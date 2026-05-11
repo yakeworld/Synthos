@@ -1,173 +1,237 @@
 ---
 name: hypothesis-generation
-description: Generate testable research hypotheses based on literature analysis. Evaluates novelty, reasonableness, and testability of each hypothesis. Returns structured hypotheses with reasoning chains. Use when the user asks to propose research ideas, generate hypotheses, brainstorm research directions, or identify novel approaches in a specific field.
-license: MIT
-metadata:
-  synthos_atom_type: "cognitive"
-  synthos_version: "1.1.0"
-  synthos_skill_md_hash: "pending"
-  synthos_model_version_pin: "deepseek/deepseek-v4-pro@2026-05-11"
-  synthos_model_tested_on: "2026-05-10T00:00:00Z"
-  synthos_io_contract_ref: "references/IO_CONTRACT.md"
-  synthos_evidence_schema_ref: "references/EVIDENCE_SCHEMA.md"
-  synthos_golden_set_ref: "golden/GOLDEN_SET.md"
-  synthos_golden_set_origin: "self_defined"
-  synthos_pass_threshold: "0.70"
-  synthos_boundary_proof_ref: "references/BOUNDARY.md"
-  synthos_change_log_ref: "references/CHANGE_LOG.md"
-  synthos_asserted_compliance: "P0,P1,P2"
-  synthos_mechanical_atoms: ""
-  synthos_depends_on: "association-discovery"
-  synthos_author: "Synthos Agent"
-allowed-tools: delegate_task Read Write Execute
+description: "科学假设生成原子（HYP）—— 将研究空白转化为形式化可检验假说"
+version: 0.1.0
+stability: unstable
+trigger: "GAP原子输出新空白后自动调用，或用户手动输入空白"
+constitutional_alignment: [P0, P4, P5]
+dependencies: [GAP, ACQ]
+inputs:
+  - name: gaps
+    type: "gap_record[]"
+    description: "来自GAP原子的研究空白"
+    required: true
+  - name: literature_corpus
+    type: "ACQ_search_result[]"
+    description: "原始文献（用于假说的文献支撑）"
+    required: true
+  - name: existing_hypotheses
+    type: "hypothesis_record[]"
+    description: "已有假说（避免重复生成）"
+    required: false
+  - name: user_constraints
+    type: string
+    description: "用户对假说的约束（如：需ADHD相关、需可用fMRI验证等）"
+    required: false
+outputs:
+  - name: hypotheses
+    type: "hypothesis_record[]"
+    description: "生成的形式化假说列表"
+  - name: hypothesis_graph
+    type: object
+    description: "假说间的逻辑关系图（竞争、互补、层级）"
+error_states:
+  - no_gaps_input: "没有空白输入"
+  - insufficient_evidence: "支撑证据不足，无法形成可检验假说"
 ---
 
-# 假设生成 (Hypothesis Generation)
+# HYP — 科学假设生成原子
 
-## 1. 职责（Scope）
+## 功能
 
-基于上游 `association-discovery` 产出的 `associations`（跨论文关联分析结果）和识别的 `research_gaps`（研究空白），生成可检验的研究假设。每个假设附带：唯一 ID、假设文本、推理依据、来源追溯、新颖性评分、可行性评分、可检验性评估。
+HYP原子接收GAP发现的研究空白，将其转化为形式化的、可检验的科学假设。每个假说包含预测、反证条件、文献支撑、和实验设计建议。
 
-本原子**不做**关联发现（那是 `association-discovery` 的职责），**不做**论证表达（那是 `argument-expression` 的职责）。它只回答一个问题：**"基于已知的关联和空白，可以提出什么新假设？"**
-
-## 2. 输入输出（Contract Summary）
-
-详见 `references/IO_CONTRACT.md`。
-
-| 方向 | 字段 | 来源 |
-|------|------|------|
-| 输入 | `associations` (list[Association]) | 上游 `association-discovery` |
-| 输入 | `research_gaps` (list[ResearchGap]) | 上游 `association-discovery` |
-| 输出 | `hypotheses` (list[Hypothesis]) | 本原子生成 |
-
-## 3. 推理流程（Procedure）
-
-1. **读取输入**：检查 `input_dict` 中是否存在 `associations` 和 `research_gaps`。若两者均为空或不存在，返回 `_err("Missing associations and research_gaps")`。
-2. **分析空白与关联模式**：对每个 `research_gap`，检查其关联的 `associations` 条目。识别空白类型（知识空白、方法空白、人群空白、矛盾空白）。
-3. **生成候选假设**：对每个空白生成 1-3 个候选假设。使用以下生成策略：
-   a. **第一性原理**：从基本事实和原理推导可能的解释。
-   b. **类比推理**：跨领域类比启发新方向。
-   c. **贝叶斯思维**：基于先验概率（已有文献支持度）更新假设可能性。
-4. **CRISP-DM 组成模板**（v1.1 新增——吸收自 KILO-KIT CBU 模式）：对每个高分假设（novelty ≥ 0.6），生成一个 CRISP-DM 实验设计方案作为 `crispdm_plan` 字段：
-   a. **业务理解（Business Understanding）**：假设的科研背景和预期价值
-   b. **数据理解（Data Understanding）**：需要收集什么数据，现有数据是否足够
-   c. **数据准备（Data Preparation）**：数据清洗、特征工程方案
-   d. **建模（Modeling）**：选择什么方法/模型验证假设
-   e. **评估（Evaluation）**：用什么指标衡量假设是否成立
-   f. **部署（Deployment）**：如果验证成功，如何转化临床应用或进一步研究
-5. **评分与排序**：对每个假设进行三维评分：
-   a. **新颖性评分** (0-1)：与现有文献对比的原创程度。≥0.6 认为有新颖性。
-   b. **可行性评分** (0-1)：研究实施的现实可行性。≥0.5 认为可行。
-   c. **可检验性** (testable/partially_testable/not_testable)：是否可通过实验或观察验证。
-6. **构建证据链**：每个 Hypothesis 的 `source` 字段引用其依据的 association ID 或 research_gap ID。详见 `references/EVIDENCE_SCHEMA.md`。
-7. **输出**：返回 `_ok({"hypotheses": [...]})` 信封，按 `novelty_score * feasibility_score` 降序排列。
-
-## 4. 边界判断（When NOT to use this atom）
-
-详见 `references/BOUNDARY.md`。典型排除场景：
-- 如果用户只需要跨论文比较或关联分析 → 这是 `association-discovery` 的职责，不需要本原子。
-- 如果用户只需要将已有假设写成论文段落 → 这是 `argument-expression` 的职责，不需要本原子。
-- 如果输入中没有任何研究空白（全部已知）→ 本原子产出可能为空或仅包含低新颖性假设。
-- 如果任务是验证已有假设 → 应使用 `viewpoint-verification`，而非本原子。
-
-## 5. 证据链输出要求（Evidence Summary）
-
-详见 `references/EVIDENCE_SCHEMA.md`。每个 `Hypothesis` 必须携带：
-- `source`: 引用上游 `Association.id` 或 `ResearchGap.id`
-- `rationale`: 推理过程文本，说明假设如何从关联/空白推导而来
-- 证据链节点类型：`atom_output`（引用上游原子输出）
-
-## 6. 示例（Minimal Example）
-
-**输入**：
-```json
-{
-  "associations": [
-    {
-      "id": "assoc_001",
-      "type": "contradiction",
-      "paper_a": "10.3389/fpsyt.2023.1260031",
-      "paper_b": "10.1002/pcn5.70095",
-      "description": "Paper A finds eye tracking effective for ADHD screening; Paper B finds no significant difference vs. clinical interview",
-      "strength": 0.65
-    }
-  ],
-  "research_gaps": [
-    {
-      "id": "gap_001",
-      "description": "No study compares eye tracking metrics across ADHD subtypes (inattentive vs. hyperactive-impulsive vs. combined)",
-      "type": "knowledge_gap",
-      "related_associations": ["assoc_001"]
-    }
-  ]
-}
+```
+GAP空白 ──→ HYP生成 ──→ 形式化假说列表
+                         ├── 主假说
+                         ├── 竞争假说
+                         ├── 零假说
+                         └── NSFC问题树
 ```
 
-**输出**（简化）：
-```json
-{
-  "hypotheses": [
-    {
-      "id": "hyp_001",
-      "text": "Eye tracking saccade metrics differ significantly across ADHD subtypes, with hyperactive-impulsive subtype showing greater saccade variability than inattentive subtype",
-      "rationale": "The contradiction between Paper A and B may be explained by unaccounted subtype heterogeneity. If eye tracking effectiveness varies by subtype, this would explain inconsistent results.",
-      "source": "gap_001",
-      "novelty_score": 0.72,
-      "feasibility_score": 0.65,
-      "testability": "testable"
-    },
-    {
-      "id": "hyp_002",
-      "text": "Combining eye tracking metrics with continuous performance test scores improves ADHD screening accuracy beyond either method alone",
-      "rationale": "Association assoc_001 shows inconsistent unimodal results. Multi-modal approaches often outperform single modalities in clinical screening.",
-      "source": "assoc_001",
-      "novelty_score": 0.55,
-      "feasibility_score": 0.80,
-      "testability": "testable"
-    }
-  ]
-}
+## 执行流程
+
+### Step 1: 空白→假说转换
+
+对每个GAP空白生成至少一个假说：
+
+| 空白类型 | 默认假说策略 | 示例 |
+|:---------|:-------------|:-----|
+| 结论矛盾 | "矛盾是由于X调节变量不同" | 效应量随年龄段变化 |
+| 方法论缺口 | "新方法Y可以解决X限制" | 深度学习优于传统阈值 |
+| 未答问题 | "X导致Y"的正向假设 | 前庭信号异常→ADHD平衡障碍 |
+| 过时结论 | "新证据修正了旧结论" | 2025年meta分析推翻2010结论 |
+
+### Step 2: 假说形式化
+
+每个假说必须包含：
+
+```yaml
+hypothesis:
+  # 核心
+  claim: "X与Y呈正相关，且效应量≥0.5"
+  
+  # 可观测预测
+  prediction: "在A人群中测量X和Y，Pearson r ≥ 0.5, p < 0.01"
+  
+  # 反证条件
+  falsification: "如果r < 0.2或p ≥ 0.05，则假说不成立"
+  
+  # 证据基础
+  supporting_evidence:
+    - doi: "10.xxxx/xxxxx"
+      role: "提供了X→Y的初步证据"
+    - doi: "10.xxxx/xxxxy"  
+      role: "提供了效应量估计"
+  
+  # 竞争假说
+  competing_hypotheses:
+    - claim: "Z是X和Y的混淆变量"
+      distinguishing_test: "控制Z后检测X→Y的偏相关系数"
+  
+  # 实验设计
+  suggested_design:
+    type: "横断面相关性研究"
+    population: "ADHD患儿（6-12岁）"
+    sample_size_estimate: "基于效应量0.5, power=0.8, n=64"
+    key_measurements: ["3D眼动仪", "ADHD-RS评分", "前庭功能测试"]
 ```
 
-## 7. 质量要求
+### Step 3: 竞争假说生成
 
-- **新颖性**：假设的原创程度（与现有文献对比）
-- **合理性**：与现有知识的逻辑一致性
-- **可检验性**：假设是否可以通过实验/观察验证
-- **明确性**：假设表述是否清晰具体，包含可操作变量
+对每个主假说，生成至少1个竞争假说（对抗确认偏差）：
 
-## 8. 约束
+| 竞争类型 | 含义 | 示例 |
+|:---------|:-----|:-----|
+| **混淆变量** | 第三变量导致假象关联 | Z→X且Z→Y |
+| **反向因果** | Y→X而非X→Y | ADHD症状→异常眼动，而非反之 |
+| **调节效应** | 只在特定条件下成立 | 仅男性患儿中显著 |
+| **测量伪像** | 假象来自测量方法 | 眼动仪校准误差 |
 
-- 必须基于已有关联和空白，不得凭空捏造
-- 必须说明推理过程（rationale 字段）
-- 必须评估新颖性和可行性（评分 0-1）
-- 每个假设必须有唯一 ID
+### Step 4: 假说评级
 
-## 9. 失败模式
+| 维度 | 评分标准 |
+|:-----|:---------|
+| 可检验性（0-1） | 是否有明确的观测指标和统计阈值 |
+| 新颖性（0-1） | 与已有文献的差异度 |
+| 重要性（0-1） | 验证后对领域的贡献 |
+| 可行性（0-1） | 所需资源、时间、技术 |
 
-- **无新颖假设** → 扩大关联分析范围或引入跨领域知识
-- **假设不可检验** → 重新表述为可操作假设，降低抽象层级
-- **评分虚高** → 交叉验证评分，提供评分依据
+综合分 = 可检验性 × 0.3 + 新颖性 × 0.25 + 重要性 × 0.25 + 可行性 × 0.2
 
-## 10. 依赖
+### Step 5: NSFC问题树
 
-- 上游：`association-discovery`
-- 下游：`argument-expression`、`viewpoint-verification`
+如果假说符合国家自然科学基金框架，生成问题树：
 
-## 11. Synthos 维度
+```
+顶层问题：前庭功能障碍在ADHD中的致病机制？
+ ├── 子问题1：ADHD患儿的前庭功能是否异常？
+ │    └── 假说1.1：ADHD患儿的vHIT增益低于正常对照
+ ├── 子问题2：前庭异常是否与ADHD核心症状相关？
+ │    └── 假说2.1：vHIT增益与ADHD-RS多动评分呈负相关
+ └── 子问题3：前庭训练是否能改善ADHD症状？
+      └── 假说3.1：8周前庭训练降低ADHD-RS评分≥30%
+```
 
-- **第一性原理**：从基本事实和原理推导
-- **类比**：跨领域类比启发
-- **贝叶斯思维**：基于先验概率更新
+## Schema: hypothesis_record
 
-## 12. 注意事项
+```yaml
+hypothesis_record:
+  id: "HYP-YYYYMMDD-N"
+  
+  # 来源
+  source_gap: "GAP-YYYYMMDD-M"      # 源自哪个空白
+  origin: enum[GAP_pipeline, user_input, mixed]
+  
+  # 核心
+  title: string                      # 假说标题
+  claim: string                      # 核心主张（精确到可检验）
+  type: enum[primary, competing, null, auxiliary]
+  
+  # 可检验性
+  prediction: string                 # 可观测预测
+  falsification: string              # 反证条件
+  statistical_criterion: string      # 统计阈值（如 p<0.05, effect>0.5）
+  
+  # 证据
+  supporting_evidence:               # 至少2篇
+    - doi: string
+      role: string
+  conflicting_evidence:              # 如果有
+    - doi: string
+      role: string
+  
+  # 竞争关系
+  competes_with: string[]            # 竞争假说ID
+  distinguishing_test: string        # 区分性实验
+  
+  # 评分
+  scores:
+    testability: float               # 0-1
+    novelty: float
+    importance: float
+    feasibility: float
+    overall: float
+  
+  # 实验设计
+  suggested_design:
+    type: string
+    population: string
+    sample_size: string
+    duration: string
+    key_measurements: string[]
+  
+  # NSFC（如果适用）
+  nsfc:
+    applicable: boolean
+    question_tree: object
+    funding_category: string
+  
+  # 状态
+  status: enum[proposed, in_review, accepted, rejected, tested, validated, falsified]
+  created_at: timestamp
+  last_updated: timestamp
+```
 
-从关联到假设的飞跃——这是核心创新环节，需要最大的人类监督。假设质量直接决定下游产出的学术价值。
+## Schema: hypothesis_graph
 
-## 13. 参考文件索引（References）
+```yaml
+hypothesis_graph:
+  nodes:
+    - id: string
+      title: string
+      type: enum[primary, competing, null]
+      status: string
+  edges:
+    - source: string
+      target: string
+      relationship: enum[competes_with, supports, contradicts, generalizes, specializes]
+  gaps_addressed: string[]          # 覆盖的空白ID列表
+```
 
-- IO 契约：`references/IO_CONTRACT.md`
-- 证据链 schema：`references/EVIDENCE_SCHEMA.md`
-- 边界证明：`references/BOUNDARY.md`
-- 金标准：`golden/GOLDEN_SET.md`
-- 变更日志：`references/CHANGE_LOG.md`
+## 验证标准
+
+| 测试 | 通过条件 |
+|:-----|:---------|
+| 输入1个空白 | 生成≥1个假说 + ≥1个竞争假说 |
+| 输入3个空白 | 所有空白都被覆盖 |
+| 每个假说 | 有prediction和falsification字段 |
+| 每个假说 | 有≥2篇文献支撑 |
+| 无输入 | 返回 no_gaps_input 错误 |
+
+## 与下游原子的接口
+
+```
+HYP.hypotheses[] 
+  ├──→ ASC (论证表达)：将假说展开为论文引言/讨论
+  ├──→ NotebookLM/Notion：存入假说库
+  └──→ EVA (质量评估)：假说质量纳入进化评分
+```
+
+## 错误处理
+
+| 错误 | 处理 |
+|:-----|:-----|
+| 空白太模糊 | 提示用户补充具体矛盾点 |
+| 证据不足以形成假说 | 触发ACQ补充检索 |
+| 生成的假说与现有库重复 | 自动合并/标记为辅助假说 |
