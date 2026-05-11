@@ -23,7 +23,7 @@
   "association-discovery": {
     "name": "association-discovery",
     "atom": 3,
-    "version": "1.0.0",
+    "version": "1.2.0",
     "status": "active",
     "license": "MIT",
     "created": "2026-05-09",
