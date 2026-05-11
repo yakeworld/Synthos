@@ -293,5 +293,18 @@
     }
   },
   "updated": "2026-05-09T11:39:20.482083+00:00",
-  "implementation_status": "all_atoms_implemented"
+  "implementation_status": "all_atoms_implemented",
+  "gap_discovery": {
+    "name": "GAP - 研究空白发现",
+    "description": "跨文献矛盾检测、方法论缺口识别、未答问题提取",
+    "children": [
+      "contradiction_detection",
+      "methodology_gap",
+      "unanswered_questions"
+    ],
+    "dependencies": [
+      "knowledge_acquisition"
+    ],
+    "status": "unstable"
+  }
 }
