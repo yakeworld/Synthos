@@ -1,0 +1,12 @@
+# AGENT_MANIFEST.yaml
+# Test contribution for CI verification
+
+agent:
+  name: "TestAgent-CI"
+  version: "1.0.0"
+  framework: "manual-test"
+  contact: "https://github.com/yakeworld/Synthos/issues"
+  capability: "CI pipeline test agent — verifies PR verification gates"
+  verification:
+    self_test_passed: true
+    validated_by: "human"
