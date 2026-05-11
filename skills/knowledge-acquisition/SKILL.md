@@ -10,7 +10,7 @@ metadata:
   synthos_citation_verification_ref: "references/CITATION_VERIFICATION.md"
   synthos_change_log_ref: "references/CHANGE_LOG.md"
   synthos_asserted_compliance: "P0,P2,P3"
-  synthos_depends_on: "semantic-scholar, pubmed, arxiv, openalex, research-paper-search"
+  synthos_depends_on: "semantic-scholar, pubmed, arxiv, openalex, biorxiv, research-paper-search"
   synthos_author: "Synthos Agent (v4.0 agent-native refactor)"
 allowed-tools: terminal web delegate_task Read Write
 ---
@@ -23,7 +23,7 @@ allowed-tools: terminal web delegate_task Read Write
 
 ## 输入契约
 - `search_query`: 搜索查询字符串（必填）
-- `sources`: 数据来源列表，可选（默认全部）。有效值: `semantic_scholar`, `pubmed`, `arxiv`, `openalex`, `crossref`
+- `sources`: 数据来源列表，可选（默认全部）。有效值: `semantic_scholar`, `pubmed`, `arxiv`, `openalex`, `crossref`, `biorxiv`
 - `max_results`: 最大结果数，默认 10
 - `domain`: 研究领域（可选，用于过滤）
 
@@ -53,8 +53,8 @@ allowed-tools: terminal web delegate_task Read Write
   ],
   "metadata": {
     "total_found": 15,
-    "sources_used": ["semantic_scholar", "pubmed"],
-    "sources_attempted": ["semantic_scholar", "pubmed", "arxiv"],
+    "sources_used": ["semantic_scholar", "pubmed", "biorxiv"],
+    "sources_attempted": ["semantic_scholar", "pubmed", "arxiv", "openalex", "crossref", "biorxiv"],
     "sources_failed": ["openalex"]
   },
   "evidence_chain": [
@@ -73,6 +73,7 @@ allowed-tools: terminal web delegate_task Read Write
 - `arxiv` — arXiv API 格式
 - `research-paper-search` — 多源搜索 + PDF 下载参考
 - `openalex` — OpenAlex API（可选，无 key 即可用）
+- `biorxiv` — bioRxiv/medRxiv 预印本 API
 
 ### 1. 并行搜索各数据源
 
@@ -123,6 +124,20 @@ curl -s "https://api.crossref.org/works?query=<encoded_query>&rows=<N>&select=DO
 - 免费，不需要 API key
 - 注意 `select` 参数不要包含 `publication-date` 或 `citation-count`（会导致空结果）
 - 返回 JSON 的 `message.items` 数组
+
+#### bioRxiv / medRxiv
+```
+# search bioRxiv
+curl -s "https://api.biorxiv.org/details/biorxiv/<encoded_query>"
+
+# search medRxiv
+curl -s "https://api.biorxiv.org/details/medrxiv/<encoded_query>"
+```
+- 免费，不需要 API key，无速率限制
+- 返回 JSON，从 `collection[0].papers` 数组提取论文
+- 每个 paper 有 `title`, `abstract`, `authors`, `doi`, `date`, `subject`, `pdf_url`
+- ⚠ 注意：该 API 有时不稳定（返回空 `collection`），如果失败则如实记录到 `sources_failed`
+- 也支持按作者搜索: `/details/biorxiv/author/NAME`
 
 ### 2. 去重
 
@@ -204,6 +219,11 @@ curl -s "https://api.crossref.org/works?query=<encoded_query>&rows=<N>&select=DO
 `title, doi, abstract, year, authors (list), source, open_access_url, arxiv_id`
 
 ## 变更日志
+2026-05-11: v1.2.0 — 新增 bioRxiv/medRxiv 预印本源（吸收自 biorxiv Hermes 技能）。
+  新增: 第6个数据源 bioRxiv/medRxiv（免费，无 key）
+  新增: Step 1 中的 bioRxiv/medRxiv curl 命令和字段说明
+  更新: 输入契约 sources 列表 + 元数据 depends_on
+  影响: knowledge-acquisition 现覆盖 Semantic Scholar / PubMed / arXiv / OpenAlex / Crossref / bioRxiv / medRxiv 共7个源
 2026-05-11: v1.1.0 — 新增4层引用验证（吸收自AutoResearchClaw）。
   新增: CITATION_VERIFICATION.md 参考文件
   新增: Step 2.5 引用验证（L1 DOI + L2 arXiv + L3 S2标题 + L4 LLM相关性）
