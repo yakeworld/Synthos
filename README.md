@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="docs/Synthos_封面_1920x1080.png" alt="Synthos Logo" width="600"/>
+  <img src="docs/Synthos_封面_1920x1080.png" alt="Synthos Banner" width="700"/>
 </p>
 
 <h1 align="center">Synthos — 自主进化学术科研平台</h1>
@@ -24,8 +24,7 @@
 
 从文献检索到论文输出，Synthos 完整覆盖科研的认知闭环。配合 **自进化引擎**，系统每天自动检查健康状况、执行功能测试、从外部项目吸收养分，持续自我增强。
 
-> **当前版本**: v4.2.0 · 进化引擎 v2.3 · 评估得分: 95/100（卓越）
-> **竞赛**: 全球数智教育创新大赛 AI for Medicine 赛道
+> **当前版本**: v4.2.0 · 进化引擎 v2.3 · 综合评分: 95/100
 
 ---
 
@@ -96,7 +95,7 @@ Synthos 基于 **八维认知框架** 构建：
 │                                                           │
 │  LOAD → LESSONS → PROBE → BENCHMARK → EXTERNAL           │
 │    ↓        ↓         ↓         ↓          ↓             │
-│  加载状态   导入教训  结构探测   功能测试   主动吸收        │
+│  加载状态   导入教训   结构探测   功能测试   主动吸收        │
 │                                                           │
 │  DIAGNOSE → IMPROVE → VERIFY → RECORD                    │
 │     ↓          ↓         ↓         ↓                     │
@@ -173,7 +172,7 @@ Synthos 基于 **八维认知框架** 构建：
 | D1 知识获取 | 15% | 文献覆盖面、多源覆盖、相关性 | 94 |
 | D2 知识提取 | 15% | 字段完整性、方法论分类、证据等级 | 86 |
 | D3 关联发现 | 20% | 类型多样性、矛盾识别、研究空白 | 86 |
-| **D4 假设生成** | **20%** | **新颖性、可检验性、CRISP-DM** | **85** ↑ |
+| **D4 假设生成** | **20%** | **新颖性、可检验性、CRISP-DM** | **85** |
 | D5 论证表达 | 15% | IMRaD结构、证据支撑、引用格式 | 70 |
 | D6 观点验证 | 15% | 反方观点、证伪条件、置信度诚实 | 90 |
 
@@ -194,25 +193,19 @@ Synthos/
 │   ├── argument-expression/         # 原子5: 论证表达
 │   ├── viewpoint-verification/      # 原子6: 观点验证
 │   ├── evolution/                   # 进化引擎 v2.3
-│   │   ├── SKILL.md                 # 9步循环流程
-│   │   └── references/              # BENCHMARKS, ABSORPTION, LESSONS...
+│   │   ├── SKILL.md
+│   │   └── references/              # BENCHMARKS, LESSONS, ABSORPTION...
 │   └── latex-output/                # LaTeX 论文输出
 │
 ├── docs/                            # 文档
 │   ├── synthos-philosophy.md        # 八维认知框架
 │   ├── synthos-evaluation-framework.md  # 评估标准
 │   ├── atom-io-schemas.md           # I/O 契约总表
-│   └── ... (审计报告、技术路线图、竞赛材料等)
+│   └── ... (审计报告、技术路线图等)
 │
-├── outputs/                         # 运行产出
-│   ├── runs/                        # 全链路运行记录
-│   ├── evolution/                   # 进化报告 + 项目追踪库
-│   └── evaluation/                  # 评估基线
-│
-├── archive/                         # 历史归档
-│   └── v3-legacy/                   # v3.x 遗留物
-│
-└── docs/synthos-evaluation-framework.md  # 评估框架
+├── README.md
+├── LICENSE (MIT)
+└── .gitignore
 ```
 
 ---
@@ -226,13 +219,13 @@ Synthos/
   - `SEMANTIC_SCHOLAR_API_KEY` — Semantic Scholar API
   - `PUBMED_API_KEY` — PubMed API (可选)
   - `OPENALEX_API_KEY` — OpenAlex API (可选)
-- **系统**: Linux (在 WSL/macOS 上也可运行)
+- **系统**: Linux / macOS / WSL
 
 ### 快速开始
 
 ```bash
 # 1. 克隆仓库
-git clone https://github.com/YOUR_USERNAME/Synthos.git
+git clone https://github.com/yakeworld/Synthos.git
 cd Synthos
 
 # 2. 设置 API 密钥
@@ -278,18 +271,6 @@ cat outputs/evolution/absorption-tracked.json
 [MIT License](LICENSE) — 详见 [LICENSE](LICENSE) 文件。
 
 Copyright (c) 2026 Yang Xiaokai (杨晓凯)
-
-特此授予任何获得本软件及相关文档文件的人免费的许可，以无限制地处理本软件，包括但不限于使用、复制、修改、合并、发布、分发、再许可和/或销售本软件的副本，并允许获得本软件的人在遵守以下条件的情况下这样做：
-
-上述版权声明和本许可声明应包含在所有副本或实质性部分中。
-
-本软件按"原样"提供，不提供任何明示或暗示的保证，包括但不限于适销性、特定用途的适用性和非侵权性。
-
----
-
-## 🤝 Contributing
-
-待定（仓库发布后开放）。
 
 ---
 
