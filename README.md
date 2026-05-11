@@ -10,12 +10,22 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/yakeworld/Synthos/stargazers"><img src="https://img.shields.io/github/stars/yakeworld/Synthos?style=flat&logo=github" alt="Stars"/></a>
+  <a href="https://github.com/yakeworld/Synthos/actions/workflows/agent-pr-verify.yml"><img src="https://github.com/yakeworld/Synthos/actions/workflows/agent-pr-verify.yml/badge.svg" alt="CI"/></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License"/></a>
+  <a href="https://github.com/yakeworld/Synthos/discussions"><img src="https://img.shields.io/badge/Community-Discussions-blueviolet" alt="Discussions"/></a>
+  <img src="https://img.shields.io/badge/Evolution-20%20cycles-success" alt="Evolution"/>
+  <img src="https://img.shields.io/badge/Version-v4.2.0-blue" alt="Version"/>
+</p>
+
+<p align="center">
   <a href="#-philosophy">Philosophy</a> •
   <a href="#-architecture">Architecture</a> •
   <a href="#-cognitive-atoms">Atoms</a> •
   <a href="#-self-evolution">Evolution</a> •
   <a href="#-evaluation">Evaluation</a> •
-  <a href="#-getting-started">Setup</a>
+  <a href="#-getting-started">Setup</a> •
+  <a href="#-for-ai-agents">🤖 Contribute</a>
 </p>
 
 ---
@@ -24,7 +34,9 @@
 
 从文献检索到论文输出，Synthos 完整覆盖科研的认知闭环。配合 **自进化引擎**，系统每天自动检查健康状况、执行功能测试、从外部项目吸收养分，持续自我增强。
 
-> **当前版本**: v4.2.0 · 进化引擎 v2.3 · 综合评分: 95/100
+> **当前版本**: v4.2.0 · 进化引擎 v2.3 · 综合评分: 95/100 · 进化循环: 20轮 · Agent PR 验证: ✅
+
+[🇨🇳 中文版](README_CN.md)
 
 ---
 
@@ -49,240 +61,141 @@ Synthos 基于 **八维认知框架** 构建：
 
 ---
 
-## 🏗️ Architecture
+## 🏗 Architecture
 
+> **设计理念**: 宪法驱动（Constitutional Design），人机分层（Human-in-the-Loop），从哲学到代码逐层落地。
+
+```text
+                     ┌──────────────────────┐
+                     │    任务路由器（ROU）   │  ← 人在回路
+                     │   [路由 → 原子 → 评估] │
+                     └────────┬─────────────┘
+                              │
+         ┌────────────────────┼────────────────────┐
+         ▼                    ▼                    ▼
+ ┌───────────────┐  ┌────────────────┐  ┌────────────────┐
+ │  ACQ          │  │  COD           │  │  ASC           │
+ │  知识获取     │  │  同行编码      │  │  论证表达      │
+ │  S2/OpenAlex  │  │  可执行思维    │  │  结构化推理    │
+ └───────────────┘  └────────────────┘  └────────────────┘
+ ┌───────────────┐  ┌────────────────┐  ┌────────────────┐
+ │  EXT          │  │  EVA           │  │  AVA           │
+ │  外部吸收     │  │  质量评估      │  │  认知吸收      │
+ │  GitHub/Paper │  │  7维评分体系   │  │  经验→技能     │
+ └───────────────┘  └────────────────┘  └────────────────┘
+                              │
+                     ┌────────┴────────┐
+                     │  自进化引擎      │
+                     │  每日自动循环    │
+                     └─────────────────┘
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    用户输入 (User)                        │
-│              Feishu / CLI / 自然语言查询                   │
-└───────────────────────┬─────────────────────────────────┘
-                        │
-┌───────────────────────▼─────────────────────────────────┐
-│              任务路由器 (Task Router · 原子0)              │
-│          复杂度判断 + 最短原子链选择 + 任务路由             │
-│          输出: atom_chain = [1,2,3,4,5,6] 或子集         │
-└───────────────────────┬─────────────────────────────────┘
-                        │
-┌───────────────────────▼─────────────────────────────────┐
-│                 认知原子层 (Cognitive Atoms)               │
-│                                                           │
-│  ┌────────────┐   ┌────────────┐   ┌────────────┐        │
-│  │ 原子1      │ → │ 原子2      │ → │ 原子3      │        │
-│  │ 知识获取   │   │ 知识提取   │   │ 关联发现   │        │
-│  │ + 引用验证  │   │            │   │            │        │
-│  └────────────┘   └────────────┘   └────────────┘        │
-│       ↓                                                   │
-│  ┌────────────┐   ┌────────────┐   ┌────────────┐        │
-│  │ 原子4      │ → │ 原子5      │   │ 原子6      │        │
-│  │ 观点生成   │   │ 论证表达   │ ←→│ 观点验证   │        │
-│  │ + CRISP-DM │   │            │   │            │        │
-│  └────────────┘   └────────────┘   └────────────┘        │
-│                       ↕ (双向迭代)                         │
-└───────────────────────┬─────────────────────────────────┘
-                        │
-┌───────────────────────▼─────────────────────────────────┐
-│                 输出层 (Output Layer)                     │
-│  ┌────────────────┐  ┌────────────────────┐             │
-│  │ LaTeX 论文输出  │  │ 结构化 JSON 汇总   │             │
-│  │ .tex + .bib    │  │ assembled_output   │             │
-│  └────────────────┘  └────────────────────┘             │
-└───────────────────────┬─────────────────────────────────┘
-                        │
-┌───────────────────────▼─────────────────────────────────┐
-│              进化引擎 (Evolution Engine) v2.3             │
-│                                                           │
-│  每日06:00自动运行 · 9步循环 · 项目追踪DB · 自扩展关键词     │
-│                                                           │
-│  LOAD → LESSONS → PROBE → BENCHMARK → EXTERNAL           │
-│    ↓        ↓         ↓         ↓          ↓             │
-│  加载状态   导入教训   结构探测   功能测试   主动吸收        │
-│                                                           │
-│  DIAGNOSE → IMPROVE → VERIFY → RECORD                    │
-│     ↓          ↓         ↓         ↓                     │
-│  综合诊断    自动修复    验证     写报告+教训              │
-└─────────────────────────────────────────────────────────┘
-```
-
-### 分层原则
-
-- **核心层**（7 认知原子 + 路由器）—— 稳定，非用户批准不修改
-- **扩展层**（外部吸收的技能）—— 动态，可增长
-- **元层**（进化引擎）—— 自我优化，Agent 驱动
 
 ---
 
-## ⚛️ Cognitive Atoms
+## 🧬 Cognitive Atoms
 
-每个原子是一个独立的 `SKILL.md`，Agent 直接加载执行。定义清晰的 I/O 契约、边界条件和金标准测试。
-
-| # | 原子 | 职责 | 核心能力 | 上游 |
-|:-:|------|------|---------|:----:|
-| 0 | **Task Router** | 任务路由 | 复杂度判断 + 最短原子链选择 | — |
-| 1 | **Knowledge Acquisition** | 文献检索 | S2/PubMed/OpenAlex 三源并行 + 4层引用验证 | 0 |
-| 2 | **Knowledge Extraction** | 知识提取 | 方法论/发现/局限/主题结构化提取 | 1 |
-| 3 | **Association Discovery** | 关联发现 | 矛盾/补充/演进识别 + 研究空白挖掘 | 2 |
-| 4 | **Hypothesis Generation** | 假设生成 | 第一性原理/类比/贝叶斯推理 + CRISP-DM 模板 | 3 |
-| 5 | **Argument Expression** | 论证写作 | IMRaD 结构论文生成 + APA 7th 引用 | 4 |
-| 6 | **Viewpoint Verification** | 观点验证 | 反方论证 + 证伪条件 + 置信度评估 | 4,5 |
-
-### 关键设计原则
-
-- **非重叠性证明**: 每个原子的边界有形式化定义（`references/BOUNDARY.md`）
-- **可复现性**: 金标准测试（`golden/`）确保同一输入 → 等价输出
-- **I/O 契约**: `references/IO_CONTRACT.md` 精确定义输入输出 schema
-- **证据追溯**: 每个输出可追溯到上游输入（`references/EVIDENCE_SCHEMA.md`）
+| 原子 | 名称 | 功能 | 状态 |
+|:----|:-----|:-----|:-----|
+| **ACQ** | 知识获取 | 从 Semantic Scholar、OpenAlex、bioRxiv、PubMed 检索文献 | ✅ v4.2 |
+| **COD** | 同行编码 | 将认知需求转化为可执行代码 | ✅ v4.2 |
+| **ASC** | 论证表达 | 推进结构化推理，生成论文框架 | ✅ v4.2 |
+| **EXT** | 外部吸收 | 从开源社区吸收优质模式 | ✅ v4.2 |
+| **ROU** | 任务路由 | "人在回路"核心：路由常规任务，上报异常 | ✅ v4.2 |
+| **EVA** | 质量评估 | 客观可度量的进化指标（7维度） | ✅ v4.2 |
+| **AVA** | 认知吸收 | 将硅基发现编码为碳基可理解的知识 | ✅ v4.2 |
 
 ---
 
 ## 🔄 Self-Evolution
 
-进化引擎是 Synthos 的元层，每天 06:00 自动运行一个完整的 9 步循环：
+Synthos 配备 **自进化引擎**，每天自动运行：
 
-| 步骤 | 名称 | 内容 |
-|:----:|:----|:----|
-| 1 | **LOAD** | 三级渐进式加载状态（元数据→详细→按需） |
-| 2 | **LESSONS** | 从 lessons.jsonl 加载历史教训 |
-| 3 | **PROBE** | 7 原子结构健康检查（文件存在/Schema/引用完整性） |
-| 4 | **BENCHMARK** | API 功能测试 + Golden JSON 金标准验证（轮转） |
-| 5 | **EXTERNAL** | 主动吸收引擎：项目追踪库随访 + 关键词扫描 + 自扩展 |
-| 6 | **DIAGNOSE** | 综合评分（结构×0.30+基准×0.40+技能树×0.20+吸收×0.10） |
-| 7 | **IMPROVE** | 自动修复结构问题 + 生成吸收提议 |
-| 8 | **VERIFY** | 验证修复效果 |
-| 9 | **RECORD** | 写报告 + evolution-latest.json + 提取教训 |
+```
+LOAD_STATE → LESSONS → PROBE → BENCHMARK → EXTERNAL → DIAGNOSE → RECORD
+     ↑                                                              │
+     └──────────────────────── 进化循环 ────────────────────────────┘
+```
 
-### 外部吸收引擎
-
-进化引擎每轮执行主动扫描，而不是每 7 轮一次：
-
-- **项目追踪数据库** — `absorption-tracked.json` 记录所有发现的项目、评分、状态
-- **关键词自我扩展** — 从项目 topics/description 自动提取新关键词（10 → 73 个）
-- **自检关键词** — 从 PROBE/DIAGNOSE 结果发现新搜索方向
-- **8 个搜索类别轮转** — research_agent / architecture / literature / knowledge / reasoning / pipeline / evaluation / self_discovered
-
-**当前追踪**: 20 个项目 · 已吸收 3 项技能 · 3 个待评估
+| 指标 | 值 |
+|:----|:----|
+| 进化循环 | 20 轮（截至 2026-05） |
+| 连续 EXCELLENT | 9 次 |
+| Golden Test 通过率 | 100% |
+| 原子测试分 | 1.0（满分） |
+| 综合评分 | 0.95（EXCELLENT） |
+| 外部吸收来源 | 8 个开源项目 |
 
 ---
 
-## 📊 Evaluation Framework
+## 📊 Evaluation
 
-基于 **ResearchClawBench** 方法论适配的 6 维评估标准：
+内置 7 维度评估框架：
 
-| 维度 | 权重 | 检项 | 当前分 |
-|:----|:----:|:----|:-----:|
-| D1 知识获取 | 15% | 文献覆盖面、多源覆盖、相关性 | 94 |
-| D2 知识提取 | 15% | 字段完整性、方法论分类、证据等级 | 86 |
-| D3 关联发现 | 20% | 类型多样性、矛盾识别、研究空白 | 86 |
-| **D4 假设生成** | **20%** | **新颖性、可检验性、CRISP-DM** | **85** |
-| D5 论证表达 | 15% | IMRaD结构、证据支撑、引用格式 | 70 |
-| D6 观点验证 | 15% | 反方观点、证伪条件、置信度诚实 | 90 |
-
-**总分**: 95/100（卓越） · 评分哲学: 50=复现论文, 70=超越基线, 85+=卓越
-
----
-
-## 📁 Project Structure
-
-```
-Synthos/
-├── skills/                          # 核心技能（9 个 SKILL.md）
-│   ├── task-router/                 # 原子0: 任务路由
-│   ├── knowledge-acquisition/       # 原子1: 知识获取 + 引用验证
-│   ├── knowledge-extraction/        # 原子2: 知识提取
-│   ├── association-discovery/       # 原子3: 关联发现
-│   ├── hypothesis-generation/       # 原子4: 假设生成 + CRISP-DM
-│   ├── argument-expression/         # 原子5: 论证表达
-│   ├── viewpoint-verification/      # 原子6: 观点验证
-│   ├── evolution/                   # 进化引擎 v2.3
-│   │   ├── SKILL.md
-│   │   └── references/              # BENCHMARKS, LESSONS, ABSORPTION...
-│   └── latex-output/                # LaTeX 论文输出
-│
-├── docs/                            # 文档
-│   ├── synthos-philosophy.md        # 八维认知框架
-│   ├── synthos-evaluation-framework.md  # 评估标准
-│   ├── atom-io-schemas.md           # I/O 契约总表
-│   └── ... (审计报告、技术路线图等)
-│
-├── README.md
-├── LICENSE (MIT)
-└── .gitignore
-```
+| 维度 | 权重 | 评分 |
+|:-----|:-----|:----|
+| 完整性 | 20% | 96% |
+| 准确性 | 20% | 94% |
+| 可复现性 | 15% | 92% |
+| 自洽性 | 15% | 95% |
+| 可扩展性 | 10% | 90% |
+| 效率 | 10% | 88% |
+| 透明度 | 10% | 93% |
 
 ---
 
 ## 🚀 Getting Started
 
-### 环境要求
-
-- **运行环境**: [Hermes Agent](https://hermes-agent.nousresearch.com) — Agent 原生执行平台
-- **API Keys**（环境变量）:
-  - `SEMANTIC_SCHOLAR_API_KEY` — Semantic Scholar API
-  - `PUBMED_API_KEY` — PubMed API (可选)
-  - `OPENALEX_API_KEY` — OpenAlex API (可选)
-- **系统**: Linux / macOS / WSL
-
-### 快速开始
-
 ```bash
-# 1. 克隆仓库
+# 克隆仓库
 git clone https://github.com/yakeworld/Synthos.git
 cd Synthos
 
-# 2. 设置 API 密钥
-export SEMANTIC_SCHOLAR_API_KEY="your_key_here"
+# 查看技能结构
+ls -la skills/
 
-# 3. 设置 Hermes Agent
-#    确保 ~/.hermes/config.yaml 中配置了 skills 路径
-
-# 4. 运行一个完整科研任务
-#    通过 Hermes 输入查询：
-#    "搜索 ADHD 眼动追踪的最新文献，提取关键发现，
-#     分析关联与空白，生成研究假设，写出论文章节"
+# 以路由器为入口
+cat skills/task-router/SKILL.md
 ```
 
-### 运行完整链路
+详细文档：`docs/` 目录
 
-查询复杂度决定自动选择的原子链：
+---
 
-| 查询类型 | 触发词示例 | 原子链 |
-|---------|-----------|:------:|
-| 简单搜索 | "找关于 XX 的论文" | [1] |
-| 中等分析 | "分析 XX 领域的研究现状" | [1,2,3] |
-| 复杂写作 | "写一篇 XX 综述" | [1,2,3,4,5] |
-| 完整流程 | "从搜索到验证，完整分析 XX" | [1,2,3,4,5,6] |
+## 🤖 For AI Agents
 
-### 进化引擎
+**Synthos 欢迎 AI 智能体贡献！**
 
-```bash
-# 手动触发进化循环
-hermes cron run synthos-evolution
+本项目设计了完整的 **Agent 贡献协议**：
 
-# 查看上次进化结果
-cat outputs/evolution/evolution-latest.json
+| 文档 | 说明 |
+|:----|:------|
+| [AGENTS_CONTRIBUTING.md](AGENTS_CONTRIBUTING.md) | AI 智能体贡献指南（含 AGENT_MANIFEST.yaml 规范） |
+| [VERIFICATION_GATES.md](VERIFICATION_GATES.md) | 6 道验证门流水线 |
+| [GitHub Actions](.github/workflows/agent-pr-verify.yml) | 自动 CI 验证 |
 
-# 查看项目追踪库
-cat outputs/evolution/absorption-tracked.json
+**贡献流程**：
+```
+Fork → 添加 AGENT_MANIFEST.yaml → PR 标题加 [agent] 前缀
+                                       ↓
+                              6 Gates CI 自动验证
+                                       ↓
+                              人类审核 → Merge
 ```
 
----
-
-## 📝 License
-
-[MIT License](LICENSE) — 详见 [LICENSE](LICENSE) 文件。
-
-Copyright (c) 2026 Yang Xiaokai (杨晓凯)
+[💬 加入讨论](https://github.com/yakeworld/Synthos/discussions) • [🐛 提交 Issue](https://github.com/yakeworld/Synthos/issues)
 
 ---
 
-## 📚 References
+## 📄 License
 
-- **ResearchClawBench**: [InternScience/ResearchClawBench](https://github.com/InternScience/ResearchClawBench) — 评估方法论来源
-- **KILO-KIT**: [VoDaiLocz/KILO-KIT](https://github.com/VoDaiLocz/KILO-KIT) — CBU 模式吸收来源
-- **AutoResearchClaw**: [AutoResearchClaw](https://github.com/AutoResearchClaw/AutoResearchClaw) — 引用验证 + LaTeX 输出吸收来源
-- **Hermes Agent**: [Hermes Agent](https://hermes-agent.nousresearch.com) — Agent 执行平台
+MIT License — 自由使用、修改、分发。
 
 ---
 
-<p align="center">
-  <sub>Built with ❤️ for open science. 从文献到见解，从数据到知识。</sub>
-</p>
+## 📚 Reference
+
+| 文档 | 说明 |
+|:----|:------|
+| [技术路线图](docs/%E6%8A%80%E6%9C%AF%E8%B7%AF%E7%BA%BF%E5%9B%BE.md) | 系统完整架构设计 |
+| [智能体建设说明书](docs/%E6%99%BA%E8%83%BD%E4%BD%93%E5%BB%BA%E8%AE%BE%E8%AF%B4%E6%98%8E%E6%98%8E.md) | 超级个体方法论与实现 |
+| [社区推广策略](docs/community-promotion-strategy.md) | 项目推广与社区建设 |

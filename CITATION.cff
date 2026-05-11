@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+title: "Synthos: Autonomous Academic Research Cognitive Operating System"
+message: "If you use Synthos in your research, please cite it."
+type: software
+authors:
+  - family-names: "Yang"
+    given-names: "Xiaokai"
+identifiers:
+  - type: url
+    value: "https://github.com/yakeworld/Synthos"
+repository-code: "https://github.com/yakeworld/Synthos"
+license: MIT
+version: "4.2.0"
+date-released: 2026-05-12
+keywords:
+  - "ai-agent"
+  - "cognitive-architecture"
+  - "scientific-research"
+  - "self-evolving"
+  - "multi-agent"
