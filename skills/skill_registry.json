@@ -43,24 +43,20 @@
   },
   "hypothesis-generation": {
     "name": "hypothesis-generation",
-    "atom": 4,
-    "version": "1.0.0",
+    "atom": 10,
+    "version": "0.1.0",
     "status": "active",
+    "stability": "unstable",
     "license": "MIT",
-    "created": "2026-05-09",
-    "description": "Generate testable research hypotheses based on literature analysis. Evaluates novelty,合理性 (reasonableness), and testability of each hypothesis. Returns structured hypotheses with reasoning chains. Use when the user asks to propose research ideas, generate hypotheses, brainstorm research directions, or identify novel approaches in a specific field.",
+    "created": "2026-05-12",
+    "description": "科学假设生成（HYP）：形式化可检验假说、竞争假说、NSFC问题树",
     "directory": "hypothesis-generation",
     "file_path": "/media/yakeworld/sda2/Synthos/skills/hypothesis-generation/SKILL.md",
     "allowed_tools": [
-      "delegate_task",
       "Read",
-      "Write",
-      "Execute"
+      "Write"
     ],
-    "file_size": 2005,
-    "updated": "2026-05-09T11:39:20.482083+00:00",
-    "implementation": "core/atoms/hypothesis-generation.py",
-    "pipeline_integrated": true
+    "file_size": 7309
   },
   "knowledge-acquisition": {
     "name": "knowledge-acquisition",
@@ -143,5 +139,22 @@
     "updated": "2026-05-09T11:39:20.482083+00:00",
     "implementation": "core/atoms/viewpoint-verification.py",
     "pipeline_integrated": true
+  },
+  "gap-discovery": {
+    "name": "gap-discovery",
+    "atom": 9,
+    "version": "0.1.0",
+    "status": "active",
+    "stability": "unstable",
+    "license": "MIT",
+    "created": "2026-05-12",
+    "description": "研究空白发现（GAP）：跨文献矛盾检测、方法论缺口识别",
+    "directory": "gap-discovery",
+    "file_path": "/media/yakeworld/sda2/Synthos/skills/gap-discovery/SKILL.md",
+    "allowed_tools": [
+      "Read",
+      "Write"
+    ],
+    "file_size": 5443
   }
 }
