@@ -74,16 +74,25 @@ Core principle: **Constitution → Architecture → Schema → Implementation**,
          ┌────────────────────┼────────────────────┐
          ▼                    ▼                    ▼
  ┌───────────────┐  ┌────────────────┐  ┌────────────────┐
- │  ACQ          │  │  COD           │  │  ASC           │
- │  Acquisition  │  │  Coding        │  │  Argumentation │
- │  S2/OpenAlex  │  │  Executable    │  │  Structured    │
- │  bioRxiv      │  │  Thought       │  │  Reasoning     │
+ │  ACQ          │  │  GAP           │  │  HYP           │
+ │  Acquisition  │  │  Gap Discovery │  │  Hypothesis    │🆕
+ │  S2/OpenAlex  │  │  Contradiction │  │  Formalizable  │🆕
+ │  bioRxiv      │  │  Gap Analysis  │  │  Falsifiable   │
+ └───────┬───────┘  └────────────────┘  └───────┬────────┘
+         │                                       │
+         └──────────────────┬────────────────────┘
+                            ▼
+ ┌───────────────┐  ┌────────────────┐  ┌────────────────┐
+ │  COD          │  │  ASC           │  │  EXT           │
+ │  Coding       │  │  Argumentation │  │  External      │
+ │  Executable   │  │  Structured    │  │  Absorb from   │
+ │  Thought      │  │  Reasoning     │  │  OSS Projects  │
  └───────────────┘  └────────────────┘  └────────────────┘
  ┌───────────────┐  ┌────────────────┐  ┌────────────────┐
- │  EXT          │  │  EVA           │  │  AVA           │
- │  External     │  │  Evaluation    │  │  Absorption    │
- │  Absorb from  │  │  7-dim Score   │  │  Experience →  │
- │  OSS Projects │  │  System        │  │  Skill Encoding│
+ │  EVA          │  │  AVA           │  │                │
+ │  Evaluation   │  │  Absorption    │  │                │
+ │  7-dim Score  │  │  Experience →  │  │                │
+ │  System       │  │  Skill Encoding│  │                │
  └───────────────┘  └────────────────┘  └────────────────┘
                               │
                      ┌────────┴────────┐
@@ -100,6 +109,8 @@ Core principle: **Constitution → Architecture → Schema → Implementation**,
 | Atom | Name | Function | Status |
 |:-----|:-----|:---------|:-------|
 | **ACQ** | Knowledge Acquisition | Search Semantic Scholar, OpenAlex, bioRxiv, PubMed | ✅ v4.2 |
+| **GAP** | Gap Discovery | Cross-literature contradiction detection, methodology gap analysis | 🆕 v4.3 |
+| **HYP** | Hypothesis Generation | Formal falsifiable hypothesis generation, competing hypothesis, NSFC tree | 🆕 v4.3 |
 | **COD** | Peer Coding | Transform cognitive needs into executable code | ✅ v4.2 |
 | **ASC** | Argumentation & Expression | Structured reasoning, paper framework generation | ✅ v4.2 |
 | **EXT** | External Absorption | Absorb quality patterns from open-source projects | ✅ v4.2 |
