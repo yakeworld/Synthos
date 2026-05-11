@@ -1,5 +1,5 @@
 {
-  "version": "3.1",
+  "version": "3.2",
   "created": "2026-05-09T23:50:00",
   "description": "Synthos技能树 - 6认知原子架构",
   "architecture": {
@@ -54,7 +54,7 @@
         "knowledge-extraction",
         "association-discovery"
       ],
-      "implementation": "core/atoms/dependencies.py",
+      "implementation": "agent_native_skill",
       "tested": true
     }
   },
@@ -89,7 +89,7 @@
           "hypothesis-generation"
         ]
       },
-      "implementation": "core/atoms/knowledge-extraction.py",
+      "implementation": "agent_native_skill",
       "tested": true
     },
     "association-discovery": {
@@ -104,7 +104,7 @@
         "Execute"
       ],
       "file_size": 1980,
-      "version": "1.0.0",
+      "version": "1.1.0",
       "status": "active",
       "level": 3,
       "type": "cognitive_atom",
@@ -120,7 +120,7 @@
           "hypothesis-generation"
         ]
       },
-      "implementation": "core/atoms/association-discovery.py",
+      "implementation": "agent_native_skill",
       "tested": true
     }
   },
@@ -155,7 +155,7 @@
           "viewpoint-verification"
         ]
       },
-      "implementation": "core/atoms/hypothesis-generation.py",
+      "implementation": "agent_native_skill",
       "tested": true
     }
   },
@@ -185,7 +185,7 @@
         ],
         "downstream": []
       },
-      "implementation": "core/atoms/argument-expression.py",
+      "implementation": "agent_native_skill",
       "tested": true
     },
     "viewpoint-verification": {
@@ -213,7 +213,7 @@
         ],
         "downstream": []
       },
-      "implementation": "core/atoms/viewpoint-verification.py",
+      "implementation": "agent_native_skill",
       "tested": true
     }
   },
@@ -292,7 +292,7 @@
       "result": "success"
     }
   },
-  "updated": "2026-05-09T11:39:20.482083+00:00",
+  "updated": "2026-05-12T06:55:00Z",
   "implementation_status": "all_atoms_implemented",
   "gap_discovery": {
     "name": "GAP - 研究空白发现",
