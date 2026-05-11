@@ -1,0 +1,55 @@
+{
+  "knowledge_items": [
+    {
+      "id": "10.1016/j.jalz.2022.06.001",
+      "title": "Blood-Based Biomarkers for Early Alzheimer's Disease Detection: A Cross-Sectional Study of Plasma pTau217 and NfL",
+      "key_findings": [
+        "Plasma pTau217 shows 82% accuracy in distinguishing early Alzheimer's from healthy controls (n=120)",
+        "Neurofilament light (NfL) levels correlate with cognitive decline trajectory over 12 months",
+        "Single blood biomarker panel achieves AUC of 0.86 for amyloid PET positivity prediction"
+      ],
+      "key_themes": ["Alzheimer's disease", "blood biomarkers", "pTau217", "NfL", "early detection"],
+      "methodology": "cross_sectional_comparative",
+      "methods_detail": "Cross-sectional plasma biomarker analysis with amyloid PET validation, n=120 (60 early AD, 60 healthy controls)",
+      "domain": "neurology",
+      "sample_size": 120,
+      "year": 2022,
+      "evidence_level": "cross_sectional",
+      "limitations": ["Cross-sectional design limits causal inference", "Single-cohort without replication", "Moderate sample size"]
+    },
+    {
+      "id": "10.1038/s41591-023-02544-x",
+      "title": "Multi-Modal Biomarker Fusion with Machine Learning for Alzheimer's Disease Classification",
+      "key_findings": [
+        "Multi-modal fusion of plasma biomarkers, MRI volumetrics, and CSF measures achieves AUC of 0.94 for AD classification (n=500)",
+        "Machine learning integration improves diagnostic accuracy by 8–12% over any single biomarker modality",
+        "Plasma pTau217 + hippocampal volume + cognitive scores form the most predictive feature set"
+      ],
+      "key_themes": ["Alzheimer's disease", "multi-modal biomarkers", "machine learning", "plasma", "MRI", "CSF"],
+      "methodology": "cross_sectional_comparative",
+      "methods_detail": "Multi-modal biomarker fusion using gradient-boosted trees and deep learning, validated on 500 subjects from ADNI and independent cohort",
+      "domain": "neurology",
+      "sample_size": 500,
+      "year": 2023,
+      "evidence_level": "cross_sectional",
+      "limitations": ["Retrospective cohort analysis", "High computational complexity limits clinical deployment", "Cohort enriched for typical AD, may not generalize to atypical variants"]
+    },
+    {
+      "id": "10.1001/jama.2024.0210",
+      "title": "Blood and Imaging Biomarkers for Alzheimer's Disease: A Systematic Review and Meta-Analysis of 15 Prospective Studies",
+      "key_findings": [
+        "Pooled sensitivity of plasma pTau217 for AD diagnosis across 15 studies is 87% (95% CI: 83–91%)",
+        "Combined blood + imaging biomarker panel achieves significantly higher diagnostic accuracy (AUC=0.93) than blood-only (AUC=0.84, p<0.001)",
+        "Heterogeneity in biomarker assay protocols remains a major barrier to clinical implementation"
+      ],
+      "key_themes": ["Alzheimer's disease", "meta-analysis", "blood biomarkers", "imaging biomarkers", "pTau217", "diagnostic accuracy"],
+      "methodology": "systematic_review_meta_analysis",
+      "methods_detail": "Systematic review with random-effects meta-analysis of 15 prospective studies (total n=4,280) comparing blood and imaging biomarkers for AD diagnosis",
+      "domain": "neurology",
+      "sample_size": 4280,
+      "year": 2024,
+      "evidence_level": "meta_analysis",
+      "limitations": ["High between-study heterogeneity in assay protocols", "Publication bias may inflate pooled sensitivity estimates", "Limited geographic diversity among included studies"]
+    }
+  ]
+}

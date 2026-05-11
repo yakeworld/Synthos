@@ -1,0 +1,147 @@
+{
+  "argument-expression": {
+    "name": "argument-expression",
+    "atom": 5,
+    "version": "1.0.0",
+    "status": "active",
+    "license": "MIT",
+    "created": "2026-05-09",
+    "description": "\"Transform hypotheses into structured academic arguments: paper sections, evidence chains, and literature support. Writes content in academic style with proper citations. Use when the user asks to write a research paper section, draft an argument, create an academic outline, or write content for a paper, thesis, or proposal.\"",
+    "directory": "argument-expression",
+    "file_path": "/media/yakeworld/sda2/Synthos/skills/argument-expression/SKILL.md",
+    "allowed_tools": [
+      "delegate_task",
+      "Read",
+      "Write",
+      "Execute"
+    ],
+    "file_size": 1935,
+    "updated": "2026-05-09T11:39:20.482083+00:00",
+    "implementation": "core/atoms/argument-expression.py",
+    "pipeline_integrated": true
+  },
+  "association-discovery": {
+    "name": "association-discovery",
+    "atom": 3,
+    "version": "1.0.0",
+    "status": "active",
+    "license": "MIT",
+    "created": "2026-05-09",
+    "description": "\"Identify relationships between knowledge items: contradictions, supplements, evolution, and research gaps. Builds a knowledge graph and identifies research空白 (gaps). Use when the user asks to compare papers, find connections between studies, identify research trends, discover research gaps, or build a knowledge map from academic papers.\"",
+    "directory": "association-discovery",
+    "file_path": "/media/yakeworld/sda2/Synthos/skills/association-discovery/SKILL.md",
+    "allowed_tools": [
+      "delegate_task",
+      "Read",
+      "Write",
+      "Execute"
+    ],
+    "file_size": 1980,
+    "updated": "2026-05-09T11:39:20.482083+00:00",
+    "implementation": "core/atoms/association-discovery.py",
+    "pipeline_integrated": true
+  },
+  "hypothesis-generation": {
+    "name": "hypothesis-generation",
+    "atom": 4,
+    "version": "1.0.0",
+    "status": "active",
+    "license": "MIT",
+    "created": "2026-05-09",
+    "description": "Generate testable research hypotheses based on literature analysis. Evaluates novelty,合理性 (reasonableness), and testability of each hypothesis. Returns structured hypotheses with reasoning chains. Use when the user asks to propose research ideas, generate hypotheses, brainstorm research directions, or identify novel approaches in a specific field.",
+    "directory": "hypothesis-generation",
+    "file_path": "/media/yakeworld/sda2/Synthos/skills/hypothesis-generation/SKILL.md",
+    "allowed_tools": [
+      "delegate_task",
+      "Read",
+      "Write",
+      "Execute"
+    ],
+    "file_size": 2005,
+    "updated": "2026-05-09T11:39:20.482083+00:00",
+    "implementation": "core/atoms/hypothesis-generation.py",
+    "pipeline_integrated": true
+  },
+  "knowledge-acquisition": {
+    "name": "knowledge-acquisition",
+    "atom": 1,
+    "version": "1.0.0",
+    "status": "active",
+    "license": "MIT",
+    "created": "2026-05-09",
+    "description": "Search and retrieve academic papers from multiple sources (Semantic Scholar, PubMed, Crossref, OpenAlex, arXiv). Returns paper metadata, abstracts, and PDF files. Use when the user asks to find, search, or retrieve academic papers, literature, references, or research papers on any topic. Also use when the user mentions keywords like 'literature review', 'paper search', 'academic references', or 'find papers about'.",
+    "directory": "knowledge-acquisition",
+    "file_path": "/media/yakeworld/sda2/Synthos/skills/knowledge-acquisition/SKILL.md",
+    "allowed_tools": [
+      "delegate_task",
+      "Read",
+      "Write",
+      "Execute"
+    ],
+    "file_size": 2191,
+    "updated": "2026-05-09T11:39:20.482083+00:00",
+    "implementation": "core/atoms/knowledge-acquisition.py",
+    "pipeline_integrated": true
+  },
+  "knowledge-extraction": {
+    "name": "knowledge-extraction",
+    "atom": 2,
+    "version": "1.0.0",
+    "status": "active",
+    "license": "MIT",
+    "created": "2026-05-09",
+    "description": "\"Extract structured information from academic paper PDFs: methodology, findings, datasets, statistical results, limitations. Returns structured JSON with field-level extraction and confidence scores. Use when the user asks to read, analyze, or extract information from a paper PDF, or mentions extracting methods, results, data, or conclusions from research papers.\"",
+    "directory": "knowledge-extraction",
+    "file_path": "/media/yakeworld/sda2/Synthos/skills/knowledge-extraction/SKILL.md",
+    "allowed_tools": [
+      "delegate_task",
+      "Read",
+      "Write",
+      "Execute"
+    ],
+    "file_size": 1959,
+    "updated": "2026-05-09T11:39:20.482083+00:00",
+    "implementation": "core/atoms/knowledge-extraction.py",
+    "pipeline_integrated": true
+  },
+  "task-router": {
+    "name": "task-router",
+    "atom": 0,
+    "version": "1.0.0",
+    "status": "active",
+    "license": "MIT",
+    "created": "2026-05-09",
+    "description": "Route user tasks to the shortest chain of cognitive atoms. Determines task complexity (simple/medium/complex/full) and outputs the minimal atom sequence. Use when starting any research task to determine which atoms are needed and skip unnecessary ones.",
+    "directory": "task-router",
+    "file_path": "/media/yakeworld/sda2/Synthos/skills/task-router/SKILL.md",
+    "allowed_tools": [
+      "delegate_task",
+      "Read"
+    ],
+    "file_size": 2171,
+    "updated": "2026-05-09T11:39:20.482083+00:00",
+    "implementation": "core/atoms/atom0_task_router.py",
+    "pipeline_integrated": true
+  },
+  "viewpoint-verification": {
+    "name": "viewpoint-verification",
+    "atom": 6,
+    "version": "1.0.0",
+    "status": "active",
+    "license": "MIT",
+    "created": "2026-05-09",
+    "description": "\"Multi-angle verification of hypotheses and arguments: counterarguments, falsification tests, robustness checks. Calculates confidence scores and identifies weaknesses. Use when the user asks to validate a hypothesis, find counterarguments, test a claim, check for bias, evaluate argument strength, or perform a literature-based sanity check on a research idea.\"",
+    "directory": "viewpoint-verification",
+    "file_path": "/media/yakeworld/sda2/Synthos/skills/viewpoint-verification/SKILL.md",
+    "allowed_tools": [
+      "delegate_task",
+      "Read",
+      "Write",
+      "Execute"
+    ],
+    "file_size": 1983,
+    "updated": "2026-05-09T11:39:20.482083+00:00",
+    "implementation": "core/atoms/viewpoint-verification.py",
+    "pipeline_integrated": true
+  }
+}

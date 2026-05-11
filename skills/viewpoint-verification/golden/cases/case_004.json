@@ -1,0 +1,16 @@
+{
+  "hypothesis": {
+    "id": "hyp_001",
+    "text": "Social media use causes adolescent anxiety."
+  },
+  "argument": {
+    "text": "There is growing evidence that social media use is associated with increased anxiety in adolescents. Studies have found that adolescents who spend more than 3 hours per day on social media report higher anxiety scores. However, it is important to note that correlation does not imply causation—adolescents who are already anxious may be more likely to use social media as a coping mechanism. Nevertheless, the evidence suggests that social media platforms are designed to be addictive and exploit attention, and this is clearly causing an epidemic of anxiety among young people. In fact, some studies show that reducing social media use leads to decreased anxiety, but these findings could also be explained by the fact that less anxious individuals find it easier to reduce their social media use.",
+    "supporting_evidence": [
+      "Primack, B. A., et al. (2021). Social media use and perceived social isolation among young adults. American Journal of Preventive Medicine.",
+      "Twenge, J. M. (2020). Increases in depression and anxiety among adolescents. Journal of Abnormal Psychology."
+    ]
+  },
+  "context": {
+    "domain": "developmental psychology and social media research"
+  }
+}

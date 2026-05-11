@@ -1,0 +1,12 @@
+{
+  "raw_papers": [
+    {
+      "title": "AI-based eye tracking technology for screening ADHD symptoms in children",
+      "doi": "10.3389/fpsyt.2023.1260031",
+      "abstract": "OBJECTIVE: To explore the potential of using artificial intelligence (AI)-based eye tracking technology on a tablet for screening Attention-deficit/hyperactivity disorder (ADHD) symptoms in children. METHODS: We recruited 112 children diagnosed with ADHD and 325 typically developing children. We designed a data-driven end-to-end convolutional neural network appearance-based model to predict eye gaze. The participants completed the eye tracking task on a tablet, which consisted of a simple fixation task as well as 14 prosaccade and 14 antisaccade trials. RESULTS: Two-way MANOVA analyses demonstrated that diagnosis and age had significant effects on performance. CONCLUSION: Our AI-based eye tracking technology implemented on a tablet could reliably discriminate eye movements of the TD group and the ADHD group, providing a potential solution for ADHD screening outside of clinical settings.",
+      "year": 2023,
+      "authors": ["Chen X", "Wang S", "Yang X"],
+      "source": "pubmed"
+    }
+  ]
+}

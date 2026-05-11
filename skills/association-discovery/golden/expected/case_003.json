@@ -1,0 +1,28 @@
+{
+  "associations": [],
+  "research_gaps": [
+    {
+      "type": "domain_gap",
+      "description": "The ADHD eye-tracking domain (pediatric psychiatry), stroke neuroimaging domain (neurology), and depression pharmacogenetics domain (psychiatry) have negligible thematic overlap. No cross-domain associations exist among these three knowledge items.",
+      "confidence": 0.95,
+      "evidence": "Jaccard similarity of key_themes between any two items is 0.0. ADHD/eye-tracking, stroke/MRI, and depression/pharmacogenetics share no overlapping themes or methodologies.",
+      "priority": "medium"
+    }
+  ],
+  "knowledge_graph": {
+    "nodes": [
+      {"id": "10.1007/s10802-023-01064-x", "label": "Eye Tracking CPT for ADHD (2023)", "year": 2023, "type": "paper", "domain": "pediatric_psychiatry"},
+      {"id": "10.1161/STROKEAHA.2023.044611", "label": "Neuroimaging Post-Stroke Recovery (2023)", "year": 2023, "type": "paper", "domain": "neurology"},
+      {"id": "10.1001/jamapsychiatry.2023.3052", "label": "Pharmacogenetic SSRI Response MDD (2023)", "year": 2023, "type": "paper", "domain": "psychiatry"}
+    ],
+    "edges": [],
+    "statistics": {
+      "total_nodes": 3,
+      "total_edges": 0,
+      "contradictions": 0,
+      "supplements": 0,
+      "evolutions": 0,
+      "gaps": 1
+    }
+  }
+}

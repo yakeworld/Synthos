@@ -1,0 +1,33 @@
+{
+  "verdict": "requires_revision",
+  "confidence_score": 0.25,
+  "counterarguments": [
+    {
+      "type": "direct_contradiction",
+      "strength": 0.80,
+      "content": "The argument explicitly acknowledges that 'correlation does not imply causation' and that reverse causation is plausible (anxious adolescents use social media more), yet simultaneously asserts that social media 'is clearly causing an epidemic of anxiety.' This is a direct internal contradiction between the acknowledged caveat and the definitive causal claim."
+    },
+    {
+      "type": "alternative_explanation",
+      "strength": 0.60,
+      "content": "The argument mentions that intervention studies show reduced social media use leads to decreased anxiety but immediately undermines this by noting the finding could be explained by pre-existing anxiety levels affecting the ability to reduce use. This undercuts the evidence it purports to present."
+    },
+    {
+      "type": "evidence_gap",
+      "strength": 0.55,
+      "content": "No specific causal mechanisms are proposed or tested. The argument conflates platform design features (addictive design) with population-level mental health outcomes without specifying a causal pathway."
+    }
+  ],
+  "falsification_conditions": [
+    "If the temporal relationship is clarified such that baseline social media use does not predict future anxiety after controlling for baseline anxiety, the causal claim is falsified.",
+    "If an RCT of social media reduction finds no effect on anxiety after accounting for expectation effects and social desirability bias, the claim is falsified.",
+    "If genetic and family-confounding studies show that the association is fully explained by shared environmental or genetic factors, the causal claim is falsified."
+  ],
+  "weaknesses": [
+    "INTERNAL CONTRADICTION: The argument simultaneously claims causation ('clearly causing an epidemic') and acknowledges the correlation ≠ causation problem, directly undermining its own thesis.",
+    "INTERNAL CONTRADICTION: The argument cites intervention evidence (reducing use reduces anxiety) and then immediately provides a reason why this evidence is invalid (reverse causation), making the argument self-defeating.",
+    "The argument fails to define 'social media use' or 'anxiety' operationally, making the hypothesis unfalsifiable in its current form.",
+    "No consideration of dose-response, platform-specific effects, or moderating variables (e.g., passive vs. active use, baseline mental health status).",
+    "The emotional tone ('clearly causing') is inconsistent with the scientific caveats acknowledged in the same text."
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "complexity": "simple",
+  "chain": ["knowledge-acquisition"],
+  "explanation": "The query 'find papers about ADHD eye-tracking' contains explicit search keywords 'find papers' and a clear topic ('ADHD eye-tracking'), indicating a straightforward knowledge acquisition task. No analysis, synthesis, or hypothesis evaluation is requested."
+}

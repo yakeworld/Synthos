@@ -1,0 +1,5 @@
+{
+  "complexity": "full",
+  "chain": ["1", "2", "3", "4", "5", "6"],
+  "explanation": "The query '评估我这个假设的鲁棒性' is in Chinese and requests robustness evaluation of a hypothesis ('评估假设的鲁棒性'), which requires the full pipeline: knowledge acquisition (1), argument expression (2), viewpoint verification (3), debate simulation (4), editing (5), and evaluation (6) atoms to comprehensively assess and validate the hypothesis."
+}

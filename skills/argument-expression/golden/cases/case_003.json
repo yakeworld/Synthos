@@ -1,0 +1,47 @@
+{
+  "hypotheses": [
+    {
+      "id": "hyp_001",
+      "text": "Increased screen time during early childhood is associated with elevated ADHD symptom scores at age 8, after controlling for socioeconomic status and parental education.",
+      "novelty_score": 0.6,
+      "feasibility_score": 0.8,
+      "testability": "testable",
+      "rationale": "Multiple longitudinal cohort studies have examined this association but findings remain inconsistent due to differences in measurement and control variables."
+    },
+    {
+      "id": "hyp_002",
+      "text": "The association between screen time and ADHD symptoms is partially mediated by reduced sleep duration and quality.",
+      "novelty_score": 0.75,
+      "feasibility_score": 0.7,
+      "testability": "testable",
+      "rationale": "Sleep disruption is a known consequence of excessive screen exposure and is independently linked to attention problems, yet formal mediation analyses are scarce."
+    }
+  ],
+  "raw_papers": [
+    {
+      "id": "10.1001/jamapediatrics.2019.2856",
+      "title": "Association of screen time with attention-deficit/hyperactivity disorder symptoms in children: A longitudinal cohort study",
+      "authors": ["Madigan, S.", "Browne, D.", "Racine, N.", "Mori, C.", "Tough, S."],
+      "year": 2019,
+      "journal": "JAMA Pediatrics",
+      "abstract": "A prospective cohort study of 2,441 children followed from ages 3 to 5. Higher screen time at age 3 was associated with greater ADHD symptom scores at age 5 (beta = 0.13, 95% CI: 0.07 to 0.19), after adjusting for confounders."
+    },
+    {
+      "id": "10.1016/j.jsr.2020.08.004",
+      "title": "Screen time and sleep problems in school-aged children: A systematic review and dose-response meta-analysis",
+      "authors": ["Li, C.", "Cheng, G.", "Sha, T.", "Cheng, W.", "Yan, Y."],
+      "year": 2020,
+      "journal": "Journal of Sleep Research",
+      "abstract": "A meta-analysis of 32 studies found a significant dose-response relationship between daily screen time and sleep problems (OR = 1.32 per additional hour), with stronger effects for interactive screen use."
+    },
+    {
+      "id": "10.1016/j.bandc.2021.105726",
+      "title": "Sleep duration mediates the relationship between screen time and attention problems in early adolescence",
+      "authors": ["Guerrero, M. D.", "Barnes, J. D.", "Chaput, J. P.", "Tremblay, M. S."],
+      "year": 2021,
+      "journal": "Brain and Cognition",
+      "abstract": "Cross-sectional analysis of 1,876 adolescents aged 11–14. Screen time was associated with attention problems (beta = 0.09, p < 0.01), and this relationship was partially mediated by sleep duration (indirect effect = 0.03, p < 0.05)."
+    }
+  ],
+  "structure": "full_paper"
+}

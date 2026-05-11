@@ -1,0 +1,16 @@
+{
+  "hypothesis": {
+    "id": "hyp_001",
+    "text": "ADHD eye-tracking screening can replace clinical interviews for diagnosing attention-deficit/hyperactivity disorder in children."
+  },
+  "argument": {
+    "text": "Eye-tracking technology provides objective, quantitative measures of attentional function that are free from rater bias. Studies have shown that machine learning classifiers based on eye-tracking features can achieve 80-85% accuracy in discriminating ADHD from control participants. This accuracy is comparable to the inter-rater reliability of structured clinical interviews (kappa = 0.70-0.80), suggesting that eye-tracking screening could serve as a standalone diagnostic tool, potentially replacing the need for time-consuming and resource-intensive clinical interviews.",
+    "supporting_evidence": [
+      "Deng, S., Zhang, Y., & Cheng, H. (2020). A machine learning approach for ADHD classification using eye-tracking data. Scientific Reports, 10, 21849.",
+      "Munoz, D. P., Armstrong, I. T., & Everling, S. (2023). Oculomotor abnormalities in ADHD: A systematic review and meta-analysis. Biological Psychiatry."
+    ]
+  },
+  "context": {
+    "domain": "clinical psychology and psychiatry"
+  }
+}

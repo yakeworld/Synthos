@@ -1,0 +1,40 @@
+{
+  "knowledge_items": [
+    {
+      "id": "10.3389/fpsyt.2023.1260031",
+      "title": "AI-Extracted Eye-Tracking Features for ADHD Screening: A Tablet-Based Approach",
+      "key_findings": [
+        "AI-extracted eye-tracking features achieve 89% sensitivity and 84% specificity for ADHD screening in children aged 6–14",
+        "Tablet-based eye-tracking paradigm successfully distinguishes ADHD from typically developing controls",
+        "Saccadic latency and fixation duration are the most discriminative biomarkers",
+        "Machine learning classifier outperforms traditional rating scales (AUC = 0.92 vs 0.74)"
+      ],
+      "key_themes": ["ADHD", "eye-tracking", "AI screening", "pediatric", "machine learning", "biomarkers"],
+      "methodology": "cross_sectional_comparative",
+      "methods_detail": "Tablet-based eye-tracking with ML classification (random forest + SVM) on 437 children (227 ADHD, 210 controls)",
+      "domain": "pediatric_psychiatry",
+      "sample_size": 437,
+      "year": 2023,
+      "evidence_level": "cross_sectional",
+      "limitations": ["Single-center study", "No independent validation cohort", "Potential overfitting without external validation"]
+    },
+    {
+      "id": "10.3390/brainsci13050703",
+      "title": "Unraveling ADHD Through Eye Tracking: Pupil Metrics Do Not Outperform Traditional Diagnostic Methods",
+      "key_findings": [
+        "Pupil diameter metrics during cognitive tasks show no significant group differences between ADHD and controls",
+        "Eye-tracking based classification accuracy (57% sensitivity) does not exceed that of parent-reported rating scales (61% sensitivity)",
+        "Fixation-based metrics show moderate discriminability but high inter-subject variability limits clinical utility",
+        "Traditional Conners Rating Scales remain more practical and equally accurate for ADHD screening"
+      ],
+      "key_themes": ["ADHD", "eye-tracking", "pupil metrics", "diagnostic accuracy", "rating scales", "pediatric"],
+      "methodology": "cross_sectional_comparative",
+      "methods_detail": "Laboratory-based eye-tracking with pupilometry and fixation analysis, compared against Conners Parent Rating Scales, n=186",
+      "domain": "pediatric_psychiatry",
+      "sample_size": 186,
+      "year": 2023,
+      "evidence_level": "cross_sectional",
+      "limitations": ["Smaller sample size than comparable studies", "Laboratory setting may not reflect real-world screening conditions", "Single metric focus without multi-modal integration"]
+    }
+  ]
+}

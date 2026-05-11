@@ -1,0 +1,403 @@
+{
+  "architecture": "6 Cognitive Atoms - Strict DAG",
+  "total_atoms": 6,
+  "topological_order": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "dag_structure": {
+    "1": {
+      "layer": 1,
+      "name": "知识获取",
+      "next": [
+        2,
+        3
+      ]
+    },
+    "2": {
+      "layer": 2,
+      "name": "知识提取",
+      "next": [
+        3
+      ]
+    },
+    "3": {
+      "layer": 3,
+      "name": "关联发现",
+      "next": [
+        4
+      ]
+    },
+    "4": {
+      "layer": 4,
+      "name": "观点生成",
+      "next": [
+        5,
+        6
+      ]
+    },
+    "5": {
+      "layer": 5,
+      "name": "论证表达",
+      "next": []
+    },
+    "6": {
+      "layer": 5,
+      "name": "观点验证",
+      "next": []
+    }
+  },
+  "atom_details": {
+    "1": {
+      "name": "知识获取/KnowledgeAcquisition",
+      "chinese": "知识获取",
+      "english": "KnowledgeAcquisition",
+      "depends_on": [],
+      "used_by": [
+        "知识提取/KnowledgeExtraction",
+        "关联发现/AssociationDiscovery"
+      ],
+      "synthos_dimensions": [
+        "第一性原理",
+        "系统思维"
+      ],
+      "execution": {
+        "module": "core/atoms/atom1_*.py",
+        "class": "Atom1*",
+        "status": "implemented",
+        "version": "1.0.0",
+        "updated": "2026-05-09T11:39:20.482083+00:00"
+      },
+      "trust_score": 0.85,
+      "usage_count": 4
+    },
+    "2": {
+      "name": "知识提取/KnowledgeExtraction",
+      "chinese": "知识提取",
+      "english": "KnowledgeExtraction",
+      "depends_on": [
+        "知识获取/KnowledgeAcquisition"
+      ],
+      "used_by": [
+        "关联发现/AssociationDiscovery",
+        "观点生成/HypothesisGeneration"
+      ],
+      "synthos_dimensions": [
+        "第一性原理",
+        "奥卡姆剃刀"
+      ],
+      "execution": {
+        "module": "core/atoms/atom2_*.py",
+        "class": "Atom2*",
+        "status": "implemented",
+        "version": "1.0.0",
+        "updated": "2026-05-09T11:39:20.482083+00:00"
+      },
+      "trust_score": 0.8,
+      "usage_count": 3
+    },
+    "3": {
+      "name": "关联发现/AssociationDiscovery",
+      "chinese": "关联发现",
+      "english": "AssociationDiscovery",
+      "depends_on": [
+        "知识提取/KnowledgeExtraction"
+      ],
+      "used_by": [
+        "观点生成/HypothesisGeneration"
+      ],
+      "synthos_dimensions": [
+        "系统思维",
+        "模型依赖实在论"
+      ],
+      "execution": {
+        "module": "core/atoms/atom3_*.py",
+        "class": "Atom3*",
+        "status": "implemented",
+        "version": "1.0.0",
+        "updated": "2026-05-09T11:39:20.482083+00:00"
+      },
+      "trust_score": 0.55,
+      "usage_count": 2
+    },
+    "4": {
+      "name": "观点生成/HypothesisGeneration",
+      "chinese": "观点生成",
+      "english": "HypothesisGeneration",
+      "depends_on": [
+        "关联发现/AssociationDiscovery"
+      ],
+      "used_by": [
+        "论证表达/ArgumentExpression",
+        "观点验证/ViewpointVerification"
+      ],
+      "synthos_dimensions": [
+        "第一性原理",
+        "类比",
+        "贝叶斯思维"
+      ],
+      "execution": {
+        "module": "core/atoms/atom4_*.py",
+        "class": "Atom4*",
+        "status": "implemented",
+        "version": "1.0.0",
+        "updated": "2026-05-09T11:39:20.482083+00:00"
+      },
+      "trust_score": 0.55,
+      "usage_count": 2
+    },
+    "5": {
+      "name": "论证表达/ArgumentExpression",
+      "chinese": "论证表达",
+      "english": "ArgumentExpression",
+      "depends_on": [
+        "观点生成/HypothesisGeneration",
+        "知识获取/KnowledgeAcquisition"
+      ],
+      "used_by": [],
+      "synthos_dimensions": [
+        "系统思维",
+        "第一性原理",
+        "奥卡姆剃刀"
+      ],
+      "execution": {
+        "module": "core/atoms/atom5_*.py",
+        "class": "Atom5*",
+        "status": "implemented",
+        "version": "1.0.0",
+        "updated": "2026-05-09T11:39:20.482083+00:00"
+      },
+      "trust_score": 0.75,
+      "usage_count": 2
+    },
+    "6": {
+      "name": "观点验证/ViewpointVerification",
+      "chinese": "观点验证",
+      "english": "ViewpointVerification",
+      "depends_on": [
+        "观点生成/HypothesisGeneration",
+        "论证表达/ArgumentExpression"
+      ],
+      "used_by": [],
+      "synthos_dimensions": [
+        "证伪主义",
+        "贝叶斯思维",
+        "自由能原理"
+      ],
+      "execution": {
+        "module": "core/atoms/atom6_*.py",
+        "class": "Atom6*",
+        "status": "implemented",
+        "version": "1.0.0",
+        "updated": "2026-05-09T11:39:20.482083+00:00"
+      },
+      "trust_score": 0.75,
+      "usage_count": 2
+    }
+  },
+  "flow_analysis": {
+    "1": {
+      "inputs": [
+        "search_query",
+        "sources: list[str]",
+        "domain",
+        "max_results: int"
+      ],
+      "outputs": [
+        "raw_papers: list[Paper]",
+        "raw_abstracts: list[Abstract]",
+        "pdf_files: list[str]"
+      ],
+      "trust_score": 0.85,
+      "usage_count": 4,
+      "synthos_dims": [
+        "第一性原理",
+        "系统思维"
+      ],
+      "atom_name": "知识获取/KnowledgeAcquisition"
+    },
+    "2": {
+      "inputs": [
+        "pdf_files: list[str]",
+        "extract_fields: list[str]",
+        "depth: str"
+      ],
+      "outputs": [
+        "extracted_knowledge: list[KnowledgeItem]",
+        "field_summary: dict"
+      ],
+      "trust_score": 0.8,
+      "usage_count": 3,
+      "synthos_dims": [
+        "第一性原理",
+        "奥卡姆剃刀"
+      ],
+      "atom_name": "知识提取/KnowledgeExtraction"
+    },
+    "3": {
+      "inputs": [
+        "extracted_knowledge: list[KnowledgeItem]",
+        "knowledge_graph: KG or None"
+      ],
+      "outputs": [
+        "associations: list[Association]",
+        "knowledge_graph: KG",
+        "research_gaps: list[Gap]"
+      ],
+      "trust_score": 0.55,
+      "usage_count": 2,
+      "synthos_dims": [
+        "系统思维",
+        "模型依赖实在论"
+      ],
+      "atom_name": "关联发现/AssociationDiscovery"
+    },
+    "4": {
+      "inputs": [
+        "associations: list[Association]",
+        "research_gaps: list[Gap]",
+        "domain_knowledge: dict"
+      ],
+      "outputs": [
+        "hypotheses: list[Hypothesis]",
+        "rationale: dict",
+        "novelty_score: float"
+      ],
+      "trust_score": 0.55,
+      "usage_count": 2,
+      "synthos_dims": [
+        "第一性原理",
+        "类比",
+        "贝叶斯思维"
+      ],
+      "atom_name": "观点生成/HypothesisGeneration"
+    },
+    "5": {
+      "inputs": [
+        "hypotheses: list[Hypothesis]",
+        "evidence: list[Evidence]",
+        "structure: str"
+      ],
+      "outputs": [
+        "sections: list[Section]",
+        "arguments: list[Argument]",
+        "references: list[Ref]"
+      ],
+      "trust_score": 0.75,
+      "usage_count": 2,
+      "synthos_dims": [
+        "系统思维",
+        "第一性原理",
+        "奥卡姆剃刀"
+      ],
+      "atom_name": "论证表达/ArgumentExpression"
+    },
+    "6": {
+      "inputs": [
+        "hypotheses: list[Hypothesis]",
+        "arguments: list[Argument]",
+        "evidence: list[Evidence]"
+      ],
+      "outputs": [
+        "verification_results: list[Verification]",
+        "weaknesses: list[Weakness]",
+        "confidence_score: float"
+      ],
+      "trust_score": 0.75,
+      "usage_count": 2,
+      "synthos_dims": [
+        "证伪主义",
+        "贝叶斯思维",
+        "自由能原理"
+      ],
+      "atom_name": "观点验证/ViewpointVerification"
+    },
+    "0": {
+      "inputs": [
+        "user_request"
+      ],
+      "outputs": [
+        "complexity",
+        "atom_chain",
+        "skip_reasons"
+      ],
+      "trust_score": 0.9,
+      "usage_count": 3,
+      "synthos_dims": [
+        "奥卡姆剃刀",
+        "系统思维"
+      ],
+      "atom_name": "任务编排/TaskRouter"
+    }
+  },
+  "bottlenecks": [
+    {
+      "atom": "知识获取/KnowledgeAcquisition",
+      "atom_id": 1,
+      "dependency_count": 2
+    },
+    {
+      "atom": "知识提取/KnowledgeExtraction",
+      "atom_id": 2,
+      "dependency_count": 2
+    },
+    {
+      "atom": "观点生成/HypothesisGeneration",
+      "atom_id": 4,
+      "dependency_count": 2
+    },
+    {
+      "atom": "关联发现/AssociationDiscovery",
+      "atom_id": 3,
+      "dependency_count": 1
+    }
+  ],
+  "synthos_coverage": {
+    "第一性原理": [
+      1,
+      2,
+      4,
+      5
+    ],
+    "系统思维": [
+      1,
+      3,
+      5
+    ],
+    "贝叶斯思维": [
+      4,
+      6
+    ],
+    "证伪主义": [
+      6
+    ],
+    "类比": [
+      4
+    ],
+    "奥卡姆剃刀": [
+      2,
+      5
+    ],
+    "模型依赖实在论": [
+      3
+    ],
+    "自由能原理": [
+      6
+    ]
+  },
+  "pipeline": {
+    "entry_point": "run_pipeline.py",
+    "orchestrator": "core/atom_pipeline.py",
+    "status": "operational",
+    "tested_complexities": [
+      "simple",
+      "medium",
+      "full"
+    ],
+    "updated": "2026-05-09T11:39:20.482083+00:00"
+  }
+}

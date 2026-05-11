@@ -1,0 +1,35 @@
+{
+  "hypotheses": [
+    {
+      "id": "hyp_001",
+      "text": "Multi-modal fusion of eye-tracking features (saccadic latency, fixation stability, micro-saccade rate) with behavioral CPT metrics and parent/teacher rating scales will achieve significantly higher diagnostic accuracy for ADHD (AUC ≥ 0.90) compared to any single modality alone, analogous to the demonstrated advantage of multi-modal biomarker fusion in Alzheimer's disease.",
+      "rationale": "Drawing from the cross-domain analogy between Alzheimer's neurology and ADHD psychiatry (assoc_002: evolution from single-modal blood biomarkers to multi-modal ML fusion in AD achieving AUC 0.94), and informed by the unresolved contradiction in ADHD eye-tracking literature (assoc_001: 89% vs 57% sensitivity depending on feature approach), this hypothesis applies the successful multi-modal integration strategy from AD to the ADHD diagnostic challenge. The knowledge gap (gap_001) explicitly identifies that no ADHD study has attempted this approach, despite the analogous data types being available.",
+      "source": "cross_domain_analogy",
+      "source_ref": "assoc_002",
+      "novelty_score": 0.75,
+      "feasibility_score": 0.60,
+      "testability": "testable",
+      "required_n": "n=400 (200 ADHD, 200 controls) to detect a 10% AUC improvement over single-modality baseline at 80% power"
+    },
+    {
+      "id": "hyp_002",
+      "text": "The contradiction between positive and null findings in ADHD eye-tracking screening is partially explained by unmeasured moderators including IQ, medication status, and ADHD subtype (inattentive vs. combined), which have been shown to affect cognitive performance metrics in other psychiatric conditions and could account for up to 30% of between-study variance in classification accuracy.",
+      "rationale": "A first-principles analysis of contradiction assoc_001 suggests that between-study differences in sample characteristics, rather than true differences in eye-tracking signal quality, may drive the divergent findings. This hypothesis systematically identifies measurable confounders that could reconcile the literature, drawing on established principles from psychometrics that test performance varies systematically with cognitive and clinical covariates.",
+      "source": "contradiction",
+      "source_ref": "assoc_001",
+      "novelty_score": 0.62,
+      "feasibility_score": 0.73,
+      "testability": "testable",
+      "required_n": "Meta-regression on 10+ existing datasets; or single study with n=300 stratified by subtype, medication, and IQ"
+    }
+  ],
+  "metadata": {
+    "total_hypotheses": 2,
+    "mean_novelty": 0.685,
+    "mean_feasibility": 0.665,
+    "from_gaps": 0,
+    "from_contradictions": 1,
+    "from_other": 1,
+    "from_cross_domain_analogy": 1
+  }
+}

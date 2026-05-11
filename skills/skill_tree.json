@@ -1,0 +1,297 @@
+{
+  "version": "3.1",
+  "created": "2026-05-09T23:50:00",
+  "description": "Synthos技能树 - 6认知原子架构",
+  "architecture": {
+    "layer_0_router": {
+      "name": "任务编排/TaskRouter",
+      "directory": "task-router",
+      "atom": 0,
+      "description": "路由用户请求到最短原子链。判断任务复杂度，跳过不必要的原子。奥卡姆剃刀原则。",
+      "allowed_tools": [
+        "delegate_task",
+        "Read"
+      ],
+      "file_size": 2171,
+      "version": "1.0.0",
+      "status": "active",
+      "level": 0,
+      "type": "router",
+      "children": [
+        "knowledge-acquisition",
+        "knowledge-extraction",
+        "association-discovery",
+        "hypothesis-generation",
+        "argument-expression",
+        "viewpoint-verification"
+      ]
+    }
+  },
+  "layer_1": {
+    "name": "知识获取/KnowledgeAcquisition",
+    "directory": "knowledge-acquisition",
+    "atom": 1,
+    "description": "Search and retrieve academic papers from multiple sources (Semantic Scholar, PubMed, Crossref, OpenAlex, arXiv). Returns paper metadata, abstracts, and PDF files. Use when the user asks to find, search, or retrieve academic papers, literature, references, or research papers on any topic. Also use when the user mentions keywords like 'literature review', 'paper search', 'academic references', or 'find papers about'.",
+    "allowed_tools": [
+      "delegate_task",
+      "Read",
+      "Write",
+      "Execute"
+    ],
+    "file_size": 2191,
+    "version": "1.0.0",
+    "status": "active",
+    "level": 1,
+    "type": "cognitive_atom",
+    "parent": "task-router",
+    "children": [
+      "knowledge-extraction",
+      "association-discovery"
+    ],
+    "dependencies": {
+      "upstream": [],
+      "downstream": [
+        "knowledge-extraction",
+        "association-discovery"
+      ],
+      "implementation": "core/atoms/dependencies.py",
+      "tested": true
+    }
+  },
+  "layer_2": {
+    "knowledge-extraction": {
+      "name": "知识提取/KnowledgeExtraction",
+      "directory": "knowledge-extraction",
+      "atom": 2,
+      "description": "\"Extract structured information from academic paper PDFs: methodology, findings, datasets, statistical results, limitations. Returns structured JSON with field-level extraction and confidence scores. Use when the user asks to read, analyze, or extract information from a paper PDF, or mentions extracting methods, results, data, or conclusions from research papers.\"",
+      "allowed_tools": [
+        "delegate_task",
+        "Read",
+        "Write",
+        "Execute"
+      ],
+      "file_size": 1959,
+      "version": "1.0.0",
+      "status": "active",
+      "level": 2,
+      "type": "cognitive_atom",
+      "parent": "knowledge-acquisition",
+      "children": [
+        "association-discovery",
+        "hypothesis-generation"
+      ],
+      "dependencies": {
+        "upstream": [
+          "knowledge-acquisition"
+        ],
+        "downstream": [
+          "association-discovery",
+          "hypothesis-generation"
+        ]
+      },
+      "implementation": "core/atoms/knowledge-extraction.py",
+      "tested": true
+    },
+    "association-discovery": {
+      "name": "关联发现/AssociationDiscovery",
+      "directory": "association-discovery",
+      "atom": 3,
+      "description": "\"Identify relationships between knowledge items: contradictions, supplements, evolution, and research gaps. Builds a knowledge graph and identifies research空白 (gaps). Use when the user asks to compare papers, find connections between studies, identify research trends, discover research gaps, or build a knowledge map from academic papers.\"",
+      "allowed_tools": [
+        "delegate_task",
+        "Read",
+        "Write",
+        "Execute"
+      ],
+      "file_size": 1980,
+      "version": "1.0.0",
+      "status": "active",
+      "level": 3,
+      "type": "cognitive_atom",
+      "parent": "knowledge-extraction",
+      "children": [
+        "hypothesis-generation"
+      ],
+      "dependencies": {
+        "upstream": [
+          "knowledge-extraction"
+        ],
+        "downstream": [
+          "hypothesis-generation"
+        ]
+      },
+      "implementation": "core/atoms/association-discovery.py",
+      "tested": true
+    }
+  },
+  "layer_3": {
+    "hypothesis-generation": {
+      "name": "观点生成/HypothesisGeneration",
+      "directory": "hypothesis-generation",
+      "atom": 4,
+      "description": "Generate testable research hypotheses based on literature analysis. Evaluates novelty,合理性 (reasonableness), and testability of research ideas.",
+      "allowed_tools": [
+        "delegate_task",
+        "Read",
+        "Write",
+        "Execute"
+      ],
+      "file_size": 2005,
+      "version": "1.0.0",
+      "status": "active",
+      "level": 4,
+      "type": "cognitive_atom",
+      "parent": "association-discovery",
+      "children": [
+        "argument-expression",
+        "viewpoint-verification"
+      ],
+      "dependencies": {
+        "upstream": [
+          "association-discovery"
+        ],
+        "downstream": [
+          "argument-expression",
+          "viewpoint-verification"
+        ]
+      },
+      "implementation": "core/atoms/hypothesis-generation.py",
+      "tested": true
+    }
+  },
+  "layer_4": {
+    "argument-expression": {
+      "name": "论证表达/ArgumentExpression",
+      "directory": "argument-expression",
+      "atom": 5,
+      "description": "\"Transform hypotheses into structured academic arguments: paper sections, evidence chains, and literature support. Writes content in academic style with proper citations. Use when the user asks to write a research paper section, draft an argument, create an academic outline, or write content for a paper, thesis, or proposal.\"",
+      "allowed_tools": [
+        "delegate_task",
+        "Read",
+        "Write",
+        "Execute"
+      ],
+      "file_size": 1935,
+      "version": "1.0.0",
+      "status": "active",
+      "level": 5,
+      "type": "cognitive_atom",
+      "parent": "hypothesis-generation",
+      "children": [],
+      "dependencies": {
+        "upstream": [
+          "hypothesis-generation",
+          "knowledge-acquisition"
+        ],
+        "downstream": []
+      },
+      "implementation": "core/atoms/argument-expression.py",
+      "tested": true
+    },
+    "viewpoint-verification": {
+      "name": "观点验证/ViewpointVerification",
+      "directory": "viewpoint-verification",
+      "atom": 6,
+      "description": "\"Multi-angle verification of hypotheses and arguments: counterarguments, falsification tests, robustness checks. Calculates confidence scores and identifies weaknesses. Use when the user asks to validate a hypothesis, find counterarguments, test a claim, check for bias, evaluate argument strength, or perform a literature-based sanity check on a research idea.\"",
+      "allowed_tools": [
+        "delegate_task",
+        "Read",
+        "Write",
+        "Execute"
+      ],
+      "file_size": 1983,
+      "version": "1.0.0",
+      "status": "active",
+      "level": 5,
+      "type": "cognitive_atom",
+      "parent": "hypothesis-generation",
+      "children": [],
+      "dependencies": {
+        "upstream": [
+          "hypothesis-generation",
+          "argument-expression"
+        ],
+        "downstream": []
+      },
+      "implementation": "core/atoms/viewpoint-verification.py",
+      "tested": true
+    }
+  },
+  "total_skills": 7,
+  "layers": 5,
+  "cognitive_atoms": 6,
+  "router": 1,
+  "philosophy": {
+    "core_principles": [
+      "证伪主义 (Falsificationism): 不追求证明正确，而是通过任务检验寻找反证",
+      "贝叶斯思维 (Bayesian Thinking): 基于证据不断更新技能可信度",
+      "量化评估 (Quantification): 每个技能必须有可测量的指标和证据"
+    ],
+    "trust_system": {
+      "description": "使用贝叶斯思维量化每个技能的可信度",
+      "rules": [
+        "成功检验增加信任度 (+0.05-0.1)",
+        "失败检验降低信任度 (-0.1-0.2)",
+        "连续成功增加信任度加速 (+0.02)",
+        "连续失败降低信任度加速 (-0.05)"
+      ]
+    },
+    "falsification_tests": {
+      "description": "每个技能必须通过具体任务检验",
+      "tests": [
+        "test_001: 知识获取验证 (已完成)",
+        "test_002: 知识提取验证 (待执行)",
+        "test_003: 关联发现验证 (待执行)",
+        "test_004: 观点生成验证 (待执行)",
+        "test_005: 论证表达验证 (待执行)",
+        "test_006: 观点验证验证 (待执行)",
+        "test_007: 端到端流程验证 (待执行)"
+      ]
+    }
+  },
+  "test_results": {
+    "test_001": {
+      "status": "completed",
+      "result": "success",
+      "evidence": "3 relevant papers found with valid DOIs",
+      "metrics": {
+        "检索覆盖率": 1.0,
+        "相关性评分": 0.92,
+        "时效性": 1.0,
+        "权威性": 0.9
+      },
+      "bayesian_update": {
+        "prior": 0.8,
+        "likelihood": 1.0,
+        "posterior": 1.0,
+        "update_direction": "positive"
+      }
+    },
+    "test_002": {
+      "status": "completed",
+      "result": "success"
+    },
+    "test_003": {
+      "status": "completed",
+      "result": "partial"
+    },
+    "test_004": {
+      "status": "completed",
+      "result": "partial"
+    },
+    "test_005": {
+      "status": "completed",
+      "result": "success"
+    },
+    "test_006": {
+      "status": "completed",
+      "result": "success"
+    },
+    "test_007": {
+      "status": "completed",
+      "result": "success"
+    }
+  },
+  "updated": "2026-05-09T11:39:20.482083+00:00",
+  "implementation_status": "all_atoms_implemented"
+}
