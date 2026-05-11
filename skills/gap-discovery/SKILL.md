@@ -1,8 +1,8 @@
 ---
 name: gap-discovery
-description: "研究空白发现原子（GAP）—— 跨文献矛盾检测、方法论缺口识别、未回答问题结构化提取"
-version: 0.1.0
-stability: unstable
+description: "[⚠️ ABSORBED into association-discovery v1.1.0] 研究空白发现功能已合并至ASC原子。本原子保留为引用参考。"
+version: 0.2.0
+status: absorbed
 trigger: "ACQ完成文献检索后自动调用，或用户手动触发空白扫描"
 constitutional_alignment: [P0, P5]
 dependencies: [ACQ]

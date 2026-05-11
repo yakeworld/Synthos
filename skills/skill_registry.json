@@ -17,7 +17,7 @@
     ],
     "file_size": 1935,
     "updated": "2026-05-09T11:39:20.482083+00:00",
-    "implementation": "core/atoms/argument-expression.py",
+    "implementation": "agent_native_skill",
     "pipeline_integrated": true
   },
   "association-discovery": {
@@ -38,7 +38,7 @@
     ],
     "file_size": 1980,
     "updated": "2026-05-09T11:39:20.482083+00:00",
-    "implementation": "core/atoms/association-discovery.py",
+    "implementation": "agent_native_skill",
     "pipeline_integrated": true
   },
   "hypothesis-generation": {
@@ -76,7 +76,7 @@
     ],
     "file_size": 2191,
     "updated": "2026-05-09T11:39:20.482083+00:00",
-    "implementation": "core/atoms/knowledge-acquisition.py",
+    "implementation": "agent_native_skill",
     "pipeline_integrated": true
   },
   "knowledge-extraction": {
@@ -97,7 +97,7 @@
     ],
     "file_size": 1959,
     "updated": "2026-05-09T11:39:20.482083+00:00",
-    "implementation": "core/atoms/knowledge-extraction.py",
+    "implementation": "agent_native_skill",
     "pipeline_integrated": true
   },
   "task-router": {
@@ -116,7 +116,7 @@
     ],
     "file_size": 2171,
     "updated": "2026-05-09T11:39:20.482083+00:00",
-    "implementation": "core/atoms/atom0_task_router.py",
+    "implementation": "agent_native_skill",
     "pipeline_integrated": true
   },
   "viewpoint-verification": {
@@ -137,24 +137,25 @@
     ],
     "file_size": 1983,
     "updated": "2026-05-09T11:39:20.482083+00:00",
-    "implementation": "core/atoms/viewpoint-verification.py",
+    "implementation": "agent_native_skill",
     "pipeline_integrated": true
   },
   "gap-discovery": {
     "name": "gap-discovery",
     "atom": 9,
-    "version": "0.1.0",
-    "status": "active",
-    "stability": "unstable",
+    "version": "0.2.0",
+    "status": "absorbed",
+    "stability": "stable",
     "license": "MIT",
     "created": "2026-05-12",
-    "description": "研究空白发现（GAP）：跨文献矛盾检测、方法论缺口识别",
+    "description": "[ABSORBED into association-discovery v1.1.0] 研究空白发现功能已合并至ASC原子",
     "directory": "gap-discovery",
     "file_path": "/media/yakeworld/sda2/Synthos/skills/gap-discovery/SKILL.md",
     "allowed_tools": [
       "Read",
       "Write"
     ],
-    "file_size": 5443
+    "file_size": 5443,
+    "absorbed_into": "association-discovery"
   }
 }

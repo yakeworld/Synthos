@@ -4,7 +4,7 @@ description: "Identify relationships between knowledge items: contradictions, su
 license: MIT
 metadata:
   synthos_atom_type: "cognitive"
-  synthos_version: "0.1.0"
+  synthos_version: "1.1.0"
   synthos_skill_md_hash: "14e47ba9d49730ba31dd30c2686814b2fe4de0955e408f0f4abe5c86a4c0fa95"
   synthos_model_version_pin: "deepseek/deepseek-v4-pro@2026-05-10"
   synthos_model_tested_on: "2026-05-10T00:00:00Z"
@@ -61,11 +61,41 @@ allowed-tools: Read Write
    a. 为每个 KnowledgeItem 创建 GraphNode（`type: "paper"`）。
    b. 为每个 Association 创建 GraphEdge（`source → target`，带 type 和 confidence）。
    c. 计算 GraphStats：total_nodes, total_edges, contradictions, supplements, evolutions, gaps。
-4. **识别研究空白**：
+4. **识别研究空白**（吸收自 GAP 结构化分类法 v0.1.0 —— GAP 原子已合并入本原子）：
+   
+   4.1 **矛盾检测**：对每个聚类内部和跨聚类检测4类矛盾：
+   | 矛盾类型 | 检测条件 | 示例 |
+   |:---------|:---------|:-----|
+   | **结论矛盾** | A报告正向结果，B报告负向结果 | 药物A有效 vs 无效 |
+   | **方法矛盾** | 相似方法得出不同结论 | 样本量/人群差异 |
+   | **假设矛盾** | 不同的底层假设导致冲突 | 机制解释不同 |
+   | **时间矛盾** | 早期结论被后期证据推翻 | 2020 vs 2025结论 |
+   
+   4.2 **方法论缺口检测**：检测5类系统性缺口：
+   - **样本缺口（sample_gap）**：所有研究集中在特定人群，缺少其他人群
+   - **技术缺口（tech_gap）**：现有方法无法测量关键变量
+   - **纵向缺口（longitudinal_gap）**：只有横断面研究，缺少纵向追踪
+   - **机制缺口（mechanism_gap）**：观察到现象但机制不明
+   - **验证缺口（validation_gap）**：模型/算法未在独立数据集验证
+   
+   4.3 **未答问题提取**：从文献的"未来工作"、"局限性"部分提取显式和隐式问题：
+   - **显式**：作者明确说"需要进一步研究..."
+   - **隐式**：从局限性推断出的延伸问题
+   
+   4.4 **全局空白检测**：
    a. 检测未配对的知识项（与其他项主题相似度均 < 0.1 的孤立节点）→ 标记为潜在空白。
-   b. 检测主题内部的结构性缺失（如某个 `domain` 只有 observational studies，缺乏 RCT 证据）→ 标记为方法论空白。
+   b. 检测主题内部的结构性缺失（如某个 `domain` 只有 observational studies，缺乏 RCT 证据）。
    c. 检测 `field_summary.identified_contradictions` 和 `knowledge_gaps` 中未解决的矛盾或空白 → 提升优先级。
-   d. 为每个空白分配 `priority`：`critical`（直接阻碍下游假设生成）| `high`（明显缺失）| `medium`（值得注意的缺口）。
+   d. 检测文献中作者声明的"未来工作"方向。
+
+   4.5 **空白评级**（P0-P3 四维评级，吸收自 GAP 原子）：
+   | 维度 | P0 | P1 | P2 | P3 |
+   |:-----|:---|:---|:---|:---|
+   | 重要性 | 影响领域核心范式 | 影响重要子领域 | 有价值但非核心 | 边缘增量 |
+   | 时效性 | 亟需解决 | 1-2年内 | 2-5年 | 长期 |
+   | 可行性 | 现有技术可解 | 需适度努力 | 需重大突破 | 理论尚不成熟 |
+   | 证据基础 | ≥5篇矛盾文献 | 3-4篇 | 1-2篇 | 单篇或推测 |
+   最终优先级 = max(重要性, 时效性) + feasibility modifier。
 5. **构建证据链**：每个 Association 和 ResearchGap 的证据节点引用其来源 KnowledgeItem 的 id。详见 `references/EVIDENCE_SCHEMA.md`。
 6. **输出**：返回 `_ok({"associations": [...], "knowledge_graph": {...}, "research_gaps": [...]})` 信封。
 
@@ -154,7 +184,8 @@ allowed-tools: Read Write
       "description": "No studies on adolescent ADHD (age 13-17) for eye-tracking diagnosis",
       "confidence": 0.75,
       "evidence": "Paper 1 covers children (n=112), Paper 2 covers adults (n=450); adolescent cohort missing",
-      "priority": "high"
+      "priority": "P1",
+      "falsification_condition": "If a study covers age 13-17 ADHD-ET, this gap is closed"
     }
   ]
 }
