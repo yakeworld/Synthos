@@ -1,0 +1,42 @@
+# Synthos .dockerignore — keep the image lean
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Outputs (generated at runtime)
+outputs/
+
+# Archive
+archive/
+
+# Local dev
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node
+node_modules/
+
+# Big build artifacts
+docs/*.pdf
+docs/*.pptx
+docs/*.png

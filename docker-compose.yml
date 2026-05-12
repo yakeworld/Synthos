@@ -1,0 +1,45 @@
+# =============================================================================
+# Synthos Docker Compose — quick start
+# =============================================================================
+# Usage:
+#   1. Set your API key in .env or export it:
+#      export DEEPSEEK_API_KEY=sk-xxx
+#
+#   2. Build:
+#      docker compose build
+#
+#   3. Interactive mode:
+#      docker compose run --rm synthos
+#
+#   4. Single query:
+#      docker compose run --rm synthos \
+#        hermes chat -q "Search papers on ADHD eye tracking"
+# =============================================================================
+
+services:
+  synthos:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: synthos:latest
+    container_name: synthos
+    stdin_open: true   # -i (interactive)
+    tty: true          # -t (tty)
+    environment:
+      # Primary provider
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+      # Academic search APIs (optional but recommended)
+      - SEMANTIC_SCHOLAR_API_KEY=${SEMANTIC_SCHOLAR_API_KEY}
+      # Optional fallback providers
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      # Persist Hermes state (sessions, skills, config) across runs
+      - synthos_hermes:/home/hermes/.hermes
+      # Mount current project for live development
+      - .:/synthos
+    working_dir: /synthos
+
+volumes:
+  synthos_hermes:
