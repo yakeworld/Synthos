@@ -1,10 +1,10 @@
 ---
 name: association-discovery
-description: "Identify relationships between knowledge items: contradictions, supplements, evolution, and research gaps. Builds knowledge graph. Use when extracted_knowledge is ready from knowledge-extraction and you need to find connections between studies."
+description: "Identify relationships between knowledge items: contradictions, supplements, evolutions, supports, extends, uses, similar-to, and research gaps (P0-P3 rated). Builds knowledge graph. 7 typed edges from claude-paperloom absorption. Gap taxonomy from GAP absorption."
 license: MIT
 metadata:
   synthos_atom_type: "cognitive"
-  synthos_version: "0.1.0"
+  synthos_version: "1.2.0"
   synthos_skill_md_hash: "14e47ba9d49730ba31dd30c2686814b2fe4de0955e408f0f4abe5c86a4c0fa95"
   synthos_model_version_pin: "deepseek/deepseek-v4-pro@2026-05-10"
   synthos_model_tested_on: "2026-05-10T00:00:00Z"
@@ -28,7 +28,7 @@ allowed-tools: Read Write
 
 从上游 `knowledge-extraction` 产出的 `extracted_knowledge`（结构化知识项列表）中，系统性发现知识项之间的关联关系。核心任务：
 
-- **两两比较知识项**，识别矛盾（contradiction）、补充（supplement）、演进（evolution）三种关联类型
+- **两两比较知识项**，识别7种关联类型：矛盾（contradiction）、补充（supplement）、演进（evolution）、支持（supports）、扩展（extends）、使用（uses）、相似（similar-to）
 - **构建知识图谱**：以知识项为节点、以关联为边，输出图的节点、边和统计信息
 - **检测研究空白**：识别现有知识覆盖中的缺口，按优先级分类（critical / high / medium）
 
@@ -51,21 +51,57 @@ allowed-tools: Read Write
 1. **读取输入**：检查 `input_dict` 中是否存在 `extracted_knowledge`。若为空或不存在，返回 `_err("Missing extracted_knowledge")`。若知识项数量 < 2，返回 `_err("Need at least 2 knowledge items")`。
 2. **两两比较**：对所有知识项 pair (i, j) 执行以下子步骤：
    a. **主题重叠检测**：计算 `key_themes` 的 Jaccard 相似度，筛选有潜在关联的对（阈值 ≥ 0.1）。
-   b. **关联分类**：对通过筛选的对，分析其关系类型：
+   b. **关联分类**（吸收自 claude-paperloom 的7类型图谱）：对通过筛选的对，分析其关系类型：
       - **矛盾 (contradiction)**：两篇论文的核心发现相互冲突或结论方向相反（如 Paper A 报告正效应，Paper B 报告无效或负效应）
       - **补充 (supplement)**：两篇论文研究同一问题的不同方面，结果互相补充但不冲突（如 A 研究诊断，B 研究治疗）
       - **演进 (evolution)**：一篇论文在时间或方法上构成另一篇的后续发展（year 差异 + 方法论升级，如 cross_sectional → RCT）
+      - **支持 (supports)**：一篇论文的发现或方法为另一篇提供直接证据支持
+      - **扩展 (extends)**：一篇论文在另一篇的基础上扩展了范畴（如人群扩展、条件泛化）
+      - **使用 (uses)**：一篇论文直接使用另一篇的方法、数据或框架
+      - **相似 (similar-to)**：两篇论文主题/方法高度相似但独立完成（无明确引用关系）
    c. **置信度评估**：为每个关联估算 confidence（0.0–1.0），考虑因素：主题重叠度、方法论可比性、证据等级一致性、时序关系。
    d. **显著性描述**：为 `significance` 字段撰写该关联为什么重要的简短说明。
 3. **构建知识图谱**：
    a. 为每个 KnowledgeItem 创建 GraphNode（`type: "paper"`）。
    b. 为每个 Association 创建 GraphEdge（`source → target`，带 type 和 confidence）。
-   c. 计算 GraphStats：total_nodes, total_edges, contradictions, supplements, evolutions, gaps。
-4. **识别研究空白**：
+   c. 计算 GraphStats：total_nodes, total_edges, contradictions, supplements, evolutions, supports, extends, uses, similar_to, gaps。
+   
+   > **常量成本链接**（吸收自 claude-paperloom）：当知识项 > 30 时，用 Jaccard 预筛选+<30候选项限制，确保第100篇论文的关联成本与第10篇相同。
+4. **识别研究空白**（吸收自 GAP 结构化分类法 v0.1.0 —— GAP 原子已合并入本原子）：
+   
+   4.1 **矛盾检测**：对每个聚类内部和跨聚类检测4类矛盾：
+   | 矛盾类型 | 检测条件 | 示例 |
+   |:---------|:---------|:-----|
+   | **结论矛盾** | A报告正向结果，B报告负向结果 | 药物A有效 vs 无效 |
+   | **方法矛盾** | 相似方法得出不同结论 | 样本量/人群差异 |
+   | **假设矛盾** | 不同的底层假设导致冲突 | 机制解释不同 |
+   | **时间矛盾** | 早期结论被后期证据推翻 | 2020 vs 2025结论 |
+   
+   4.2 **方法论缺口检测**：检测5类系统性缺口：
+   - **样本缺口（sample_gap）**：所有研究集中在特定人群，缺少其他人群
+   - **技术缺口（tech_gap）**：现有方法无法测量关键变量
+   - **纵向缺口（longitudinal_gap）**：只有横断面研究，缺少纵向追踪
+   - **机制缺口（mechanism_gap）**：观察到现象但机制不明
+   - **验证缺口（validation_gap）**：模型/算法未在独立数据集验证
+   
+   4.3 **未答问题提取**：从文献的"未来工作"、"局限性"部分提取显式和隐式问题：
+   - **显式**：作者明确说"需要进一步研究..."
+   - **隐式**：从局限性推断出的延伸问题
+   
+   4.4 **全局空白检测**：
    a. 检测未配对的知识项（与其他项主题相似度均 < 0.1 的孤立节点）→ 标记为潜在空白。
-   b. 检测主题内部的结构性缺失（如某个 `domain` 只有 observational studies，缺乏 RCT 证据）→ 标记为方法论空白。
+   b. 检测主题内部的结构性缺失（如某个 `domain` 只有 observational studies，缺乏 RCT 证据）。
    c. 检测 `field_summary.identified_contradictions` 和 `knowledge_gaps` 中未解决的矛盾或空白 → 提升优先级。
-   d. 为每个空白分配 `priority`：`critical`（直接阻碍下游假设生成）| `high`（明显缺失）| `medium`（值得注意的缺口）。
+   d. 检测文献中作者声明的"未来工作"方向。
+
+   4.5 **空白评级**（P0-P3 四维评级，吸收自 GAP 原子）：
+   | 维度 | P0 | P1 | P2 | P3 |
+   |:-----|:---|:---|:---|:---|
+   | 重要性 | 影响领域核心范式 | 影响重要子领域 | 有价值但非核心 | 边缘增量 |
+   | 时效性 | 亟需解决 | 1-2年内 | 2-5年 | 长期 |
+   | 可行性 | 现有技术可解 | 需适度努力 | 需重大突破 | 理论尚不成熟 |
+   | 证据基础 | ≥5篇矛盾文献 | 3-4篇 | 1-2篇 | 单篇或推测 |
+   最终优先级 = max(重要性, 时效性) + feasibility modifier。
 5. **构建证据链**：每个 Association 和 ResearchGap 的证据节点引用其来源 KnowledgeItem 的 id。详见 `references/EVIDENCE_SCHEMA.md`。
 6. **输出**：返回 `_ok({"associations": [...], "knowledge_graph": {...}, "research_gaps": [...]})` 信封。
 
@@ -154,7 +190,8 @@ allowed-tools: Read Write
       "description": "No studies on adolescent ADHD (age 13-17) for eye-tracking diagnosis",
       "confidence": 0.75,
       "evidence": "Paper 1 covers children (n=112), Paper 2 covers adults (n=450); adolescent cohort missing",
-      "priority": "high"
+      "priority": "P1",
+      "falsification_condition": "If a study covers age 13-17 ADHD-ET, this gap is closed"
     }
   ]
 }

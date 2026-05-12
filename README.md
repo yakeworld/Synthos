@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="docs/Synthos_封面_1920x1080.png" alt="Synthos Banner" width="700"/>
+  <img src="docs/architecture_v4.3.svg" alt="Synthos Architecture" width="700"/>
 </p>
 
 <h1 align="center">Synthos — Autonomous Evolving Research OS</h1>
@@ -14,27 +14,27 @@
   <a href="https://github.com/yakeworld/Synthos/actions/workflows/agent-pr-verify.yml"><img src="https://github.com/yakeworld/Synthos/actions/workflows/agent-pr-verify.yml/badge.svg" alt="CI"/></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License"/></a>
   <a href="https://github.com/yakeworld/Synthos/discussions"><img src="https://img.shields.io/badge/Community-Discussions-blueviolet" alt="Discussions"/></a>
-  <img src="https://img.shields.io/badge/Evolution-20%20cycles-success" alt="Evolution"/>
-  <img src="https://img.shields.io/badge/Version-v4.2.0-blue" alt="Version"/>
+  <img src="https://img.shields.io/badge/Evolution-13%20cycles-success" alt="Evolution"/>
+  <img src="https://img.shields.io/badge/Version-v4.3.0-blue" alt="Version"/>
 </p>
 
 <p align="center">
   <a href="#-philosophy">Philosophy</a> •
   <a href="#-architecture">Architecture</a> •
   <a href="#-cognitive-atoms">Atoms</a> •
+  <a href="#-extended-skills">Extended Skills</a> •
   <a href="#-self-evolution">Evolution</a> •
-  <a href="#-evaluation">Evaluation</a> •
   <a href="#-getting-started">Setup</a> •
   <a href="#-for-ai-agents">🤖 Contribute</a>
 </p>
 
 ---
 
-**Synthos** is a **pure SKILL.md-driven** cognitive operating system for scientific research. It decomposes the entire research workflow into **7 cognitive atoms**, each defined as an SKILL.md executed natively by an AI agent — no Python scripts, pure reasoning through agent capabilities.
+**Synthos** is a **pure SKILL.md-driven** cognitive operating system for scientific research. It decomposes the entire research workflow into **cognitive atoms**, each defined as an SKILL.md executed natively by an AI agent — no Python scripts, pure reasoning through agent capabilities.
 
-From literature retrieval to paper output, Synthos covers the complete cognitive loop of scientific research. Its **self-evolution engine** automatically checks health, runs functional tests, and absorbs patterns from external projects every day.
+From literature retrieval to paper output, Synthos covers the complete cognitive loop of scientific research. Its **self-evolution engine** automatically checks health, runs functional benchmarks, and absorbs patterns from external projects every day.
 
-> **v4.2.0** · Evolution Engine v2.3 · Quality Score: 95/100 · 20 Evolution Cycles · Agent PR Verification: ✅
+> **v4.3.0** · Evolution Engine v2.3 · Quality Score: 0.933 (EXCELLENT) · 13 Evolution Cycles · 6 Cognitive Atoms + 3 Extended Skills + 2 Infrastructure · Agent PR Verification: ✅
 
 [🇨🇳 中文版](README_CN.md)
 
@@ -46,14 +46,14 @@ Synthos is built on an **8-dimensional cognitive framework**:
 
 | # | Dimension | Core Idea | Covered Atoms | Progress |
 |:-:|-----------|-----------|:-------------:|:--------:|
-| 1 | **First Principles** | Build from fundamental facts | 1,2,4,5 | 95% |
-| 2 | **Systems Thinking** | Holistic view of knowledge | 1,3,5 | 95% |
-| 3 | **Bayesian Thinking** | Update beliefs with evidence | 4,6 | 90% |
-| 4 | **Analogical Thinking** | Cross-domain knowledge transfer | 4 | 80% |
-| 5 | **Occam's Razor** | Shortest path first | 0,2,5 | 80% |
-| 6 | **Falsificationism** | Actively seek counter-evidence | 6,1 | 80% |
-| 7 | **Model-Dependent Realism** | Multi-perspective validation | 3 | 60% |
-| 8 | **Free Energy Principle** | Minimize prediction error via evolution | 6, meta | 55% |
+| 1 | **First Principles** | Build from fundamental facts | ACQ, EXT, HYP, ARG | 95% |
+| 2 | **Systems Thinking** | Holistic view of knowledge | ACQ, ASC, EXT | 95% |
+| 3 | **Bayesian Thinking** | Update beliefs with evidence | HYP, VER | 90% |
+| 4 | **Analogical Thinking** | Cross-domain knowledge transfer | HYP, EXT (absorption) | 80% |
+| 5 | **Occam's Razor** | Shortest path first | ROU, EXT, ARG | 80% |
+| 6 | **Falsificationism** | Actively seek counter-evidence | VER, ACQ | 80% |
+| 7 | **Model-Dependent Realism** | Multi-perspective validation | ASC | 60% |
+| 8 | **Free Energy Principle** | Minimize prediction error via evolution | VER, evolution engine | 55% |
 
 **Overall Progress**: 85% (based on built-in audit framework)
 
@@ -67,30 +67,36 @@ Core principle: **Constitution → Architecture → Schema → Implementation**,
 
 ```text
                      ┌──────────────────────┐
-                     │   Task Router (ROU)   │  ← Human-in-the-Loop
-                     │  [Route → Atom → Eval]│
-                     └────────┬─────────────┘
-                              │
-         ┌────────────────────┼────────────────────┐
-         ▼                    ▼                    ▼
- ┌───────────────┐  ┌────────────────┐  ┌────────────────┐
- │  ACQ          │  │  COD           │  │  ASC           │
- │  Acquisition  │  │  Coding        │  │  Argumentation │
- │  S2/OpenAlex  │  │  Executable    │  │  Structured    │
- │  bioRxiv      │  │  Thought       │  │  Reasoning     │
- └───────────────┘  └────────────────┘  └────────────────┘
- ┌───────────────┐  ┌────────────────┐  ┌────────────────┐
- │  EXT          │  │  EVA           │  │  AVA           │
- │  External     │  │  Evaluation    │  │  Absorption    │
- │  Absorb from  │  │  7-dim Score   │  │  Experience →  │
- │  OSS Projects │  │  System        │  │  Skill Encoding│
- └───────────────┘  └────────────────┘  └────────────────┘
-                              │
-                     ┌────────┴────────┐
-                     │  Evolution      │
-                     │  Engine         │
-                     │  (Daily Loop)   │
-                     └─────────────────┘
+                     │  Task Router (ROU)   │  ← Human-in-the-Loop
+                     │ [Route→Atom→Eval]   │
+                     └──────┬───────────────┘
+                            │
+    ┌───────────────────────┼───────────────────────┐
+    ▼                       ▼                       ▼
+┌──────────┐         ┌──────────┐            ┌──────────┐
+│  ACQ     │   ═══>  │  EXT     │    ═══>    │  ASC     │
+│Acquisition│        │Extraction│           │Association│
+└──────────┘         └──────────┘            └────┬─────┘
+                                                   │
+                                              ┌────▼─────┐
+                                              │  HYP     │
+                                              │Hypothesis│
+                                              └────┬─────┘
+                                                   │
+                                    ┌───────────────┼───────────────┐
+                                    ▼                               ▼
+                              ┌──────────┐                   ┌──────────┐
+                              │  ARG     │                   │  VER     │
+                              │Argument  │                   │Verification│
+                              └──────────┘                   └──────────┘
+
+Extended: BPPV Expert  •  Research Thinking  •  Figure Generation ⭐
+Infra:    Evolution Engine  •  LaTeX Output
+
+         ┌─────────────────────────────────────────────┐
+         │         Evolution Loop (daily cycle)         │
+         │  PROBE → BENCHMARK → EXTERNAL → DIAGNOSE   │
+         └─────────────────────────────────────────────┘
 ```
 
 ---
@@ -99,50 +105,57 @@ Core principle: **Constitution → Architecture → Schema → Implementation**,
 
 | Atom | Name | Function | Status |
 |:-----|:-----|:---------|:-------|
-| **ACQ** | Knowledge Acquisition | Search Semantic Scholar, OpenAlex, bioRxiv, PubMed | ✅ v4.2 |
-| **COD** | Peer Coding | Transform cognitive needs into executable code | ✅ v4.2 |
-| **ASC** | Argumentation & Expression | Structured reasoning, paper framework generation | ✅ v4.2 |
-| **EXT** | External Absorption | Absorb quality patterns from open-source projects | ✅ v4.2 |
-| **ROU** | Task Routing | Core HITL design: route routine, escalate exceptions | ✅ v4.2 |
-| **EVA** | Quality Evaluation | 7-dimension objective evaluation system | ✅ v4.2 |
-| **AVA** | Cognitive Absorption | Encode AI discoveries into human-understandable knowledge | ✅ v4.2 |
+| **ROU** | Task Routing | Route user queries to shortest atom chain. Occam's razor | ✅ v4.2 |
+| **ACQ** | Knowledge Acquisition | Multi-source search: Semantic Scholar, PubMed, OpenAlex, arXiv, Crossref | ✅ v4.2 |
+| **EXT** | Knowledge Extraction | Extract structured knowledge: method, findings, conclusion, limitations | ✅ v4.2 |
+| **ASC** | Association Discovery | Identify 7 typed edges between knowledge items. Integrated GAP research gap detection | ✅ v4.2 |
+| **HYP** | Hypothesis Generation | Formal falsifiable hypotheses with prediction, counter-evidence, competitive hypotheses | ✅ v4.3 |
+| **ARG** | Argument Expression | Transform hypotheses into structured academic arguments with citations | ✅ v4.2 |
+| **VER** | Viewpoint Verification | Multi-angle falsification: counterarguments, robustness checks, Bayesian confidence | ✅ v4.2 |
+
+---
+
+## 🧩 Extended Skills
+
+| Skill | Source | Function | Status |
+|:------|:-------|:---------|:-------|
+| **BPPV Expert** | AKNE Knowledge Graph | Structured BPPV medical diagnosis & treatment knowledge (126 nodes) | ✅ v1.0 |
+| **Research Thinking** | AKNE Philosophy | First Principles, Systems Thinking, Bayesian Thinking, Falsificationism | ✅ v1.0 |
+| **Figure Generation** ⭐ | [nature-figure](https://github.com/Yuan1z0825/nature-skills) (交大袁一哲) | Publication-grade scientific figures: Figure Contract methodology, 16 layout patterns, Nature color palettes, SVG/PDF export | ✅ v1.0 🆕 |
+
+### Figure Generation — What's New
+
+Absorbed from [nature-figure](https://github.com/Yuan1z0825/nature-skills) by YiZhe Yuan (Shanghai Jiao Tong University), rated **4.5/5** as the most mature skill in the repository:
+
+- **Figure Contract Methodology**: Claim → Evidence Hierarchy → Panel Mapping → Export Contract → QA Review — before any plotting code
+- **16 layout patterns**: ultra-wide bars, clinical triptych, dark image plates, asymmetric hero panels, ablation alphagradient, hatch grayscale safety, etc.
+- **Nature semantic color system**: blue-main/green-positive/red-baseline + NMI pastel family + 5 domain-specific palettes (imaging, clinical, genomics, materials, clinical)
+- **Export**: SVG (editable text), PDF, TIFF at publication DPI
+
+Unlike the cognitive atoms, Figure Generation requires Python/matplotlib execution as a **visual output mechanism** — the figure contract design remains Agent-native reasoning.
 
 ---
 
 ## 🔄 Self-Evolution
 
-Synthos runs a **self-evolution engine** daily:
+Synthos runs a **self-evolution engine** that cycles daily:
 
-```
-LOAD_STATE → LESSONS → PROBE → BENCHMARK → EXTERNAL → DIAGNOSE → RECORD
-     ↑                                                              │
-     └──────────────────── Evolution Loop ──────────────────────────┘
-```
+| Step | Action |
+|:-----|:-------|
+| **PROBE** | Structural score all atoms (frontmatter, I/O contracts, boundary declarations) |
+| **BENCHMARK** | Run functional golden tests against each atom's search/analysis capabilities |
+| **EXTERNAL** | Scan for quality patterns in external open-source AI-research projects |
+| **DIAGNOSE** | Calculate composite score, identify degraded atoms, repair automatically |
+| **RECORD** | Log lessons, update evolution-state.json, repeat |
 
 | Metric | Value |
 |:-------|:------|
-| Evolution Cycles | 20 (as of May 2026) |
-| Consecutive EXCELLENT | 9 |
-| Golden Test Pass Rate | 100% |
-| Atom Test Score | 1.0 (perfect) |
-| Overall Quality Score | 0.95 (EXCELLENT) |
-| External Sources Absorbed | 8 OSS projects |
-
----
-
-## 📊 Evaluation
-
-Built-in 7-dimension evaluation framework:
-
-| Dimension | Weight | Score |
-|:----------|:-------|:------|
-| Completeness | 20% | 96% |
-| Accuracy | 20% | 94% |
-| Reproducibility | 15% | 92% |
-| Self-Consistency | 15% | 95% |
-| Extensibility | 10% | 90% |
-| Efficiency | 10% | 88% |
-| Transparency | 10% | 93% |
+| Evolution Cycles | 13 (as of May 2026) |
+| Consecutive EXCELLENT | 7 |
+| Benchmark Pass Rate | 100% (8/8 in Cycle 13) |
+| Atom Structural Score | 1.0 (perfect — all 7 atoms) |
+| Overall Quality Score | 0.933 (EXCELLENT) |
+| External Sources Absorbed | 3 (AKNE, nature-figure, ADHD review) |
 
 ---
 
