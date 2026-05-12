@@ -1,38 +1,23 @@
 ---
 name: hypothesis-generation
-description: "科学假设生成原子（HYP）—— 将研究空白转化为形式化可检验假说"
-version: 0.1.0
-stability: unstable
-trigger: "GAP原子输出新空白后自动调用，或用户手动输入空白"
-constitutional_alignment: [P0, P4, P5]
-dependencies: [GAP, ACQ]
-inputs:
-  - name: gaps
-    type: "gap_record[]"
-    description: "来自GAP原子的研究空白"
-    required: true
-  - name: literature_corpus
-    type: "ACQ_search_result[]"
-    description: "原始文献（用于假说的文献支撑）"
-    required: true
-  - name: existing_hypotheses
-    type: "hypothesis_record[]"
-    description: "已有假说（避免重复生成）"
-    required: false
-  - name: user_constraints
-    type: string
-    description: "用户对假说的约束（如：需ADHD相关、需可用fMRI验证等）"
-    required: false
-outputs:
-  - name: hypotheses
-    type: "hypothesis_record[]"
-    description: "生成的形式化假说列表"
-  - name: hypothesis_graph
-    type: object
-    description: "假说间的逻辑关系图（竞争、互补、层级）"
-error_states:
-  - no_gaps_input: "没有空白输入"
-  - insufficient_evidence: "支撑证据不足，无法形成可检验假说"
+description: "科学假设生成原子（HYP）—— 将研究空白转化为形式化可检验假说。接收GAP发现的研究空白和ACQ文献语料，生成包含预测、反证条件、竞争假说和实验设计的结构化假设。每个假设包含可检验性/新颖性/重要性/可行性评分。"
+license: MIT
+allowed-tools: terminal Read Write
+metadata:
+  synthos_atom_type: "cognitive"
+  synthos_version: "0.1.0"
+  synthos_skill_md_hash: "pending"
+  synthos_model_tested_on: "2026-05-13T00:00:00Z"
+  synthos_io_contract_ref: "references/IO_CONTRACT.md"
+  synthos_evidence_schema_ref: "references/EVIDENCE_SCHEMA.md"
+  synthos_golden_set_ref: "golden/GOLDEN_SET.md"
+  synthos_golden_set_origin: "self_defined"
+  synthos_pass_threshold: "0.80"
+  synthos_boundary_proof_ref: "references/BOUNDARY.md"
+  synthos_change_log_ref: "references/CHANGE_LOG.md"
+  synthos_asserted_compliance: "P0,P4,P5"
+  synthos_depends_on: "knowledge-extraction,association-discovery"
+  synthos_author: "Synthos Agent (v4.3 evolution patch)"
 ---
 
 # HYP — 科学假设生成原子
