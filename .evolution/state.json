@@ -2,9 +2,9 @@
   "version": "4.3.0",
   "architecture": "pure_skill_driven_zero_python",
   "mode": "ACTUAL",
-  "last_updated": "2026-05-14T06:00:00Z",
-  "last_run": "2026-05-14T06:00:00Z",
-  "evolution_count": 31,
+  "last_updated": "2026-05-13T20:00:00Z",
+  "last_run": "2026-05-13T20:00:00Z",
+  "evolution_count": 29,
   "refactoring": {
     "completed": true,
     "completed_at": "2026-05-10T20:56:00",
@@ -25,70 +25,6 @@
       "Removed: MECHANICAL/COGNITIVE distinction — all atoms skill-driven",
       "Change: Synthos is now 100% skill-driven with zero Python code"
     ]
-  },
-  "quality_metrics": {
-    "1_知识获取": {
-      "trust_score": 1.0,
-      "usage_count": 2,
-      "status": "agent_native",
-      "code_status": "agent_executed",
-      "last_benchmarked": "2026-05-13",
-      "benchmark_result": "pass"
-    },
-    "2_研究空白发现_GAP": {
-      "trust_score": 1.0,
-      "usage_count": 0,
-      "status": "absorbed_into_ASC",
-      "stability": "stable",
-      "code_status": "agent_executed",
-      "last_benchmarked": null,
-      "benchmark_result": "n/a"
-    },
-    "3_科学假设生成_HYP": {
-      "trust_score": 1.0,
-      "usage_count": 0,
-      "status": "agent_native",
-      "stability": "stable",
-      "code_status": "agent_executed",
-      "last_benchmarked": "2026-05-15",
-      "benchmark_result": "pass"
-    },
-    "4_知识提取": {
-      "trust_score": 1.0,
-      "usage_count": 2,
-      "status": "agent_native",
-      "code_status": "agent_executed",
-      "last_benchmarked": "2026-05-13",
-      "benchmark_result": "pass"
-    },
-    "5_关联发现": {
-      "trust_score": 1.0,
-      "usage_count": 2,
-      "status": "agent_native",
-      "code_status": "agent_executed",
-      "last_benchmarked": "2026-05-13",
-      "benchmark_result": "pass"
-    },
-    "6_观点生成": {
-      "trust_score": 1.0,
-      "usage_count": 1,
-      "status": "agent_native",
-      "code_status": "agent_executed",
-      "last_benchmarked": "2026-05-15",
-      "benchmark_result": "pass"
-    },
-    "7_论证表达": {
-      "trust_score": 1.0,
-      "usage_count": 1,
-      "status": "agent_native",
-      "code_status": "agent_executed"
-    },
-    "8_观点验证": {
-      "trust_score": 1.0,
-      "usage_count": 1,
-      "status": "agent_native",
-      "code_status": "agent_executed"
-    }
   },
   "trust_db": {
     "knowledge_acquisition": {
@@ -150,42 +86,43 @@
     "skill": "skills/evolution/SKILL.md",
     "version": "2.3.0",
     "created": "2026-05-11T06:35:00+00:00",
-    "cycle": 17,
+    "cycle": 16,
     "status": "healthy",
     "cron_schedule": "0 6 * * *",
-    "last_auto_run": "2026-05-14T06:00:00+00:00",
+    "last_auto_run": "2026-05-13T06:00:00+00:00",
     "last_cycle": {
-      "performed_at": "2026-05-14T06:00:00+00:00",
+      "performed_at": "2026-05-13T20:00:00+00:00",
       "status": "healthy",
       "actions_taken": [
-        "Cycle 17 evolution completed (odd cycle: ACQ + EXT + ASC + ROUTE)",
-        "PROBE: 7/7 core atoms at structural_score=1.0 (VER anti-sycophancy protocol intact)",
-        "BENCHMARK: 8/8 all pass (4 API + 4 Golden), S2 API normal (no 429)",
-        "DIAGNOSE: 0.939 (EXCELLENT) — stable high performance",
-        "EXTERNAL: aso-skills(⭐1237) discovered but domain mismatch; NanoResearch(⭐991) growing",
+        "Cycle 16 evolution completed (even cycle: HYP + ARG + VER + ROUTE)",
+        "PROBE: 7/7 core atoms at structural_score=1.0 (perfect, GAP absorbed into ASC)",
+        "BENCHMARK: 8/8 all pass (4 API + 4 Golden)",
+        "DIAGNOSE: 0.965 (EXCELLENT) — new all-time high",
+        "EXTERNAL: NanoResearch (⭐979) identified as high-value absorption candidate (4.5/5)",
+        "Semantic Scholar FastMCP (⭐136) identified as useful infra tool",
         "No degraded atoms, no fixes needed"
       ],
       "avg_score": 1.0,
       "benchmark_score": 1.0,
-      "overall_score": 0.939,
+      "overall_score": 0.965,
       "degraded_atoms": [],
       "api_health": "healthy"
     },
     "current_cycle": {
-      "cycle": 17,
-      "type": "cron_auto_run_acq_ext_asc",
-      "performed_at": "2026-05-14T06:00:00+00:00",
+      "cycle": 16,
+      "type": "manual_full_cycle_probe_benchmark_external",
+      "performed_at": "2026-05-13T20:00:00+00:00",
       "status": "healthy",
       "actions": [
-        "PROBE: 7/7 core atoms structural_score=1.0 (VER anti-sycophancy protocol intact)",
-        "BENCHMARK: 8/8 all pass (ROUTE+ACQ+EXT+ASC + 4 Golden)",
-        "EXTERNAL: aso-skills(⭐1237) discovered but domain mismatch (ASO, not research); MedgeClaw(⭐644) confirmed; NanoResearch(⭐991) growing +12⭐",
-        "DIAGNOSE: overall=0.939 — EXCELLENT",
+        "PROBE: 7/7 core atoms structural_score=1.0",
+        "BENCHMARK: 8/8 all pass (ROUTE+HYP+ARG+VER + GOLDEN)",
+        "EXTERNAL: NanoResearch(⭐979)+SemanticScholarFastMCP(⭐136) discovered",
+        "DIAGNOSE: overall=0.965 — EXCELLENT (new all-time high)",
         "No fixes needed — all atoms healthy"
       ],
       "structural_avg": 1.0,
       "benchmark_score": 1.0,
-      "overall_score": 0.939,
+      "overall_score": 0.965,
       "degraded_atoms": [],
       "fixes_applied": []
     }
@@ -337,11 +274,11 @@
     "SKILL-spec-profile.md": {"status": "final", "version": "1.0", "created": "2026-05-10T01:07:23.858356+00:00"}
   },
   "evolution": {
-    "cycle": 18,
+    "cycle": 13,
     "status": "healthy",
     "structural_avg": 1.0,
     "benchmark_score": 1.0,
-    "overall_score": 0.965,
+    "overall_score": 0.933,
     "degraded_atoms": [],
     "api_health": "healthy"
   },
