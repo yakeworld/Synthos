@@ -20,7 +20,8 @@ metadata:
   synthos_depends_on: "hypothesis-generation,argument-expression"
   synthos_author: "Synthos Agent"
 allowed-tools: Read Write
----
+metadata:
+  synthos_data_access_level: "verified_only"
 
 # 观点验证 (Viewpoint Verification) — 认知原子 #6
 
@@ -87,9 +88,38 @@ allowed-tools: Read Write
 
 3. **聚合**：汇总所有 Verification，计算 `aggregate_confidence`（均值、最小值、分布），给出整体 `verdict`。
 
-4. **构建证据链**：每个 counterargument、falsification_condition、robustness_concern 的证据节点见 `references/EVIDENCE_SCHEMA.md`。
+4. **[ARS吸收] 反谄媚门控 — Concession Threshold Protocol**：
+   
+   当验证过程中出现"用户反驳验证结论"的情况（用户说"你这个反驳不对"或"这个验证太严了"），遵循以下三步协议，**禁止因为用户坚持而让步**：
 
-5. **输出**：返回 `_ok({"verification_results": [...], "aggregate_confidence": {...}, "verdict": "..."})` 信封。
+   **Step 1: 对反驳打分 1-5**
+
+   | 分数 | 定义 | 动作 |
+   |------|------|------|
+   | 5 | 反驳直接针对核心验证发现 + 提供新证据或严密逻辑 | **让步** — 明确承认并修改验证结论 |
+   | 4 | 反驳实质削弱验证，但有小缺口 | **让步但标注缺口** — 修改结论 + 标注未解决部分 |
+   | 3 | 部分相关但偏离核心验证 | **坚守** — 重申原验证，解释未被打中的部分 |
+   | 2 | 边缘相关，讨论了不同的点 | **反攻** — 指出偏离，重新聚焦核心验证 |
+   | 1 | 断言无证据、权威诉求、或简单否认 | **升级** — 加强原验证，从更多角度论证 |
+
+   **Step 2: 记录每次决策** — 在验证记录中添加内部标签：
+   `[DA-DECISION: Score X/5 | ACTION: Concede/Hold/Counter/Escalate | REASON: ...]`
+
+   **Step 3: 反谄媚规则**（强制遵守）：
+   - ❌ **不因用户坚持而让步** — 用户坚持不是证据，不能作为减弱验证的原因
+   - ❌ **不准连续让步** — 让步后，下次让步门槛升到5/5
+   - ❌ **让步率监控** — 如果本验证周期内让步率 > 50%，暂停并升级剩余所有反驳门槛到5/5
+   - ✅ **思维框锁检测** — 每3轮用户反驳后自问："这个验证讨论的前提假设是什么我还没质疑？"
+   - ✅ **不因用户反复提出同一反驳而加强其分数** — 同一论点重复3次不增加分数
+
+   **反模式警告**：
+   - "用户说了很多次可能不对" → 这不等于反证
+   - "用户看起来不高兴" → 验证的严格度不应因用户情绪改变
+   - "用户是领域专家所以可能更懂" → 验证逻辑应基于证据链而非身份
+
+5. **构建证据链**：每个 counterargument、falsification_condition、robustness_concern 的证据节点见 `references/EVIDENCE_SCHEMA.md`。
+
+6. **输出**：返回 `_ok({"verification_results": [...], "aggregate_confidence": {...}, "verdict": "..."})` 信封。
 
 ## 4. 边界判断（When NOT to use this atom）
 

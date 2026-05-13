@@ -20,7 +20,8 @@ metadata:
   synthos_depends_on: "hypothesis-generation,knowledge-acquisition"
   synthos_author: "Synthos Agent"
 allowed-tools: delegate_task Read Write Execute
----
+metadata:
+  synthos_data_access_level: "verified_only"
 
 # 论证表达 (Argument Expression)
 
@@ -183,3 +184,89 @@ allowed-tools: delegate_task Read Write Execute
 - 边界证明：`references/BOUNDARY.md`
 - 金标准：`golden/GOLDEN_SET.md`
 - 变更日志：`references/CHANGE_LOG.md`
+
+---
+
+## 学术写作增强 Academic Writing Enhancement [SYNTHOS_P0_ABSORBED_FROM: NanoResearch ml-paper-writing]
+
+This section augments the basic IMRaD structure support above with advanced paper writing guidance adapted from the ml-paper-writing knowledge base. It provides concrete formulas, narrative frameworks, and writing philosophy from leading ML/AI researchers.
+
+### 1. The Narrative Principle: Three Pillars
+
+Every strong academic paper tells a coherent story built on three narrative pillars. Every section should serve at least one of these:
+
+| Pillar | Question | What It Does |
+|--------|----------|--------------|
+| **The What** | What did you do? | States the method, approach, or system clearly. Establishes the concrete contribution. |
+| **The Why** | Why does it matter? | Motivates the work — the problem being solved, the gap being filled, the anomaly being explained. |
+| **The So What** | Why should the reader care? | Articulates the impact, implications, and downstream consequences. Connects the work to broader significance. |
+
+**Application**: Before writing any section, ask: *Does this paragraph advance The What, The Why, or The So What?* If a paragraph does none of the three, cut it or reframe it.
+
+### 2. Five-Sentence Abstract Formula (Sebastian Farquhar / DeepMind)
+
+Structured abstracts dramatically improve clarity and reviewer experience. Each sentence has a specific rhetorical job:
+
+| # | Sentence | Job | Example Template |
+|---|----------|-----|-----------------|
+| 1 | **Background & Problem** | Establish the domain, the known, and the gap. | "Recent advances in X have shown Y, but Z remains challenging." |
+| 2 | **What You Did** | State your method/approach in one clear sentence. | "We propose A, a novel method that does B." |
+| 3 | **Key Result** | Report the single most important finding or metric. | "On benchmark C, A achieves D% improvement over baselines." |
+| 4 | **Interpretation / Insight** | Say *why* the result matters. Go beyond the number. | "This improvement stems from E, which addresses the core limitation of prior work." |
+| 5 | **Broader Impact / Outlook** | Connect to the bigger picture. One forward-looking claim. | "Our findings suggest that F could generalize to G, opening new directions for H." |
+
+**Constraint**: The entire abstract must fit within 5–8 sentences total. Each sentence must pass the "delete test": if you remove it, the abstract loses essential information.
+
+### 3. Section-by-Section Writing Guidance
+
+| Section | Narrative Focus | Key Strategy | Common Pitfall |
+|---------|----------------|--------------|----------------|
+| **Abstract** | The What + The Why + The So What (condensed) | Use the 5-sentence formula above. No citations (except in rare cases). Write it *last*. | Trying to cram every result; overwhelming the reader. |
+| **Introduction** | The Why (establish gap + motivation) | Inverted pyramid: broad context → specific gap → your contribution. End with a clear roadmap paragraph ("In this work, we..."). Use 1–2 figures / diagrams if helpful. | Literature dump without narrative arc; burying the contribution on page 2. |
+| **Methods / Approach** | The What (precise, reproducible) | Top-down: first give the high-level intuition / architecture diagram, then formalize in equations or pseudocode, then detail training/hyperparameters. Use bullet-style paragraphs for implementation details. | Starting with equations before the big picture; missing reproducibility-critical details (seed, learning rate schedule, hardware). |
+| **Experiments** | The What (evidence) + The So What (proof) | Set up the question first: "To evaluate X, we..." Present results in tables/figures, then interpret *in prose*. Always compare to a meaningful baseline. Always report variance. Include ablation studies for design choices. | Cherry-picking results; no error bars; qualitative claims without quantitative evidence. |
+| **Related Work** | The Why (positioning) | Position your work *after* explaining your approach — or place it after the introduction. Group by theme, not by paper. End each paragraph with how your work differs or improves upon that theme. | Laundry-list summaries ("Paper A did X, Paper B did Y..."); failing to distinguish your contribution. |
+| **Discussion / Conclusion** | The So What (implications + limitations) | Summarize the core finding in one sentence. Discuss limitations honestly (reviewers respect this). Outline 2–3 concrete future directions. End with a strong final sentence that circles back to the introduction's motivation. | Repeating results verbatim; writing a weak or generic closing sentence. |
+
+### 4. Key Writing Philosophy from Top Researchers
+
+Adapted from widely shared advice by researchers including Neel Nanda, Sebastian Farquhar, and others in the ML research community:
+
+1. **Write for the tired reviewer (Nanda, Farquhar)** — Your reviewer has 15 papers to read. Be kind. Make your contribution obvious in the first page. Put figures where they are seen. Use informative section headings. Don't make them hunt for the main idea.
+
+2. **Narrative first, results second (Nanda)** — Decide the story before running final experiments. Figure out: "What is the one thing I want the reader to remember?" Then design every figure, every table, every paragraph to serve that one thing. The narrative *determines* which numbers belong in the paper, not the other way around.
+
+3. **Every paragraph is a claim (Farquhar)** — A paragraph that makes no claim is a waste of ink. Each paragraph should: (a) state a claim, (b) support it with evidence or reasoning, and (c) connect it to the paper's central argument. If a paragraph fails any of these, rewrite or remove.
+
+4. **The first draft is allowed to be bad** — "The only way to write a good paper is to write a bad one first and improve it" (common wisdom, often attributed to various researchers). Get a structurally complete draft on the page, then iterate on clarity. Don't try to write perfectly sentence-by-sentence.
+
+5. **Figures are the paper (Nanda, Farquhar)** — Many reviewers jump to figures first. Each figure must be self-contained: clear caption, readable fonts, labeled axes, statistical annotations. A good figure tells the story. A bad figure creates confusion. Spend as much time on figures as on prose.
+
+6. **The "So what?" hammer (multiple researchers)** — After every sentence, ask: *So what?* If the answer adds nothing new, delete the sentence. This is the most powerful editing tool you have.
+
+7. **Acknowledge limitations preemptively (Farquhar)** — Don't wait for reviewers to find your weaknesses. Discuss limitations in the paper itself. This builds trust and shows intellectual maturity. Frame limitations as *opportunities for future work* where possible.
+
+### 5. Anti-Hallucination Rule for Citations
+
+**CRITICAL RULE**: Never generate BibTeX entries, citation keys, or inline citations (`\cite{...}`) from memory. Every citation must derive from one of:
+
+1. Papers explicitly listed in the `raw_papers` input
+2. Papers the user has provided or confirmed
+3. Papers retrieved from a verified source (e.g., Semantic Scholar API, arXiv)
+
+**Violation examples** (DO NOT DO):
+```bibtex
+% BAD — Hallucinated from memory:
+@inproceedings{vaswani2017attention,
+  author    = {Ashish Vaswani and ...},
+  title     = {Attention Is All You Need},
+  ...
+}
+```
+
+**Correct behavior**:
+1. If the user says "cite Transformer paper" and you know it exists → respond: *"I know of this paper (Vaswani et al., 2017, 'Attention Is All You Need') but I should not generate BibTeX from memory. Please provide the DOI or use a citation retrieval tool to get the correct entry."*
+2. Or use a tool to fetch the real citation data (e.g., query Semantic Scholar API).
+3. Default citation format in generated prose: `(Author, Year)` — only use this format, never generate BibTeX keys.
+
+**Rationale**: Hallucinated citations erode trust in the entire paper. A single fake reference can get a paper desk-rejected or retracted. Accuracy > convenience.

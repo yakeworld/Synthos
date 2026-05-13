@@ -28,8 +28,9 @@ outputs:
     description: "文献矛盾关系图谱"
 error_states:
   - insufficient_literature: "文献量少于5篇时无法检测矛盾"
-  - focus_too_broad: "研究焦点过于宽泛导致假阳性空白"
----
+allowed-tools: Read Write
+metadata:
+  synthos_data_access_level: "redacted"
 
 # GAP — 研究空白发现原子
 

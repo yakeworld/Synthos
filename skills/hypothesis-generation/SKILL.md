@@ -18,6 +18,7 @@ metadata:
   synthos_asserted_compliance: "P0,P4,P5"
   synthos_depends_on: "knowledge-extraction,association-discovery"
   synthos_author: "Synthos Agent (v4.3 evolution patch)"
+  synthos_data_access_level: "verified_only"
 ---
 
 # HYP — 科学假设生成原子

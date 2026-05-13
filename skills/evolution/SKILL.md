@@ -4,7 +4,7 @@ description: Synthos evolution engine v2.3. Agent-native self-evolution cycle �
 metadata:
   synthos_atom_type: "meta-evolution"
   synthos_version: "2.3.0"
-  synthos_skill_md_hash: "pending"
+  synthos_skill_md_hash: "dd7136ad55d0846c700ccae0dec27eb5fe4edacfdf1834f089f0c4972626a52a"
   synthos_model_tested_on: "2026-05-11T00:00:00Z"
   synthos_io_contract_ref: "references/IO_CONTRACT.md"
   synthos_benchmarks_ref: "references/BENCHMARKS.md"
@@ -15,6 +15,7 @@ metadata:
   synthos_asserted_compliance: "P0,P2,P3"
   synthos_depends_on: "task-router, knowledge-acquisition, knowledge-extraction, association-discovery, hypothesis-generation, argument-expression, viewpoint-verification"
   synthos_author: "Synthos Evolution Engine v2.3"
+  synthos_data_access_level: "redacted"
 allowed-tools: terminal skill_view Read Write patch cronjob web_search delegate_task
 ---
 
@@ -105,14 +106,16 @@ Synthos 项目根: /media/yakeworld/sda2/Synthos
 用 `terminal(cat path)` 检查7原子的结构健康：
 | 检查项 | 权重 | 方法 |
 |--------|------|------|
-| 文件存在 | 0.30 | cat 返回非空 |
-| name匹配目录 | 0.15 | 正则匹配 |
-| desc ≥80字符 | 0.15 | 行长度 |
+| 文件存在 | 0.25 | cat 返回非空 |
+| name匹配目录 | 0.10 | 正则匹配 |
+| desc ≥80字符 | 0.10 | 行长度 |
 | allowed-tools存在 | 0.10 | "allowed-tools:" in text |
 | IO_CONTRACT.md | 0.10 | 有内容 |
-| EVIDENCE_SCHEMA.md | 0.10 | 有内容 |
+| EVIDENCE_SCHEMA.md | 0.05 | 有内容 |
 | BOUNDARY.md | 0.05 | 有内容 |
 | CHANGE_LOG.md | 0.05 | 有内容 |
+| **synthos_data_access_level** | **0.15** | **json中"synthos_data_access_level"存在且值为"raw"/"redacted"/"verified_only"** |
+| **反谄媚协议（VER原子专属）** | **0.05** | **viewpoint-verification/SKILL.md含"Concession Threshold Protocol"或"对反驳打分 1-5"** |
 
 评分公式详见 `references/QUALITY_CRITERIA.md`。
 
