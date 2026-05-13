@@ -13,6 +13,8 @@ metadata:
   synthos_depends_on: "semantic-scholar, pubmed, arxiv, openalex, biorxiv, research-paper-search"
   synthos_author: "Synthos Agent (v4.0 agent-native refactor)"
 allowed-tools: terminal web delegate_task Read Write
+metadata:
+  synthos_data_access_level: "raw"
 ---
 
 # 知识获取 (Knowledge Acquisition) - 认知原子 #1
@@ -143,9 +145,9 @@ curl -s "https://api.biorxiv.org/details/medrxiv/<encoded_query>"
 
 按 DOI 精确匹配去重。无 DOI 的按标题归一化后模糊匹配（忽略大小写、标点）。
 
-### 2.5 [新增] 引用验证
+### 2.5 [ARS增强] 引用验证 + 5类幻觉检测
 
-对去重后的每篇论文执行4层引用验证。读取 `references/CITATION_VERIFICATION.md` 获取完整流程。
+对去重后的每篇论文执行4层引用验证 + 5类幻觉分类。读取 `references/CITATION_VERIFICATION.md` 获取完整流程（含TF/PAC/IH/PH/SH五分类法及5种复合欺骗模式）。
 
 验证策略：
 1. **L1: DOI验证** — `curl -s "https://api.crossref.org/works/{doi}"` 检查200

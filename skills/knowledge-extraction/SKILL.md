@@ -20,7 +20,8 @@ metadata:
   synthos_depends_on: "knowledge-acquisition"
   synthos_author: "Synthos Agent"
 allowed-tools: Read Write
----
+metadata:
+  synthos_data_access_level: "redacted"
 
 # 知识提取 (Knowledge Extraction)
 
