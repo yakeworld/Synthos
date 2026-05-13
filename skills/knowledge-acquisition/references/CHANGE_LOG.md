@@ -18,3 +18,19 @@
 **影响的组件**: SKILL.md（全部重写）、core/atom_pipeline.py（移除短路逻辑）、run_pipeline.py（移除原子1特化显示）、core/atoms/atom1_knowledge_acquisition.py（标记为 DEPRECATED）、evolution-state.json（v4.0.0 → v4.1.0）
 **审批人**: 杨晓凯
 **审批时间**: 2026-05-10
+
+---
+
+## v1.3.0 — 2026-05-13
+
+**变更类型**: [ARS吸收] 能力增强
+**描述**: 
+- CITATION_VERIFICATION.md 新增引用幻觉5分类法（TF/PAC/IH/PH/SH）及5种复合欺骗模式
+- 基于 GPTZero × NeurIPS 2025 (Adams et al., 2026)，为每篇论文的验证指定具体幻觉类型
+- 新增"难以验证不是有效判决"的硬规则
+- 引用证据必须达到 VERIFIED/NOT_FOUND/MISMATCH 之一
+- SKILL.md Step 2.5 增强为"引用验证 + 5类幻觉检测"
+- 新增 frontmatter: `synthos_data_access_level: "raw"`
+**影响的组件**: SKILL.md, references/CITATION_VERIFICATION.md
+**审批人**: Synthos Agent
+**审批时间**: 2026-05-13

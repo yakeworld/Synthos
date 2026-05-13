@@ -12,6 +12,7 @@ metadata:
   synthos_asserted_compliance: "P0,P2,P3"
   synthos_depends_on: "knowledge-acquisition, knowledge-extraction, association-discovery, hypothesis-generation, argument-expression, viewpoint-verification"
   synthos_author: "Synthos Agent (v4.1 zero-python refactor)"
+  synthos_data_access_level: "redacted"
 allowed-tools: terminal web delegate_task Read Write skill_view
 ---
 
@@ -43,6 +44,8 @@ mkdir -p /media/yakeworld/sda2/Synthos/outputs/runs/<run_id>
 
 | 关键词类别 | 标记 | 示例关键词 |
 |-----------|------|-----------|
+| 创意 | `needs_ideation` | 创意、新想法、研究方向、brainstorm、ideation、探索 |
+| 认知 | `needs_creativity` | 创造性思维、打破框架、跨领域、analogy、类比 |
 | 检索 | `needs_acquisition` | 找论文、搜索、文献、find papers、search |
 | 分析 | `needs_extraction` | 分析、综述、现状、趋势、analyze、review |
 | 关联 | `needs_association` | 比较、对比、关系、矛盾、compare、contradiction |
@@ -55,9 +58,14 @@ mkdir -p /media/yakeworld/sda2/Synthos/outputs/runs/<run_id>
 - `medium` (2个标记)：短链，2个原子
 - `complex` (3-4个标记)：中长链，3-4个原子
 - `full` (5+个标记)：完整链，5-6个原子
+- `creative` (含 `needs_ideation` 或 `needs_creativity`)：创意链，前置 research-ideation 原子
 
-**原子链顺序**（标准的 DAG 依赖顺序）：
+**原子链顺序**——新原子在DAG中的位置：
 ```
+# 创意链（creative-cognition已合并入research-ideation作为Layer2）
+research-ideation → [标准原子链]
+
+# 标准原子链
 knowledge-acquisition → knowledge-extraction → association-discovery → hypothesis-generation → argument-expression → viewpoint-verification
 ```
 
@@ -83,6 +91,7 @@ for each atom_name in atom_chain:
 **对应关系**（atom 名称 → skill 名称）：
 | Atom 名 | Skill 名 | 功能 |
 |---------|----------|------|
+| `research-ideation` | `research-ideation` | 研究创意发散与认知引擎（L1:10框架+L2:8引擎+L3:组合协议） |
 | `knowledge-acquisition` | `knowledge-acquisition` | 多源文献检索 |
 | `knowledge-extraction` | `knowledge-extraction` | 结构化知识提取 |
 | `association-discovery` | `association-discovery` | 关联发现与分析 |
@@ -109,6 +118,7 @@ assembled_output.json
 ├── routing (原子链、复杂度、跳过理由)
 ├── short_circuit (如有)
 ├── outputs: {
+      "research-ideation": { ... },  (如有)
       "knowledge-acquisition": { ... },
       "knowledge-extraction": { ... },  (如有)
       ...

@@ -72,6 +72,18 @@
 - 空白必须有重要性评级（P0-P3）
 - Schema要求：空白记录包含 `gap_type`、`source_refs`、`priority`
 
+## P6: 数据访问分级（Data Access Levels）
+
+> [ARS吸收] 自 Academic Research Skills v3.7 — 防止评分标准/金标准与原始数据共存
+
+原子按数据敏感度分三级：`raw` (原始) → `redacted` (脱敏) → `verified_only` (仅已验证)。
+
+- `raw` 原子消费外部API数据，不能读取下游验证结论
+- `verified_only` 原子的评分标准绝不与 `raw` 数据共存于同一上下文
+- 跨层流禁止：`verified_only` 不能直接接收 `raw` 输出，须经 `redacted` 转换
+- 完整性门控（见 `shared/references/DATA_ACCESS_LEVELS.md`）是实际执行点
+- Schema要求：每个原子在 frontmatter 声明 `synthos_data_access_level`
+
 ---
 
 ## 宪法层级与原子映射
@@ -79,11 +91,12 @@
 | 原则 | 适用原子 | 审查频率 |
 |:-----|:---------|:---------|
 | P0 证据可溯性 | ACQ, ASC, GAP, HYP | 每次进化 |
-| P1 原子可复现性 | 全部7+2原子 | 每次进化 |
+| P1 原子可复现性 | 全部8原子 | 每次进化 |
 | P2 稳定下沉/演化上浮 | 全部技能 | 每周 |
 | P3 人机分层 | ROU（含GAP/HYP路由） | 每次进化 |
 | P4 假说可证伪性 | HYP | 每次假说生成 |
 | P5 空白可追溯性 | GAP | 每次空白发现 |
+| **P6 数据访问分级** | **全部8原子** | **每次进化** |
 
 ---
 
@@ -96,4 +109,4 @@
 
 ---
 
-> 宪法是Synthos的顶层约束。所有原子、技能、进化循环必须遵守以上六项原则。
+> 宪法是Synthos的顶层约束。所有原子、技能、进化循环必须遵守以上**七项**原则。
