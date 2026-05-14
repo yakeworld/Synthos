@@ -2,9 +2,9 @@
   "version": "4.3.0",
   "architecture": "pure_skill_driven_zero_python",
   "mode": "ACTUAL",
-  "last_updated": "2026-05-14T09:30:00Z",
-  "last_run": "2026-05-14T09:30:00Z",
-  "evolution_count": 35,
+  "last_updated": "2026-05-14T22:30:00Z",
+  "last_run": "2026-05-14T22:30:00Z",
+  "evolution_count": 36,
   "refactoring": {
     "completed": true,
     "completed_at": "2026-05-10T20:56:00",
@@ -185,7 +185,7 @@
       ],
       "structural_avg": 1.0,
       "benchmark_score": 1.0,
-      "overall_score": 0.915,
+      "overall_score": 0.920,
       "degraded_atoms": [],
       "fixes_applied": []
     }
@@ -344,7 +344,7 @@
     "status": "healthy",
     "structural_avg": 1.0,
     "benchmark_score": 1.0,
-    "overall_score": 0.915,
+    "overall_score": 0.920,
     "degraded_atoms": [],
     "api_health": "healthy"
   },
