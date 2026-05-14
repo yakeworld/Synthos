@@ -148,6 +148,10 @@ metadata:
 - **完整性**：每个主张都有支持证据或标注为假设
 - **可读性**：语言表达的清晰和准确
 - **规范性**：符合学术写作标准（引用格式、段落结构）
+- **[PW-Bench吸收] 文献综述六轴质量门控**：Introduction/Related Work 章节输出前，使用 `references/litreview-quality-gate.md` 的 6 轴评分体系进行自检。门控标准：
+  - **≥ 55** → 直接输出 ✅
+  - **40-54** → 输出 + 标注改进点 ⚠️
+  - **< 40** → 标记为"需要重写"，输出改进建议 🔴
 
 ## 8. 约束
 
@@ -184,6 +188,7 @@ metadata:
 - 边界证明：`references/BOUNDARY.md`
 - 金标准：`golden/GOLDEN_SET.md`
 - 变更日志：`references/CHANGE_LOG.md`
+- **[PW-Bench吸收] 文献综述六轴质量门控**：`references/litreview-quality-gate.md`
 
 ---
 
