@@ -48,3 +48,19 @@
 **影响的组件**: SKILL.md, frontmatter
 **审批人**: Synthos Agent
 **审批时间**: 2026-05-13
+
+---
+
+## v0.3.0 — 2026-05-14
+
+**变更类型**: [PW-Bench吸收] 证据质量增强
+**描述**: 
+- 从 PaperOrchestra/PaperWritingBench (arXiv:2604.05018, App. F.3) 吸收 Citation F1 引用质量评价方法论
+- 在置信度计算步骤（Step 3e）之后新增 Step 3e.5：引用质量修正门控
+- 引用质量得分 = (P0数 + 0.5×P1数) / (P0数 + P1数)
+- 置信度修正：confidence × min(1.0, citation_quality + 0.3)
+- 新增 reference 文件: references/citation-f1-methodology.md
+- P0/P1 分类不参与自动裁决，仅作为弱信号
+**影响的组件**: SKILL.md (Step 3e.5 + references索引), CHANGE_LOG.md
+**审批人**: Synthos Agent
+**审批时间**: 2026-05-14

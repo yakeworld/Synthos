@@ -114,6 +114,7 @@ metadata:
 - 如果需要从论文中提取结构化信息 → 这是 `knowledge-extraction` 的职责，本原子只处理已结构化的知识项。
 - 如果需要基于空白和关联生成可检验的假设 → 这是 `hypothesis-generation` 的职责，本原子只报告空白，不生成假设。
 - 如果输入是 PDF 或原始论文元数据 → 先经过 `knowledge-acquisition` → `knowledge-extraction` 管道。
+- **PW-Bench 逆向工程**（从论文重构 Idea + Experimental Log）→ `knowledge-extraction` 的**可选增强模式**，不在本原子范围内。
 
 ## 5. 证据链输出要求（Evidence Summary）
 

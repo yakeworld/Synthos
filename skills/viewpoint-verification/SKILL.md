@@ -79,6 +79,14 @@ metadata:
       - 证据质量评分作为置信度上限
       - 最终置信度裁剪至 [0.0, 1.0]
 
+   e.5 **[PW-Bench吸收] 引用质量修正 — Citation F1 门控**：
+      - 提取当前假设/论点引用的所有参考文献
+      - 使用 Python 或 LLM 对引用列表执行 P0/P1 分类（见 `references/citation-f1-methodology.md`）
+      - 计算引用质量得分 = (P0数 + 0.5×P1数) / (P0数 + P1数)，空列表=0.0
+      - 应用置信度修正：`confidence = confidence × min(1.0, citation_quality + 0.3)`
+      - 在 verification_results.citation_quality 中记录引用质量得分
+      - **注意**: 此修正仅作为弱信号，不单独触发 verdict 变化
+
    f. **裁决（Verdict）**：
       - `supported`：confidence ≥ 0.80，无强反方观点
       - `partially_supported`：0.50 ≤ confidence < 0.80
@@ -219,3 +227,4 @@ metadata:
 - 边界证明：`references/BOUNDARY.md`
 - 金标准：`golden/GOLDEN_SET.md`
 - 变更日志：`references/CHANGE_LOG.md`
+- **[PW-Bench吸收] 引用质量评价方法论**：`references/citation-f1-methodology.md`
