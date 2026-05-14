@@ -65,6 +65,7 @@ metadata:
 - 如果只需要论文的标题/DOI，不需要结构化提取 → 直接用 `raw_papers`，不调用本原子。
 - 如果需要跨论文比较或关联分析 → 这是 `association-discovery` 的职责，本原子只提供结构化输入。
 - 如果输入是 PDF 文件路径（而非已解析的元数据） → 需要机械原子 `pdf_parser`，不在本原子范围内。
+- **如需从论文逆向工程重构研究设计**（PW-Bench 的 Sparse Idea / Dense Idea / Experimental Log）→ 本原子的**可选增强模式**，见 `references/pwbench-reverse-engineer.md`。
 
 ## 5. 证据链输出要求（Evidence Summary）
 
@@ -119,3 +120,4 @@ metadata:
 - 边界证明：`references/BOUNDARY.md`
 - 金标准：`golden/GOLDEN_SET.md`
 - 变更日志：`references/CHANGE_LOG.md`
+- **[PW-Bench吸收] 逆向工程方法论**：`references/pwbench-reverse-engineer.md`
