@@ -143,7 +143,7 @@
   "evolution_engine": {
     "active": true,
     "skill": "skills/evolution/SKILL.md",
-    "version": "2.10.0",
+    "version": "2.11.0",
     "created": "2026-05-11T06:35:00+00:00",
     "cycle": 19,
     "status": "healthy",
@@ -546,6 +546,18 @@
       "type": "P0_self_improvement",
       "evaluation_score": 4.5,
       "note": "写作闭环测试发现S2 API完全不可用。新增：本地缓存系统(24h TTL)、6级API回退链(自动降级)、local_absorption_db离线兜底(从absorption-tracked.json提取)。保证ACQ在任何网络条件下都有数据可返回。"
+    },
+    {
+      "date": "2026-05-18",
+      "source": "HaiyangDiiing/aris-cli (ARIS, ⭐8, MIT) — Git-as-Memory + 单指标聚焦 + 假设先行",
+      "skills": [
+        "evolution v2.10→v2.11 (Git-as-Memory Phase 0.5/A/B/C + safe_revert)",
+        "evolution v2.10→v2.11 (单指标聚焦 IMPROVE + stuck 协议)",
+        "evolution v2.10→v2.11 (假设先行 DIAGNOSE 8.0 + hypothesis_yaml)"
+      ],
+      "type": "P0_core_mechanism_enhancement",
+      "evaluation_score": 4.0,
+      "note": "3项核心机制吸收：①Git-as-Memory循环协议嵌入BENCHMARK→IMPROVE子循环；②单指标聚焦每轮只修最低分维度；③假设先行在DIAGNOSE-IMPROVE间插入可验证假说。L+0~L+2通过。L+3: git commit验证通过，Phase A/B/C需真实进化BENCHMARK后验证。"
     }
   ]
 }
