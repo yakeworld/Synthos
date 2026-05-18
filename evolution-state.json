@@ -2,9 +2,9 @@
   "version": "4.3.0",
   "architecture": "pure_skill_driven_zero_python",
   "mode": "ACTUAL",
-  "last_updated": "2026-05-14T22:30:00Z",
-  "last_run": "2026-05-14T22:30:00Z",
-  "evolution_count": 36,
+  "last_updated": "2026-05-17T12:35:20Z",
+  "last_run": "2026-05-16T23:48:24Z",
+  "evolution_count": 39,
   "refactoring": {
     "completed": true,
     "completed_at": "2026-05-10T20:56:00",
@@ -99,13 +99,13 @@
       "note": "S2 API 429 recurring - OpenAlex/arXiv fallback effective"
     },
     "knowledge_extraction": {
-      "trust": 0.90,
+      "trust": 0.9,
       "runs": 2,
       "success_rate": 1.0,
       "last_run": "2026-05-13"
     },
     "association_discovery": {
-      "trust": 0.90,
+      "trust": 0.9,
       "runs": 2,
       "success_rate": 1.0,
       "last_run": "2026-05-13"
@@ -118,13 +118,13 @@
       "note": "Frontmatter fixed in Cycle 12, benchmarked PASS Cycle 13"
     },
     "argument_expression": {
-      "trust": 0.90,
+      "trust": 0.9,
       "runs": 1,
       "success_rate": 1.0,
       "last_run": null
     },
     "viewpoint_verification": {
-      "trust": 0.90,
+      "trust": 0.9,
       "runs": 1,
       "success_rate": 1.0,
       "last_run": null
@@ -137,58 +137,90 @@
     }
   },
   "next_actions": [
-    "Verify each atom's SKILL.md Agent-execution in practice",
-    "Create golden test sets for each cognitive atom (P1)",
-    "Fix hypothesis-generation SKILL.md frontmatter to use synthos_version format — DONE (Cycle 12)",
-    "Address S2 API 429 rate limit — consider rotating API keys or switching to OpenAlex primary",
-    "Run ADHD demo end-to-end with pure skill-driven execution",
-    "Add references/ and golden/ to bppv-expert and research-thinking-framework for completeness",
-    "Monitor DATAGEN and Mimosa-AI for potential future absorption"
+    "Continue paper writing: ACQ+EXT -> ASC+GAP -> HYP -> paper-workflow -> ARG -> VER",
+    "Update PROBE formula to include signature field (v2.6 gap)"
   ],
   "evolution_engine": {
     "active": true,
     "skill": "skills/evolution/SKILL.md",
-    "version": "2.3.0",
+    "version": "2.10.0",
     "created": "2026-05-11T06:35:00+00:00",
-    "cycle": 17,
+    "cycle": 19,
     "status": "healthy",
     "cron_schedule": "0 6 * * *",
-    "last_auto_run": "2026-05-14T06:00:00+00:00",
+    "last_auto_run": "2026-05-15T06:00:00+00:00",
     "last_cycle": {
-      "performed_at": "2026-05-14T06:00:00+00:00",
+      "performed_at": "2026-05-16T23:48:24Z",
       "status": "healthy",
       "actions_taken": [
-        "Cycle 17 evolution completed (odd cycle: ACQ + EXT + ASC + ROUTE)",
-        "PROBE: 7/7 core atoms at structural_score=1.0 (VER anti-sycophancy protocol intact)",
-        "BENCHMARK: 8/8 all pass (4 API + 4 Golden), S2 API normal (no 429)",
-        "DIAGNOSE: 0.939 (EXCELLENT) — stable high performance",
-        "EXTERNAL: aso-skills(⭐1237) discovered but domain mismatch; NanoResearch(⭐991) growing",
-        "No degraded atoms, no fixes needed"
+        "Cycle 19 evolution completed (even cycle: HYP + ARG + VER + ROUTE)",
+        "PROBE: 8/8 core atoms at structural_score=1.0 (VER anti-sycophancy protocol intact)",
+        "BENCHMARK: 12/12 all pass (4 golden + 4 structure), score=1.0",
+        "DIAGNOSE: 0.960 (EXCELLENT) — stable",
+        "IMPROVE: added signature field to 7 core atoms (v2.6 DSPy requirement)",
+        "No degraded atoms, no structural fixes needed"
       ],
       "avg_score": 1.0,
       "benchmark_score": 1.0,
-      "overall_score": 0.939,
+      "overall_score": 0.96,
       "degraded_atoms": [],
       "api_health": "healthy"
     },
     "current_cycle": {
-      "cycle": 18,
-      "type": "manual_run_acq_ext_asc",
-      "performed_at": "2026-05-14T08:00:00+00:00",
+      "cycle": 19,
+      "type": "manual_user_request_even_cycle",
+      "performed_at": "2026-05-16T23:48:24Z",
       "status": "healthy",
       "actions": [
-        "PROBE: 7/7 core atoms structural_score=1.0 (all ref files intact, VER anti-sycophancy intact)",
-        "BENCHMARK: 8/8 all pass (ROUTE-01+ACQ-01+EXT-01+ASC-01 + 4 Golden)",
-        "EXTERNAL: nature-skills⭐5625🚀; PaperOrchestra(⭐456) NEW — SKILL.md multi-agent paper pipeline; AutoR(⭐1043) NEW — philosophy aligned; CognitiveKernel-Pro(⭐513) NEW; Kosmos(⭐510) stable",
-        "DIAGNOSE: overall=0.905 — EXCELLENT",
-        "No fixes needed — all atoms healthy"
+        "PROBE: 8/8 core atoms structural_score=1.0",
+        "BENCHMARK: 12/12 all pass (HYP+ARG+VER+ROUTE + 8 golden)",
+        "OPTIMIZE: skipped (no failures)",
+        "EXTERNAL: skipped (recent scan)",
+        "DIAGNOSE: overall=0.960 — EXCELLENT",
+        "IMPROVE: 7 atoms added signature field"
       ],
       "structural_avg": 1.0,
       "benchmark_score": 1.0,
-      "overall_score": 0.920,
+      "overall_score": 0.96,
       "degraded_atoms": [],
-      "fixes_applied": []
-    }
+      "fixes_applied": [
+        "Added 'signature' frontmatter field to 7 core atoms"
+      ]
+    },
+    "architecture": "state_machine_3_paths_5_gates_4_interrupts",
+    "last_updated": "2026-05-17T00:01:22Z",
+    "checkpoint": {
+      "exists": false,
+      "last_completed_step": null,
+      "next_step": null,
+      "created_at": null,
+      "expires_at": null,
+      "had_crash_resume": false,
+      "consecutive_crashes": 0
+    },
+    "gates": {
+      "fresh_session_gate": {
+        "pass_count": 0,
+        "skip_count": 0
+      },
+      "evolution_needed_gate": {
+        "pass_count": 0,
+        "skip_count": 0
+      },
+      "optimize_needed_gate": {
+        "pass_count": 0,
+        "skip_count": 0
+      },
+      "external_scan_gate": {
+        "pass_count": 0,
+        "skip_count": 0
+      },
+      "user_notify_gate": {
+        "pass_count": 0,
+        "skip_count": 0
+      }
+    },
+    "traces": []
   },
   "skill_tree": {
     "total_skills": 16,
@@ -232,7 +264,7 @@
     "total": 10,
     "passed": 9,
     "failed": 1,
-    "average_quality": 0.90
+    "average_quality": 0.9
   },
   "implementation": {
     "completed_at": "2026-05-10T20:56:00+00:00",
@@ -289,8 +321,8 @@
     "quality_gain": "Pure skill-driven — Agent flexibly handles any search source, any API change, any error condition without Python code changes. Adding a new source = editing SKILL.md."
   },
   "constitution": {
-    "document": "docs/SKILL-principles.md",
-    "version": "1.0",
+    "document": "/media/yakeworld/sda2/Synthos/CONSTITUTION.md",
+    "version": "5.0",
     "principles": {
       "P0_evidence_traceability": {
         "status": "implemented",
@@ -329,24 +361,48 @@
       }
     },
     "constraint_matrix": {
-      "skills": ["P0", "P1", "P2"],
-      "task_router": ["P0", "P2", "P3"],
-      "human_interface": ["P0", "P3"]
+      "skills": [
+        "P0",
+        "P1",
+        "P2"
+      ],
+      "task_router": [
+        "P0",
+        "P2",
+        "P3"
+      ],
+      "human_interface": [
+        "P0",
+        "P3"
+      ]
     }
   },
   "documents": {
-    "SKILL-architecture.md": {"status": "completed", "version": "1.0", "created": "2026-05-10T00:45:52.522310+00:00"},
-    "atom-io-schemas.md": {"status": "completed", "version": "1.0", "created": "2026-05-10T00:51:29.665695+00:00"},
-    "SKILL-spec-profile.md": {"status": "final", "version": "1.0", "created": "2026-05-10T01:07:23.858356+00:00"}
+    "SKILL-architecture.md": {
+      "status": "completed",
+      "version": "1.0",
+      "created": "2026-05-10T00:45:52.522310+00:00"
+    },
+    "atom-io-schemas.md": {
+      "status": "completed",
+      "version": "1.0",
+      "created": "2026-05-10T00:51:29.665695+00:00"
+    },
+    "SKILL-spec-profile.md": {
+      "status": "final",
+      "version": "1.0",
+      "created": "2026-05-10T01:07:23.858356+00:00"
+    }
   },
   "evolution": {
-    "cycle": 19,
+    "cycle": 42,
     "status": "healthy",
     "structural_avg": 1.0,
     "benchmark_score": 1.0,
-    "overall_score": 0.920,
+    "overall_score": 0.975,
     "degraded_atoms": [],
-    "api_health": "healthy"
+    "api_health": "healthy",
+    "last_lesson": "Chinese municipal science project proposals frequently contain fabricated Englis"
   },
   "absorptions": [
     {
@@ -364,7 +420,9 @@
     {
       "date": "2026-05-13",
       "source": "Hermes Agent skill: nsfc-grant-audit",
-      "skills": ["nsfc-grant-audit (extended skill - 标书评审与重构)"],
+      "skills": [
+        "nsfc-grant-audit (extended skill - 标书评审与重构)"
+      ],
       "type": "extended_skill_absorption",
       "evaluation_score": 4.0,
       "note": "8维评审矩阵+文献差距分析+OA PDF下载+NotebookLM集成。已在PD误吸标书验证。"
@@ -372,7 +430,10 @@
     {
       "date": "2026-05-12",
       "source": "AKNE (yakeworld/.knowledge/)",
-      "skills": ["bppv-expert", "research-thinking-framework"],
+      "skills": [
+        "bppv-expert",
+        "research-thinking-framework"
+      ],
       "type": "extended_knowledge",
       "evaluation_score": 4.0,
       "note": "高互补性结构化医学知识 + 方法论框架。Low integration cost (纯SKILL.md)"
@@ -380,7 +441,9 @@
     {
       "date": "2026-05-12",
       "source": "academic_writer/work/src/",
-      "skills": ["knowledge-acquisition (v1.3.0)"],
+      "skills": [
+        "knowledge-acquisition (v1.3.0)"
+      ],
       "type": "P1_capability_enhancement",
       "items": [
         "PMC full-text extraction",
@@ -393,7 +456,9 @@
     {
       "date": "2026-05-12",
       "source": "self_creation (academic_writer/work/research/adhd_notebook_papers/)",
-      "skills": ["adhd-eye-tracking-review"],
+      "skills": [
+        "adhd-eye-tracking-review"
+      ],
       "type": "extended_research_skill",
       "evaluation_score": 3.0,
       "note": "15篇ADHD眼动追踪论文(2020-2026)的系统综述skill。"
@@ -401,7 +466,9 @@
     {
       "date": "2026-05-11",
       "source": "nature-figure from Yuan1z0825/nature-skills (袁一哲, 上海交大)",
-      "skills": ["figure-generation"],
+      "skills": [
+        "figure-generation"
+      ],
       "type": "extended_skill_absorption",
       "evaluation_score": 4.5,
       "note": "Figure契约方法论：结论→证据链→面板映射→出口契约。16种排版模式+Nature色板体系+QA审核清单。最成熟Nature技能（Stable阶段），Synthos最大的图表能力缺口。"
@@ -418,6 +485,67 @@
       "type": "P1_capability_enhancement",
       "evaluation_score": 4.0,
       "note": "PaperWritingBench三层架构吸收：①Citation F1引用质量评价→VER置信度门控；②六轴文献综述评分→ARG质量自检；③逆向工程(Sparse/Dense Idea+ExpLog)→EXT可选模式；④SxS比对+反膨胀规则→BENCHMARKS新增维度。3原子引用文件+4 SKILL.md修改+BENCHMARKS扩展。零Python代码，纯SKILL.md方法论吸收。"
+    },
+    {
+      "date": "2026-05-17",
+      "source": "Orchestra-Research/AI-research-SKILLs (8,492⭐, MIT)",
+      "skills": [
+        "viewpoint-verification v1.2.0→v1.3.0 (ARA 6D epistemic scoring)",
+        "evolution RECORD 11.2 (ARA provenance event types)"
+      ],
+      "type": "P0_core_mechanism_enhancement",
+      "evaluation_score": 4.5,
+      "note": "90 SKILL.md ML科研技能集合。ARA Rigor Reviewer的6维认识论评分(证据/可证伪性/范围/论证/探索/方法)直接增强VER置信度计算。ARA Research Manager的7事件类型+溯源标记增强evolution日志。"
+    },
+    {
+      "date": "2026-05-17",
+      "source": "SkyworkAI/DeepResearchAgent (3,388⭐, MIT)",
+      "skills": [
+        "evolution v2.9.0→v2.10.0 (SEPL rollback mechanism)"
+      ],
+      "type": "P0_core_mechanism_enhancement",
+      "evaluation_score": 4.2,
+      "note": "SEPL (Self Evolution Protocol) 的 propose→assess→commit 闭环 + rollback → 增强evolution OPTIMIZE的VERIFY_PATCH步骤，增加提交门、自动回滚、版本快照、止损规则。"
+    },
+    {
+      "date": "2026-05-18",
+      "source": "Orchestra-Research/AI-research-SKILLs (8,492⭐, MIT) — Autoresearch two-loop",
+      "skills": [
+        "task-router v1.1.0→v1.2.0 (two-loop orchestration protocol)"
+      ],
+      "type": "P0_core_mechanism_enhancement",
+      "evaluation_score": 4.3,
+      "note": "Autoresearch 双循环编排协议吸收。新增三种执行模式（simple_chain/exploratory_loop/research_twoloop）。内循环：HYP→VER→ASC 迭代。外循环：每5轮全局复盘+方向决策。更新IO_CONTRACT+BOUNDARY+CHANGE_LOG四重同步。"
+    },
+    {
+      "date": "2026-05-18",
+      "source": "K-Dense/scientific-agent-skills (23,109⭐, MIT) — Database Lookup",
+      "skills": [
+        "scientific-database-lookup v1.0.0 (unified scientific database routing)"
+      ],
+      "type": "P0_extended_skill_absorption",
+      "evaluation_score": 4.0,
+      "note": "78+科学数据库统一路由层。6领域×17+数据库API参考文件（PubChem/UniProt/NCBI-Gene/ClinicalTrials/ChEMBL/STRING等）。纯SKILL.md+curl/jq架构，零Python依赖。"
+    },
+    {
+      "date": "2026-05-18",
+      "source": "Orchestra-Research/AI-research-SKILLs (8,492⭐, MIT) — ML Paper Writing LaTeX",
+      "skills": [
+        "latex-output v1.0.0→v1.1.0 (AAAI/ACL/COLM templates + algorithm.sty + writing philosophy)"
+      ],
+      "type": "P1_capability_enhancement",
+      "evaluation_score": 3.8,
+      "note": "4个新会议模板(AAAI/ACL/COLM/算法宏包) + 写作哲学(永不记忆生成BibTeX) + 协作写作方法。Synthos原有latex-output已覆盖NeurIPS/ICLR/ICML/中文，此次补全了会议覆盖缺口。"
+    },
+    {
+      "date": "2026-05-18",
+      "source": "self_fix — 写作闭环测试驱动修复",
+      "skills": [
+        "knowledge-acquisition v1.3.0→v1.4.0 (API resilience: cache + fallback chain + offline local_absorption_db)"
+      ],
+      "type": "P0_self_improvement",
+      "evaluation_score": 4.5,
+      "note": "写作闭环测试发现S2 API完全不可用。新增：本地缓存系统(24h TTL)、6级API回退链(自动降级)、local_absorption_db离线兜底(从absorption-tracked.json提取)。保证ACQ在任何网络条件下都有数据可返回。"
     }
   ]
 }
