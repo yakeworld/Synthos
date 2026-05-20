@@ -1,10 +1,14 @@
 ---
 name: viewpoint-verification
 description: "Multi-angle verification of hypotheses and arguments: counterarguments, falsification tests, robustness checks, and weakness identification. Calculates Bayesian-inspired confidence scores and returns structured verdicts. Use when the user asks to validate a hypothesis, find counterarguments, test a claim, check for bias, evaluate argument strength, or perform a literature-based sanity check on a research idea."
+version: 1.3.0
+author: Synthos Agent
 license: MIT
+allowed-tools: Read Write
+signature: "hypothesis: Hypothesis, argument: Argument -> verdict: str, confidence_score: float, counterarguments: list[Counterargument]"
 metadata:
   synthos_atom_type: "cognitive"
-  synthos_version: "0.1.0"
+  synthos_version: "1.1.0"
   synthos_skill_md_hash: "9224c10a88b51ce0bda48e8ecebd687027ead6cf02ab2f75eaa338c88d6439ac"
   synthos_model_version_pin: "deepseek/deepseek-v4-pro@2026-05-10"
   synthos_model_tested_on: "2026-05-10T00:00:00Z"
@@ -16,14 +20,30 @@ metadata:
   synthos_boundary_proof_ref: "references/BOUNDARY.md"
   synthos_change_log_ref: "references/CHANGE_LOG.md"
   synthos_asserted_compliance: "P0,P1,P2"
-  synthos_mechanical_atoms: ""
   synthos_depends_on: "hypothesis-generation,argument-expression"
   synthos_author: "Synthos Agent"
-allowed-tools: Read Write
-metadata:
   synthos_data_access_level: "verified_only"
+---
 
-# 观点验证 (Viewpoint Verification) — 认知原子 #6
+# 观点验证 (Viewpoint Verification)
+
+## 触发条件
+
+在以下情况加载本技能：
+
+- 上游 argument-expression 已产出论点，需要验证其可靠性
+- 用户要求"验证假设/找反证/检测偏差/评估论证强度"
+- 需要对已生成的假设进行证伪检验
+- 需要计算贝叶斯置信度分数
+
+## 验证清单
+
+- [ ] 已生成至少1个反方论点或反证条件
+- [ ] 置信度评分基于证据强度计算（非主观判断）
+- [ ] 弱点/局限性已明确标注
+- [ ] 已应用反谄媚协议（Concession Threshold Protocol）
+- [ ] 输出包含可操作的改进建议
+- [ ] 无确认偏误（主动寻找了反证而非仅确认）
 
 ## 1. 职责（Scope）
 
@@ -87,6 +107,44 @@ metadata:
       - 在 verification_results.citation_quality 中记录引用质量得分
       - **注意**: 此修正仅作为弱信号，不单独触发 verdict 变化
 
+   e.6 **[ARA吸收] 6维认识论评分校准 — Epistemic Scoring**：
+      - 对当前假设/论点执行6维认识论评分（吸收自 Orchestra-Research/AI-research-SKILLs ARA Rigor Reviewer v3.0，8,492⭐）
+      - 每个维度独立评分 1-5，并记录 strength/weakness/suggestion：
+
+      | 维度 | 评估内容 | 评分标准 |
+      |:-----|:---------|:---------|
+      | **D1. 证据相关性** | 引用的证据是否实质支持每个主张？不仅是引用存在，而是内容对得上 | 1=无关/5=精确匹配 |
+      | **D2. 可证伪性质量** | 证伪条件是否有意义、可操作、范围适当？ | 1=模糊/5=精确可测 |
+      | **D3. 范围校准** | 主张是否精确匹配证据支持的边界，不多不少？ | 1=过度泛化/5=精确校准 |
+      | **D4. 论证连贯性** | 叙事是否从问题→方案→证据形成逻辑脉络？ | 1=跳跃/5=严密链条 |
+      | **D5. 探索完整性** | 是否诚实地记录了研究过程，包括失败？ | 1=隐瞒失败/5=完整记录 |
+      | **D6. 方法严谨性** | 实验设计是否充分（基线、消融、复现报告）？ | 1=草率/5=完备 |
+
+      - 计算6维平均分：`epistemic_score = (D1+D2+D3+D4+D5+D6) / 6`（范围 1.0-5.0）
+      - 映射为置信度校准因子：`epistemic_factor = min(1.0, epistemic_score / 4.0)`（4.0≈"good"基准线）
+      - 应用最终校准：`confidence = confidence × epistemic_factor`
+      - 在 verification_results.epistemic_scoring 中记录各维度分数和校准因子
+      - **注意**：此校准在所有其他修正（反方观点/弱点/鲁棒性/引用质量）之后执行，作为最终校准层
+
+   e.7 **[哲学吸收] 多人格辩论校准 — Persona Debate**：
+      - 当同一数据/论点存在多种解释路径时（如眼动数据同时支持神经生物学模型和生物力学模型），自动创建多视阈辩论：
+      
+      | Persona | 理论透镜 | 评估视角 |
+      |:--------|:---------|:---------|
+      | **Persona A** | 神经生物学模型 | 关注突触可塑性、神经递质通路、脑区激活模式 |
+      | **Persona B** | 生物力学模型 | 关注惯性/力矩、组织力学特性、运动控制 |
+      | **Persona C** | 进化心理学模型 | 关注适应价值、环境选择压力、跨物种比较 |
+      
+      - 辩论协议：
+        ├── **Step 1**: 每个Persona独立解释数据 → 生成结构化论证（含预测+覆盖范围）
+        ├── **Step 2**: 交叉驳斥 — A反驳B的解释，B反驳C，C反驳A
+        ├── **Step 3**: 记录无法解释的残余数据 — 所有Persona都无法覆盖的观察
+        └── **Step 4**: 输出综合评分 — `debate_verdict: {persona_A_conf, persona_B_conf, persona_C_conf, residual_data, recommended_lens}`
+
+      - **触发条件**：仅当存在 ≥2 条不同解释路径时执行（非每次运行）
+      - 校准因子：`debate_factor = max(persona_confs) / (max(persona_confs) + residual_ratio)` 越多残余数据越低置信
+      - 最终置信度 = confidence × debate_factor
+
    f. **裁决（Verdict）**：
       - `supported`：confidence ≥ 0.80，无强反方观点
       - `partially_supported`：0.50 ≤ confidence < 0.80
@@ -96,38 +154,48 @@ metadata:
 
 3. **聚合**：汇总所有 Verification，计算 `aggregate_confidence`（均值、最小值、分布），给出整体 `verdict`。
 
-4. **[ARS吸收] 反谄媚门控 — Concession Threshold Protocol**：
-   
-   当验证过程中出现"用户反驳验证结论"的情况（用户说"你这个反驳不对"或"这个验证太严了"），遵循以下三步协议，**禁止因为用户坚持而让步**：
+4. **[泛化] 反谄媚门控 — Concession Threshold Protocol**
 
-   **Step 1: 对反驳打分 1-5**
+   应用标准的 [反谄媚阈值协议](/media/yakeworld/sda2/Synthos/docs/shared/CONCESSION_THRESHOLD_PROTOCOL.md)（从 viewpoint-verification 提取并泛化到所有技能）。
 
-   | 分数 | 定义 | 动作 |
-   |------|------|------|
-   | 5 | 反驳直接针对核心验证发现 + 提供新证据或严密逻辑 | **让步** — 明确承认并修改验证结论 |
-   | 4 | 反驳实质削弱验证，但有小缺口 | **让步但标注缺口** — 修改结论 + 标注未解决部分 |
-   | 3 | 部分相关但偏离核心验证 | **坚守** — 重申原验证，解释未被打中的部分 |
-   | 2 | 边缘相关，讨论了不同的点 | **反攻** — 指出偏离，重新聚焦核心验证 |
-   | 1 | 断言无证据、权威诉求、或简单否认 | **升级** — 加强原验证，从更多角度论证 |
+   当用户反驳验证结论时，执行三步协议：
 
-   **Step 2: 记录每次决策** — 在验证记录中添加内部标签：
-   `[DA-DECISION: Score X/5 | ACTION: Concede/Hold/Counter/Escalate | REASON: ...]`
+   **Step 1: 对反驳打分 1-5**（评分标准见共享协议文档）
+   **Step 2: 记录每次决策** — `[DA-DECISION: Score X/5 | ACTION: ...]`
+   **Step 3: 强制规则** — 不因坚持让步、不准连续让步、让步率监控
 
-   **Step 3: 反谄媚规则**（强制遵守）：
-   - ❌ **不因用户坚持而让步** — 用户坚持不是证据，不能作为减弱验证的原因
-   - ❌ **不准连续让步** — 让步后，下次让步门槛升到5/5
-   - ❌ **让步率监控** — 如果本验证周期内让步率 > 50%，暂停并升级剩余所有反驳门槛到5/5
-   - ✅ **思维框锁检测** — 每3轮用户反驳后自问："这个验证讨论的前提假设是什么我还没质疑？"
-   - ✅ **不因用户反复提出同一反驳而加强其分数** — 同一论点重复3次不增加分数
+5. **[伦理扩展层] 伦理影响评估 — Ethics Screening**
 
-   **反模式警告**：
-   - "用户说了很多次可能不对" → 这不等于反证
-   - "用户看起来不高兴" → 验证的严格度不应因用户情绪改变
-   - "用户是领域专家所以可能更懂" → 验证逻辑应基于证据链而非身份
+   **触发条件**：当验证对象涉及医学/脑机接口/人类受试者/基因编辑/神经增强等领域时，执行此可选检查：
 
-5. **构建证据链**：每个 counterargument、falsification_condition、robustness_concern 的证据节点见 `references/EVIDENCE_SCHEMA.md`。
+   ```yaml
+   ethics_screening:
+     domain: "医学"  # 触发领域
+     risk_level: enum[low, medium, high, critical]
+     
+     check_1: "双刃剑评估 — 该技术是否存在潜在滥用方向？"
+       - 正面应用: "..."
+       - 潜在风险: "..."
+       - 风险等级: medium
+     
+     check_2: "受试者保护 — 研究方案是否涉及人类受试者？"
+       - 涉及人群: "ADHD患儿"
+       - 伦理审查需求: "需要IRB批准"
+       - 知情同意: "需监护人签署"
+     
+     check_3: "社会影响 — 研究成果是否可能被误用？"
+       - 误用场景: "..."
+       - 影响范围: "..."
+     
+     recommendation: "建议：在发表前增加伦理声明段落，明确研究边界和限制条件。"
+   ```
 
-6. **输出**：返回 `_ok({"verification_results": [...], "aggregate_confidence": {...}, "verdict": "..."})` 信封。
+   **位置**：此检查为扩展层，不改变VER核心流程。当领域匹配时自动附加到验证结果中。
+   详见 `references/ETHICS_SCREENING.md`。
+
+6. **构建证据链**：每个 counterargument、falsification_condition、robustness_concern 的证据节点见 `references/EVIDENCE_SCHEMA.md`。
+
+7. **输出**：返回 `_ok({"verification_results": [...], "aggregate_confidence": {...}, "verdict": "..."})` 信封。
 
 ## 4. 边界判断（When NOT to use this atom）
 

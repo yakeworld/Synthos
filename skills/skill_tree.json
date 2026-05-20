@@ -4,31 +4,38 @@
   "description": "Synthos技能树 - 全部技能拓扑",
   "architecture": {
     "layer_0_ideation": {
-    "name": "研究创意发散与认知引擎/ResearchIdeationCCF",
-    "directory": "research-ideation",
-    "atom": 7,
-    "description": "三层架构：L1(10操作框架: Problem-First/抽象阶梯/张力狩猎/交叉授粉/变化探测/失败分析/简化检验/利益相关者/组合分解/解释检验) + L2(8认知引擎: Bisociation/重构/类比/Boden约束/反转/抽象梯塔/相邻可能/两面神) + L3(6种组合协议+3阶段集成流程)。合并自NanoResearch brainstorming-research-ideas + creative-thinking-for-research。",
-    "version": "2.0.0",
-    "status": "active",
-    "level": 0,
-    "type": "cognitive_atom",
-    "parent": "task-router",
-    "children": ["knowledge-acquisition"],
-    "dependencies": {
-      "upstream": [],
-      "downstream": ["knowledge-acquisition"]
+      "name": "研究创意发散与认知引擎/ResearchIdeationCCF",
+      "directory": "research-ideation",
+      "atom": 7,
+      "description": "三层架构：L1(10操作框架: Problem-First/抽象阶梯/张力狩猎/交叉授粉/变化探测/失败分析/简化检验/利益相关者/组合分解/解释检验) + L2(8认知引擎: Bisociation/重构/类比/Boden约束/反转/抽象梯塔/相邻可能/两面神) + L3(6种组合协议+3阶段集成流程)。合并自NanoResearch brainstorming-research-ideas + creative-thinking-for-research。",
+      "version": "2.0.0",
+      "status": "active",
+      "level": 0,
+      "type": "cognitive_atom",
+      "parent": "task-router",
+      "children": [
+        "knowledge-acquisition"
+      ],
+      "dependencies": {
+        "upstream": [],
+        "downstream": [
+          "knowledge-acquisition"
+        ]
+      },
+      "implementation": "agent_native_skill",
+      "tested": false,
+      "absorbed_from": "NanoResearch brainstorming-research-ideas + creative-thinking-for-research",
+      "absorption_date": "2026-05-14"
     },
-    "implementation": "agent_native_skill",
-    "tested": false,
-    "absorbed_from": "NanoResearch brainstorming-research-ideas + creative-thinking-for-research",
-    "absorption_date": "2026-05-14"
-  },
-  "layer_0_router": {
+    "layer_0_router": {
       "name": "任务编排/TaskRouter",
       "directory": "task-router",
       "atom": 0,
       "description": "路由用户请求到最短原子链。判断任务复杂度，跳过不必要的原子。奥卡姆剃刀原则。",
-      "allowed_tools": ["delegate_task", "Read"],
+      "allowed_tools": [
+        "delegate_task",
+        "Read"
+      ],
       "version": "1.0.0",
       "status": "active",
       "level": 0,
@@ -53,10 +60,16 @@
     "level": 1,
     "type": "cognitive_atom",
     "parent": "task-router",
-    "children": ["knowledge-extraction", "association-discovery"],
+    "children": [
+      "knowledge-extraction",
+      "association-discovery"
+    ],
     "dependencies": {
       "upstream": [],
-      "downstream": ["knowledge-extraction", "association-discovery"],
+      "downstream": [
+        "knowledge-extraction",
+        "association-discovery"
+      ],
       "implementation": "agent_native_skill",
       "tested": true
     }
@@ -72,10 +85,18 @@
       "level": 2,
       "type": "cognitive_atom",
       "parent": "knowledge-acquisition",
-      "children": ["association-discovery", "hypothesis-generation"],
+      "children": [
+        "association-discovery",
+        "hypothesis-generation"
+      ],
       "dependencies": {
-        "upstream": ["knowledge-acquisition"],
-        "downstream": ["association-discovery", "hypothesis-generation"]
+        "upstream": [
+          "knowledge-acquisition"
+        ],
+        "downstream": [
+          "association-discovery",
+          "hypothesis-generation"
+        ]
       },
       "implementation": "agent_native_skill",
       "tested": true
@@ -90,14 +111,22 @@
       "level": 3,
       "type": "cognitive_atom",
       "parent": "knowledge-extraction",
-      "children": ["hypothesis-generation"],
+      "children": [
+        "hypothesis-generation"
+      ],
       "dependencies": {
-        "upstream": ["knowledge-extraction"],
-        "downstream": ["hypothesis-generation"]
+        "upstream": [
+          "knowledge-extraction"
+        ],
+        "downstream": [
+          "hypothesis-generation"
+        ]
       },
       "implementation": "agent_native_skill",
       "tested": true,
-      "absorbed_skills": ["gap-discovery"]
+      "absorbed_skills": [
+        "gap-discovery"
+      ]
     }
   },
   "layer_3": {
@@ -112,10 +141,19 @@
       "level": 4,
       "type": "cognitive_atom",
       "parent": "association-discovery",
-      "children": ["argument-expression", "viewpoint-verification"],
+      "children": [
+        "argument-expression",
+        "viewpoint-verification"
+      ],
       "dependencies": {
-        "upstream": ["knowledge-extraction", "association-discovery"],
-        "downstream": ["argument-expression", "viewpoint-verification"]
+        "upstream": [
+          "knowledge-extraction",
+          "association-discovery"
+        ],
+        "downstream": [
+          "argument-expression",
+          "viewpoint-verification"
+        ]
       },
       "implementation": "agent_native_skill",
       "tested": true
@@ -134,7 +172,10 @@
       "parent": "hypothesis-generation",
       "children": [],
       "dependencies": {
-        "upstream": ["hypothesis-generation", "knowledge-acquisition"],
+        "upstream": [
+          "hypothesis-generation",
+          "knowledge-acquisition"
+        ],
         "downstream": []
       },
       "implementation": "agent_native_skill",
@@ -152,7 +193,10 @@
       "parent": "hypothesis-generation",
       "children": [],
       "dependencies": {
-        "upstream": ["hypothesis-generation", "argument-expression"],
+        "upstream": [
+          "hypothesis-generation",
+          "argument-expression"
+        ],
         "downstream": []
       },
       "implementation": "agent_native_skill",
@@ -205,15 +249,30 @@
       "cron_schedule": "0 6 * * *",
       "last_run": "2026-05-15T07:45:00Z"
     },
-    "experiment-recipes": {
-      "name": "ML训练配方/ExperimentRecipes",
-      "directory": "experiment-recipes",
-      "description": "实战ML训练配方参考——架构选择、训练循环、优化器配置、LR调度、混合精度、调试清单等。吸收自NanoResearch ml-training-recipes。",
-      "version": "1.0.0",
+    "paper-workflow": {
+      "name": "人机互动论文撰写工作流",
+      "directory": "paper-workflow",
+      "description": "人机互动论文撰写工作流。连接HYP→ARG，生成论文框架（研究空白、科学假设、技术方案、实验设计、预期结果、核心结论），人类确认后执行全流程写作。支持多版本探索模式。",
+      "version": "0.1.0",
       "status": "active",
-      "type": "reference",
-      "absorbed_from": "NanoResearch ml-training-recipes",
-      "absorption_date": "2026-05-14"
+      "type": "workflow",
+      "level": 4,
+      "parent": "hypothesis-generation",
+      "children": [
+        "argument-expression",
+        "viewpoint-verification"
+      ],
+      "dependencies": {
+        "upstream": [
+          "hypothesis-generation"
+        ],
+        "downstream": [
+          "argument-expression",
+          "viewpoint-verification"
+        ]
+      },
+      "implementation": "agent_native_skill",
+      "tested": false
     },
     "latex-output": {
       "name": "LaTeX输出",
@@ -224,29 +283,13 @@
       "type": "infrastructure"
     }
   },
-  "absorbed": {
-    "gap-discovery": {
-      "name": "GAP — 研究空白发现",
-      "description": "跨文献矛盾检测、方法论缺口识别、未答问题提取。已吸收进 association-discovery v1.1.0+。",
-      "absorbed_into": "association-discovery",
-      "absorbed_at": "2026-05-12",
-      "former_version": "0.2.0"
-    },
-    "creative-cognition": {
-      "name": "CCF — 深层认知引擎",
-      "description": "8种认知科学框架(Bisociation/重构/类比/Boden约束/反转/抽象梯塔/相邻可能/两面神)。已吸收进 research-ideation v2.0.0 作为 Layer 2。",
-      "absorbed_into": "research-ideation",
-      "absorbed_at": "2026-05-14",
-      "former_version": "1.0.0"
-    }
-  },
-  "total_skills": 15,
+  "absorbed": 1,
+  "total_skills": 16,
   "cognitive_atoms": 7,
   "router": 1,
   "extended_count": 3,
-  "infrastructure": 2,
+  "infrastructure_count": 3,
   "reference": 1,
-  "absorbed": 1,
   "layers": 5,
   "philosophy": {
     "core_principles": [
@@ -265,12 +308,33 @@
     }
   },
   "test_results": {
-    "test_001": {"status": "completed", "result": "success"},
-    "test_002": {"status": "completed", "result": "success"},
-    "test_003": {"status": "completed", "result": "partial"},
-    "test_004": {"status": "completed", "result": "partial"},
-    "test_005": {"status": "completed", "result": "success"},
-    "test_006": {"status": "completed", "result": "success"},
-    "test_007": {"status": "completed", "result": "success"}
+    "test_001": {
+      "status": "completed",
+      "result": "success"
+    },
+    "test_002": {
+      "status": "completed",
+      "result": "success"
+    },
+    "test_003": {
+      "status": "completed",
+      "result": "partial"
+    },
+    "test_004": {
+      "status": "completed",
+      "result": "partial"
+    },
+    "test_005": {
+      "status": "completed",
+      "result": "success"
+    },
+    "test_006": {
+      "status": "completed",
+      "result": "success"
+    },
+    "test_007": {
+      "status": "completed",
+      "result": "success"
+    }
   }
 }
