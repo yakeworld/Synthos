@@ -211,6 +211,19 @@
     "absorbed_from": "NanoResearch ml-training-recipes",
     "absorption_date": "2026-05-14"
   },
+  "paper-workflow": {
+    "name": "paper-workflow",
+    "version": "0.1.0",
+    "status": "active",
+    "license": "MIT",
+    "created": "2026-05-13",
+    "description": "人机互动论文撰写工作流。连接HYP→ARG，生成论文框架（研究空白、科学假设、技术方案、实验设计、预期结果、核心结论），人类确认后执行全流程写作。支持多版本探索模式。",
+    "directory": "paper-workflow",
+    "file_path": "/media/yakeworld/sda2/Synthos/skills/paper-workflow/SKILL.md",
+    "implementation": "agent_native_skill",
+    "type": "workflow",
+    "pipeline_integrated": false
+  },
   "latex-output": {
     "name": "latex-output",
     "version": "1.0.0",

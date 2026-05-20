@@ -1,15 +1,18 @@
 ---
 name: latex-output
-description: Convert Synthos assembled_output.json into conference-ready LaTeX (.tex, .bib, figures). Supports NeurIPS/ICLR/ICML templates + Chinese journal formats. Agent-native — reads JSON, writes LaTeX directly, zero Python.
+version: 1.1.0
+author: Synthos + Nous Research
+description: Convert Synthos assembled_output.json into conference-ready LaTeX (.tex, .bib, figures). Supports NeurIPS/ICLR/ICML/AAAI/ACL/COLM templates + Chinese journal formats. Agent-native — reads JSON, writes LaTeX directly, zero Python.
 license: MIT
 metadata:
   synthos_atom_type: "output"
-  synthos_version: "1.0.0"
+  synthos_version: "1.1.0"
   synthos_skill_md_hash: "pending"
-  synthos_model_tested_on: "2026-05-11T00:00:00Z"
+  synthos_model_tested_on: "2026-05-18T00:00:00Z"
   synthos_depends_on: "argument-expression, knowledge-acquisition"
-  synthos_author: "Synthos + AutoResearchClaw absorption"
-allowed-tools: terminal Read Write
+  synthos_author: "Synthos + AutoResearchClaw absorption + AI-research-SKILLs enhancement"
+  synthos_absorbed_from: "AutoResearchClaw (base) + Orchestra Research AI-research-SKILLs (AAAI/ACL/COLM模板, algorithm包, 写作哲学)"
+allowed-tools: terminal read_file write_file
 ---
 
 # LaTeX 输出 — 从 Synthos 到会议论文
@@ -38,6 +41,9 @@ outputs/runs/<run_id>/latex/
 | NeurIPS 2025 | 国际 ML 会议 | AutoResearchClaw `styles/neurips_2025.sty` |
 | ICLR 2026 | 国际表征学习会议 | AutoResearchClaw `styles/iclr_2026.sty` |
 | ICML 2026 | 国际 ML 会议 | AutoResearchClaw `styles/icml_2026.sty` |
+| AAAI 2026 | AI 会议（新） | AI-research-SKILLs `templates/aaai2026/` |
+| ACL | 计算语言学（新） | AI-research-SKILLs `templates/acl/` |
+| COLM 2025 | 语言建模（新） | AI-research-SKILLs `templates/colm2025/` |
 | 中文期刊模板 | 中文核心期刊 | Agent 按规范手写 |
 
 ## 输入
@@ -156,6 +162,43 @@ author = {{杨}晓凯 and {王}小明}
 ### 5. 公式复制
 argument-expression 输出的数学公式（LaTeX 格式）直接透传，
 不需要额外转换。
+
+## 触发条件
+
+当以下任一条件满足时，应加载本技能：
+
+- 用户要求将论文内容导出为LaTeX格式
+- 用户需要生成会议/期刊模板的 .tex 文件（NeurIPS/ICLR/ICML/中文期刊）
+- 需要从 assembled_output.json 生成完整的论文包（paper.tex + references.bib + build.sh）
+- 用户需要论文编译、格式调整或LaTeX修复
+- 需要将 Markdown 内容转换为 LaTeX 语法
+
+**不加载的时机**：
+- 仅需要图表生成（使用 figure-generation 技能）
+- 仅需要参考文献检索（使用 knowledge-acquisition 技能）
+- 需要的是 Word/PPT/HTML 等非 LaTeX 格式输出
+- 论文内容尚未完成论证构建（先使用 argument-expression 技能）
+
+## 验证清单
+
+执行前确认：
+
+- [ ] assembled_output.json 已就绪（含 title, abstract, sections, references）
+- [ ] 目标输出格式已明确（NeurIPS / ICLR / ICML / 中文期刊 / 自定义）
+- [ ] 参考文献引用已验证状态为 "verified"
+- [ ] 图表文件（如有）已就绪，路径已确认
+- [ ] 会议模板 .sty 文件可用或可从官网获取
+
+执行后确认：
+
+- [ ] paper.tex 已生成，无 LaTeX 语法错误
+- [ ] references.bib 已生成，仅包含已验证引用
+- [ ] Markdown→LaTeX 转换正确（`#` → `\section`, `##` → `\subsection`, `**` → `\textbf` 等）
+- [ ] 数学公式已正确透传（`$$` → `\[ \]`, `$` → `\( \)`）
+- [ ] 图表引用已使用 `\includegraphics` 并设置正确路径
+- [ ] 中文期刊使用 `ctex` 宏包，非中文会议使用对应 .sty 模板
+- [ ] build.sh 已生成，可一键编译
+- [ ] 编译脚本不依赖特定用户环境（使用 pdflatex/bibtex/lualatex 标准命令）
 
 ## 参考
 - AutoResearchClaw `researchclaw/templates/conference.py` — 会议模板定义

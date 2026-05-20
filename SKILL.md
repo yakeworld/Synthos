@@ -134,16 +134,22 @@ DRAFT → TESTING → VALIDATED → ACTIVE → DEPRECATED
 
 ### 当前状态
 
-- **总技能数**: 7
-- **通过测试**: 7/7 (100%)
-- **平均质量**: 0.97
+- **总技能数**: 16（7核心原子 + 7扩展技能 + 2基础设施）
+- **通过测试**: 8/8 (100%, Cycle 24)
+- **平均质量**: 0.970 (EXCELLENT)
+- **进化轮次**: 37
 - **淘汰建议**: 0
 
 ## 文件结构
 
 ```
-Synthos/
+| Synthos/
 ├── SKILL.md                          # 认知操作系统总编排
+├── CONSTITUTION.md                   # 宪法（哲学免疫系统）
+├── PROJECT_QUALITY.md                # 质量标准与闭环阈值
+├── evolution-state.json              # 进化状态
+├── README.md                         # 英文文档
+├── README_CN.md                      # 中文文档
 ├── skills/
 │   ├── knowledge-acquisition/        # Atom 1
 │   ├── knowledge-extraction/         # Atom 2
@@ -151,15 +157,20 @@ Synthos/
 │   ├── hypothesis-generation/        # Atom 4
 │   ├── argument-expression/          # Atom 5
 │   ├── viewpoint-verification/       # Atom 6
-│   └── task-router/                  # 编排层
-├── scripts/
-│   ├── skill_network.py              # 网络分析
-│   ├── skill_tester.py               # 质量测试
-│   ├── skill_absorber.py             # 技能吸收
-│   └── evolution_scheduler.py        # 进化调度
-├── test-results/                     # 测试报告
+│   ├── task-router/                  # 编排层
+│   ├── gap-discovery/                # 研究空白发现
+│   ├── evolution/                    # 自进化引擎 (v2.9)
+│   ├── bppv-expert/                  # BPPV 诊断知识
+│   ├── research-thinking-framework/  # 科研思维框架
+│   ├── figure-generation/            # 出版级图表生成
+│   ├── nsfc-grant-audit/             # NSFC 标书评审
+│   ├── experiment-recipes/           # 实验配方
+│   ├── latex-output/                 # LaTeX 输出
+│   ├── research-ideation/            # 研究创意
+│   └── paper-workflow/               # 论文工作流
+├── archive/                          # 历史存档
 ├── docs/                             # 文档
-└── evolution-state.json              # 进化状态
+└── outputs/                          # 运行输出
 ```
 
 ## License
