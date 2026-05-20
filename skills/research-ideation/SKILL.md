@@ -8,6 +8,8 @@ description: >-
   3-layer architecture: Layer 1 (10 operational frameworks) + Layer 2 (8 cognitive engine
   frameworks) + Layer 3 (combination protocol + integrated workflow).
   Transforms research problems into multi-dimensional creative directions and cognitive insights.
+version: 2.0.0
+author: Synthos Agent
 license: MIT
 allowed-tools: Read Write
 dependencies:
@@ -34,6 +36,34 @@ metadata:
 [SYNTHOS_P0_ABSORBED_FROM]: <> (Layer 1: NanoResearch brainstorming-research-ideas — 10 frameworks for structured research ideation. Layer 2: NanoResearch creative-thinking-for-research — 8 foundational frameworks for creative cognition. Merged 2026-05-14 to eliminate atomic redundancy.)
 
 # 研究创意发散与认知引擎 (Research Ideation & Creative Cognition)
+
+## 触发条件
+
+加载此技能当用户：
+- 需要围绕一个研究问题进行多维度创意发散
+- 希望从不同角度探索研究方向和可能性
+- 思维卡住，需要认知热身或瓶颈突破
+- 需要系统性地扫描某个领域的研究机会
+- 面对学术争议，希望找到矛盾转化点
+
+不适用场景（请使用替代技能）：
+- 已有明确具体方向 → 直接进入 hypothesis-generation
+- 需要文献检索 → 使用 knowledge-acquisition
+- 需要跨论文关联分析 → 使用 association-discovery
+- 需要将创意形式化为可检验假说 → 使用 hypothesis-generation
+- 输入问题过于模糊（如"研究脑科学"）→ 先追问用户具体问题维度
+
+## 验证清单
+
+在执行此技能前，请确认以下条件已满足：
+
+- [ ] 输入：一个清晰的研究问题描述（problem statement）
+- [ ] 输入（可选）：约束条件 / 上游发现 / 思维阻塞点
+- [ ] 工具可用：Read（读取输入问题）、Write（输出创意列表和认知洞察）
+- [ ] 依赖技能可用：knowledge-acquisition（提供文献语境）、association-discovery（提供空白/矛盾线索）
+- [ ] 数据访问级别：raw（允许从原始文献中提取灵感和关联）
+- [ ] 前置条件：如使用上游依赖，确保 knowledge-acquisition 和 association-discovery 的输出已就绪
+- [ ] 反谄媚防护：确保输出包含与用户预设方向相反的创意方向
 
 ## 概述 / Overview
 

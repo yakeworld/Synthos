@@ -1,5 +1,9 @@
 ---
 name: research-thinking-framework
+version: 1.0.0
+author: Synthos Agent
+license: MIT
+allowed-tools: Read
 description: >-
   Research methodology knowledge base derived from AKNE's five philosophical
   principles: First Principles (第一性原理), Systems Thinking (系统思维),
@@ -9,6 +13,28 @@ description: >-
 tags: [research-methodology, epistemology, reasoning, critical-thinking, science-philosophy]
 ---
 # Research Thinking Framework — Extended Skill for Synthos
+
+## 触发条件
+
+在以下情况加载本技能：
+
+- 用户需要评估研究方法论
+- 用户询问假设生成、实验设计或论证结构
+- 用户希望从第一性原理批判论文推理
+- 用户询问 FEP（自由能原理）作为科研指导
+- 用户需要区分研究中的事实与解读
+- 用户面对复杂问题需要系统性分解方法
+
+## 验证清单
+
+运行本技能后，确认以下检查项：
+
+- [ ] 第一性原理分解已完成：识别了不可违反的物理/生物约束，剥离了文献继承假设，从约束向上重建了解答
+- [ ] 贝叶斯假设更新已完成：陈述了先验信念+置信度，计算了后验，标明了使新信念被证伪的条件
+- [ ] 模型依赖实在论分析已完成：比较了竞争模型的预测力，选择了最简拟合模型，记录了局限性
+- [ ] 自由能分析已完成：识别了不确定性最高的方向，估算了每单位投入的熵减潜力
+- [ ] 每个推理步骤引用了具体的 AKNE 知识源
+- [ ] 输出了可操作的后续步骤和常见误区列表
 
 ## Trigger
 - User needs to evaluate a research methodology

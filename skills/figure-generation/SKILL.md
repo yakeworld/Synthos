@@ -5,21 +5,23 @@ description: >-
   支持matplotlib (Python) 单/多面板排版，Nature语义色板（蓝主-绿正-红基+中性色+NMI淡色系），16种排版模式，
   按需生成SVG/PDF/PNG。认知原子层负责契约设计，terminal执行Python生成图像。
   兼容nature-figure方法论，但不绑定特定期刊风格——适用于所有SCI/会议图表场景。
-|version: 1.0.0
-|inherits: nature-figure (absorbed 2026-05-11), academic-plotting (absorbed 2026-05-14)
-|allowed-tools:
-|  - terminal (Python plotting)
-|  - read_file (data inspection)
-|  - search_files (data location)
-|  - execute_code (data preprocessing)
-|  - write_file (figure scripts)
-|metadata:
-|  synthos_atom_type: "extended"
-|  synthos_data_access_level: "verified_only"
-|  archetype: cognitive-atom
-|  layer: extended
-|  absorbed_from: https://github.com/Yuan1z0825/nature-skills (袁一哲, 上海交大)
-|  absorption_date: 2026-05-11
+version: 1.0.0
+author: Synthos + Nous Research
+license: MIT
+inherits: nature-figure (absorbed 2026-05-11), academic-plotting (absorbed 2026-05-14)
+allowed-tools:
+  - terminal (Python plotting)
+  - read_file (data inspection)
+  - search_files (data location)
+  - execute_code (data preprocessing)
+  - write_file (figure scripts)
+metadata:
+  synthos_atom_type: "extended"
+  synthos_data_access_level: "verified_only"
+  archetype: cognitive-atom
+  layer: extended
+  absorbed_from: https://github.com/Yuan1z0825/nature-skills (袁一哲, 上海交大)
+  absorption_date: 2026-05-11
   absorption_notes: >
     完全吸收nature-figure的Figure契约方法论（结论→证据链→面板映射→出口契约）、Nature语义色板体系
     （蓝-绿-红+中性色+NMI淡色系+分领域色板）、16种多面板布局模式、API参考和QA审核清单。
@@ -254,33 +256,56 @@ fig.savefig(f"{filename}.pdf", bbox_inches="tight")
 
 ## QA审核清单（提交前）
 
-- [ ] 结论Claim存在，每个面板映射到唯一证据
-- [ ] 原型已声明，面板层级已确定
-- [ ] 最终尺寸符合目标期刊（单栏89mm/双栏183mm）
-- [ ] 文本在SVG中可编辑（`svg.fonttype='none'`）
-- [ ] Arial/sans-serif字体一致
-- [ ] 无彩虹色板；红绿不是唯一编码
-- [ ] 灰度打印可分辨（考虑hatch）
-- [ ] 误差棒、区间和统计检验已定义
-- [ ] 可比较面板间的轴范围可比
-- [ ] 代表性图像已量化并追溯到源文件
-- [ ] `tight_layout(pad=2)` + `plt.close(fig)`
+详见下方 [验证清单](#验证清单)。以下为快速参考：
+
+
 
 ---
 
-## 加载时机
+## 触发条件
+
+当以下任一条件满足时，应加载本技能：
 
 - 用户要求创建、修改或润色论文图表
 - 用户提到"Nature风格"、"SCI图表"、"发表级图表"
 - 竞赛视频需要插图
 - 需要多面板排版、审美优化、期刊适配
+- 用户要求从数据生成出版级可视化
 
-## 不加载的时机
-
+**不加载的时机**：
 - 数据探索性（EDA）图表，无发表目标
 - Plotly/Altair/Bokeh等交互式图表
 - 主要流程是3D/GIS/非科学插图
 - Illustrator/Figma优先的图表
+
+---
+
+## 验证清单
+
+执行前确认：
+
+- [ ] 结论Claim已明确，每个面板映射到唯一证据
+- [ ] 原型已声明（quantitative-grid / schematic-led-composite / image-plate+quant / asymmetric-mixed-modality）
+- [ ] 面板层级已确定（英雄面板、验证证据、对照/稳健性）
+- [ ] 最终尺寸符合目标出口（单栏89mm / 双栏183mm / 自定义）
+- [ ] 源数据已确认（CSV路径、列名、行数）
+- [ ] 所需统计检验已定义（样本量、误差棒类型、检验方法）
+- [ ] 风格代号已声明（A/B/C/D），色板已选定
+- [ ] 色盲可分辨性已检查
+- [ ] 灰度打印可读性已确认
+- [ ] 冗余检查完成（面板间不重复，每面板有独立轴标签词汇）
+
+执行后确认：
+
+- [ ] 文本在SVG中可编辑（`svg.fonttype='none'`）
+- [ ] Arial/sans-serif字体一致
+- [ ] 无彩虹色板；红绿不是唯一编码
+- [ ] 误差棒、区间和统计检验已正确显示
+- [ ] 可比较面板间的轴范围可比
+- [ ] 代表性图像已量化并追溯到源文件
+- [ ] `tight_layout(pad=2)` + `plt.close(fig)`
+- [ ] SVG/PDF/TIFF已保存至 `./figures/` 目录
+- [ ] 图例文本（figure legend）已生成
 
 ---
 

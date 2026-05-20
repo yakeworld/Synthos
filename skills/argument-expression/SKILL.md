@@ -1,10 +1,14 @@
 ---
 name: argument-expression
 description: "Transform hypotheses into structured academic arguments: paper sections, evidence chains, and literature support. Writes content in academic style with proper citations. Use when the user asks to write a research paper section, draft an argument, create an academic outline, or write content for a paper, thesis, or proposal."
+version: 1.1.0
+author: Synthos Agent
 license: MIT
+allowed-tools: delegate_task Read Write Execute
+signature: "hypotheses: list[Hypothesis], structure: str -> sections: list[Section], references: list[Reference]"
 metadata:
   synthos_atom_type: "cognitive"
-  synthos_version: "0.1.0"
+  synthos_version: "1.1.0"
   synthos_skill_md_hash: "982e9b14203fe63c9edbf492ad315f8063b6cb031b1a2027f780d96acf4df1ec"
   synthos_model_version_pin: "deepseek/deepseek-v4-pro@2026-05-10"
   synthos_model_tested_on: "2026-05-10T00:00:00Z"
@@ -16,14 +20,29 @@ metadata:
   synthos_boundary_proof_ref: "references/BOUNDARY.md"
   synthos_change_log_ref: "references/CHANGE_LOG.md"
   synthos_asserted_compliance: "P0,P1,P2"
-  synthos_mechanical_atoms: ""
   synthos_depends_on: "hypothesis-generation,knowledge-acquisition"
   synthos_author: "Synthos Agent"
-allowed-tools: delegate_task Read Write Execute
-metadata:
   synthos_data_access_level: "verified_only"
+---
 
 # 论证表达 (Argument Expression)
+
+## 触发条件
+
+在以下情况加载本技能：
+
+- 上游 hypothesis-generation 已产出假设，需要结构化论文论证
+- 用户要求"写论文/写段落/构建论证/写综述"
+- 需要将研究结果转化为符合TRIPOD+AI标准的报告
+- 下游 viewpoint-verification 等待待验证的论点
+
+## 验证清单
+
+- [ ] 论证结构完整（背景→问题→方法→结果→讨论）
+- [ ] 每项主张有文献引用支撑（符合P0证据可溯性）
+- [ ] 引用的DOI可访问
+- [ ] 输出符合学术写作规范
+- [ ] 无虚构论文或捏造数据
 
 ## 1. 职责（Scope）
 

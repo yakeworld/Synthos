@@ -1,6 +1,8 @@
 ---
 name: nsfc-grant-audit
 description: "Review, critique, and reconstruct Chinese scientific grant proposals — NSFC (国家自然科学基金), provincial (省科技厅), and municipal (市科技局) levels. Covers 青年/面上/重点 and local government projects. 8-dimension review matrix, literature gap analysis, OA PDF download, and NotebookLM project population."
+version: 1.0.0
+author: Synthos Agent
 license: MIT
 metadata:
   synthos_atom_type: "extended_skill"
@@ -95,6 +97,17 @@ notebooklm source add N_AuthorYear_Paper.pdf
 - `references/oa-pdf-download.md` — OA PDF下载技术
 - `references/nsfc-budget-templates.md` — NSFC预算模板（注意：市级科技局项目预算可能低至1万元，属正常范围）
 - `references/notebooklm-review-workflow.md` — NotebookLM集成工作流
+
+## 验证清单
+
+在执行此技能前，请确认以下条件已满足：
+
+- [ ] 输入：一份完整的基金标书（NSFC/省科技厅/市科技局级别），格式为 PDF、DOCX 或 Markdown
+- [ ] 输入：已明确标书的资助来源和预算级别
+- [ ] 工具可用：terminal（用于文献搜索和 PDF 下载）、Read（读取标书文件）、Write（输出评审报告）
+- [ ] 依赖技能可用：pubmed、semantic-scholar、research-paper-search、notebooklm-cli
+- [ ] 数据访问级别：raw（允许原文引用和引用文献全文下载）
+- [ ] 前置条件：如使用 NotebookLM，确保 NotebookLM CLI 已配置
 
 ## 已知陷阱
 

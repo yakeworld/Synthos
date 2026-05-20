@@ -2,6 +2,8 @@
 synthos_atom_type: reference
 name: experiment-recipes
 version: 1.0.0
+author: Synthos Agent
+license: MIT
 data_access_level: raw
 allowed-tools: Read
 dependencies: []
@@ -21,6 +23,34 @@ bilingual: zh-en
 >
 > **这是一个参考技能** — 提供可复用的配方、预设和代码模式，
 > 供其他认知原子（如 research-ideation、hypothesis-generation）在实验设计和训练配置时加载技术指导。
+
+---
+
+## 触发条件
+
+在以下情况加载本技能：
+
+- 用户需要设计或设置深度学习训练实验
+- 用户需要选择模型架构（按数据类型或数据规模）
+- 用户需要训练循环模板（单GPU/DDP/FSDP/函数式）
+- 用户需要优化器配置或学习率调度方案
+- 用户需要混合精度训练或 torch.compile 加速模式
+- 用户需要内存优化策略或 OOM 排障
+- 用户需要 Karpathy 风格调试清单
+- 上游 cognitive 原子（如 research-ideation、hypothesis-generation）需要实验技术指导
+
+---
+
+## 验证清单
+
+运行本技能后，确认以下检查项：
+
+- [ ] 根据用户场景选择了正确的配方类别（架构/训练/优化/调度/精度/内存/调试）
+- [ ] 推荐的架构决策基于数据类型+数据规模（非随意推荐）
+- [ ] 提供的代码块可直接复制使用（含正确 import 和参数注释）
+- [ ] 训练循环模式匹配用户硬件环境（单GPU/DDP/FSDP）
+- [ ] 混合精度配置与用户 GPU 型号兼容
+- [ ] 调试清单完整覆盖至少 Karpathy 原始配方项目
 
 ---
 
@@ -498,301 +528,138 @@ with torch.device("meta"):
     model = MyLargeModel(config)
 
 # Method 2: using accelerate
-# from accelerate import init_empty_weights
-# with init_empty_weights():
-#     model = MyLargeModel(config)
-
-# Materialize on target device later
-model.to_empty(device="cuda")
-# or: model.to("cuda")
+from accelerate import init_empty_weights
+with init_empty_weights():
+    model = MyLargeModel(config)
 ```
 
-### 7.2 MFU (Model FLOPS Utilization) Measurement
+### 7.2 MFU (Model Flop Utilization) Calculation
+
+MFU measures how efficiently your GPU is being used during training:
 
 ```python
-def compute_mfu(model, batch_size, seq_len, throughput, dtype_flops=2):
+def estimate_mfu(model, batch_size, seq_len, step_time_ms, num_gpus=1):
     """
-    Compute Model FLOPS Utilization.
+    Estimate Model Flop Utilization.
     
     Args:
-        model: the model (needs to have config with hidden_size, num_layers, etc.)
-        batch_size: tokens per batch (micro batch in FSDP)
+        model: the model being trained
+        batch_size: per-GPU batch size
         seq_len: sequence length
-        throughput: tokens per second
-        dtype_flops: factor (2 for fp16/bf16, 1 for fp32)
+        step_time_ms: milliseconds per training step
+        num_gpus: number of GPUs
     
     Returns:
-        mfu: fraction of theoretical peak FLOPS achieved
+        MFU as a float (0.0-1.0)
     """
-    N = model.config.num_layers
-    d = model.config.hidden_size
-    V = model.config.vocab_size
+    import torch.utils.flop_counter
     
-    # Approximate FLOPs per token (Transformer decoder)
-    flops_per_token = 6 * N * d * d + 12 * N * d * seq_len + 2 * N * d * V
-    total_flops = flops_per_token * throughput
+    # Get model FLOPs per forward pass
+    flop_counter = torch.utils.flop_counter.FlopCounter(model)
+    dummy_input = torch.randint(0, 1000, (batch_size, seq_len))
+    with flop_counter:
+        model(dummy_input)
+    flops_per_forward = flop_counter.get_total_flops()
     
-    # GPU theoretical peak (A100: 312 TFLOPS for fp16/bf16)
-    gpu_peak_flops = 312e12  # adjust for your GPU
-    mfu = total_flops / gpu_peak_flops
+    # Total FLOPs per step (forward + backward ≈ 2× forward)
+    total_flops_per_step = flops_per_forward * 2 * num_gpus
+    theoretical_flops = get_gpu_theoretical_flops() * num_gpus
+    actual_flops = total_flops_per_step / (step_time_ms / 1000)
     
-    return mfu
-
-# Usage example
-# mfu = compute_mfu(model, batch_size=8, seq_len=2048, throughput=50000)
-# print(f"MFU: {mfu:.2%}")  # typically 40-55% is good
+    return actual_flops / theoretical_flops
 ```
 
-### 7.3 OOM Solutions Checklist
+### 7.3 OOM Troubleshooting Checklist
 
-| Symptom | Solution |
-|---------|----------|
-| **CUDA OOM at model init** | Use meta device init → `to_empty()` |
-| **CUDA OOM at forward pass** | Enable gradient checkpointing (`model.gradient_checkpointing_enable()`) |
-| **CUDA OOM at backward pass** | Reduce batch size → micro-batching → gradient accumulation |
-| **CUDA OOM with FSDP** | Reduce `limit_all_gathers`; use `SHARD_GRAD_OP` sharding |
-| **CPU RAM OOM** | Use `torch.cuda.empty_cache()`; set `PYTORCH_NO_CUDA_MEMORY_CACHING=1` |
-| **Activation memory spike** | Use activation offloading (DeepSpeed ZeRO-Offload) |
-| **KV cache OOM (inference)** | Use PagedAttention / vLLM; reduce `max_seq_len` |
-| **Slow but no OOM** | Not enough `torch.compile`; enable `channels_last` memory format |
+Common causes and fixes:
 
-**Quick OOM recovery (lossless):**
-```bash
-# Environment variable tweaks
-export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
-export TORCH_DISTRIBUTED_DEBUG=INFO
-
-# Or in Python:
-# torch.cuda.set_per_process_memory_fraction(0.9)  # limit to 90% of GPU
-```
+| Symptom | Likely Cause | Fix |
+|---------|-------------|-----|
+| CUDA OOM at start | Batch too large | Reduce batch size; use gradient accumulation |
+| OOM on long sequences | Attention O(n²) | Use Flash Attention; enable seq_len parallelism |
+| OOM after N steps | Activation memory leak | Check for retained graph; use `.detach()` |
+| OOM with FSDP | Sharding strategy wrong | Use `SHARD_GRAD_OP` instead of `FULL_SHARD` |
+| OOM during compile | Compiler memory spike | Use `mode="reduce-overhead"` |
+| Silent OOM | CPU-side memory leak | Clear cache: `torch.cuda.empty_cache()` |
 
 ---
 
 ## 8. Debugging Checklist / 调试清单
 
-### 8.1 Karpathy's Recipe for Training (Preserved)
+Karpathy's original debugging recipe, adapted for modern PyTorch:
 
-> This is the original Karpathy debugging checklist, reformulated for Synthos.
-> Source: Andrej Karpathy's "A Recipe for Training Neural Networks" (karpathy/recipes).
+1. [ ] **Overfit a single batch** — loss should go to near-zero
+2. [ ] **Check loss function** — logits shape matches target shape?
+3. [ ] **Check data pipeline** — visualize inputs, check for NaNs/infs
+4. [ ] **Check gradient flow** — `grad` values should be non-zero everywhere
+5. [ ] **Check learning rate** — too high diverges, too low stalls
+6. [ ] **Check normalization** — BatchNorm layers in eval mode during inference?
+7. [ ] **Check weight initialization** — default init OK for your activation?
+8. [ ] **Check mixed precision** — no loss scale underflow?
+9. [ ] **Check randomness** — set `torch.manual_seed` for reproducibility
+10. [ ] **Simplify** — remove augmentations, halve model size, halve LR
 
-```python
-"""
-KARPATHY'S DEBUGGING CHECKLIST
-(用于训练神经网络的调试食谱)
+**Chinese / 中文清单：**
 
-OVERVIEW / 概述:
-当你搭建完模型、开始训练却得不到合理结果时，用这个清单系统地排查问题。
-依次执行，每步确认无误后再进到下一步。
-
-1. 先别碰复杂架构
-   - □ 先过拟合单批数据 (loss → 0) → 确认模型可以学习
-   - □ 关闭所有正则化 (dropout=0, weight_decay=0, aug=off)
-   - □ 用少量数据(1-5 batch)跑训练, loss应平滑下降
-   - □ 若loss不降: 检查数据标签是否正确, 模型forward是否有梯度流
-
-2. 数据预处理确认
-   - □ 可视化输入数据: 确保喂入网络的数据是正确的
-   - □ 检查标签分布: 确保没有标签错误/数据泄露
-   - □ 确认数据增强不破坏标签语义
-
-3. 模型初始化检查
-   - □ 初始loss应与随机猜测一致 (分类: -ln(1/n_classes))
-   - □ 初始logits不应全是0或NaN
-   - □ 检查所有梯度存在 (没有None gradient)
-   - □ 打印参数量: 确认模型没有"意外地小"
-
-4. 训练循环正确性
-   - □ model.train() / model.eval() 切换正确
-   - □ optimizer.zero_grad() 在每个batch开始前调用
-   - □ loss.backward() 后确认梯度不为0
-   - □ 梯度裁剪: clip_grad_norm_ (max_norm=1.0) 防止爆炸
-
-5. 学习率与优化器
-   - □ 先用 lr=3e-4 (AdamW默认推荐)
-   - □ 若loss震荡/发散: 降低lr × 0.3
-   - □ 若loss停滞不降: 提高lr × 3.0
-   - □ weight_decay不宜过大: 从wd=0.01开始
-
-6. 数值稳定性
-   - □ 检查loss中是否有NaN (detect early)
-   - □ 使用AMP时检查scaler是否正常更新 (scaler.get_scale() > 0)
-   - □ softmax + CE loss: 用内置nn.CrossEntropyLoss而非手动实现
-
-7. Batch Size与梯度累积
-   - □ 小batch size → 增大lr (linear scaling rule)
-   - □ 梯度累积: total_batch = micro_batch × grad_accum_steps
-   - □ 确认累积步骤中loss除以了grad_accum_steps
-
-8. 验证/测试流程
-   - □ 用与训练完全相同的预处理流程验证
-   - □ 关闭gradient checkpointing在验证时
-   - □ with torch.no_grad(): 确保不消耗显存
-
-9. 性能基准
-   - □ 计算tokens/s或samples/s并记录
-   - □ 计算MFU (见7.2节) 确认GPU利用率
-   - □ CPU预处理是否成为瓶颈? 用num_workers或NVIDIA DALI
-
-10. 消融实验
-    - □ 逐步添加组件: 先保证最简版本work
-    - □ 每加一个组件后重新过拟合单批数据测试
-    - □ 记录每次消融的loss曲线
-"""
-```
-
-### 8.2 Quick Checks (Bash)
-
-```bash
-# Check GPU utilization
-nvidia-smi --query-gpu=index,name,utilization.gpu,memory.used,memory.total --format=csv,noheader
-
-# Check for NaN in model weights
-python -c "
-import torch
-m = torch.load('model.pt', map_location='cpu')
-for k, v in m.items():
-    if torch.isnan(v).any() or torch.isinf(v).any():
-        print(f'NaN/Inf found in: {k}')
-"
-
-# Monitor training in real-time
-watch -n 1 nvidia-smi
-```
+1. [ ] **单批次过拟合** — loss 应降至接近零
+2. [ ] **检查损失函数** — logits 形状与目标匹配？
+3. [ ] **检查数据管道** — 可视化输入，检查 NaN/Inf
+4. [ ] **检查梯度流** — 所有参数梯度非零
+5. [ ] **检查学习率** — 过高发散，过低停滞
+6. [ ] **检查归一化** — 推理时 BatchNorm 处于 eval 模式？
+7. [ ] **检查权重初始化** — 默认初始化对激活函数是否合适？
+8. [ ] **检查混合精度** — loss scale 没有下溢？
+9. [ ] **检查随机性** — 设置 `torch.manual_seed` 确保可复现
+10. [ ] **简化** — 去掉数据增强、模型减半、学习率减半
 
 ---
 
 ## 9. Experiment Management / 实验管理
 
-### 9.1 TSV Experiment Tracking Format
+Track experiments in a simple TSV format:
 
 ```tsv
-# experiment-recipes master tracking sheet
-# format: experiment_id<tab>date<tab>model<tab>dataset<tab>params<tab>lr<tab>schedule<tab>batch_size<tab>gpus<tab>val_loss<tab>best_epoch<tab>notes
-
-exp-001	2026-05-14	GPT-125M	C4	tok=50257,d=768,l=12,h=12	3e-4	cosine	64	1	3.21	42	baseline
-exp-002	2026-05-14	GPT-125M	C4	tok=50257,d=768,l=12,h=12	1e-3	cosine	64	1	3.15	38	lr=1e-3 sweep
-exp-003	2026-05-15	GPT-350M	C4	tok=50257,d=1024,l=24,h=16	3e-4	wsd	128	4	2.89	55	wsd schedule test
-exp-004	2026-05-16	GPT-1B	FineWeb	tok=50257,d=2048,l=32,h=32	3e-4	cosine	256	8	2.54	61	mixed precision=bf16
-exp-005	2026-05-17	GPT-1B	FineWeb	tok=50257,d=2048,l=32,h=32	3e-4	cosine	256	8	2.48	63	+compile reduce-overhead
+experiment	model	dataset	lr	batch_size	epochs	best_val_loss	notes
+exp001	LLaMA-160M	C4	3e-4	256	10	3.21	baseline
+exp002	LLaMA-160M	C4	1e-4	512	10	3.15	lower lr, larger batch
+exp003	LLaMA-160M	C4	3e-4	256	20	2.98	longer training
 ```
 
-### 9.2 Python TSV Logger
-
-```python
-import csv
-from datetime import datetime
-from pathlib import Path
-
-class ExperimentLogger:
-    """Lightweight TSV experiment tracker."""
-    
-    def __init__(self, path="experiments.tsv"):
-        self.path = Path(path)
-        self.fields = [
-            "experiment_id", "date", "model", "dataset", "params",
-            "lr", "schedule", "batch_size", "gpus", "val_loss",
-            "best_epoch", "notes"
-        ]
-        self._ensure_header()
-    
-    def _ensure_header(self):
-        if not self.path.exists():
-            with open(self.path, "w", newline="") as f:
-                writer = csv.writer(f, delimiter="\t")
-                writer.writerow(self.fields)
-    
-    def log(self, exp_id, **kwargs):
-        row = {field: kwargs.get(field, "") for field in self.fields}
-        row["experiment_id"] = exp_id
-        row["date"] = str(datetime.now().date())
-        
-        with open(self.path, "a", newline="") as f:
-            writer = csv.DictWriter(f, fieldnames=self.fields, delimiter="\t")
-            writer.writerow(row)
-    
-    def load(self):
-        """Load all experiments as list of dicts."""
-        results = []
-        with open(self.path, "r", newline="") as f:
-            reader = csv.DictReader(f, delimiter="\t")
-            for row in reader:
-                results.append(row)
-        return results
-    
-    def best(self, metric="val_loss", minimize=True):
-        """Find best run by metric."""
-        runs = self.load()
-        if not runs:
-            return None
-        key = lambda r: float(r.get(metric, float("inf")))
-        return min(runs, key=key) if minimize else max(runs, key=key)
-
-# Usage
-# logger = ExperimentLogger("experiments.tsv")
-# logger.log("exp-001", model="GPT-125M", lr="3e-4", val_loss="3.21", ...)
-# best = logger.best("val_loss")
-```
-
-### 9.3 Recommended Directory Structure
+### Recommended Directory Structure
 
 ```
 experiments/
-├── exp-001_baseline/
-│   ├── config.yaml          # full hyperparameter config
-│   ├── logs/
-│   │   ├── train.log
-│   │   └── eval.log
-│   ├── checkpoints/
-│   │   ├── epoch_001.pt
-│   │   ├── epoch_010.pt
-│   │   └── best.pt
-│   ├── tensorboard/         # or wandb run dir
-│   ├── predictions/
-│   │   └── test_outputs.npy
-│   └── summary.json         # final metrics
-├── exp-002_lr_sweep/
+├── exp001-baseline/
+│   ├── config.yaml
+│   ├── train.log
+│   ├── checkpoint-latest.pt
+│   ├── checkpoint-best.pt
+│   ├── events.out.tfevents.*  (TensorBoard)
+│   └── metrics.json
+├── exp002-lower-lr/
 │   └── ...
-└── experiments.tsv          # master tracking sheet
+└── tracking.tsv
 ```
 
----
+### Hydra / Config Management
 
-## Appendix / 附录
+For large-scale experiments, use Hydra for hierarchical config:
 
-### A. Quick Reference Card / 快速参考卡
+```yaml
+# config.yaml
+model:
+  name: llama
+  dim: 4096
+  n_layers: 32
+  n_heads: 32
 
-| Component | Recommended Default |
-|-----------|-------------------|
-| Optimizer | AdamW (lr=3e-4, betas=(0.9,0.95), wd=0.1) |
-| Schedule | Cosine (warmup=5% of steps) or WSD |
-| Precision | bf16 AMP (A100/H100), fp16 AMP (V100) |
-| Compile | `torch.compile(mode="reduce-overhead")` |
-| Batch Size | As large as GPU memory allows (power of 2) |
-| Grad Clip | max_norm=1.0 |
-| Weight Init | Default PyTorch (or init_weights from model zoo) |
+training:
+  lr: 3e-4
+  batch_size: 256
+  total_steps: 50000
+  warmup_steps: 1000
 
-### B. Common Errors / 常见错误
-
-| Error | Likely Cause | Fix |
-|-------|-------------|-----|
-| `CUDA error: device-side assert` | Label out of range | Check `targets.max() < num_classes` |
-| `RuntimeError: Expected all tensors to be on same device` | Mixed device tensors | Unified `to(device)` |
-| `OutOfMemoryError` | GPU memory exhausted | See §7.3 |
-| `NaN in loss` | Exploding gradients / bad LR | Reduce lr, add grad clip |
-| `No improvement in val loss` | Overfitting / wrong schedule | Check reg, reduce capacity |
-
-### C. Environment Setup / 环境配置
-
-```bash
-# Recommended PyTorch version
-pip install torch>=2.1.0 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-
-# For distributed training
-pip install torchdistx fairscale
-
-# For experiment tracking
-pip install wandb tensorboard
-
-# For data loading optimization
-pip install nvidia-dali-cuda110
+data:
+  path: /data/c4
+  seq_len: 2048
 ```

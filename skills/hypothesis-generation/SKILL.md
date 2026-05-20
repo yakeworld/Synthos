@@ -1,11 +1,14 @@
 ---
 name: hypothesis-generation
 description: "科学假设生成原子（HYP）—— 将研究空白转化为形式化可检验假说。接收GAP发现的研究空白和ACQ文献语料，生成包含预测、反证条件、竞争假说和实验设计的结构化假设。每个假设包含可检验性/新颖性/重要性/可行性评分。"
+version: 1.2.0
+author: Synthos Agent
 license: MIT
 allowed-tools: terminal Read Write
+signature: "associations: list[Association], research_gaps: list[Gap] -> hypotheses: list[Hypothesis]"
 metadata:
   synthos_atom_type: "cognitive"
-  synthos_version: "0.1.0"
+  synthos_version: "1.1.0"
   synthos_skill_md_hash: "pending"
   synthos_model_tested_on: "2026-05-13T00:00:00Z"
   synthos_io_contract_ref: "references/IO_CONTRACT.md"
@@ -22,6 +25,23 @@ metadata:
 ---
 
 # HYP — 科学假设生成原子
+
+## 触发条件
+
+在以下情况加载本技能：
+
+- 上游 association-discovery 已产出 research_gaps，需要转化可检验假设
+- 用户要求"生成假设/提出假说/找研究方向"
+- 需要形式化假设（含预测、反证条件、评分）
+
+## 验证清单
+
+- [ ] 每个假设包含 prediction（可观测预测）
+- [ ] 每个假设包含 falsification_condition（至少一个反证条件）
+- [ ] 每个假设包含可检验性/新颖性/重要性/可行性评分
+- [ ] 假设来源的研究空白有文献定位
+- [ ] 输出格式符合 _ok 信封结构
+- [ ] 无 Python 代码生成
 
 ## 功能
 
@@ -81,6 +101,30 @@ hypothesis:
     population: "ADHD患儿（6-12岁）"
     sample_size_estimate: "基于效应量0.5, power=0.8, n=64"
     key_measurements: ["3D眼动仪", "ADHD-RS评分", "前庭功能测试"]
+```
+
+### Step 3.5: [反类比] 负面对齐 — Disanalogy Check
+
+**当假说基于跨领域类比时，必须同时输出负面对齐清单**：
+
+| 类比元素 | 正面相似 | 本质差异（负面对齐） |
+|:---------|:---------|:--------------------|
+| 源领域特征A | 目标领域也有A | 但在机制M上不同（见注） |
+| 源领域关系R | 目标领域有类似关系 | 但R的因果方向可能相反 |
+
+```yaml
+analogy:
+  source_domain: "变压器注意力机制"
+  target_domain: "生物眼动注意力"
+  positive: "两者都使用权重分配来聚焦关键信息"
+  disanalogies:
+    - aspect: "疲劳上限"
+      why_different: "生物注意力有生理疲劳上限，变压器没有"
+      consequence: "该类比在[长时间任务建模]场景无效"
+    - aspect: "状态依赖性"
+      why_different: "生物注意力受情绪/药物/昼夜节律影响"
+      consequence: "该类比在[ADHD干预评估]场景需修正"
+  boundary_condition: "仅适用于[信息选择过程的数学描述]，不适用于[生理机制的因果解释]"
 ```
 
 ### Step 3: 竞争假说生成
