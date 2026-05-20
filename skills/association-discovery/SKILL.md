@@ -1,10 +1,14 @@
 ---
 name: association-discovery
 description: "Identify relationships between knowledge items: contradictions, supplements, evolutions, supports, extends, uses, similar-to, and research gaps (P0-P3 rated). Builds knowledge graph. 7 typed edges from claude-paperloom absorption. Gap taxonomy from GAP absorption."
+version: 1.3.0
+author: Synthos Agent
 license: MIT
+allowed-tools: Read Write
+signature: "knowledge_items: list[KnowledgeItem] -> associations: list[Association], research_gaps: list[Gap]"
 metadata:
   synthos_atom_type: "cognitive"
-  synthos_version: "1.2.0"
+  synthos_version: "1.3.0"
   synthos_skill_md_hash: "14e47ba9d49730ba31dd30c2686814b2fe4de0955e408f0f4abe5c86a4c0fa95"
   synthos_model_version_pin: "deepseek/deepseek-v4-pro@2026-05-10"
   synthos_model_tested_on: "2026-05-10T00:00:00Z"
@@ -16,14 +20,21 @@ metadata:
   synthos_boundary_proof_ref: "references/BOUNDARY.md"
   synthos_change_log_ref: "references/CHANGE_LOG.md"
   synthos_asserted_compliance: "P0,P1,P2"
-  synthos_mechanical_atoms: ""
   synthos_depends_on: "knowledge-extraction"
   synthos_author: "Synthos Agent"
-allowed-tools: Read Write
-metadata:
   synthos_data_access_level: "redacted"
+---
 
 # 关联发现 (Association Discovery)
+
+## 0. 触发条件
+
+在以下情况加载本技能：
+
+- 上游 knowledge-extraction 已产出 extracted_knowledge，需要发现论文间关联
+- 需要构建知识图谱或检测研究空白
+- 用户要求"找出这些文献之间的关系/矛盾/空白"
+- 下游 hypothesis-generation 需要关联分析作为输入
 
 ## 1. 职责（Scope）
 
@@ -206,3 +217,15 @@ metadata:
 - 边界证明：`references/BOUNDARY.md`
 - 金标准：`golden/GOLDEN_SET.md`
 - 变更日志：`references/CHANGE_LOG.md`
+
+## 验证清单
+
+运行本技能后，确认以下检查项：
+
+- [ ] 至少2个知识项完成了两两比较
+- [ ] 识别出的关联类型在7种枚举范围内（contradiction/supplement/evolution/supports/extends/uses/similar-to）
+- [ ] 每个关联有置信度评分（0.0-1.0）
+- [ ] 知识图谱节点和边的结构完整
+- [ ] 研究空白按P0-P3评级且附带 falsification_condition
+- [ ] 常量成本链接已启用（知识项>30时使用Jaccard预筛选）
+- [ ] 输出格式符合 _ok 信封结构

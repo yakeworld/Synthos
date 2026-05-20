@@ -1,38 +1,35 @@
 ---
 name: gap-discovery
 description: "[⚠️ ABSORBED into association-discovery v1.1.0] 研究空白发现功能已合并至ASC原子。本原子保留为引用参考。"
-version: 0.2.0
+version: 1.0.0
+author: Synthos Agent
+license: MIT
 status: absorbed
-trigger: "ACQ完成文献检索后自动调用，或用户手动触发空白扫描"
-constitutional_alignment: [P0, P5]
-dependencies: [ACQ]
-inputs:
-  - name: literature_corpus
-    type: "ACQ_search_result[]"
-    description: "来自ACQ原子的文献集合（每篇含title、abstract、DOI、method、conclusion）"
-    required: true
-  - name: research_focus
-    type: string
-    description: "研究领域的自然语言描述"
-    required: true
-  - name: existing_gaps
-    type: "gap_record[]"
-    description: "已有的空白记录（避免重复发现）"
-    required: false
-outputs:
-  - name: gaps
-    type: "gap_record[]"
-    description: "新发现的研究空白列表"
-  - name: contradiction_map
-    type: object
-    description: "文献矛盾关系图谱"
-error_states:
-  - insufficient_literature: "文献量少于5篇时无法检测矛盾"
 allowed-tools: Read Write
 metadata:
+  synthos_atom_type: "cognitive"
+  synthos_version: "1.0.0"
+  synthos_depends_on: "association-discovery"
+  synthos_author: "Synthos Agent"
   synthos_data_access_level: "redacted"
+---
 
 # GAP — 研究空白发现原子
+
+## 触发条件
+
+本原子已合并入 association-discovery（§4 空白发现）。在以下情况加载：
+
+- 作为独立入口，仅需空白检测，不需要完整关联链路
+- 用户明确要求"找研究空白/知识缺口"
+- 引用 association-discovery 的空白发现方法时
+
+## 验证清单
+
+- [ ] 空白按 P0-P3 评级
+- [ ] 每个空白附带 falsification_condition（可证伪条件）
+- [ ] 空白有明确的文献引用支撑
+- [ ] 功能与 association-discovery §4 一致
 
 ## 功能
 

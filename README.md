@@ -14,7 +14,7 @@
   <a href="https://github.com/yakeworld/Synthos/actions/workflows/agent-pr-verify.yml"><img src="https://github.com/yakeworld/Synthos/actions/workflows/agent-pr-verify.yml/badge.svg" alt="CI"/></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License"/></a>
   <a href="https://github.com/yakeworld/Synthos/discussions"><img src="https://img.shields.io/badge/Community-Discussions-blueviolet" alt="Discussions"/></a>
-  <img src="https://img.shields.io/badge/Evolution-13%20cycles-success" alt="Evolution"/>
+  <img src="https://img.shields.io/badge/Evolution-41%20cycles-success" alt="Evolution"/>
   <img src="https://img.shields.io/badge/Version-v4.3.0-blue" alt="Version"/>
 </p>
 
@@ -34,7 +34,7 @@
 
 From literature retrieval to paper output, Synthos covers the complete cognitive loop of scientific research. Its **self-evolution engine** automatically checks health, runs functional benchmarks, and absorbs patterns from external projects every day.
 
-> **v4.3.0** · Evolution Engine v2.3 · Quality Score: 0.933 (EXCELLENT) · 13 Evolution Cycles · 6 Cognitive Atoms + 3 Extended Skills + 2 Infrastructure · Agent PR Verification: ✅
+> **v4.3.0** · Evolution Engine v2.11 · Quality Score: 0.970 (EXCELLENT) · 41 Evolution Cycles · 7 Cognitive Atoms + 11 Extended Skills + 2 Infrastructure · Agent PR Verification: ✅ · Skill optimization: 81% compression, 3-tier language system
 
 [🇨🇳 中文版](README_CN.md)
 
@@ -150,30 +150,29 @@ Synthos runs a **self-evolution engine** that cycles daily:
 
 | Metric | Value |
 |:-------|:------|
-| Evolution Cycles | 13 (as of May 2026) |
-| Consecutive EXCELLENT | 7 |
-| Benchmark Pass Rate | 100% (8/8 in Cycle 13) |
+| Evolution Cycles | 37 (as of May 2026) |
+| Consecutive EXCELLENT | 8 |
+| Benchmark Pass Rate | 100% (8/8 in Cycle 24) |
 | Atom Structural Score | 1.0 (perfect — all 7 atoms) |
-| Overall Quality Score | 0.933 (EXCELLENT) |
-| External Sources Absorbed | 3 (AKNE, nature-figure, ADHD review) |
+| Overall Quality Score | 0.970 (EXCELLENT) |
+| External Sources Absorbed | 7 (AKNE, nature-figure, ADHD, biorxiv, PW-Bench, GEPA, OpenAI SDK) |
 
 ---
 
 ## 🚀 Getting Started
+
+See the **[Setup Guide](SETUP.md)** for full instructions.
 
 ```bash
 # Clone the repo
 git clone https://github.com/yakeworld/Synthos.git
 cd Synthos
 
-# Explore the skill structure
-ls -la skills/
-
-# Start from the task router
-cat skills/task-router/SKILL.md
+# Read the setup guide
+cat SETUP.md
 ```
 
-Full docs in `docs/` directory.
+**Quick usage**: Load the task router skill in your AI agent and ask a research question — Synthos automatically selects the shortest atom chain for your query.
 
 ---
 
