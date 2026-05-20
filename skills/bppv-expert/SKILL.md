@@ -1,5 +1,9 @@
 ---
 name: bppv-expert
+version: 1.0.0
+author: Synthos Agent
+license: MIT
+allowed-tools: Read
 description: >-
   Structured BPPV (Benign Paroxysmal Positional Vertigo) medical knowledge
   extracted from AKNE knowledge graph. Covers diagnosis techniques (Dix-Hallpike,
@@ -10,6 +14,28 @@ description: >-
 tags: [bppv, vestibular, vertigo, diagnosis, repositioning, medical-expert]
 ---
 # BPPV Expert — Extended Skill for Synthos
+
+## 触发条件
+
+在以下情况加载本技能：
+
+- 用户询问 BPPV 诊断、治疗或耳石复位操作
+- 用户需要根据眼震模式判断受累半规管（后/水平/前半规管）
+- 用户需要 BPPV 三维生物力学模拟指导
+- 用户询问半规管和耳石器解剖知识
+- 用户需要进行位置性眩晕的鉴别诊断
+- 患者表现包括：特定头位诱发的短暂眩晕、位置性眼震、恶心/呕吐
+
+## 验证清单
+
+运行本技能后，确认以下检查项：
+
+- [ ] 已根据眼震方向/模式正确识别受累半规管
+- [ ] 推荐的诊断试验（Dix-Hallpike/仰卧翻滚试验/俯屈仰头试验）与怀疑的半规管匹配
+- [ ] 复位手法（Epley/Gufoni/Semont/Barbecue/roll-over）包含患者体位、头转方向/角度、时机和预期眼震反应
+- [ ] 已区分管石症 vs 壶腹嵴顶结石症（基于眼震持续时间）
+- [ ] 已标注医学警告：＂此知识仅作教育用途，临床决策需面诊评估＂
+- [ ] 每个论断引用了具体的 AKNE wiki 页面来源
 
 ## Trigger
 - User asks about BPPV diagnosis, treatment, or canalith repositioning

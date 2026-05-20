@@ -1,10 +1,14 @@
 ---
 name: knowledge-extraction
 description: Extract structured knowledge from academic paper metadata and abstracts. Returns structured JSON with per-paper findings, methodology classification, domain tags, limitations, and field-level summary. Use when upstream knowledge-acquisition has returned raw_papers and structured extraction is needed before association discovery.
+version: 1.1.0
+author: Synthos Agent
 license: MIT
+allowed-tools: Read Write
+signature: "papers: list[Paper] -> knowledge_items: list[KnowledgeItem], field_summary: dict"
 metadata:
   synthos_atom_type: "cognitive"
-  synthos_version: "0.1.0"
+  synthos_version: "1.1.0"
   synthos_skill_md_hash: "51b3b4ade3128abd12b46e05e197ad7308b52259d3e313e3a01051d3a69157ed"
   synthos_model_version_pin: "deepseek/deepseek-v4-pro@2026-05-10"
   synthos_model_tested_on: "2026-05-10T00:00:00Z"
@@ -16,14 +20,21 @@ metadata:
   synthos_boundary_proof_ref: "references/BOUNDARY.md"
   synthos_change_log_ref: "references/CHANGE_LOG.md"
   synthos_asserted_compliance: "P0,P1,P2"
-  synthos_mechanical_atoms: ""
   synthos_depends_on: "knowledge-acquisition"
   synthos_author: "Synthos Agent"
-allowed-tools: Read Write
-metadata:
   synthos_data_access_level: "redacted"
+---
 
 # 知识提取 (Knowledge Extraction)
+
+## 0. 触发条件
+
+在以下情况加载本技能：
+
+- 上游 knowledge-acquisition 已返回 raw_papers，需要进行结构化提取
+- 需要从论文摘要中提取研究方法、领域标签、证据等级
+- 下游 association-discovery 等待结构化输入时
+- 用户要求"提炼/总结/分析这些论文"
 
 ## 1. 职责（Scope）
 
@@ -121,3 +132,15 @@ metadata:
 - 金标准：`golden/GOLDEN_SET.md`
 - 变更日志：`references/CHANGE_LOG.md`
 - **[PW-Bench吸收] 逆向工程方法论**：`references/pwbench-reverse-engineer.md`
+
+## 验证清单
+
+运行本技能后，确认以下检查项：
+
+- [ ] 每篇论文都提取了核心发现（key_findings）
+- [ ] 研究方法分类准确（匹配13种方法论枚举之一）
+- [ ] 研究领域映射正确（9个领域之一）
+- [ ] 证据链中每个 KnowledgeItem 引用了来源论文的 DOI
+- [ ] field_summary 已聚合所有论文的跨领域信息
+- [ ] 输出格式符合 _ok 信封结构
+- [ ] 无 Python 代码生成（Agent-native 推理执行）
