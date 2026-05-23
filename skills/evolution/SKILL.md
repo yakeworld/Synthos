@@ -120,6 +120,39 @@ related_skills: [project-experience-distillation, quality-gate, conversation-to-
 | 10 | VERIFY | 验证patch+重跑失败案例 |
 | 11 | RECORD | 更新状态+日志+教训+报告 |
 
+## Nudge 熔断机制（吸收自 724-office）
+
+**当进化引擎检测到死锁/发散趋势时，先软引导再硬回滚，避免不必要的 revert 开销。**
+
+### 触发条件
+
+| 信号 | 判定 | Nudge 动作 |
+|:-----|:-----|:-----------|
+| 同一原子连续 2 轮无改进 | 🔶 发散警告 | 输出提示: "当前原子 [name] 连续 2 轮无进展。建议: (1)换一个原子修改 (2)缩小修改范围 (3)查阅对应吸收记录是否有相关方法论" |
+| 基准测试结果波动 > 15% | 🔶 不稳定警告 | 输出提示: "基准测试波动 > 15%。建议先运行 CONVERGENCE_CHECK 确认环境是否稳定" |
+| 连续 2 次 git revert | 🟡 回滚预警 | 自动降低修改幅度（建议修改量减少 50%），提示"当前修改幅度可能过大，建议缩小范围" |
+| 单步执行超过 30 分钟 | 🟡 超时预警 | 提示"当前步骤已运行 30min+, 考虑中断后重新规划执行路径" |
+
+### 执行协议
+
+```python
+nudge(cycle_data):
+  # 1. 检查发散信号
+  for signal, action in NUDGE_SIGNALS:
+    if signal.matches(cycle_data):
+      action.execute()                    # 输出软提示
+      cycle_data.nudge_applied = True    # 记录已应用
+  
+  # 2. 累计 Nudge > 3 次仍无改善 → 升级为硬性拦截
+  if cycle_data.nudge_count >= 3 and not cycle_data.improved:
+    escalate_to_hard_gate(cycle_data)    # 触发完整回滚
+  
+  # 3. 记录 Nudge 到 lession.jsonl
+  log_nudge(cycle_data.current_nudge)
+```
+
+**意图**：给进化引擎一个"教练提示"而非直接"报错回滚"。吸收自 724-office 的 nudge 方法论，以纯 skill 方式实现（零 Python）。
+
 ## 自主吸收阈值（Auto-Absorption Threshold）
 
 **核心理念**：吸收需要人审批不是系统限制，是安全策略。通过阈值机制，高置信度吸收可以完全自主执行。

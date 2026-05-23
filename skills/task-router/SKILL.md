@@ -4,7 +4,7 @@ description: Synthos system entry point. Routes user queries to the correct cogn
 version: 1.2.0
 author: Synthos Agent + AI-Research-SKILLs (Orchestra Research) absorption
 license: MIT
-allowed-tools: terminal web delegate_task Read Write skill_view
+allowed-tools: terminal web delegate_task Read Write skill_view browser_console
 signature: "query: str -> mode: str, chain: list[str], loop_state: dict"
 metadata:
   synthos_atom_type: "router"
@@ -424,7 +424,75 @@ assembled_output.json
 }
 ```
 
-## 已知陷阱
+## 动态环境调试（ENV-Debug）[吸收自 Claude Code]
+
+**当执行报错时，自动查日志→分析失败原因→修复→重试。不再是一次失败就回滚。**
+
+### 触发条件
+
+执行任何原子后 exit_code ≠ 0 或输出包含 ERROR/Exception/Traceback：
+
+### 调试协议
+
+```
+env_debug(step_name, error):
+  1. 捕获完整错误输出（stdout + stderr）
+  2. 分析错误类型：
+     - ImportError/ModuleNotFoundError → pip install 缺失包后重试
+     - FileNotFoundError → 检查路径/创建目录后重试
+     - TimeoutError → 增加 timeout 后重试
+     - PermissionError → 检查权限后重试
+     - ValueError/TypeError → 检查参数格式后重试
+  3. 执行修复操作（通过 terminal）
+  4. 重新执行失败的步骤
+  5. 如果重试仍失败 → 完整错误报告 + 建议替代方案
+  6. 如果重试成功 → 记录修复方案到 lessons.jsonl
+```
+
+**边界**：最多重试 2 次；连续 2 次失败则停止调试并回滚。
+
+## 动态 MCP 工具发现 [吸收自 MCP 生态]
+
+**运行时动态发现可用工具，不硬编码 allowed-tools。**
+
+### 发现协议
+
+```
+mcp_discover():
+  1. 检查 Hermes 配置中是否启用了 native-mcp
+  2. 如果已配置 MCP servers：
+     - 读取 mcp_servers 列表
+     - 对每个 server 发送 tools/list 请求
+     - 将返回的工具合并到当前 allowed-tools
+  3. 如果未配置 MCP：
+     - 扫描本地 ~/.hermes/tools/ 目录下的 tool 定义
+     - 加载可用工具列表
+  4. 将发现的工具注册到当前会话的 tool registry
+  5. 标记来源: "mcp" | "local_tool" | "built_in"
+```
+
+**意图**：不把 allowed-tools 写死。运行时发现新能力——吸收自 MCP 协议的动态工具发现机制。
+
+## 短时情景记忆缓冲（Episodic Memory）[吸收自 Reflexion]
+
+**在单次任务执行中维护一个短时错误缓冲区，遇到失败时立即语言反思并重试。**
+
+### 执行协议
+
+```
+in each inner iteration:
+  1. 执行当前原子
+  2. 如果成功 → 清除失败计数
+  3. 如果失败 → 
+     a. 将错误写入 episodic_buffer[]（上限 3 条）
+     b. 用自然语言反思：\"为什么这次失败？和之前类似吗？\"
+     c. 如果 episodic_buffer 中已有 ≥ 2 条同类错误 → 调用 env_debug()
+     d. 如果 ≥ 3 条不同错误 → 停止当前操作，建议更换策略
+  4. 迭代结束时，将 episodic_buffer 清空或摘要写入 long_term_memory
+```
+
+**适用场景**：单次文献检索失败 → 反思"是不是关键词太宽泛？" → 调整后重试。
+**与 Nudge 的区别**：Nudge 是进化引擎维度的宏观引导；Episodic Memory 是任务执行中的微观试错缓冲。
 
 ### 1. 不要用旧 Python 代码
 `core/` 目录下的 Python 代码已经全部删除。不要尝试 import 或运行它们。所有功能通过 SKILL.md + Agent 工具实现。
