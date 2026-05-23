@@ -10,8 +10,8 @@ identifiers:
     value: "https://github.com/yakeworld/Synthos"
 repository-code: "https://github.com/yakeworld/Synthos"
 license: MIT
-version: "4.2.0"
-date-released: 2026-05-12
+version: "4.3.0"
+date-released: 2026-05-22
 keywords:
   - "ai-agent"
   - "cognitive-architecture"

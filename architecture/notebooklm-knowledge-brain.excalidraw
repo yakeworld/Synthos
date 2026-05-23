@@ -1,0 +1,98 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "hermes-agent",
+  "elements": [
+    {
+      "type": "text",
+      "id": "title",
+      "x": 250,
+      "y": 20,
+      "width": 500,
+      "height": 40,
+      "text": "NotebookLM as Knowledge Brain: Zero-Cost Tiered Architecture",
+      "fontSize": 28,
+      "fontFamily": 1,
+      "strokeColor": "#1e1e1e",
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "originalText": "NotebookLM as Knowledge Brain: Zero-Cost Tiered Architecture",
+      "autoResize": true
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "x": 350,
+      "y": 65,
+      "width": 300,
+      "height": 25,
+      "text": "Synthos Philosophy x Free Gemini-tier Reasoning",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "strokeColor": "#666666",
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "originalText": "Synthos Philosophy x Free Gemini-tier Reasoning",
+      "autoResize": true
+    },
+
+    {"type":"rectangle","id":"bg_synthos","x":40,"y":100,"width":920,"height":580,"roundness":{"type":3},"backgroundColor":"#f0f0f0","fillStyle":"solid","strokeColor":"#cccccc","strokeWidth":1,"opacity":50},
+    {"type":"text","id":"t_bg_synthos","x":45,"y":105,"width":200,"height":20,"text":"Synthos System", "fontSize":16,"fontFamily":1,"strokeColor":"#888888","textAlign":"left","verticalAlign":"middle","containerId":"bg_synthos","originalText":"Synthos System","autoResize":true},
+
+    {"type":"rectangle","id":"bg_constitution","x":60,"y":145,"width":880,"height":40,"roundness":{"type":3},"backgroundColor":"#fff3bf","fillStyle":"solid","strokeColor":"#fab005"},
+    {"type":"text","id":"t_bg_constitution","x":65,"y":150,"width":870,"height":30,"text":"Constitution P0-P6 | Evolution Engine v2.12 | Cognitive Atoms (ACQ, EXT, ASC, GAP, HYP, ARG, VER)", "fontSize":14,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center","verticalAlign":"middle","containerId":"bg_constitution","originalText":"Constitution P0-P6 | Evolution Engine v2.12 | Cognitive Atoms (ACQ, EXT, ASC, GAP, HYP, ARG, VER)","autoResize":true},
+
+    {"type":"rectangle","id":"bg_tier1","x":60,"y":210,"width":420,"height":240,"roundness":{"type":3},"backgroundColor":"#a5d8ff","fillStyle":"solid","strokeColor":"#1971c2"},
+    {"type":"text","id":"t_tier1_title","x":140,"y":218,"width":260,"height":25,"text":"TIER 1: Knowledge Brain", "fontSize":20,"fontFamily":1,"strokeColor":"#1971c2","textAlign":"center","verticalAlign":"middle","containerId":"bg_tier1","originalText":"TIER 1: Knowledge Brain","autoResize":true},
+
+    {"type":"rectangle","id":"t1_nb","x":80,"y":255,"width":180,"height":70,"roundness":{"type":3},"backgroundColor":"#ffffff","fillStyle":"solid","strokeColor":"#1971c2"},
+    {"type":"text","id":"t_t1_nb","x":85,"y":262,"width":170,"height":56,"text":"NotebookLM\n(Gemini-powered)", "fontSize":16,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center","verticalAlign":"middle","containerId":"t1_nb","originalText":"NotebookLM\n(Gemini-powered)","autoResize":true},
+
+    {"type":"rectangle","id":"t1_capabilities","x":280,"y":255,"width":180,"height":70,"roundness":{"type":3},"backgroundColor":"#ffffff","fillStyle":"solid","strokeColor":"#1971c2"},
+    {"type":"text","id":"t_t1_cap","x":285,"y":260,"width":170,"height":60,"text":"Deep Reasoning\nLiterature RAG\nGap/Hypothesis", "fontSize":14,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center","verticalAlign":"middle","containerId":"t1_capabilities","originalText":"Deep Reasoning\nLiterature RAG\nGap/Hypothesis","autoResize":true},
+
+    {"type":"rectangle","id":"t1_cost","x":80,"y":340,"width":180,"height":50,"roundness":{"type":3},"backgroundColor":"#b2f2bb","fillStyle":"solid","strokeColor":"#2f9e44"},
+    {"type":"text","id":"t_t1_cost","x":85,"y":347,"width":170,"height":36,"text":"Cost: FREE\n(Google account)", "fontSize":14,"fontFamily":1,"strokeColor":"#2f9e44","textAlign":"center","verticalAlign":"middle","containerId":"t1_cost","originalText":"Cost: FREE\n(Google account)","autoResize":true},
+
+    {"type":"rectangle","id":"t1_generate","x":280,"y":340,"width":180,"height":50,"roundness":{"type":3},"backgroundColor":"#fff3bf","fillStyle":"solid","strokeColor":"#fab005"},
+    {"type":"text","id":"t_t1_gen","x":285,"y":347,"width":170,"height":36,"text":"Generate:\nReport/Audio/Video/Slides", "fontSize":12,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center","verticalAlign":"middle","containerId":"t1_generate","originalText":"Generate:\nReport/Audio/Video/Slides","autoResize":true},
+
+    {"type":"text","id":"t_t1_desc","x":80,"y":400,"width":390,"height":40,"text":"* ink: source add PDF/literature\n* Deep research mode for literature discovery\n* 5 sequential Q&A for Gap + Hypothesis\n* 7-dim SCI quality review\n* Content generation (reports, slides)", "fontSize":12,"fontFamily":1,"strokeColor":"#555555","textAlign":"left","verticalAlign":"top","originalText":"* ink: source add PDF/literature\n* Deep research mode for literature discovery\n* 5 sequential Q&A for Gap + Hypothesis\n* 7-dim SCI quality review\n* Content generation (reports, slides)","autoResize":true},
+
+    {"type":"rectangle","id":"bg_tier2","x":500,"y":210,"width":420,"height":240,"roundness":{"type":3},"backgroundColor":"#d0bfff","fillStyle":"solid","strokeColor":"#7048e8"},
+    {"type":"text","id":"t_tier2_title","x":565,"y":218,"width":290,"height":25,"text":"TIER 2: Execution Cortex", "fontSize":20,"fontFamily":1,"strokeColor":"#7048e8","textAlign":"center","verticalAlign":"middle","containerId":"bg_tier2","originalText":"TIER 2: Execution Cortex","autoResize":true},
+
+    {"type":"rectangle","id":"t2_hermes","x":520,"y":255,"width":180,"height":70,"roundness":{"type":3},"backgroundColor":"#ffffff","fillStyle":"solid","strokeColor":"#7048e8"},
+    {"type":"text","id":"t_t2_hermes","x":525,"y":262,"width":170,"height":56,"text":"Hermes Agent\n(local/free model)", "fontSize":16,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center","verticalAlign":"middle","containerId":"t2_hermes","originalText":"Hermes Agent\n(local/free model)","autoResize":true},
+
+    {"type":"rectangle","id":"t2_capabilities","x":720,"y":255,"width":180,"height":70,"roundness":{"type":3},"backgroundColor":"#ffffff","fillStyle":"solid","strokeColor":"#7048e8"},
+    {"type":"text","id":"t_t2_cap","x":725,"y":260,"width":170,"height":60,"text":"Tool Orchestration\nLaTeX Compilation\nGit Management", "fontSize":14,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center","verticalAlign":"middle","containerId":"t2_capabilities","originalText":"Tool Orchestration\nLaTeX Compilation\nGit Management","autoResize":true},
+
+    {"type":"rectangle","id":"t2_cost","x":520,"y":340,"width":180,"height":50,"roundness":{"type":3},"backgroundColor":"#b2f2bb","fillStyle":"solid","strokeColor":"#2f9e44"},
+    {"type":"text","id":"t_t2_cost","x":525,"y":347,"width":170,"height":36,"text":"Cost: FREE\n(local, no API)", "fontSize":14,"fontFamily":1,"strokeColor":"#2f9e44","textAlign":"center","verticalAlign":"middle","containerId":"t2_cost","originalText":"Cost: FREE\n(local, no API)","autoResize":true},
+
+    {"type":"rectangle","id":"t2_tools","x":720,"y":340,"width":180,"height":50,"roundness":{"type":3},"backgroundColor":"#fff3bf","fillStyle":"solid","strokeColor":"#fab005"},
+    {"type":"text","id":"t_t2_tools","x":725,"y":347,"width":170,"height":36,"text":"Tools:\nTerminal/File/Git/Code", "fontSize":12,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center","verticalAlign":"middle","containerId":"t2_tools","originalText":"Tools:\nTerminal/File/Git/Code","autoResize":true},
+
+    {"type":"text","id":"t_t2_desc","x":520,"y":400,"width":390,"height":40,"text":"* Execute code and scripts\n* Compile LaTeX (pdflatex/xelatex)\n* Manage Git repos\n* Write/read/edit files\n* Run terminal commands", "fontSize":12,"fontFamily":1,"strokeColor":"#555555","textAlign":"left","verticalAlign":"top","originalText":"* Execute code and scripts\n* Compile LaTeX (pdflatex/xelatex)\n* Manage Git repos\n* Write/read/edit files\n* Run terminal commands","autoResize":true},
+
+    {"type":"rectangle","id":"bg_router","x":140,"y":475,"width":720,"height":55,"roundness":{"type":3},"backgroundColor":"#ffc9c9","fillStyle":"solid","strokeColor":"#e03131"},
+    {"type":"text","id":"t_router_title","x":240,"y":478,"width":520,"height":20,"text":"ROUTER: Synthos Task Router (Cognitive Atom + Evolution Engine)", "fontSize":18,"fontFamily":1,"strokeColor":"#e03131","textAlign":"center","verticalAlign":"middle","containerId":"bg_router","originalText":"ROUTER: Synthos Task Router (Cognitive Atom + Evolution Engine)","autoResize":true},
+    {"type":"text","id":"t_router_logic","x":160,"y":498,"width":680,"height":25,"text":"Needs deep reasoning? -> NotebookLM  |  Needs execution? -> Local  |  Mixed? -> NotebookLM reasons, Hermes executes", "fontSize":14,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center","verticalAlign":"middle","containerId":"bg_router","originalText":"Needs deep reasoning? -> NotebookLM  |  Needs execution? -> Local  |  Mixed? -> NotebookLM reasons, Hermes executes","autoResize":true},
+
+    {"type":"arrow","id":"a_t1toR","x":270,"y":470,"width":0,"height":5,"endArrowhead":"arrow","startBinding":{"elementId":"bg_tier1","fixedPoint":[0.5,1]},"endBinding":{"elementId":"bg_router","fixedPoint":[0.5,0]}},
+    {"type":"arrow","id":"a_t2toR","x":710,"y":470,"width":0,"height":5,"endArrowhead":"arrow","startBinding":{"elementId":"bg_tier2","fixedPoint":[0.5,1]},"endBinding":{"elementId":"bg_router","fixedPoint":[0.5,0]}},
+
+    {"type":"rectangle","id":"bg_output","x":140,"y":555,"width":720,"height":100,"roundness":{"type":3},"backgroundColor":"#c3fae8","fillStyle":"solid","strokeColor":"#099268"},
+    {"type":"text","id":"t_output_title","x":240,"y":558,"width":520,"height":20,"text":"OUTPUT: Papers / Skills / Evolution Reports", "fontSize":18,"fontFamily":1,"strokeColor":"#099268","textAlign":"center","verticalAlign":"middle","containerId":"bg_output","originalText":"OUTPUT: Papers / Skills / Evolution Reports","autoResize":true},
+    {"type":"text","id":"t_output_desc","x":160,"y":585,"width":680,"height":60,"text":"* Compiled LaTeX papers (Synthos System, ADHD Eye-Tracking, etc.)\n* Absorbed skills from external sources (Agent4S, PaperSpine, Nature-paper2ppt)\n* Evolution state logs and lessons\n* Skill hierarchy optimization", "fontSize":12,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"left","verticalAlign":"top","originalText":"* Compiled LaTeX papers (Synthos System, ADHD Eye-Tracking, etc.)\n* Absorbed skills from external sources (Agent4S, PaperSpine, Nature-paper2ppt)\n* Evolution state logs and lessons\n* Skill hierarchy optimization","autoResize":true},
+
+    {"type":"arrow","id":"a_RtoO","x":500,"y":530,"width":0,"height":25,"endArrowhead":"arrow","startBinding":{"elementId":"bg_router","fixedPoint":[0.5,1]},"endBinding":{"elementId":"bg_output","fixedPoint":[0.5,0]}},
+
+    {"type":"text","id":"annotation1","x":60,"y":670,"width":440,"height":20,"text":"Key Innovation: Both tiers cost ZERO. NotebookLM is free via Google account.", "fontSize":14,"fontFamily":1,"strokeColor":"#2f9e44","textAlign":"left","verticalAlign":"middle","originalText":"Key Innovation: Both tiers cost ZERO. NotebookLM is free via Google account.","autoResize":true},
+    {"type":"text","id":"annotation2","x":60,"y":690,"width":440,"height":20,"text":"Routing overhead: ~0.5s per NotebookLM ask call + 60-90s for deep research.", "fontSize":14,"fontFamily":1,"strokeColor":"#888888","textAlign":"left","verticalAlign":"middle","originalText":"Routing overhead: ~0.5s per NotebookLM ask call + 60-90s for deep research.","autoResize":true}
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff"
+  }
+}
