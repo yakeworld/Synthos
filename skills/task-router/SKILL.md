@@ -57,12 +57,14 @@ metadata:
 ## 概述
 本 SKILL.md 是 Synthos 系统的**唯一入口**。所有用户请求都通过本文件定义的流程路由到正确的认知原子链。Agent 读取本文件后，自主推理、编排和执行，不需要任何 Python 代码。
 
-支持**三种执行模式**：
+支持**四种执行模式**：
 1. **简单链**（simple_chain）：线性执行选定原子，一次性完成
 2. **探索循环**（exploratory_loop）：重复内循环直到收敛——适用于假设验证、实验迭代
 3. **研究双循环**（research_twoloop）：内循环重复探索 + 外循环定期复盘——适用于完整研究项目
+4. **并行模式**（parallel）：将可并行的子任务通过 `delegate_task` 分发到子 Agent 并发执行——适用于多库检索、多假设验证、多实验并行
 
 双循环编排协议吸收自 **AI-Research-SKILLs (Orchestra Research)** 的 Autoresearch 架构。
+并行模式利用 Hermes 内置的 `delegate_task` 工具实现子 Agent 并发。
 
 ## 工作目录
 所有输出写入 Synthos 项目的 `outputs/runs/` 目录：
@@ -102,6 +104,7 @@ mkdir -p /media/yakeworld/sda2/Synthos/outputs/runs/<run_id>
 | 写作 | `needs_expression` | 写论文、起草、撰写、write、draft |
 | 验证 | `needs_verification` | 评估、检验、可行性、verify、validate |
 | **研究** | **`needs_research`** | **研究、实验、迭代、优化、反复、experiment、iterate、converge** |
+| **并行** | **`needs_parallel`** | **并行、并发、同时、多路、parallel、concurrent、simultaneous** |
 | **双循环** | **`needs_twoloop`** | **双循环、内外、系统研究、full research、complete study、深入系统** |
 
 **执行模式确定**：
@@ -111,6 +114,7 @@ mkdir -p /media/yakeworld/sda2/Synthos/outputs/runs/<run_id>
 | 无特殊标记，简单任务 | `simple_chain` | 线性执行，一次性完成 |
 | 含 `needs_exploration` 或 `needs_hypothesis` + `needs_verification` | `exploratory_loop` | 内循环：HYP→VER→ASC→重复 |
 | 含 `needs_research` | `exploratory_loop` | 同上 |
+| 含 `needs_parallel` 或 `needs_twoloop` + 多个独立子目标 | `parallel` | 并行分发子任务 |
 | 含 `needs_twoloop` | `research_twoloop` | 内循环 + 外循环复盘 |
 | `mode_hint` 明确指定则覆盖自动判断 | 按指定执行 |
 
@@ -302,6 +306,60 @@ outer_loop_review(N):
 | `pivot` | 将新方向注入内循环的 HYP 输入 |
 | `finalize` | 退出双循环，进入第 11 步汇总 |
 | 达 max_outer_iterations | 强制退出 |
+
+### 第 10b 步：并行模式（Parallel Execution）
+
+**利用 Hermes `delegate_task` 将可独立的子任务分发到子 Agent 并发执行，大幅缩短总执行时间。**
+
+**触发条件**：当前查询包含多个彼此独立的子目标（如同时检索3个数据库、同时验证3个假设、同时运行3个实验）
+
+**并行协议**：
+
+```
+parallel_execute(tasks):
+  1. 识别可并行执行的子任务列表
+  2. 对每个子任务，构造自包含的 goal + context
+  3. 通过 delegate_task(tasks=[...]) 并行分发
+     - 每个子任务获得独立的上下文和终端会话
+     - 最多支持 Hermes 配置的 max_concurrent_children 个并发
+  4. 等待所有子任务完成
+  5. 收集所有子任务的 summary
+  6. 进入第 11 步汇总
+```
+
+**并行分派示例**：
+
+```yaml
+parallel_acquisition:
+  description: "并行检索三个数据库"
+  tasks:
+    - goal: "检索PubMed: ADHD eye-tracking 2020-2025"
+      context: "关键词: ADHD, eye tracking, saccade"
+      toolsets: ["web"]
+    - goal: "检索Semantic Scholar: ADHD eye-tracking deep learning"
+      context: "关键词: ADHD, eye tracking, deep learning, CNN"
+      toolsets: ["web"]
+    - goal: "检索arXiv: eye movement ADHD classification"
+      context: "关键词: eye movement, ADHD, classification, transformer"
+      toolsets: ["web"]
+```
+
+**适用场景**：
+
+| 场景 | 串行时间 | 并行时间 | 加速比 |
+|:-----|:--------:|:--------:|:------:|
+| 3数据库并行检索 | ~90s | ~35s | ~2.6x |
+| 3假设同时验证 | ~180s | ~70s | ~2.6x |
+| 3实验同时执行 | ~300s | ~120s | ~2.5x |
+
+**安全约束**：
+| 规则 | 说明 |
+|:-----|:------|
+| 子任务必须独立 | 无共享状态或数据依赖 |
+| 结果需汇总校验 | 并行结果中的矛盾点须由主 Agent 仲裁 |
+| 不可嵌套并行 | 子 Agent 不能再起并行（受 Hermes max_spawn_depth=1 限制） |
+
+**意图**：填补 Synthos"单线程顺序执行"的性能短板。利用 Hermes 已有的 delegate_task 能力，对可独立的任务实现 2-3 倍的加速，使大规模文献检索和多方验证变得实用。
 
 ### 第 11 步：循环模式汇总
 
