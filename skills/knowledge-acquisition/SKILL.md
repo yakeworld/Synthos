@@ -138,8 +138,9 @@ if use_cache and file_exists(cache_path):
 | 3 | Crossref | 外部API | 偶尔空结果/slow | 标记failed→尝试OpenAlex |
 | 3 | OpenAlex | 外部API | 偶尔不可用 | 标记failed→尝试arXiv |
 | 4 | arXiv | 外部API | HTTP (非HTTPS) | 标记failed→尝试bioRxiv |
-| 5 | bioRxiv/medRxiv | 外部API | 空collection | 标记failed→尝试local_absorption_db |
-| 6 | **local_absorption_db** | **本地文件** | **无（保证可用）** | **提取相关项目作为文献** |
+| 5 | bioRxiv/medRxiv | 外部API | 空collection | 标记failed→尝试web_scrape |
+| 6 | **web_scrape** | **浏览器/curl** | **无结构化数据** | **降级→尝试local_absorption_db** |
+| 7 | **local_absorption_db** | **本地文件** | **无（保证可用）** | **提取相关项目作为文献** |
 
 关键规则：
 - **每个源最多重试1次**（重试间隔1秒）
@@ -217,6 +218,49 @@ curl -s --max-time 15 "http://export.arxiv.org/api/query?search_query=all:<encod
 curl -s --max-time 10 "https://api.biorxiv.org/details/biorxiv/<encoded_query>"
 curl -s --max-time 10 "https://api.biorxiv.org/details/medrxiv/<encoded_query>"
 ```
+
+##### 优先级6: Web Scrape — 深度网页抓取 [v1.6.0 新增]
+
+**当所有结构化 API 都无结果时，用无头浏览器或 curl 抓取非结构化网页。**
+
+**吸收自 GPT-Researcher 的深度网页搜索方法论，但以纯 skill 方式实现（零 Python）。**
+
+```bash
+# 策略A: 学术搜索引擎（无需浏览器）
+curl -sL --max-time 15 "https://scholar.google.com/scholar?q=<encoded_query>&hl=en&as_sdt=0%2C5&as_ylo=2020"
+# 注意: Google Scholar 有反爬，可能返回 503
+
+# 策略B: 通用搜索引擎（降级兜底）
+curl -sL --max-time 15 "https://html.duckduckgo.com/html/?q=<encoded_query>"
+
+# 策略C: 直接抓取已知 URL 列表（如会议主页、实验室页面）
+curl -sL --max-time 30 "<target_url>"
+```
+
+**提取方法**：通过 `terminal` 调用 `pandoc` 或 `lynx -dump` 将 HTML 转为纯文本，再用 EXT 原子提取结构化信息：
+
+```bash
+# 方法1: lynx 转纯文本（推荐，最快）
+lynx -dump -nolist <html_file> 2>/dev/null | head -200
+
+# 方法2: pandoc 转 markdown
+pandoc <html_file> -t markdown --wrap=none 2>/dev/null
+```
+
+**适用场景**：
+| 场景 | 示例 URL | 提取内容 |
+|:-----|:---------|:---------|
+| 预印本平台 | `https://arxiv.org/abs/<id>` | 摘要、作者、引用格式 |
+| 会议主页 | `https://2026.iclr.cc/` | Call for papers、截稿日期 |
+| 实验室主页 | `https://<lab>.github.io/publications/` | 最新出版物列表 |
+| 学术博客 | `https://<blog>/*.html` | 前沿研究评论、对比分析 |
+
+**边界判断**：
+- 仅在所有结构化 API（S2/PubMed/Crossref/OpenAlex/arXiv/bioRxiv）失败后启动
+- 每次抓取 timeout ≤ 30s
+- 抓取结果以纯文本保存到 `outputs/web-scrape/<query>/`，供 EXT 原子提取
+- 不抓取需登录/付费的页面
+- 遵守 `robots.txt`（通过 `-A "Synthos Academic Research Agent"` User-Agent 声明身份）
 - timeout=10s
 - 注意：该 API 有时返回空 collection
 
