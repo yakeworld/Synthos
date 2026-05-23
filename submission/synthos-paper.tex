@@ -39,7 +39,7 @@ Cognitive Architecture \sep Self-Evolution \sep Scientific AI Agent \sep Constit
 \subsection{The Rise of AI Research Agents}
 \label{sec:rise}
 
-The pursuit of autonomous scientific discovery through artificial intelligence has produced a diverse ecosystem of research agents~\cite{elovic2024gpt,sakana2025ai,shao2024storm,futurehouse2025paperqa2,asai2025openscholar}. These systems have achieved remarkable benchmarks---PaperQA2 achieving 99.3\% on PubMedQA, AI Scientist producing the first AI-written workshop paper---yet they share a fundamental limitation: their cognitive architecture remains implicit, embedded in orchestration code rather than explicitly modeled as a reasoning framework.
+The pursuit of autonomous scientific discovery through artificial intelligence has produced a diverse ecosystem of research agents~\cite{elovic2024gpt,lu2024ai,shao2024storm,futurehouse2025paperqa2,asai2025openscholar}. These systems have achieved remarkable benchmarks---PaperQA2 achieving 99.3\% on PubMedQA, AI Scientist producing the first AI-written workshop paper---yet they share a fundamental limitation: their cognitive architecture remains implicit, embedded in orchestration code rather than explicitly modeled as a reasoning framework.
 
 \subsection{Three Critical Gaps}
 \label{sec:gaps}
@@ -53,7 +53,7 @@ The pursuit of autonomous scientific discovery through artificial intelligence h
 \subsection{Related Work and Positioning}
 \label{sec:related}
 
-Recent advances address these gaps from complementary but incomplete directions. Claude Code~\cite{anthropic2025claude} introduced constitutional AI with drift detection, restricting its scope to code generation. DeepResearchAgent~\cite{skyworkai2026deep} proposed SEPL rollback protocols for self-evolution but remains Python-dependent. AI-Research-SKILLs~\cite{orchestra2026airesearch} demonstrated 90+ SKILL.md files with ARA provenance, yet lacks a self-evolution mechanism. GEPA~\cite{gepa2025gepa} introduced reflective strategy selection without constitutional governance. STORM~\cite{shao2024storm} excels at literature synthesis but does not extend to hypothesis generation or verification. OpenScholar~\cite{asai2025openscholar} synthesizes literature at scale but operates as a monolithic pipeline. Nature-skills~\cite{yuan2025nature} and Academic Research Skills~\cite{ars2025academic} advanced the SKILL.md paradigm for task-specific capabilities, while PaperOrchestra~\cite{song2026paperorchestra} demonstrated multi-agent pipeline advantages. AutoR~\cite{autox2025autor} shares the human-in-loop philosophy but implements it via Python harness. KILO-KIT~\cite{vo2025kilo} contributed CRISP-DM templates for structured research workflows. However, no existing system simultaneously achieves explicit epistemological encoding, constitutional governance, self-evolving architecture, and zero-Python execution.
+Recent advances address these gaps from complementary but incomplete directions. Constitutional AI~\cite{bai2022constitutional} introduced principles for harmlessness, later applied to code generation; yet its epistemological scope remains limited. DeepResearchAgent~\cite{skyworkai2026deep} proposed SEPL rollback protocols for self-evolution but remains Python-dependent. AI-Research-SKILLs~\cite{orchestra2026airesearch} demonstrated 90+ SKILL.md files with ARA provenance, yet lacks a self-evolution mechanism. GEPA~\cite{gepa2025gepa} introduced reflective strategy selection without constitutional governance. STORM~\cite{shao2024storm} excels at literature synthesis but does not extend to hypothesis generation or verification. OpenScholar~\cite{asai2025openscholar} synthesizes literature at scale but operates as a monolithic pipeline. Nature-skills~\cite{yuan2025nature} and Academic Research Skills~\cite{ars2025academic} advanced the SKILL.md paradigm for task-specific capabilities, while PaperOrchestra~\cite{song2026paperorchestra} demonstrated multi-agent pipeline advantages. AutoR~\cite{autox2025autor} shares the human-in-loop philosophy but implements it via Python harness. KILO-KIT~\cite{vo2025kilo} contributed CRISP-DM templates for structured research workflows. However, no existing system simultaneously achieves explicit epistemological encoding, constitutional governance, self-evolving architecture, and zero-Python execution.
 
 \subsection{Our Contributions}
 \label{sec:contributions}
@@ -62,7 +62,7 @@ Recent advances address these gaps from complementary but incomplete directions.
 
 \textbf{Contribution 2: Constitutional Hierarchy} --- All system behavior is governed by CONSTITUTION.md v5.0~\cite{yang2026synthosconst}, a formal hierarchy of immutable principles ranked CON~$>$~MEM~$>$~CMD~$>$~SKL~$>$~DEF, enforced by a philosophical immune system.
 
-\textbf{Contribution 3: Self-Evolution Infrastructure} --- An 11-step evolution engine~\cite{yang2026synthos} (v2.11) incorporating PW-Bench~\cite{song2026paperorchestra}, SEPL rollback~\cite{skyworkai2026deep}, Git-as-Memory~\cite{haiyang2025aris}, hypothesis-first single-metric improvement, and active inference gates.
+\textbf{Contribution 3: Self-Evolution Infrastructure} --- An 11-step evolution engine~\cite{yang2026synthos} (v2.11) incorporating PW-Bench~\cite{song2026paperorchestra}, SEPL rollback~\cite{skyworkai2026deep}, Git-as-Memory~\cite{yang2026aris}, hypothesis-first single-metric improvement, and active inference gates.
 
 Table~\ref{tab:comparison} compares Synthos with representative existing systems across key dimensions.
 
@@ -71,9 +71,9 @@ Table~\ref{tab:comparison} compares Synthos with representative existing systems
 \begin{tabular}{lcccc}\toprule
 \textbf{System} & \textbf{Epistemic} & \textbf{Const.} & \textbf{Self-Evol.} & \textbf{Zero-Py}\\\midrule
 GPT-Researcher~\cite{elovic2024gpt} & $\times$ & $\times$ & $\times$ & $\times$\\
-AI Scientist~\cite{sakana2025ai} & $\times$ & $\times$ & $\bigtriangleup$ & $\times$\\
+AI Scientist~\cite{lu2024ai} & $\times$ & $\times$ & $\bigtriangleup$ & $\times$\\
 PaperQA2~\cite{futurehouse2025paperqa2} & $\times$ & $\times$ & $\times$ & $\times$\\
-Claude Code~\cite{anthropic2025claude} & $\times$ & $\checkmark$ & $\times$ & $\times$\\ 
+Constitutional AI~\cite{bai2022constitutional} & $\times$ & $\checkmark$ & $\times$ & $\times$\\ 
 DSPy~\cite{khattab2023dspy} & $\times$ & $\times$ & $\checkmark$ & $\times$\\
 DeepResearchAgent~\cite{skyworkai2026deep} & $\times$ & $\times$ & $\checkmark$ & $\times$\\
 AI-Research-SKILLs~\cite{orchestra2026airesearch} & $\bigtriangleup$ & $\times$ & $\times$ & $\checkmark$\\
@@ -138,7 +138,7 @@ Path B: LOAD_CONST -> LOAD_STATE -> LESSONS ->
 Path C: LOAD_CONST -> restore checkpoint -> continue
 \end{verbatim}
 
-Key innovations include \textbf{Hypothesis-First Improvement} (each IMPROVE begins with a falsifiable hypothesis written to \texttt{hypothesis\_\{cycle\}.yaml}, inspired by~\cite{haiyang2025aris}), \textbf{Git-as-Memory} (each cycle creates a branch; passes are kept, failures reverted; agent reads \texttt{git log} before DIAGNOSE), \textbf{Single-Metric Focus} (each cycle improves exactly one dimension; three failed cycles trigger stuck protocol), and \textbf{SEPL Rollback}~\cite{skyworkai2026deep} (OPTIMIZE patches undergo commit gate; VERIFY failure triggers automatic \texttt{git revert}; three consecutive rollbacks lock the skill).
+Key innovations include \textbf{Hypothesis-First Improvement} (each IMPROVE begins with a falsifiable hypothesis written to \texttt{hypothesis\_\{cycle\}.yaml}, inspired by~\cite{yang2026aris}), \textbf{Git-as-Memory} (each cycle creates a branch; passes are kept, failures reverted; agent reads \texttt{git log} before DIAGNOSE), \textbf{Single-Metric Focus} (each cycle improves exactly one dimension; three failed cycles trigger stuck protocol), and \textbf{SEPL Rollback}~\cite{skyworkai2026deep} (OPTIMIZE patches undergo commit gate; VERIFY failure triggers automatic \texttt{git revert}; three consecutive rollbacks lock the skill).
 
 \textbf{Active Inference Gate}: When DIAGNOSE detects high epistemic uncertainty---confidence variance $>0.3$, benchmark variance $>0.2$---the engine generates formal experiment proposals to minimize expected surprise, operationalizing the Free Energy Principle~\cite{friston2010free} at the system architecture level.
 
@@ -192,7 +192,7 @@ Across 7 benchmark suites (ROUTE-01/02/03, ACQ-01/02, EXT-01/02, ASC-01/02, HYP-
 \footnotesize
 \begin{tabular}{l>{\raggedright\arraybackslash}p{3.2cm}>{\raggedright\arraybackslash}p{3.5cm}c}\toprule
 \textbf{Source} & \textbf{Absorbed Pattern} & \textbf{Target} & \textbf{Score}\\\midrule
-Claude Code~\cite{anthropic2025claude} & Hook events, drift detection & Evolution v2.4--v2.5 & --\\
+Constitutional AI~\cite{bai2022constitutional} & Hook events, drift detection & Evolution v2.4--v2.5 & --\\
 DSPy~\cite{khattab2023dspy} & Type signatures, auto-optimizer & All atoms, Evolution v2.6 & --\\
 LangGraph~\cite{langchain2024langgraph} & State machine, checkpoints & Evolution v2.7 & --\\
 GEPA~\cite{gepa2025gepa} & Reflective strategy selection & Evolution v2.8 & --\\
@@ -203,7 +203,7 @@ ARS~\cite{ars2025academic} & Anti-sycophancy protocol, data levels & VER v1.2, C
 PaperOrchestra~\cite{song2026paperorchestra} & Citation F1, LitReview 6-axis & VER v1.2, BENCHMARKS & 4.0\\
 DeepResearchAgent~\cite{skyworkai2026deep} & SEPL rollback, auditable lineage & Evolution v2.10 & 4.2\\
 AI-Res. SKILLs~\cite{orchestra2026airesearch} & ARA provenance, epistemic scoring & VER v1.3, Evolution v2.10 & 4.5\\
-ARIS~\cite{haiyang2025aris} & Git-as-Memory, hypothesis-first & Evolution v2.11 & 4.0\\\bottomrule
+ARIS~\cite{yang2026aris} & Git-as-Memory, hypothesis-first & Evolution v2.11 & 4.0\\\bottomrule
 \end{tabular}\end{table}
 
 \subsection{Practical Validation}
@@ -222,7 +222,7 @@ The evolution engine's trajectory---structural score from 0.861 to 1.00, composi
 
 \subsection{Zero-Python Architecture as a Paradigm Shift}
 
-The finding that a complete research workflow---7 cognitive atoms, router, evolution engine, absorption pipeline---can execute with zero Python infrastructure code has implications beyond Synthos itself. The SKILL.md paradigm, validated across nature-skills~(5,625~stars), AI-Research-SKILLs~(6,358~stars), and PaperOrchestra~(461~stars), demonstrates that declarative skill files are a viable alternative to Python orchestration for agent capabilities. This reduces the barrier to contribution from software engineering to domain expertise: a neurologist extending Synthos writes Markdown, not Python code.
+The finding that a complete research workflow---7 cognitive atoms, router, evolution engine, absorption pipeline---can execute with zero Python infrastructure code has implications beyond Synthos itself. The SKILL.md paradigm, validated across nature-skills, AI-Research-SKILLs, and PaperOrchestra, demonstrates that declarative skill files are a viable alternative to Python orchestration for agent capabilities. This reduces the barrier to contribution from software engineering to domain expertise: a neurologist extending Synthos writes Markdown, not Python code.
 
 \subsection{Limitations and Future Work}
 \label{sec:limitations}
@@ -250,10 +250,10 @@ We presented Synthos, a self-evolving cognitive operating system that reifies ei
 \begin{thebibliography}{34}
 
 \bibitem{elovic2024gpt}
-A. Elovic, ``GPT Researcher,'' 2024. [Online]. Available: \url{https://github.com/assafelovic/gpt-researcher}
+A. Elovic, ``GPT Researcher: An Autonomous Agent for Comprehensive Web Research,'' 2024. [Online]. Available: \url{https://github.com/assafelovic/gpt-researcher}
 
-\bibitem{sakana2025ai}
-Sakana AI, ``The AI Scientist: Towards Fully Automated Open-Ended Scientific Discovery,'' 2025. [Online]. Available: \url{https://github.com/SakanaAI/AI-Scientist}
+\bibitem{lu2024ai}
+C. Lu, C. Lu, R. T. Lange, J. Foerster, J. Clune, and D. Ha, ``The AI Scientist: Towards Fully Automated Open-Ended Scientific Discovery,'' \textit{arXiv:2408.06292}, 2024.
 
 \bibitem{shao2024storm}
 Y. Shao et al., ``Assisting in Writing Wikipedia-like Articles From Scratch with Large Language Models,'' \textit{arXiv:2402.14207}, 2024.
@@ -271,10 +271,10 @@ Nous Research, ``Hermes Agent: A Skill-Driven AI Agent Framework,'' 2025. [Onlin
 O. Khattab et al., ``DSPy: Compiling Declarative Language Model Calls into Self-Improving Pipelines,'' \textit{arXiv:2310.03714}, 2023.
 
 \bibitem{langchain2024langgraph}
-LangChain, ``LangGraph: Building Stateful, Multi-Actor Applications with LLMs,'' 2024. [Online]. Available: \url{https://github.com/langchain-ai/langgraph}
+LangChain, ``LangGraph: Building Stateful, Multi-Actor Applications with LLMs,'' \textit{Preprints}, 2024. DOI: \url{https://doi.org/10.20944/preprints202411.0566.v1}
 
-\bibitem{anthropic2025claude}
-Anthropic, ``Claude Code: Agentic Coding with Constitutional AI,'' 2025. [Online]. Available: \url{https://github.com/anthropics/claude-code}
+\bibitem{bai2022constitutional}
+Y. Bai et al., ``Constitutional AI: Harmlessness from AI Feedback,'' \textit{arXiv:2212.08073}, 2022.
 
 \bibitem{skyworkai2026deep}
 SkyworkAI, ``Deep Research Agent: A Self-Evolution Protocol and Runtime,'' 2026. [Online]. Available: \url{https://github.com/SkyworkAI/DeepResearchAgent}
@@ -291,8 +291,11 @@ X. Yang, ``Synthos Constitution v5.0 -- Immutable Principles for AI Cognitive Sy
 \bibitem{song2026paperorchestra}
 Song et al., ``PaperOrchestra: Orchestrating Scientific Paper Writing with Multi-Agent Collaboration,'' \textit{arXiv:2604.05018}, 2026.
 
-\bibitem{haiyang2025aris}
-Haiyang Diiing, ``ARIS: Autonomous Research Iteration System,'' 2025. [Online]. Available: \url{https://github.com/HaiyangDiiing/aris-cli}
+\bibitem{yang2026aris}
+R. Yang, Y. Li, and S. Li, ``ARIS: Autonomous Research via Adversarial Multi-Agent Collaboration,'' \textit{arXiv:2605.03042}, 2026.
+
+\bibitem{chase2022langchain}
+H. Chase, ``LangChain: Building Applications with LLMs through Composability,'' 2022. [Online]. Available: \url{https://github.com/langchain-ai/langchain}
 
 \bibitem{gepa2025gepa}
 GEPA Team, ``GEPA: General Evolutionary Planning for Agents,'' 2025. [Online]. Available: \url{https://github.com/gepa-ai/gepa}
@@ -310,7 +313,7 @@ V. D. Loc, ``KILO-KIT: CRISP-DM Templates for Knowledge-Driven Research,'' 2025.
 ARS Team, ``Academic Research Skills v3.7,'' 2026. [Online]. Available: \url{https://github.com/Imbad0202/academic-research-skills}
 
 \bibitem{yuan2025nature}
-Yuan1z0825, ``nature-skills: Academic Task Skills for Language Agents,'' 2025. [Online]. Available: \url{https://github.com/Yuan1z0825/nature-skills}
+Yuan1z0825, ``Nature-Skills: Academic Task Skills for Language Agents,'' 2025. [Online]. Available: \url{https://github.com/Yuan1z0825/nature-skills}
 
 \bibitem{autox2025autor}
 AutoX-AI-Labs, ``AutoR: A Human-Centered Research OS,'' 2025. [Online]. Available: \url{https://github.com/AutoX-AI-Labs/AutoR}
@@ -338,9 +341,6 @@ S. Yao et al., ``Tree of Thoughts: Deliberate Problem Solving with Large Languag
 
 \bibitem{lewis2020retrieval}
 P. Lewis et al., ``Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks,'' in \textit{Proc. NeurIPS}, 2020.
-
-\bibitem{chase2022langchain}
-H. Chase, ``LangChain: Building Applications with LLMs through Composability,'' 2022. [Online]. Available: \url{https://github.com/langchain-ai/langchain}
 
 \bibitem{sumers2023cognitive}
 T. Sumers et al., ``Cognitive Architectures for Language Agents,'' \textit{arXiv:2309.02427}, 2023.
