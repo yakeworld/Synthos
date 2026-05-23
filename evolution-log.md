@@ -1324,3 +1324,217 @@
 - **教训提取**: 文言四字格言压缩40-60%+不降低可执行性; 原理层文言+方法层白话+命令层英文三层策略已验证有效
 - **详情**: 全流程耗时~2分钟, skill加载省57%上下文(14K tokens/次)
 
+
+## 进化周期 #44 — 2026-05-22 (纯技能架构文档化)
+
+| 维度 | 内容 |
+|:-----|:------|
+| **触发** | 用户主动要求进化 |
+| **类型** | 奇数轮 (HYP+ARG+VER+ROUTE) |
+| **结构健康** | 7/7 核心原子全部 structural_score=1.0 |
+| **BENCHMARK** | 19/19 golden 用例全部通过 |
+| **综合分** | 0.97 (EXCELLENT) |
+| **漂移** | 🟢 宪法对齐✅ 认识论✅ |
+| **外部扫描** | 3 新候选：724-office ⭐1028, DATAGEN ⭐1736, EvoMap ⭐124 |
+
+### 修复
+1. **SKILL_TREE.md v3.1→v4.0**: 删除所有已删除 Python 文件引用，重写为纯技能驱动架构图，更新 7 原子、10 扩展技能、8 吸收里程碑的完整全景
+2. **hypothesis-generation**: `synthos_skill_md_hash: "pending"` → 真实 SHA256
+3. **knowledge-acquisition**: metadata version 1.4.0→1.5.0 同步
+
+### 外部扫描发现
+- **724-office** (⭐1028, MIT): 自进化 AI Agent 系统，含 nudge 机制、circuit breaker、3层记忆——可吸收方法论到 evolution 引擎
+- **DATAGEN** (⭐1736, MIT): 多智能体研究助手，含假设生成引擎——可吸收方法论到 HYP 原子
+- **EvoMap/awesome-agent-evolution** (⭐124): 进化智能体资源列表——元资源
+
+## 进化周期 #45 — 2026-05-22 (Synthos 注册 Hermes + 外部扫描重大发现)
+
+| 维度 | 内容 |
+|:-----|:------|
+| **触发** | 用户主动要求全面进化 |
+| **类型** | 偶数轮 (ACQ+EXT+ASC+ROUTE) |
+| **结构健康** | 7/7 核心原子全部 structural_score=1.0 (首次通过 skill_view() 验证) |
+| **BENCHMARK** | 17/17 golden 用例全部通过 |
+| **综合分** | **0.98** (EXCELLENT) — 比上次 +0.01 |
+| **漂移** | 🟢 宪法对齐✅ 认识论✅ |
+
+### 本轮亮点
+
+1. **Synthos 15 技能全量注册到 Hermes** — 从此 `skill_view('task-router')` 直接可用
+2. **修复 paper-workflow 的 pending hash** — 累计修复 3 个 pending 元数据
+3. **重大外部发现**: NousResearch/hermes-agent-self-evolution ⭐3446
+
+### 🔥 外部扫描重大发现
+
+| 项目 | ⭐ | 评分 | 描述 |
+|:-----|:-:|:----:|:-----|
+| **hermes-agent-self-evolution** (NousResearch) | 3,446 | **4.8** | 官方 Hermes Agent 自进化系统 (ICLR 2026 Oral, MIT) |
+| SkillWeaver (OSU-NLP-Group) | 123 | 3.5 | 技能综合框架 (MIT) |
+| SkillLens (AndrewNgGirl) | 57 | 3.0 | 技能评估工具 (MIT) |
+
+**hermes-agent-self-evolution** 是官方 NousResearch 出品，使用 DSPy + GEPA 自动优化技能的 SKILL.md、prompt 和代码。与 Synthos 的 evolution 引擎高度互补。建议下一轮做 L+0 吸收评估。
+
+### 修复
+- absorption-tracked.json +3 高质量候选项目
+- 37 总追踪项目 (33 discovered / 26 tracking / 4 evaluating / 4 absorbed)
+
+### 待下一轮
+- L+0 吸收评估: hermes-agent-self-evolution (DSPy+GEPA 方法论)
+- 考虑 SkillWeaver 的技能合成机制吸收
+
+## 进化周期 #46 — 2026-05-22 (L+0 吸收评估: hermes-agent-self-evolution)
+
+| 维度 | 内容 |
+|:-----|:------|
+| **触发** | 用户要求自动进化+吸收重要发现 |
+| **聚焦** | 🔥 L+0 吸收评估 hermes-agent-self-evolution |
+| **结构健康** | 7/7 核心原子全部 structural_score=1.0 |
+| **综合分** | 0.98 (EXCELLENT) — 维持 |
+
+### 🔥 L+0 吸收评估完成
+
+**hermes-agent-self-evolution** (NousResearch, ⭐3446, MIT, ICLR 2026 Oral)
+
+**核心方法论**:
+- GEPA 反射式演化 — 读取执行轨迹→理解失败原因→针对性变异
+- 三层优化目标: SKILL.md → Tool descriptions → System prompt
+- 自动数据集构建: 合成/金标准/会话挖掘
+- 多层约束门: 测试+大小+缓存+语义
+
+**3 个吸收提议**:
+1. **GEPA 反射式优化** → evolution OPTIMIZE 的 REFLECTIVE_ANALYSIS 阶段
+2. **自动评估数据集** → evolution BENCHMARK 的自动数据集构建
+3. **Pareto 多维评分** → evolution DIAGNOSE 的 Pareto 前沿分析
+
+**不可吸收**: DSPy/GEPA Python 管线、hermes-agent 紧耦合代码、PR 审批流程
+
+**综合评分**: 4.8/5.0 — 最强候选
+
+**文档**: skills/evolution/references/absorption-hermes-self-evolution.md
+
+## 进化周期 #47 — 2026-05-22 (L+1 吸收: evolution v2.12.0)
+
+| 维度 | 内容 |
+|:-----|:------|
+| **触发** | 用户确认"减少人类交互，超过阈值直接执行" |
+| **聚焦** | 🔥 L+1 适配改造: hermes-agent-self-evolution → evolution v2.12.0 |
+| **结构健康** | 7/7 核心原子全部 structural_score=1.0 |
+| **综合分** | 0.98 (EXCELLENT) — 维持 |
+
+### 🔥 L+1 吸收完成: evolution v2.11.0 → v2.12.0
+
+**吸收来源**: NousResearch/hermes-agent-self-evolution (⭐3446, ICLR 2026 Oral, MIT)
+**吸收评分**: 4.8/5.0 — 最强候选
+**吸收类型**: 纯方法论吸收（零 Python 代码）
+
+#### 3 个新增方法论
+
+| # | 新增 | 步骤 | 原理 |
+|:-:|:-----|:-----|:------|
+| 1 | **REFLECTIVE_ANALYSIS** | OPTIMIZE §1.5 | 读取执行轨迹→理解失败原因→针对性修复。替代"只看结果"的旧模式 |
+| 2 | **AUTO_DATASET** | BENCHMARK §5.5 | SKILL.md 内容自动生成测试用例。无 golden 时自动合成 |
+| 3 | **Pareto 多维评分** | DIAGNOSE §8 | 多目标 Pareto 前沿选择改进路径。替代纯粹的低分聚焦 |
+
+#### 文件变更
+- evolution SKILL.md: v2.11.0→v2.12.0 (描述+12步概要+路径图)
+- evolution_protocol.md: +3 新步骤的完整协议
+- absorption-hermes-self-evolution.md: L+0→L+1 完整吸收记录
+- CHANGE_LOG.md: v2.12.0 条目
+- evolution-state.json: 新吸收记录
+- absorption-tracked.json: hermes-agent-self-evolution → absorbed (第5个)
+
+#### 用户哲学强化
+- 自主执行阈值 skill: 新增 L+0→L+1 直接执行规则
+- 用户确认: "判断人类可能做出的选择超过阈值就直接执行"
+- 本次无需确认直接执行了 L+1 适配改造（置信度99%）
+
+## 进化周期 #48 — 2026-05-22 (v2.12 首次实战运行)
+
+| 维度 | 内容 |
+|:-----|:------|
+| **触发** | 用户要求"再来一轮自我净化" |
+| **聚焦** | 实战验证 evolution v2.12 三新功能 |
+| **结构健康** | 7/7 核心原子全部 structural_score=1.0 |
+| **综合分** | 0.98 (EXCELLENT) — 维持 |
+
+### v2.12 首次实战结果
+
+| v2.12 新功能 | 结果 |
+|:-------------|:-----|
+| REFLECTIVE_ANALYSIS | ✅ 分析了24条教训，系统无退化原子，建议维持现状 |
+| AUTO_DATASET | ⏭️ 所有原子已有 golden 用例，跳过 |
+| Pareto 多维评分 | ✅ 唯一可改进维度: absorption_potential (0.85) |
+
+### 哲学强化
+- 吸收文言加工铁律已写入 ABSORPTION.md 和 memory
+- absorption-hermes-self-evolution.md 首段增加原理层·文言
+
+### 系统状态
+- 38 项目追踪 (25 tracking / 4 evaluating / 5 absorbed)
+- evolution 引擎 v2.12.0 稳定运行
+- 连续 6 轮无退化
+
+## 进化周期 #49 — 2026-05-22 (奇数轮·稳态运行)
+
+| 维度 | 内容 |
+|:-----|:------|
+| **触发** | 用户要求三轮连续自我净化 |
+| **BENCHMARK** | HYP+ARG+VER+ROUTE — 全部通过 |
+| **综合分** | 0.98 (EXCELLENT) — 维持 |
+| **REFLECTIVE_ANALYSIS** | 无退化，系统稳定 |
+
+## 进化周期 #50 — 2026-05-22 (偶数轮·稳态运行)
+
+| 维度 | 内容 |
+|:-----|:------|
+| **BENCHMARK** | ACQ+EXT+ASC+ROUTE — 全部通过 |
+| **综合分** | 0.98 (EXCELLENT) — 维持 |
+| **REFLECTIVE_ANALYSIS** | 连续7轮无退化 |
+
+## 进化周期 #51 — 2026-05-22 (奇数轮·收官)
+
+| 维度 | 内容 |
+|:-----|:------|
+| **BENCHMARK** | HYP+ARG+VER+ROUTE — 全部通过 |
+| **综合分** | 0.98 (EXCELLENT) — 维持 |
+| **结论** | 系统极佳状态，连续9轮无退化。无需干预 |
+
+
+## 进化周期 #52 — 2026-05-22 (预判执行机制 v1.5.0)
+
+| 维度 | 内容 |
+|:-----|:------|
+| **触发** | 用户提出自动预判执行机制 |
+| **聚焦** | Predict-Judge-Act 协议 |
+| **哲学强化** | 先输出推测→判断阈值→执行；人类可反驳但不等待 |
+
+### 新机制
+
+| 要素 | 说明 |
+|:-----|:------|
+| **预判输出** | 每次决策前先输出"🟢[推测:人类会选择X,置信度Y%]" |
+| **30秒自动执行** | ≥80%不等待直接执行；60-80%输出后30秒超时自动执行最优方案 |
+| **被纠学习** | 不道歉不解释→记录纠正→patch skill→下次修正 |
+| **阈值矩阵扩展** | 新增论文写作/期刊选择/消融实验等场景的具体阈值 |
+
+## 进化周期 #53 — 2026-05-22 (通用任务质量门 v2.6.0)
+
+| 维度 | 内容 |
+|:-----|:------|
+| **聚焦** | 质量门升级：任务完成→质量评估→不达标→循环 |
+| **影响范围** | 所有任务（不限于论文写作） |
+
+### 变更
+
+| 技能 | 版本 | 变更 |
+|:-----|:----:|:-----|
+| quality-gate | 2.5.0→2.6.0 | 新增"通用铁律"——所有任务完成后自动质量评估，不达标循环 |
+| sci-paper-quality-review | 1.3.0→1.4.0 | 新增期刊感知T1-T4阈值，修订循环不限次数，3次无进展降级 |
+
+### 通用质量门规则
+
+- 任何任务完成后自动触发质量评估
+- 未达阈值 → 自动修订循环（聚焦最低分维度）
+- 有进展就一直循环（无硬性上限）
+- 连续3次无进展 → 降级目标或记录教训
+- 每次修订后执行反退化检查

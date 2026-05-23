@@ -19,6 +19,12 @@ allowed-tools: terminal web Read Write skill_view delegate_task
 
 # NSFC Grant Audit & Reconstruction (Synthos 吸收版)
 
+## 原理层·文言
+
+『评审之道，九维可量。科学性为骨，创新性为魂，可行性为肉，团队为脉，平台为基。』
+
+## 方法层·白话
+
 > [吸收自] Hermes Agent skill: `nsfc-grant-audit` (v1.0.0)
 > 吸收日期: 2026-05-13 | 吸收方式: 直接复制 + Synthos 前导标准化
 > 定位: Synthos extended skill — 基金标书评审与重构
@@ -120,3 +126,18 @@ notebooklm source add N_AuthorYear_Paper.pdf
 2026-05-13: v1.0.0 — 从 Hermes Agent 吸收为 Synthos extended skill。
   吸收内容: 完整的8维评审矩阵 + 文献差距分析 + OA PDF下载 + NotebookLM集成
   验证: 已在PD误吸风险预测模型标书上通过实测算例验证（2026-05-13）
+
+## 命令层·English
+
+### Quick Start
+- **Load**: Activate when user submits an NSFC/provincial/municipal grant proposal for review or reconstruction.
+- **Trigger Keywords**: grant review, NSFC, 国自然, 基金标书, proposal critique, literature gap analysis, proposal reconstruction.
+- **Core Workflow**:
+  1. **Phase 1 — Document Intake**: Read proposal (direct or via NotebookLM); summarize title, topic, source count, structure.
+  2. **Phase 2 — 8-Dimension Review Matrix**: Score 1-10 per dimension (Scientific Basis, Content, Technical Route, Innovation, Team Foundation, Expected Outputs, Budget & Schedule, Other). Provide specific comments.
+  3. **Phase 3 — Literature Gap Analysis**: Classify each citation as Direct/Tangential/Weak/Irrelevant; find replacement references; attempt OA PDF download.
+  4. **Phase 3.6 — NotebookLM Population**: Create project, add proposal + review + literature enhancement as sources.
+  5. **Phase 4 — Deliverables**: Review report (scored, detailed, actionable) + reconstructed proposal (section-by-section rewrite).
+- **Depends On**: `pubmed`, `semantic-scholar`, `research-paper-search`, `notebooklm-cli`.
+- **Known Pitfalls**: Check budget level first (municipal can be as low as 10K RMB); expand thin output sections; verify measurement tools against claimed outcomes via PubMed.
+- **Checklist**: Run all 6 verification items before starting.
