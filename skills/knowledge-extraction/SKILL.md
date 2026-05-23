@@ -4,7 +4,7 @@ description: Extract structured knowledge from academic paper metadata and abstr
 version: 1.1.0
 author: Synthos Agent
 license: MIT
-allowed-tools: Read Write
+allowed-tools: Read Write vision_analyze
 signature: "papers: list[Paper] -> knowledge_items: list[KnowledgeItem], field_summary: dict"
 metadata:
   synthos_atom_type: "cognitive"
@@ -76,6 +76,12 @@ metadata:
    d. 提取**研究局限**：作者声明或可推断的局限性。
    e. 标注**主题标签**：诊断、治疗、机制、风险评估、评估工具等。
    f. 估算**证据等级**：meta_analysis > rct > cohort > cross_sectional > case_series > expert_opinion。
+   g. **视觉提取（visual extraction）** — 当论文 PDF/图片可用时，通过 `vision_analyze` 提取图表内容：
+      - 对论文中的 Figure/Table 截图调用 `vision_analyze(image_path, "请描述该图表：标题、坐标轴、数据趋势、关键数字")`
+      - 将提取的结构化信息编码进 KnowledgeItem 的 `visual_data` 字段
+      - 支持的类型：统计图（bar/line/scatter）、热力图、医学影像（MRI/CT）、流程图、表格
+      - 标记提取类型：`chart_reading` | `table_extraction` | `medical_imaging` | `flow_diagram`
+      - 注意：`vision_analyze` 仅在 PDF 文件已下载到 `pdfs/` 目录时可用；否则跳过视觉提取
 3. **跨论文摘要**：汇总所有逐论文提取结果，产出 `field_summary`：
    - 主要方法论分布
    - 聚合主题（注明频次）

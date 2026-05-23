@@ -1,7 +1,7 @@
 ---
 name: hypothesis-generation
 description: "科学假设生成原子（HYP）—— 将研究空白转化为形式化可检验假说。接收GAP发现的研究空白和ACQ文献语料，生成包含预测、反证条件、竞争假说和实验设计的结构化假设。每个假设包含可检验性/新颖性/重要性/可行性评分。遵循7+1东西合参框架：观察者位置声明(Step0)→认识论熵定位(Step1.5)→模型假设清单(Step2.5)→日损检查点(Step5.5)。"
-version: 1.3.0
+version: 1.4.0
 author: Synthos Agent
 license: MIT
 allowed-tools: terminal Read Write
@@ -266,6 +266,66 @@ pruned:
 如果精简后剩下的假说 < 3 个，自动触发**补充生成**（回到 Step 1），确保最终输出假说数量 ≥ 3。
 
 **意图**：道家"日损"智慧——科学假说不是越多越好。"损之又损，以至于无为"——能用一个假说解释的，不用两个。
+
+#### Step 6: 实验执行 — Execution Step
+
+**已在 allowed-tools 中声明 terminal 权限。本步骤通过容器化环境执行实验代码，收集真实指标反馈给 VER 原子。**
+
+**触发条件**：仅当以下条件全部满足时执行：
+- 假说已有明确的可检验预测和统计标准
+- 用户已批准执行实验
+- 实验方案可在 Python/Shell 中实现
+
+**执行协议**：
+
+```yaml
+execution_plan:
+  hypothesis_id: "HYP-YYYYMMDD-N"
+  runtime: "docker"                    # 容器化隔离执行
+  image: "python:3.11-slim"           # 轻量Python镜像
+  entrypoint: "python /code/run.py"   # 入口脚本
+  code_generation:                    # 基于假说自动生成实验代码
+    - "生成数据加载和预处理脚本"
+    - "生成模型/统计分析代码" 
+    - "生成指标计算和可视化代码"
+  expected_outputs:
+    - "stdout 日志"
+    - "指标 JSON（含 loss/accuracy/p-value/effect_size）"
+    - "可视化 PNG（可选）"
+  verification:                        # 结果回传 VER
+    - "将指标 JSON 写入 executed_results/<hypothesis_id>/metrics.json"
+    - "通知 downstream VER 原子取用"
+```
+
+**执行流程**：
+
+```
+1. 准备实验代码 → 写入 /tmp/synthos_experiments/<hyp_id>/
+2. 构建 Docker 运行命令：
+   docker run --rm -v /tmp/synthos_experiments/<hyp_id>/:/code \
+     python:3.11-slim python /code/run.py
+3. 通过 terminal 执行 → 捕获 stdout + exit_code
+4. 解析输出 → 提取指标
+5. 写入 executed_results/ 供 VER 原子核验
+6. 标记假说状态为 "executed" 或 "execution_failed"
+```
+
+**安全约束**：
+| 规则 | 说明 |
+|:-----|:------|
+| 必须容器化 | 禁止在宿主机直接执行实验代码 |
+| 无网络 | 实验容器 `--network none` 防止数据泄露 |
+| 超时限制 | 单次执行 ≤ 30 分钟（`docker run --timeout 1800`） |
+| 无持久化 | 容器退出后自动清理（`--rm`） |
+| 代码生成审查 | 执行前由 Agent 审查生成的代码是否存在危险操作 |
+
+**边界判断**：以下情况**不执行**实验，仅输出实验方案文本：
+- 实验需要 GPU（当前无 GPU 容器）
+- 实验需要外部 API 密钥（如 OpenAI/数据库）
+- 实验时间预计 > 30 分钟
+- 实验涉及人/动物数据（伦理审批需求）
+
+**意图**：填补"主动推断生成提案但不执行"的致命短板（论文 Limitations #2）。通过 Docker 容器化执行，在不破坏宿主环境的前提下，让 HYP 的假说获得真实实验反馈，完成从"理论假设"到"可验证结果"的闭环。
 
 ### Schema: hypothesis_record
 
