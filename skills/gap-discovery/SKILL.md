@@ -14,6 +14,28 @@ metadata:
   synthos_data_access_level: "redacted"
 ---
 
+## 原理层·文言
+
+『空白之道，见所未见。检测四类矛盾，识别五型缺口。有缺则有向，有向则有问。』
+
+> 研究空白即是方向。发现文献间的矛盾之处，识别方法论上的系统性缺口——有了缺口就有了方向，有了方向就有了可检验的科学问题。
+
+## 方法层·白话
+
+本技能已合并入 association-discovery（v1.1.0），此处保留为独立入口引用。核心逻辑：
+
+1. **文献聚类**：将文献按主题/方法/结论聚类，每簇至少2篇
+2. **矛盾检测**：检测四类矛盾——结论矛盾、方法矛盾、假设矛盾、时间矛盾
+3. **缺口识别**：识别五型缺口——样本缺口、技术缺口、纵向缺口、机制缺口、验证缺口
+4. **未答问题提取**：从文献的"未来工作"和"局限性"部分提取显式/隐式问题
+5. **空白评级**：按重要性(P0-P3)、时效性、可行性、证据基础四维度评级
+
+关键约束：
+- 输入<5篇文献直接返回 insufficient_literature 错误
+- 每个空白至少需要2篇文献引用支撑
+- 每个空白必须附带 falsification_condition（可证伪条件）
+- 与existing_gaps对比，不返回重复空白
+
 # GAP — 研究空白发现原子
 
 ## 触发条件
@@ -165,3 +187,69 @@ GAP.gaps[] → HYP (空白→假说生成)
 | ACQ返回空列表 | 触发ACQ重试，附带更宽检索词 |
 | 所有文献同质无矛盾 | 输出 "no contradictions found" + 方法论缺口分析 |
 | 焦点过宽 | 提示用户缩小范围，重新聚类 |
+
+## 命令层·English
+
+### Signature
+```
+signature: "literature_set: list[dict] -> gaps: list[dict], contradiction_map: dict"
+```
+
+### Allowed Tools
+- `Read` — read ACQ (knowledge-acquisition) output, prior gap records
+- `Write` — write gap records and contradiction maps to output files
+
+### Input Format
+```json
+{
+  "literature_set": [
+    {
+      "doi": "string",
+      "title": "string",
+      "abstract": "string",
+      "conclusions": "string",
+      "methods": "string",
+      "limitations": ["string"],
+      "future_work": ["string"],
+      "year": "int"
+    }
+  ],
+  "existing_gaps": ["GAP-IDs to exclude from duplicate detection"],
+  "min_cluster_size": "int (default: 2)"
+}
+```
+
+### Output Format
+```json
+{
+  "gaps": [
+    {
+      "id": "GAP-YYYYMMDD-N",
+      "title": "string",
+      "description": "string",
+      "type": "contradiction|methodology_gap|unanswered_question|outdated_conclusion",
+      "priority": "P0|P1|P2|P3",
+      "source_refs": [
+        {"doi": "string", "claim": "string", "lines": "string"}
+      ],
+      "falsification_condition": "string",
+      "stability": "proposal|validated|accepted"
+    }
+  ],
+  "contradiction_map": {
+    "nodes": [{"id": "string", "doi": "string", "title": "string", "conclusion_summary": "string"}],
+    "edges": [{"source": "string", "target": "string", "type": "string", "strength": "string", "description": "string"}]
+  },
+  "clusters": [
+    {"name": "string", "papers": ["doi list"], "basis": "string"}
+  ]
+}
+```
+
+### Error Handling
+| Condition | Action |
+|:----------|:-------|
+| <5 papers in input | Return error: insufficient_literature, minimum 5 papers required |
+| All papers homogeneous, no contradictions | Return "no_contradictions_found" + methodology gap analysis |
+| Focus too broad (too many clusters) | Prompt user to narrow scope, re-cluster |
+| ACQ returns empty list | Trigger ACQ retry with broader search terms |

@@ -1,7 +1,7 @@
 ---
 name: evolution
-description: "⚡ P0 自进化引擎。Synthos evolution engine v2.11 — 结构探查+功能基准+外部吸收+教训学习+黄金验证+自扩关键词+SELF_REFLECT+宪法集成+漂移检测+渐进披露+响应闸门+自动优化(GEPA)+输入护栏+持久执行+条件分支+拦截点+追踪+SEPL回滚+ARA溯源+Git即记忆+单指标聚焦+假设先行。每轮触发project-experience-distillation。"
-version: 2.11.0
+description: "⚡ P0 自进化引擎。Synthos evolution engine v2.12 — GEPA反射式分析(OPTIMIZE)+自动数据集(BENCHMARK)+Pareto多维优化(DIAGNOSE)+结构探查+功能基准+外部吸收+教训学习+黄金验证+自扩关键词+SELF_REFLECT+宪法集成+漂移检测+渐进披露+响应闸门+自动优化+输入护栏+持久执行+条件分支+拦截点+追踪+SEPL回滚+ARA溯源+Git即记忆+Pareto前沿+假设先行。每轮触发project-experience-distillation。"
+version: 2.12.0
 author: Synthos Evolution Engine
 license: MIT
 metadata:
@@ -18,7 +18,11 @@ related_skills: [project-experience-distillation, quality-gate, conversation-to-
 > 宪临万法，漂移必察。败则回滚，成则铭记。
 > 每轮只修一维，每次必有假说。
 
-## 核心理念（文言）
+---
+
+## 原理层 · 文言
+
+### 核心理念
 
 | 白话 | 文言 | 义 |
 |:-----|:-----|:----|
@@ -28,15 +32,35 @@ related_skills: [project-experience-distillation, quality-gate, conversation-to-
 | Git即记忆 | **以史为鉴** | 每次改前commit，败则revert |
 | 崩溃从断点续跑 | **断点续行** | 每步写完保存检查点 |
 | 数据必源执行层 | **凡数必源执行** | 定量数据不从声明层推 |
+| **读轨迹溯败因** | **迹以观行，理以究因** | v2.12 REFLECTIVE_ANALYSIS — 读执行轨迹理解失败根源 |
+| **无金则自炼** | **无金自炼，以文生案** | v2.12 AUTO_DATASET — 从SKILL.md自动生成测试用例 |
+| **多利取其重** | **多利取重，多径择优** | v2.12 Pareto — 多目标前沿选最优改进路径 |
 
-## 两种触发模式
+### 吸收之道
+
+学于外而纳于内，谓之吸收。凡外来之技，必经四门：L+0标其源，L+1改其制，L+2验其质，L+3证其用。四门未过，不入系统。
+
+已吸收外部技能记录：
+
+| 来源 | 评分 | 文件 |
+|:-----|:----:|:-----|
+| handsomestWei/patent-disclosure-skill v1.8.5 | 4.6 | `references/absorption-patent-disclosure.md` |
+| Agent4S (Zheng et al. 2025, arXiv:2506.23692) | 4.6 | `references/absorption-agent4s.md` |
+| PaperSpine V2 (WUBING2023) | 4.6 | `references/absorption-paperspine-v2.md` |
+| nature-paper2ppt (GARCH-QUANT) | 4.6 | `references/absorption-nature-paper2ppt.md` |
+
+---
+
+## 方法层 · 白话
+
+### 两种触发模式
 
 | 模式 | 触发 | 适用 |
 |:-----|:-----|:-----|
 | ⏱ Timer | cron 定时 | 系统健康检查 |
 | ⚡ Event | Hook 事件 | 任务完成/会话结束 |
 
-## 状态机图（LangGraph吸收）
+## 状态机图
 
 ```
                     ┌───────┐
@@ -77,7 +101,7 @@ related_skills: [project-experience-distillation, quality-gate, conversation-to-
                       └───┘
 ```
 
-## 11步概要（详细协议→references/evolution_protocol.md）
+## 12步概要（详细协议→references/evolution_protocol.md）
 
 | 步骤 | 做什么 | 关键条件 |
 |:-----|:-------|:---------|
@@ -86,11 +110,13 @@ related_skills: [project-experience-distillation, quality-gate, conversation-to-
 | 2 | LESSONS | 加载近30天教训 |
 | 3 | DRIFT_CHECK | 三问自检，判定🟢/🟡/🔶/🔴 |
 | 4 | PROBE | 7原子结构健康检查 |
-| 5 | BENCHMARK | 轮转测试+Golden验证 |
-| 6 | OPTIMIZE | 自动优化失败技能+回滚协议 |
+| 5 | BENCHMARK | 轮转测试+Golden验证+**自动数据集**(v2.12) |
+| 5.5 | **AUTO_DATASET** | 无golden时从SKILL.md自动生成(v2.12) |
+| 6 | OPTIMIZE | **反射式分析**(v2.12)→自动优化失败技能+回滚协议 |
+| 6.5 | **REFLECTIVE_ANALYSIS** | 读轨迹→理解失败→针对性修复(v2.12) |
 | 7 | EXTERNAL | 主动吸收引擎（每轮） |
-| 8 | DIAGNOSE | 综合诊断+假设先行+宪法对齐 |
-| 9 | IMPROVE | **单指标聚焦**—只修最低分维度 |
+| 8 | DIAGNOSE | 综合诊断+**Pareto多维评分**(v2.12)+宪法对齐 |
+| 9 | IMPROVE | Pareto前沿选择→单指标聚焦 |
 | 10 | VERIFY | 验证patch+重跑失败案例 |
 | 11 | RECORD | 更新状态+日志+教训+报告 |
 
@@ -120,8 +146,8 @@ related_skills: [project-experience-distillation, quality-gate, conversation-to-
 
 ```
 路径A（快速漂移检查）: 宪法→漂移检查→退出
-路径B（全新进化）   : 宪法→状态→教训→漂移→探查→基准→[优化?]
-                      吸收→诊断→[拦截?]→改进→验证→记录
+路径B（全新进化）   : 宪法→状态→教训→漂移→探查→基准→[自动数据集?]
+                      吸收→反射式分析→[优化?]→[回滚?]→Pareto诊断→拦截?→改进→验证→记录
 路径C（崩溃恢复）   : 宪法→恢复断点→继续
 ```
 
@@ -172,6 +198,40 @@ related_skills: [project-experience-distillation, quality-gate, conversation-to-
 | evolution-log.md | 日志 |
 | outputs/evolution/ | 报告+追踪 |
 | skills/evolution/references/ | 参考文件 |
+
+## 命令层 · English
+
+### Trigger
+
+```bash
+# Trigger an evolution cycle manually
+skill_view("evolution")
+# The engine runs: PROBE → BENCHMARK → EXTERNAL → DIAGNOSE → IMPROVE → VERIFY → RECORD
+```
+
+### Key Tool References
+
+| Tool | Usage |
+|:-----|:-------|
+| `skill_view(name)` | Load skill content for inspection |
+| `Read/Write/patch` | Modify skill files |
+| `terminal("git commit ...")` | Snapshot before changes |
+| `terminal("git revert ...")` | Rollback on failure |
+| `delegate_task(...)` | External absorption research |
+
+### Related References
+
+| File | Purpose |
+|:-----|:--------|
+| `references/evolution_protocol.md` | Full 11-step protocol |
+| `references/absorption-*.md` | External skill absorption records |
+| `references/QUALITY_CRITERIA.md` | Quality gate thresholds |
+| `references/BENCHMARKS.md` | Benchmark definitions |
+| `references/BOUNDARY.md` | Operational boundaries |
+| `references/LESSONS.md` | Historical lessons |
+| `references/IO_CONTRACT.md` | I/O contract |
+
+---
 
 ## 验证
 
