@@ -13,7 +13,14 @@ description: >-
   137 edges, proven correctness via falsification testing).
 tags: [bppv, vestibular, vertigo, diagnosis, repositioning, medical-expert]
 ---
+
 # BPPV Expert — Extended Skill for Synthos
+
+## 原理层·文言
+
+『眩晕之道，定位为先。BPPV虽常见，误诊亦频。手法复位，精准则效。复位手法有七，辨认路径有图。』
+
+## 方法层·白话
 
 ## 触发条件
 
@@ -34,7 +41,7 @@ tags: [bppv, vestibular, vertigo, diagnosis, repositioning, medical-expert]
 - [ ] 推荐的诊断试验（Dix-Hallpike/仰卧翻滚试验/俯屈仰头试验）与怀疑的半规管匹配
 - [ ] 复位手法（Epley/Gufoni/Semont/Barbecue/roll-over）包含患者体位、头转方向/角度、时机和预期眼震反应
 - [ ] 已区分管石症 vs 壶腹嵴顶结石症（基于眼震持续时间）
-- [ ] 已标注医学警告：＂此知识仅作教育用途，临床决策需面诊评估＂
+- [ ] 已标注医学警告："此知识仅作教育用途，临床决策需面诊评估"
 - [ ] 每个论断引用了具体的 AKNE wiki 页面来源
 
 ## Trigger
@@ -98,3 +105,16 @@ input_contract:
 
 ## Origin
 Absorbed from AKNE knowledge graph (yakeworld/.knowledge/) — 2026-05-12
+
+## 命令层·English
+
+### Quick Start
+- **Load**: Activate on BPPV diagnosis, treatment, or canalith repositioning queries.
+- **Trigger Keywords**: BPPV, vertigo, nystagmus, Dix-Hallpike, Epley, Gufoni, Semont, Barbecue, canalith, otoconia.
+- **Core Workflow**:
+  1. **Diagnosis**: Interpret nystagmus → identify involved canal → select diagnostic test.
+  2. **Treatment**: Canal-specific repositioning maneuver → include position, angle, timing, expected response.
+  3. **Simulation**: 3D biomechanical modeling for custom maneuver design.
+- **Constraints**: Always add educational-use disclaimer; cite AKNE wiki sources; distinguish evidence vs hypothesis.
+- **Checklist**: Run all 6 verification items after activation.
+- **Output**: Structured answer with confidence score and source references.

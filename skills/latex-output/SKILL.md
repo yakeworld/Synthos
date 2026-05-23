@@ -15,6 +15,27 @@ metadata:
 allowed-tools: terminal read_file write_file
 ---
 
+## 原理层·文言
+
+『排版之道，精在规范。文质彬彬，然后君子。自动生成，人工审校。』
+
+> 学术排版，格式为先。文质兼备，方为上品。机器自动生成底稿，人工负责审校润色——人机协同，各司其职。
+
+## 方法层·白话
+
+本技能将论文内容（assembled_output.json）自动转换为**符合会议/期刊格式的LaTeX论文包**，核心逻辑：
+
+1. **读入内容**：读取 argument-expression 和 knowledge-acquisition 的输出 JSON
+2. **格式转换**：将 Markdown 内容按规则转换为 LaTeX 语法（#→\section, **→\textbf, $$→\\[ \\] 等）
+3. **模板适配**：根据目标会议/期刊选择对应 .sty 模板，或为中文期刊使用 ctex 宏包
+4. **引用生成**：只包含已验证的引用，生成 BibTeX 格式
+5. **自动化编译**：生成 build.sh 一键编译脚本
+
+关键约束：
+- 不使用任何 Python 库——Agent 直接用 write_file() 逐行生成 .tex
+- 不手动编写模板 .sty 文件——使用现有模板或从官网下载
+- 中文期刊需使用 ctex 宏包和 CJK 支持
+
 # LaTeX 输出 — 从 Synthos 到会议论文
 
 > 吸收自 AutoResearchClaw `researchclaw/templates/` (conference.py + converter.py + styles/)
@@ -205,3 +226,44 @@ argument-expression 输出的数学公式（LaTeX 格式）直接透传，
 - AutoResearchClaw `researchclaw/templates/converter.py` — Markdown→LaTeX 转换
 - AutoResearchClaw `researchclaw/overleaf/formatter.py` — Overleaf 兼容格式化
 - AutoResearchClaw `researchclaw/templates/styles/` — 模板 .sty 文件
+
+## 命令层·English
+
+### Signature
+```
+signature: "assembled_json: dict, target_format: str -> latex_package: dict[paths]"
+```
+
+### Allowed Tools
+- `terminal` — check LaTeX environment, list template files, compile with pdflatex
+- `read_file` — read assembled_output.json and dependency outputs
+- `write_file` — write .tex, .bib, .sty, build.sh files (NO Python libraries)
+
+### Input Format
+```
+{
+  "assembled_output_path": "string",    // path to assembled_output.json
+  "target_format": "neurips|iclr|icml|aaai|acl|colm|chinese_journal|custom",
+  "template_path": "string | null",     // optional, custom .sty path
+  "output_dir": "string"                // output directory (default: outputs/runs/<run_id>/latex/)
+}
+```
+
+### Output Format
+```
+outputs/runs/<run_id>/latex/
+├── paper.tex                    # Main LaTeX document
+├── references.bib               # Verified BibTeX references only
+├── <template>.sty               # Conference style template (if applicable)
+├── build.sh                     # One-click compile script
+└── paper.pdf                    # Compiled PDF (if LaTeX available)
+```
+
+### Error Handling
+| Condition | Action |
+|:----------|:-------|
+| assembled_output.json missing | Return error: run argument-expression first |
+| target_format unrecognized | Default to neurips template |
+| citation_verification missing | Include all references, mark as unverified |
+| pdflatex not found | Generate .tex only, skip compilation |
+| Template .sty not found | Download from official source URL in comments |

@@ -16,6 +16,27 @@ metadata:
   synthos_data_access_level: "raw"
 ---
 
+## 原理层·文言
+
+『检索之道，源有多路。PubMed/S2/Crossref/OpenAlex，各有所长。不偏废其一，不回退而不报。』
+
+> 科学数据库浩如烟海，各有专攻。不偏废任何一路，查不到则明言相告、不隐瞒失败。多源互证，方得真知。
+
+## 方法层·白话
+
+本技能为**统一科学数据库路由层**，核心逻辑：
+
+1. **多模式查询**：三种工作模式——A.定向查询（用户指定数据库）、B.智能路由（自动分领域选库）、C.交叉验证（跨库对比）
+2. **领域分类**：生物信息学/化学信息学/临床医学/材料科学/物理学天文学，共78+数据库
+3. **纯命令行**：不使用Python，全部通过 curl + jq 实现 REST API 调用
+4. **标准化输出**：各数据库返回格式不同，统一映射为标准JSON格式
+5. **错误处理**：API Key缺失、速率限制、JSON过大、数据库下线等情况均有预案
+
+关键约束：
+- 先加载数据库对应的参考文件（references/<db>.md）再查询
+- 失败后重试1次，记录失败原因供上报
+- 速率限制敏感的数据库（如NCBI E-utilities）在调用间sleep 0.5s
+
 # Scientific Database Lookup — 统一科学数据库路由
 
 > 吸收自 **scientific-agent-skills** (K-Dense, 23,109⭐) 的统一数据库层。
@@ -166,3 +187,60 @@ association-discovery (ASC) — 跨数据库关联分析
   核心: 78+ 数据库路由协议（6领域 × 17+ 数据库）
   参考: 首批6个数据库参考文件（PubChem/UniProt/NCBI-Gene/ClinicalTrials/ChEMBL/STRING）
   约束: 零 Python — 全部通过 curl + jq 实现 REST API 调用
+
+## 命令层·English
+
+### Signature
+```
+signature: "query: str, domain: str, mode: str -> results: list[dict], databases_queried: list[str]"
+```
+
+### Allowed Tools
+- `terminal` — execute curl HTTP requests and jq JSON processing
+- `web` — optional fallback for web_search-based databases (DrugBank, COSMIC, COD)
+
+### Input Format
+```json
+{
+  "query": "string",
+  "domain": "biology|chemistry|clinical|physics|materials|auto",
+  "mode": "A|B|C",
+  "database": "string | null",
+  "limit": "int (default: 20)",
+  "api_keys": {
+    "nasa_ads": "string | null",
+    "materials_project": "string | null"
+  }
+}
+```
+
+### Output Format
+```json
+{
+  "query": "string",
+  "databases_queried": ["uniprot", "ncbi-gene"],
+  "results": [
+    {
+      "id": "string",
+      "name": "string",
+      "description": "string",
+      "properties": {},
+      "url": "string",
+      "database": "string"
+    }
+  ],
+  "total_results": "int",
+  "errors": [
+    {"database": "string", "reason": "string"}
+  ]
+}
+```
+
+### Error Handling
+| Condition | Action |
+|:----------|:-------|
+| API key missing | Check ~/.hermes/.env, prompt user to register if absent |
+| HTTP timeout (>30s) | Retry once, log failure, suggest fallback database |
+| Rate limit hit | Sleep 1s and retry with exponential backoff |
+| Empty results | Return empty results list, do NOT silently fallback to other DB |
+| Database unreachable | Log reason, return error field, recommend alternative |

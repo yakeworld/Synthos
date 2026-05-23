@@ -33,6 +33,20 @@ metadata:
   synthos_author: "Synthos Agent"
 ---
 
+## 原理层·文言
+
+### 构思之道
+
+> 问从何来，思由何起？不见其问，焉有其答。
+> 四源而后有问：政策导向、临床困境、技术碰撞、学科交叉。
+> 十框架操作为体，八引擎认知为用，六协议组合为变。
+> 发散而后收敛，收敛而后凝练，凝练而后验证。
+> 思维若僵，反向求之。不见出路，问其反面。
+
+**核心理念**：研究构思是创意生成的起点。四源（政策/临床/技术/交叉）是灵感之泉，10操作框架是发散之器，8认知引擎是收敛之力。先发散后收敛，多角度扫描领域机会。
+
+## 方法层·白话
+
 [SYNTHOS_P0_ABSORBED_FROM]: <> (Layer 1: NanoResearch brainstorming-research-ideas — 10 frameworks for structured research ideation. Layer 2: NanoResearch creative-thinking-for-research — 8 foundational frameworks for creative cognition. Merged 2026-05-14 to eliminate atomic redundancy.)
 
 # 研究创意发散与认知引擎 (Research Ideation & Creative Cognition)
@@ -488,3 +502,17 @@ L1 produces tangible direction lists, L2 produces cognitive insights, L3 enables
 |:-----|:-----|:-----|
 | 1.0.0 | 2026-05-14 | 初始版本——从 NanoResearch brainstorming-research-ideas 吸收 |
 | **2.0.0** | **2026-05-14** | **合并 creative-cognition (CCF) 作为 Layer 2。三层架构：L1 10操作框架 + L2 8认知引擎 + L3 组合协议。原子总数减少1，功能不变。** |
+
+## 命令层·English
+
+- **Signature**: `problem_statement: str, constraints: dict -> research_directions: list[Direction], cognitive_insights: list[Insight]`
+- **Allowed tools**: `Read`, `Write`
+- **Input**: `problem_statement` (str, required), `constraints` (dict, optional: e.g. topics, blockers, upstream findings)
+- **Output**: `research_directions` (list[Direction] with score + novelty), `cognitive_insights` (list[Insight] with framework type)
+- **Layer 1** (10 operational frameworks): problem-narrowing, analogy, inversion, SCAMPER, 5-Whys, TOC, morphological, random-stimulus, design-thinking, first-principles
+- **Layer 2** (8 cognitive engines): lateral-thinking, systems-thinking, critical-thinking, design-thinking, creative-thinking, strategic-thinking, holistic-thinking, analytical-thinking
+- **Layer 3** (6 combination protocols): diverge-converge, problem-reframing, bottleneck-breakthrough, lateral-crossover, contradiction-resolution, reverse-perspective
+- **Integrated workflow**: Diverge → Converge → Refine → Validate (4 phases)
+- **Diversity guarantee**: top-5 outputs must come from ≥3 different frameworks
+- **Flattery protection**: output must include directions opposite to user's assumed stance
+- **Do NOT**: perform literature review, formalize hypotheses, write paper sections

@@ -7,7 +7,7 @@ license: MIT
 metadata:
   synthos_atom_type: "workflow"
   synthos_version: "0.1.0"
-  synthos_skill_md_hash: "pending"
+  synthos_skill_md_hash: "8441a73d0856e7e7ff7e308b7b845cdf2abcc2b9c25f2eeb967945a3d565afa5"
   synthos_io_contract_ref: "references/IO_CONTRACT.md"
   synthos_asserted_compliance: "P0,P3,P4,P5"
   synthos_depends_on: "task-router, hypothesis-generation, argument-expression, viewpoint-verification, knowledge-acquisition, association-discovery"
@@ -16,7 +16,39 @@ metadata:
 allowed-tools: delegate_task Read Write patch clarify terminal skill_view
 ---
 
+## 原理层·文言
+
+『作文之道，先谋后动。动机为本，假设为纲。场景有别，四型各异。NotebookLM驱动逐节生成。』
+
+> 论文写作非一蹴而就之事。框架为先，文字为后；动机立则文有骨，假设明则论有纲。人机互动，门控于中，确认方向而后落笔。
+
+## 方法层·白话
+
+本技能实现**人机互动的论文撰写工作流**，核心逻辑：
+
+1. **先框架后写作**：不直接生成论文，而是先生成结构化框架（研究空白→假设→方案→实验→结论）
+2. **人类确认门控**：框架展示给用户确认，确认后才能进入写作阶段
+3. **多版本探索**：支持生成多个竞争假说路径，让人类选择最佳方向
+4. **场景适配**：自动检测四种场景（期刊/会议/竞赛/报告），使用不同模板
+5. **PaperSpine集成**：写作前生成"写作动机矩阵"(Writing Rationale Matrix)，确保每段都有明确目的
+
+关键约束：
+- 不确认动机不得开始写作
+- 不生成Rationale Matrix不得进入执行阶段
+- clarify工具必须有人类交互，不可自动化
+
 # Paper Workflow — 人机互动论文撰写工作流
+
+> **吸收来源**：[PaperSpine V2](https://github.com/WUBING2023/PaperSpine) — motivation-driven paper writing skill suite
+> **核心吸收**：Writing Rationale Matrix、Motivation-First Gate、Scene-Specific Profiles
+
+## PaperSpine V2 集成 <!-- new section -->
+
+| 吸收概念 | 集成位置 |
+|:---------|:---------|
+| **Writing Rationale Matrix** | Step 3.5 — 写作前逐段解释"为什么这样写" |
+| **Motivation-First Gate** | Step 3 — 用户必须先确认核心论点，不能跳过直接写 |
+| **Scene-Specific Profiles** | §5 — 期刊/会议/竞赛/报告使用不同的提示模板 |
 
 ## 触发条件
 
@@ -218,6 +250,21 @@ clarify(
 )
 ```
 
+### Step 3.5：Writing Rationale Matrix（PaperSpine吸收）
+
+在进入 ARG 写作之前，生成一份 `writing_rationale_matrix.md`。这是整个论文的"设计文档"，逐单元解释：
+
+| 单元 | 字段 | 说明 |
+|:-----|:-----|:------|
+| 标题 | `unit_id` | 章节/段落标识（如 §1.1、§3.2） |
+| 功能 | `function` | 该单元在论文中的角色（如"建立研究领地"、"陈述方法"） |
+| 服务论点 | `serves_motivation` | 该单元如何服务于已确认的核心论点 |
+| SOTA参考 | `sota_lesson` | 从目标期刊/会议范文学到的写作策略 |
+| 证据支撑 | `evidence_refs` | 支持该单元主张的证据来源 |
+| 检查标准 | `check` | 写完后需满足什么条件（如"含文献引用≥2"、"含效应量"） |
+
+**约束**：不确认 Motivation 不得进入 Step 3.5；不生成 Rationale Matrix 不得进入 Step 4。
+
 ### Step 4：执行写作管线
 
 将确认的框架传递给下游原子：
@@ -236,14 +283,28 @@ confirmed_framework → ARG (加载 argument-expression SKILL.md)
 
 ```
 outputs/runs/<run_id>/
-├── paper_framework.json      # Step 2 生成的框架
-├── human_decision.json       # 人类确认记录（P3追溯）
-├── argument_output.json      # ARG 输出
-├── verification_output.json  # VER 输出
-└── assembled_output.json     # 最终论文
+├── paper_framework.json           # Step 2 生成的框架
+├── human_decision.json            # 人类确认记录（P3追溯）
+├── writing_rationale_matrix.md    # Step 3.5 写作设计文档（PaperSpine吸收）
+├── argument_output.json           # ARG 输出
+├── verification_output.json       # VER 输出
+└── assembled_output.json          # 最终论文
 ```
 
-## 5. 边界判断
+## 5. Scene-Specific Profiles（PaperSpine吸收）
+
+不同目标场景使用不同的提示模板和写作策略。在 Step 3 展示框架前，先检测场景类型：
+
+| 场景 | 检测关键词 | 特征 |
+|:-----|:-----------|:------|
+| `journal` | "期刊"、"杂志"、"journal" | 标准IMRaD，强调背景→gap→方案→结果→讨论闭环 |
+| `conference` | "会议"、"conference"、"proceeding" | 篇幅短（4-8页），结果前置，方法压缩 |
+| `competition` | "竞赛"、"比赛"、"competition"、"参赛" | 问题描述+方案设计+实现细节+实验对比四段式 |
+| `report` | "报告"、"review"、"综述"、"report" | 总分总结构，章节自包含，术语首次出现必定义 |
+
+**场景检测时机**：Step 0 模式选择后立即检测。若无法从用户输入推断，默认 `journal`。
+
+## 6. 边界判断
 
 **什么时候用本工作流**：
 - 用户需要写一篇完整学术论文
@@ -271,3 +332,48 @@ outputs/runs/<run_id>/
 | P3 人机分层 | 核心决策点使用 clarify 等待人类决策 |
 | P4 假说可证伪性 | 框架中 hypothesis 包含 prediction + falsification |
 | P5 空白可追溯性 | 框架中 research_gap 包含 gap_type + supporting_refs |
+
+## 命令层·English
+
+### Signature
+```
+signature: "user_request: str -> paper_framework: dict, human_decision: dict, assembled_output: dict"
+```
+
+### Allowed Tools
+- `delegate_task` — invoke upstream/downstream atoms (HYP, ARG, VER, ACQ, ASC, EXT)
+- `Read` — read dependency outputs (hypotheses, evidence, prior frameworks)
+- `Write` — write framework and output files
+- `patch` — modify existing output files
+- `clarify` — human-in-the-loop confirmation (MANDATORY, not auto-pipeline)
+- `terminal` — file system operations
+- `skill_view` — load and inspect downstream SKILL.md files
+
+### Input Format
+```
+{
+  "user_request": "string",       // Natural language request from user
+  "scene_type": "journal|conference|competition|report",  // optional, auto-detected
+  "existing_hypotheses": "list[dict] | null",  // optional, from HYP atom
+  "mode": "A|C"                    // optional, auto-detected based on request keywords
+}
+```
+
+### Output Format
+```
+outputs/runs/<run_id>/
+├── paper_framework.json           # Structured framework (see §3 Schema)
+├── human_decision.json            # Human confirmation record (P3 traceability)
+├── writing_rationale_matrix.md    # Writing design document (PaperSpine)
+├── argument_output.json           # ARG atom output
+├── verification_output.json       # VER atom output
+└── assembled_output.json          # Final assembled paper
+```
+
+### Error Handling
+| Condition | Action |
+|:----------|:-------|
+| No HYP output available | Load and run hypothesis-generation atom first |
+| User rejects all variants | Loop back to Step 1 with refined search |
+| clarify tool unavailable | Abort — this workflow requires human interaction |
+| Scene type unrecognizable | Default to `journal` profile |

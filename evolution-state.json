@@ -2,9 +2,9 @@
   "version": "4.3.0",
   "architecture": "pure_skill_driven_zero_python",
   "mode": "ACTUAL",
-  "last_updated": "2026-05-17T12:35:20Z",
-  "last_run": "2026-05-19T11:16:33.387163",
-  "evolution_count": 41,
+  "last_updated": "2026-05-22T06:00:00Z",
+  "last_run": "2026-05-22T06:00:00Z",
+  "evolution_count": 51,
   "refactoring": {
     "completed": true,
     "completed_at": "2026-05-10T20:56:00",
@@ -18,16 +18,16 @@
       "Deleted: entire core/ directory (16 Python files, ~4,000 lines)",
       "Deleted: run_pipeline.py (CLI entry point)",
       "Rewritten: task-router SKILL.md as Agent execution entry point",
-      "Rewritten: all atoms are pure SKILL.md — Agent loads and executes directly",
-      "Removed: Python pipeline orchestration — Agent IS the orchestrator",
-      "Removed: Python context/state manager — filesystem IS state",
-      "Removed: Python trust system — Agent reports trust per run",
-      "Removed: MECHANICAL/COGNITIVE distinction — all atoms skill-driven",
+      "Rewritten: all atoms are pure SKILL.md \u2014 Agent loads and executes directly",
+      "Removed: Python pipeline orchestration \u2014 Agent IS the orchestrator",
+      "Removed: Python context/state manager \u2014 filesystem IS state",
+      "Removed: Python trust system \u2014 Agent reports trust per run",
+      "Removed: MECHANICAL/COGNITIVE distinction \u2014 all atoms skill-driven",
       "Change: Synthos is now 100% skill-driven with zero Python code"
     ]
   },
   "quality_metrics": {
-    "1_知识获取": {
+    "1_\u77e5\u8bc6\u83b7\u53d6": {
       "trust_score": 1.0,
       "usage_count": 2,
       "status": "agent_native",
@@ -35,7 +35,7 @@
       "last_benchmarked": "2026-05-13",
       "benchmark_result": "pass"
     },
-    "2_研究空白发现_GAP": {
+    "2_\u7814\u7a76\u7a7a\u767d\u53d1\u73b0_GAP": {
       "trust_score": 1.0,
       "usage_count": 0,
       "status": "absorbed_into_ASC",
@@ -44,7 +44,7 @@
       "last_benchmarked": null,
       "benchmark_result": "n/a"
     },
-    "3_科学假设生成_HYP": {
+    "3_\u79d1\u5b66\u5047\u8bbe\u751f\u6210_HYP": {
       "trust_score": 1.0,
       "usage_count": 0,
       "status": "agent_native",
@@ -53,7 +53,7 @@
       "last_benchmarked": "2026-05-14",
       "benchmark_result": "pass"
     },
-    "4_知识提取": {
+    "4_\u77e5\u8bc6\u63d0\u53d6": {
       "trust_score": 1.0,
       "usage_count": 2,
       "status": "agent_native",
@@ -61,7 +61,7 @@
       "last_benchmarked": "2026-05-13",
       "benchmark_result": "pass"
     },
-    "5_关联发现": {
+    "5_\u5173\u8054\u53d1\u73b0": {
       "trust_score": 1.0,
       "usage_count": 2,
       "status": "agent_native",
@@ -69,7 +69,7 @@
       "last_benchmarked": "2026-05-13",
       "benchmark_result": "pass"
     },
-    "6_观点生成": {
+    "6_\u89c2\u70b9\u751f\u6210": {
       "trust_score": 1.0,
       "usage_count": 1,
       "status": "agent_native",
@@ -77,13 +77,13 @@
       "last_benchmarked": "2026-05-15",
       "benchmark_result": "pass"
     },
-    "7_论证表达": {
+    "7_\u8bba\u8bc1\u8868\u8fbe": {
       "trust_score": 1.0,
       "usage_count": 1,
       "status": "agent_native",
       "code_status": "agent_executed"
     },
-    "8_观点验证": {
+    "8_\u89c2\u70b9\u9a8c\u8bc1": {
       "trust_score": 1.0,
       "usage_count": 1,
       "status": "agent_native",
@@ -157,41 +157,41 @@
     "cron_schedule": "0 6 * * *",
     "last_auto_run": "2026-05-15T06:00:00+00:00",
     "last_cycle": {
-      "performed_at": "2026-05-16T23:48:24Z",
-      "status": "healthy",
-      "actions_taken": [
-        "Cycle 19 evolution completed (even cycle: HYP + ARG + VER + ROUTE)",
-        "PROBE: 8/8 core atoms at structural_score=1.0 (VER anti-sycophancy protocol intact)",
-        "BENCHMARK: 12/12 all pass (4 golden + 4 structure), score=1.0",
-        "DIAGNOSE: 0.960 (EXCELLENT) — stable",
-        "IMPROVE: added signature field to 7 core atoms (v2.6 DSPy requirement)",
-        "No degraded atoms, no structural fixes needed"
-      ],
-      "avg_score": 1.0,
-      "benchmark_score": 1.0,
-      "overall_score": 0.96,
-      "degraded_atoms": [],
-      "api_health": "healthy"
-    },
-    "current_cycle": {
-      "cycle": 19,
-      "type": "manual_user_request_even_cycle",
-      "performed_at": "2026-05-16T23:48:24Z",
+      "cycle": 52,
+      "type": "mechanism_enhancement",
+      "performed_at": "2026-05-22T06:00:00Z",
       "status": "healthy",
       "actions": [
-        "PROBE: 8/8 core atoms structural_score=1.0",
-        "BENCHMARK: 12/12 all pass (HYP+ARG+VER+ROUTE + 8 golden)",
-        "OPTIMIZE: skipped (no failures)",
-        "EXTERNAL: skipped (recent scan)",
-        "DIAGNOSE: overall=0.960 — EXCELLENT",
-        "IMPROVE: 7 atoms added signature field"
+        "autonomous-execution-threshold v1.4.0\u2192v1.5.0",
+        "\u65b0\u589e \u9884\u5224\u6267\u884c\u534f\u8bae (Predict-Judge-Act): Step1\u9884\u5224\u2192Step2\u9608\u503c\u2192Step3\u6267\u884c",
+        "\u65b0\u589e 30\u79d2\u81ea\u52a8\u6267\u884c\u89c4\u5219: \u226580%\u4e0d\u7b49\u5f85, 60-80%\u8f93\u51fa\u540e30\u79d2\u8d85\u65f6\u81ea\u52a8\u6267\u884c",
+        "\u65b0\u589e \u9884\u5224\u8f93\u51fa\u683c\u5f0f\u89c4\u8303 + \u88ab\u7ea0\u6b63\u5b66\u4e60\u5faa\u73af",
+        "\u65b0\u589e \u9608\u503c\u77e9\u9635(\u8bba\u6587\u5199\u4f5c/\u671f\u520a\u9009\u62e9/\u6d88\u878d\u5b9e\u9a8c\u7b49\u573a\u666f)"
       ],
       "structural_avg": 1.0,
       "benchmark_score": 1.0,
-      "overall_score": 0.96,
-      "degraded_atoms": [],
+      "overall_score": 0.98,
       "fixes_applied": [
-        "Added 'signature' frontmatter field to 7 core atoms"
+        "autonomous-execution-threshold/SKILL.md v1.5.0"
+      ]
+    },
+    "current_cycle": {
+      "cycle": 52,
+      "type": "mechanism_enhancement",
+      "performed_at": "2026-05-22T06:00:00Z",
+      "status": "healthy",
+      "actions": [
+        "autonomous-execution-threshold v1.4.0\u2192v1.5.0",
+        "\u65b0\u589e \u9884\u5224\u6267\u884c\u534f\u8bae (Predict-Judge-Act): Step1\u9884\u5224\u2192Step2\u9608\u503c\u2192Step3\u6267\u884c",
+        "\u65b0\u589e 30\u79d2\u81ea\u52a8\u6267\u884c\u89c4\u5219: \u226580%\u4e0d\u7b49\u5f85, 60-80%\u8f93\u51fa\u540e30\u79d2\u8d85\u65f6\u81ea\u52a8\u6267\u884c",
+        "\u65b0\u589e \u9884\u5224\u8f93\u51fa\u683c\u5f0f\u89c4\u8303 + \u88ab\u7ea0\u6b63\u5b66\u4e60\u5faa\u73af",
+        "\u65b0\u589e \u9608\u503c\u77e9\u9635(\u8bba\u6587\u5199\u4f5c/\u671f\u520a\u9009\u62e9/\u6d88\u878d\u5b9e\u9a8c\u7b49\u573a\u666f)"
+      ],
+      "structural_avg": 1.0,
+      "benchmark_score": 1.0,
+      "overall_score": 0.98,
+      "fixes_applied": [
+        "autonomous-execution-threshold/SKILL.md v1.5.0"
       ]
     },
     "architecture": "state_machine_3_paths_5_gates_4_interrupts",
@@ -238,12 +238,12 @@
     "benchmark_pass_rate": 1.0,
     "last_absorption": {
       "date": "2026-05-14",
-      "source": "PaperOrchestra/PaperWritingBench (Song et al., 2026, arXiv:2604.05018) — ⭐461",
+      "source": "PaperOrchestra/PaperWritingBench (Song et al., 2026, arXiv:2604.05018) \u2014 \u2b50461",
       "skills_absorbed": [
-        "viewpoint-verification (Citation F1 P0/P1引用质量门控)",
-        "argument-expression (LitReview 6轴质量评分门控)",
-        "knowledge-extraction (PW-Bench逆向工程)",
-        "evolution/BENCHMARKS (PW-Bench 3维评价模式)"
+        "viewpoint-verification (Citation F1 P0/P1\u5f15\u7528\u8d28\u91cf\u95e8\u63a7)",
+        "argument-expression (LitReview 6\u8f74\u8d28\u91cf\u8bc4\u5206\u95e8\u63a7)",
+        "knowledge-extraction (PW-Bench\u9006\u5411\u5de5\u7a0b)",
+        "evolution/BENCHMARKS (PW-Bench 3\u7ef4\u8bc4\u4ef7\u6a21\u5f0f)"
       ],
       "type": "P1_capability_enhancement"
     },
@@ -276,8 +276,8 @@
   "implementation": {
     "completed_at": "2026-05-10T20:56:00+00:00",
     "files_created": [
-      "skills/task-router/SKILL.md — Agent-native entry point",
-      "skills/knowledge-acquisition/SKILL.md — Agent-native search",
+      "skills/task-router/SKILL.md \u2014 Agent-native entry point",
+      "skills/knowledge-acquisition/SKILL.md \u2014 Agent-native search",
       "skills/knowledge-extraction/SKILL.md",
       "skills/association-discovery/SKILL.md",
       "skills/hypothesis-generation/SKILL.md",
@@ -294,7 +294,7 @@
     "python_lines_removed": 4099,
     "all_atoms_implemented": true,
     "pipeline_tested": false,
-    "execution_model": "Agent loads task-router SKILL.md → determines atom chain → loads each atom's SKILL.md → executes → saves JSON → assembles output",
+    "execution_model": "Agent loads task-router SKILL.md \u2192 determines atom chain \u2192 loads each atom's SKILL.md \u2192 executes \u2192 saves JSON \u2192 assembles output",
     "complexity_levels_tested": []
   },
   "architecture_v3_2": {
@@ -309,23 +309,23 @@
       "atom6 (viewpoint-verification)",
       "atom7 (gap-discovery)"
     ],
-    "execution_mode": "Agent loads task-router SKILL.md → determines atom chain → for each atom: load SKILL.md with skill_view() → execute with terminal/web/delegate_task → save JSON → assemble output.",
+    "execution_mode": "Agent loads task-router SKILL.md \u2192 determines atom chain \u2192 for each atom: load SKILL.md with skill_view() \u2192 execute with terminal/web/delegate_task \u2192 save JSON \u2192 assemble output.",
     "key_files": [
-      "skills/task-router/SKILL.md — Agent execution entry point",
-      "skills/knowledge-acquisition/SKILL.md — Agent-native multi-source search",
-      "skills/knowledge-extraction/SKILL.md — structured knowledge extraction",
-      "skills/association-discovery/SKILL.md — relationship discovery",
-      "skills/hypothesis-generation/SKILL.md — hypothesis generation",
-      "skills/argument-expression/SKILL.md — academic writing",
-      "skills/viewpoint-verification/SKILL.md — multi-angle verification",
-      "skills/gap-discovery/SKILL.md — research gap identification",
-      "skills/*/references/ — I/O contracts, evidence schemas, boundaries, changelogs"
+      "skills/task-router/SKILL.md \u2014 Agent execution entry point",
+      "skills/knowledge-acquisition/SKILL.md \u2014 Agent-native multi-source search",
+      "skills/knowledge-extraction/SKILL.md \u2014 structured knowledge extraction",
+      "skills/association-discovery/SKILL.md \u2014 relationship discovery",
+      "skills/hypothesis-generation/SKILL.md \u2014 hypothesis generation",
+      "skills/argument-expression/SKILL.md \u2014 academic writing",
+      "skills/viewpoint-verification/SKILL.md \u2014 multi-angle verification",
+      "skills/gap-discovery/SKILL.md \u2014 research gap identification",
+      "skills/*/references/ \u2014 I/O contracts, evidence schemas, boundaries, changelogs"
     ],
     "deleted_files": [
-      "core/ (entire directory — 16 Python files)",
+      "core/ (entire directory \u2014 16 Python files)",
       "run_pipeline.py"
     ],
-    "quality_gain": "Pure skill-driven — Agent flexibly handles any search source, any API change, any error condition without Python code changes. Adding a new source = editing SKILL.md."
+    "quality_gain": "Pure skill-driven \u2014 Agent flexibly handles any search source, any API change, any error condition without Python code changes. Adding a new source = editing SKILL.md."
   },
   "constitution": {
     "document": "/media/yakeworld/sda2/Synthos/CONSTITUTION.md",
@@ -402,37 +402,37 @@
     }
   },
   "evolution": {
-    "cycle": 42,
+    "cycle": 51,
     "status": "healthy",
     "structural_avg": 1.0,
     "benchmark_score": 1.0,
-    "overall_score": 0.975,
+    "overall_score": 0.98,
     "degraded_atoms": [],
     "api_health": "healthy",
-    "last_lesson": "Chinese municipal science project proposals frequently contain fabricated Englis"
+    "last_lesson": "L+0 absorption evaluation complete: hermes-agent-self-evolution (4.8/5.0) \u2014 GEPA methodology proposed for evolution engine OPTIMIZE/BENCHMARK/DIAGNOSE"
   },
   "absorptions": [
     {
       "date": "2026-05-13",
-      "source": "Imbad0202/academic-research-skills (ARS v3.7.0, 6358⭐)",
+      "source": "Imbad0202/academic-research-skills (ARS v3.7.0, 6358\u2b50)",
       "skills": [
-        "viewpoint-verification (反谄媚Concession Threshold Protocol)",
+        "viewpoint-verification (\u53cd\u8c04\u5a9aConcession Threshold Protocol)",
         "knowledge-acquisition (5-type citation hallucination taxonomy)",
         "CONSTITUTION.md P6 (Data Access Levels)"
       ],
       "type": "P1_capability_enhancement",
       "evaluation_score": 4.5,
-      "note": "三大核心机制吸收：①反谄媚门控；②引用幻觉5分类法(TF/PAC/IH/PH/SH)；③数据访问分级P6宪法原则"
+      "note": "\u4e09\u5927\u6838\u5fc3\u673a\u5236\u5438\u6536\uff1a\u2460\u53cd\u8c04\u5a9a\u95e8\u63a7\uff1b\u2461\u5f15\u7528\u5e7b\u89c95\u5206\u7c7b\u6cd5(TF/PAC/IH/PH/SH)\uff1b\u2462\u6570\u636e\u8bbf\u95ee\u5206\u7ea7P6\u5baa\u6cd5\u539f\u5219"
     },
     {
       "date": "2026-05-13",
       "source": "Hermes Agent skill: nsfc-grant-audit",
       "skills": [
-        "nsfc-grant-audit (extended skill - 标书评审与重构)"
+        "nsfc-grant-audit (extended skill - \u6807\u4e66\u8bc4\u5ba1\u4e0e\u91cd\u6784)"
       ],
       "type": "extended_skill_absorption",
       "evaluation_score": 4.0,
-      "note": "8维评审矩阵+文献差距分析+OA PDF下载+NotebookLM集成。已在PD误吸标书验证。"
+      "note": "8\u7ef4\u8bc4\u5ba1\u77e9\u9635+\u6587\u732e\u5dee\u8ddd\u5206\u6790+OA PDF\u4e0b\u8f7d+NotebookLM\u96c6\u6210\u3002\u5df2\u5728PD\u8bef\u5438\u6807\u4e66\u9a8c\u8bc1\u3002"
     },
     {
       "date": "2026-05-12",
@@ -443,7 +443,7 @@
       ],
       "type": "extended_knowledge",
       "evaluation_score": 4.0,
-      "note": "高互补性结构化医学知识 + 方法论框架。Low integration cost (纯SKILL.md)"
+      "note": "\u9ad8\u4e92\u8865\u6027\u7ed3\u6784\u5316\u533b\u5b66\u77e5\u8bc6 + \u65b9\u6cd5\u8bba\u6846\u67b6\u3002Low integration cost (\u7eafSKILL.md)"
     },
     {
       "date": "2026-05-12",
@@ -458,7 +458,7 @@
         "BibTeX generation"
       ],
       "evaluation_score": 3.5,
-      "note": "3项P1功能吸收：PMC两步提取、Sci-Hub镜像轮换、BibTeX输出。"
+      "note": "3\u9879P1\u529f\u80fd\u5438\u6536\uff1aPMC\u4e24\u6b65\u63d0\u53d6\u3001Sci-Hub\u955c\u50cf\u8f6e\u6362\u3001BibTeX\u8f93\u51fa\u3002"
     },
     {
       "date": "2026-05-12",
@@ -468,103 +468,115 @@
       ],
       "type": "extended_research_skill",
       "evaluation_score": 3.0,
-      "note": "15篇ADHD眼动追踪论文(2020-2026)的系统综述skill。"
+      "note": "15\u7bc7ADHD\u773c\u52a8\u8ffd\u8e2a\u8bba\u6587(2020-2026)\u7684\u7cfb\u7edf\u7efc\u8ff0skill\u3002"
     },
     {
       "date": "2026-05-11",
-      "source": "nature-figure from Yuan1z0825/nature-skills (袁一哲, 上海交大)",
+      "source": "nature-figure from Yuan1z0825/nature-skills (\u8881\u4e00\u54f2, \u4e0a\u6d77\u4ea4\u5927)",
       "skills": [
         "figure-generation"
       ],
       "type": "extended_skill_absorption",
       "evaluation_score": 4.5,
-      "note": "Figure契约方法论：结论→证据链→面板映射→出口契约。16种排版模式+Nature色板体系+QA审核清单。最成熟Nature技能（Stable阶段），Synthos最大的图表能力缺口。"
+      "note": "Figure\u5951\u7ea6\u65b9\u6cd5\u8bba\uff1a\u7ed3\u8bba\u2192\u8bc1\u636e\u94fe\u2192\u9762\u677f\u6620\u5c04\u2192\u51fa\u53e3\u5951\u7ea6\u300216\u79cd\u6392\u7248\u6a21\u5f0f+Nature\u8272\u677f\u4f53\u7cfb+QA\u5ba1\u6838\u6e05\u5355\u3002\u6700\u6210\u719fNature\u6280\u80fd\uff08Stable\u9636\u6bb5\uff09\uff0cSynthos\u6700\u5927\u7684\u56fe\u8868\u80fd\u529b\u7f3a\u53e3\u3002"
     },
     {
       "date": "2026-05-14",
-      "source": "PaperOrchestra/PaperWritingBench (Song et al., 2026, arXiv:2604.05018) — ⭐461",
+      "source": "PaperOrchestra/PaperWritingBench (Song et al., 2026, arXiv:2604.05018) \u2014 \u2b50461",
       "skills": [
-        "viewpoint-verification (Citation F1 P0/P1引用质量门控)",
-        "argument-expression (LitReview 6轴质量评分门控)",
-        "knowledge-extraction (PW-Bench逆向工程可选模式)",
-        "evolution/BENCHMARKS (PW-Bench 3维评价模式)"
+        "viewpoint-verification (Citation F1 P0/P1\u5f15\u7528\u8d28\u91cf\u95e8\u63a7)",
+        "argument-expression (LitReview 6\u8f74\u8d28\u91cf\u8bc4\u5206\u95e8\u63a7)",
+        "knowledge-extraction (PW-Bench\u9006\u5411\u5de5\u7a0b\u53ef\u9009\u6a21\u5f0f)",
+        "evolution/BENCHMARKS (PW-Bench 3\u7ef4\u8bc4\u4ef7\u6a21\u5f0f)"
       ],
       "type": "P1_capability_enhancement",
       "evaluation_score": 4.0,
-      "note": "PaperWritingBench三层架构吸收：①Citation F1引用质量评价→VER置信度门控；②六轴文献综述评分→ARG质量自检；③逆向工程(Sparse/Dense Idea+ExpLog)→EXT可选模式；④SxS比对+反膨胀规则→BENCHMARKS新增维度。3原子引用文件+4 SKILL.md修改+BENCHMARKS扩展。零Python代码，纯SKILL.md方法论吸收。"
+      "note": "PaperWritingBench\u4e09\u5c42\u67b6\u6784\u5438\u6536\uff1a\u2460Citation F1\u5f15\u7528\u8d28\u91cf\u8bc4\u4ef7\u2192VER\u7f6e\u4fe1\u5ea6\u95e8\u63a7\uff1b\u2461\u516d\u8f74\u6587\u732e\u7efc\u8ff0\u8bc4\u5206\u2192ARG\u8d28\u91cf\u81ea\u68c0\uff1b\u2462\u9006\u5411\u5de5\u7a0b(Sparse/Dense Idea+ExpLog)\u2192EXT\u53ef\u9009\u6a21\u5f0f\uff1b\u2463SxS\u6bd4\u5bf9+\u53cd\u81a8\u80c0\u89c4\u5219\u2192BENCHMARKS\u65b0\u589e\u7ef4\u5ea6\u30023\u539f\u5b50\u5f15\u7528\u6587\u4ef6+4 SKILL.md\u4fee\u6539+BENCHMARKS\u6269\u5c55\u3002\u96f6Python\u4ee3\u7801\uff0c\u7eafSKILL.md\u65b9\u6cd5\u8bba\u5438\u6536\u3002"
     },
     {
       "date": "2026-05-17",
-      "source": "Orchestra-Research/AI-research-SKILLs (8,492⭐, MIT)",
+      "source": "Orchestra-Research/AI-research-SKILLs (8,492\u2b50, MIT)",
       "skills": [
-        "viewpoint-verification v1.2.0→v1.3.0 (ARA 6D epistemic scoring)",
+        "viewpoint-verification v1.2.0\u2192v1.3.0 (ARA 6D epistemic scoring)",
         "evolution RECORD 11.2 (ARA provenance event types)"
       ],
       "type": "P0_core_mechanism_enhancement",
       "evaluation_score": 4.5,
-      "note": "90 SKILL.md ML科研技能集合。ARA Rigor Reviewer的6维认识论评分(证据/可证伪性/范围/论证/探索/方法)直接增强VER置信度计算。ARA Research Manager的7事件类型+溯源标记增强evolution日志。"
+      "note": "90 SKILL.md ML\u79d1\u7814\u6280\u80fd\u96c6\u5408\u3002ARA Rigor Reviewer\u76846\u7ef4\u8ba4\u8bc6\u8bba\u8bc4\u5206(\u8bc1\u636e/\u53ef\u8bc1\u4f2a\u6027/\u8303\u56f4/\u8bba\u8bc1/\u63a2\u7d22/\u65b9\u6cd5)\u76f4\u63a5\u589e\u5f3aVER\u7f6e\u4fe1\u5ea6\u8ba1\u7b97\u3002ARA Research Manager\u76847\u4e8b\u4ef6\u7c7b\u578b+\u6eaf\u6e90\u6807\u8bb0\u589e\u5f3aevolution\u65e5\u5fd7\u3002"
     },
     {
       "date": "2026-05-17",
-      "source": "SkyworkAI/DeepResearchAgent (3,388⭐, MIT)",
+      "source": "SkyworkAI/DeepResearchAgent (3,388\u2b50, MIT)",
       "skills": [
-        "evolution v2.9.0→v2.10.0 (SEPL rollback mechanism)"
+        "evolution v2.9.0\u2192v2.10.0 (SEPL rollback mechanism)"
       ],
       "type": "P0_core_mechanism_enhancement",
       "evaluation_score": 4.2,
-      "note": "SEPL (Self Evolution Protocol) 的 propose→assess→commit 闭环 + rollback → 增强evolution OPTIMIZE的VERIFY_PATCH步骤，增加提交门、自动回滚、版本快照、止损规则。"
+      "note": "SEPL (Self Evolution Protocol) \u7684 propose\u2192assess\u2192commit \u95ed\u73af + rollback \u2192 \u589e\u5f3aevolution OPTIMIZE\u7684VERIFY_PATCH\u6b65\u9aa4\uff0c\u589e\u52a0\u63d0\u4ea4\u95e8\u3001\u81ea\u52a8\u56de\u6eda\u3001\u7248\u672c\u5feb\u7167\u3001\u6b62\u635f\u89c4\u5219\u3002"
     },
     {
       "date": "2026-05-18",
-      "source": "Orchestra-Research/AI-research-SKILLs (8,492⭐, MIT) — Autoresearch two-loop",
+      "source": "Orchestra-Research/AI-research-SKILLs (8,492\u2b50, MIT) \u2014 Autoresearch two-loop",
       "skills": [
-        "task-router v1.1.0→v1.2.0 (two-loop orchestration protocol)"
+        "task-router v1.1.0\u2192v1.2.0 (two-loop orchestration protocol)"
       ],
       "type": "P0_core_mechanism_enhancement",
       "evaluation_score": 4.3,
-      "note": "Autoresearch 双循环编排协议吸收。新增三种执行模式（simple_chain/exploratory_loop/research_twoloop）。内循环：HYP→VER→ASC 迭代。外循环：每5轮全局复盘+方向决策。更新IO_CONTRACT+BOUNDARY+CHANGE_LOG四重同步。"
+      "note": "Autoresearch \u53cc\u5faa\u73af\u7f16\u6392\u534f\u8bae\u5438\u6536\u3002\u65b0\u589e\u4e09\u79cd\u6267\u884c\u6a21\u5f0f\uff08simple_chain/exploratory_loop/research_twoloop\uff09\u3002\u5185\u5faa\u73af\uff1aHYP\u2192VER\u2192ASC \u8fed\u4ee3\u3002\u5916\u5faa\u73af\uff1a\u6bcf5\u8f6e\u5168\u5c40\u590d\u76d8+\u65b9\u5411\u51b3\u7b56\u3002\u66f4\u65b0IO_CONTRACT+BOUNDARY+CHANGE_LOG\u56db\u91cd\u540c\u6b65\u3002"
     },
     {
       "date": "2026-05-18",
-      "source": "K-Dense/scientific-agent-skills (23,109⭐, MIT) — Database Lookup",
+      "source": "K-Dense/scientific-agent-skills (23,109\u2b50, MIT) \u2014 Database Lookup",
       "skills": [
         "scientific-database-lookup v1.0.0 (unified scientific database routing)"
       ],
       "type": "P0_extended_skill_absorption",
       "evaluation_score": 4.0,
-      "note": "78+科学数据库统一路由层。6领域×17+数据库API参考文件（PubChem/UniProt/NCBI-Gene/ClinicalTrials/ChEMBL/STRING等）。纯SKILL.md+curl/jq架构，零Python依赖。"
+      "note": "78+\u79d1\u5b66\u6570\u636e\u5e93\u7edf\u4e00\u8def\u7531\u5c42\u30026\u9886\u57df\u00d717+\u6570\u636e\u5e93API\u53c2\u8003\u6587\u4ef6\uff08PubChem/UniProt/NCBI-Gene/ClinicalTrials/ChEMBL/STRING\u7b49\uff09\u3002\u7eafSKILL.md+curl/jq\u67b6\u6784\uff0c\u96f6Python\u4f9d\u8d56\u3002"
     },
     {
       "date": "2026-05-18",
-      "source": "Orchestra-Research/AI-research-SKILLs (8,492⭐, MIT) — ML Paper Writing LaTeX",
+      "source": "Orchestra-Research/AI-research-SKILLs (8,492\u2b50, MIT) \u2014 ML Paper Writing LaTeX",
       "skills": [
-        "latex-output v1.0.0→v1.1.0 (AAAI/ACL/COLM templates + algorithm.sty + writing philosophy)"
+        "latex-output v1.0.0\u2192v1.1.0 (AAAI/ACL/COLM templates + algorithm.sty + writing philosophy)"
       ],
       "type": "P1_capability_enhancement",
       "evaluation_score": 3.8,
-      "note": "4个新会议模板(AAAI/ACL/COLM/算法宏包) + 写作哲学(永不记忆生成BibTeX) + 协作写作方法。Synthos原有latex-output已覆盖NeurIPS/ICLR/ICML/中文，此次补全了会议覆盖缺口。"
+      "note": "4\u4e2a\u65b0\u4f1a\u8bae\u6a21\u677f(AAAI/ACL/COLM/\u7b97\u6cd5\u5b8f\u5305) + \u5199\u4f5c\u54f2\u5b66(\u6c38\u4e0d\u8bb0\u5fc6\u751f\u6210BibTeX) + \u534f\u4f5c\u5199\u4f5c\u65b9\u6cd5\u3002Synthos\u539f\u6709latex-output\u5df2\u8986\u76d6NeurIPS/ICLR/ICML/\u4e2d\u6587\uff0c\u6b64\u6b21\u8865\u5168\u4e86\u4f1a\u8bae\u8986\u76d6\u7f3a\u53e3\u3002"
     },
     {
       "date": "2026-05-18",
-      "source": "self_fix — 写作闭环测试驱动修复",
+      "source": "self_fix \u2014 \u5199\u4f5c\u95ed\u73af\u6d4b\u8bd5\u9a71\u52a8\u4fee\u590d",
       "skills": [
-        "knowledge-acquisition v1.3.0→v1.4.0 (API resilience: cache + fallback chain + offline local_absorption_db)"
+        "knowledge-acquisition v1.3.0\u2192v1.4.0 (API resilience: cache + fallback chain + offline local_absorption_db)"
       ],
       "type": "P0_self_improvement",
       "evaluation_score": 4.5,
-      "note": "写作闭环测试发现S2 API完全不可用。新增：本地缓存系统(24h TTL)、6级API回退链(自动降级)、local_absorption_db离线兜底(从absorption-tracked.json提取)。保证ACQ在任何网络条件下都有数据可返回。"
+      "note": "\u5199\u4f5c\u95ed\u73af\u6d4b\u8bd5\u53d1\u73b0S2 API\u5b8c\u5168\u4e0d\u53ef\u7528\u3002\u65b0\u589e\uff1a\u672c\u5730\u7f13\u5b58\u7cfb\u7edf(24h TTL)\u30016\u7ea7API\u56de\u9000\u94fe(\u81ea\u52a8\u964d\u7ea7)\u3001local_absorption_db\u79bb\u7ebf\u515c\u5e95(\u4eceabsorption-tracked.json\u63d0\u53d6)\u3002\u4fdd\u8bc1ACQ\u5728\u4efb\u4f55\u7f51\u7edc\u6761\u4ef6\u4e0b\u90fd\u6709\u6570\u636e\u53ef\u8fd4\u56de\u3002"
     },
     {
       "date": "2026-05-18",
-      "source": "HaiyangDiiing/aris-cli (ARIS, ⭐8, MIT) — Git-as-Memory + 单指标聚焦 + 假设先行",
+      "source": "HaiyangDiiing/aris-cli (ARIS, \u2b508, MIT) \u2014 Git-as-Memory + \u5355\u6307\u6807\u805a\u7126 + \u5047\u8bbe\u5148\u884c",
       "skills": [
-        "evolution v2.10→v2.11 (Git-as-Memory Phase 0.5/A/B/C + safe_revert)",
-        "evolution v2.10→v2.11 (单指标聚焦 IMPROVE + stuck 协议)",
-        "evolution v2.10→v2.11 (假设先行 DIAGNOSE 8.0 + hypothesis_yaml)"
+        "evolution v2.10\u2192v2.11 (Git-as-Memory Phase 0.5/A/B/C + safe_revert)",
+        "evolution v2.10\u2192v2.11 (\u5355\u6307\u6807\u805a\u7126 IMPROVE + stuck \u534f\u8bae)",
+        "evolution v2.10\u2192v2.11 (\u5047\u8bbe\u5148\u884c DIAGNOSE 8.0 + hypothesis_yaml)"
       ],
       "type": "P0_core_mechanism_enhancement",
       "evaluation_score": 4.0,
-      "note": "3项核心机制吸收：①Git-as-Memory循环协议嵌入BENCHMARK→IMPROVE子循环；②单指标聚焦每轮只修最低分维度；③假设先行在DIAGNOSE-IMPROVE间插入可验证假说。L+0~L+2通过。L+3: git commit验证通过，Phase A/B/C需真实进化BENCHMARK后验证。"
+      "note": "3\u9879\u6838\u5fc3\u673a\u5236\u5438\u6536\uff1a\u2460Git-as-Memory\u5faa\u73af\u534f\u8bae\u5d4c\u5165BENCHMARK\u2192IMPROVE\u5b50\u5faa\u73af\uff1b\u2461\u5355\u6307\u6807\u805a\u7126\u6bcf\u8f6e\u53ea\u4fee\u6700\u4f4e\u5206\u7ef4\u5ea6\uff1b\u2462\u5047\u8bbe\u5148\u884c\u5728DIAGNOSE-IMPROVE\u95f4\u63d2\u5165\u53ef\u9a8c\u8bc1\u5047\u8bf4\u3002L+0~L+2\u901a\u8fc7\u3002L+3: git commit\u9a8c\u8bc1\u901a\u8fc7\uff0cPhase A/B/C\u9700\u771f\u5b9e\u8fdb\u5316BENCHMARK\u540e\u9a8c\u8bc1\u3002"
+    },
+    {
+      "date": "2026-05-22",
+      "source": "NousResearch/hermes-agent-self-evolution (\u2b503,446, ICLR 2026 Oral, MIT)",
+      "skills": [
+        "evolution v2.11.0\u2192v2.12.0 (REFLECTIVE_ANALYSIS in OPTIMIZE)",
+        "evolution v2.11.0\u2192v2.12.0 (AUTO_DATASET in BENCHMARK)",
+        "evolution v2.11.0\u2192v2.12.0 (Pareto multi-objective in DIAGNOSE)"
+      ],
+      "type": "P0_core_mechanism_enhancement",
+      "evaluation_score": 4.8,
+      "note": "GEPA\u53cd\u5c04\u5f0f\u5206\u6790\uff1a\u8bfb\u8f68\u8ff9\u2192\u7406\u89e3\u5931\u8d25\u2192\u9488\u5bf9\u6027\u4fee\u590d\u3002\u81ea\u52a8\u6570\u636e\u96c6\uff1a\u4eceSKILL.md\u751f\u6210\u6d4b\u8bd5\u96c6\u3002Pareto\u591a\u7ef4\u8bc4\u5206\uff1a\u591a\u76ee\u6807\u524d\u6cbf\u9009\u62e9\u3002\u96f6Python\u4ee3\u7801\uff0c\u7eaf\u65b9\u6cd5\u8bba\u5438\u6536\u3002"
     }
   ]
 }
