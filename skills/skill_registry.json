@@ -167,6 +167,21 @@
     "absorbed_from": "nature-figure (Yuan1z0825/nature-skills)",
     "absorption_date": "2026-05-11"
   },
+  "patent-disclosure": {
+    "name": "patent-disclosure",
+    "version": "1.8.5-synthos-1",
+    "status": "active_extended",
+    "license": "Apache-2.0",
+    "absorbed_from": "handsomestWei/patent-disclosure-skill",
+    "absorbed_on": "2026-05-21",
+    "absorption_score": 4.6,
+    "created": "2026-05-21",
+    "description": "中国专利挖掘发现与交底书生成全流程：扫描项目文档挖掘专利点、讨论融合、基于脱敏模版生成技术交底书、CNIPA查新、生成后自检含逻辑闭环与公式参数一致性",
+    "directory": "patent-disclosure",
+    "file_path": "/media/yakeworld/sda2/Synthos/skills/patent-disclosure/SKILL.md",
+    "implementation": "absorbed_skill",
+    "type": "extended_skill"
+  },
   "research-ideation": {
     "name": "research-ideation",
     "atom": 7,
@@ -236,6 +251,51 @@
     "directory": "latex-output",
     "file_path": "/media/yakeworld/sda2/Synthos/skills/latex-output/SKILL.md",
     "implementation": "agent_native_skill",
+    "pipeline_integrated": false
+  },
+  "nature-paper2ppt": {
+    "name": "nature-paper2ppt",
+    "version": "1.0.0",
+    "status": "active",
+    "type": "extended_skill",
+    "license": "MIT",
+    "created": "2026-05-22",
+    "description": "Nature-style Chinese PPTX from academic papers — argument-driven slide generation with figure-first layout optimization.",
+    "directory": "nature-paper2ppt",
+    "file_path": "/media/yakeworld/sda2/Synthos/skills/nature-paper2ppt/SKILL.md",
+    "implementation": "absorbed_skill",
+    "absorbed_from": "GARCH-QUANT/nature-paper2ppt",
+    "absorption_date": "2026-05-22",
+    "pipeline_integrated": false
+  },
+  "nsfc-grant-audit": {
+    "name": "nsfc-grant-audit",
+    "version": "1.0.0",
+    "status": "active",
+    "type": "extended_skill",
+    "stability": "stable",
+    "license": "MIT",
+    "created": "2026-05-18",
+    "description": "Review, critique, and reconstruct Chinese scientific grant proposals — NSFC/provincial/municipal levels. 8-dimension review matrix.",
+    "directory": "nsfc-grant-audit",
+    "file_path": "/media/yakeworld/sda2/Synthos/skills/nsfc-grant-audit/SKILL.md",
+    "implementation": "agent_native_skill",
+    "pipeline_integrated": false
+  },
+  "scientific-database-lookup": {
+    "name": "scientific-database-lookup",
+    "version": "1.0.0",
+    "status": "active",
+    "type": "extended_skill",
+    "stability": "stable",
+    "license": "MIT",
+    "created": "2026-05-18",
+    "description": "Route queries to 78+ public scientific databases via REST APIs. Covering bioinformatics, chemistry, clinical, neuroscience, materials, and physics. Absorbed from K-Dense/scientific-agent-skills.",
+    "directory": "scientific-database-lookup",
+    "file_path": "/media/yakeworld/sda2/Synthos/skills/scientific-database-lookup/SKILL.md",
+    "implementation": "absorbed_skill",
+    "absorbed_from": "K-Dense/scientific-agent-skills",
+    "absorption_date": "2026-05-18",
     "pipeline_integrated": false
   }
 }
