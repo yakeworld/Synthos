@@ -1,7 +1,7 @@
 ---
 name: evolution
 description: "⚡ P0 自进化引擎。Synthos evolution engine v2.12 — GEPA反射式分析(OPTIMIZE)+自动数据集(BENCHMARK)+Pareto多维优化(DIAGNOSE)+结构探查+功能基准+外部吸收+教训学习+黄金验证+自扩关键词+SELF_REFLECT+宪法集成+漂移检测+渐进披露+响应闸门+自动优化+输入护栏+持久执行+条件分支+拦截点+追踪+SEPL回滚+ARA溯源+Git即记忆+Pareto前沿+假设先行。每轮触发project-experience-distillation。"
-version: 2.12.0
+version: 2.14.0
 author: Synthos Evolution Engine
 license: MIT
 metadata:
