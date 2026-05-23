@@ -1,7 +1,7 @@
 ---
 name: task-router
 description: Synthos system entry point. Routes user queries to the correct cognitive atom chain and orchestrates execution. Agent-native — no Python code, all atoms executed by Agent loading SKILL.md files. Supports three execution modes: simple chain (linear), exploratory loop (inner loop only), and research two-loop (inner+outer).
-version: 1.2.0
+version: 1.4.0
 author: Synthos Agent + AI-Research-SKILLs (Orchestra Research) absorption
 license: MIT
 allowed-tools: terminal web delegate_task Read Write skill_view browser_console

@@ -1,7 +1,7 @@
 ---
 name: knowledge-acquisition
 description: Search and retrieve academic papers from multiple sources (Semantic Scholar, PubMed, Crossref, OpenAlex, arXiv, bioRxiv/medRxiv, local-absorption-db) using Agent tools. Includes API resilience layer: local cache, automatic fallback chain, and offline absorption database backup. Returns paper metadata, abstracts, and PDF files. Agent-native — uses Hermes skills + terminal/curl, no Python code.
-version: 1.5.0
+version: 1.6.0
 author: Synthos Agent
 license: MIT
 allowed-tools: terminal web delegate_task Read Write
