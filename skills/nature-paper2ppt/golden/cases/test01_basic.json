@@ -1,0 +1,35 @@
+{
+  "test_case": "nature-paper2ppt-basic",
+  "description": "标准英文论文转Nature风格中文PPT",
+  "input": {
+    "title": "Agent4S: The Transformation of Research Paradigms from the Perspective of Large Language Models",
+    "authors": "Zheng Boyuan, Fang Zerui, Xu Zhe, et al.",
+    "journal": "arXiv preprint",
+    "year": 2025,
+    "doi": "arXiv:2506.23692",
+    "abstract": "While AI for Science (AI4S) serves as an analytical tool in the current research paradigm, it doesn't solve its core inefficiency. We propose 'Agent for Science' (Agent4S)—the use of LLM-driven agents to automate the entire research workflow—as the true Fifth Scientific Paradigm. This paper introduces a five-level classification for Agent4S, outlining a clear roadmap from simple task automation to fully autonomous, collaborative 'AI Scientists'.",
+    "paper_type": "perspective_review",
+    "key_figures": []
+  },
+  "expected": {
+    "slide_count": "12-16",
+    "language": "Chinese",
+    "has_cover_slide": true,
+    "has_conclusion_slide": true,
+    "has_speaker_notes": true,
+    "has_source_label": true,
+    "presentation_logic": "evidence-map",
+    "slide_structure": [
+      "标题页",
+      "研究背景",
+      "知识缺口",
+      "核心问题与主张",
+      "关键证据1",
+      "关键证据2",
+      "关键证据3",
+      "创新点",
+      "局限性",
+      "总结讨论"
+    ]
+  }
+}

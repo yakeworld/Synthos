@@ -1,0 +1,11 @@
+{
+  "test_case": "nature-paper2ppt-minimal",
+  "verification_criteria": [
+    {"check": "pptx_created", "condition": "output/final_presentation_cn.pptx created even with minimal input", "weight": "critical"},
+    {"check": "slide_count_acceptable", "condition": "8 <= slide_count <= 12", "weight": "high"},
+    {"check": "no_hallucination", "condition": "does not invent results, methods, or figures from nothing", "weight": "critical"},
+    {"check": "uncertainty_marked", "condition": "missing information clearly noted (qa_report or slide annotations)", "weight": "high"},
+    {"check": "returns_gracefully", "condition": "does not crash or error out", "weight": "critical"},
+    {"check": "has_conclusion", "condition": "has a summary/conclusion slide", "weight": "medium"}
+  ]
+}
