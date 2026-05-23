@@ -25,9 +25,35 @@ metadata:
   synthos_data_access_level: "redacted"
 ---
 
-# 关联发现 (Association Discovery)
+# 关联发现 (Association Discovery) - 认知原子 #3
 
-## 0. 触发条件
+## 原理层·文言
+
+### 联属之道
+
+> 物以类聚，事以群分。孤立之知，不如关联之智。
+> 两两相较，七型可辨：矛盾、补充、演进、支持、扩展、使用、相似。
+> 聚则为图，散则为点。有联则有知，有图则有见。
+> 见矛盾而知所争，见空白而知所缺。
+> 联属既成，假设可生矣。
+
+**核心理念**：关联发现是认知链的第三步。将孤立知识项两两比较，识别7种关联类型，构建知识图谱，检测研究空白。空白是假设生成的土壤——没有空白，就没有科学进步。
+
+### 七型关联释义
+
+| 关联类型 | 文言释名 | 含义 |
+|:---------|:---------|:-----|
+| contradiction | 相悖 | 结论冲突或方向相反 |
+| supplement | 互补 | 同一问题的不同方面 |
+| evolution | 演进 | 时序+方法论升级 |
+| supports | 佐证 | 一篇为另一篇提供直接证据 |
+| extends | 拓展 | 在另一篇基础上扩展范畴 |
+| uses | 借用 | 直接使用另一篇的方法/数据 |
+| similar-to | 相近 | 主题方法相似但独立完成 |
+
+## 方法层·白话
+
+### 触发条件
 
 在以下情况加载本技能：
 
@@ -36,7 +62,7 @@ metadata:
 - 用户要求"找出这些文献之间的关系/矛盾/空白"
 - 下游 hypothesis-generation 需要关联分析作为输入
 
-## 1. 职责（Scope）
+### 1. 职责（Scope）
 
 从上游 `knowledge-extraction` 产出的 `extracted_knowledge`（结构化知识项列表）中，系统性发现知识项之间的关联关系。核心任务：
 
@@ -46,7 +72,7 @@ metadata:
 
 本原子**不做**单论文信息提取（那是 `knowledge-extraction` 的职责），**不做**假设生成（那是 `hypothesis-generation` 的职责）。它只回答一个问题：**"这些知识之间有什么关系？"**
 
-## 2. 输入输出（Contract Summary）
+### 2. 输入输出（Contract Summary）
 
 详见 `references/IO_CONTRACT.md`。
 
@@ -58,9 +84,10 @@ metadata:
 | 输出 | `knowledge_graph` (KnowledgeGraph) | 本原子生成 |
 | 输出 | `research_gaps` (list[ResearchGap]) | 本原子生成 |
 
-## 3. 推理流程（Procedure）
+### 3. 推理流程（Procedure）
 
 1. **读取输入**：检查 `input_dict` 中是否存在 `extracted_knowledge`。若为空或不存在，返回 `_err("Missing extracted_knowledge")`。若知识项数量 < 2，返回 `_err("Need at least 2 knowledge items")`。
+
 2. **两两比较**：对所有知识项 pair (i, j) 执行以下子步骤：
    a. **主题重叠检测**：计算 `key_themes` 的 Jaccard 相似度，筛选有潜在关联的对（阈值 ≥ 0.1）。
    b. **关联分类**（吸收自 claude-paperloom 的7类型图谱）：对通过筛选的对，分析其关系类型：
@@ -73,12 +100,14 @@ metadata:
       - **相似 (similar-to)**：两篇论文主题/方法高度相似但独立完成（无明确引用关系）
    c. **置信度评估**：为每个关联估算 confidence（0.0–1.0），考虑因素：主题重叠度、方法论可比性、证据等级一致性、时序关系。
    d. **显著性描述**：为 `significance` 字段撰写该关联为什么重要的简短说明。
+
 3. **构建知识图谱**：
    a. 为每个 KnowledgeItem 创建 GraphNode（`type: "paper"`）。
    b. 为每个 Association 创建 GraphEdge（`source → target`，带 type 和 confidence）。
    c. 计算 GraphStats：total_nodes, total_edges, contradictions, supplements, evolutions, supports, extends, uses, similar_to, gaps。
    
    > **常量成本链接**（吸收自 claude-paperloom）：当知识项 > 30 时，用 Jaccard 预筛选+<30候选项限制，确保第100篇论文的关联成本与第10篇相同。
+
 4. **识别研究空白**（吸收自 GAP 结构化分类法 v0.1.0 —— GAP 原子已合并入本原子）：
    
    4.1 **矛盾检测**：对每个聚类内部和跨聚类检测4类矛盾：
@@ -114,10 +143,12 @@ metadata:
    | 可行性 | 现有技术可解 | 需适度努力 | 需重大突破 | 理论尚不成熟 |
    | 证据基础 | ≥5篇矛盾文献 | 3-4篇 | 1-2篇 | 单篇或推测 |
    最终优先级 = max(重要性, 时效性) + feasibility modifier。
+
 5. **构建证据链**：每个 Association 和 ResearchGap 的证据节点引用其来源 KnowledgeItem 的 id。详见 `references/EVIDENCE_SCHEMA.md`。
+
 6. **输出**：返回 `_ok({"associations": [...], "knowledge_graph": {...}, "research_gaps": [...]})` 信封。
 
-## 4. 边界判断（When NOT to use this atom）
+### 4. 边界判断（When NOT to use this atom）
 
 详见 `references/BOUNDARY.md`。典型排除场景：
 
@@ -127,7 +158,7 @@ metadata:
 - 如果输入是 PDF 或原始论文元数据 → 先经过 `knowledge-acquisition` → `knowledge-extraction` 管道。
 - **PW-Bench 逆向工程**（从论文重构 Idea + Experimental Log）→ `knowledge-extraction` 的**可选增强模式**，不在本原子范围内。
 
-## 5. 证据链输出要求（Evidence Summary）
+### 5. 证据链输出要求（Evidence Summary）
 
 详见 `references/EVIDENCE_SCHEMA.md`。每个 `Association` 必须携带：
 - `source_type: "atom_output"`, `source_ref: "extracted_knowledge"`, `note: "引用 KnowledgeItem.id=<item1_id>, <item2_id>"`
@@ -135,7 +166,7 @@ metadata:
 每个 `ResearchGap` 必须携带：
 - `evidence` 字段引用具体论文的 KnowledgeItem.id 或统计信息，说明为什么判定为空白。
 
-## 6. 示例（Minimal Example）
+### 6. 示例（Minimal Example）
 
 **输入**：
 ```json
@@ -210,7 +241,7 @@ metadata:
 }
 ```
 
-## 7. 参考文件索引（References）
+### 7. 参考文件索引（References）
 
 - IO 契约：`references/IO_CONTRACT.md`
 - 证据链 schema：`references/EVIDENCE_SCHEMA.md`
@@ -218,7 +249,7 @@ metadata:
 - 金标准：`golden/GOLDEN_SET.md`
 - 变更日志：`references/CHANGE_LOG.md`
 
-## 验证清单
+### 验证清单
 
 运行本技能后，确认以下检查项：
 
@@ -228,4 +259,14 @@ metadata:
 - [ ] 知识图谱节点和边的结构完整
 - [ ] 研究空白按P0-P3评级且附带 falsification_condition
 - [ ] 常量成本链接已启用（知识项>30时使用Jaccard预筛选）
-- [ ] 输出格式符合 _ok 信封结构
+
+## 命令层·English
+
+- **Signature**: `knowledge_items: list[KnowledgeItem] -> associations: list[Association], research_gaps: list[Gap]`
+- **Allowed tools**: `Read`, `Write`
+- **Input**: `extracted_knowledge` (list[KnowledgeItem]) from upstream `knowledge-extraction`
+- **Output**: `associations` (list[Association]), `knowledge_graph` (KnowledgeGraph), `research_gaps` (list[ResearchGap])
+- **Edge types**: `contradiction`, `supplement`, `evolution`, `supports`, `extends`, `uses`, `similar-to`
+- **Gap priority**: P0 (paradigm-shifting) > P1 (important) > P2 (valuable) > P3 (incremental)
+- **Scalability**: Jaccard pre-filter for >30 items to maintain O(n) cost
+- **Do NOT**: extract single-paper info, generate hypotheses, parse PDFs

@@ -25,9 +25,34 @@ metadata:
   synthos_data_access_level: "verified_only"
 ---
 
-# 观点验证 (Viewpoint Verification)
+# 观点验证 (Viewpoint Verification) - 认知原子 #6
 
-## 触发条件
+## 原理层·文言
+
+### 证伪之法
+
+> 凡立论必可驳，凡假设必可证伪。不信则立，不驳则废。
+> 证之以多方，验之于反例。六类反方，四维证伪。
+> 置信者，证据之影也。无证则信低，有驳则疑增。
+> 不专求证实，更孜孜于反证。此乃科学精神，亦认识论之基。
+> 自知其不知，方为真知。
+
+**核心理念**：观点验证是认知链的第六步，也是最终质量闸门。对假设和论证进行多角度批判性验证：寻找反方观点、设定证伪条件、评估鲁棒性、识别内部弱点。不专求证实，更孜孜于反证。
+
+### 验证六要义
+
+| 要义 | 文言释 | 含义 |
+|:-----|:-------|:-----|
+| 求反 | 求驳也 | 主动寻找反方观点而非确认 |
+| 证伪 | 可破也 | 设定具体可操作的证伪条件 |
+| 鲁棒 | 不迁也 | 检验假设在不同条件下的稳定性 |
+| 寻弱 | 察漏也 | 识别逻辑矛盾和内部缺陷 |
+| 评分 | 可信也 | 贝叶斯启发式置信度评分 |
+| 反谄 | 不阿也 | 用户反驳时按协议让步，不盲目坚持 |
+
+## 方法层·白话
+
+### 触发条件
 
 在以下情况加载本技能：
 
@@ -36,7 +61,7 @@ metadata:
 - 需要对已生成的假设进行证伪检验
 - 需要计算贝叶斯置信度分数
 
-## 验证清单
+### 验证清单
 
 - [ ] 已生成至少1个反方论点或反证条件
 - [ ] 置信度评分基于证据强度计算（非主观判断）
@@ -44,14 +69,18 @@ metadata:
 - [ ] 已应用反谄媚协议（Concession Threshold Protocol）
 - [ ] 输出包含可操作的改进建议
 - [ ] 无确认偏误（主动寻找了反证而非仅确认）
+- [ ] **[熵减律]** 已记录 uncertainty_reduction 并写入 aggregate_confidence.verification_entropy_reduction
+- [ ] **[日损]** 已执行简约性审计，标记了可选验证维度
+- [ ] **[格物通理]** 每个 verification_result 包含 reasoning_path 推演路径
+- [ ] **[天人合一]** 验证输出元数据中包含 observer_standpoint 声明
 
-## 1. 职责（Scope）
+### 1. 职责（Scope）
 
 对上游 `hypothesis-generation` 产出的 `hypotheses` 和 `argument-expression` 产出的 `arguments` 进行多角度批判性验证：寻找反方观点（counterarguments）、设定证伪条件（falsification conditions）、评估鲁棒性（robustness concerns）、识别内部弱点（weaknesses）。计算贝叶斯启发式置信度评分，并给出结构化裁决（verdict）。
 
 本原子**不做**假设生成（那是 `hypothesis-generation` 的职责），**不做**论证撰写（那是 `argument-expression` 的职责），**不做**跨论文关联发现（那是 `association-discovery` 的职责）。它只回答一个问题：**"这个主张有多可靠？什么条件下它会失败？"**
 
-## 2. 输入输出（Contract Summary）
+### 2. 输入输出（Contract Summary）
 
 详见 `references/IO_CONTRACT.md`。
 
@@ -60,11 +89,24 @@ metadata:
 | 输入 | `hypotheses` (list[Hypothesis]) | 上游 `hypothesis-generation` |
 | 输入 | `arguments` (list[Argument]) | 上游 `argument-expression` |
 | 输入 | `evidence` (list[EvidenceNode]) | 上游证据链（可选） |
-| 输出 | `verification_results` (list[Verification]) | 本原子生成 |
-| 输出 | `aggregate_confidence` (AggregateConfidence) | 本原子生成 |
+| 输出 | `verification_results` (list[Verification] + uncertainty_reduction + reasoning_path + minimal_verification + optional_dimensions) | 本原子生成 |
+| 输出 | `aggregate_confidence` (AggregateConfidence + verification_entropy_reduction) | 本原子生成 |
 | 输出 | `verdict` (string) | 本原子生成 |
+| 输出 | `observer_standpoint` (dict) | 本原子生成（Step 0） |
 
-## 3. 推理流程（Procedure）
+### 3. 推理流程（Procedure）
+
+**Step 0: 观察者位置声明** — 原子启动时记录认知链定位：
+
+```yaml
+observer_standpoint:
+  cognitive_chain_position: 6 (ACQ→EXT→ASC→HYP→ARG→VER)
+  upstream_atoms: [hypothesis-generation, argument-expression]
+  downstream_atoms: [用户/paper-pipeline]
+  validation_lens: "默认：批判性检验——寻找假设最脆弱的地方；可选：同行评审模拟——评估论文可发表性"
+```
+
+此声明嵌入每个验证流程的输出元数据中，确保观察者位置透明、可追溯。**不做**立场中性化承诺（那是伪客观），而是明确标注"谁在什么位置以什么透镜观察"。
 
 1. **读取输入**：检查 `input_dict` 中是否存在 `hypotheses`。若为空或不存在，返回 `_err("Missing hypotheses")`。`arguments` 和 `evidence` 为可选增强输入。
 
@@ -98,6 +140,10 @@ metadata:
       - 每个未解决的鲁棒性关切扣 0.05
       - 证据质量评分作为置信度上限
       - 最终置信度裁剪至 [0.0, 1.0]
+      - **输出不确定性降低量**：`uncertainty_reduction = initial_confidence - final_confidence`
+        - 记录验证前后置信度的差值，作为熵减信号
+        - `uncertainty_reduction` 写入每个 `verification_result`
+        - `aggregate_confidence` 增加 `verification_entropy_reduction` 字段（各假设均值）
 
    e.5 **[PW-Bench吸收] 引用质量修正 — Citation F1 门控**：
       - 提取当前假设/论点引用的所有参考文献
@@ -152,6 +198,19 @@ metadata:
       - `likely_false`：confidence < 0.30 且有强反方观点
       - `requires_revision`：confidence < 0.40 且主要原因是内部逻辑矛盾
 
+      每个 verification_result 的裁决必须包含 `reasoning_path: string` — **从先验到最终置信度的推演路径**：
+      ```
+      先验=0.7 → 反方观点-0.10(替代解释,strength=0.7) → 弱点-0.08(概念混淆) → 引用质量×0.92 → 认识论校准×0.88 → debate_factor×0.95 → 最终=0.45
+      ```
+      推理路径以单行字符串形式嵌入每个 `verification_result.reasoning_path`，列出每一步更新的原因。不可省略，不可简化为"综合评估"。
+
+   **Step 2.7: 日损检查点** — 裁决完成后执行简约性审计：
+      - 问："当前使用的验证维度是否都是必要的？"
+      - 问："如果去掉一个验证维度（如不检查鲁棒性），裁决会变吗？"
+      - 如果某维度不影响裁决 → 标记为 `optional: true`
+      - 如果去掉后裁决不变 → 该假设的验证可简化为更少维度
+      - 输出：在 verification_result 中增加 `minimal_verification: [使用的维度列表]` 和 `optional_dimensions: [可省略的维度]`
+
 3. **聚合**：汇总所有 Verification，计算 `aggregate_confidence`（均值、最小值、分布），给出整体 `verdict`。
 
 4. **[泛化] 反谄媚门控 — Concession Threshold Protocol**
@@ -197,7 +256,7 @@ metadata:
 
 7. **输出**：返回 `_ok({"verification_results": [...], "aggregate_confidence": {...}, "verdict": "..."})` 信封。
 
-## 4. 边界判断（When NOT to use this atom）
+### 4. 边界判断（When NOT to use this atom）
 
 详见 `references/BOUNDARY.md`。典型排除场景：
 - 如果用户想要生成新假设 → 这是 `hypothesis-generation` 的职责
@@ -205,7 +264,7 @@ metadata:
 - 如果用户想要发现跨论文关联 → 这是 `association-discovery` 的职责
 - 如果用户只想要论文信息而不评估主张 → 直接用 `knowledge-extraction` 输出即可
 
-## 5. 证据链输出要求（Evidence Summary）
+### 5. 证据链输出要求（Evidence Summary）
 
 详见 `references/EVIDENCE_SCHEMA.md`。每个 `Verification` 必须携带：
 - `CounterArgument` → `source_type: "doi"` | `"atom_output"` | `"reasoning"`
@@ -214,7 +273,7 @@ metadata:
 - 逻辑推理型反方观点必须在 `note` 中标注 `[INFERRED]`
 - 如果无法找到外部反方证据，置信度上限 ≤ 0.6
 
-## 6. 示例（Minimal Example）
+### 6. 示例（Minimal Example）
 
 **输入**：
 ```json
@@ -275,6 +334,8 @@ metadata:
         "No comparison against existing screening tools provided"
       ],
       "confidence_score": 0.45,
+      "uncertainty_reduction": 0.25,
+      "reasoning_path": "先验=0.7 → 反方观点-0.10(替代解释,strength=0.7) → 反方观点-0.12(普适性挑战,strength=0.8) → 弱点-0.08(概念混淆) → 鲁棒性-0.05(样本不均衡) → 最终=0.45",
       "verdict": "insufficient_evidence"
     }
   ],
@@ -282,13 +343,14 @@ metadata:
     "mean_confidence": 0.45,
     "min_confidence": 0.45,
     "confidence_distribution": "uniform",
+    "verification_entropy_reduction": 0.25,
     "overall_verdict": "insufficient_evidence"
   },
   "verdict": "insufficient_evidence"
 }
 ```
 
-## 7. 参考文件索引（References）
+### 7. 参考文件索引（References）
 
 - IO 契约：`references/IO_CONTRACT.md`
 - 证据链 schema：`references/EVIDENCE_SCHEMA.md`
@@ -296,3 +358,22 @@ metadata:
 - 金标准：`golden/GOLDEN_SET.md`
 - 变更日志：`references/CHANGE_LOG.md`
 - **[PW-Bench吸收] 引用质量评价方法论**：`references/citation-f1-methodology.md`
+
+## 命令层·English
+
+- **Signature**: `hypothesis: Hypothesis, argument: Argument -> verdict: str, confidence_score: float, counterarguments: list[Counterargument]`
+- **Allowed tools**: `Read`, `Write`
+- **Input**: `hypotheses` (list[Hypothesis]) from upstream `hypothesis-generation`, `arguments` (list[Argument]) from upstream `argument-expression`
+- **Output**: `verification_results` (list[Verification] with counterarguments/falsification/robustness/weaknesses/confidence/uncertainty_reduction/reasoning_path), `aggregate_confidence` (AggregateConfidence with verification_entropy_reduction), `verdict` (string)
+- **Observer standpoint** (Step 0): declares cognitive chain position (6), upstream/downstream atoms, validation lens before processing
+- **Prior confidence**: 0.7 (neutral); deductions from counterarguments, weaknesses, robustness concerns
+- **Uncertainty reduction** (Step 2e): `uncertainty_reduction = initial_confidence - final_confidence`, recorded per result + aggregated as `verification_entropy_reduction`
+- **Reasoning path** (Step 2f): string tracing each step from prior to final confidence (e.g. "prior=0.7 → counterargument-0.10 → weakness-0.08 → final=0.52")
+- **Minimal verification** (Step 2.7): post-verdict simplicity audit — optional dimensions flagged, minimal_verification list output
+- **Verdict thresholds**: supported (≥0.80), partially_supported (0.50-0.79), insufficient_evidence (<0.50), likely_false (<0.30 + strong counterarguments), requires_revision (<0.40 + logical flaws)
+- **Citation quality correction**: `confidence × min(1.0, citation_quality + 0.3)`
+- **Epistemic scoring**: 6-dimensions (D1-D6), average 1-5, factor = min(1.0, score/4.0)
+- **Persona debate**: optional, triggered for ≥2 competing explanations
+- **Concession Threshold Protocol**: required when user challenges verdict
+- **Ethics screening**: auto-triggered for medical/BCI/human-subject domains
+- **Do NOT**: generate hypotheses, write arguments, discover associations

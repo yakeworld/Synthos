@@ -12,7 +12,14 @@ description: >-
   patterns for hypothesis generation, experimental design, and paper critique.
 tags: [research-methodology, epistemology, reasoning, critical-thinking, science-philosophy]
 ---
+
 # Research Thinking Framework — Extended Skill for Synthos
+
+## 原理层·文言
+
+『思维之道，八维可论。系统观全局、第一性破迷雾、奥卡姆去繁芜、演化见趋势、递归入细微、类比通他域、杠杆求倍增、反脆弱御不测。』
+
+## 方法层·白话
 
 ## 触发条件
 
@@ -112,3 +119,16 @@ Compare uncertainty reduction per unit effort:
 
 ## Origin
 Absorbed from AKNE knowledge graph (yakeworld/.knowledge/) — 2026-05-12
+
+## 命令层·English
+
+### Quick Start
+- **Load**: Activate on research methodology, hypothesis generation, experiment design, or paper critique queries.
+- **Trigger Keywords**: research methodology, hypothesis generation, first principles, FEP, model-dependent realism, Bayesian updating, paper critique.
+- **Core Patterns**:
+  1. **First Principles Decomposition**: Identify constraints → strip assumptions → rebuild → compare with literature.
+  2. **Bayesian Hypothesis Updating**: State prior → new evidence → posterior update → falsification condition.
+  3. **Model-Dependent Reality**: Compare competing models → select simplest fit → document limitations.
+  4. **Free Energy Guidance**: Minimize surprise → learn or intervene → reduce uncertainty → kill flat-gradient projects.
+- **Checklist**: Run all 6 verification items after activation.
+- **Output**: Structured analysis + next steps + pitfalls list.

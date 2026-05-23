@@ -8,7 +8,7 @@ allowed-tools: terminal web delegate_task Read Write
 signature: "topic: str, sources: list -> papers: list[Paper], total_found: int"
 metadata:
   synthos_atom_type: "cognitive"
-  synthos_version: "1.4.0"
+  synthos_version: "1.5.0"
   synthos_skill_md_hash: "2f7b3ee8e9f5d1a6c4b8a0e3d9f2c7b5a1e6d4f8c0a3b7e9d2f5c1a4b8e0d7"
   synthos_io_contract_ref: "references/IO_CONTRACT.md"
   synthos_citation_verification_ref: "references/CITATION_VERIFICATION.md"
@@ -21,7 +21,21 @@ metadata:
 
 # 知识获取 (Knowledge Acquisition) - 认知原子 #1
 
-## 触发条件
+## 原理层·文言
+
+### 求知之道
+
+> 知者，认知之始也。先求于外，而后内化。
+> 无求则无知，无源则无流。
+> 搜于六方而不偏，核于四维而不妄。
+> 凡文必求真，凡数必溯源，凡引必可验。
+> 宁无所得，不取伪术。诚则明矣，伪则暗矣。
+
+**核心理念**：知识获取是认知链的起点。六方之搜（S2/PubMed/Crossref/OpenAlex/arXiv/bioRxiv）不可偏废，四维之验（DOI/arXiv/S2/相关性）不可省略。不虚构、不编造、不臆测。零篇论文是有效结果，虚构论文是致命错误。
+
+## 方法层·白话
+
+### 触发条件
 
 在以下情况加载本技能：
 
@@ -30,7 +44,7 @@ metadata:
 - 下游 knowledge-extraction 原子等待输入
 - 用户明确要求"搜索文献/查论文/找资料"
 
-## 概述
+### 概述
 从外部源获取学术知识：检索论文、提取摘要、下载全文。是认知链条的起点。
 **Agent-native**: 本原子由 Agent 直接执行，使用 Hermes 技能库中的搜索工具和 terminal + curl，没有 Python 依赖。
 
@@ -41,14 +55,14 @@ metadata:
 - 📄 **PDF命名规范** — 每篇下载的PDF文件名 = `{BibTeX_key}.pdf`（如 `Chen2025.pdf`），一目了然区分已下载/未下载。
 - 📚 **摘要BibTeX格式** — 每篇论文的摘要/元数据必须以 `.bib` 格式保存到 `references/` 目录下。
 
-## 输入契约
+### 输入契约
 - `search_query`: 搜索查询字符串（必填）
 - `sources`: 数据来源列表，可选（默认全部）。有效值: `semantic_scholar`, `pubmed`, `arxiv`, `openalex`, `crossref`, `biorxiv`, `local_absorption_db`
 - `max_results`: 最大结果数，默认 100
 - `domain`: 研究领域（可选，用于过滤）
 - `use_cache`: 是否使用本地缓存，默认 true（可选）
 
-## 输出契约
+### 输出契约
 ```json
 {
   "raw_papers": [
@@ -87,9 +101,9 @@ metadata:
 }
 ```
 
-## 执行步骤
+### 执行步骤
 
-### 0. 加载外部技能
+#### 0. 加载外部技能
 在开始之前，加载以下 Hermes 技能作为参考：
 - `semantic-scholar` — S2 API 端点、字段、格式
 - `pubmed` — PubMed E-utilities 端点
@@ -99,7 +113,7 @@ metadata:
 - `biorxiv` — bioRxiv/medRxiv 预印本 API
 - `scientific-database-lookup` — 科学数据库路由（备选源）
 
-### 0.5 [v1.4.0新增] 本地缓存检查
+#### 0.5 [v1.4.0新增] 本地缓存检查
 在调用任何外部API之前，先检查本地缓存：
 
 ```
@@ -114,7 +128,7 @@ if use_cache and file_exists(cache_path):
 
 缓存路径：`/media/yakeworld/sda2/Synthos/outputs/search-cache/{cache_key}.json`
 
-### 0.6 [v1.4.0新增] API回退策略定义
+#### 0.6 [v1.4.0新增] API回退策略定义
 定义搜索源的回退优先级链。当高级别源失败时自动降级到下一级：
 
 | 优先级 | 源 | 依赖 | 典型失败模式 | 回退动作 |
@@ -133,7 +147,7 @@ if use_cache and file_exists(cache_path):
 - 连续3个源失败后，**自动启用 local_absorption_db 兜底**
 - 所有失败记录到 `sources_failed`
 
-### 1. 多关键词搜索策略 [v1.5.0]
+#### 1. 多关键词搜索策略 [v1.5.0]
 
 对同一个研究主题，生成 **3-5 个不同关键词组合** 并行搜索，最大化覆盖率：
 
@@ -151,12 +165,12 @@ if use_cache and file_exists(cache_path):
 3. 去重后合并结果
 4. 每换一个关键词，**必须遵守对应 API 的速率限制**
 
-### 1b. 并行搜索各数据源（带回退链）
+#### 1b. 并行搜索各数据源（带回退链）
 
 使用 terminal + curl 并发查询。按优先级顺序启动，首个成功的源即返回结果。
 如果首选源失败，自动降级到下一个优先级。
 
-#### 优先级1: Semantic Scholar
+##### 优先级1: Semantic Scholar
 ```
 curl -s --max-time 15 -H "x-api-key: $SEMANTIC_SCHOLAR_API_KEY" \
   "https://api.semanticscholar.org/graph/v1/paper/search?query=<encoded_query>&limit=100&fields=title,year,abstract,authors,externalIds,citationCount,openAccessPdf"
@@ -166,7 +180,7 @@ curl -s --max-time 15 -H "x-api-key: $SEMANTIC_SCHOLAR_API_KEY" \
 - 如果返回429 → sleep 1s后重试1次 → 仍429则跳过此源
 - 如果返回空data数组 → 视为成功（0结果），不降级
 
-#### 优先级2: PubMed
+##### 优先级2: PubMed
 ```
 # Step 1: ESearch — 拿 PMID 列表
 curl -s --max-time 10 "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=<encoded_query>&retmax=100&retmode=json"
@@ -177,28 +191,28 @@ curl -s --max-time 10 "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fc
 - timeout=10s per call
 - 中间 sleep 0.5s（无key时）
 
-#### 优先级3: Crossref
+##### 优先级3: Crossref
 ```
 curl -s --max-time 15 "https://api.crossref.org/works?query=<encoded_query>&rows=100&select=DOI,title,author,abstract,issued,container-title,reference"
 ```
 - timeout=15s
 - 注意：`select` 参数不能包含 `publication-date` 或 `citation-count`
 
-#### 优先级3: OpenAlex
+##### 优先级3: OpenAlex
 ```
 curl -s --max-time 15 "https://api.openalex.org/works?search=<encoded_query>&per_page=100&sort=relevance_score:desc"
 ```
 - timeout=15s
 - `abstract_inverted_index` 需要按数字键排序后拼接
 
-#### 优先级4: arXiv
+##### 优先级4: arXiv
 ```
 curl -s --max-time 15 "http://export.arxiv.org/api/query?search_query=all:<encoded_query>&max_results=100"
 ```
 - timeout=15s
 - 注意：HTTP 不是 HTTPS
 
-#### 优先级5: bioRxiv / medRxiv
+##### 优先级5: bioRxiv / medRxiv
 ```
 curl -s --max-time 10 "https://api.biorxiv.org/details/biorxiv/<encoded_query>"
 curl -s --max-time 10 "https://api.biorxiv.org/details/medrxiv/<encoded_query>"
@@ -206,7 +220,7 @@ curl -s --max-time 10 "https://api.biorxiv.org/details/medrxiv/<encoded_query>"
 - timeout=10s
 - 注意：该 API 有时返回空 collection
 
-#### 优先级6: [v1.4.0新增] local_absorption_db（离线兜底）
+##### 优先级6: [v1.4.0新增] local_absorption_db（离线兜底）
 当所有外部API都失败时，使用本地吸收追踪数据库作为最后的数据源：
 
 ```
@@ -225,11 +239,11 @@ curl -s --max-time 10 "https://api.biorxiv.org/details/medrxiv/<encoded_query>"
 **优势**：保证100%可用（本地文件），数据100%真实（已验证的项目）
 **局限**：项目级数据（非论文级），star数需定期更新
 
-### 2. 去重
+#### 2. 去重
 
 按 DOI 精确匹配去重。无 DOI 的按标题归一化后模糊匹配（忽略大小写、标点）。
 
-### 2.5 [ARS增强] 引用验证 + 5类幻觉检测
+#### 2.5 [ARS增强] 引用验证 + 5类幻觉检测
 
 对去重后的每篇论文执行4层引用验证 + 5类幻觉分类。读取 `references/CITATION_VERIFICATION.md` 获取完整流程（含TF/PAC/IH/PH/SH五分类法及5种复合欺骗模式）。
 
@@ -243,7 +257,7 @@ curl -s --max-time 10 "https://api.biorxiv.org/details/medrxiv/<encoded_query>"
 
 预期耗时：每篇论文约5-10秒（curl API调用+Agent推理评分）。
 
-### 3. 下载 PDF [命名规范 v1.5.0]
+#### 3. 下载 PDF [命名规范 v1.5.0]
 
 对每篇论文尝试下载全文 PDF，按以下策略链（从 `research-paper-search` 技能文档）：
 1. **OA URL** — 用 S2 返回的 `openAccessPdf.url` 下载
@@ -254,12 +268,12 @@ curl -s --max-time 10 "https://api.biorxiv.org/details/medrxiv/<encoded_query>"
 
 **PDF 命名规则**: 每篇论文的 BibTeX key = `{第一作者姓}{年份}`。下载的 PDF 以该 key 命名：
 ```
-Chem2025.pdf     ← 第一作者 Chen, 2025
+Chen2025.pdf     ← 第一作者 Chen, 2025
 Wang2026.pdf     ← 第一作者 Wang, 2026
 ```
 记录每篇论文的 `pdf_status` 和 `bibkey`。
 
-### 3.5 [v1.5.0新增] 合并保存为单一 references.bib
+#### 3.5 [v1.5.0新增] 合并保存为单一 references.bib
 
 对所有检索到的论文,合并为一个统一的 BibTeX 文件：
 ```
@@ -293,7 +307,7 @@ latex/references.bib     ← 所有论文的 BibTeX 条目合并于此文件
 - 所有元数据字段必须从 API 返回的真实数据提取，**严禁虚构**
 - 如果论文未成功下载 PDF，仍加入 references.bib（标记 `pdf_status = "unavailable"`）
 
-### 3.6 [v1.4.0] 保存到本地缓存
+#### 3.6 [v1.4.0] 保存到本地缓存
 
 将搜索结果保存到本地缓存，供后续搜索复用：
 ```
@@ -311,14 +325,14 @@ write_file("outputs/search-cache/{cache_key}.json", {
 
 缓存有效期：24小时。过期缓存作为后备数据源（stale cache）。
 
-### 4. 保存输出
+#### 4. 保存输出
 
 将去重后的论文列表 + metadata + evidence_chain 写入输出文件：
 ```
 <output_path>/knowledge-acquisition_agent_output.json
 ```
 
-## 质量要求
+### 质量要求
 - **检索覆盖率**：至少覆盖 2 个数据源（含local_absorption_db兜底）
 - **多关键词**：至少使用 3 个不同关键词变体搜索（核心词 + 同义词 + 方法学）
 - **相关性**：标题/摘要需与查询语义相关
@@ -329,52 +343,52 @@ write_file("outputs/search-cache/{cache_key}.json", {
 - **API弹性**：任何源失败不影响整体结果（自动降级）
 - **质量门槛 [v1.5.0]**：输出的论文应引用 ≥ 40 篇参考文献。因此在检索阶段需搜索足够多的相关文献（目标累计 80-120 篇候选），去重后至少保留 60 篇以上供引用筛选。如果无法获取全文（真实不可下载），标记 `pdf_status = "unavailable"` 并如实记录原因，不禁用该论文。
 
-## 边界判断
+### 边界判断
 - 如果所有源都返回 0 篇论文，这是有效结果（不是错误）：输出空 `raw_papers` + 带详细 evidence_chain（记录每个源的查询、时间戳、返回数）
 - 不要自行修改搜索查询（除非用户要求）
 - 不要虚构论文：如果搜索结果不足，如实报告
 
-## 已知陷阱
+### 已知陷阱
 
-### 1. S2 API 速率限制
+#### 1. S2 API 速率限制
 - 无 key 时 1次/秒；**有有效 key 时也是 1次/秒**
 - 每次 curl 调用后强制 `sleep 1`
 - 如果收到 429（Too Many Requests），sleep 1s 后重试 1 次
 - 如果返回空结果但不是错误，视为正常（0篇论文）
 
-### 2. PubMed rate limit
+#### 2. PubMed rate limit
 - 无 key 时每秒最多 3 次请求
 - 搜索 + 摘要各算一次，中间至少等 0.4 秒
 
-### 3. arXiv API 是 HTTP（非 HTTPS）
+#### 3. arXiv API 是 HTTP（非 HTTPS）
 - URL 必须以 `http://` 开头，不是 `https://`
 
-### 4. Crossref `select` 参数
+#### 4. Crossref `select` 参数
 - 不能包含 `publication-date` 或 `citation-count`
 - 如果带 `abstract` 则可能丢失 `author` 字段
 
-### 5. OpenAlex abstract 格式
+#### 5. OpenAlex abstract 格式
 - `abstract_inverted_index` 是倒排索引 `{ position: word }`
 - 须按 position 排序后拼接成句子
 
-### 6. PDF 下载失败
+#### 6. PDF 下载失败
 - 很多 OA 链接返回 403（MDPI、BMJ 等）。这不是异常，如实记录状态。
 - 标记为 `pdf_status: "unavailable"` 即可，不影响论文元数据。
 
-### 7. [v1.4.0新增] local_absorption_db 局限
+#### 7. [v1.4.0新增] local_absorption_db 局限
 - 只包含已吸收的项目级数据，不是论文级
 - star 数可能过时（需定期 GitHub API 刷新）
 - 适合作为"最后手段"而非主要来源
 
-### 8. [v1.4.0新增] 缓存过期
+#### 8. [v1.4.0新增] 缓存过期
 - 缓存24小时过期后标记为 stale，不作为主数据源
 - 但可作为"离线模式"的数据源（当所有API都失败时）
 
-## 输出格式必须与上游兼容
+### 输出格式必须与上游兼容
 下游 atoms (2-6) 期望的 `raw_papers` 字段名必须保持一致：
 `title, doi, abstract, year, authors (list), source, open_access_url, arxiv_id`
 
-## 验证清单
+### 验证清单
 
 运行本技能后，确认以下检查项：
 
@@ -388,7 +402,7 @@ write_file("outputs/search-cache/{cache_key}.json", {
 - [ ] 输出符合上游契约格式（raw_papers → metadata → evidence_chain）
 - [ ] 无 Python 代码生成（Agent-native 执行）
 
-## 变更日志
+### 变更日志
 2026-05-18: v1.4.0 — API弹性层 + 本地缓存 + 离线吸收库兜底。
   新增: Step 0.5 本地缓存检查 + Step 0.6 API回退策略
   新增: Step 3.5 保存到本地缓存 + 缓存有效期管理
@@ -398,5 +412,12 @@ write_file("outputs/search-cache/{cache_key}.json", {
   原因: 写作闭环测试发现S2 API完全不可用，ACQ需要API弹性
 2026-05-11: v1.3.0 — 2.5节引入 CITAION_VERIFICATION.md 引用验证流程
 2026-05-11: v1.2.0 — 新增 bioRxiv/medRxiv 预印本源
-2026-05-11: v1.1.0 — 新增4层引用验证（L1-DOI, L2-ArXiv, L3-S2标题, L4-LLM）
-2026-05-10: v1.0.0 — 从 Python 重构为 Agent-native 认知原子
+
+## 命令层·English
+
+- **Signature**: `topic: str, sources: list -> papers: list[Paper], total_found: int`
+- **Allowed tools**: `terminal`, `web`, `delegate_task`, `Read`, `Write`
+- **Input**: `search_query` (str), `sources` (list[str]), `max_results` (int, default 100)
+- **Output**: `raw_papers` (list[Paper]), `metadata` (Metadata), `evidence_chain` (list[EvidenceNode])
+- **Reference**: Semantic Scholar API v1, PubMed E-utilities, arXiv API, OpenAlex API, Crossref REST API, bioRxiv API
+- **Cache path**: `outputs/search-cache/{cache_key}.json`

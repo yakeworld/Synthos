@@ -19,6 +19,19 @@ metadata:
   synthos_data_access_level: "redacted"
 ---
 
+## 原理层·文言
+
+```
+路由之道，统合诸子。
+以问定向，以能授命。
+分而治之，合而成之。
+知人善任，因材施教。
+```
+
+**核心理念**：任务路由器是Synthos系统的唯一中枢，其职责不是代替各认知原子执行任务，而是理解用户问题、判断复杂度、选择最合适的执行路径，并将任务精准分派给对应的原子链。简单任务走线性速通，复杂任务进入探索循环，系统研究启用双循环架构。路由器本身不产生知识，但让知识的产生路径最优。
+
+## 方法层·白话
+
 # Synthos 任务路由器 (Task Router) — 技能驱动入口
 
 ## 触发条件
@@ -401,3 +414,25 @@ assembled_output.json
   移除: scripts/ 中依赖 Python 核心的脚本
   新增: Agent 直接编排所有原子，读取 SKILL.md 执行
   影响: Synthos 实现零 Python 代码，全部技能驱动
+
+## 命令层·English
+
+### Core Command: Route & Execute
+```
+Route the user query through Synthos cognitive atoms.
+1. Classify intent and determine complexity (simple/medium/complex/full/creative/research)
+2. Select execution mode (simple_chain / exploratory_loop / research_twoloop)
+3. For simple_chain: load atoms in sequence, each reads upstream output from <run_dir>/<atom>_output.json
+4. For exploratory_loop: inner loop of HYP→VER→ASC until convergence or max 10 iterations
+5. For research_twoloop: inner loop + outer review every 5 iterations, pivot/continue/finalize
+6. Write pipeline_trace.json and assembled_output.json to run directory
+```
+
+### Key Constraints
+```
+- No Python code generation: all atoms execute by Agent loading SKILL.md files
+- Output directory: /media/yakeworld/sda2/Synthos/outputs/runs/<run_id>/
+- Loop state tracked in pipeline_trace.json.loop_state
+- Never exceed max_inner_iterations=10 or max_outer_iterations=5
+- Report progress to user after each atom/iteration
+```

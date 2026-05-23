@@ -17,6 +17,12 @@ bilingual: zh-en
 
 # Experiment Recipes / 实验配方参考
 
+## 原理层·文言
+
+『实验之道，可复为先。配方精准，步骤清晰。材料设备，一一记录。参数不可缺，版本不可乱。』
+
+## 方法层·白话
+
 > **A REFERENCE skill** — provides reusable recipes, presets, and code patterns
 > that other cognitive atoms (e.g. `research-ideation`, `hypothesis-generation`)
 > can load for technical guidance during experiment design and training setup.
@@ -663,3 +669,20 @@ data:
   path: /data/c4
   seq_len: 2048
 ```
+
+## 命令层·English
+
+### Quick Start
+- **Load**: Activate when user needs to design, debug, or manage DL training experiments.
+- **Trigger Keywords**: training recipe, experiment setup, architect selection, optimizer config, LR schedule, mixed precision, memory optimization, debugging, Karpathy checklist.
+- **Core Recipe Categories**:
+  1. **Architect Selection**: Choose by data type + data scale — decision table provided.
+  2. **Training Loops**: Copy-paste templates for single-GPU, DDP, FSDP, functional (torch.compile).
+  3. **Optimizers**: AdamW (scale-dependent hyperparams) and Muon (second-order) with ready code.
+  4. **LR Schedules**: Cosine decay + warmup, and WSD (Warmup-Stable-Decay).
+  5. **Mixed Precision**: `torch.amp` + `torch.compile` patterns by GPU type.
+  6. **Memory Optimization**: Meta device init, MFU calculation, OOM troubleshooting table.
+  7. **Debugging Checklist**: 10-item Karpathy-style checklist (bilingual).
+  8. **Experiment Management**: TSV tracking + Hydra config structure.
+- **Checklist**: Run all 6 verification items after activation.
+- **Output**: Copy-paste-ready code blocks + decision tables + troubleshooting guidance.

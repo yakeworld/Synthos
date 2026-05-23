@@ -29,6 +29,20 @@ metadata:
     增加Synthos认知原子风格的前导格式和IO契约、增加与argument-expression的协同接口。
 ---
 
+## 原理层·文言
+
+### 图表之道
+
+> 一图胜千言，一计定乾坤。
+> 画图先立约：结论→证据→面板→出口→审核，五步不可移。
+> Nature规范为本，色盲友好为德，TikZ矢量为体，高清输出为用。
+> 统计标注不可省，审稿质疑不可躲。
+> 科学之图，诚实为先。不误导、不夸大、不隐瞒。
+
+**核心理念**：图表生成是视觉论证设计。每张图从可证伪的结论Claim开始。不画无主之图，不展无据之像。类比色盲友好，尊重期刊规范。
+
+## 方法层·白话
+
 # Figure Generation Skill
 
 面向Synthos认知流水线的**科学图表生成**技能。不是画图工具，是**视觉论证设计器**：每张图表从可证伪的结论Claim开始，经过证据链分析、面板映射、排版契约，最后通过terminal执行Python生成SVG/PDF。
@@ -719,3 +733,17 @@ PALETTE_OKABE_ITO = [
 - [ ] 色盲可分辨性已检查——非Okabe-Ito色板时确认红绿并非唯一编码
 - [ ] 灰度打印可读性已确认（Ink & Wash已天然支持，其他风格需检查hatch/pattern备用）
 - [ ] 风格一致——同论文/同竞赛的所有图表使用同一风格+色板组合，不混搭
+
+## 命令层·English
+
+- **Signature**: `claim: str, evidence: list[EvidenceNode] -> figure_assets: list[SVG|PDF|PNG], figure_legend: str`
+- **Allowed tools**: `terminal` (Python plotting), `read_file`, `search_files`, `execute_code`, `write_file`
+- **Input**: `claim` (one falsifiable statement), `evidence` (from `argument-expression`), `target_format` (journal/conference/poster/report)
+- **Output**: SVG/PDF/PNG figures, `figure_legend.txt`, `figure_contract.json`
+- **Figure contract workflow**: Claim → Evidence hierarchy → Panel mapping → Export contract → Review risk → Python execution
+- **Layout prototypes**: `quantitative-grid`, `schematic-led-composite`, `image-plate+quant`, `asymmetric-mixed-modality`
+- **Color palettes**: Nature 6-color, Okabe-Ito (color-blind safe), Ocean Dusk, Nord, Ink & Wash
+- **Style system**: A-Sketch, B-Modern Minimal, C-Illustrated Technical, D-Accent Bar
+- **Redundancy check**: each panel must add a unique dimension; blocking any panel must weaken argument
+- **Anti-hallucination**: all statistical annotations must come from source data, not agent memory
+- **Do NOT**: create figures without a contract, fabricate data or statistics, use red-green only as color encoding
