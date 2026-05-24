@@ -41,6 +41,21 @@
 
 **3 Meta-Components:** Task Router (shortest-path routing), Entelechy Gate (direction compatibility), Quality Gate (L0–L4 multi-layer verification)
 
+## Paper Outputs
+
+Synthos has produced **44 paper drafts** across multiple biomedical domains and methodology:
+
+| Category | Papers | Size |
+|:---------|:-------|:----:|
+| 🧠 **Neurology** | PD Torsion Review ✅, BPPV Minimal Stimulus ✅, PD Dysphagia Risk, HCS-3WT Breast Cancer | 4 full papers |
+| 👁️ **Ophthalmology** | Iris 3D Anatomical Segmentation, Iris YOLO, CutEye Model, Portable Eye Tracking | 4 full papers |
+| 🔄 **VOR/Vestibular** | VOR Sparse Modular NN, VOR Digital Twin | 2 full papers |
+| 📊 **Methodology** | PIMA CRISP-DM Helix ✅ | 1 full paper |
+| 📚 **Literature Reviews** | 33 reviews across eye-tracking, VOR, BPPV, iris, eyeball, methods | 33 reviews |
+| **Total** | **44 paper.tex files** | **10 full papers + 33 reviews** |
+
+✅ = Dual quality check passed (local Layer A + NotebookLM Gemini Layer B)
+
 ## Results (53 Evolution Cycles)
 
 | Metric | Cycle 1 | Cycle 10 | Cycle 23 | Cycle 41 | Cycle 53 |
