@@ -260,33 +260,33 @@ metadata:
 
 ---
 
-### 学术写作增强 Academic Writing Enhancement [SYNTHOS_P0_ABSORBED_FROM: NanoResearch ml-paper-writing]
+### 写作增强·纳外法
 
-This section augments the basic IMRaD structure support above with advanced paper writing guidance adapted from the ml-paper-writing knowledge base. It provides concrete formulas, narrative frameworks, and writing philosophy from leading ML/AI researchers.
+This section augments the basic IMRaD structure support above with advanced paper writing guidance adapted from external knowledge bases. It provides concrete formulas, narrative frameworks, and writing philosophy from leading ML/AI researchers, absorbed into native expression.
 
-#### 1. The Narrative Principle: Three Pillars
+#### 1. 叙事原则：三问叙事
 
-Every strong academic paper tells a coherent story built on three narrative pillars. Every section should serve at least one of these:
+Every strong academic paper tells a coherent story built on three narrative questions. Every section should serve at least one of these:
 
-| Pillar | Question | What It Does |
-|--------|----------|--------------|
-| **The What** | What did you do? | States the method, approach, or system clearly. Establishes the concrete contribution. |
-| **The Why** | Why does it matter? | Motivates the work — the problem being solved, the gap being filled, the anomaly being explained. |
-| **The So What** | Why should the reader care? | Articulates the impact, implications, and downstream consequences. Connects the work to broader significance. |
+| 问 | 英文对位 | 问题 | 作用 |
+|:---|:---------|:-----|:-----|
+| **所作何事？** | The What | 你做了什么？ | 陈述方法、系统、贡献的核心内容 |
+| **因何重要？** | The Why | 为什么重要？ | 驱动工作的问题、空白、异常 |
+| **于谁有益？** | The So What | 读者为何关心？ | 阐明影响、含义、后继意义 |
 
 **Application**: Before writing any section, ask: *Does this paragraph advance The What, The Why, or The So What?* If a paragraph does none of the three, cut it or reframe it.
 
-#### 2. Five-Sentence Abstract Formula (Sebastian Farquhar / DeepMind)
+#### 2. 摘要五句法
 
 Structured abstracts dramatically improve clarity and reviewer experience. Each sentence has a specific rhetorical job:
 
-| # | Sentence | Job | Example Template |
-|---|----------|-----|-----------------|
-| 1 | **Background & Problem** | Establish the domain, the known, and the gap. | "Recent advances in X have shown Y, but Z remains challenging." |
-| 2 | **What You Did** | State your method/approach in one clear sentence. | "We propose A, a novel method that does B." |
-| 3 | **Key Result** | Report the single most important finding or metric. | "On benchmark C, A achieves D% improvement over baselines." |
-| 4 | **Interpretation / Insight** | Say *why* the result matters. Go beyond the number. | "This improvement stems from E, which addresses the core limitation of prior work." |
-| 5 | **Broader Impact / Outlook** | Connect to the bigger picture. One forward-looking claim. | "Our findings suggest that F could generalize to G, opening new directions for H." |
+| # | 句 | 作用 | 模板示例 |
+|---|-----|-----|---------|
+| 1 | **背景与问题** | 建立领域、已知、空白 | "Recent advances in X have shown Y, but Z remains challenging." |
+| 2 | **所作之事** | 一句说清方法/途径 | "We propose A, a novel method that does B." |
+| 3 | **关键结果** | 报告最重要的发现或指标 | "On benchmark C, A achieves D% improvement over baselines." |
+| 4 | **解释/洞察** | 说明结果为何重要，超越数字 | "This improvement stems from E, which addresses the core limitation of prior work." |
+| 5 | **广泛影响/展望** | 连接更大图景，一个展望式断言 | "Our findings suggest that F could generalize to G, opening new directions for H." |
 
 **Constraint**: The entire abstract must fit within 5–8 sentences total. Each sentence must pass the "delete test": if you remove it, the abstract loses essential information.
 
