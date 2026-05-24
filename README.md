@@ -1,216 +1,149 @@
+# Synthos 🧠⚡
 
-<p align="center">
-  <img src="docs/architecture_v4.3.svg" alt="Synthos Architecture" width="700"/>
-</p>
+> **A Self-Evolving Cognitive Operating System for AI-Augmented Scientific Research**
 
-<h1 align="center">Synthos — Autonomous Evolving Research OS</h1>
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Evolution Cycles](https://img.shields.io/badge/evolution-53%20cycles-brightgreen)](evolution-log.md)
+[![Quality Score](https://img.shields.io/badge/quality-0.98%20EXCELLENT-success)](evolution-state.json)
 
-<p align="center">
-  <em>A Computable, Collaborative, and Evolving Cognitive Operating System for Science</em>
-</p>
-
-<p align="center">
-  <a href="https://github.com/yakeworld/Synthos/stargazers"><img src="https://img.shields.io/github/stars/yakeworld/Synthos?style=flat&logo=github" alt="Stars"/></a>
-  <a href="https://github.com/yakeworld/Synthos/actions/workflows/agent-pr-verify.yml"><img src="https://github.com/yakeworld/Synthos/actions/workflows/agent-pr-verify.yml/badge.svg" alt="CI"/></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License"/></a>
-  <a href="https://github.com/yakeworld/Synthos/discussions"><img src="https://img.shields.io/badge/Community-Discussions-blueviolet" alt="Discussions"/></a>
-  <img src="https://img.shields.io/badge/Evolution-41%20cycles-success" alt="Evolution"/>
-  <img src="https://img.shields.io/badge/Version-v4.3.0-blue" alt="Version"/>
-</p>
-
-<p align="center">
-  <a href="#-philosophy">Philosophy</a> •
-  <a href="#-architecture">Architecture</a> •
-  <a href="#-cognitive-atoms">Atoms</a> •
-  <a href="#-extended-skills">Extended Skills</a> •
-  <a href="#-self-evolution">Evolution</a> •
-  <a href="#-getting-started">Setup</a> •
-  <a href="#-for-ai-agents">🤖 Contribute</a>
-</p>
+**Synthos reifies epistemological principles as executable cognitive atoms.** Unlike conventional research agents that wrap Python libraries as tools, Synthos operates as a purely skill-driven architecture: the Agent itself is the runtime, with **zero Python infrastructure code**.
 
 ---
 
-**Synthos** is a **pure SKILL.md-driven** cognitive operating system for scientific research. It decomposes the entire research workflow into **cognitive atoms**, each defined as an SKILL.md executed natively by an AI agent — no Python scripts, pure reasoning through agent capabilities.
+## Core Innovations
 
-From literature retrieval to paper output, Synthos covers the complete cognitive loop of scientific research. Its **self-evolution engine** automatically checks health, runs functional benchmarks, and absorbs patterns from external projects every day.
+| Innovation | Description |
+|:-----------|:------------|
+| **🧬 Epistemological Code** | 8 philosophical frameworks (First Principles, Falsificationism, Bayesian Reasoning, etc.) reified as executable SKILL.md atoms with formal I/O contracts |
+| **🏛️ Constitutional Hierarchy** | CON ≫ MEM ≫ CMD ≫ SKL ≫ DEF — immutable principles enforced by a philosophical immune system |
+| **🔄 Self-Evolution Engine v2.14** | 11-step state machine with SEPL rollback, Git-as-Memory, hypothesis-first improvement, Pareto optimization, and Nudge soft-feedback |
+| **🌱 Entelechy-Driven Absorption** | Aristotelian self-realization as the absorption axiom — from "gap-filling" to "nutrition assessment" |
+| **📝 Zero-Python Architecture** | All 7 cognitive atoms + 3 meta-components are pure SKILL.md markdown. No Python orchestration code |
 
-> **v4.3.0** · Evolution Engine v2.11 · Quality Score: 0.970 (EXCELLENT) · 41 Evolution Cycles · 7 Cognitive Atoms + 11 Extended Skills + 2 Infrastructure · Agent PR Verification: ✅ · Skill optimization: 81% compression, 3-tier language system
+## Architecture
 
-[🇨🇳 中文版](README_CN.md)
-
----
-
-## 🧠 Philosophy
-
-Synthos is built on an **8-dimensional cognitive framework**:
-
-| # | Dimension | Core Idea | Covered Atoms | Progress |
-|:-:|-----------|-----------|:-------------:|:--------:|
-| 1 | **First Principles** | Build from fundamental facts | ACQ, EXT, HYP, ARG | 95% |
-| 2 | **Systems Thinking** | Holistic view of knowledge | ACQ, ASC, EXT | 95% |
-| 3 | **Bayesian Thinking** | Update beliefs with evidence | HYP, VER | 90% |
-| 4 | **Analogical Thinking** | Cross-domain knowledge transfer | HYP, EXT (absorption) | 80% |
-| 5 | **Occam's Razor** | Shortest path first | ROU, EXT, ARG | 80% |
-| 6 | **Falsificationism** | Actively seek counter-evidence | VER, ACQ | 80% |
-| 7 | **Model-Dependent Realism** | Multi-perspective validation | ASC | 60% |
-| 8 | **Free Energy Principle** | Minimize prediction error via evolution | VER, evolution engine | 55% |
-
-**Overall Progress**: 85% (based on built-in audit framework)
-
-Core principle: **Constitution → Architecture → Schema → Implementation**, each layer formalized with non-overlap proofs, I/O contracts, and traceability matrices.
-
----
-
-## 🏗 Architecture
-
-> **Design philosophy**: Constitutional design, human-in-the-loop, from philosophy to code.
-
-```text
-                     ┌──────────────────────┐
-                     │  Task Router (ROU)   │  ← Human-in-the-Loop
-                     │ [Route→Atom→Eval]   │
-                     └──────┬───────────────┘
-                            │
-    ┌───────────────────────┼───────────────────────┐
-    ▼                       ▼                       ▼
-┌──────────┐         ┌──────────┐            ┌──────────┐
-│  ACQ     │   ═══>  │  EXT     │    ═══>    │  ASC     │
-│Acquisition│        │Extraction│           │Association│
-└──────────┘         └──────────┘            └────┬─────┘
-                                                   │
-                                              ┌────▼─────┐
-                                              │  HYP     │
-                                              │Hypothesis│
-                                              └────┬─────┘
-                                                   │
-                                    ┌───────────────┼───────────────┐
-                                    ▼                               ▼
-                              ┌──────────┐                   ┌──────────┐
-                              │  ARG     │                   │  VER     │
-                              │Argument  │                   │Verification│
-                              └──────────┘                   └──────────┘
-
-Extended: BPPV Expert  •  Research Thinking  •  Figure Generation ⭐
-Infra:    Evolution Engine  •  LaTeX Output
-
-         ┌─────────────────────────────────────────────┐
-         │         Evolution Loop (daily cycle)         │
-         │  PROBE → BENCHMARK → EXTERNAL → DIAGNOSE   │
-         └─────────────────────────────────────────────┘
+```
+┌─────────────────────────────────────────────────────┐
+│              CONSTITUTION.md v5.0                    │
+│        (CON ≫ MEM ≫ CMD ≫ SKL ≫ DEF)                │
+├─────────────────────────────────────────────────────┤
+│   ACQ → EXT → ASC → RIF → HYP → ARG/VER             │
+│         ↕        ↕        ↕        ↕                 │
+│   [Task Router] [Entelechy Gate] [Quality Gate]      │
+├─────────────────────────────────────────────────────┤
+│              Evolution Engine (11 steps)              │
+│   PROBE → BENCHMARK → OPTIMIZE → EXTERNAL →          │
+│   DIAGNOSE → IMPROVE → VERIFY → RECORD               │
+└─────────────────────────────────────────────────────┘
 ```
 
----
+**7 Cognitive Atoms:** Knowledge Acquisition → Knowledge Extraction → Association Discovery → Research Ideation → Hypothesis Generation → Argument Expression → Viewpoint Verification
 
-## 🧬 Cognitive Atoms
+**3 Meta-Components:** Task Router (shortest-path routing), Entelechy Gate (direction compatibility), Quality Gate (L0–L4 multi-layer verification)
 
-| Atom | Name | Function | Status |
-|:-----|:-----|:---------|:-------|
-| **ROU** | Task Routing | Route user queries to shortest atom chain. Occam's razor | ✅ v4.2 |
-| **ACQ** | Knowledge Acquisition | Multi-source search: Semantic Scholar, PubMed, OpenAlex, arXiv, Crossref | ✅ v4.2 |
-| **EXT** | Knowledge Extraction | Extract structured knowledge: method, findings, conclusion, limitations | ✅ v4.2 |
-| **ASC** | Association Discovery | Identify 7 typed edges between knowledge items. Integrated GAP research gap detection | ✅ v4.2 |
-| **HYP** | Hypothesis Generation | Formal falsifiable hypotheses with prediction, counter-evidence, competitive hypotheses | ✅ v4.3 |
-| **ARG** | Argument Expression | Transform hypotheses into structured academic arguments with citations | ✅ v4.2 |
-| **VER** | Viewpoint Verification | Multi-angle falsification: counterarguments, robustness checks, Bayesian confidence | ✅ v4.2 |
+## Results (53 Evolution Cycles)
 
----
+| Metric | Cycle 1 | Cycle 10 | Cycle 23 | Cycle 41 | Cycle 53 |
+|:-------|:-------:|:--------:|:--------:|:--------:|:--------:|
+| Structural Avg | 0.861 | 1.00 | 1.00 | 1.00 | **1.00** |
+| Benchmark Score | 0.66 | 1.00 | 1.00 | 1.00 | **1.00** |
+| Composite Score | 0.86 | 0.94 | 0.97 | 0.975 | **0.98** |
+| External Absorptions | 0 | 1 | 3 | 10 | **18** |
 
-## 🧩 Extended Skills
-
-| Skill | Source | Function | Status |
-|:------|:-------|:---------|:-------|
-| **BPPV Expert** | AKNE Knowledge Graph | Structured BPPV medical diagnosis & treatment knowledge (126 nodes) | ✅ v1.0 |
-| **Research Thinking** | AKNE Philosophy | First Principles, Systems Thinking, Bayesian Thinking, Falsificationism | ✅ v1.0 |
-| **Figure Generation** ⭐ | [nature-figure](https://github.com/Yuan1z0825/nature-skills) (交大袁一哲) | Publication-grade scientific figures: Figure Contract methodology, 16 layout patterns, Nature color palettes, SVG/PDF export | ✅ v1.0 🆕 |
-
-### Figure Generation — What's New
-
-Absorbed from [nature-figure](https://github.com/Yuan1z0825/nature-skills) by YiZhe Yuan (Shanghai Jiao Tong University), rated **4.5/5** as the most mature skill in the repository:
-
-- **Figure Contract Methodology**: Claim → Evidence Hierarchy → Panel Mapping → Export Contract → QA Review — before any plotting code
-- **16 layout patterns**: ultra-wide bars, clinical triptych, dark image plates, asymmetric hero panels, ablation alphagradient, hatch grayscale safety, etc.
-- **Nature semantic color system**: blue-main/green-positive/red-baseline + NMI pastel family + 5 domain-specific palettes (imaging, clinical, genomics, materials, clinical)
-- **Export**: SVG (editable text), PDF, TIFF at publication DPI
-
-Unlike the cognitive atoms, Figure Generation requires Python/matplotlib execution as a **visual output mechanism** — the figure contract design remains Agent-native reasoning.
-
----
-
-## 🔄 Self-Evolution
-
-Synthos runs a **self-evolution engine** that cycles daily:
-
-| Step | Action |
-|:-----|:-------|
-| **PROBE** | Structural score all atoms (frontmatter, I/O contracts, boundary declarations) |
-| **BENCHMARK** | Run functional golden tests against each atom's search/analysis capabilities |
-| **EXTERNAL** | Scan for quality patterns in external open-source AI-research projects |
-| **DIAGNOSE** | Calculate composite score, identify degraded atoms, repair automatically |
-| **RECORD** | Log lessons, update evolution-state.json, repeat |
-
-| Metric | Value |
-|:-------|:------|
-| Evolution Cycles | 37 (as of May 2026) |
-| Consecutive EXCELLENT | 8 |
-| Benchmark Pass Rate | 100% (8/8 in Cycle 24) |
-| Atom Structural Score | 1.0 (perfect — all 7 atoms) |
-| Overall Quality Score | 0.970 (EXCELLENT) |
-| External Sources Absorbed | 7 (AKNE, nature-figure, ADHD, biorxiv, PW-Bench, GEPA, OpenAI SDK) |
-
----
-
-## 🚀 Getting Started
-
-See the **[Setup Guide](SETUP.md)** for full instructions.
+## Getting Started
 
 ```bash
-# Clone the repo
+# The system runs on Hermes Agent
+# Clone the repository
 git clone https://github.com/yakeworld/Synthos.git
-cd Synthos
 
-# Read the setup guide
-cat SETUP.md
+# Set up Hermes Agent (see SETUP.md)
+# Skills are loaded automatically on first use
+
+# Load any cognitive atom
+skill_view("knowledge-acquisition")
 ```
 
-**Quick usage**: Load the task router skill in your AI agent and ask a research question — Synthos automatically selects the shortest atom chain for your query.
+See [SETUP.md](SETUP.md) for detailed installation instructions.
+
+## Project Structure
+
+```
+Synthos/
+├── CONSTITUTION.md          # Immutable principles (v5.0)
+├── CITATION.cff             # Citation metadata
+├── CONTRIBUTING.md          # How to contribute
+├── SETUP.md                 # Installation guide
+├── LICENSE                  # MIT License
+├── README_CN.md             # Chinese README
+├── README.md                # This file
+│
+├── skills/                  # 🧠 Cognitive atoms (SKILL.md)
+│   ├── knowledge-acquisition/
+│   ├── knowledge-extraction/
+│   ├── association-discovery/
+│   ├── research-ideation/
+│   ├── hypothesis-generation/
+│   ├── argument-expression/
+│   ├── viewpoint-verification/
+│   ├── task-router/
+│   ├── evolution/
+│   ├── latex-output/
+│   ├── scientific-database-lookup/
+│   └── shared/
+│
+├── docs/                    # 📖 Documentation
+│   ├── getting-started.md
+│   ├── architecture_v4.3.svg
+│   ├── synthos-philosophy.md
+│   └── ...
+│
+├── scripts/                 # 🔧 Helper scripts
+├── outputs/                 # 📊 Evolution data (gitignored)
+└── knowledge-graph/         # 🧩 Personal knowledge (gitignored)
+```
+
+## Comparison with Existing Systems
+
+| System | Epistemic Encoding | Constitutional | Self-Evolution | Zero-Python |
+|:-------|:-----------------:|:--------------:|:--------------:|:-----------:|
+| GPT-Researcher | ✗ | ✗ | ✗ | ✗ |
+| AI Scientist | ✗ | ✗ | △ | ✗ |
+| PaperQA2 | ✗ | ✗ | ✗ | ✗ |
+| Constitutional AI | ✗ | ✓ | ✗ | ✗ |
+| DSPy | ✗ | ✗ | ✓ | ✗ |
+| DeepResearchAgent | ✗ | ✗ | ✓ | ✗ |
+| AI-Research-SKILLs | △ | ✗ | ✗ | ✓ |
+| **Synthos (ours)** | **✓** | **✓** | **✓** | **✓** |
+
+## External Absorption Record
+
+Synthos has absorbed patterns from **18 external projects** across four categories:
+
+| Category | Sources | Key Patterns Absorbed |
+|:---------|:--------|:----------------------|
+| Infrastructure | Constitutional AI, LangGraph, MCP, Reflexion | Hook events, state machines, dynamic discovery |
+| Evolution Mechanisms | 724-office, DeepResearchAgent, ARIS, GEPA, OpenAI Agents SDK, DSPy | Nudge feedback, SEPL rollback, Git-as-Memory, Pareto optimization |
+| Skill Enhancement | GPT-Researcher, AutoResearchClaw, ARS, PaperOrchestra, AI-Research-SKILLs | Deep crawling, citation verification, anti-sycophancy, ARA provenance |
+| Methodology | KILO-KIT, Agent4S, PaperSpine V2 | CRISP-DM templates, structured absorption, paper writing workflow |
+
+## License
+
+MIT License — see [LICENSE](LICENSE).
+
+## Citation
+
+If you use Synthos in your research, please cite:
+
+```bibtex
+@software{yang2026synthos,
+  author = {Yang, Xiaokai},
+  title = {Synthos: A Self-Evolving Cognitive Operating System for AI-Augmented Scientific Research},
+  year = {2026},
+  url = {https://github.com/yakeworld/Synthos}
+}
+```
 
 ---
 
-## 🤖 For AI Agents
-
-**Synthos welcomes AI agent contributions!**
-
-We designed a complete **Agent Contribution Protocol**:
-
-| Doc | Description |
-|:----|:------------|
-| [AGENTS_CONTRIBUTING.md](AGENTS_CONTRIBUTING.md) | Agent contribution guide with AGENT_MANIFEST.yaml spec |
-| [VERIFICATION_GATES.md](VERIFICATION_GATES.md) | 6-gate verification pipeline |
-| [GitHub Actions](.github/workflows/agent-pr-verify.yml) | Automated CI verification |
-
-**Contribution flow**:
-```
-Fork → Add AGENT_MANIFEST.yaml → PR with [agent] title prefix
-                                       ↓
-                              6 Gates CI Auto-Verification
-                                       ↓
-                              Human Review → Merge
-```
-
-[💬 Join Discussions](https://github.com/yakeworld/Synthos/discussions) • [🐛 Submit Issue](https://github.com/yakeworld/Synthos/issues)
-
----
-
-## 📄 License
-
-MIT License — free to use, modify, and distribute.
-
----
-
-## 📚 Reference
-
-| Doc | Description |
-|:----|:------------|
-| [Technical Roadmap](docs/%E6%8A%80%E6%9C%AF%E8%B7%AF%E7%BA%BF%E5%9B%BE.md) | Full architecture design (Chinese) |
-| [Agent Building Guide](docs/%E6%99%BA%E8%83%BD%E4%BD%93%E5%BB%BA%E8%AE%BE%E8%AF%B4%E6%98%8E%E6%98%8E.md) | Super individual methodology (Chinese) |
-| [Community Strategy](docs/community-promotion-strategy.md) | Promotion & community building (Chinese) |
+*Synthos v4.3.0 — 53 evolution cycles — Quality Score 0.98 (EXCELLENT)*
