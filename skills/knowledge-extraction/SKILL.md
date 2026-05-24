@@ -68,7 +68,9 @@ metadata:
 
 ### 3. 推理流程（Procedure）
 
-1. **读取输入**：检查 `input_dict` 中是否存在 `raw_papers`。若为空或不存在，返回 `_err("Missing raw_papers")`。
+1. **读取输入**：检查 `input_dict` 中是否存在 `raw_papers`。
+   - 若 `raw_papers` 非空，正常执行后续提取。
+   - 若 `raw_papers` 为空或不存在，尝试从最近一次缓存（`extracted_knowledge`）中恢复历史提取结果，在输出中标注 `"recalled_from_cache":true`。若也无缓存，返回 `_err("Missing raw_papers and no cache available")`。
 2. **逐论文提取**：对每篇论文执行以下子步骤：
    a. 从 `title` + `abstract` 中识别**核心发现**（寻找结果性陈述：found/show/demonstrate/reveal/indicate + 具体效应）。
    b. 分类**研究方法**：匹配13种方法论模式（RCT、cohort、cross-sectional、machine_learning、eye_tracking 等），见 `references/IO_CONTRACT.md` 的枚举。
@@ -152,6 +154,12 @@ metadata:
 - 金标准：`golden/GOLDEN_SET.md`
 - 变更日志：`references/CHANGE_LOG.md`
 - **[PW-Bench吸收] 逆向工程方法论**：`references/pwbench-reverse-engineer.md`
+
+### 变更日志
+
+| 日期 | 版本 | 变更内容 |
+|:----|:----|:---------|
+| 2026-05-23 | v1.2.0 | 新增空输入缓存回退机制，新增vision_analyze视觉提取增强 |
 
 ### 验证清单
 
