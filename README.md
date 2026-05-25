@@ -6,7 +6,7 @@
 [![Evolution Cycles](https://img.shields.io/badge/evolution-53%20cycles-brightgreen)](evolution-log.md)
 [![Quality Score](https://img.shields.io/badge/quality-0.98%20EXCELLENT-success)](evolution-state.json)
 
-**Synthos reifies epistemological principles as executable cognitive atoms.** Unlike conventional research agents that wrap Python libraries as tools, Synthos operates as a purely skill-driven architecture: the Agent itself is the runtime, with **zero Python infrastructure code**.
+**Synthos reifies epistemological principles as executable cognitive atoms.** Unlike conventional research agents that wrap Python libraries as tools, Synthos operates as a purely skill-driven architecture: the Agent itself is the runtime, with **zero Python infrastructure code** (core orchestration is 100% SKILL.md; helper automation scripts in `scripts/` use Python/shell but are not part of the cognitive architecture).
 
 ---
 

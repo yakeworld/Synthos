@@ -1,6 +1,6 @@
 ---
 name: evolution
-description: "⚡ P0 自进化引擎。Synthos evolution engine v2.12 — GEPA反射式分析(OPTIMIZE)+自动数据集(BENCHMARK)+Pareto多维优化(DIAGNOSE)+结构探查+功能基准+外部吸收+教训学习+黄金验证+自扩关键词+SELF_REFLECT+宪法集成+漂移检测+渐进披露+响应闸门+自动优化+输入护栏+持久执行+条件分支+拦截点+追踪+SEPL回滚+ARA溯源+Git即记忆+Pareto前沿+假设先行。每轮触发project-experience-distillation。"
+description: "⚡ P0 自进化引擎。Synthos evolution engine v2.14 — GEPA反射式分析(OPTIMIZE)+自动数据集(BENCHMARK)+Pareto多维优化(DIAGNOSE)+结构探查+功能基准+外部吸收+教训学习+黄金验证+自扩关键词+SELF_REFLECT+宪法集成+漂移检测+渐进披露+响应闸门+自动优化+输入护栏+持久执行+条件分支+拦截点+追踪+SEPL回滚+ARA溯源+Git即记忆+Pareto前沿+假设先行。每轮触发project-experience-distillation。"
 version: 2.14.0
 author: Synthos Evolution Engine
 license: MIT
@@ -13,7 +13,7 @@ signature: "cycle: int, prev_scores: dict, prev_benchmark: float -> evolution_re
 related_skills: [project-experience-distillation, quality-gate, conversation-to-memory, skill-absorption, cognitive-atom-architecture]
 ---
 
-# Synthos 进化引擎 v2.11
+# Synthos Evolution Engine v2.14
 
 > 宪临万法，漂移必察。败则回滚，成则铭记。
 > 每轮只修一维，每次必有假说。

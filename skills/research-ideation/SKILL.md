@@ -18,7 +18,7 @@ dependencies:
 metadata:
   synthos_atom_type: "cognitive"
   synthos_version: "2.0.0"
-  synthos_skill_md_hash: "pending"
+  synthos_skill_md_hash: "d2e1fdf9fa12f4d6a34d63cfa0f0f60c"
   synthos_data_access_level: "raw"
   synthos_model_tested_on: "2026-05-14T00:00:00Z"
   synthos_io_contract_ref: "references/IO_CONTRACT.md"

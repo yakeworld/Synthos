@@ -16,7 +16,8 @@ NOTEBOOK_ID="$1"
 SEARCH_QUERY="$2"
 PROJECT_NAME="${3:-notebook-${NOTEBOOK_ID}}"
 OUTDIR="/media/yakeworld/sda2/Synthos/outputs/papers/${PROJECT_NAME}"
-S2_KEY="iYTNXXDH278PVXl2FJ2YU1TyZ5joLAZr3WA9IVzt"
+# S2 API Key — Load from environment variable (set in ~/.hermes/.env)
+S2_KEY="${S2_API_KEY:-}"
 
 # Lock files (directory-based = atomic)
 S2_LOCK="/tmp/.hermes_s2_lock"
