@@ -9,7 +9,7 @@ signature: "source: str (PDF|text|notes) -> presentation: PPTX, qa_report: MD, f
 metadata:
   synthos_atom_type: "extended"
   synthos_version: "1.0.0"
-  synthos_skill_md_hash: "pending"
+  synthos_skill_md_hash: "da875dcf6601e2738ebd94a85bc8a0d9"
   synthos_data_access_level: "verified_only"
   absorbed_from: "https://github.com/GARCH-QUANT/garch-nature-paper2ppt"
   absorption_date: "2026-05-21"
