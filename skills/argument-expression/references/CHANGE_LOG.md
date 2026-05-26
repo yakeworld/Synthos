@@ -21,18 +21,3 @@
 **审批人**: Synthos Agent
 **审批时间**: 2026-05-10
 **金标准通过率**: 待首次测试
-
----
-
-## v0.2.0 — 2026-05-14
-
-**变更类型**: [PW-Bench吸收] 质量门控增强
-**描述**: 
-- 从 PaperOrchestra/PaperWritingBench (arXiv:2604.05018, App. F.3) 吸收文献综述六轴质量评分体系
-- 在 §7 质量要求中新增 6 轴评分门控（Coverage/Relevance/Critical Analysis/Positioning/Organization/Citation Rigor）
-- 门控阈值：≥55 直接输出，40-54 标注改进点，<40 标记重写
-- 新增 reference 文件: references/litreview-quality-gate.md
-- 反膨胀规则：默认期望 45-70，>85 需六轴全强证据
-**影响的组件**: SKILL.md (§7 + references索引), CHANGE_LOG.md
-**审批人**: Synthos Agent
-**审批时间**: 2026-05-14

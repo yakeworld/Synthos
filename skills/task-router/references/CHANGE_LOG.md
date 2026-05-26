@@ -4,16 +4,6 @@
 
 ---
 
-## v1.2.0 — 2026-05-18
-
-**变更类型**: 架构增强
-**描述**: 吸收 AI-Research-SKILLs (Orchestra) Autoresearch 双循环编排协议。新增 research 模式（两循环）+ exploratory 模式（仅内循环）。新增循环状态追踪（迭代计数器、累积结果、退出条件）。更新 pipeline_trace.json schema 支持 loop_state。更新 BOUNDARY 声明循环编排边界。
-**影响的组件**: task-router（SKILL.md 执行流程 + pipeline_trace.json schema + IO_CONTRACT + BOUNDARY）
-**吸收来源**: Orchestra Research / AI-Research-SKILLs — Autoresearch two-loop architecture (8,492⭐, MIT)
-**审批人**: Hermes Agent (autonomous — 自主执行阈值≥80%)
-**审批时间**: 2026-05-18
-**金标准通过率**: 待下次 BENCHMARK 验证
-
 ## v0.1.0 — 2026-05-10
 
 **变更类型**: 初始版本
