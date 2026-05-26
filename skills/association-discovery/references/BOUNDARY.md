@@ -13,4 +13,3 @@
 | knowledge-extraction (2) | 原子2单论文提取；本原子跨论文关联 |
 | hypothesis-generation (4) | 本原子报告空白；原子4基于空白生成假设 |
 | viewpoint-verification (6) | 本原子发现关联；原子6评估关联的价值/可靠性 |
-| **pwbench 逆向工程** | 不在本原子范围内。从论文重建研究设计归属 `knowledge-extraction` 的可选增强模式 |
