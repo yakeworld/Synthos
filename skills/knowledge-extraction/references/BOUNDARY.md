@@ -15,4 +15,3 @@
 | hypothesis-generation (4) | 本原子描述性，原子4生成性 |
 | argument-expression (5) | 本原子输出JSON，原子5输出学术文本 |
 | viewpoint-verification (6) | 本原子正向提取，原子6反向验证 |
-| **pwbench 逆向工程** | 从论文重建idea+experimental log是**可选增强模式**，不改变"单论文结构化提取"核心定义。非跨论文、非生成性，仍在本原子范围内 |
