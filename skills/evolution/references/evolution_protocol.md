@@ -299,7 +299,24 @@ edit_budget:
                                          有余额？→ 继续编辑
 ```
 
-## 第九步：IMPROVE — 单指标聚焦（v2.15 新增 rejected_buffer 防护）
+## 第九步：IMPROVE — 单指标聚焦（v2.15 新增 rejected_buffer 防护，v2.16 新增假说前置）
+
+### [v2.16] 假说前置协议（Hypothesis Preamble）
+
+> 吸收自 ResearcherSkill — 每次编辑前先写假说，使方向可证伪、失败可学习。
+
+每次 IMPROVE 编辑（patch/write_file/skill_manage）前，必须输出：
+
+```yaml
+hypothesis_preamble:
+  target_dimension: <聚焦维度>
+  current_measurement: <当前值 or "无">
+  hypothesis: "如果修改 [X], 预期 [Y 提升 Z%], 因为 [机制推理]"
+  expected_measurement: <预期验证值>
+  falsification: "如果 [Z 不提升或下降], 则假说被证伪, 应回归"
+```
+
+假说被证伪 ≠ 编辑被退回。被证伪的假说同样有价值——记录到 lessons 作为"已试过的方向"。
 
 每轮只修分数最低的一个维度。不并行不全面调整。
 修复顺序：机制缺口→技能执行→评估参数→外部扫描。
@@ -367,17 +384,88 @@ rejected_buffer:
   下次 IMPROVE: rejected_buffer.READ → 自动排除重复方案
 ```
 
-## 第十步：VERIFY — 验证（v2.15 新增 rejected_buffer 联动）
+### [v2.16] VERIFY 四态决策 + 硬收敛护栏
 
-对已patch的原子：确认可加载、重算结构分、重跑失败案例。
+> 吸收自 ResearcherSkill — 失败也有信息价值，连续不提升则强制转向。
 
-## 第十一步：RECORD — 更新状态和日志
+#### VERIFY 四态决策
 
-- 更新 evolution-state.json
-- 追加 evolution-log.md（含7种事件类型+provenance标记）
-- 提取教训到 lessons.jsonl
-- 生成报告 outputs/evolution/report_{cycle}.json
-- 更新 absorption-tracked.json
+| 判决 | 含义 | 动作 |
+|:-----|:------|:-----|
+| **keep:best** | 分数提升，创新基线 | KEEP + 记录为 new_best |
+| **keep:insight** | 分数未提升，但发现了有价值的方向/反模式 | KEEP（不应用）+ 记录到 lessons 作为 insight |
+| **discard:regression** | 分数下降，明确退化 | REVERT (git) + rejected_buffer.WRITE |
+| **discard:useless** | 分数持平，无新信息 | REVERT + 记录为 dead_end |
+
+#### 硬收敛护栏（v2.16）
+
+当以下任一条件触发时，**强制**跳转聚焦维度（不等待 Nudge 软提示）：
+
+```yaml
+hard_convergence_gates:
+  consecutive_no_improvement:
+    threshold: 3           # 连续3轮同一维度无提升
+    action: FORCE_PIVOT    # 强制切换到次低分维度
+    rationale: "三度不济，易弦更张"
+  
+  same_target_exhausted:
+    threshold: 3           # 同一target被rejected_buffer排除3次
+    action: LOCK_TARGET    # 锁定该target到"已穷尽"状态，本轮不再尝试
+    rationale: "路尽则返，不改空耗"
+  
+  plateau_detected:
+    condition: "同一指标连续3轮波动 < 5%"
+    action: ESCALATE       # 升级问题：从局部优化转为方法重新设计
+    rationale: "无尺则立规，以文度文"
+```
+
+触发 HARD_GATE 后，在 evolution-state.json 记录 gate_event，并追加 lessons。
+
+## 第十一步：RECORD — 更新状态和日志（v2.17 吸收 GenericAgent：事后技能结晶）
+
+| 子步骤 | 动作 |
+|:-------|:-----|
+| 11a. UPDATE_STATE | 更新 evolution-state.json |
+| 11b. WRITE_LOG | 追加 evolution-log.md（含7种事件类型+provenance标记） |
+| **11c. CRYSTALLIZE_SKILL** | **新增** — 自动结晶稳定执行轨迹为 skill |
+| 11d. EXTRACT_LESSONS | 提取教训到 lessons.jsonl |
+| 11e. SAVE_REPORT | 生成报告 outputs/evolution/report_{cycle}.json |
+| 11f. UPDATE_DB | 更新 absorption-tracked.json |
+
+### [v2.17] 11c. CRYSTALLIZE_SKILL — 事后技能结晶
+
+> 吸收自 GenericAgent (lsdefine, ⭐12,156, MIT) — 事成即录，录即成技
+
+#### 原理
+
+GenericAgent 的核心发现：**技能最好的来源不是预先编写，而是从执行轨迹中自动结晶**。每次成功完成一项任务，执行路径中包含了完整的知识——用了什么工具、经历了什么步骤、解决了什么坑。将这些信息固化为 skill，下次遇到同类任务直接调用。
+
+Synthos 已有 `project-experience-distillation`（SubagentStop 触发），但它是事件驱动且需要手动确认。本步骤将其扩展为**持续内联结晶**。
+
+#### 触发条件
+
+```yaml
+crystallize_skill:
+  trigger: "同一任务模式成功执行 ≥3 次（由 agent 判断任务类型相似性）"
+  filter: |
+    排除以下情况：
+      - 纯临时一次性任务（如"读这个文件"）
+      - 已有明确 skill 覆盖的模式
+      - 执行轨迹不足 3 步的简单操作
+  action: |
+    1. 从执行轨迹提取：任务目标、关键步骤、使用工具、遇到的坑和解决方法
+    2. 判断是否有复用价值（同一用户/项目是否会再次遇到）
+    3. 生成 SKILL.md 草稿（含原理层·文言 + 方法层·白话 + 触发条件 + 验证清单）
+    4. 标记为 pending_review（不自动创建，避免噪声）
+    5. 在 evolution-log 记录 "crystallized skill candidate: [name]"
+
+  自动注入点（无需标记 pending_review）：
+    - discovery pattern（发现某个 API 的稳定用法）
+    - debugging script（解决某个特定错误类型的步骤）
+    - workflow optimization（耗时操作的优化方案）
+```
+
+**文言**：事成即录，录即成技。一次做，二次熟，三次固之。
 
 ## Git-as-Memory 循环（v2.11）
 

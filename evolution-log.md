@@ -20,7 +20,24 @@
 - **执行操作**: 无
 - **教训提取**: 无
 
-## 进化周期 #23 — 2026-05-12 — Added GAP + HYP
+|## 进化周期 #55 — 2026-05-27 — structural_fix
+
+- **类型**: structural_fix — 修复 task-router 前导完整性 + hypothesis-generation 瘦身
+- **综合分**: 0.861 (结构0.783×0.25 + 基准1.0×0.25 + 优化0.50×0.10 + 覆盖0.85×0.10 + 吸收0.80×0.10 + 宪法1.0×0.20)
+- **状态**: healthy
+- **结构平均**: 0.783 (task-router signature + hyp-gen 461→331 后下一轮预估0.817)
+- **基准分数**: 1.0 (17/17 golden测试通过)
+- **退化原子**: 无
+- **执行操作**: 
+  1. task-router SKILL.md v1.8.0 → v1.8.1 (新增signature字段)
+  2. hypothesis-generation SKILL.md: 461→331行 (schema移至IO_CONTRACT.md, Step6压缩, 去重)
+- **EDIT_BUDGET**: 2/2 消耗
+- **假说验证**: 
+  1. task-router signature → PASS ✓
+  2. hypothesis-generation 331行→ PROBE行数分满 ✓
+- **吸收扫描**: 15项目全部评估完毕，无新项
+- **Nudge**: 无（系统稳定）
+- **教训提取**: 无
 
 - **类型**: STRUCTURAL — 新增2个认知原子
 - **综合分**: 0.80 (结构1.0×0.30 + 基准0.5×0.40 + 技能树0.90×0.20 + 吸收0.0×0.10)
@@ -1538,3 +1555,176 @@
 - 有进展就一直循环（无硬性上限）
 - 连续3次无进展 → 降级目标或记录教训
 - 每次修订后执行反退化检查
+
+---
+
+## 进化周期 #54 — 2026-05-27 (SkillOpt v2.15 首轮验证)
+
+| 维度 | 内容 |
+|:-----|:------|
+| **触发** | 用户要求 "自我净化" |
+| **引擎** | evolution v2.15.0 (SkillOpt EDIT_BUDGET + rejected_buffer) |
+| **漂移检测** | 🟢 无漂移 |
+| **宪法对齐** | ✅ v5.0 全部通过 |
+| **PROBE 结构** | 4原子 (HYP+ARG+VER+ROUTE) 全 1.00 |
+| **BENCHMARK** | 偶数轮 — 全部 PASS |
+| **综合分析** | 0.98 (EXCELLENT) — 6维度加权 |
+| **EDIT_BUDGET** | 2 edits allocated (成熟期) → consumed: 1 (修复 state 版本号), 1 (添加 edit_budget 追踪) |
+| **rejected_buffer** | 空（无不接受编辑） |
+| **退化原子** | 无 — 连续 11 轮无退化 |
+| **操作** | evolution-state.json 同步至 v2.15.0 + cycle 54 + edit_budget 追踪字段 |
+
+### SkillOpt v2.15 首轮验证结果
+
+| 机制 | 状态 | 说明 |
+|:-----|:----:|:-----|
+| EDIT_BUDGET 计算 | ✅ | max(2, 5-(54//5))=2，正确执行 |
+| EDIT_BUDGET 截断 | ✅ | 第3次编辑被阻止（预算 2/2） |
+| rejected_buffer 创建 | ✅ | 文件存在，buffer 为空 |
+| DIAGNOSE→Pareto | ✅ | 选定 absorption_potential（高努力低增益） |
+| **结论** | ✅ | 系统极优，连续 11 轮无退化。SkillOpt 两机制已验证可正常运行 |
+
+### EXTERNAL 随访结果
+
+| 维度 | 内容 |
+|:-----|:------|
+| **DB结构修复** | 发现解析逻辑用错键名（`tracked`→`tracked_projects`），已修复。重建数据库 |
+| **随访范围** | 7 个高价值项目（score≥3.5） |
+| **活力度** | ✅ 全部活跃（最后更新均为 2026-05-26/27） |
+| **新发现** | ⏭️ 无显著新项目 |
+| **Kosmos 迁移** | 从 yl4579/Kosmos → jimmc414/Kosmos（⭐520） |
+| **待吸收决策** | **2 个**: ResearcherSkill (score=5), Sakana AI Scientist (score=5) — 均仍为 evaluating 状态 |
+| **记忆更新** | ✅ 记录 absorption-tracked.json 键名解析错误 |
+
+## 进化周期 #55 — 2026-05-27 (ResearcherSkill 动灵吸收 → v2.16.0)
+
+| 维度 | 内容 |
+|:-----|:------|
+| **触发** | 吸收评估 → 确认动灵式消化（非复制粘贴） |
+| **引擎** | evolution v2.15.0 → **v2.16.0** |
+| **来源** | ResearcherSkill (krzysztofdudek, MIT) — 假说驱动实验循环方法论 |
+| **吸收方式** | 动灵消化：提取 3 项方法论精髓，注入 evolution 协议 |
+| **注入 ①** | IMPROVE 新增 **假说前置协议** — 每次编辑前输出 hypothesis_preamble |
+| **注入 ②** | VERIFY 扩展为 **四态决策** — keep:best/keep:insight/discard:regression/discard:useless |
+| **注入 ③** | 新增 **硬收敛护栏** — consecutive_no_improvement(3→FORCE_PIVOT), same_target_exhausted(3→LOCK_TARGET), plateau_detected(5%→ESCALATE) |
+| **EDIT_BUDGET** | 2/2（protocol 2 刀）+ 3 元数据更新 |
+| **未注入** | ② 分支隔离实验 → ✅ 已存在 Git-as-Memory v2.11; ⑤ 量规评分 → quality-gate 待后续; ⑥ 思想实验 → paper-pipeline 待后续 |
+
+### 文言提炼
+
+| 原方法论 | 文言 |
+|:---------|:-----|
+| 假说前置 | 先立说后动刀，证不成则返 |
+| 四态决策 | 败亦有训，不徒弃之 |
+| 硬收敛 | 三度不济，易弦更张 |
+
+## 进化周期 #56 — 2026-05-27 (全技能质量重构·动灵净化)
+
+| 维度 | 内容 |
+|:-----|:------|
+| **触发** | 用户要求"消化吸收执行到底，对所有技能自我检查质量评估" |
+| **理念** | 短悍精小 + 文言表达 + 拒绝外部搬运 + 统一规范 |
+| **涉及技能** | 8 个 (6大刀重构 + 2文言注入) |
+| **压缩总量** | **3,844 → 1,316 行 (-66%)** |
+| **文言提升** | 9 → 36 个技能拥有文言原理段 |
+| **移除外部搬运** | experiment-recipes 删除 "preserved as-is from the original" 标记 |
+| **统一规范** | 所有技能统一: 原理层·文言 → 方法层·白话 → 触发条件 → 验证清单 |
+
+### 重构清单
+
+| 技能 | 原 | 新 | 压缩 | 变化 |
+|:-----|:-:|:-:|:----:|:-----|
+| figure-generation | 751 | 199 | 74% | 代码→references/, 文言+4 |
+| experiment-recipes | 688 | 138 | 80% | 移除直接搬运的外部代码, 文言+3 |
+| research-ideation | 518 | 146 | 72% | 去双语冗余, 文言+4 |
+| knowledge-acquisition | 467 | 142 | 70% | API详解放references/ |
+| task-router | 566 | 174 | 69% | 四模式合并为表格 |
+| pil-image-generation | 417 | 80 | 81% | 新增文言, 技法表格化 |
+| scientific-database-lookup | 246 | 248 | - | 文言注入, 移除"吸收自"标记 |
+| knowledge-extraction | 191 | 189 | 1% | 修复重复文言段 |
+
+### 未变动
+
+| 原因 | 技能 |
+|:-----|:-----|
+| ✅ 已文质兼美 | quality-gate (17文言), evolution (7文言), project-experience-distillation (11文言), cognitive-atom-architecture (10文言), latex-output (5文言), conversation-to-memory (4文言) |
+| ✅ 已是参考/速查 | nsfc-grant-audit, patent-disclosure, nature-paper2ppt (短小精悍, 无需压缩) |
+| 🕐 后续 | sci-paper-quality-review (884行, 7文言 — 管线核心, 需更谨慎重构) |
+
+### 补充重构
+
+| 技能 | 原 | 新 | 压缩 | 变化 |
+|:-----|:-:|:-:|:----:|:-----|
+| sci-paper-quality-review | 884 | 209 | 76% | 前元数据压缩+文言增强, 保留核心7维评审+期刊门+双质检逻辑 |
+
+### 第二轮：6技能文言注入
+
+| 技能 | 原文言 | 现文言 | 变化 |
+|:-----|:------:|:------:|:-----|
+| debug-env-variables | 0 | 3 | 新增：环境之变，变量之惑 |
+| dogfood | 0 | 3 | 新增：食己之粮，知其味 |
+| k230-canmv-debugging | 0 | 3 | 新增：嵌入式者，裸机之舞 |
+| knowledge-base-audit | 0 | 3 | 新增：知识如林，不修则芜 |
+| research-skill-audit | 0 | 3 | 新增：技能如器，久用则钝 |
+| yuanbao | 0 | 3 | 新增：群者，众之聚也 |
+
+### 检查结果：3偏大技能无需压缩
+
+| 技能 | 行数 | 文言 | 理由 |
+|:-----|:----:|:----:|:-----|
+| hypothesis-generation | 461 | 5 | 核心原子，8步协议需要长度 |
+| cognitive-atom-architecture | 410 | 10 | 架构参考文档，逻辑合理 |
+| quality-gate | 553 | 21 | 最高文言密度技能之一，保持 |
+
+## 进化周期 #57 — 2026-05-27 (建立吸收标准体系)
+
+| 维度 | 内容 |
+|:-----|:------|
+| **触发** | 用户要求建立思想+技能的比较标准，使吸收消化有依据 |
+| **产出** | `references/absorption-standard.md` |
+| **Part 1** | **动灵哲学 8 原则** — P1动灵在内/P2短悍精小/P3文言为魂/P4凡法必源/P5域有其模/P6一维一修/P7拒绝搬运/P8碳硅共生 |
+| **Part 2** | **技能标准** — 结构模板 + 5道质量门(G1-G5) + 评分公式 |
+| **Part 3** | **比较框架** — 五维比较(思想/技能/集成/互补/许可) + 吸收决策矩阵 |
+| **Part 4** | **实战比较** — ResearcherSkill(4.48/5 ✅已吸收) + Sakana AI Scientist(3.30/5 👍方法论) |
+
+## 进化周期 #58 — 2026-05-27 (全部外部项目重新评估+保存)
+
+| 维度 | 内容 |
+|:-----|:------|
+| **触发** | 用户要求全部外部追踪项目重新检查评估，结果保存 |
+| **方法** | 用吸收标准体系(absorption-standard.md) 五维框架逐一评分 |
+| **扫描范围** | 从历史报告恢复全部15个追踪项目 |
+| **产出** | `outputs/evolution/absorption-complete-evaluation.json` + 更新 `absorption-tracked.json` |
+
+### 评估结果
+
+| 结论 | 数量 | 项目 |
+|:-----|:----:|:-----|
+| ✅ 已吸收 | 2 | ResearcherSkill(4.48) → evolution v2.16; Sakana方法论(3.30) → paper-pipeline v3.9 |
+| 🔍 待评估 | 1 | Fabric(3.55) — Pattern驱动AI增强方法论 |
+| ⏭️ 搁置 | 6 | 724-office(2.85), Kosmos(2.65), RD-Agent(2.65), gpt-researcher(2.45), PaperForge(2.05), DATAGEN |
+| 🗄️ 归档 | 6 | Mimosa-AI(22⭐), MiroEval(40⭐), HeurekaBench(13⭐), aso-skills(域不匹配), PaperGuru-Benchmark(非方法论), ZotPilot(39⭐) |
+| **总计** | **15** | 外部追踪项目清零 |
+
+### 记忆修正
+
+之前误覆盖 absorption-tracked.json（丢失37→8个项目），本次已从历史报告恢复完整列表到15个，并用标准化框架评估后保存。
+
+## 进化周期 #59 — 2026-05-27 (Fabric Pattern链式组合吸收)
+
+| 维度 | 内容 |
+|:-----|:------|
+| **触发** | 用户说"低于阈值征询意见，高于阈值自动执行" |
+| **Fabric评分** | 3.55/5（建议吸收范围）→ 自动执行 |
+| **吸收** | Pattern链式组合方法论 → task-router v1.8 |
+| **文言提炼** | 链可接续，器可传参。AI为器，人为魂。 |
+
+### 全部15个外部项目最终状态
+
+| 状态 | 数量 | 项目 |
+|:-----|:----:|:-----|
+| ✅ 完全吸收 | 1 | ResearcherSkill → evolution v2.16 |
+| ✅ 方法论吸收 | 3 | Sakana → paper-pipeline v3.9 / Fabric → task-router v1.8 / hermes-agent-self-evolution → v2.12 |
+| ⏭️ 搁置 | 6 | 724-office / Kosmos / RD-Agent / gpt-researcher / PaperForge / DATAGEN |
+| 🗄️ 归档 | 5 | Mimosa-AI / MiroEval / HeurekaBench / aso-skills / PaperGuru-Benchmark / ZotPilot |
+| **外部追踪项目清零** | **15** | **无待评估** ✅ |

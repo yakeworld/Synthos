@@ -1,15 +1,11 @@
 ---
 name: research-ideation
 description: >-
-  认知原子——研究创意发散与认知引擎（RIF+CCF）。三层架构：
-  Layer 1 (10操作框架) + Layer 2 (8认知引擎框架) + Layer 3 (组合协议+集成流程)。
-  将研究问题转化为多维度创意方向和认知洞察。
-  Cognitive atom — Research Ideation Framework (RIF) + Creative Cognition Engine (CCF).
-  3-layer architecture: Layer 1 (10 operational frameworks) + Layer 2 (8 cognitive engine
-  frameworks) + Layer 3 (combination protocol + integrated workflow).
-  Transforms research problems into multi-dimensional creative directions and cognitive insights.
-version: 2.0.0
-author: Synthos Agent
+  研究创意发散与认知引擎（RIF+CCF）。三层架构：Layer 1（10操作框架）→ 产出研究方向候选；
+  Layer 2（8认知引擎）→ 产出认知洞察；Layer 3（组合协议）→ 编排执行流程。
+  将研究问题转化为多维度创意方向和认知洞察。先发散后收敛，多角度扫描领域机会。
+version: 2.1.0
+author: Synthos
 license: MIT
 allowed-tools: Read Write
 dependencies:
@@ -17,20 +13,8 @@ dependencies:
   - association-discovery
 metadata:
   synthos_atom_type: "cognitive"
-  synthos_version: "2.0.0"
-  synthos_skill_md_hash: "d2e1fdf9fa12f4d6a34d63cfa0f0f60c"
   synthos_data_access_level: "raw"
-  synthos_model_tested_on: "2026-05-14T00:00:00Z"
-  synthos_io_contract_ref: "references/IO_CONTRACT.md"
-  synthos_evidence_schema_ref: "references/EVIDENCE_SCHEMA.md"
-  synthos_golden_set_ref: "golden/GOLDEN_SET.md"
-  synthos_golden_set_origin: "self_defined"
-  synthos_pass_threshold: "0.80"
-  synthos_boundary_proof_ref: "references/BOUNDARY.md"
-  synthos_change_log_ref: "references/CHANGE_LOG.md"
-  synthos_asserted_compliance: "P0,P1,P2"
-  synthos_depends_on: "knowledge-acquisition,association-discovery"
-  synthos_author: "Synthos Agent"
+  synthos_depends_on: "knowledge-acquisition, association-discovery"
 ---
 
 ## 原理层·文言
@@ -43,476 +27,120 @@ metadata:
 > 发散而后收敛，收敛而后凝练，凝练而后验证。
 > 思维若僵，反向求之。不见出路，问其反面。
 
-**核心理念**：研究构思是创意生成的起点。四源（政策/临床/技术/交叉）是灵感之泉，10操作框架是发散之器，8认知引擎是收敛之力。先发散后收敛，多角度扫描领域机会。
-
 ## 方法层·白话
 
-[SYNTHOS_P0_ABSORBED_FROM]: <> (Layer 1: NanoResearch brainstorming-research-ideas — 10 frameworks for structured research ideation. Layer 2: NanoResearch creative-thinking-for-research — 8 foundational frameworks for creative cognition. Merged 2026-05-14 to eliminate atomic redundancy.)
-
-# 研究创意发散与认知引擎 (Research Ideation & Creative Cognition)
+**研究创意发散与认知引擎** — 创意生成的起点。四源（政策/临床/技术/交叉）是灵感之泉，10框架是发散之器，8引擎是收敛之力。
 
 ## 触发条件
 
-加载此技能当用户：
-- 需要围绕一个研究问题进行多维度创意发散
-- 希望从不同角度探索研究方向和可能性
-- 思维卡住，需要认知热身或瓶颈突破
-- 需要系统性地扫描某个领域的研究机会
-- 面对学术争议，希望找到矛盾转化点
+加载此技能当用户：需要多维度创意发散、从不同角度探索方向、思维卡住需突破、系统扫描领域机会。
 
-不适用场景（请使用替代技能）：
-- 已有明确具体方向 → 直接进入 hypothesis-generation
-- 需要文献检索 → 使用 knowledge-acquisition
-- 需要跨论文关联分析 → 使用 association-discovery
-- 需要将创意形式化为可检验假说 → 使用 hypothesis-generation
-- 输入问题过于模糊（如"研究脑科学"）→ 先追问用户具体问题维度
+**不适用**：已有明确方向 → 用hypothesis-generation；需要文献检索 → knowledge-acquisition；需要关联分析 → association-discovery。
 
 ## 验证清单
 
-在执行此技能前，请确认以下条件已满足：
+- [ ] 输入：清晰的研究问题描述
+- [ ] 输出包含与用户预设方向相反的创意方向（反谄媚）
+- [ ] top-5创意来自≥3个不同框架
 
-- [ ] 输入：一个清晰的研究问题描述（problem statement）
-- [ ] 输入（可选）：约束条件 / 上游发现 / 思维阻塞点
-- [ ] 工具可用：Read（读取输入问题）、Write（输出创意列表和认知洞察）
-- [ ] 依赖技能可用：knowledge-acquisition（提供文献语境）、association-discovery（提供空白/矛盾线索）
-- [ ] 数据访问级别：raw（允许从原始文献中提取灵感和关联）
-- [ ] 前置条件：如使用上游依赖，确保 knowledge-acquisition 和 association-discovery 的输出已就绪
-- [ ] 反谄媚防护：确保输出包含与用户预设方向相反的创意方向
+---
 
-## 概述 / Overview
-
-**中文**：本原子是 Synthos 的创意生成与认知探索单元，由三层架构组成：
-- **Layer 1**（操作层）：10种结构化创意框架，直接生成研究方向
-- **Layer 2**（引擎层）：8种底层认知操作模式，提供思维操作的原始能力
-- **Layer 3**（组合层）：6种预定义组合协议 + 3阶段集成流程
-
-L1 产出具象的方向列表，L2 产出认知洞察，L3 提供两者的自由组合。使用顺序为调用 Layer 3 的集成流程自动编排。本原子不做文献综述（`knowledge-acquisition`），不做假设形式化（`hypothesis-generation`）。它只回答一个问题：**"围绕这个问题，还有哪些值得探索的方向和认知维度？"**
-
-**English**: This atom is Synthos' creative generation & cognitive exploration unit, with a 3-layer architecture:
-- **Layer 1** (Operational): 10 structured ideation frameworks → concrete research directions
-- **Layer 2** (Engine): 8 fundamental cognitive operation modes → raw thinking insights
-- **Layer 3** (Combination): 6 predefined combination protocols + integrated workflow
-
-L1 produces tangible direction lists, L2 produces cognitive insights, L3 enables free combination. The integrated workflow in Layer 3 auto-orchestrates execution order. This atom does NOT perform literature review (`knowledge-acquisition`) nor formalize hypotheses (`hypothesis-generation`). It answers only one question: **"What worthwhile directions and cognitive dimensions can be explored around this problem?"**
+## 三层架构
 
 ```
-输入问题/方向
-    │
-    ├── Layer 3: 集成流程 (Diverge → Converge → Refine → Validate)
-    │       │
-    │       ├── Layer 1: 10操作框架 → 研究方向候选列表
-    │       └── Layer 2: 8认知引擎 → 认知洞察/新维度
-    │
-    └── 输出：创意候选列表 + 认知视角清单 + 组合分析
+输入问题 → Layer 3: 集成流程(Diverge→Converge→Refine→Validate)
+                ├── Layer 1: 10操作框架 → 研究方向候选
+                └── Layer 2: 8认知引擎 → 认知洞察
+         → 输出：创意候选 + 认知视角 + 组合分析
 ```
 
----
-
-## 职责 / Scope
-
-| 职责 | 说明 |
-|:-----|:------|
-| **输入** | 研究问题描述（problem statement），可选上下文（constraints / upstream findings / thinking blockers） |
-| **输出** | `ideations` (list[IdeationItem]) + `cognitive_insights` (list[CognitiveInsight]) |
-| **上游依赖** | `knowledge-acquisition`（提供文献语境）、`association-discovery`（提供空白/矛盾线索） |
-| **下游输出至** | `hypothesis-generation`（将创意形式化）、`argument-expression`（展开为论文思路） |
-| **不做** | 不做文献检索（`knowledge-acquisition`）、不做关联发现（`association-discovery`）、不做假设形式化（`hypothesis-generation`） |
+| Layer | 内容 | 产出 |
+|:------|:-----|:-----|
+| L1 操作层 | 10种结构化创意框架 | 具体研究方向列表 |
+| L2 引擎层 | 8种底层认知操作模式 | 认知洞察、新维度 |
+| L3 组合层 | 6种预定义组合协议 + 集成流程 | 编排执行方案 |
 
 ---
 
-## Layer 1: 10个创意操作框架 (Operational Frameworks)
+## Layer 1: 10操作框架
 
-每个框架独立运行，直接产出具体的研究方向候选。
-
-### 框架 1: Problem-First vs Solution-First 切换
-
-**中文**：从问题出发和从方案出发是两种互补的创意路径。切换视角往往能发现被忽视的方向。
-
-| 路径 | 提问方式 | 示例 |
-|:-----|:---------|:-----|
-| **Problem-First** | "当前最困扰这个领域的问题是什么？有没有被忽视的难点？" | 精神疾病诊断依赖主观量表 → "能否用客观生物标记物？" |
-| **Solution-First** | "我手中有什么独特的方法/技术/数据？它还能解决什么其他问题？" | 具备眼动追踪技术 → "还能用于哪些神经疾病的早期筛查？" |
-
-**使用方法**：先以 Problem-First 梳理痛点，再切换到 Solution-First 盘点资产。交叉点往往是创新高发区。
-
----
-
-### 框架 2: Abstraction Ladder 抽象阶梯
-
-**中文**：沿着"具体 ↔ 抽象"的阶梯上下移动，在不同抽象层级寻找创意。
-
-```
-抽象层 (Why)    ──→ "为什么这个问题重要？它反映了什么更一般的规律？"
-                      │
-中间层 (What)   ──→ "具体的研究对象是什么？用什么方法？"
-                      │
-具体层 (How)    ──→ "具体怎么做？用什么指标？"
-```
-
-**使用技巧**：
-- **上移**（抽象化）：将具体问题提升为一般规律 → "ADHD眼动异常是否反映了更普遍的注意力-运动耦合机制？"
-- **下移**（具体化）：将一般问题落到可操作细节 → "具体是哪个眼动参数（扫视速度？注视时间？）有区分度？"
+| # | 框架 | 核心操作 | 一句话示例 |
+|:-:|:-----|:---------|:-----------|
+| F1 | Problem-First vs Solution-First 切换 | 从问题出发 vs 从方案出发 | "能否用客观生物标记物替代主观量表？" |
+| F2 | Abstraction Ladder 抽象阶梯 | 沿具体↔抽象上下移动 | ADHD眼动异常 → 注意力-运动耦合机制 |
+| F3 | Tension Hunting 张力狩猎 | 寻找领域内矛盾/悖论/异常值 | "为什么模型预测A但观察到B？" |
+| F4 | Cross-Pollination 交叉授粉 | 跨领域迁移概念/方法 | 生态学多样性指数 → 精神症状谱宽度 |
+| F5 | What Changed 变化探测 | 关注技术/环境/人群/政策变化 | "新技术能否回答旧问题？" |
+| F6 | Failure Analysis 失败分析 | 从失败和不一致中挖方向 | 效应量小→是否忽略了调节变量？ |
+| F7 | Simplicity Test 简洁性检验 | 追问更简单解释/更少前提 | 多症状是否共享一个核心缺陷？ |
+| F8 | Stakeholder Rotation 利益旋转 | 换视角（患者/医生/政策/研究者） | 患者的"生活质量"vs医生的"诊断准确" |
+| F9 | Composition/Decomposition 组合分解 | 拆分组件后重新组合 | 空间×时间×功能维度新组合 |
+| F10 | Explain-It Test 解释检验 | 向不同听众解释发现盲点 | 外行→动机；跨学科→方法；专家→反证 |
 
 ---
 
-### 框架 3: Tension Hunting 张力狩猎
+## Layer 2: 8认知引擎
 
-**中文**：寻找领域内的矛盾、悖论和异常值。张力最大的地方往往是创新最肥沃的土壤。
-
-| 张力类型 | 典型信号 | 示例问题 |
-|:---------|:---------|:---------|
-| **数据-理论张力** | 实验数据与现有理论预测不符 | "为什么模型预测A但实际观察到B？" |
-| **跨研究矛盾** | 不同研究得出相反结论 | "为什么文章1报告正相关而文章2报告无关联？" |
-| **直觉背离** | 结果违反领域常识 | "为什么最严重患者的某些指标反而正常？" |
-| **方法论张力** | 不同方法得出不同结论 | "问卷调查和生理测量结果为何不一致？" |
-
----
-
-### 框架 4: Cross-Pollination 交叉授粉
-
-**中文**：将一个领域的成熟概念、方法或模型引入目标领域。
-
-| 源领域 | 可迁移概念 | 目标领域应用示例 |
-|:-------|:-----------|:-----------------|
-| 生态学 | 物种多样性指数 | 用于评估精神症状的多样性（症状谱宽度） |
-| 经济学 | 边际效用递减 | 药物剂量-反应的边际效益分析 |
-| 网络科学 | 小世界网络 | 脑功能连接的小世界特性与认知灵活性 |
-| 物理学 | 熵/自由能 | 自由能原理应用于心理健康维持机制 |
+| # | 引擎 | 原理来源 | 核心操作 |
+|:-:|:-----|:---------|:---------|
+| E1 | Bisociation 组合创造 | Koestler《The Act of Creation》 | 两独立框架交叉产生新意义 |
+| E2 | Problem Reformulation 问题重构 | 元认知 | 解决问题前先质疑问题本身 |
+| E3 | Analogical Reasoning 结构映射 | Gentner SMT(1983) | 关系结构映射，非表面相似 |
+| E4 | Constraint Manipulation 约束操作 | Boden《The Creative Mind》 | 放松/收紧/替换/反转约束 |
+| E5 | Negation/Inversion 否定反转 | 反直觉 | 问"如果全错，对的会是什么" |
+| E6 | Abstraction Laddering 抽象升降 | 认知灵活度 | 上行问"为什么"，下行问"具体如何" |
+| E7 | Adjacent Possible 相邻可能 | Kauffman/Johnson | 探索当前知识的一步可达空间 |
+| E8 | Janusian/Dialectical 双面辩证 | Rothenberg(1979) / Hegel | 同时持有矛盾，寻找合题 |
 
 ---
 
-### 框架 5: What Changed 变化探测
+## Layer 3: 组合协议
 
-**中文**：关注"什么变了"——技术、环境、人群、政策的变化往往会创造新的研究机会。
+### 预定义组合
 
-| 变化维度 | 典型变化 | 研究机会 |
-|:---------|:---------|:---------|
-| **技术变化** | 新工具出现（fNIRS、可穿戴设备、大语言模型） | "新工具能否回答旧问题？" |
-| **环境变化** | COVID后线上教育普及、屏幕时间激增 | "环境变化是否改变了疾病表型？" |
-| **人群变化** | 老龄化、生活方式改变 | "新人群是否需要新的诊断标准？" |
-| **政策变化** | 新医保政策、数据隐私法规 | "政策变化如何影响研究设计？" |
-| **范式变化** | 从DSM分类到RDoC维度框架 | "新范式下哪些旧发现需要重新审视？" |
+| 组合 | 目标 | 操作序列 |
+|:----|:-----|:---------|
+| C1 思维热身 | 激活多维度思考 | E6→E1→E2 → L1全部 |
+| C2 瓶颈突破 | 突破认知卡点 | E5→E4→E8 → F6→F3 |
+| C3 跨域嫁接 | 引入外域智慧 | E3→E6→E1 → F4 |
+| C4 方向扫描 | 系统探测可能方向 | E7→E2→E6 → L1全部 |
+| C5 矛盾转化 | 将冲突变机遇 | E8→E5→E7 → F3 |
+| C6 约束突破 | 超越资源限制 | E4→E5→E2 → F7→F1 |
 
----
+### 集成流程
 
-### 框架 6: Failure Analysis 失败分析
-
-**中文**：分析"为什么之前的研究失败了或者结果不一致"，从失败中挖掘新方向。
-
-| 失败类型 | 分析问题 | 可能的出路 |
-|:---------|:---------|:-----------|
-| **效果微弱** | 效应量小，统计不显著 | 是否忽略了调节变量/亚群体？ |
-| **无法复现** | 结果无法在独立样本中复现 | 是否实验条件控制不足？ |
-| **结论矛盾** | 多篇研究结论冲突 | 差异是否来自方法/人群/测量工具的系统性差异？ |
-| **实际应用落地难** | 实验室效果好但临床转化失败 | 生态效度问题？实施障碍？ |
+1. **发散**: L2引擎运行→认知洞察 → L1框架触发→创意候选(10-30个) → 交叉标记
+2. **收敛**: 去重 → 三轴评分(新颖性/可行性/影响力, 1-5) → 排序(新颖×0.4+影响×0.4+可行×0.2)
+3. **检验**: 反谄媚检查 → 框架多样性核验(top-5≥3框架) → 输出格式化
 
 ---
 
-### 框架 7: Simplicity Test 简洁性检验
-
-**中文**：追问"有没有更简单的解释？"或者"能否用更少的前提解释同样的现象？"
-
-| 简洁性检验 | 典型问题 | 示例 |
-|:-----------|:---------|:-----|
-| **因果简化** | 现有复杂因果链能否用一个核心机制解释？ | 多种ADHD症状是否共享一个注意力-运动耦合缺陷？ |
-| **方法简化** | 能否用更便宜、更快的方法达到同等效果？ | 3分钟问卷 vs 30分钟认知测试？ |
-| **模型简化** | 复杂模型是否有过拟合风险？baseline模型表现如何？ | 深度学习 vs 线性回归在临床预测中的边际收益？ |
-| **概念简化** | 两个看似不同的概念是否在测量同一潜在结构？ | "执行功能"和"注意力控制"是否同一回事？ |
-
----
-
-### 框架 8: Stakeholder Rotation 利益相关者旋转
-
-**中文**：从不同利益相关者的视角看同一个问题，每个视角都可能揭示不同的研究优先级。
-
-| 视角 | 关心的核心问题 | 可能的研究方向 |
-|:-----|:--------------|:---------------|
-| **患者** | "我的生活质量能改善吗？" | 症状管理策略、用户体验 |
-| **临床医生** | "这个发现能帮我做诊断/治疗决策吗？" | 临床决策工具、风险分层 |
-| **政策制定者** | "这个研究值得投入公共资源吗？" | 成本效益分析、卫生经济学 |
-| **基础研究者** | "这个现象背后的机制是什么？" | 分子/环路机制、动物模型 |
-| **资助机构** | "这个方向是否具有战略价值？" | 国家需求导向、技术壁垒 |
-| **学术同行** | "这个方法比现有方法好在哪？" | 方法论创新、可复现性提升 |
-
----
-
-### 框架 9: Composition / Decomposition 组合与分解
-
-**中文**：将研究对象拆分为更小的组件，然后以新的方式重新组合。
-
-| 操作 | 定义 | 示例 |
-|:-----|:-----|:-----|
-| **空间分解** | 按解剖/功能区域拆分 | 将"大脑"拆分为前额叶、顶叶、小脑等 |
-| **时间分解** | 按时间阶段拆分 | 将"疾病进程"拆分为早期、中期、晚期 |
-| **功能分解** | 按功能模块拆分 | 将"注意力"拆分为警觉、定向、执行控制 |
-| **维度重组** | 跨维度的新组合 | 将"前庭功能×执行功能"的测量数据组合为新指标 |
-| **边界延伸** | 扩大或缩小研究边界 | 从"ADHD患儿"到"ADHD成人+儿童"的连续谱研究 |
-
----
-
-### 框架 10: Explain-It Test 解释检验
-
-**中文**：试着向不同知识背景的人解释你的研究想法，解释的困难点往往揭示了未被充分理解的问题。
-
-| 听众 | 解释要求 | 发现的问题类型 |
-|:-----|:---------|:---------------|
-| **外行（朋友/家人）** | 用1分钟说清楚"为什么要做这个研究" | 研究动机是否真正清晰？故事是否引人入胜？ |
-| **跨学科同事** | 用5分钟说清楚"方法为什么可行" | 方法论的普适性？术语壁垒在哪里？ |
-| **领域专家** | 用15分钟讨论"什么情况下你的想法会错" | 反证条件是否明确？假设潜台词是什么？ |
-| **资助评审** | 用3句话说明"为什么现在做、为什么你做" | 时机是否成熟？你的独特优势是什么？ |
-
----
-
-## Layer 2: 8个认知引擎框架 (Cognitive Engine Frameworks)
-
-每个框架提供一种底层的认知操作原始能力。不直接产出研究方向，而是产出认知洞察和新维度。
-
-### 框架 E1: Bisociation — 组合性创造 (Koestler)
-
-**中文**：Bisociation 是 Arthur Koestler 在《The Act of Creation》中提出的核心概念。它指将两个原本不相关的"参照框架"强行结合，产生新的意义。创造来源不是单一领域的深化，而是两个独立框架的交叉点。
-
-```
-框架A（如生物学）    框架B（如计算机科学）
-    │                      │
-    └──────────┬───────────┘
-               │
-         交叉点（如：神经网络 = 生物神经元的计算模型）
-               │
-         创造性的新框架
-```
-
-| 操作 | 描述 | 研究示例 |
-|:-----|:------|:---------|
-| **同域双框架** | 同一领域内两个子框架的结合 | 神经科学 × 免疫学 → 神经-免疫相互作用 |
-| **异域双框架** | 完全不同的两个领域 | 热力学 × 信息论 → 信息热力学 |
-| **方法-对象** | 将甲领域的方法应用于乙领域的问题 | 生态学的种-面积关系 → 城市规模分布 |
-| **概念-概念** | 两个抽象概念结合 | 熵 × 注意力 → 注意力熵理论 |
-
----
-
-### 框架 E2: Problem Reformulation — 问题重构
-
-**中文**：问题重构是创造性思维中最基础的元操作——改变对问题本身的表述。同一个根本问题可以用无数种方式表述，表述方式决定了你能看到什么解法。核心原则：**解决问题之前，先质疑问题本身。**
-
-| 重构策略 | 操作 | 示例 |
-|:---------|:-----|:-----|
-| **目的追问** | 从"怎么做X"退回到"为什么做X" | "如何提高注意力训练效果？" → "我们真正想要的是提升注意力的哪个方面？" |
-| **视角替换** | 从不同角色的角度重新定义问题 | "研究者想知道病因" vs "患者想知道怎么缓解" |
-| **约束去除** | 去掉一个隐含的假设条件 | "如何在fMRI下测量前庭功能？" → 去掉"fMRI"：是否可用其他工具？ |
-| **逆向定义** | 定义"不是什么"来明确"是什么" | "ADHD不是单纯的注意力问题，还包含什么？" |
-| **扩展边界** | 扩大/缩小问题的时间/空间/概念边界 | "大脑如何维持稳态？" → "整个神经系统如何维持稳态？" |
-
----
-
-### 框架 E3: Analogical Reasoning — 结构映射 (Gentner)
-
-**中文**：基于 Dedre Gentner 的结构映射理论（SMT, 1983）。类比不是表面相似性的匹配，而是**关系结构的映射**。真正强有力的类比发生在高阶关系层面。
-
-| 映射类型 | 定义 | 示例 |
-|:---------|:-----|:-----|
-| **表面映射** | 具体物/属性匹配（最弱，易误导） | "大脑像电脑" |
-| **关系映射** | 关系结构匹配 | "自然选择像市场选择"（变异-选择-保留的关系相同） |
-| **高阶映射** | 关系之间的关系匹配 | "自由能最小化像经济效用最大化"（都是在约束下优化目标函数） |
-
-**使用技巧**：选择一个你熟悉的领域作为源域，提取其核心因果/功能关系结构，逐一映射到目标问题。关键是要找到**关系的同构性**而非物体的相似性。
-
----
-
-### 框架 E4: Constraint Manipulation — 约束操作 (Boden)
-
-**中文**：源自 Margaret Boden 的创造性理论（*The Creative Mind*, 1990）。Boden 将创造力分为三种类型：组合性（已知元素重组合）、探索性（在已有空间内探索）、转换性（**改变约束空间本身**）。转换性创造力是最深刻的——不满足于在现有规则下找答案，而是改变规则本身。
-
-```
-约束 ──→ 识别约束类型 ──→ 操作约束 ──→ 新空间
-               │                    │
-        ├── 显性约束          ├── 放松：去掉
-        ├── 隐含约束          ├── 收紧：增加
-        └── 元约束            └── 替换/反转
-```
-
-| 约束类型 | 定义 | 操作 | 示例 |
-|:---------|:-----|:-----|:-----|
-| **方法论约束** | "必须用XX方法" | 放松 | "如果不用fMRI，还能用什么测脑活动？" |
-| **概念约束** | "X是Y的必要条件" | 反转 | "反过来会不会也一样？" |
-| **领域边界** | "这个领域只关心A" | 扩展 | "A和B的交集是什么？" |
-| **时间约束** | "必须在XX时间内完成" | 缩短 | "如果只有1/10时间，怎么做？" |
-| **资源约束** | "只能用XX数据" | 替换 | "如果用另一种数据，会有什么新发现？" |
-
----
-
-### 框架 E5: Negation / Inversion — 否定与反转
-
-**中文**：最强有力的反直觉认知操作——不是问"什么是对的"，而是问**"如果完全错了，正确的会是什么"**。利用了人类认知的"对比效应"——无法直接看到真理时，看清它的反面往往更容易。
-
-| 反转形式 | 操作 | 研究示例 |
-|:---------|:-----|:---------|
-| **因果反转** | 将"X导致Y"换成"Y导致X" | "ADHD导致注意力差" → "注意力调节能力差是否导致ADHD症状？" |
-| **假设否定** | 否定一个核心假设 | "假设训练有效" → "假设完全无效，什么情况下仍有改善？" |
-| **评价倒置** | 将"缺点"视为"优点" | "前庭功能检查太敏感（缺点）" → "敏感的测量是否能捕捉到更细微的差异？" |
-| **优先级反转** | 将次要变量变为主变量 | "年龄作为协变量" → "年龄是否应该是主要研究变量？" |
-| **量值反转** | 将效应方向反转 | "正相关" → "是否存在负相关的情境？" |
-
----
-
-### 框架 E6: Abstraction Laddering — 抽象升降
-
-**中文**：一条从具体到抽象（上行）和从抽象到具体（下行）的认知梯子。上行通过追问**"为什么"**，下行通过追问**"具体如何"**。创造性往往发生在跨越多个抽象层级的跳跃中。
-
-| 方向 | 操作 | 典型问题 | 示例 |
-|:-----|:------|:---------|:-----|
-| **上行（抽象化）** | 寻找更高层次的规律或原理 | "这个具体现象是什么更一般规律的特例？" | "ADHD儿童扫视异常" → "注意力-运动耦合的一般机制" |
-| **下行（具体化）** | 寻找可操作、可测量的细节 | "这个一般原理在具体情境中如何表现？" | "注意力-运动耦合" → "具体是哪个眼动参数？" |
-| **侧移（类比）** | 在相同抽象层级跨域移动 | "其他领域有类似模式吗？" | "注意力-运动耦合" → "语言-运动耦合是否存在类似机制？" |
-| **多级跳跃** | 跨越多级抽象层 | "上升到最高层再下降到最底层？" | 力学原理 → 机械手表 vs 量子力学 → 量子钟 |
-
----
-
-### 框架 E7: Adjacent Possible — 相邻可能 (Kauffman/Johnson)
-
-**中文**：Stuart Kauffman 提出，Steven Johnson 推广（*Where Good Ideas Come From*, 2010）。核心思想：**只有"一步之遥"的可能性是可达的**。创新不是凭空出现，而是当前知识的"临近空间"中的新组合。"相邻可能"是动态扩展的——每探索一个，新的相邻可能就会打开。
-
-| 分析维度 | 问题 | 操作指南 |
-|:---------|:-----|:---------|
-| **当前状态清单** | "我们现在有什么？" | 列出：现有数据、方法、工具、理论、合作者、设备 |
-| **一步可达空间** | "利用现有资源，下一步最自然的方向是什么？" | 每个资源×每个未解决问题 = 相邻可能候选 |
-| **两步映射** | "如果第一步被探索，接下来会打开什么？" | 标记战略路径（先走哪步能打开更多后续可能） |
-| **技术催化** | "新技术/新数据是否打开了新的相邻可能？" | 新技术（如LLM、fNIRS）可能一次性打开大片相邻空间 |
-
----
-
-### 框架 E8: Janusian / Dialectical Thinking — 双面/辩证思维
-
-**中文**：Albert Rothenberg（1979）提出，指同时思考**两个相反的概念为同时成立**的能力。Rothenberg 发现许多诺贝尔奖得主的重大突破始于同时持有两个矛盾的想法。辩证思维（Hegel）：正题 → 反题 → 合题。合题不是折中，而是**在更高抽象层次上消解矛盾的新框架**。
-
-```
-正题（现有框架A）───→ 矛盾 ──→ 反题（对立框架B）
-       │                            │
-       └──────────┬─────────────────┘
-                  │
-             合题（新框架C）
-         "在更高层次上消解矛盾"
-```
-
-**使用方法**：
-1. 识别当前研究中的核心矛盾或张力的两方
-2. 同时持有两个矛盾的方向，追问"如果两者都对，会怎样？"
-3. 寻找一个更高抽象层次的新框架，使得矛盾在其中不再是矛盾的
-
----
-
-## Layer 3: 组合协议 (Combination Protocol)
-
-### 层间组合规则
-
-| 层间路径 | 效果 | 使用场景 |
-|:---------|:-----|:---------|
-| **L1独立** | 仅使用10操作框架，产出研究方向列表 | 用户已有明确方向感，只需结构化发散 |
-| **L2独立** | 仅使用8认知引擎，产出认知洞察 | 思维卡住，需要认知热身/瓶颈突破 |
-| **L1+L2串联** | L2引擎产出认知洞察 → L1框架转化为具体方向 | 完整创意链（默认推荐） |
-| **L2+L1并联** | L1/L2各自独立运行 → 结果交叉整合 | 需要最大化的方向多样性 |
-
-### 预定义组合模式 (C1-C6)
-
-| 组合 | 认知目标 | 使用场景 | 操作序列 |
-|:-----|:---------|:---------|:---------|
-| **C1: 思维热身** | 激活多维度思考 | ideation 前的准备 | L2(E6→E1→E2) → L1(全部) |
-| **C2: 瓶颈突破** | 突破认知卡点 | 思维停滞时 | L2(E5→E4→E8) → L1(F6→F3) |
-| **C3: 跨域嫁接** | 引入外域智慧 | 方法/概念创新 | L2(E3→E6→E1) → L1(F4) |
-| **C4: 方向扫描** | 系统探测可能方向 | 新领域探索 | L2(E7→E2→E6) → L1(全部10框架) |
-| **C5: 矛盾转化** | 将冲突变为机遇 | 面对学术争议 | L2(E8→E5→E7) → L1(F3) |
-| **C6: 约束突破** | 超越资源限制 | 资源受限时 | L2(E4→E5→E2) → L1(F7→F1) |
-
-### 集成流程 (Integrated Workflow)
-
-#### Stage 1: Diverge (发散)
-
-**中文**：对 L1 各框架产生 IdeaItem，同时 L2 引擎产生 CognitiveInsight。
-
-| 步骤 | 操作 | 产出 |
-|:-----|:-----|:-----|
-| 1a | L2认知引擎：按选定组合模式运行 | cognitive_insights (L2输出) |
-| 1b | L1操作框架：10框架独立触发 | 原始创意候选列表 (10-30个) |
-| 1c | 交叉标记：标注L1创意中受L2洞察启发的方向 | 来源关联矩阵 |
-
-#### Stage 2: Converge (收敛)
-
-| 步骤 | 操作 | 产出 |
-|:-----|:-----|:-----|
-| 2a | 去重合并 | 合并多框架来源的相同创意 |
-| 2b | 三轴评分（新颖性/可行性/影响力, 1-5） | 三维评分矩阵 |
-| 2c | 冲突标记 | 标记与已知知识冲突的创意 |
-| 2d | 排序（新颖性×0.4 + 影响力×0.4 + 可行性×0.2） | 创意优先级列表 |
-
-#### Stage 3: Validate (检验)
-
-| 步骤 | 操作 | 产出 |
-|:-----|:-----|:-----|
-| 3a | 反谄媚检查 | 是否符合新颖性/多样性/反方向要求 |
-| 3b | 框架多样性核验 | top-5创意来自≥3个不同框架 |
-| 3c | 输出格式化 | 最终封装输出 |
-
----
-
-## 框架选择指南 (Framework Selection Guide)
+## 框架选择指南
 
 | 你的状态 | 推荐路径 |
 |:---------|:---------|
-| **需要新的研究方向** | L1(F2→F3→F5) + L2(E7) |
-| **思维卡住了** | L2(E5→E4→E2) |
-| **需要方法创新** | L2(E3→E1) + L1(F4→F9) |
-| **面对学术争议** | L2(E8→E5) + L1(F3) |
-| **资源受限** | L2(E4→E5) + L1(F7→F1) |
-| **需要系统扫描** | L2(E7→E2→E6) + L1(全部) |
+| 需要新研究方向 | F2→F3→F5 + E7 |
+| 思维卡住 | E5→E4→E2 |
+| 需要方法创新 | E3→E1 + F4→F9 |
+| 面对学术争议 | E8→E5 + F3 |
+| 资源受限 | E4→E5 + F7→F1 |
+| 需要系统扫描 | E7→E2→E6 + L1全部 |
 
 ---
 
-## 边界判断 (When NOT to use this atom)
+## 反谄媚防护
 
-| 场景 | 替代方案 |
-|:-----|:---------|
-| 已有明确具体方向，不需要发散 | 直接进入 `hypothesis-generation` |
-| 需要的是文献检索 | 使用 `knowledge-acquisition` |
-| 需要的是跨论文关联分析 | 使用 `association-discovery` |
-| 需要将创意形式化为可检验假说 | 使用 `hypothesis-generation` |
-| 输入问题过于模糊（如"研究脑科学"） | 先追问用户具体问题维度 |
+1. **强制反方向**: 每个框架至少提出一个与用户预设相反的创意方向
+2. **新颖性检查**: L1≥30% novelty≥4, L2≥40% novelty≥4
+3. **冲突标记**: 与已知文献冲突必须标记风险
+4. **多样性保证**: top-5来自≥3个不同框架
 
 ---
 
-## 反谄媚防护 (Anti-Sycophancy Guardrails)
-
-### 1. 强制反方向
-每个框架必须至少提出一个**与用户预设方向相反的**创意方向。
-
-### 2. 新颖性强制检查
-- L1：至少30%的创意 novelty ≥ 4
-- L2：至少40%的认知洞察 novelty ≥ 4
-- 如果全部 novelty ≤ 3，触发回溯：尝试切换为反直觉模式
-
-### 3. 冲突标记条款
-如果创意与已知文献直接冲突，必须明确标记风险。
-
-### 4. 输出多样性保证
-最终输出的 top-5 创意必须来自至少3个不同的框架（L1或L2均可）。
-
----
-
-## 版本历史
-
-| 版本 | 日期 | 变更 |
-|:-----|:-----|:-----|
-| 1.0.0 | 2026-05-14 | 初始版本——从 NanoResearch brainstorming-research-ideas 吸收 |
-| **2.0.0** | **2026-05-14** | **合并 creative-cognition (CCF) 作为 Layer 2。三层架构：L1 10操作框架 + L2 8认知引擎 + L3 组合协议。原子总数减少1，功能不变。** |
-
-## 命令层·English
+## 命令层
 
 - **Signature**: `problem_statement: str, constraints: dict -> research_directions: list[Direction], cognitive_insights: list[Insight]`
-- **Allowed tools**: `Read`, `Write`
-- **Input**: `problem_statement` (str, required), `constraints` (dict, optional: e.g. topics, blockers, upstream findings)
-- **Output**: `research_directions` (list[Direction] with score + novelty), `cognitive_insights` (list[Insight] with framework type)
-- **Layer 1** (10 operational frameworks): problem-narrowing, analogy, inversion, SCAMPER, 5-Whys, TOC, morphological, random-stimulus, design-thinking, first-principles
-- **Layer 2** (8 cognitive engines): lateral-thinking, systems-thinking, critical-thinking, design-thinking, creative-thinking, strategic-thinking, holistic-thinking, analytical-thinking
-- **Layer 3** (6 combination protocols): diverge-converge, problem-reframing, bottleneck-breakthrough, lateral-crossover, contradiction-resolution, reverse-perspective
-- **Integrated workflow**: Diverge → Converge → Refine → Validate (4 phases)
-- **Diversity guarantee**: top-5 outputs must come from ≥3 different frameworks
-- **Flattery protection**: output must include directions opposite to user's assumed stance
+- **Allowed tools**: Read, Write
+- **Input**: `problem_statement` (required), `constraints` (optional)
+- **Output**: `research_directions` (with score + novelty), `cognitive_insights` (with framework type)
 - **Do NOT**: perform literature review, formalize hypotheses, write paper sections
