@@ -1,6 +1,6 @@
 # 反谄媚阈值协议 (Concession Threshold Protocol)
 
-> 版本: 1.0.0 | 适用: 所有 Synthos 认知原子及 Hermes 技能
+> 版本: 1.0.0 | 适用: 所有 Synthos 认知原子及 AI Agent 技能
 > 来源: 从 viewpoint-verification 的 ARS 反谄媚门控提取并泛化
 > 吸收自: Claude Code 的拒绝反思协议 ("Mental reframing to make a request acceptable is signal to refuse")
 

@@ -68,15 +68,12 @@ Synthos has produced **44 paper drafts** across multiple biomedical domains and 
 ## Getting Started
 
 ```bash
-# The system runs on Hermes Agent
 # Clone the repository
 git clone https://github.com/yakeworld/Synthos.git
-
-# Set up Hermes Agent (see SETUP.md)
-# Skills are loaded automatically on first use
+cd Synthos
 
 # Load any cognitive atom
-skill_view("knowledge-acquisition")
+open skills/knowledge-acquisition/SKILL.md
 ```
 
 See [SETUP.md](SETUP.md) for detailed installation instructions.

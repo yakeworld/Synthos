@@ -229,7 +229,8 @@ class ResearchPaperManager:
         bibtex_file: str,
         output_dir: str,
         enhanced_bibtex_file: str = None,
-        callback: Callable[[int, int, str], None] = None
+        callback: Callable[[int, int, str], None] = None,
+        download_pdfs: bool = True,
     ) -> Tuple[int, int, str]:
         """
         下载并增强BibTeX文件
@@ -239,7 +240,7 @@ class ResearchPaperManager:
             output_dir: 输出目录
             enhanced_bibtex_file: 增强的BibTeX文件路径
             callback: 进度回调
-            
+            download_pdfs: 是否下载PDF
         Returns:
             (成功下载数, 总条目数, 增强文件路径)
         """
@@ -283,31 +284,35 @@ class ResearchPaperManager:
             pdf_downloaded = False
             pdf_url = enhanced_entry.get('pdf_url', '')
             
-            if isinstance(pdf_url, str) and pdf_url.startswith(('http://', 'https://')):
-                pdf_filename = os.path.join(pdf_dir, f"{enhanced_entry.get('ID', f'paper_{idx}')}.pdf")
-                if self.downloader.download_paper_sync(pdf_url, pdf_filename):
-                    logger.info(f"Successfully downloaded paper to {pdf_filename}")
-                    pdf_downloaded = True
-                    success_downloads += 1
-                    rel_pdf_path = os.path.relpath(pdf_filename, os.path.dirname(enhanced_bibtex_file))
-                    enhanced_entry['file'] = f":{rel_pdf_path}:PDF"
-            elif pdf_url:
-                logger.warning(f"pdf_url exists but is not a valid http(s) link: '{pdf_url}'")
-            
-            if not pdf_downloaded:
-                paper = {
-                    'key': enhanced_entry.get('ID', f'paper_{idx}'),
-                    'doi': enhanced_entry.get('doi', ''),
-                    'arxiv': enhanced_entry.get('eprint', '') if enhanced_entry.get('archiveprefix', '').lower() == 'arxiv' else '',
-                    'title': enhanced_entry.get('title', '')
-                }
-                if paper['doi'] or paper['arxiv']:
-                    pdf_path = await self._download_paper_async(paper, pdf_dir)
-                    if pdf_path and os.path.exists(pdf_path):
-                        success_downloads += 1
+            if download_pdfs:
+                if isinstance(pdf_url, str) and pdf_url.startswith(('http://', 'https://')):
+                    pdf_filename = os.path.join(pdf_dir, f"{enhanced_entry.get('ID', f'paper_{idx}')}.pdf")
+                    if self.downloader.download_paper_sync(pdf_url, pdf_filename):
+                        logger.info(f"Successfully downloaded paper to {pdf_filename}")
                         pdf_downloaded = True
-                        rel_pdf_path = os.path.relpath(pdf_path, os.path.dirname(enhanced_bibtex_file))
+                        success_downloads += 1
+                        rel_pdf_path = os.path.relpath(pdf_filename, os.path.dirname(enhanced_bibtex_file))
                         enhanced_entry['file'] = f":{rel_pdf_path}:PDF"
+                elif pdf_url:
+                    logger.warning(f"pdf_url exists but is not a valid http(s) link: '{pdf_url}'")
+                
+                if not pdf_downloaded:
+                    paper = {
+                        'key': enhanced_entry.get('ID', f'paper_{idx}'),
+                        'doi': enhanced_entry.get('doi', ''),
+                        'arxiv': enhanced_entry.get('eprint', '') if enhanced_entry.get('archiveprefix', '').lower() == 'arxiv' else '',
+                        'title': enhanced_entry.get('title', '')
+                    }
+                    if paper['doi'] or paper['arxiv']:
+                        pdf_path = await self._download_paper_async(paper, pdf_dir)
+                        if pdf_path and os.path.exists(pdf_path):
+                            success_downloads += 1
+                            pdf_downloaded = True
+                            rel_pdf_path = os.path.relpath(pdf_path, os.path.dirname(enhanced_bibtex_file))
+                            enhanced_entry['file'] = f":{rel_pdf_path}:PDF"
+            elif pdf_url:
+                # 不下载PDF，但仍记录OA链接
+                enhanced_entry['file'] = pdf_url
             
             return enhanced_entry
         
@@ -344,7 +349,62 @@ class ResearchPaperManager:
         return success_downloads, total_entries, enhanced_bibtex_file
     
     def _fetch_semantic_scholar_data_sync(self, entry: Dict) -> Dict:
-        """同步获取Semantic Scholar数据"""
+        """同步获取Semantic Scholar数据，增强bib条目元数据"""
+        import requests as _req
+        doi = entry.get('doi', '')
+        if not doi:
+            return entry
+        
+        try:
+            # Semantic Scholar API: paper lookup by DOI
+            api_url = f"https://api.semanticscholar.org/graph/v1/paper/DOI:{doi}"
+            # Use shorter fields list to avoid URL length issues
+            params = {'fields': 'title,year,abstract,authors,journal,externalIds,openAccessPdf'}
+            
+            r = _req.get(api_url, params=params, timeout=15)
+            if r.status_code != 200:
+                logger.debug(f"Semantic Scholar lookup failed for DOI {doi}: HTTP {r.status_code}")
+                return entry
+            
+            data = r.json()
+            
+            # Enrich the entry with data from Semantic Scholar
+            if data.get('title'):
+                entry['title'] = data['title']
+            if data.get('year'):
+                entry['year'] = str(data['year'])
+            if data.get('abstract'):
+                entry['abstract'] = data['abstract']
+            if data.get('citationCount') is not None:
+                entry['citation_count'] = str(data['citationCount'])
+            if data.get('referenceCount') is not None:
+                entry['reference_count'] = str(data['referenceCount'])
+            if data.get('journal') and isinstance(data['journal'], dict):
+                if data['journal'].get('name'):
+                    entry['journal'] = data['journal']['name']
+                if data['journal'].get('volume'):
+                    entry['volume'] = data['journal']['volume']
+                if data['journal'].get('pages'):
+                    entry['pages'] = data['journal']['pages']
+            if data.get('authors') and isinstance(data['authors'], list):
+                author_str = ' and '.join(
+                    a.get('name', '') for a in data['authors'] if a.get('name')
+                )
+                if author_str:
+                    entry['author'] = author_str
+            if data.get('openAccessPdf') and isinstance(data['openAccessPdf'], dict):
+                entry['pdf_url'] = data['openAccessPdf'].get('url', '')
+            if data.get('externalIds') and isinstance(data['externalIds'], dict):
+                eids = data['externalIds']
+                if eids.get('ArXiv') and not entry.get('eprint'):
+                    entry['eprint'] = eids['ArXiv']
+                    entry['archiveprefix'] = 'arXiv'
+            
+            logger.info(f"Enhanced entry: {entry.get('ID', '?')}")
+            
+        except Exception as e:
+            logger.debug(f"Semantic Scholar enhancement failed for {doi}: {e}")
+        
         return entry
     
     async def _download_paper_async(self, paper: Dict, pdf_dir: str) -> Optional[str]:

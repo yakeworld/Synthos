@@ -4,8 +4,9 @@ description: "Transform hypotheses into structured academic arguments: paper sec
 version: 1.1.0
 author: Synthos Agent
 license: MIT
-allowed-tools: delegate_task Read Write Execute
+allowed-tools: task_delegation (agent, inline), Read (view, read), Write (write), Execute (bash, code execution)
 signature: "hypotheses: list[Hypothesis], structure: str -> sections: list[Section], references: list[Reference]"
+tags: [argument-expression, academic-writing, paper-sections, evidence-chains, literature-support, citation]
 metadata:
   synthos_atom_type: "cognitive"
   synthos_version: "1.1.0"
@@ -352,7 +353,7 @@ Adapted from widely shared advice by researchers including Neel Nanda, Sebastian
 ## 命令层·English
 
 - **Signature**: `hypotheses: list[Hypothesis], structure: str -> sections: list[Section], references: list[Reference]`
-- **Allowed tools**: `delegate_task`, `Read`, `Write`, `Execute`
+- **Allowed tools**: `task_delegation`, `Read`, `Write`, `Execute`
 - **Input**: `hypotheses` (list[Hypothesis]) from upstream `hypothesis-generation`, `structure` (str, one of: `introduction`, `methods`, `results`, `discussion`, `full_paper`), `raw_papers` (optional)
 - **Output**: `sections` (list[Section] with heading + paragraphs + argument refs), `arguments` (list[Argument] with claim/evidence/reasoning), `references` (list[Reference] in APA 7th), `standpoint_declaration` (dict with position_in_chain, writing_lens, model_boundary)
 - **Narrative pillars**: The What, The Why, The So What — every paragraph must serve at least one

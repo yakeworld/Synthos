@@ -44,7 +44,7 @@ def _extract_pdf_url(html: str, base_domain: str) -> str | None:
 
 def _probe_domains():
     """Probe all domains for reachability, update stats."""
-    from ..domain_db import update_probe, get_probe_timestamp, set_probe_timestamp
+    from domain_db import update_probe, get_probe_timestamp, set_probe_timestamp
     
     last_probe = get_probe_timestamp()
     if time.time() - last_probe < _PROBE_TTL:
@@ -74,7 +74,7 @@ def try_scihub_curl(doi: str, output_path: str, **kwargs) -> dict | None:
     Download from Sci-Hub using curl_cffi (TLS fingerprint bypass).
     Returns {'success': True, 'file': output_path} or None.
     """
-    from ..domain_db import get_best_domains, record_download_result, get_cooldown_domains
+    from domain_db import get_best_domains, record_download_result, get_cooldown_domains
     
     # Probe domains periodically
     _probe_domains()

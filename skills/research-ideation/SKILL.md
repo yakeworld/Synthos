@@ -11,8 +11,18 @@ allowed-tools: Read Write
 dependencies:
   - knowledge-acquisition
   - association-discovery
+signature: "research_question: str -> research_candidates: list[ResearchCandidate], cognitive_insights: list[CognitiveInsight]"
+tags: [research-ideation, brainstorming, cognitive-engine, research-direction, exploration]
 metadata:
   synthos_atom_type: "cognitive"
+  synthos_version: "2.1.0"
+  synthos_skill_md_hash: "research-ideation-v2.1.0"
+  synthos_model_tested_on: "2026-05-10T00:00:00Z"
+  synthos_author: "Synthos"
+  synthos_absorbed_from: "Synthos internal (research ideation methodology)"
+  synthos_absorbed_date: "2026-05-10"
+  synthos_io_contract_ref: "references/IO_CONTRACT.md"
+  synthos_asserted_compliance: "P1"
   synthos_data_access_level: "raw"
   synthos_depends_on: "knowledge-acquisition, association-discovery"
 ---

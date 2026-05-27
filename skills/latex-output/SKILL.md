@@ -7,13 +7,14 @@ license: MIT
 signature: "input: assembled_output_json -> output: conference_ready_latex_with_bib"
 metadata:
   synthos_atom_type: "output"
-  synthos_version: "1.1.0"
-  synthos_skill_md_hash: "b2c6dcb4cc59bdd035ab893ef67ba063"
+  synthos_skill_md_hash: "bf686fd527e3594549e7eea08c0cf22c987e4cd327c39934e31e10948681e5ed"
   synthos_model_tested_on: "2026-05-18T00:00:00Z"
-  synthos_depends_on: "argument-expression, knowledge-acquisition"
   synthos_author: "Synthos + AutoResearchClaw absorption + AI-research-SKILLs enhancement"
   synthos_absorbed_from: "AutoResearchClaw (base) + Orchestra Research AI-research-SKILLs (AAAI/ACL/COLM模板, algorithm包, 写作哲学)"
-allowed-tools: terminal read_file write_file
+allowed-tools:
+  - shell
+  - file_read
+  - file_write
 
 ---
 
@@ -42,7 +43,7 @@ allowed-tools: terminal read_file write_file
 5. **自动化编译**：生成 build.sh 一键编译脚本
 
 关键约束：
-- 不使用任何 Python 库——Agent 直接用 write_file() 逐行生成 .tex
+- 不使用任何 Python 库——Agent 直接用 file_write() 逐行生成 .tex
 - 不手动编写模板 .sty 文件——使用现有模板或从官网下载
 - 中文期刊需使用 ctex 宏包和 CJK 支持
 
@@ -109,7 +110,7 @@ outputs/runs/<run_id>/latex/
 
 ### 2. 生成 LaTeX 正文
 
-Agent 用 `write_file()` 写入 LaTeX 内容。关键转换规则：
+Agent 用 `file_write()` 写入 LaTeX 内容。关键转换规则：
 
 | Markdown | LaTeX |
 |----------|-------|
@@ -123,7 +124,7 @@ Agent 用 `write_file()` 写入 LaTeX 内容。关键转换规则：
 | `- item` | `\item item` |
 | `` `code` `` | `\texttt{code}` |
 
-**不要使用任何 Python 库**。Agent 直接用 `write_file()` 逐行生成 .tex 内容。
+**不要使用任何 Python 库**。Agent 直接用 `file_write()` 逐行生成 .tex 内容。
 
 ### 3. 生成 BibTeX 引用
 
@@ -243,11 +244,11 @@ argument-expression 输出的数学公式（LaTeX 格式）直接透传，
 ```
 signature: "assembled_json: dict, target_format: str -> latex_package: dict[paths]"
 ```
-
-### Allowed Tools
-- `terminal` — check LaTeX environment, list template files, compile with pdflatex
-- `read_file` — read assembled_output.json and dependency outputs
-- `write_file` — write .tex, .bib, .sty, build.sh files (NO Python libraries)
+| Allowed Tools | Purpose |
+|--------------|---------|
+| `shell` | check LaTeX environment, list template files, compile with pdflatex |
+| `file_read` | read assembled_output.json and dependency outputs |
+| `file_write` | write .tex, .bib, .sty, build.sh files (NO Python libraries) |
 
 ### Input Format
 ```

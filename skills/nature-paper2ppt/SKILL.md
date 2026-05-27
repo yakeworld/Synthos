@@ -4,7 +4,7 @@ description: "Nature-style Chinese PPTX from academic papers — argument-driven
 version: 1.0.0
 author: Synthos + GARCH-QUANT (absorbed)
 license: MIT
-allowed-tools: terminal Read Write search_files
+allowed-tools: shell Read Write file_search
 signature: "source: str (PDF|text|notes) -> presentation: PPTX, qa_report: MD, figure_assets: list[Image]"
 metadata:
   synthos_atom_type: "extended"
@@ -138,7 +138,7 @@ metadata:
 ## 命令层·English
 
 - **Signature**: `source: str (PDF|text|notes) -> presentation: PPTX, qa_report: MD, figure_assets: list[Image]`
-- **Allowed tools**: `terminal` (PyMuPDF/Pillow/python-pptx), `Read`, `Write`, `search_files`
+- **Allowed tools**: `shell` (PyMuPDF/Pillow/python-pptx), `Read`, `Write`, `file_search`
 - **Default stack**: PyMuPDF (extract) → Pillow (crop/resize) → python-pptx (build PPTX)
 - **Cross-platform**: macOS, Linux, Windows — no OS-specific paths or fonts
 - **Default length**: 12-16 slides (15-20 min)

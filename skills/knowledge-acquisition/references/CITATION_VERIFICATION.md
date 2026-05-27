@@ -106,7 +106,7 @@ Agent 阅读论文标题+摘要，判断是否与研究主题相关：
 
 ## 集成到 knowledge-acquisition 流程
 
-在 skill_view('knowledge-acquisition') 加载后的执行流程中，在"API 检索"步骤之后增加"引用验证"步骤：
+在加载 knowledge-acquisition 技能后的执行流程中，在"API 检索"步骤之后增加"引用验证"步骤：
 
 ```
 1. 用户查询 → 确定关键词

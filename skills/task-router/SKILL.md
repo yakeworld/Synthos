@@ -7,7 +7,7 @@ description: >-
 version: 1.8.0
 author: Synthos
 license: MIT
-allowed-tools: terminal Read Write delegate_task skill_view
+allowed-tools: shell (bash), Read (view), Write (write), task_delegation (agent, inline), skill_loader (view with file path)
 signature: "query: str, context: dict -> route: str, atom_chain: list[str], execution_mode: str"
 metadata:
   synthos_atom_type: "cognitive"
@@ -67,7 +67,7 @@ metadata:
 | **标准链** | 一次性查询：搜索文献/提取信息/写段文字 | ACQ→EXT→ARG 或 自定义短链 | 顺序执行，每步完报告 |
 | **探索循环** | 需迭代优化的单一问题 | HYP→ARG→VER, 循环 | 提出→检验→修改, 循环≥2次 |
 | **研究双循环** | 完整研究任务：文献+发现+假说+论文 | ACQ→EXT→ASC→GAP→HYP→ARG→VER | 外环(计划)+内环(执行) |
-| **并行执行** | 独立子任务可并行 | 各子任务独立链 | 用delegate_task并行 |
+| **并行执行** | 独立子任务可并行 | 各子任务独立链 | 并行执行子任务 |
 
 **查询→模式判断规则：**
 - "搜索/查找/找文献" → 标准链(ACQ→EXT)
@@ -81,7 +81,7 @@ metadata:
 
 ```
 for each atom in chain:
-  1. skill_view(atom) 加载技能
+  1. 加载技能：open skills/{atom}/SKILL.md
   2. 从上游JSON读取输入
   3. 执行原子任务
   4. 保存输出到 {atom}_{sequence}.json
@@ -123,7 +123,7 @@ for each atom in chain:
 ### 并行执行
 
 ```
-子任务列表 → delegate_task(goal, context, toolsets)
+子任务列表 → 并行执行子任务
 汇总: 收集所有子任务输出 → 统一格式
 注意: 子任务不可依赖彼此输出
 ```
@@ -190,6 +190,6 @@ chain_example:
 ## 命令层
 
 - **Signature**: `query: str -> pipeline_trace.json + 汇总报告`
-- **Allowed tools**: terminal, Read, Write, delegate_task, skill_view
+- **Allowed tools**: shell, Read, Write, task_delegation, skill_loader
 - **Output**: 原子级JSON + pipeline_trace.json + 用户终报
 - **Execution**: 每步独立JSON → 不拼接 → 汇总时引用文件路径

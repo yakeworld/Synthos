@@ -4,8 +4,9 @@ description: Route queries to 78+ public scientific databases via REST APIs. Cov
 version: 1.0.0
 author: Synthos Agent (scientific-agent-skills absorption)
 license: MIT
-allowed-tools: terminal web
+allowed-tools: terminal playwright
 signature: "query: str, domain: str -> results: list[dict], databases_queried: list[str]"
+tags: [database-lookup, scientific-data, bioinformatics, chemistry, api-routing]
 metadata:
   synthos_atom_type: "extended"
   synthos_version: "1.0.0"
@@ -14,6 +15,9 @@ metadata:
   synthos_absorbed_date: "2026-05-18"
   synthos_depends_on: "knowledge-acquisition"
   synthos_data_access_level: "raw"
+  synthos_skill_md_hash: "scientific-database-lookup-v1.0.0"
+  synthos_model_tested_on: "2026-05-18T00:00:00Z"
+  synthos_author: "Synthos Agent (scientific-agent-skills absorption)"
 ---
 
 ## 原理层·文言
@@ -158,7 +162,7 @@ metadata:
 
 | 陷阱 | 说明 | 避免方法 |
 |------|------|---------|
-| **API Key 缺失** | 部分数据库(如NASA ADS, Materials Project)需要API key | 查环境变量 ~/.hermes/.env 或提示用户注册 |
+| **API Key 缺失** | 部分数据库(如NASA ADS, Materials Project)需要API key | 查环境变量（如 $S2_API_KEY, $NASA_API_KEY）或提示用户注册 |
 | **速率限制** | 部分数据库(如NCBI E-utilities)限制每秒3请求 | curl 调用间 sleep 0.5s |
 | **JSON响应过大** | 某些查询返回数千行 | 使用 limit/offset 参数分页 |
 | **结果标准化** | 不同数据库返回格式各异 | 用 jq 统一映射到标准化输出格式 |
@@ -244,7 +248,7 @@ signature: "query: str, domain: str, mode: str -> results: list[dict], databases
 ### Error Handling
 | Condition | Action |
 |:----------|:-------|
-| API key missing | Check ~/.hermes/.env, prompt user to register if absent |
+| API key missing | Check environment variables (e.g. $S2_API_KEY, $NASA_API_KEY) |
 | HTTP timeout (>30s) | Retry once, log failure, suggest fallback database |
 | Rate limit hit | Sleep 1s and retry with exponential backoff |
 | Empty results | Return empty results list, do NOT silently fallback to other DB |
