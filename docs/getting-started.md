@@ -1,23 +1,23 @@
 # Synthos — 使用指南
 
-## 如何在 Hermes 中使用
+## 如何在 AI Agent 中使用
 
-### 方法1：直接加载
+### 方法1：直接加载技能
 
 ```
-在对话中加载：skill_view(name='Synthos')
+# 用 Agent 的文件读取能力加载技能
+open skills/task-router/SKILL.md
 ```
 
-加载后，告知你想要做什么（"帮我写一个文献综述"），Hermes 会自动按照流程执行。
+加载后，告知你想要做什么（"帮我写一个文献综述"），Agent 会自动按照流程执行。
 
 ### 方法2：分步使用 Skill
 
 每个子 skill 可单独加载：
 
 ```
-skill_view(name='文献检索与摘要')     # 单独做文献检索
-skill_view(name='章节写作')           # 单独生成某个章节
-skill_view(name='参考文献管理')       # 单独处理参考文献
+open skills/knowledge-acquisition/SKILL.md    # 单独做文献检索
+open skills/argument-expression/SKILL.md       # 单独生成某个章节
 ```
 
 ### 方法3：通过工作流编排
@@ -30,7 +30,7 @@ workflows/lit-review-paper-draft.md  定义了完整流程
 
 ## 环境要求
 
-- Hermes Agent 已安装
+- AI Agent 需支持 SKILL.md 加载（任一种均可：Hermes Agent, Claude Code, Codex, OpenCode 等）
 - 环境变量中已配置 Semantic Scholar API Key
 - 有网络连接（用于文献检索）
 
@@ -49,7 +49,7 @@ Agent: 好的，开始Step 1：多源文献检索...
 
 ### 会话2：继续项目
 
-Hermes 的 session 记忆会自动保留上下文。新 session 中直接说：
+Agent 的 session 记忆会自动保留上下文。新 session 中直接说：
 
 ```
 User: 继续文献综述项目
@@ -91,10 +91,10 @@ A: 支持。章节写作时指定语言即可。
 A: 当前版本主要处理文本。图表可以描述数据结构，AI 提供图表制作建议，但实际图表制作需借助其他工具（如 matplotlib、GraphPad）。
 
 **Q: 如何保存项目？**
-A: 每次运行的中间结果保存在 `output/YYYYMMDD-项目名称/` 目录下。每个 session 之间通过 Hermes 的 session 记忆保持上下文。
+A: 每次运行的中间结果保存在 `output/YYYYMMDD-项目名称/` 目录下。客户端 Agent 的 session 记忆会帮助保持上下文。
 
 **Q: 可以多个项目并行吗？**
-A: 可以。不同项目的上下文通过不同的 output 目录区分。但同一个 time 只能专注一个项目的对话上下文。
+A: 可以。不同项目的上下文通过不同的 output 目录区分。
 
 ## 版本历史
 

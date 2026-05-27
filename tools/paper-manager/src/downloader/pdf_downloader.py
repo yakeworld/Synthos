@@ -258,7 +258,7 @@ class PDFDownloader(BaseDownloader):
     async def _download_racing(self, doi: str, save_path: str) -> bool:
         """Parallel racing download via curl_cffi + LibGen."""
         try:
-            from ..racing_engine import race_sources, build_download_tiers
+            from racing_engine import race_sources, build_download_tiers
             from concurrent.futures import ThreadPoolExecutor
             import functools
             

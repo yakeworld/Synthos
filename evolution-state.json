@@ -309,7 +309,7 @@
       "atom6 (viewpoint-verification)",
       "atom7 (gap-discovery)"
     ],
-    "execution_mode": "Agent loads task-router SKILL.md → determines atom chain → for each atom: load SKILL.md with skill_view() → execute with terminal/web/delegate_task → save JSON → assemble output.",
+    "execution_mode": "Agent loads task-router SKILL.md → determines atom chain → for each atom: load SKILL.md → execute with shell/web/task_delegation → save JSON → assemble output.",
     "key_files": [
       "skills/task-router/SKILL.md — Agent execution entry point",
       "skills/knowledge-acquisition/SKILL.md — Agent-native multi-source search",

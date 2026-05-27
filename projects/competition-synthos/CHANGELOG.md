@@ -60,4 +60,4 @@
 | **待办** | 补充2篇论文的Figure（架构图/对比图）；等待用户临床数据填充Table |
 
 
-*日志始于: 2026-05-16 | 路径: .hermes/projects/competition-synthos/*
+*日志始于: 2026-05-16 | 路径: projects/competition-synthos/*

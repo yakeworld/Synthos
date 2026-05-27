@@ -6,17 +6,25 @@ description: >-
 version: 1.1.0
 author: Synthos
 license: MIT
-signature: "input: claim, evidence_levels -> output: figure_contract, publication_ready_figure"
 allowed-tools:
-  - terminal (Python plotting)
-  - read_file (data inspection)
-  - search_files (data location)
-  - execute_code (data preprocessing)
-  - write_file (figure scripts)
+  - terminal (Python plotting, shell)
+  - file_read (data inspection)
+  - file_search (data location)
+  - execute (data preprocessing, code execution)
+  - file_write (figure scripts)
+signature: "input: claim, evidence_levels -> output: figure_contract, publication_ready_figure"
+tags: [figure-generation, data-visualization, scientific-figures, nature-style, publication-ready]
 metadata:
   synthos_atom_type: "extended"
+  synthos_version: "1.1.0"
+  synthos_skill_md_hash: "figure-generation-v1.1.0"
+  synthos_model_tested_on: "2026-05-15T00:00:00Z"
   synthos_data_access_level: "verified_only"
   synthos_priority: "P2"
+  synthos_author: "Synthos"
+  synthos_absorbed_from: "Synthos internal (originally from research-paper-search skill)"
+  synthos_absorbed_date: "2026-05-15"
+  synthos_depends_on: "knowledge-acquisition"
 ---
 
 ## 原理层·文言
