@@ -106,10 +106,28 @@ temp/
 cache/
 
 # ============================================
-# 12. tools/paper-manager 运行时产物
+# 12. 🔴 敏感信息 — 禁止上传（已泄露需改密码）
 # ============================================
+# 密码 MEDDATA_PASSWORD_PLACEHOLDER 已提交到git历史，已从当前版本清除
+# 建议：立即修改 MedData 平台密码
 tools/.domain_cache/
 tools/paper-manager/.domain_cache/
 tools/paper-manager/*.log
 tools/paper-manager/.api_key
 tools/paper-manager/.env
+tools/paper-manager/auto_fix_d8.py
+tools/paper-manager/batch_enhance_all.py
+tools/paper-manager/batch_meddata_all.py
+
+# ============================================
+# 13. 通用敏感文件模式
+# ============================================
+*.key
+*.pem
+*.crt
+credentials*
+auth.json
+token*
+secrets*
+**/.api_key
+**/__pycache__/
