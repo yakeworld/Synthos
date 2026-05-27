@@ -1,8 +1,8 @@
 ---
 name: hypothesis-generation
-description: "科学假设生成原子（HYP）—— 将研究空白转化为形式化可检验假说。接收GAP发现的研究空白和ACQ文献语料，生成包含预测、反证条件、竞争假说和实验设计的结构化假设。每个假设包含可检验性/新颖性/重要性/可行性评分。遵循7+1东西合参框架：观察者位置声明(Step0)→认识论熵定位(Step1.5)→模型假设清单(Step2.5)→日损检查点(Step5.5)。"
-version: 1.4.0
-author: Synthos Agent
+description: "科学假设生成原子（HYP）—— 将研究空白转化为形式化可检验假说。接收GAP发现的研究空白和ACQ文献语料，生成包含预测、反证条件、竞争假说和实验设计的结构化假设。每个假设包含可检验性/新颖性/重要性/可行性/可验证性/冲突度六维评分及验证方案草案。遵循7+1东西合参框架：观察者位置声明(Step0)→认识论熵定位(Step1.5)→模型假设清单(Step2.5)→日损检查点(Step5.5)。"
+version: 1.5.0
+author: Synthos Agent + 用户杨晓凯
 license: MIT
 allowed-tools: terminal Read Write
 signature: "associations: list[Association], research_gaps: list[Gap] -> hypotheses: list[Hypothesis]"
@@ -77,7 +77,8 @@ observer_standpoint:
 - [ ] 每个假设包含 falsification_condition（至少一个反证条件）
 - [ ] 每个假设包含 entropy_reduced（认识论熵定位，Step 1.5）
 - [ ] 每个假设包含 model_assumptions（≥3条，每条带违反后果，Step 2.5）
-- [ ] 每个假设包含可检验性/新颖性/重要性/可行性评分
+- [ ] 每个假设包含可检验性/新颖性/重要性/可行性/可验证性/冲突度六维评分
+- [ ] 每个假设附带 verification_plan（含验证路径、数据需求、计算成本、风险因素）
 - [ ] 假设来源的研究空白有文献定位
 - [ ] 最终输出包含 pruned 记录（日损检查，Step 5.5）
 - [ ] 精简后假说数量 ≥ 3（否则触发补充生成）
@@ -216,16 +217,49 @@ analogy:
 | **调节效应** | 只在特定条件下成立 | 仅男性患儿中显著 |
 | **测量伪像** | 假象来自测量方法 | 眼动仪校准误差 |
 
-#### Step 4: 假说评级
+#### Step 4: 假说评级 — 双轨评分体系
 
-| 维度 | 评分标准 |
-|:-----|:---------|
-| 可检验性（0-1） | 是否有明确的观测指标和统计阈值 |
-| 新颖性（0-1） | 与已有文献的差异度 |
-| 重要性（0-1） | 验证后对领域的贡献 |
-| 可行性（0-1） | 所需资源、时间、技术 |
+| 维度 | 评分标准 | 权重 |
+|:-----|:---------|:----:|
+| **可检验性**（0-1） | 是否有明确的观测指标和统计阈值 | 0.20 |
+| **新颖性**（0-1） | 与已有文献的差异度 | 0.20 |
+| **重要性**（0-1） | 验证后对领域的贡献 | 0.15 |
+| **可行性**（0-1） | 所需资源、时间、技术 | 0.15 |
+| **可验证性**（0-1） | 验证路径是否清晰完整（见下） | 0.20 |
+| **冲突度**（0-1） | 与现有知识的冲突程度（越高越颠覆） | 0.10 |
 
-综合分 = 可检验性 × 0.3 + 新颖性 × 0.25 + 重要性 × 0.25 + 可行性 × 0.2
+综合分 = 可检验性×0.20 + 新颖性×0.20 + 重要性×0.15 + 可行性×0.15 + 可验证性×0.20 + 冲突度×0.10
+
+##### 可验证性评分细则
+
+| 分值 | 含义 | 示例 |
+|:---:|:-----|:-----|
+| 0.9-1.0 | 有公开数据集/代码可直接运行验证 | 用PhysioNet数据验证PD眼动分类假说 |
+| 0.7-0.9 | 可通过虚拟仿真或数值实验验证 | 用PINN模拟VOR增益变化假说 |
+| 0.5-0.7 | 需要收集新数据但方案清晰可行 | 临床横断面研究，已有人群可招募 |
+| 0.3-0.5 | 验证方案可行但成本高（>1月/>10万） | 纵向队列研究，需随访1年 |
+| 0.0-0.3 | 验证方案模糊或当前不可行 | 需新硬件开发/伦理审批/国际合作 |
+
+##### 验证方案草案（每个假说附带）
+
+```yaml
+verification_plan:
+  approach: "公开数据分析 | 虚拟仿真 | 临床实验 | 算法对比"  # 四选一
+  data_requirement: 
+    type: "公开数据集 | 自采集数据 | 仿真生成 | 代码运行"
+    source: "数据集名/GitHub仓库/设备名"
+    estimated_size: "约N GB / N条记录"
+  computation:
+    gpu_hours: "约N小时"  # 可为0
+    cpu_hours: "约N小时"
+  steps:
+    - "步骤1：下载/预处理数据"
+    - "步骤2：运行分析/仿真脚本"
+    - "步骤3：统计检验，生成结果"
+  expected_duration: "N天/N周"
+  cost_estimate: "约N元（GPU租赁/数据购买）"
+  risk_factors: ["可能因XXX而失败", "需依赖XXX可用性"]
+```
 
 #### Step 5: NSFC问题树
 
@@ -324,7 +358,9 @@ HYP.hypotheses[]
 - **Output**: `hypotheses` (list[Hypothesis]) — each with prediction, falsification, competing hypotheses, evidence, scores, experimental design, entropy_reduced, model_assumptions; plus observer_standpoint declaration and pruned records
 - **Required fields per hypothesis**: `prediction`, `falsification`, `supporting_evidence` (≥2), `competing_hypotheses` (≥1), `scores`, `entropy_reduced`, `model_assumptions` (≥3)
 - **Competing types**: `confounding`, `reverse_causality`, `moderation`, `measurement_artifact`
-- **Score weights**: testability×0.3 + novelty×0.25 + importance×0.25 + feasibility×0.2
+- **Score weights**: testability×0.20 + novelty×0.20 + importance×0.15 + feasibility×0.15 + verifiability×0.20 + conflict×0.10
+- **Verifiability scale**: 0.9-1.0 (public dataset/code) / 0.7-0.9 (simulation) / 0.5-0.7 (new data, doable) / 0.3-0.5 (costly) / 0.0-0.3 (infeasible)
+- **Verification plan**: each hypothesis includes approach, data_requirement, computation, steps, duration, cost_estimate, risk_factors
 - **NSFC mode**: optional, generates question tree when applicable
 - **Pruning**: mandatory Step 5.5 — if hypotheses < 3 after pruning, trigger supplementary generation
 - **Model lens**: default "most likely true"; optional "most competitive for NSFC"
