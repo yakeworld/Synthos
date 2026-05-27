@@ -21,3 +21,17 @@
 **审批人**: Synthos Agent
 **审批时间**: 2026-05-10
 **金标准通过率**: 待首次测试
+
+---
+
+## v0.2.0 — 2026-05-14
+
+**变更类型**: [PW-Bench吸收] 提取模式增强
+**描述**: 
+- 从 PaperOrchestra/PaperWritingBench (arXiv:2604.05018, §3 / App. F.2) 吸收逆向工程方法论
+- 新增三种可选提取模式：Sparse Idea、Dense Idea、Experimental Log
+- 在边界条件中标注逆向工程为可选增强模式
+- 新增 reference 文件: references/pwbench-reverse-engineer.md
+**影响的组件**: SKILL.md (§4 + references索引), CHANGE_LOG.md
+**审批人**: Synthos Agent
+**审批时间**: 2026-05-14

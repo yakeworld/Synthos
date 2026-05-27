@@ -1,16 +1,50 @@
 ---
 name: latex-output
-description: Convert Synthos assembled_output.json into conference-ready LaTeX (.tex, .bib, figures). Supports NeurIPS/ICLR/ICML templates + Chinese journal formats. Agent-native — reads JSON, writes LaTeX directly, zero Python.
+version: 1.1.0
+author: Synthos + Nous Research
+description: Convert Synthos assembled_output.json into conference-ready LaTeX (.tex, .bib, figures). Supports NeurIPS/ICLR/ICML/AAAI/ACL/COLM templates + Chinese journal formats. Agent-native — reads JSON, writes LaTeX directly, zero Python.
 license: MIT
+signature: "input: assembled_output_json -> output: conference_ready_latex_with_bib"
 metadata:
   synthos_atom_type: "output"
-  synthos_version: "1.0.0"
-  synthos_skill_md_hash: "pending"
-  synthos_model_tested_on: "2026-05-11T00:00:00Z"
+  synthos_version: "1.1.0"
+  synthos_skill_md_hash: "b2c6dcb4cc59bdd035ab893ef67ba063"
+  synthos_model_tested_on: "2026-05-18T00:00:00Z"
   synthos_depends_on: "argument-expression, knowledge-acquisition"
-  synthos_author: "Synthos + AutoResearchClaw absorption"
-allowed-tools: terminal Read Write
+  synthos_author: "Synthos + AutoResearchClaw absorption + AI-research-SKILLs enhancement"
+  synthos_absorbed_from: "AutoResearchClaw (base) + Orchestra Research AI-research-SKILLs (AAAI/ACL/COLM模板, algorithm包, 写作哲学)"
+allowed-tools: terminal read_file write_file
+
 ---
+
+## 原理层·文言
+
+> 格式非饰也，乃信息熵之控也。排版失真则知识损，格式精准则信息全。
+> 以LaTeX为器，以精确为的。自动生其形，人工审其神。
+> 文质彬彬，然后君子。
+
+**核心理念**：排版不是装饰，是最小化信息畸变的过程。每个LaTeX命令都是降低读者关于格式的认知不确定性的工具——追求的不是"好看"，是"读者不花任何认知资源在格式上，全部用于理解内容"。
+
+| 要义 | 文言释 | 对应7+1维度 |
+|:-----|:-------|:------------|
+| 格式即约束 | 格式即认知约束 | 格物通理——格式是认知的边界条件 |
+| 排版即熵减 | 排版者，降熵之事也 | 熵减律——排版降低读者关于格式的不确定性 |
+| 自动生形，人工审神 | 人机各司其职 | 天人合一——系统生成，人负责验证和升华 |
+
+## 方法层·白话
+
+本技能将论文内容（assembled_output.json）自动转换为**符合会议/期刊格式的LaTeX论文包**，核心逻辑：
+
+1. **读入内容**：读取 argument-expression 和 knowledge-acquisition 的输出 JSON
+2. **格式转换**：将 Markdown 内容按规则转换为 LaTeX 语法（#→\section, **→\textbf, $$→\\[ \\] 等）
+3. **模板适配**：根据目标会议/期刊选择对应 .sty 模板，或为中文期刊使用 ctex 宏包
+4. **引用生成**：只包含已验证的引用，生成 BibTeX 格式
+5. **自动化编译**：生成 build.sh 一键编译脚本
+
+关键约束：
+- 不使用任何 Python 库——Agent 直接用 write_file() 逐行生成 .tex
+- 不手动编写模板 .sty 文件——使用现有模板或从官网下载
+- 中文期刊需使用 ctex 宏包和 CJK 支持
 
 # LaTeX 输出 — 从 Synthos 到会议论文
 
@@ -38,6 +72,9 @@ outputs/runs/<run_id>/latex/
 | NeurIPS 2025 | 国际 ML 会议 | AutoResearchClaw `styles/neurips_2025.sty` |
 | ICLR 2026 | 国际表征学习会议 | AutoResearchClaw `styles/iclr_2026.sty` |
 | ICML 2026 | 国际 ML 会议 | AutoResearchClaw `styles/icml_2026.sty` |
+| AAAI 2026 | AI 会议（新） | AI-research-SKILLs `templates/aaai2026/` |
+| ACL | 计算语言学（新） | AI-research-SKILLs `templates/acl/` |
+| COLM 2025 | 语言建模（新） | AI-research-SKILLs `templates/colm2025/` |
 | 中文期刊模板 | 中文核心期刊 | Agent 按规范手写 |
 
 ## 输入
@@ -157,8 +194,86 @@ author = {{杨}晓凯 and {王}小明}
 argument-expression 输出的数学公式（LaTeX 格式）直接透传，
 不需要额外转换。
 
+## 触发条件
+
+当以下任一条件满足时，应加载本技能：
+
+- 用户要求将论文内容导出为LaTeX格式
+- 用户需要生成会议/期刊模板的 .tex 文件（NeurIPS/ICLR/ICML/中文期刊）
+- 需要从 assembled_output.json 生成完整的论文包（paper.tex + references.bib + build.sh）
+- 用户需要论文编译、格式调整或LaTeX修复
+- 需要将 Markdown 内容转换为 LaTeX 语法
+
+**不加载的时机**：
+- 仅需要图表生成（使用 figure-generation 技能）
+- 仅需要参考文献检索（使用 knowledge-acquisition 技能）
+- 需要的是 Word/PPT/HTML 等非 LaTeX 格式输出
+- 论文内容尚未完成论证构建（先使用 argument-expression 技能）
+
+## 验证清单
+
+执行前确认：
+
+- [ ] assembled_output.json 已就绪（含 title, abstract, sections, references）
+- [ ] 目标输出格式已明确（NeurIPS / ICLR / ICML / 中文期刊 / 自定义）
+- [ ] 参考文献引用已验证状态为 "verified"
+- [ ] 图表文件（如有）已就绪，路径已确认
+- [ ] 会议模板 .sty 文件可用或可从官网获取
+
+执行后确认：
+
+- [ ] paper.tex 已生成，无 LaTeX 语法错误
+- [ ] references.bib 已生成，仅包含已验证引用
+- [ ] Markdown→LaTeX 转换正确（`#` → `\section`, `##` → `\subsection`, `**` → `\textbf` 等）
+- [ ] 数学公式已正确透传（`$$` → `\[ \]`, `$` → `\( \)`）
+- [ ] 图表引用已使用 `\includegraphics` 并设置正确路径
+- [ ] 中文期刊使用 `ctex` 宏包，非中文会议使用对应 .sty 模板
+- [ ] build.sh 已生成，可一键编译
+- [ ] 编译脚本不依赖特定用户环境（使用 pdflatex/bibtex/lualatex 标准命令）
+
 ## 参考
 - AutoResearchClaw `researchclaw/templates/conference.py` — 会议模板定义
 - AutoResearchClaw `researchclaw/templates/converter.py` — Markdown→LaTeX 转换
 - AutoResearchClaw `researchclaw/overleaf/formatter.py` — Overleaf 兼容格式化
 - AutoResearchClaw `researchclaw/templates/styles/` — 模板 .sty 文件
+
+## 命令层·English
+
+### Signature
+```
+signature: "assembled_json: dict, target_format: str -> latex_package: dict[paths]"
+```
+
+### Allowed Tools
+- `terminal` — check LaTeX environment, list template files, compile with pdflatex
+- `read_file` — read assembled_output.json and dependency outputs
+- `write_file` — write .tex, .bib, .sty, build.sh files (NO Python libraries)
+
+### Input Format
+```
+{
+  "assembled_output_path": "string",    // path to assembled_output.json
+  "target_format": "neurips|iclr|icml|aaai|acl|colm|chinese_journal|custom",
+  "template_path": "string | null",     // optional, custom .sty path
+  "output_dir": "string"                // output directory (default: outputs/runs/<run_id>/latex/)
+}
+```
+
+### Output Format
+```
+outputs/runs/<run_id>/latex/
+├── paper.tex                    # Main LaTeX document
+├── references.bib               # Verified BibTeX references only
+├── <template>.sty               # Conference style template (if applicable)
+├── build.sh                     # One-click compile script
+└── paper.pdf                    # Compiled PDF (if LaTeX available)
+```
+
+### Error Handling
+| Condition | Action |
+|:----------|:-------|
+| assembled_output.json missing | Return error: run argument-expression first |
+| target_format unrecognized | Default to neurips template |
+| citation_verification missing | Include all references, mark as unverified |
+| pdflatex not found | Generate .tex only, skip compilation |
+| Template .sty not found | Download from official source URL in comments |
