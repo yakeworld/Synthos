@@ -1,0 +1,12 @@
+{
+  "test_case": "nature-paper2ppt-chinese-medical",
+  "verification_criteria": [
+    {"check": "design_to_inference_logic", "condition": "clinical paper uses design-to-inference arc (problem→design→results→inference)", "weight": "high"},
+    {"check": "chinese_titles", "condition": "all slide titles in Chinese, conclusion-style preferred", "weight": "high"},
+    {"check": "evidence_figures_used", "condition": "at least 2 evidence figures integrated", "weight": "high"},
+    {"check": "limitation_slide", "condition": "dedicated limitation slide exists", "weight": "medium"},
+    {"check": "roc_curve_included", "condition": "if ROC curve is key evidence, it should be a hero figure", "weight": "medium"},
+    {"check": "medical_terminology", "condition": "technical terms preserved in English (ADHD, AUC, CNN)", "weight": "medium"},
+    {"check": "no_hallucinated_numbers", "condition": "all numbers match input (AUC=0.89, sens=87.5%, spec=91.2%)", "weight": "critical"}
+  ]
+}

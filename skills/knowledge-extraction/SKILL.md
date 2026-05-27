@@ -1,10 +1,14 @@
 ---
 name: knowledge-extraction
 description: Extract structured knowledge from academic paper metadata and abstracts. Returns structured JSON with per-paper findings, methodology classification, domain tags, limitations, and field-level summary. Use when upstream knowledge-acquisition has returned raw_papers and structured extraction is needed before association discovery.
+version: 1.1.0
+author: Synthos Agent
 license: MIT
+allowed-tools: Read Write vision_analyze
+signature: "papers: list[Paper] -> knowledge_items: list[KnowledgeItem], field_summary: dict"
 metadata:
   synthos_atom_type: "cognitive"
-  synthos_version: "0.1.0"
+  synthos_version: "1.1.0"
   synthos_skill_md_hash: "51b3b4ade3128abd12b46e05e197ad7308b52259d3e313e3a01051d3a69157ed"
   synthos_model_version_pin: "deepseek/deepseek-v4-pro@2026-05-10"
   synthos_model_tested_on: "2026-05-10T00:00:00Z"
@@ -16,21 +20,43 @@ metadata:
   synthos_boundary_proof_ref: "references/BOUNDARY.md"
   synthos_change_log_ref: "references/CHANGE_LOG.md"
   synthos_asserted_compliance: "P0,P1,P2"
-  synthos_mechanical_atoms: ""
   synthos_depends_on: "knowledge-acquisition"
   synthos_author: "Synthos Agent"
-allowed-tools: Read Write
+  synthos_data_access_level: "redacted"
 ---
 
-# 知识提取 (Knowledge Extraction)
+# 知识提取 (Knowledge Extraction) - 认知原子 #2
 
-## 1. 职责（Scope）
+## 原理层·文言
+
+### 提纯之道
+
+> 玉在山而草木润，文在卷而精华藏。
+> 不琢不成器，不提取不知。
+> 观其要而摘其核，分其类而明其法。
+> 一篇一摘，逐篇提纯，不越俎代庖。
+> 知止而后有定，定而后能得。
+
+**核心理念**：知识提取是认知链的第二步。只回答"这篇论文说了什么"——不比较、不关联、不假设。逐篇提取核心发现、方法论、领域标签、研究局限。提取的精度决定后续认知的质量。
+
+## 方法层·白话
+
+### 触发条件
+
+在以下情况加载本技能：
+
+- 上游 knowledge-acquisition 已返回 raw_papers，需要进行结构化提取
+- 需要从论文摘要中提取研究方法、领域标签、证据等级
+- 下游 association-discovery 等待结构化输入时
+- 用户要求"提炼/总结/分析这些论文"
+
+### 1. 职责（Scope）
 
 从上游 `knowledge-acquisition` 产出的 `raw_papers` 中，逐论文提取结构化知识：核心发现、研究方法分类、领域标签、研究局限、主题关键词。输出 `extracted_knowledge`（单论文粒度）和 `field_summary`（跨论文领域摘要）。
 
 本原子**不做**跨论文比较（那是 `association-discovery` 的职责），**不做**假设生成（那是 `hypothesis-generation` 的职责）。它只回答一个问题：**"这篇论文说了什么？"**
 
-## 2. 输入输出（Contract Summary）
+### 2. 输入输出（Contract Summary）
 
 详见 `references/IO_CONTRACT.md`。
 
@@ -40,9 +66,11 @@ allowed-tools: Read Write
 | 输出 | `extracted_knowledge` (list[KnowledgeItem]) | 本原子生成 |
 | 输出 | `field_summary` (FieldSummary) | 本原子生成 |
 
-## 3. 推理流程（Procedure）
+### 3. 推理流程（Procedure）
 
-1. **读取输入**：检查 `input_dict` 中是否存在 `raw_papers`。若为空或不存在，返回 `_err("Missing raw_papers")`。
+1. **读取输入**：检查 `input_dict` 中是否存在 `raw_papers`。
+   - 若 `raw_papers` 非空，正常执行后续提取。
+   - 若 `raw_papers` 为空或不存在，尝试从最近一次缓存（`extracted_knowledge`）中恢复历史提取结果，在输出中标注 `"recalled_from_cache":true`。若也无缓存，返回 `_err("Missing raw_papers and no cache available")`。
 2. **逐论文提取**：对每篇论文执行以下子步骤：
    a. 从 `title` + `abstract` 中识别**核心发现**（寻找结果性陈述：found/show/demonstrate/reveal/indicate + 具体效应）。
    b. 分类**研究方法**：匹配13种方法论模式（RCT、cohort、cross-sectional、machine_learning、eye_tracking 等），见 `references/IO_CONTRACT.md` 的枚举。
@@ -50,6 +78,12 @@ allowed-tools: Read Write
    d. 提取**研究局限**：作者声明或可推断的局限性。
    e. 标注**主题标签**：诊断、治疗、机制、风险评估、评估工具等。
    f. 估算**证据等级**：meta_analysis > rct > cohort > cross_sectional > case_series > expert_opinion。
+   g. **视觉提取（visual extraction）** — 当论文 PDF/图片可用时，通过 `vision_analyze` 提取图表内容：
+      - 对论文中的 Figure/Table 截图调用 `vision_analyze(image_path, "请描述该图表：标题、坐标轴、数据趋势、关键数字")`
+      - 将提取的结构化信息编码进 KnowledgeItem 的 `visual_data` 字段
+      - 支持的类型：统计图（bar/line/scatter）、热力图、医学影像（MRI/CT）、流程图、表格
+      - 标记提取类型：`chart_reading` | `table_extraction` | `medical_imaging` | `flow_diagram`
+      - 注意：`vision_analyze` 仅在 PDF 文件已下载到 `pdfs/` 目录时可用；否则跳过视觉提取
 3. **跨论文摘要**：汇总所有逐论文提取结果，产出 `field_summary`：
    - 主要方法论分布
    - 聚合主题（注明频次）
@@ -58,20 +92,21 @@ allowed-tools: Read Write
 4. **构建证据链**：每个 KnowledgeItem 的证据节点引用其来源论文的 DOI。详见 `references/EVIDENCE_SCHEMA.md`。
 5. **输出**：返回 `_ok({"extracted_knowledge": [...], "field_summary": {...}})` 信封。
 
-## 4. 边界判断（When NOT to use this atom）
+### 4. 边界判断（When NOT to use this atom）
 
 详见 `references/BOUNDARY.md`。典型排除场景：
 - 如果只需要论文的标题/DOI，不需要结构化提取 → 直接用 `raw_papers`，不调用本原子。
 - 如果需要跨论文比较或关联分析 → 这是 `association-discovery` 的职责，本原子只提供结构化输入。
 - 如果输入是 PDF 文件路径（而非已解析的元数据） → 需要机械原子 `pdf_parser`，不在本原子范围内。
+- **如需从论文逆向工程重构研究设计**（PW-Bench 的 Sparse Idea / Dense Idea / Experimental Log）→ 本原子的**可选增强模式**，见 `references/pwbench-reverse-engineer.md`。
 
-## 5. 证据链输出要求（Evidence Summary）
+### 5. 证据链输出要求（Evidence Summary）
 
 详见 `references/EVIDENCE_SCHEMA.md`。每个 `KnowledgeItem` 必须携带：
 - `source_type: "doi"`, `source_ref: "<DOI>"`, `note: "Extracted from abstract"`
 - 如果论文无 DOI，使用 `source_type: "atom_output"`, `source_ref: "raw_papers[index]"`
 
-## 6. 示例（Minimal Example）
+### 6. 示例（Minimal Example）
 
 **输入**：
 ```json
@@ -111,10 +146,39 @@ allowed-tools: Read Write
 }
 ```
 
-## 7. 参考文件索引（References）
+### 7. 参考文件索引（References）
 
 - IO 契约：`references/IO_CONTRACT.md`
 - 证据链 schema：`references/EVIDENCE_SCHEMA.md`
 - 边界证明：`references/BOUNDARY.md`
 - 金标准：`golden/GOLDEN_SET.md`
 - 变更日志：`references/CHANGE_LOG.md`
+- **[PW-Bench吸收] 逆向工程方法论**：`references/pwbench-reverse-engineer.md`
+
+### 变更日志
+
+| 日期 | 版本 | 变更内容 |
+|:----|:----|:---------|
+| 2026-05-23 | v1.2.0 | 新增空输入缓存回退机制，新增vision_analyze视觉提取增强 |
+
+### 验证清单
+
+运行本技能后，确认以下检查项：
+
+- [ ] 每篇论文都提取了核心发现（key_findings）
+- [ ] 研究方法分类准确（匹配13种方法论枚举之一）
+- [ ] 研究领域映射正确（9个领域之一）
+- [ ] 证据链中每个 KnowledgeItem 引用了来源论文的 DOI
+- [ ] field_summary 已聚合所有论文的跨领域信息
+- [ ] 输出格式符合 _ok 信封结构
+- [ ] 无 Python 代码生成（Agent-native 推理执行）
+
+## 命令层·English
+
+- **Signature**: `papers: list[Paper] -> knowledge_items: list[KnowledgeItem], field_summary: dict`
+- **Allowed tools**: `Read`, `Write`
+- **Input**: `raw_papers` (list[Paper]) from upstream `knowledge-acquisition`
+- **Output**: `extracted_knowledge` (list[KnowledgeItem]), `field_summary` (FieldSummary)
+- **Reference docs**: `references/IO_CONTRACT.md`, `references/EVIDENCE_SCHEMA.md`, `references/BOUNDARY.md`
+- **Golden set**: `golden/GOLDEN_SET.md` (pass threshold: 0.80)
+- **Do NOT**: compare across papers, generate hypotheses, parse PDFs directly

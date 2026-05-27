@@ -31,3 +31,36 @@
 **审批人**: Synthos Agent
 **审批时间**: 2026-05-10
 **金标准通过率**: 待首次测试
+
+---
+
+## v0.2.0 — 2026-05-13
+
+**变更类型**: [ARS吸收] 能力增强
+**描述**: 
+- 在 SKILL.md 推理流程中新增 Step 4（反谄媚门控 — Concession Threshold Protocol）
+- 用户反驳必须打分1-5才能让步（5=让步，4=让步但标注缺口，3=坚守，2=反攻，1=升级）
+- 禁止连续让步（让步后下次门槛升到5/5）
+- 让步率 >50% 时暂停并升级所有门槛到5/5
+- 思维框锁检测（每3轮反驳后自问前提假设）
+- 反模式警告：用户坚持≠证据，用户情绪不影响验证
+- 新增 frontmatter: `synthos_data_access_level: "verified_only"`
+**影响的组件**: SKILL.md, frontmatter
+**审批人**: Synthos Agent
+**审批时间**: 2026-05-13
+
+---
+
+## v0.3.0 — 2026-05-14
+
+**变更类型**: [PW-Bench吸收] 证据质量增强
+**描述**: 
+- 从 PaperOrchestra/PaperWritingBench (arXiv:2604.05018, App. F.3) 吸收 Citation F1 引用质量评价方法论
+- 在置信度计算步骤（Step 3e）之后新增 Step 3e.5：引用质量修正门控
+- 引用质量得分 = (P0数 + 0.5×P1数) / (P0数 + P1数)
+- 置信度修正：confidence × min(1.0, citation_quality + 0.3)
+- 新增 reference 文件: references/citation-f1-methodology.md
+- P0/P1 分类不参与自动裁决，仅作为弱信号
+**影响的组件**: SKILL.md (Step 3e.5 + references索引), CHANGE_LOG.md
+**审批人**: Synthos Agent
+**审批时间**: 2026-05-14
