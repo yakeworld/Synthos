@@ -269,151 +269,21 @@ pruned:
 
 #### Step 6: 实验执行 — Execution Step
 
-**已在 allowed-tools 中声明 terminal 权限。本步骤通过容器化环境执行实验代码，收集真实指标反馈给 VER 原子。**
+**已在 allowed-tools 中声明 terminal 权限。通过容器化环境执行实验代码，收集真实指标。**
 
-**触发条件**：仅当以下条件全部满足时执行：
-- 假说已有明确的可检验预测和统计标准
-- 用户已批准执行实验
-- 实验方案可在 Python/Shell 中实现
-
-**执行协议**：
-
-```yaml
-execution_plan:
-  hypothesis_id: "HYP-YYYYMMDD-N"
-  runtime: "docker"                    # 容器化隔离执行
-  image: "python:3.11-slim"           # 轻量Python镜像
-  entrypoint: "python /code/run.py"   # 入口脚本
-  code_generation:                    # 基于假说自动生成实验代码
-    - "生成数据加载和预处理脚本"
-    - "生成模型/统计分析代码" 
-    - "生成指标计算和可视化代码"
-  expected_outputs:
-    - "stdout 日志"
-    - "指标 JSON（含 loss/accuracy/p-value/effect_size）"
-    - "可视化 PNG（可选）"
-  verification:                        # 结果回传 VER
-    - "将指标 JSON 写入 executed_results/<hypothesis_id>/metrics.json"
-    - "通知 downstream VER 原子取用"
-```
+**触发条件**：仅当假说已有明确可检验预测 + 用户批准 + 实验可 Python/Shell 实现时执行。
 
 **执行流程**：
-
 ```
-1. 准备实验代码 → 写入 /tmp/synthos_experiments/<hyp_id>/
-2. 构建 Docker 运行命令：
-   docker run --rm -v /tmp/synthos_experiments/<hyp_id>/:/code \
-     python:3.11-slim python /code/run.py
-3. 通过 terminal 执行 → 捕获 stdout + exit_code
-4. 解析输出 → 提取指标
-5. 写入 executed_results/ 供 VER 原子核验
-6. 标记假说状态为 "executed" 或 "execution_failed"
+1. 生成实验代码 → /tmp/synthos_experiments/<hyp_id>/
+2. docker run --rm -v /tmp/.../<hyp_id>/:/code python:3.11-slim python /code/run.py
+3. 捕获 stdout + exit_code → 解析指标 → 写入 executed_results/
+4. 标记假说状态为 executed / execution_failed
 ```
 
-**安全约束**：
-| 规则 | 说明 |
-|:-----|:------|
-| 必须容器化 | 禁止在宿主机直接执行实验代码 |
-| 无网络 | 实验容器 `--network none` 防止数据泄露 |
-| 超时限制 | 单次执行 ≤ 30 分钟（`docker run --timeout 1800`） |
-| 无持久化 | 容器退出后自动清理（`--rm`） |
-| 代码生成审查 | 执行前由 Agent 审查生成的代码是否存在危险操作 |
+**安全约束**：必须容器化 | 无网络(--network none) | 超时≤30min | 自动清理(--rm) | 执行前审查代码
 
-**边界判断**：以下情况**不执行**实验，仅输出实验方案文本：
-- 实验需要 GPU（当前无 GPU 容器）
-- 实验需要外部 API 密钥（如 OpenAI/数据库）
-- 实验时间预计 > 30 分钟
-- 实验涉及人/动物数据（伦理审批需求）
-
-**意图**：填补"主动推断生成提案但不执行"的致命短板（论文 Limitations #2）。通过 Docker 容器化执行，在不破坏宿主环境的前提下，让 HYP 的假说获得真实实验反馈，完成从"理论假设"到"可验证结果"的闭环。
-
-### Schema: hypothesis_record
-
-```yaml
-hypothesis_record:
-  id: "HYP-YYYYMMDD-N"
-  
-  # 来源
-  source_gap: "GAP-YYYYMMDD-M"      # 源自哪个空白
-  origin: enum[GAP_pipeline, user_input, mixed]
-  
-  # 核心
-  title: string                      # 假说标题
-  claim: string                      # 核心主张（精确到可检验）
-  type: enum[primary, competing, null, auxiliary]
-  
-  # 认识论熵定位（Step 1.5）
-  entropy_reduced:
-    uncertainty_type: string         # 四选一：机制不明/效应方向不确定/边界条件模糊/测量效度存疑
-    specificity: string              # 具体描述这个假设解决的不确定性
-    baseline_entropy: string         # 当前不确定性程度评估
-    reduction_gain: string           # 如果验证，不确定性降低多少
-  
-  # 模型假设清单（Step 2.5）
-  model_assumptions:
-    - assumption: string
-      consequence_if_false: string
-  
-  # 可检验性
-  prediction: string                 # 可观测预测
-  falsification: string              # 反证条件
-  statistical_criterion: string      # 统计阈值（如 p<0.05, effect>0.5）
-  
-  # 证据
-  supporting_evidence:               # 至少2篇
-    - doi: string
-      role: string
-  conflicting_evidence:              # 如果有
-    - doi: string
-      role: string
-  
-  # 竞争关系
-  competes_with: string[]            # 竞争假说ID
-  distinguishing_test: string        # 区分性实验
-  
-  # 评分
-  scores:
-    testability: float               # 0-1
-    novelty: float
-    importance: float
-    feasibility: float
-    overall: float
-  
-  # 实验设计
-  suggested_design:
-    type: string
-    population: string
-    sample_size: string
-    duration: string
-    key_measurements: string[]
-  
-  # NSFC（如果适用）
-  nsfc:
-    applicable: boolean
-    question_tree: object
-    funding_category: string
-  
-  # 状态
-  status: enum[proposed, in_review, accepted, rejected, tested, validated, falsified]
-  created_at: timestamp
-  last_updated: timestamp
-```
-
-### Schema: hypothesis_graph
-
-```yaml
-hypothesis_graph:
-  nodes:
-    - id: string
-      title: string
-      type: enum[primary, competing, null]
-      status: string
-  edges:
-    - source: string
-      target: string
-      relationship: enum[competes_with, supports, contradicts, generalizes, specializes]
-  gaps_addressed: string[]          # 覆盖的空白ID列表
-```
+**不执行（仅出方案）**：需 GPU / 外部 API 密钥 / >30min / 涉及人或动物数据
 
 ### 验证标准
 
@@ -428,7 +298,7 @@ hypothesis_graph:
 | 最终输出 | 有pruned记录（Step 5.5日损检查） |
 | 精简后 | 假说数量 ≥ 3（否则触发补充生成） |
 | 无输入 | 返回 no_gaps_input 错误 |
-
+| 完整Schema | references/IO_CONTRACT.md |
 ### 与下游原子的接口
 
 ```
