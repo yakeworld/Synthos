@@ -131,3 +131,28 @@ token*
 secrets*
 **/.api_key
 **/__pycache__/
+
+# ============================================
+# 14. 非核心文件 — 不与Synthos功能直接相关
+# ============================================
+.github/
+outputs/evolution/
+projects/
+.evolution/
+evolution-log.md
+evolution-state.json
+evolution/
+scripts/
+skills/notebooklm-sources-sync.py
+skills/upload-pdfs.sh
+skills/upload-pdfs-v2.sh
+skills/notebooklm-bibtex-workflow.md
+skills/pdf-download-racing.md
+skills/references/racing-engine-code.py
+skills/references/scihub-racing-code.py
+skills/skill_network.json
+skills/skill_registry.json
+skills/skill_tree.json
+skills/SKILL_TREE.md
+docs/promotion/
+architecture/
