@@ -37,10 +37,15 @@ metadata:
 - 失败后重试1次，记录失败原因供上报
 - 速率限制敏感的数据库（如NCBI E-utilities）在调用间sleep 0.5s
 
-# Scientific Database Lookup — 统一科学数据库路由
+# Scientific Database Lookup
 
-> 吸收自 **scientific-agent-skills** (K-Dense, 23,109⭐) 的统一数据库层。
-> 137 skills 中提取的精华：数据库路由协议而非 Python 库绑定。
+## 原理层·文言
+
+> 研者有疑，问于四方。
+> 七十八库，各有所长。
+> 生物医学问PubMed，工程技术访IEEE。
+> 路有不通则换道，库有不答则他求。
+> 知其源，明其限，方为善用。
 
 ## 触发条件
 

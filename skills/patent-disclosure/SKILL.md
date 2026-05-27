@@ -10,9 +10,15 @@ synthos_absorption_license: "Apache-2.0"
 tags: [patent, disclosure, cnipa, prior-art, chinese-patent, extended-skill]
 ---
 
-# 专利挖掘与交底书生成
+# 专利挖掘发现与交底书生成
 
-> **吸收来源**：[handsomestWei/patent-disclosure-skill](https://github.com/handsomestWei/patent-disclosure-skill) v1.8.5
+## 原理层·文言
+
+> 技有所创，创有所保。专利者，创新之盾也。
+> 挖掘在平时，发现于细微。不放过一个改进，不遗漏一个变体。
+> 交底之书，以清为上。使同行可解，使审查可明。
+
+##
 > **Synthos 整合版本**：1.8.5-synthos-2
 
 ---

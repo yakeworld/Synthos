@@ -75,8 +75,7 @@ class BaseDownloader(IDownloader):
             
             async with self.session.get(url, headers=headers, timeout=self.config.download_timeout, allow_redirects=True) as response:
                 if response.status != 200:
-                    logger.error(f"Failed download from {url}: HTTP {response.status}")
-                    # Fallback: try requests
+                    logger.error(f"HTTP {response.status}, trying curl_cffi fallback")
                     return await self._fallback_download(url, filename)
                 
                 ensure_directory_exists(os.path.dirname(os.path.abspath(filename)))
@@ -89,8 +88,14 @@ class BaseDownloader(IDownloader):
                             break
                         f.write(chunk)
                 
-                logger.info(f"File {filename} has been downloaded successfully.")
-                return True
+                # Validate PDF
+                if await self._validate_pdf(filename):
+                    logger.info(f"File {filename} downloaded successfully.")
+                    return True
+                else:
+                    logger.warning(f"Downloaded file is not a valid PDF, trying fallback")
+                    os.remove(filename)
+                    return await self._fallback_download(url, filename)
                 
         except (asyncio.TimeoutError, aiohttp.ClientError, Exception) as e:
             logger.warning(f"aiohttp download failed, trying requests fallback: {e}")
@@ -127,12 +132,30 @@ class BaseDownloader(IDownloader):
                 with open(filename, 'wb') as f:
                     for chunk in r.iter_content(chunk_size=8192):
                         f.write(chunk)
-                logger.info(f"requests download successful: {filename}")
-                return True
+                if await self._validate_pdf(filename):
+                    logger.info(f"requests download successful: {filename}")
+                    return True
+                else:
+                    os.remove(filename)
             logger.error(f"requests failed: HTTP {r.status_code}")
         except Exception as e:
             logger.error(f"All fallbacks failed: {e}")
         return False
+
+    async def _validate_pdf(self, path: str) -> bool:
+        """Validate that file is a real PDF."""
+        try:
+            if not os.path.exists(path) or os.path.getsize(path) < 1000:
+                return False
+            with open(path, 'rb') as f:
+                header = f.read(5)
+                if header != b'%PDF-':
+                    return False
+                f.seek(-100, 2)
+                tail = f.read()
+                return b'%%EOF' in tail
+        except:
+            return False
     
     async def download_pdf(self, identifier: str, save_path: str) -> bool:
         """

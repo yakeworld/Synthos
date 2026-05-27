@@ -1,7 +1,7 @@
 ---
 name: evolution
-description: "⚡ P0 自进化引擎。Synthos evolution engine v2.15 — SkillOpt EDIT_BUDGET约束+rejected_buffer防护+GEPA反射式分析(OPTIMIZE)+自动数据集(BENCHMARK)+Pareto多维优化(DIAGNOSE)+结构探查+功能基准+外部吸收+教训学习+黄金验证+自扩关键词+SELF_REFLECT+宪法集成+漂移检测+渐进披露+响应闸门+自动优化+输入护栏+持久执行+条件分支+拦截点+追踪+SEPL回滚+ARA溯源+Git即记忆+Pareto前沿+假设先行。每轮触发project-experience-distillation。"
-version: 2.15.0
+description: "⚡ P0 自进化引擎。Synthos evolution engine v2.17 — GenericAgent事后技能结晶(CRYSTALLIZE_SKILL) + ResearcherSkill假说前置+四态决策+硬收敛护栏 + SkillOpt EDIT_BUDGET约束+rejected_buffer防护+GEPA反射式分析(OPTIMIZE)+自动数据集(BENCHMARK)+Pareto多维优化(DIAGNOSE)+结构探查+功能基准+外部吸收+教训学习+黄金验证+自扩关键词+SELF_REFLECT+宪法集成+漂移检测+渐进披露+响应闸门+自动优化+输入护栏+持久执行+条件分支+拦截点+追踪+SEPL回滚+ARA溯源+Git即记忆+Pareto前沿+假设先行。每轮触发project-experience-distillation。"
+version: 2.17.0
 author: Synthos Evolution Engine
 license: MIT
 metadata:
