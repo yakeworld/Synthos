@@ -5,7 +5,7 @@
   "mode": "ACTUAL",
   "last_updated": "2026-05-27T07:50:00Z",
   "last_run": "2026-05-27T07:50:00Z",
-  "evolution_count": 55,
+  "evolution_count": 57,
   "refactoring": {
     "completed": true,
     "completed_at": "2026-05-10T20:56:00",
@@ -153,46 +153,46 @@
     "skill": "skills/evolution/SKILL.md",
     "version": "2.17.0",
     "created": "2026-05-11T06:35:00+00:00",
-    "cycle": 55,
+    "cycle": 56,
     "status": "healthy",
     "edit_budget": {
       "allocated": 2,
       "consumed": 2,
       "remaining": 0,
-      "last_cycle": 55
+      "last_cycle": 56
     },
     "cron_schedule": "0 6 * * *",
     "last_auto_run": "2026-05-15T06:00:00+00:00",
     "last_cycle": {
-      "cycle": 55,
-      "type": "structural_fix",
-      "performed_at": "2026-05-27T07:30:00Z",
+      "cycle": 56,
+      "type": "edge_case_expansion",
+      "performed_at": "2026-05-28T00:00:00Z",
       "status": "healthy",
       "actions": [
-        "task-router SKILL.md: added missing signature field",
-        "hypothesis-generation SKILL.md: 461→331 lines, schema moved to IO_CONTRACT.md"
+        "task-router: added case_006 (empty string) and case_007 (unicode/emoji query) to golden set",
+        "golden set expanded from 5 to 7 test cases for edge case coverage"
       ],
-      "structural_avg": 0.8,
-      "benchmark_score": 1.0,
-      "overall_score": 0.861,
+      "structural_avg": 1.0,
+      "benchmark_score": 0.83,
+      "overall_score": 0.90,
       "fixes_applied": [
-        "task-router/SKILL.md v1.8.1"
+        "task-router edge cases verified via 4-state decision protocol"
       ]
     },
     "current_cycle": {
-      "cycle": 55,
-      "type": "structural_fix",
-      "performed_at": "2026-05-27T07:30:00Z",
+      "cycle": 56,
+      "type": "edge_case_expansion",
+      "performed_at": "2026-05-28T00:00:00Z",
       "status": "healthy",
       "actions": [
-        "task-router SKILL.md: added missing signature field",
-        "hypothesis-generation SKILL.md: 461→331 lines, schema moved to IO_CONTRACT.md"
+        "task-router: added case_006 (empty string) and case_007 (unicode/emoji query) to golden set",
+        "golden set expanded from 5 to 7 test cases for edge case coverage"
       ],
-      "structural_avg": 0.8,
-      "benchmark_score": 1.0,
-      "overall_score": 0.861,
+      "structural_avg": 1.0,
+      "benchmark_score": 0.83,
+      "overall_score": 0.90,
       "fixes_applied": [
-        "task-router/SKILL.md v1.8.1"
+        "task-router edge cases via 4-state decision protocol"
       ]
     },
     "architecture": "state_machine_3_paths_5_gates_4_interrupts",
