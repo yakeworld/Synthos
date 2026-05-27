@@ -152,7 +152,7 @@ This skill is a verified **Agent4S L3 (Single-Process Intelligent Agent)** imple
 |:---------------------|:---------------------|
 | **Reasoning** | LLM-driven multi-step analysis (patent mining → prior art → disclosure) |
 | **Context Engineering** | `prompts/` step-by-step templates + `iteration_context.md` state tracking |
-| **MCP** | `tools/` Python scripts as MCP-like tool endpoints; `skill_view` for tool discovery |
+| **MCP** | `tools/` Python scripts as MCP-like tool endpoints; `skill_loader` for tool discovery |
 | **Self-Check** | `disclosure_self_check.md` — quality gate before delivery |
 
 To upgrade to standard MCP: each `tools/*.py` script can be wrapped as an MCP server, enabling interoperability with any MCP-compatible AI system (Claude Code, Codex, etc.). See `docs/mcp-migration-guide.md` (planned).

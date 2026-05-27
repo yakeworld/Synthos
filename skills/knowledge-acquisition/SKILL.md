@@ -7,12 +7,21 @@ description: >-
 version: 1.7.0
 author: Synthos
 license: MIT
-allowed-tools: terminal delegate_task Read Write
+allowed-tools: terminal Read Write task_delegation (bash, view/write, agent, inline)
 signature: "topic: str, sources: list -> papers: list[Paper], total_found: int"
+tags: [academic-search, paper-retrieval, semantic-scholar, pubmed, arxiv, openalex, literature-review]
 metadata:
   synthos_atom_type: "cognitive"
-  synthos_data_access_level: "raw"
+  synthos_version: "1.7.0"
+  synthos_skill_md_hash: "knowledge-acquisition-v1.7.0"
+  synthos_model_tested_on: "2026-05-10T00:00:00Z"
+  synthos_author: "Synthos"
+  synthos_absorbed_from: "Synthos internal (multi-source academic search pattern)"
+  synthos_absorbed_date: "2026-05-10"
+  synthos_io_contract_ref: "references/IO_CONTRACT.md"
+  synthos_asserted_compliance: "P0"
   synthos_depends_on: "semantic-scholar, pubmed, arxiv, openalex, biorxiv, research-paper-search, scientific-database-lookup"
+  synthos_data_access_level: "raw"
 ---
 
 # 知识获取 (Knowledge Acquisition)
@@ -29,7 +38,7 @@ metadata:
 
 ## 方法层·白话
 
-Agent-native认知原子。使用Hermes技能库+终端curl检索学术文献，零Python依赖。
+Agent-native认知原子。使用技能库+终端curl检索学术文献，零Python依赖。
 
 ## 触发条件
 
@@ -159,6 +168,6 @@ notebooklm source add "$(cat pdfs/{bibkey}.md)" --type text --title "{bibkey}" -
 ## 命令层
 
 - **Signature**: `topic: str, sources: list -> papers: list[Paper], total_found: int`
-- **Allowed tools**: terminal, delegate_task, Read, Write
+- **Allowed tools**: shell, task_delegation, Read, Write
 - **Output**: JSON with papers list + search_meta
-- **Zero Python**: 全部使用 terminal+curl，无Python运行时依赖
+- **Zero Python**: 全部使用 shell+curl，无Python运行时依赖

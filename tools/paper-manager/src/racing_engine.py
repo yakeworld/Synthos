@@ -87,8 +87,9 @@ def build_download_tiers(doi: str) -> List[Tuple[List[Tuple[SourceFn, str]], str
     
     Tiers run sequentially; sources within a tier run in parallel.
     """
-    from .sources.scihub_racing import try_scihub_curl
-    from .sources.libgen import try_libgen
+    from sources.scihub_racing import try_scihub_curl
+    from sources.libgen import try_libgen
+    from sources.meddata import try_meddata
     
     tiers = []
     
@@ -99,5 +100,9 @@ def build_download_tiers(doi: str) -> List[Tuple[List[Tuple[SourceFn, str]], str
     # Tier 2: LibGen
     tier2 = [(try_libgen, "LibGen")]
     tiers.append((tier2, "LibGen", 20))
+    
+    # Tier 3: meddata.com.cn (Chinese medical data platform, requires MEDDATA_TOKEN)
+    tier3 = [(try_meddata, "MedData")]
+    tiers.append((tier3, "MedData", 20))
     
     return tiers

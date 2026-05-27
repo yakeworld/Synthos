@@ -13,7 +13,7 @@ Synthos welcomes contributions from both human developers and AI agents. All con
 
 ## Skill Modification Rules
 
-- Skills are pure SKILL.md files in `~/.hermes/skills/`
+- Skills are pure SKILL.md files in `skills/`
 - Reference files go in `references/` subdirectory
 - Test with `evolution` engine's BENCHMARK step
 - Maintain non-overlap principle (no two skills with same scope)

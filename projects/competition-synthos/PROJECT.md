@@ -31,7 +31,7 @@
 | **进化引擎** | evolution | 质量评估 → 偏差检测 → 技能吸收 → 参数优化，1000s 循环 |
 | **教学层** | 73 sources | CRISP-DM, TRIPOD+AI, AIGC 教学法, 25+ 数据集 |
 | **方法论** | 八维认知框架 | 第一性原理、系统思维、贝叶斯、类比、奥卡姆剃刀、证伪主义、模型依赖实在论、自由能原理 |
-| **技术栈** | Hermes Agent | Agent 原生执行，Zero Python（纯技能驱动） |
+| **技术栈** | AI Agent (Hermes/Claude Code/Codex) | Agent 原生执行（纯技能驱动，Zero Python） |
 
 ### 关键指标
 
@@ -71,7 +71,7 @@
 ├── evolution-state.json          ← 进化状态
 ├── evolution-log.md              ← 进化日志
 ├── README.md / README_CN.md      ← 项目说明（中英分离）
-├── .hermes/projects/competition-synthos/  ← 本工作区
+├── projects/competition-synthos/  ← 本工作区
 ├── skills/                       ← 8个认知原子 + 工具技能
 │   ├── knowledge-acquisition/
 │   ├── knowledge-extraction/
@@ -132,4 +132,4 @@ P1-P3 项目交付 (竞赛/NSFC/论文/代码)
 
 ---
 
-*生成: 2026-05-16 | 工作区: .hermes/projects/competition-synthos/*
+*生成: 2026-05-16 | 工作区: projects/competition-synthos/*

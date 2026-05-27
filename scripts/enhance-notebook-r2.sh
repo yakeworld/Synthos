@@ -9,7 +9,7 @@ NOTEBOOK_ID="$1"
 SEARCH_QUERY="$2"
 PROJECT_NAME="${3:-notebook-${NOTEBOOK_ID}-r2}"
 OUTDIR="/media/yakeworld/sda2/Synthos/outputs/papers/${PROJECT_NAME}"
-# S2 API Key — Load from environment variable (set in ~/.hermes/.env)
+# S2 API Key — Load from environment variable (set in config/.env)
 S2_KEY="${S2_API_KEY:-}"
 LIMIT=10
 

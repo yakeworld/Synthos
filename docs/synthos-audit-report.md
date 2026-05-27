@@ -15,7 +15,7 @@
                                                       [6] 观点验证 ↺
 ```
 
-所有原子均为**纯 SKILL.md 文件**，Agent 通过 `skill_view()` 加载 → 推理执行 → 保存JSON。零 Python 脚本，零编排引擎。
+所有原子均为**纯 SKILL.md 文件**，Agent 通过加载技能来读取 → 推理执行 → 保存JSON。零 Python 脚本，零编排引擎。
 
 ## Synthos八维对齐
 

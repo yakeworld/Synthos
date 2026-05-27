@@ -173,7 +173,7 @@ class BaseDownloader(IDownloader):
     
     def download_paper_sync(self, url: str, filename: str) -> bool:
         """
-        同步下载论文
+        同步下载论文（含PDF验证）
         
         Args:
             url: 论文URL
@@ -196,25 +196,87 @@ class BaseDownloader(IDownloader):
             headers = {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
             }
-            response = requests.get(url, headers=headers, timeout=self.config.download_timeout)
-            if response.status_code == 200:
-                with open(filename, 'wb') as f:
-                    for chunk in response.iter_content(chunk_size=8192):
-                        if chunk:
-                            f.write(chunk)
-                return True
-            else:
-                logger.error(f"Failed to download paper from {url}. Status code: {response.status_code}")
+            response = requests.get(url, headers=headers, timeout=self.config.download_timeout, stream=True)
+            if response.status_code != 200:
+                logger.error(f"Failed to download from {url}. HTTP {response.status_code}")
                 return False
+            
+            # Content-Type快速检查
+            ct = response.headers.get('Content-Type', '').lower()
+            if 'text/html' in ct and 'pdf' not in url.lower():
+                logger.warning(f"URL returned HTML instead of PDF (Content-Type: {ct}): {url}")
+                return False
+            
+            ensure_directory_exists(os.path.dirname(os.path.abspath(filename)))
+            with open(filename, 'wb') as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    if chunk:
+                        f.write(chunk)
+            
+            # PDF验证：检查文件头尾
+            if not self._is_valid_pdf_sync(filename):
+                logger.warning(f"Downloaded file is not a valid PDF, removing: {filename}")
+                os.remove(filename)
+                # 尝试用curl_cffi降级下载（处理brotli/重定向）
+                return self._fallback_download_sync(url, filename)
+            
+            logger.info(f"File {filename} downloaded successfully ({os.path.getsize(filename)}B).")
+            return True
+            
         except requests.Timeout:
-            logger.error(f"Timeout downloading paper from {url}")
+            logger.error(f"Timeout downloading from {url}")
             return False
         except requests.ConnectionError:
-            logger.error(f"Connection error downloading paper from {url}")
+            logger.error(f"Connection error downloading from {url}")
             return False
         except Exception as e:
-            logger.error(f"Error downloading paper from {url}: {str(e)}")
+            logger.error(f"Error downloading from {url}: {str(e)}")
             return False
+    
+    def _is_valid_pdf_sync(self, path: str) -> bool:
+        """同步PDF验证"""
+        try:
+            if not os.path.exists(path) or os.path.getsize(path) < 1000:
+                return False
+            with open(path, 'rb') as f:
+                header = f.read(5)
+                if header != b'%PDF-':
+                    return False
+                f.seek(-100, 2)
+                tail = f.read()
+                return b'%%EOF' in tail
+        except:
+            return False
+    
+    def _fallback_download_sync(self, url: str, filename: str) -> bool:
+        """同步降级下载：try curl_cffi (TLS指纹+brotli), then requests without stream."""
+        try:
+            from curl_cffi import requests as cffi
+            logger.info(f"curl_cffi sync fallback: {url}")
+            r = cffi.get(url, impersonate="chrome120", timeout=60, allow_redirects=True)
+            if r.status_code == 200 and r.content[:4] == b'%PDF' and len(r.content) > 1000:
+                ensure_directory_exists(os.path.dirname(os.path.abspath(filename)))
+                with open(filename, 'wb') as f:
+                    f.write(r.content)
+                logger.info(f"curl_cffi fallback success: {filename} ({len(r.content)}B)")
+                return True
+        except ImportError:
+            pass
+        except Exception as e:
+            logger.warning(f"curl_cffi fallback error: {e}")
+        
+        # Last resort: non-streaming requests
+        try:
+            r = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=60)
+            if r.status_code == 200 and len(r.content) > 1000 and r.content[:4] == b'%PDF':
+                with open(filename, 'wb') as f:
+                    f.write(r.content)
+                logger.info(f"Direct requests fallback success: {filename} ({len(r.content)}B)")
+                return True
+        except Exception as e:
+            logger.warning(f"Direct fallback error: {e}")
+        
+        return False
 
 
 class SimpleDownloader(BaseDownloader):

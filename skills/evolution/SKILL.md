@@ -8,7 +8,7 @@ metadata:
   synthos_atom_type: "meta-evolution"
   synthos_priority: "P0"
   synthos_depends_on: "task-router, knowledge-acquisition, knowledge-extraction, association-discovery, gap-discovery, hypothesis-generation, argument-expression, viewpoint-verification, project-experience-distillation, quality-gate"
-allowed-tools: terminal skill_view Read Write patch cronjob web_search delegate_task memory session_search
+allowed-tools: shell, skill_loader, Read, Write, file_edit, cron, web_search, task_delegation, memory, session_search
 signature: "cycle: int, prev_scores: dict, prev_benchmark: float -> evolution_report: EvolutionReport, next_actions: list[str], drift_log: DriftLog"
 related_skills: [project-experience-distillation, quality-gate, conversation-to-memory, skill-absorption, cognitive-atom-architecture]
 ---
@@ -295,7 +295,7 @@ EXTERNAL step 中检测到候选项目后：
 
 ```bash
 # Trigger an evolution cycle manually
-skill_view("evolution")
+open skills/evolution/SKILL.md
 # The engine runs: PROBE → BENCHMARK → EXTERNAL → DIAGNOSE → [EDIT_BUDGET] → IMPROVE(+rejected_buffer) → VERIFY → RECORD
 ```
 
@@ -303,11 +303,11 @@ skill_view("evolution")
 
 | Tool | Usage |
 |:-----|:-------|
-| `skill_view(name)` | Load skill content for inspection |
-| `Read/Write/patch` | Modify skill files |
-| `terminal("git commit ...")` | Snapshot before changes |
-| `terminal("git revert ...")` | Rollback on failure |
-| `delegate_task(...)` | External absorption research |
+| `skill_loader(name)` | Load skill content for inspection |
+| `Read/Write/file_edit` | Modify skill files |
+| `shell("git commit ...")` | Snapshot before changes |
+| `shell("git revert ...")` | Rollback on failure |
+| `task_delegation(...)` | External absorption research |
 
 ### Related References
 

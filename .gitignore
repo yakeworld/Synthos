@@ -104,3 +104,12 @@ temp/
 *.log
 *.bak
 cache/
+
+# ============================================
+# 12. tools/paper-manager 运行时产物
+# ============================================
+tools/.domain_cache/
+tools/paper-manager/.domain_cache/
+tools/paper-manager/*.log
+tools/paper-manager/.api_key
+tools/paper-manager/.env
