@@ -93,6 +93,31 @@
 | GOLD-ARG | golden | argument-expression | 输入含hypotheses/structure，输出含sections/references | @pass=1.0, part=0.5 |
 | GOLD-VER | golden | viewpoint-verification | 输入含hypothesis/argument，输出含verdict/confidence_score | @pass=1.0, part=0.5 |
 
+### PW-Bench 评价模式（v4.0 新增 — 吸收自 PaperOrchestra/PaperWritingBench）
+
+新增三种评价维度，用于评估**论文产出质量**而非单一原子功能：
+
+| 测试ID | 原子 | 类型 | 输入 | 期望输出 | 评分标准 |
+|--------|------|:----:|:----:|:--------:|:--------:|
+| **CITATION-F1** | argument-expression | quality | 生成论文段落 + 引用列表 | citation_f1: {p0_precision, p0_recall, p0_f1, p1_precision, p1_recall, p1_f1, overall_f1} | JSON含所有字段 @pass=1.0 |
+| **LITREVIEW-6AXIS** | argument-expression | quality | Introduction/Related Work 章节 | 6轴评分(0-100) + overall + penalties | 总分≥40 @pass=1.0 |
+| **SXS-PAPER** | viewpoint-verification | quality | 两篇论文(A, B) | winner ∈ {A, B, tie} + justification | JSON字段完整 @pass=1.0 |
+| **SXS-LITREVIEW** | viewpoint-verification | quality | 两篇论文的Introduction | winner ∈ {A, B, tie} + justification | JSON字段完整 @pass=1.0 |
+
+评分整合机制：PW-Bench 评价分作为**吸收潜力因子**纳入综合分计算，不替代现有基准分。
+
+### 反膨胀规则（LitReview 6轴评价必读）
+
+| 规则 | 硬上限 |
+|:----|:------:|
+| 默认期望 | 总分 45-70 |
+| > 85 需六轴全强证据 | — |
+| > 90 极罕见（综述级） | — |
+| 任何一轴 < 50 | 总分 ≤ 75 |
+| 描述性综述 | 轴3(批判分析) ≤ 60 |
+| 无对比创新声明 | 轴4(定位) ≤ 60 |
+| 稀疏引用 | 轴6(引用严谨性) ≤ 60 |
+
 **golden 得分规则**：
 1. 加载 case_NNN.json（输入）和 expected/case_NNN.json（期望输出）
 2. 验证输入 JSON 必须包含 GOLDEN_SET.md 描述的所有必填字段

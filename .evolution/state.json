@@ -1,0 +1,27 @@
+{
+  "version": "4.3.0",
+  "architecture": "pure_skill_driven_zero_python",
+  "mode": "ACTUAL",
+  "last_updated": "2026-05-25T10:00:00Z",
+  "last_run": "2026-05-25T06:50:00Z",
+  "evolution_count": 53,
+  "refactoring": {
+    "completed": true,
+    "completed_at": "2026-05-10T20:56:00",
+    "old_skill_count": 7,
+    "new_atom_count": 6,
+    "old_structure": "all_cognitive_agent_native_with_python_infra",
+    "new_structure": "pure_skill_driven_zero_python",
+    "synthos_before": 72,
+    "synthos_after": 100,
+    "change_log": [
+      "Synced from root evolution-state.json (53 cycles)"
+    ]
+  },
+  "quality_metrics": {
+    "structural_avg": 1.0,
+    "benchmark_score": 1.0,
+    "overall_score": 0.98
+  },
+  "note": "This is a legacy tracking file. The authoritative state is at /media/yakeworld/sda2/Synthos/evolution-state.json"
+}
