@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- **Hermes Agent** (or any AI agent that supports SKILL.md loading)
+- **Any AI agent** that supports SKILL.md loading (Hermes Agent, Claude Code, Codex, OpenCode, etc.)
 - **Python 3.10+** (only for extended skills like Figure Generation)
 - **curl** (for API-based knowledge acquisition)
 - **Internet access** (PubMed, Semantic Scholar, OpenAlex, arXiv, etc.)
@@ -21,13 +21,13 @@ cd Synthos
 In your AI agent session, load the task router:
 
 ```
-skill_view(name="task-router", path="/path/to/Synthos/skills/task-router/SKILL.md")
+open /path/to/Synthos/skills/task-router/SKILL.md
 ```
 
-Or in Hermes Agent:
+Or use your agent's native skill-loading mechanism to load from:
 
 ```
-Load the Synthos task router skill from /path/to/Synthos/skills/task-router/
+./skills/task-router/SKILL.md
 ```
 
 ### 3. Run a Query

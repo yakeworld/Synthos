@@ -6,9 +6,9 @@
 
 | Score | Condition |
 |-------|-----------|
-| 1.0 | `skill_view()` returns full content without error |
-| 0.5 | `skill_view()` returns content but with warnings |
-| 0.0 | `skill_view()` fails (file missing or malformed) |
+| 1.0 | `skill_loader(name)` returns full content without error |
+| 0.5 | `skill_loader(name)` returns content but with warnings |
+| 0.0 | `skill_loader(name)` fails (file missing or malformed) |
 
 ### 1.2 Frontmatter Validity (weight: 0.15)
 

@@ -4,6 +4,9 @@ description: "Review, critique, and reconstruct Chinese scientific grant proposa
 version: 1.0.0
 author: Synthos Agent
 license: MIT
+allowed-tools: terminal playwright file_read file_write task_delegation
+signature: "proposal: file -> review_report: MD, reconstructed_proposal: MD"
+tags: [grant-review, nsfc, research-proposal, academic-audit]
 metadata:
   synthos_atom_type: "extended_skill"
   synthos_version: "1.0.0"
@@ -13,8 +16,9 @@ metadata:
   synthos_asserted_compliance: "P0,P2"
   synthos_depends_on: "pubmed, semantic-scholar, research-paper-search, notebooklm-cli"
   synthos_data_access_level: "raw"
-  synthos_author: "Hermes Agent → Synthos absorption (2026-05-13)"
-allowed-tools: terminal web Read Write skill_view delegate_task
+  synthos_author: "AI Agent (absorbed from Hermes Agent, 2026-05-13)"
+  synthos_absorbed_from: "Hermes Agent skill: nsfc-grant-audit"
+  synthos_absorbed_date: "2026-05-13"
 ---
 
 # NSFC Grant Audit & Reconstruction (Synthos 吸收版)

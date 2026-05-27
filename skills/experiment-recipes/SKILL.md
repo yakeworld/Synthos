@@ -1,16 +1,23 @@
 ---
-synthos_atom_type: reference
 name: experiment-recipes
 version: 1.1.0
 author: Synthos
 license: MIT
-data_access_level: raw
 allowed-tools: Read
-dependencies: []
 description: >-
   ML训练配方与预设——架构选择、训练循环、优化器、调度器、混合精度、内存优化、调试。
   提炼自实战经验，非外部代码搬运。每个配方记录原理而非逐行代码。
 tags: [training, recipes, ml, pytorch, reference]
+metadata:
+  synthos_atom_type: "reference"
+  synthos_version: "1.1.0"
+  synthos_skill_md_hash: "experiment-recipes-v1.1.0"
+  synthos_model_tested_on: "2026-05-15T00:00:00Z"
+  synthos_data_access_level: "raw"
+  synthos_author: "Synthos"
+  synthos_absorbed_from: "Synthos internal (ML training recipes from实战经验)"
+  synthos_absorbed_date: "2026-05-15"
+  synthos_depends_on: "knowledge-acquisition"
 ---
 
 # Experiment Recipes / 实验配方参考

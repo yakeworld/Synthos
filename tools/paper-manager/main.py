@@ -363,6 +363,15 @@ def parse_args():
                               help='输出格式')
     export_parser.add_argument('--output', required=True, help='输出文件路径')
     
+    # 增强BibTeX命令
+    enhance_parser = subparsers.add_parser('enhance', help='增强BibTeX：元数据补全+PDF下载')
+    enhance_parser.add_argument('bibtex_file', help='输入BibTeX文件 (.bib)')
+    enhance_parser.add_argument('--output', '-o', default='./enhanced', help='输出目录')
+    enhance_parser.add_argument('--output-bib', help='输出增强BibTeX文件路径（默认: {output}/enhanced.bib）')
+    enhance_parser.add_argument('--no-download', action='store_true', help='不下载PDF')
+    enhance_parser.add_argument('--limit', type=int, default=0, 
+                                help='最多处理前N条（0=全部）')
+    
     return parser.parse_args()
 
 
@@ -597,6 +606,70 @@ async def main_async(args):
     # 导出命令
     if args.command == 'export':
         await export_data(args)
+        return
+    
+    # 增强BibTeX命令
+    if args.command == 'enhance':
+        if not os.path.exists(args.bibtex_file):
+            print(f"Error: BibTeX file not found: {args.bibtex_file}")
+            return
+        
+        output_dir = args.output
+        os.makedirs(output_dir, exist_ok=True)
+        
+        download_pdfs = not args.no_download
+        
+        print(f"📖 Enhancing BibTeX: {args.bibtex_file}")
+        print(f"📂 Output dir: {output_dir}")
+        print(f"⬇️  Download PDFs: {'YES' if download_pdfs else 'NO'}")
+        
+        try:
+            # 如果指定了limit，截断BibTeX文件
+            if args.limit and args.limit > 0:
+                entries = manager.converter.parse_bibtex_file_for_enhancement(args.bibtex_file)
+                if len(entries) > args.limit:
+                    print(f"  Limiting to first {args.limit} of {len(entries)} entries")
+                    # Create temp .bib with only the first N entries
+                    temp_bib = os.path.join(output_dir, '_limit_temp.bib')
+                    manager.converter.save_enhanced_bibtex(entries[:args.limit], temp_bib)
+                    effective_bib = temp_bib
+                else:
+                    effective_bib = args.bibtex_file
+            else:
+                effective_bib = args.bibtex_file
+            
+            success, total, out_path = await manager.download_and_enhance_bibtex(
+                effective_bib,
+                output_dir,
+                enhanced_bibtex_file=args.output_bib,
+                download_pdfs=download_pdfs,
+            )
+            
+            # 如果用了limit模式但没指定输出，先重命名再清理
+            if args.limit and args.limit > 0 and not args.output_bib:
+                default_out = os.path.join(output_dir, 'enhanced.bib')
+                if os.path.exists(default_out):
+                    os.remove(default_out)
+                os.rename(out_path, default_out)
+                out_path = default_out
+            
+            # 清理临时文件
+            temp_paths = [
+                os.path.join(output_dir, '_limit_temp.bib'),
+                os.path.join(output_dir, '_limit_temp_enhanced.bib'),
+            ]
+            for p in temp_paths:
+                if os.path.exists(p):
+                    os.remove(p)
+            
+            print(f"\n✅ Enhanced {total} entries, downloaded {success} PDFs")
+            print(f"📄 Enhanced BibTeX: {out_path}")
+        except Exception as e:
+            logger.error(f"Enhance failed: {e}")
+            if args.debug:
+                import traceback
+                traceback.print_exc()
+            print(f"❌ Error: {e}")
         return
     
     # 批处理命令
