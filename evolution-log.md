@@ -32,6 +32,22 @@
   1. task-router SKILL.md v1.8.0 → v1.8.1 (新增signature字段)
   2. hypothesis-generation SKILL.md: 461→331行 (schema移至IO_CONTRACT.md, Step6压缩, 去重)
 - **EDIT_BUDGET**: 2/2 消耗
+
+## 进化周期 #56 — 2026-05-28 (task-router 边缘测试用例扩展)
+
+- **类型**: edge_case_expansion — 扩充 task-router 边缘测试覆盖 (空字符串 + Unicode)
+- **综合分**: 0.90 (结构1.0×0.25 + 基准0.83×0.25 + 优化0.5×0.10 + 覆盖0.9×0.10 + 吸收0.5×0.10 + 宪法1.0×0.20)
+- **状态**: healthy
+- **结构平均**: 1.0 (全原子通过 PROBE)
+- **基准分数**: 0.83 (hypothesis-generation=0.83, argument-expression=0.83, viewpoint-verification=0.83, task-router=0.67)
+- **退化原子**: 无
+- **执行操作**: 
+  1. 创建 case_006 (空字符串查询) → 预期最短路径 [knowledge-acquisition]
+  2. 创建 case_007 (Unicode+Emoji 查询) → 预期完整链 [association-discovery, hypothesis-generation, viewpoint-verification]
+  3. 通过 4-state decision 协议验证: case_006=keep:best, case_007=keep:best
+  4. GOLDEN_SET.md 更新: 5→7 个测试用例
+- **EDIT_BUDGET**: 2/2 (仅 STATE/RECORD 操作不计入)
+- **DIAGNOSE 输出**: /media/yakeworld/sda2/Synthos/evolution/cycle-56-delta.md
 - **假说验证**: 
   1. task-router signature → PASS ✓
   2. hypothesis-generation 331行→ PROBE行数分满 ✓

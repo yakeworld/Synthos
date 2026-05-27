@@ -1,0 +1,6 @@
+{
+  "query": "",
+  "mode": "standard_chain",
+  "chain": ["knowledge-acquisition"],
+  "complexity": "simple"
+}

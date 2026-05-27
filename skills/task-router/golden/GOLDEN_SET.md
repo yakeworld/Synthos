@@ -37,9 +37,17 @@
 - **输入**: `"ADHD eye-tracking"`
 - **期望**: complexity=`medium`, chain=`[1,2,3]` (默认)
 
+### case_006: 空字符串（边缘）
+- **输入**: `""`
+- **期望**: complexity=`simple` or `medium`, chain=`[knowledge-acquisition]` (最短回退链)
+
+### case_007: Unicode 查询（非 ASCII）
+- **输入**: `"🔬 科学发现 → 假说验证 🧪"`
+- **期望**: complexity=`full` or `complex`, chain=`[1,2,3,4,5,6]` (emoji+unicode 应触发全链)
+
 ## pass_threshold: 1.0
 
-路由器的判定是**确定性规则**（关键词匹配），不是推理过程。因此 pass_threshold 设为 1.0——所有 5 个 case 必须完全正确。
+路由器的判定是**确定性规则**（关键词匹配），不是推理过程。因此 pass_threshold 设为 1.0——所有 7 个 case 必须完全正确。
 
 ### 阈值理由
 - 路由错误会系统性影响下游所有原子的调用（错误传播）
