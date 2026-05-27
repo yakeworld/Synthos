@@ -38,7 +38,7 @@ tags: [download, pdf, sci-hub, libgen, racing, curl-cffi]
 ## 代码位置
 
 ```
-outputs/code/src/
+tools/paper-manager/src/
 ├── downloader/
 │   ├── base_downloader.py    ← curl_cffi fallback (brotli/403修复)
 │   └── pdf_downloader.py     ← _download_racing() 入口
