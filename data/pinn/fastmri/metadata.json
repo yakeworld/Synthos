@@ -1,0 +1,14 @@
+{
+  "dataset": "fastmri",
+  "source": "synthetic (placeholder for AWS download)",
+  "n_train_samples": {
+    "brain": 10,
+    "knee": 10
+  },
+  "n_test_samples": 2,
+  "img_size": 64,
+  "subsampling_ratio": 0.25,
+  "coil_sensitivity": "approximate gaussian",
+  "notes": "Synthetic data for pipeline testing. Replace with real FastMRI download.",
+  "real_data_command": "pip install fastmri && python3 -c \"from fastmri.data import subsample; ...\""
+}

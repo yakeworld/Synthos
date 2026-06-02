@@ -1,0 +1,13 @@
+{
+  "dataset": "duke_us",
+  "source": "synthetic (placeholder for official Duke-US)",
+  "official_source": "https://gitlab.oit.duke.edu/sMRI/super-resolution",
+  "n_train": 20,
+  "n_test": 5,
+  "img_size": [
+    128,
+    256
+  ],
+  "forward_model": "wave_helmholtz_approx",
+  "notes": "Synthetic data. Real data requires Git LFS clone."
+}

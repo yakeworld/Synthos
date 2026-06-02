@@ -1,7 +1,7 @@
 ---
 name: evolution
 description: "⚡ P0 自进化引擎。Synthos evolution engine v2.17 — GenericAgent事后技能结晶(CRYSTALLIZE_SKILL) + ResearcherSkill假说前置+四态决策+硬收敛护栏 + SkillOpt EDIT_BUDGET约束+rejected_buffer防护+GEPA反射式分析(OPTIMIZE)+自动数据集(BENCHMARK)+Pareto多维优化(DIAGNOSE)+结构探查+功能基准+外部吸收+教训学习+黄金验证+自扩关键词+SELF_REFLECT+宪法集成+漂移检测+渐进披露+响应闸门+自动优化+输入护栏+持久执行+条件分支+拦截点+追踪+SEPL回滚+ARA溯源+Git即记忆+Pareto前沿+假设先行。每轮触发project-experience-distillation。"
-version: 2.17.0
+version: 2.18.0
 author: Synthos Evolution Engine
 license: MIT
 metadata:
@@ -22,6 +22,10 @@ related_skills: [project-experience-distillation, quality-gate, conversation-to-
 
 ## 原理层 · 文言
 
+> 「苟日新，日日新，又日新。」日进其功，不怠不辍。
+> 「天行健，君子以自强不息。」结构日日新，功能周周检。
+> 退化即亡，不进则退。熵减生生，自进化不息。
+
 ### 核心理念
 
 | 白话 | 文言 | 义 |
@@ -35,6 +39,7 @@ related_skills: [project-experience-distillation, quality-gate, conversation-to-
 | **读轨迹溯败因** | **迹以观行，理以究因** | v2.12 REFLECTIVE_ANALYSIS — 读执行轨迹理解失败根源 |
 | **无金则自炼** | **无金自炼，以文生案** | v2.12 AUTO_DATASET — 从SKILL.md自动生成测试用例 |
 | **多利取其重** | **多利取重，多径择优** | v2.12 Pareto — 多目标前沿选最优改进路径 |
+| **进化不依赖模型能力** | **模型无关，重器在构** | 11步全结构化操作（CRUD+数值+条件分支），无需大模型理解力。内容生成外包，进化本身自给 |
 
 ### 吸收之道
 
@@ -50,6 +55,34 @@ related_skills: [project-experience-distillation, quality-gate, conversation-to-
 | Agent4S (Zheng et al. 2025, arXiv:2506.23692) | 4.6 | `references/absorption-agent4s.md` |
 | PaperSpine V2 (WUBING2023) | 4.6 | `references/absorption-paperspine-v2.md` |
 | nature-paper2ppt (GARCH-QUANT) | 4.6 | `references/absorption-nature-paper2ppt.md` |
+
+### 设计原则：模型无关性
+
+> **2026-06-02 用户杨晓凯确认：进化引擎不依赖强大模型，本地小模型即可满足。**
+
+这是 Synthos 进化引擎最容易被忽略的设计特征——**进化路径不需要模型理解力**。55 轮进化已实证：
+
+| 步骤 | 操作类型 | 需要大模型？ |
+|:-----|:---------|:------------:|
+| PROBE | 读文件、字段完整性检查 | ❌ 正则+文件I/O |
+| BENCHMARK | 执行 golden test、数值比对 | ❌ terminal + 断言 |
+| OPTIMIZE | 反射分析失败轨迹 → 定向修复 | ❌ 结构化决策树 |
+| DIAGNOSE | Pareto 多目标评分 | ❌ 数值计算 |
+| IMPROVE | 在 EDIT_BUDGET 内执行文本替换 | ❌ 字符串操作 |
+| VERIFY | 重跑基准 + 回归检查 | ❌ 重复执行 |
+| RECORD | 写日志 + git commit | ❌ 文件操作 |
+| DRIFT_CHECK | 三问自检 | ✅ 轻量语义 |
+| EXTERNAL | 吸收评分 ≥4.5 自主执行 | 🟡 仅评分步骤 |
+
+**11 步中 8 步纯结构化，2 步轻量语义，1 步需评分但可用规则替代。**
+
+**核心分离架构**：进化引擎不做内容生成，也不做质量评审。这两项被刻意外包——论文写作 → NotebookLM Gemini，Layer B 评审 → Gemini 独立判分。进化引擎只做"元操作"：探测→诊断→修复→验证→归档。
+
+**这意味着**：
+- 进化引擎可运行在任何能做 CRUD+条件分支的模型上（Qwen2.5-7B、Mistral-7B、甚至 LLaMA-3B）
+- 进化速度不受限于模型推理速度（限制因素是 EDIT_BUDGET 和 cron 频率）
+- 未来的进化方向是"更加结构化"——将更多语义判断转为可计算的规则
+- 系统能力的上限不绑死在模型能力上，绑死在技能设计和质量门的严密性上
 
 ---
 
@@ -273,11 +306,12 @@ EXTERNAL step 中检测到候选项目后：
 
 ## 已知陷阱
 
-1. 宪法未加载但未报错→ `constitution_loaded: true/false` 字段每次验证
-2. 漂移检测过严→ 🟡冷却期：同会话至少5次tool call后才再次检查
-3. 渐进披露与用户预期冲突→ SessionStart提醒"我有120+技能"
+1. 宪法未加载但未报错→ constitution_loaded 字段每次验证
+2. 漂移检测过严→ 同会话至少5次tool call后才再次检查
+3. 渐进披露与用户预期冲突→ SessionStart提醒系统有大量技能
 4. 外部搜索关键词可能过期→自扩展自动发现新关键词
 5. SKILL.md被意外覆盖→每次Patch前备份到 backups/
+6. 误将模型能力与进化能力等同：进化引擎的结构化步骤（PROBE/BENCHMARK/DIAGNOSE/IMPROVE/VERIFY/RECORD）不依赖大模型理解力。不要因为当前模型不够强就跳过进化循环——本地7B模型做这些操作一样好。进化速度瓶颈是EDIT_BUDGET和cron频率，不是模型推理能力。
 
 ## 工作目录
 

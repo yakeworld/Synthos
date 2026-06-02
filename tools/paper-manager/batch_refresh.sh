@@ -2,8 +2,8 @@
 # Batch reference: enhance → download → upload for remaining papers
 set -e
 cd /media/yakeworld/sda2/Synthos/tools/paper-manager
-export MEDDATA_USERNAME="MEDDATA_USERNAME_PLACEHOLDER"
-export MEDDATA_PASSWORD="MEDDATA_PASSWORD_PLACEHOLDER"
+# Credentials from env (MEDDATA_USERNAME / MEDDATA_PASSWORD)
+[ -z "$MEDDATA_USERNAME" ] && echo "⚠️ MEDDATA_USERNAME not set" || true
 
 for args in \
   "vor-digital-twin:15:c0bba510" \

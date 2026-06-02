@@ -40,6 +40,8 @@
 
 ## 🧠 设计哲学
 
+> 📖 完整哲学框架 → [docs/synthos-philosophy.md](docs/synthos-philosophy.md) — 文言核心 · 八维认知框架 · 三大铁律
+
 Synthos 基于 **碳硅共生（Carbon-Silicon Symbiosis）** 理念构建：
 
 - **碳基**（人类）负责：直觉判断、伦理决策、方向选择
