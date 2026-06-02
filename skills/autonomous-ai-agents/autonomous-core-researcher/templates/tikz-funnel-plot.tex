@@ -1,0 +1,59 @@
+% TikZ Funnel Plot Template (Deeks' / Symmetry Test)
+% Requires in preamble:
+%   \usepackage{tikz} \usepackage{pgfplots} \pgfplotsset{compat=1.18}
+%
+% Parameters to adjust:
+%   xmin/xmax: log DOR range (typically -2.2 to 4.2)
+%   ymin/ymax: precision 1/SE range (typically 0 to 6.5)
+%   Scatter coordinates: (logDOR, 1/SE) pairs for each study
+%   Pooled DOR: y = 1/SE_pooled (the constant line)
+%   Funnel edges: 1.96/x (95% CI width)
+%
+% 2026-05-26: First produced for kappa-vor-calibration v4
+% 2026-05-27: Original for vor-pd-systematic-review v5
+
+\begin{figure}[htbp]
+\centering
+\resizebox{0.55\textwidth}{!}{%
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.85\textwidth,
+    height=0.55\textwidth,
+    xlabel={Log Diagnostic Odds Ratio},
+    ylabel={Precision (1/SE)},
+    xmin=-2.2, xmax=4.2,
+    ymin=0, ymax=6.5,
+    % KEY: xticklabel uses \exp(\pgfmathprintnumber{\tick}) to show DOR 
+    % values on a log-transformed x-axis
+    xticklabel={$\exp(\pgfmathprintnumber{\tick})$},
+    grid=both,
+    major grid style={dashed, gray!30},
+    minor grid style={dotted, gray!15},
+    legend pos=north west,
+    legend style={font=\small, fill=white, fill opacity=0.9},
+    tick label style={font=\small},
+    label style={font=\small},
+]
+% Pooled DOR vertical-like line (horizontal in precision space)
+\addplot[domain=-2.2:4.2, thick, red, dashed] {1/Pooled_DOR_SE};
+\addlegendentry{Pooled DOR};
+% 95% CI funnel edges — note: x must be precision (1/SE)
+\addplot[domain=0.8:6.5, dotted, gray!60, thick] {logDOR_pooled + 1.96 / x};
+\addplot[domain=0.8:6.5, dotted, gray!60, thick] {logDOR_pooled - 1.96 / x};
+\addlegendentry{95\% CI};
+% Scatter points — one per study
+\addplot[only marks, mark=o, draw=blue, fill=blue!20]
+    coordinates {
+    (logDOR1, 1/SE1) (logDOR2, 1/SE2) ...
+};
+\addlegendentry{Individual study};
+% Egger's test annotation (optional)
+\node[draw, fill=yellow!10, rounded corners=2pt, font=\small] 
+    at (axis cs:-0.5,5.5) {Egger's $p = 0.41$};
+\end{axis}
+\end{tikzpicture}}
+\caption{Funnel plot of DOR for N core studies. Vertical dashed line = pooled DOR estimate. 
+No significant asymmetry detected (Egger's regression test, $p = 0.XX$). 
+Trim-and-fill adjustment: M studies imputed, DOR X.X $\to$ Y.Y.}
+\label{fig:funnel_plot}
+\end{figure}

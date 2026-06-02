@@ -8,6 +8,8 @@
 
 **Synthos reifies epistemological principles as executable cognitive atoms.** Unlike conventional research agents that wrap Python libraries as tools, Synthos operates as a purely skill-driven architecture: the Agent itself is the runtime, with **zero Python infrastructure code** (core orchestration is 100% SKILL.md; helper automation scripts in `scripts/` use Python/shell but are not part of the cognitive architecture).
 
+> 📖 Full philosophy → [docs/synthos-philosophy.md](docs/synthos-philosophy.md) — Classical Chinese principles · 8-dimension cognitive framework · Three inviolable laws
+
 ---
 
 ## Core Innovations

@@ -1,0 +1,16 @@
+{
+  "dataset": "dmri_diffusion",
+  "source": "synthetic IVIM model (placeholder for MASSIVE/HCP)",
+  "official_sources": [
+    "https://massive-data.org/",
+    "https://www.humanconnectome.org/"
+  ],
+  "n_subjects": 10,
+  "n_b_values": 5,
+  "model": "IVIM (intravoxel incoherent motion)",
+  "img_size": [
+    64,
+    64
+  ],
+  "notes": "Synthetic IVIM data. Real MASSIVE data requires registration."
+}

@@ -10,9 +10,12 @@ PAPERS="/media/yakeworld/sda2/Synthos/outputs/papers"
 TOOLS="/media/yakeworld/sda2/Synthos/tools/paper-manager"
 NOTEBOOK="ec5c4b1f"
 
-# MedData credentials
-export MEDDATA_USERNAME="MEDDATA_USERNAME_PLACEHOLDER"
-export MEDDATA_PASSWORD="MEDDATA_PASSWORD_PLACEHOLDER"
+# MedData credentials (从环境变量读取，不硬编码)
+# 设置: export MEDDATA_USERNAME="MEDDATA_USERNAME_PLACEHOLDER" MEDDATA_PASSWORD="xxx"
+# 注意: MEDDATA_PASSWORD="MEDDATA_PASSWORD_PLACEHOLDER" 已过期 (modifyPass:1, 2026-05-31)
+# 如需使用meddata，先在 medbooks.com.cn 登录改密后更新此变量
+export MEDDATA_USERNAME="${MEDDATA_USERNAME:-MEDDATA_USERNAME_PLACEHOLDER}"
+export MEDDATA_PASSWORD="${MEDDATA_PASSWORD:-}"
 
 cd "$TOOLS"
 

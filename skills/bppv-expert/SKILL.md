@@ -128,3 +128,6 @@ Absorbed from AKNE knowledge graph (yakeworld/.knowledge/) — 2026-05-12
 - **Constraints**: Always add educational-use disclaimer; cite AKNE wiki sources; distinguish evidence vs hypothesis.
 - **Checklist**: Run all 6 verification items after activation.
 - **Output**: Structured answer with confidence score and source references.
+
+### Related Skills
+- `research/scc-bppv-kinematics` — Computational SCC morphometry + kinematic simulation from centerline data (complementary: this skill provides clinical knowledge, scc-bppv-kinematics provides the computational pipeline)

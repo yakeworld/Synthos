@@ -1,5 +1,22 @@
 # NSFC Grant Review — 8-Dimension Scoring Rubric
 
+## ⚡ 级别校准：同一标书在不同级别下评分不同
+
+评价前先确定经费级别，校准期望基准。用A级标准评C级项目=不合理的严苛。
+
+| 级别 | 预算范围 | 立项依据基准 | 创新性基准 | 预期成果基准 | 关键注意事项 |
+|:-----|:---------|:------------|:----------|:------------|:------------|
+| **NSFC面上** | ~50万 | 9/10 | 9/10 | 7/10 | 要求机制创新+多维产出（数据集+IP+论文） |
+| **NSFC青年** | ~30万 | 8/10 | 8/10 | 6/10 | 创新可接受工程创新，论文1-2篇+数据集即可 |
+| **省科技厅** | ~10-30万 | 7.5/10 | 7/10 | 5/10 | 应用价值优先于机制深度 |
+| **市科技局** | ~1-5万 | **6.5/10** | **5.5/10** | **4/10** | **务实为首：1篇核心论文+临床可用工具=优秀结题**。不要用NSFC的论文数量/IP要求去苛求。重点检查：临床问题真实、方案可行、预算匹配。 |
+
+### 常见误判模式（用户多次纠正）
+
+- ❌ **认为市局项目"论文1篇不够"** —— 1篇核心期刊论文对市局3年期项目是合理预期，不是短板
+- ❌ **认为要升级产出目标** —— 除非预算充足，否则"1篇论文+临床工具"就是完整结题
+- ❌ **要求外部验证** —— 市局预算通常不支持多中心外部验证，Bootstrap 1000次内部验证足够
+
 ## 1. 立项依据 (7/10 baseline)
 
 | Score | Criteria |
@@ -45,14 +62,23 @@
 | 5-6  | Some experience but weak connection to proposed work |
 | 1-4  | No relevant prior work demonstrated |
 
-## 6. 预期成果 (4/10 — frequent weak point)
+## 6. 预期成果 (4/10 baseline — 级别依赖严重)
+
+⚠️ 此维度评分需要先确定项目级别：
+
+| 级别 | 合理期望 | 评分基准 |
+|:-----|:---------|:---------|
+| NSFC面上 | 数据集+软著/IP+1-2篇SCI | 7-10分为合理范围 |
+| NSFC青年 | 数据集+1篇SCI/核心 | 6-8分为合理范围 |
+| 省科技厅 | 1-2篇核心+临床工具 | 5-7分为合理范围 |
+| **市科技局** | **1篇核心+临床可用的评估工具** | **4-6分为合理范围。只要1篇论文+工具=评分中点5分** |
 
 | Score | Criteria |
 |-------|----------|
 | 9-10 | Multi-dimensional: dataset + technology/IP + academic output; specific, quantifiable targets |
 | 7-8  | Mostly complete but missing one dimension (e.g., no IP) |
-| 5-6  | Only academic output; no dataset or technology transfer |
-| 1-4  | Vague; non-quantifiable; or just "1-2 papers" |
+| 5-6  | Single academic output + clinical tool (appropriate for municipal level) |
+| 1-4  | Vague; non-quantifiable; or just "论文1篇" with no tool commitment |
 
 ## 7. 预算与进度 (3/10 — critical failure point)
 

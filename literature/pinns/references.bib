@@ -1,0 +1,265 @@
+@article{luo2025physicsinformed,
+  title = {Physics-informed neural networks for PDE problems: a comprehensive review},
+  author = {Kuang Luo and Jingshan Zhao and Yingping Wang and Jiayao Li and Junjie Wen and Jiong Liang and H. Soekmadji and Shaolin Liao},
+  year = 2025,
+  journal = {Artificial Intelligence Review},
+  volume = {58},
+  doi = {10.1007/s10462-025-11322-7},
+  dblp = {journals/air/LuoZWLWLSL25},
+  corpusid = {280401971},
+  referenceCount = 152,
+  citationCount = 126,
+  issn = {0269-2821},
+  publisher = {Artificial Intelligence Review}
+}
+
+@article{zhu2025physicssolver,
+  title = {PhysicsSolver: Transformer-Enhanced Physics-Informed Neural Networks for Forward and Forecasting Problems in Partial Differential Equations},
+  author = {Zhenyi Zhu and Yuchen Huang and Liu Liu},
+  year = 2025,
+  journal = {J. Comput. Appl. Math.},
+  volume = {473},
+  pages = {116900},
+  abstract = {Time-dependent partial differential equations are a significant class of equations that describe the evolution of various physical phenomena over time. One of the open problems in scientific computing is predicting the behaviour of the solution outside the given temporal region. Most traditional numerical methods are applied to a given time-space region and can only accurately approximate the solution of the given region. To address this problem, many deep learning-based methods, basically data-driven and data-free approaches, have been developed to solve these problems. However, most data-driven methods require a large amount of data, which consumes significant computational resources and fails to utilize all the necessary information embedded underlying the partial differential equations (PDEs). Moreover, data-free approaches such as Physics-Informed Neural Networks (PINNs) may not be that ideal in practice, as traditional PINNs, which primarily rely on multilayer perceptrons (MLPs) and convolutional neural networks (CNNs), tend to overlook the crucial temporal dependencies inherent in real-world physical systems. We propose a method denoted as \textbf{PhysicsSolver} that merges the strengths of two approaches: data-free methods that can learn the intrinsic properties of physical systems without using data, and data-driven methods, which are effective at making predictions. Extensive numerical experiments have demonstrated the efficiency and robustness of our proposed method. We provide the code at \href{https://github.com/PhysicsSolver/PhysicsSolver}{https://github.com/PhysicsSolver}.},
+  doi = {10.48550/arXiv.2502.19290},
+  dblp = {journals/jcam/ZhuHL26},
+  corpusid = {276617607},
+  referenceCount = 34,
+  citationCount = 8,
+  issn = {0377-0427},
+  publisher = {Journal of Computational and Applied Mathematics}
+}
+
+@article{unknown2025comparative,
+  title = {Comparative Analysis of Physics-Informed Neural Networks Using TOPSIS Balancing Efficiency, Interpretability, and Physical Law Integration},
+  year = 2025,
+  journal = {REST Journal on Advances in Mechanical Engineering},
+  abstract = {This study evaluates the performance of Physics-Informed Neural Networks (PINNs) and related methods in scientific computing and engineering applications using the Technique of Selection by Ideal Solution (TOPSIS) method. The analysis compares traditional numerical methods, machine learning models, hybrid physical-ML models, Gaussian process regression, and index regression on four key criteria: data efficiency, interpretability, computational costs, and convergence of physical laws. The results reveal that indexed regression emerges as the best ranking approach, demonstrating well-balanced performance across all criteria. It excels in data efficiency and interpretation while keeping reasonable computational costs and adhering to the laws of physics. Gaussian process regression is second, particularly robust in interpretation, making it suitable for applications requiring transparent decision processes. Hybrid physics-ML models show strong performance, especially in the integration of data efficiency and physics laws, effectively combining traditional physics-based modeling with machine learning capabilities. Traditional numerical methods, while valuable in some contexts, show limitations in data efficiency and interpretation compared to newer approaches. Pure machine learning models rank very low, suggesting that data-driven approaches may not be sufficient for problems where physical laws play an important role. This study underscores the importance of balancing multiple criteria when selecting modeling approaches for physics-informed problems. This highlights the trend towards hybrid methods that combine domain knowledge with data-driven learning, addressing the limitations of purely data-driven or physics-based approaches. These findings provide valuable insights to researchers and practitioners in scientific prediction and engineering, future modeling of complex physical systems, and approaches that effectively combine field knowledge with data-driven techniques to optimize complex physical phenomena.},
+  doi = {10.46632/jame/4/3/6},
+  corpusid = {282725681},
+  referenceCount = 34,
+  citationCount = 0
+}
+
+@article{xie2025daehompinn,
+  title = {DAE-HomPINN: Physics-Informed Neural Networks for Differential-Algebraic Equations Using Homotopy Method},
+  author = {Manqi Xie and Juan Tang and Xiaoqing Zeng and Xiaolin Qin},
+  year = 2025,
+  journal = {2025 International Conference on Advanced Computing and Intelligent Robotics Applications (ACIRA)},
+  pages = {30-37},
+  abstract = {Differential-Algebraic equations (DAEs) are hybrid dynamic systems formed coupling differential and algebraic equations via shared variables. They describe the dynamics of multiphysics-coupled systems and are widely used to model complex dynamical systems across domains. As an emerging tool at the intersection of deep learning and scientific computing, physics-informed neural networks (PINNs) show great potential to solve DAEs. However, they often struggle with gradient instability and insufficient convergence when handling high-index DAEs. To address this limitation, we integrate homotopy methods with PINNs to propose a novel physics-informed neural network framework. In this work, the L2 relative errors of all variables in the studied DAEs have been reduced by 2-3 orders of magnitude compared with the traditional PINNs, and the absolute errors reach 10-5 to 10-4. Our model demonstrates the ability to handle DAEs, and offers a viable approach to solve high-index problems in the field of physics-informed machine learning.},
+  doi = {10.1109/ACIRA67680.2025.11334764},
+  corpusid = {284920772},
+  referenceCount = 20,
+  citationCount = 0
+}
+
+@article{seiler2025stiff,
+  title = {Stiff Transfer Learning for Physics-Informed Neural Networks},
+  author = {E. Seiler and Wanzhou Lei and P. Protopapas},
+  year = 2025,
+  journal = {ArXiv},
+  volume = {abs/2501.17281},
+  abstract = {Stiff differential equations are prevalent in various scientific domains, posing significant challenges due to the disparate time scales of their components. As computational power grows, physics-informed neural networks (PINNs) have led to significant improvements in modeling physical processes described by differential equations. Despite their promising outcomes, vanilla PINNs face limitations when dealing with stiff systems, known as failure modes. In response, we propose a novel approach, stiff transfer learning for physics-informed neural networks (STL-PINNs), to effectively tackle stiff ordinary differential equations (ODEs) and partial differential equations (PDEs). Our methodology involves training a Multi-Head-PINN in a low-stiff regime, and obtaining the final solution in a high stiff regime by transfer learning. This addresses the failure modes related to stiffness in PINNs while maintaining computational efficiency by computing"one-shot"solutions. The proposed approach demonstrates superior accuracy and speed compared to PINNs-based methods, as well as comparable computational efficiency with implicit numerical methods in solving stiff-parameterized linear and polynomial nonlinear ODEs and PDEs under stiff conditions. Furthermore, we demonstrate the scalability of such an approach and the superior speed it offers for simulations involving initial conditions and forcing function reparametrization.},
+  doi = {10.48550/arXiv.2501.17281},
+  dblp = {journals/corr/abs-2501-17281},
+  corpusid = {275954256},
+  referenceCount = 0,
+  citationCount = 4,
+  issn = {2331-8422},
+  publisher = {arXiv.org}
+}
+
+@article{chen2025global,
+  title = {Global physics-informed neural networks (GPINNs): from local point-wise constraint to global nodal association},
+  author = {Feng Chen and Yiran Meng and Kegan Li and Chao Yang and Jiong Yang},
+  year = 2025,
+  abstract = {Recently, physics-informed neural networks (PINNs) and their variants have gained significant popularity as a scientific computing method for solving partial differential equations (PDEs), whereas accuracy is still its main shortcoming. Despite numerous development efforts, there is no literature demonstrating that these methods surpass classic numerical algorithms in solving the forward issue. In this paper, by analyzing the disparities between PINNs and traditional numerical methods based on mesh discretization, we investigate the underlying causes for the in adequate precision of PINNs and introduce a novel approach named global physics-informed neural networks (GPINNs). Inspired by the crucial concept of global nodal association in conventional numerical algorithms, GPINNs leverages the prior field distribution information from pre-trained PINNs to estimate the association weights between arbitrary nodes in space. GPINNs can not only be regarded as a meshless approach but also be demonstrated, both theoretically and in practical circumstances, to have the ability of second-order convergence when trained with equidistant nodes. Overall, GPINNs may be seen as an ideal approach to inheriting the merits of scientific machine learning (SciML) and conventional numerical computing, which also represent the first SciML algorithm to surpass standard numerical methods in terms of accuracy.},
+  corpusid = {276903643},
+  referenceCount = 18,
+  citationCount = 1
+}
+
+@article{anague2025physicsinformed,
+  title = {Physics-Informed Neural Networks for Joint Source and Parameter Estimation in Advection-Diffusion Equations},
+  author = {Brenda Anague and Bamdad Hosseini and Issa Karambal and Jean Medard Ngnotchouye},
+  year = 2025,
+  abstract = {Recent studies have demonstrated the success of deep learning in solving forward and inverse problems in engineering and scientific computing domains, such as physics-informed neural networks (PINNs). Source inversion problems under sparse measurements for parabolic partial differential equations (PDEs) are particularly challenging to solve using PINNs, due to their severe ill-posedness and the multiple unknowns involved including the source function and the PDE parameters. Although the neural tangent kernel (NTK) of PINNs has been widely used in forward problems involving a single neural network, its extension to inverse problems involving multiple neural networks remains less explored. In this work, we propose a weighted adaptive approach based on the NTK of PINNS including multiple separate networks representing the solution, the unknown source, and the PDE parameters. The key idea behind our methodology is to simultaneously solve the joint recovery of the solution, the source function along with the unknown parameters thereby using the underlying partial differential equation as a constraint that couples multiple unknown functional parameters, leading to more efficient use of the limited information in the measurements. We apply our method on the advection-diffusion equation and we present various 2D and 3D numerical experiments using different types of measurements data that reflect practical engineering systems. Our proposed method is successful in estimating the unknown source function, the velocity and diffusion parameters as well as recovering the solution of the equation, while remaining robust to additional noise in the measurements.},
+  corpusid = {283694341},
+  referenceCount = 49,
+  citationCount = 0
+}
+
+@article{wang2025solving,
+  title = {Solving Euler equations with Multiple Discontinuities via Separation-Transfer Physics-Informed Neural Networks},
+  author = {Chuanxing Wang and Hui Luo and Kai Wang and Guohuai Zhu and Mingxing Luo},
+  year = 2025,
+  journal = {ArXiv},
+  volume = {abs/2505.20361},
+  abstract = {Despite the remarkable progress of physics-informed neural networks (PINNs) in scientific computing, they continue to face challenges when solving hydrodynamic problems with multiple discontinuities. In this work, we propose Separation-Transfer Physics Informed Neural Networks (ST-PINNs) to address such problems. By sequentially resolving discontinuities from strong to weak and leveraging transfer learning during training, ST-PINNs significantly reduce the problem complexity and enhance solution accuracy. To the best of our knowledge, this is the first study to apply a PINNs-based approach to the two-dimensional unsteady planar shock refraction problem, offering new insights into the application of PINNs to complex shock-interface interactions. Numerical experiments demonstrate that ST-PINNs more accurately capture sharp discontinuities and substantially reduce solution errors in hydrodynamic problems involving multiple discontinuities.},
+  doi = {10.48550/arXiv.2505.20361},
+  dblp = {journals/corr/abs-2505-20361},
+  corpusid = {278911616},
+  referenceCount = 23,
+  citationCount = 0,
+  issn = {2331-8422},
+  publisher = {arXiv.org}
+}
+
+@article{张2025ltpinns,
+  title = {LT-PINNs: Physics-informed neural networks based on Laplace transform for solving Caputo-type fractional partial differential equations},
+  author = {R. Zhang 张 and F. Li 李 and Jianqiang 建强 Liu 刘},
+  year = 2025,
+  journal = {Chinese Physics B},
+  volume = {35},
+  abstract = {The solution of fractional partial differential equations (PDEs) is an important topic in scientific computing. However, the traditional physics-informed neural networks (PINNs) have problems of memory overflow and low computational efficiency when the derivative is discretized for a long time. Therefore in this paper we innovatively propose a framework of Laplace transform physics-informed neural networks (LT-PINNs), which is dedicated to solving the forward and inverse problems of Caputo-type fractional PDEs. The core of this method is to use the Laplace transform to construct the loss function, which skillfully avoids the dilemma that the fractional derivative operator in traditional PINNs is difficult to operate effectively. By studying the benchmark problem of parameter α in a series of different scenarios we verify that LT-PINNs can predict the solution of Caputo-type fractional PDEs more accurately than fractional PINNs. The excellent performance of LT-PINNs in identifying inverse problems involving fractional order, convection and diffusion coefficients is further explored. At the same time, the effects of network structure, the number of sampling points and noise on the LT-PINNs method are analyzed in detail. The results show that the method can predict the solution of the equation satisfactorily even under severe noise interference. The proposed LT-PINNs framework opens up a new path for efficiently solving fractional PDEs. It shows significant advantages in improving computational efficiency, reducing memory usage and dealing with complex noise environments. It is expected to promote the further development of fractional PDEs in many fields.},
+  doi = {10.1088/1674-1056/adf827},
+  corpusid = {280568790},
+  referenceCount = 5,
+  citationCount = 0,
+  issn = {1674-1056},
+  publisher = {Chinese Physics B}
+}
+
+@article{abdalla2025exploring,
+  title = {Exploring physics-informed neural networks to compute definite integrals through differential equations},
+  author = {Aboelnour N. Abdalla and Ibrahim A. Abbas and hassan Z. Khalifa},
+  year = 2025,
+  journal = {Sohag Journal of Sciences},
+  abstract = {: This research focuses on the application of physics-informed neural networks (PINNs) in the field of definite integral evaluation. PINNs is the name assigned to artificial neural networks. They are different from standard neural networks in that they include loss terms that explain the physics of the issue. This work investigates the effectiveness of physics-informed neural networks in accurately computing definite integrals, a critical process in many scientific and engineering fields. The study aims to assess the precision and effectiveness of PINNs in evaluating definite integrals in contrast to traditional integration techniques or numerical integral methods. Discover how mathematical analysis computing methods, particularly those involving definite integral computations, may be transformed by neural networks. This study adds to the developing field of artificial intelligence (AI) in mathematical computations by utilizing the built-in characteristics of PINNs, such as their capacity to learn from data and integrate existing knowledge. The results of this study offer a solid basis for upcoming advancements in neural network-based techniques for mathematical modeling, numerical analysis, and other scientific fields.},
+  doi = {10.21608/sjsci.2025.355778.1256},
+  corpusid = {279084104},
+  referenceCount = 8,
+  citationCount = 0,
+  issn = {2357-0938},
+  publisher = {Sohag Journal of Sciences}
+}
+
+@article{tanaka2026learn,
+  title = {Learn and Verify: A Framework for Rigorous Verification of Physics-Informed Neural Networks},
+  author = {Kazuaki Tanaka and Kohei Yatabe},
+  year = 2026,
+  journal = {ArXiv},
+  volume = {abs/2601.19818},
+  abstract = {The numerical solution of differential equations using neural networks has become a central topic in scientific computing, with Physics-Informed Neural Networks (PINNs) emerging as a powerful paradigm for both forward and inverse problems. However, unlike classical numerical methods that offer established convergence guarantees, neural network-based approximations typically lack rigorous error bounds. Furthermore, the non-deterministic nature of their optimization makes it difficult to mathematically certify their accuracy. To address these challenges, we propose a"Learn and Verify"framework that provides computable, mathematically rigorous error bounds for the solutions of differential equations. By combining a novel Doubly Smoothed Maximum (DSM) loss for training with interval arithmetic for verification, we compute rigorous a posteriori error bounds as machine-verifiable proofs. Numerical experiments on nonlinear Ordinary Differential Equations (ODEs), including problems with time-varying coefficients and finite-time blow-up, demonstrate that the proposed framework successfully constructs rigorous enclosures of the true solutions, establishing a foundation for trustworthy scientific machine learning.},
+  doi = {10.48550/arXiv.2601.19818},
+  dblp = {journals/corr/abs-2601-19818},
+  corpusid = {285071622},
+  referenceCount = 35,
+  citationCount = 1,
+  issn = {2331-8422},
+  publisher = {arXiv.org}
+}
+
+@article{xiong2025separatedvariable,
+  title = {Separated-Variable Spectral Neural Networks: A Physics-Informed Learning Approach for High-Frequency PDEs},
+  author = {Xiong Xiong and Zhuo Zhang and Rongchun Hu and Chen Gao and Zichen Deng},
+  year = 2025,
+  journal = {ArXiv},
+  volume = {abs/2508.00628},
+  abstract = {Solving high-frequency oscillatory partial differential equations (PDEs) is a critical challenge in scientific computing, with applications in fluid mechanics, quantum mechanics, and electromagnetic wave propagation. Traditional physics-informed neural networks (PINNs) suffer from spectral bias, limiting their ability to capture high-frequency solution components. We introduce Separated-Variable Spectral Neural Networks (SV-SNN), a novel framework that addresses these limitations by integrating separation of variables with adaptive spectral methods. Our approach features three key innovations: (1) decomposition of multivariate functions into univariate function products, enabling independent spatial and temporal networks; (2) adaptive Fourier spectral features with learnable frequency parameters for high-frequency capture; and (3) theoretical framework based on singular value decomposition to quantify spectral bias. Comprehensive evaluation on benchmark problems including Heat equation, Helmholtz equation, Poisson equations and Navier-Stokes equations demonstrates that SV-SNN achieves 1-3 orders of magnitude improvement in accuracy while reducing parameter count by over 90\% and training time by 60\%. These results establish SV-SNN as an effective solution to the spectral bias problem in neural PDE solving. The implementation will be made publicly available upon acceptance at https://github.com/xgxgnpu/SV-SNN.},
+  doi = {10.48550/arXiv.2508.00628},
+  dblp = {journals/corr/abs-2508-00628},
+  corpusid = {280417170},
+  referenceCount = 36,
+  citationCount = 2,
+  issn = {2331-8422},
+  publisher = {arXiv.org}
+}
+
+@article{jain2026pinnsur,
+  title = {PINNsur: Physics-Informed Neural Networks for PDEs on Curved Surfaces},
+  author = {Pranav Jain and Navami Kairanda and P. Chen and Oded Stein},
+  year = 2026,
+  abstract = {Partial differential equations (PDEs) on surfaces are fundamental to scientific computing and geometry processing. A popular approach to solving PDEs on surfaces is the finite element method (FEM), where the surface is divided into discrete geometric elements (usually triangles). Recently, physics-informed neural networks (PINNs) have emerged as a continuous, mesh-free alternative that does not suffer from FEM's sensitivity to mesh quality or geometric discretization errors. We present PINNSur, a simple framework for using PINNs on curved surfaces: we train a neural field to approximate the surface's normals, and then we express surface differential operators using their projection from $\mathbb{R}^3$ onto the surface. Since every orientable manifold has well-defined normals, our method is suitable for all such surfaces, regardless of curvature or topology, enabling many geometry processing applications. Moreover, despite their empirical success in solving PDEs in flat Euclidean domains, PINNs lack convergence guarantees to the true solution of the underlying PDE, and there is limited systematic experimental evidence demonstrating such convergence. This gap restricts their adoption as reliable solvers compared to established methods like FEM, where convergence to the true solution is well understood and theoretically grounded. These surface PDEs are particularly challenging to solve convergently, as one must not only deal with the convergence of the function approximation, but also with the convergence of the geometric approximation of the surface itself. In this work, we empirically investigate the convergence behavior of PINNs for solving surface PDEs by introducing a simple empirical convergence test.},
+  corpusid = {288672201},
+  referenceCount = 58,
+  citationCount = 0
+}
+
+@article{wang2026forked,
+  title = {Forked Physics Informed Neural Networks for Coupled Systems of Differential equations},
+  author = {Zhao-Wei Wang and Zhao-Ming Wang},
+  year = 2026,
+  abstract = {Solving coupled systems of differential equations (DEs) is a central problem across scientific computing. While Physics Informed Neural Networks (PINNs) offer a promising, mesh-free approach, their standard architectures struggle with the multi-objective optimization conflicts and local optima traps inherent in coupled problems. To address the first issue, we propose a Forked PINN (FPINN) framework designed for coupled systems of DEs. FPINN employs a shared base network with independent branches, isolating gradient pathways to stabilize training. We demonstrate the effectiveness of FPINN in simulating non-Markovian open quantum dynamics governed by coupled DEs, where multi-objective conflicts and local optima traps often cause evolutionary stagnation. To overcome this second challenge, we incorporate an evolution regularization loss that guides the model away from trivial solutions and ensures physically meaningful evolution. We demonstrate the effectiveness of FPINN in simulating non-Markovian open quantum dynamics governed by coupled DEs, where multi-objective conflicts and local optima traps often cause evolutionary stagnation. For the spin-boson and XXZ models, FPINN accurately captures hallmark non-Markovian features, such as quantum coherence revival and information backflow, significantly outperforming standard PINNs. The proposed FPINN architecture offers a general and effective framework for solving coupled systems of equations, which arise across a broad spectrum from classical physics to modern artificial intelligence, including applications in multi-body rotational dynamics, multi-asset portfolio optimization, chemical reaction kinetics, and deep representation learning.},
+  corpusid = {285616784},
+  referenceCount = 50,
+  citationCount = 0
+}
+
+@article{aberqi2026solving,
+  title = {Solving the Fisher nonlinear differential equations via Physics-Informed Neural Networks: A Comprehensive Retraining Study and Comparative Analysis with the Finite Difference Method},
+  author = {Ahmed Aberqi and Ahmed Miloudi},
+  year = 2026,
+  journal = {ArXiv},
+  volume = {abs/2601.11406},
+  abstract = {Physics-Informed Neural Networks (PINNs) represent a groundbreaking paradigm in scientific computing, seamlessly integrating the robust framework of deep learning with fundamental physical laws. This paper meticulously applies the standard PINN framework to solve the challenging one-dimensional nonlinear Fisher-KPP equation, a critical model in reaction-diffusion dynamics describing phenomena such as population spread and flame propagation. We detail a comprehensive methodology, encompassing the neural network architecture, the physics-informed loss function, and an in-depth investigation into retraining strategies aimed at optimizing model performance. Our approach is rigorously validated through a direct comparison of the PINN solution against both the known analytical solution and a numerical solution derived from the Finite Difference Method (FDM). Through this work, we elucidate the intricate balance between model complexity, training efficiency, and accuracy. Results highlight the PINN's remarkable capability in accurately approximating the solution to this complex PDE, while also shedding light on the critical aspects and challenges of model retraining, particularly concerning the optimizer's state. This study provides a thorough quantitative error analysis, demonstrating the efficacy of PINNs as a viable and competitive alternative to traditional numerical methods for solving nonlinear differential equations, and discusses their broader applications across various scientific domains.},
+  doi = {10.48550/arXiv.2601.11406},
+  dblp = {journals/corr/abs-2601-11406},
+  corpusid = {284860976},
+  referenceCount = 21,
+  citationCount = 0,
+  issn = {2331-8422},
+  publisher = {arXiv.org}
+}
+
+@article{wang2025gradient,
+  title = {Gradient Alignment in Physics-informed Neural Networks: A Second-Order Optimization Perspective},
+  author = {Sifan Wang and Ananyae Kumar Bhartari and Bowen Li and P. Perdikaris},
+  year = 2025,
+  journal = {ArXiv},
+  volume = {abs/2502.00604},
+  abstract = {Multi-task learning through composite loss functions is fundamental to modern deep learning, yet optimizing competing objectives remains challenging. We present new theoretical and practical approaches for addressing directional conflicts between loss terms, demonstrating their effectiveness in physics-informed neural networks (PINNs) where such conflicts are particularly challenging to resolve. Through theoretical analysis, we demonstrate how these conflicts limit first-order methods and show that second-order optimization naturally resolves them through implicit gradient alignment. We prove that SOAP, a recently proposed quasi-Newton method, efficiently approximates the Hessian preconditioner, enabling breakthrough performance in PINNs: state-of-the-art results on 10 challenging PDE benchmarks, including the first successful application to turbulent flows with Reynolds numbers up to 10,000, with 2-10x accuracy improvements over existing methods. We also introduce a novel gradient alignment score that generalizes cosine similarity to multiple gradients, providing a practical tool for analyzing optimization dynamics. Our findings establish frameworks for understanding and resolving gradient conflicts, with broad implications for optimization beyond scientific computing.},
+  doi = {10.48550/arXiv.2502.00604},
+  dblp = {journals/corr/abs-2502-00604},
+  corpusid = {276095289},
+  referenceCount = 88,
+  citationCount = 61,
+  issn = {2331-8422},
+  publisher = {arXiv.org}
+}
+
+@article{zheng2025a,
+  title = {A Staged Training Approach for Physics-Informed Neural Networks in Solving Partial Differential Equations},
+  author = {Zheng Zheng and Xiaofeng Han and Guodong Liu},
+  year = 2025,
+  journal = {2025 7th International Conference on Electronics and Communication, Network and Computer Technology (ECNCT)},
+  pages = {612-616},
+  abstract = {Partial differential equations (PDEs) serve as fundamental mathematical frameworks for modeling natural phenomena and engineering challenges, playing an irreplaceable role in scientific research and engineering practice. Since exact solutions are rarely obtainable for most PDEs, numerical approachs have traditionally been used to compute approximate solutions. With recent advances in deep learning, physics-informed neural networks (PINNs) have emerged as a promising approach for numerically solving PDEs. In this paper, we propose a novel staged training strategy for PINNs to improve the performance in solving PDEs. The approach implements a two-stage process: first, an initial phase pre-trains model on a short time domain, then a formal phase extends the initially trained model to the full time domain. The initial phase provides better parameter initialization and additional training data for the formal phase training, thereby improving the accuracy and efficiency of standard PINNs approach. Furthermore, we incorporate an uncertainty-guided sampling strategy to optimize model's ability to generalize beyond training samples. Numerous numerical simulations confirm the efficacy and robustness of the proposed approach in solving time-dependent PDEs.},
+  doi = {10.1109/ECNCT66493.2025.11172661},
+  corpusid = {281605485},
+  referenceCount = 31,
+  citationCount = 0
+}
+
+@article{çevik2025physicsinformed,
+  title = {Physics-Informed Neural Networks for Solving Differential Equations},
+  author = {M. Çevik},
+  year = 2025,
+  journal = {9th International Students Science Congress Proceedings Book},
+  abstract = {Differential equations (DEs) are fundamental tools for modeling physical phenomena across various scientific and engineering disciplines. Traditional numerical methods for solving these equations often require extensive computational resources, especially when dealing with high-dimensional, nonlinear, or data-scarce problems. In recent years, Physics-Informed Neural Networks (PINNs) have emerged as a powerful alternative, blending the strengths of deep learning with the rigor of physical laws. By embedding DEs, initial conditions, and boundary conditions directly into the loss function of a neural network, PINNs enable the solution of both forward and inverse problems without the need for mesh generation or large datasets. This paper presents an overview of the PINN methodology and applies it to solve a one-dimensional heat conduction problem without relying on empirical data. The results demonstrate that PINNs can accurately approximate the analytical solution, confirming their potential as flexible, mesh-free solvers. The advantages and challenges of PINNs are also discussed, highlighting their role in advancing data-driven scientific computing.},
+  doi = {10.52460/issc.2025.035},
+  corpusid = {282195151},
+  referenceCount = 0,
+  citationCount = 1
+}
+
+@article{rama2025forecasting,
+  title = {Forecasting Seasonal Influenza Epidemics with Physics-Informed Neural Networks},
+  author = {M. Rama and G. Santin and Giulia Cencetti and Michele Tizzoni and Bruno Lepri},
+  year = 2025,
+  abstract = {Accurate epidemic forecasting is critical for informing public health decisions and timely interventions. While Physics-Informed Neural Networks have shown promise in various scientific domains, their potential application to real-time epidemic forecasting remains underexplored. Here, we present SIR-INN, a hybrid forecasting framework that integrates the mechanistic structure of the classical Susceptible-Infectious-Recovered (SIR) model into a neural network architecture. Trained once on synthetic epidemic scenarios, the model is able to generalize across epidemic conditions without retraining. From limited and noisy observations, SIR-INN infers key transmission parameters via Markov chain Monte Carlo, generating probabilistic short- and long-term forecasts. We validate SIR-INN using national influenza data from the Italian National Institute of Health in the 2023-2024 and 2024-2025 seasons. The model performs competitively with current state-of-the-art approaches, particularly in terms of Weighted Interval Score. It shows accurate predictive performance in nearly all phases of the outbreak, with improved accuracy observed for the 2024-2025 influenza season. Credible uncertainty intervals are consistently maintained, while coverage metrics highlight room for improvement in uncertainty calibration. SIR-INN offers a computationally efficient, transparent, and generalizable solution for epidemic forecasting, appropriately leveraging the framework's hybrid design. Its ability to provide real-time predictions of epidemic dynamics, together with uncertainty quantification, makes it a promising tool for real-world epidemic forecasting.},
+  corpusid = {279154504},
+  referenceCount = 54,
+  citationCount = 3
+}
+
+@article{pal2025solving,
+  title = {Solving Navier-Stokes Equations Using Data-free Physics-Informed Neural Networks With Hard Boundary Conditions},
+  author = {Ritik Pal and S. Mukherjee and U. Dutta and A. Choudhury},
+  year = 2025,
+  abstract = {In recent years, Physics-Informed Neural Networks (PINNs) have emerged as a powerful and robust framework for solving nonlinear differential equations across a wide range of scientific and engineering disciplines, including biology, geophysics, astrophysics and fluid dynamics. In the PINN framework, the governing partial differential equations, along with initial and boundary conditions, are encoded directly into the loss function, enabling the network to learn solutions that are consistent with the underlying physics. In this work, we employ the PINN framework to solve the dimensionless Navier-Stokes equations for three two-dimensional incompressible, steady, laminar flow problems without using any labeled data. The boundary and initial conditions are enforced in a hard manner, ensuring they are satisfied exactly rather than penalized during training. We validate the PINN predicted velocity profiles, drag coefficients and pressure profiles against the conventional computational fluid dynamics (CFD) simulations for moderate to high values of Reynolds number ($Re$). It is observed that the PINN predictions show good agreement with the CFD results at lower $Re$. We also extend our analysis to a transient condition and find that our method is equally capable of simulating complex time-dependent flow dynamics. To quantitatively assess the accuracy, we compute the $L_2$ normalized error, which lies in the range $\mathcal{O}(10^{-4})$ - $\mathcal{O}(10^{-1})$ for our chosen case studies.},
+  corpusid = {283080862},
+  referenceCount = 0,
+  citationCount = 0
+}
