@@ -975,9 +975,9 @@ notebooklm note create "$(cat synthos-framework.md)" --title "Synthos 7+1 Framew
 # 查看所有可用账号及其 authuser 索引
 notebooklm auth inspect
 # 输出示例：
-# ghfdshgf79@gmail.com | default (authuser=0)
-# yakeworld@gmail.com  |         (authuser=1)
-# gushiedu@gmail.com   |         (authuser=2)
+# <USER_EMAIL> | default (authuser=0)
+# <USER_EMAIL>  |         (authuser=1)
+# <EXAMPLE_EMAIL>   |         (authuser=2)
 ```
 
 ### 针对性提取
@@ -986,10 +986,10 @@ notebooklm auth inspect
 
 ```bash
 # 提取指定账号的 cookies（写入 default profile）
-notebooklm login --browser-cookies auto --account yakeworld@gmail.com
+notebooklm login --browser-cookies auto --account <USER_EMAIL>
 
 # 创建独立 profile（方便多账号切换）
-notebooklm login --browser-cookies auto --account yakeworld@gmail.com --profile-name yakeworld
+notebooklm login --browser-cookies auto --account <USER_EMAIL> --profile-name yakeworld
 
 # 后续使用：指定 profile
 notebooklm -p yakeworld use <notebook_id>
@@ -1041,7 +1041,7 @@ notebooklm list                    # 如果返回笔记本列表，认证有效
 
 ### 实战案例
 
-服务器环境，3个 Google 账号，帕金森笔记本在 `ghfdshgf79@gmail.com` 下：
+服务器环境，3个 Google 账号，帕金森笔记本在 `<USER_EMAIL>` 下：
 ```bash
 # 1. 先枚举账号
 notebooklm auth inspect

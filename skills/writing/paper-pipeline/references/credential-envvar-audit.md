@@ -13,7 +13,7 @@
 | 文件 | 硬编码内容 | 改为 | 状态 |
 |:-----|:-----------|:-----|:------|
 | `tools/paper-manager/batch_refresh.sh` | `export MEDDATA_USERNAME/PASSWORD` | 移除 export，加缺失告警 | ✅ |
-| `tools/paper-manager/batch_meddata_all.py` | `ENV["MEDDATA_USERNAME"] = "MEDDATA_USERNAME_PLACEHOLDER"` | `os.environ.copy()` + 缺失检查 | ✅ |
+| `tools/paper-manager/batch_meddata_all.py` | `ENV["MEDDATA_USERNAME"] = "<MEDDATA_USERNAME>"` | `os.environ.copy()` + 缺失检查 | ✅ |
 | `tools/paper-manager/batch_enhance_all.py` | 同上 | 同上 | ✅ |
 | `tools/paper-manager/auto_fix_d8.py` | 同上 | 同上 | ✅ |
 
@@ -25,8 +25,8 @@
 
 | 变量 | 用途 | 值 | 设置位置 |
 |:-----|:-----|:---|:---------|
-| `MEDDATA_USERNAME` | meddata SSO 账号 | `MEDDATA_USERNAME_PLACEHOLDER` | ~/.bashrc 或等效 |
-| `MEDDATA_PASSWORD` | meddata SSO 密码 | `MEDDATA_PASSWORD_PLACEHOLDER` | ~/.bashrc 或等效 |
+| `MEDDATA_USERNAME` | meddata SSO 账号 | `<MEDDATA_USERNAME>` | ~/.bashrc 或等效 |
+| `MEDDATA_PASSWORD` | meddata SSO 密码 | `<MEDDATA_PASSWORD>` | ~/.bashrc 或等效 |
 | `GITHUB_TOKEN` | GitHub API | (已设置) | ~/.bashrc |
 | `SEMANTIC_SCHOLAR_API_KEY` | SS API | (已设置) | ~/.bashrc |
 
@@ -39,7 +39,7 @@ cd /media/yakeworld/sda2/Synthos/tools
 # 搜索常见的硬编码模式
 grep -rn "export.*USERNAME\|export.*PASSWORD\|ENV\[\"MEDDATA" --include="*.sh" --include="*.py" .
 # 也可搜具体值
-grep -rn "MEDDATA_USERNAME_PLACEHOLDER\|MEDDATA_PASSWORD_PLACEHOLDER" --include="*.sh" --include="*.py" --include="*.json" .
+grep -rn "<MEDDATA_USERNAME>\|<MEDDATA_PASSWORD>" --include="*.sh" --include="*.py" --include="*.json" .
 ```
 
 ## 续审指引

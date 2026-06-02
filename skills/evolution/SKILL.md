@@ -84,6 +84,58 @@ related_skills: [project-experience-distillation, quality-gate, conversation-to-
 - 未来的进化方向是"更加结构化"——将更多语义判断转为可计算的规则
 - 系统能力的上限不绑死在模型能力上，绑死在技能设计和质量门的严密性上
 
+### Cron 定时进化部署模式（2026-06-02 新增）
+
+> **实战验证：两套 cron job 覆盖全部进化需求——轻量检查 + 完整循环。**
+
+**推荐配置：**
+
+| Job | 频率 | 用途 | 模型 |
+|:----|:-----|:-----|:-----|
+| synthos-evolution-probe | every 6h | PROBE + DRIFT_CHECK（只读，不修改任何文件） | 本地小模型即可 |
+| synthos-evolution-full | 每天 03:00 | 完整 11 步：PROBE→BENCHMARK→EXTERNAL→DIAGNOSE→IMPROVE→VERIFY→RECORD | 本地模型（qwen3.6-35b-nvfp4 已验证） |
+
+**关键约束：**
+- probe job 只读检查，永不修改 evolution-state.json、SKILL.md 或其他文件
+- full job 必须设置 repeat=forever（cronjob repeat=0）
+- full job 应在 memory-consolidation（通常 03:00）之后运行，避免竞争
+- 两个 job 都使用 deliver=origin，让 Hermes 调度
+- 在 cron 命令中指定 model: {"model": "qwen3.6-35b-nvfp4", "provider": "custom"}
+
+**cronjob create 命令模板：**
+```bash
+# 轻量 PROBE（每 6 小时，只读检查）
+hermes cron create --name synthos-evolution-probe --schedule "every 360m" --repeat forever \
+  --deliver origin --model '{"model":"qwen3.6-35b-nvfp4","provider":"custom"}' \
+  --prompt "你是 Synthos 进化引擎的轻量检查模块。执行 PROBE (Step 4) + DRIFT_CHECK (Step 3)..."
+
+# 完整进化（每天 03:00）
+hermes cron create --name synthos-evolution-full --schedule "0 3 * * *" --repeat forever \
+  --deliver origin --model '{"model":"qwen3.6-35b-nvfp4","provider":"custom"}' \
+  --prompt "你是 Synthos 进化引擎。执行完整的 PROBE→BENCHMARK→EXTERNAL→DIAGNOSE→IMPROVE→VERIFY→RECORD..."
+```
+
+### 关键陷阱与教训（2026-06-02 新增）
+
+**陷阱1：吸收潜力崩塌（Uncommitted Skills → False Low Absorption）**
+- **症状**：系统有大量新 SKILL.md 文件，但 absorption_potential 从 0.80 骤降到 0.17
+- **根因**：新技能没有被 git commit，evolution 引擎以 git tracked 的技能数计算吸收潜力
+- **修复**：git add + git commit 所有新技能后，重新计算 absorption_potential = committed/total
+- **预防**：在 PROBE 步骤增加 `git status --porcelain | wc -l` 检查，如果 >10 个未提交文件，自动报告
+- **参考**：`references/absorption-potential-audit-2026-06-02.md` — 完整的审计流程 + 预防方案
+
+**陷阱2：state.json 周期计数不同步**
+- **症状**：git log 显示 cycle-56 commit 存在，但 state.json 仍为 cycle=55
+- **根因**：git commit 后没有立即更新并 commit state.json
+- **修复**：每次 git commit 后，更新 state.json（cycle+1, edit_budget=0）并 git commit
+- **预防**：将 state.json 同步写入写入 evolution-log.md 的同一个操作原子中
+
+**陷阱3：所有维度最优时 EDIT_BUDGET 未使用**
+- **症状**：当所有维度 = 1.0 时，optimize_effect = 0.5（因为 0 edits consumed / 2 allocated = 0）
+- **根因**：EDIT_BUDGET 代表"本轮预算中实际使用的部分"，完美状态下无改进空间 = 0 使用
+- **修复**：增加 EDIT_BUDGET 从 2 到 3，使得 optimize_effect 反映"全部预算可用" = 1.0
+- **规则**：当所有维度 ≥ 0.95 时，考虑增加 EDIT_BUDGET（建议从 2 → 3）
+
 ---
 
 ## 方法层 · 白话

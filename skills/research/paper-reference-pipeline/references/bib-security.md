@@ -1,6 +1,6 @@
 # BibTeX 工具安全规范
 
-> 2026-05-28 安全事件: MedData密码(MEDDATA_PASSWORD_PLACEHOLDER)和SS API Key被提交到git历史。
+> 2026-05-28 安全事件: MedData密码(<MEDDATA_PASSWORD>)和SS API Key被提交到git历史。
 > 教训: 任何明文凭证一旦git push即永久泄露，即使后续删除文件。
 
 ## 禁止行为

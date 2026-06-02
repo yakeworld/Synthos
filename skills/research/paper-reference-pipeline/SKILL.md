@@ -463,11 +463,11 @@ cd /media/yakeworld/sda2/Synthos/tools/paper-manager
 python3 main.py search "BPPV otoconia" --limit 20 --no-download --output /tmp/refs
 
 # 2. 增强元数据（快，～1s/条）
-MEDDATA_USERNAME="MEDDATA_USERNAME_PLACEHOLDER" MEDDATA_PASSWORD="xxx" \
+MEDDATA_USERNAME="<MEDDATA_USERNAME>" MEDDATA_PASSWORD="xxx" \
   python3 main.py enhance /tmp/refs/references.bib -o /tmp/enhanced --no-download
 
 # 3. 下载PDF（慢，15-60s/条，涉及3级竞速）
-MEDDATA_USERNAME="MEDDATA_USERNAME_PLACEHOLDER" MEDDATA_PASSWORD="xxx" \
+MEDDATA_USERNAME="<MEDDATA_USERNAME>" MEDDATA_PASSWORD="xxx" \
   python3 main.py enhance /tmp/refs/references.bib -o /tmp/enhanced --limit 10
 
 # 4. 上传到NotebookLM
@@ -529,8 +529,8 @@ browser_navigate → 查找"Download PDF"按钮 → 点击
 当有MEDDATA凭据时，用 `download_one.py` 逐篇下载（比 `enhance` 批量模式更稳定）：
 
 ```bash
-export MEDDATA_USERNAME="MEDDATA_USERNAME_PLACEHOLDER"
-export MEDDATA_PASSWORD="MEDDATA_PASSWORD_PLACEHOLDER"
+export MEDDATA_USERNAME="<MEDDATA_USERNAME>"
+export MEDDATA_PASSWORD="<MEDDATA_PASSWORD>"
 cd /media/yakeworld/sda2/Synthos/tools/paper-manager
 python3 download_one.py "10.7326/M14-0697" "/path/to/output/Collins2015.pdf"
 ```
@@ -590,13 +590,13 @@ Salminen2000 → 10.1242/dev.127.1.13
 | **搜索历史技能/笔记** | `session_search('meddata password')` + `fact_store search` + 搜索 yakeworld 笔记目录 | 🟡 需时间 |
 | **用户主动提供** | 直接询问 | ✅ 最快 |
 
-**2026-05-30 实战**：MEDDATA密码 `MEDDATA_PASSWORD_PLACEHOLDER` 存储在 `batch_refresh.sh` 中。优先环境变量，搜索脚本文件为兜底。
+**2026-05-30 实战**：MEDDATA密码 `<MEDDATA_PASSWORD>` 存储在 `batch_refresh.sh` 中。优先环境变量，搜索脚本文件为兜底。
 
 所有API密钥和密码通过环境变量传入，`.env.template` 中有模板：
 
 ```
 SEMANTIC_SCHOLAR_API_KEY  — SS搜索（无key有rate limit 1req/s）
-MEDDATA_USERNAME          — 医数据平台账号(MEDDATA_USERNAME_PLACEHOLDER)
+MEDDATA_USERNAME          — 医数据平台账号(<MEDDATA_USERNAME>)
 MEDDATA_PASSWORD          — 医数据平台密码
 MEDDATA_TOKEN             — 直接token（替代账号密码）
 ```

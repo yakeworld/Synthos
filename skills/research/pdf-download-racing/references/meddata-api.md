@@ -13,7 +13,7 @@
 ┌───────────────────────────────────────────┐
 │ 体系①: MedData PDF 全文下载               │
 │                                           │
-│  MEDDATA_USERNAME_PLACEHOLDER:MEDDATA_PASSWORD_PLACEHOLDER (INSTITUTION_NAME_PLACEHOLDERSSO账号)  │
+│  <MEDDATA_USERNAME>:<MEDDATA_PASSWORD> (INSTITUTION_NAME_PLACEHOLDERSSO账号)  │
 │       │ (POST JSON)                       │
 │       ▼                                    │
 │  uuct.medbooks.com.cn:9443/sso/login      │
@@ -60,7 +60,7 @@
 | **Token 交换** | **❌ 500** | `responseMsg: "登录失败，用户名或密码错误"` |
 | viewtext 下载 | ❌ 不可用 | 依赖有效 token |
 
-**诊断结论**：`MEDDATA_USERNAME_PLACEHOLDER:MEDDATA_PASSWORD_PLACEHOLDER` 的 SSO 密码可能已被 SSO 系统标记为过期（`modifyPass: 1`），导致 `app.meddata.com.cn:8878` 的 token 交换接口拒绝认证。需要先到 `medbooks.com.cn` 手动登录一次，按提示修改密码，再用新密码更新环境变量。
+**诊断结论**：`<MEDDATA_USERNAME>:<MEDDATA_PASSWORD>` 的 SSO 密码可能已被 SSO 系统标记为过期（`modifyPass: 1`），导致 `app.meddata.com.cn:8878` 的 token 交换接口拒绝认证。需要先到 `medbooks.com.cn` 手动登录一次，按提示修改密码，再用新密码更新环境变量。
 
 ### 体系② CNKI 知网
 
@@ -73,7 +73,7 @@
 ```python
 import requests, re
 r = requests.post("https://uuct.medbooks.com.cn:9443/sso/login",
-    json={"username": "MEDDATA_USERNAME_PLACEHOLDER", "password": "xxx", "appId": None,
+    json={"username": "<MEDDATA_USERNAME>", "password": "xxx", "appId": None,
           "type": "USERNAME", "autoLogin": True},
     headers={"Content-Type": "application/json"}, verify=False)
 d = r.json()
@@ -81,7 +81,7 @@ d = r.json()
 # {"code":"200","message":"操作成功","data":{
 #   "url":"http://lib.medbooks.com.cn/sso/login?bucToken=eyJ...",
 #   "autoKey":"969a19f7...", "dcode":"0007",
-#   "username":"MEDDATA_USERNAME_PLACEHOLDER", "realName":"INSTITUTION_NAME_PLACEHOLDER",
+#   "username":"<MEDDATA_USERNAME>", "realName":"INSTITUTION_NAME_PLACEHOLDER",
 #   "aid":"book_med2", "modifyPass":1}}  # ← 需改密标志
 
 buc_token = re.search(r'bucToken=([^&]+)', d['data']['url']).group(1)
@@ -92,7 +92,7 @@ buc_token = re.search(r'bucToken=([^&]+)', d['data']['url']).group(1)
 ```python
 r2 = requests.get("http://app.meddata.com.cn:8878/api/sso/user/login",
     params={"bucToken": buc_token})
-# 返回: {"loginName":"MEDDATA_USERNAME_PLACEHOLDER","responseCode":500,"responseMsg":"登录失败，用户名或密码错误"}
+# 返回: {"loginName":"<MEDDATA_USERNAME>","responseCode":500,"responseMsg":"登录失败，用户名或密码错误"}
 ```
 
 尝试过的变体（全部失败）：
@@ -141,11 +141,11 @@ status含义:
 # 测试SSO登录
 curl -sk -X POST "https://uuct.medbooks.com.cn:9443/sso/login" \
   -H "Content-Type: application/json" \
-  -d '{"username":"MEDDATA_USERNAME_PLACEHOLDER","password":"xxx","appId":null,"type":"USERNAME","autoLogin":true}'
+  -d '{"username":"<MEDDATA_USERNAME>","password":"xxx","appId":null,"type":"USERNAME","autoLogin":true}'
 
 # 解码JWT bucToken（查看过期时间）
 python3 -c "import base64,json; p='<buc_token>'.split('.')[1]; p+='='*(4-len(p)%4); print(json.loads(base64.urlsafe_b64decode(p)))"
-# 输出: {"iat": 1780182123, "sub": "MEDDATA_USERNAME_PLACEHOLDER", "exp": 1780786923}
+# 输出: {"iat": 1780182123, "sub": "<MEDDATA_USERNAME>", "exp": 1780786923}
 
 # 测试viewtext
 curl -s "http://www.meddata.com.cn/api/abstract/viewtext?fileName=101016jmedia2022100001&token=test"

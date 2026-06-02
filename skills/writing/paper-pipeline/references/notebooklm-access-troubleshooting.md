@@ -194,9 +194,9 @@ notebooklm login --browser-cookies auto --all-accounts
 notebooklm profile list
 # 输出示例：
 # ┃ *  │ default    │ -                    │ not authenticated ┃
-# ┃    │ ghfdshgf79 │ ghfdshgf79@gmail.com │ authenticated     ┃
-# ┃    │ yakeworld  │ yakeworld@gmail.com  │ authenticated     ┃
-# ┃    │ gushiedu   │ gushiedu@gmail.com   │ authenticated     ┃
+# ┃    │ ghfdshgf79 │ <USER_EMAIL> │ authenticated     ┃
+# ┃    │ yakeworld  │ <USER_EMAIL>  │ authenticated     ┃
+# ┃    │ gushiedu   │ <EXAMPLE_EMAIL>   │ authenticated     ┃
 ```
 
 ### 6.2 查找项目所在的 profile

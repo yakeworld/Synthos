@@ -4,7 +4,7 @@ Batch download reference PDFs from .bib files and upload to NotebookLM.
 Pipeline: .bib → extract DOIs → parallel download (racing engine with MedData) → upload
 
 Supports MedData auto-login via environment variables:
-    export MEDDATA_USERNAME="MEDDATA_USERNAME_PLACEHOLDER"
+    export MEDDATA_USERNAME="<MEDDATA_USERNAME>"
     export MEDDATA_PASSWORD="xxx"
 
 Usage:
