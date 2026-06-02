@@ -627,7 +627,7 @@ opencode run '清理僵尸引用'  # OpenCode已吸收此技能
 
 ```bash
 cd /media/yakeworld/sda2/Synthos/tools/paper-manager
-SEMANTIC_SCHOLAR_API_KEY="x" MEDDATA_USERNAME="x" MEDDATA_PASSWORD="x" \
+SEMANTIC_SCHOLAR_API_KEY="[REDACTED]" MEDDATA_USERNAME="x" MEDDATA_PASSWORD="x" \
   python3 auto_fix_d8.py
 ```
 
