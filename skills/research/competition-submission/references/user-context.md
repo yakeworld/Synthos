@@ -11,7 +11,7 @@
 - **赛事**: 全球数智教育创新大赛 AI for Medicine 赛道
 - **组织**: 北大医学-超星数智教育联合实验室
 - **官网**: http://MeedTAC.mh.chaoxing.com
-- **邮箱**: meedtac@aichaoxing.com
+- **邮箱**: <COMPETITION_EMAIL>
 - **截止**: 2026-06-01 15:00（原5月15日，有延期）
 - **赛道**: 医学研究支持智能体
 - **专业大类**: 临床医学类 / 临床医学

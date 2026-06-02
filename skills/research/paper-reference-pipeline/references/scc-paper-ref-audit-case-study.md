@@ -64,12 +64,12 @@ Step 7: 产出审计报告
 ### 环境限制
 - 中国网络环境下，Springer/Elsevier/Nature/PNAS直接PDF下载全部返回HTML而非PDF
 - Sci-Hub（sci-hub.ee / sci-hub.wf / sci-hub.al）可用，约60%成功率
-- MedData（中国医学数据平台）需 `MEDDATA_USERNAME=MEDDATA_USERNAME_PLACEHOLDER` + `MEDDATA_PASSWORD`
+- MedData（中国医学数据平台）需 `MEDDATA_USERNAME=<MEDDATA_USERNAME>` + `MEDDATA_PASSWORD`
 
 ### 推荐命令
 ```bash
 cd /media/yakeworld/sda2/Synthos/tools/paper-manager
-MEDDATA_USERNAME="MEDDATA_USERNAME_PLACEHOLDER" MEDDATA_PASSWORD="MEDDATA_PASSWORD_PLACEHOLDER" \
+MEDDATA_USERNAME="<MEDDATA_USERNAME>" MEDDATA_PASSWORD="<MEDDATA_PASSWORD>" \
   python3 main.py enhance /tmp/refs.bib -o /tmp/pdfs
 ```
 

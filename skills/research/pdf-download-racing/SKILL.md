@@ -115,7 +115,7 @@ python3 /home/yakeworld/.hermes/skills/research/pdf-download-racing/scripts/scih
 2. `MEDDATA_USERNAME` + `MEDDATA_PASSWORD` — 自动SSO登录获取（推荐）
 
 ```bash
-export MEDDATA_USERNAME="MEDDATA_USERNAME_PLACEHOLDER"
+export MEDDATA_USERNAME="<MEDDATA_USERNAME>"
 export MEDDATA_PASSWORD="xxx"
 ```
 
@@ -318,7 +318,7 @@ Synthos/tools/paper-manager/
 8. **arXiv vs Sci-Hub** — arXiv DOI 不走Sci-Hub
 9. **🔴 文件名 ≠ bibkey** — Sci-Hub存储的PDF文件名基于真实作者（如 `sun2022.pdf`），但 `.bib` 中键可能是 `IDF2021`。下载后重命名为 `{bibkey}.pdf` 而非保留Sci-Hub原始文件名。
 10. **🔴 PMID: 状态而非DOI** — 早期用 `pmid:` 标注替代DOI的引用，其下载状态可能返回 `NOT_FOUND`。从SS响应中提取DOI后，用DOI重新下载。
-11. **🔴 MedData凭据状态** — `MEDDATA_USERNAME_PLACEHOLDER`/`MEDDATA_PASSWORD_PLACEHOLDER` 的SSO返回 modifyPass: 1（密码标记需修改），导致meddata token交换失败。详见 `references/meddata-api.md`。**不要反复重试** — 改密前所有meddata下载不可用。
+11. **🔴 MedData凭据状态** — `<MEDDATA_USERNAME>`/`<MEDDATA_PASSWORD>` 的SSO返回 modifyPass: 1（密码标记需修改），导致meddata token交换失败。详见 `references/meddata-api.md`。**不要反复重试** — 改密前所有meddata下载不可用。
 12. **🔴 MedData出版社白名单** — 只有特定出版社可通过meddata下载。详见 `references/meddata-api.md`。不支持的出版社直接跳到Sci-Hub或SS引用图谱。
 13. **🔴 凭据搜索工作流** — 当被告知"密码在系统里"时：① `session_search('<用户名>')` 查历史会话 → ② `grep -r '<用户名>'` 查脚本/配置文件（特别注意 `batch_*.sh`、`*.py` 中的硬编码）→ ③ 检查 `.env`、`~/.hermes/config`、Firefox `logins.json`。不要仅限于检查 `env` 变量。
 14. **D9路径不一致** — 参考PDF可能同时在 `pdfs/` 和 `enhanced_refs/pdfs/` 下。质检(D9)需扫描两个目录。

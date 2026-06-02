@@ -4,7 +4,7 @@
     "class_type": "KSampler",
     "_meta": {"title": "KSampler"},
     "inputs": {
-      "seed": 156680208700286,
+      "seed": <PHONE>0286,
       "steps": 20,
       "cfg": 8.0,
       "sampler_name": "euler",

@@ -90,7 +90,7 @@ OUT="/media/yakeworld/sda2/Synthos/outputs/papers/$PAPER/enhanced_refs"
 python3 main.py enhance "$BIB" -o "$OUT" --limit 15 --no-download
 
 # Step 2: 下载PDF（含MedData Tier 3）
-MEDDATA_USERNAME="MEDDATA_USERNAME_PLACEHOLDER" MEDDATA_PASSWORD="xxx" \
+MEDDATA_USERNAME="<MEDDATA_USERNAME>" MEDDATA_PASSWORD="xxx" \
 python3 main.py enhance "$BIB" -o "$OUT" --limit 15
 
 # Step 3: 上传到NotebookLM
@@ -112,7 +112,7 @@ done
 
 ```bash
 cd /media/yakeworld/sda2/Synthos/tools/paper-manager
-MEDDATA_USERNAME="MEDDATA_USERNAME_PLACEHOLDER" MEDDATA_PASSWORD="xxx" timeout 1800 \
+MEDDATA_USERNAME="<MEDDATA_USERNAME>" MEDDATA_PASSWORD="xxx" timeout 1800 \
 python3 batch_meddata_all.py
 ```
 

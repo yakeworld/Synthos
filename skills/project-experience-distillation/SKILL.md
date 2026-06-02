@@ -245,6 +245,8 @@ ACQ（文献检索）→ EXT（知识提取）→ HYP（科学假设）
 | 4 | **轻易创建新 skill** — 发现模式就直接创建新 skill，不问能否吸收到已有技能 | 普遍规律优先扩展现有技能，只有个性化规则才新开 |
 | 5 | **建完 skill 不跑质量门** — 创建了不检查属于 L1/L2/L3/L4 | 新建 skill 至少通过 L1 格式门 |
 | 6 | **文档退化** — 累积 patch 操作导致同一节重复出现 | 大重构时重写整个文件，不累积 patch |
+| 7 | **吸收潜力崩塌** — 大量新技能未 git commit 导致 absorption_potential 从 0.80 骤降到 0.17 | 在提炼任何新技能后，必须 git add + git commit，然后重新计算 absorption_potential = committed/total。在 PROBE 步骤增加 `git status --porcelain | wc -l` 检查，如果 >10 个未提交文件，自动报告 |
+| 8 | **state.json 周期计数不同步** — git commit 存在但 state.json 仍为旧周期 | 每次 git commit 后，立即更新 state.json（cycle+1, edit_budget=0）并 git commit，两个操作在同一原子中 |
 
 ---
 
