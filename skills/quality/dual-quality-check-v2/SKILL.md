@@ -730,6 +730,33 @@ NotebookLM不可用
 
 **thebibliography D10a修复协议**：发现孤儿/僵尸后，按以下顺序修复：
 
+**Step −1 — 检测重复 bibitem（前置预检）**
+
+同一 bibitem key 出现两次或以上时，LaTeX 会保留最后一个定义（覆盖前一个），但 D8 扫描会重复计数，导致 D8 虚高而 D10a 分母不对。必须在任何修复前先去重。
+
+```python
+# 检测重复 bibitem
+import re
+bibitem_keys = re.findall(r'\\bibitem(?:\[[^\]]*\])?\{([^}]+)\}', tex)
+from collections import Counter
+dupes = {k: v for k, v in Counter(bibitem_keys).items() if v > 1}
+if dupes:
+    print(f'⚠ Duplicate bibitems found: {dupes}')
+    # 保留第一次出现的实例，删除后续重复
+    seen = set()
+    def dedup_bib(match):
+        key = match.group(1)
+        if key in seen:
+            return ''  # 删除
+        seen.add(key)
+        return match.group(0)
+    tex = re.sub(r'\\bibitem(?:\[[^\]]*\])?\{([^}]+)\}(?:\n|.)*?(?=\\bibitem|\\Z)', dedup_bib, tex)
+```
+
+**实战参考**（3wd-framework-trustworthy-clinical-ai 2026-06-03）：`Wen2022` 在 thebibliography 中重复出现两次（分别对应数据泄漏综述的两个引用必要性）。删除重复实例后 D8 从 15 恢复至 14（真实值），D10a 修复后可正常达 100%。
+
+**验证**：去重后重新运行 D10a 扫描，确认无孤儿/僵尸因去重而变为孤儿（即：重复条目未被正文 `\cite{}` 引用时，去重只消除虚高，不影响覆盖率）。
+
 **Step 0 — 在文内检测未使用 `\cite{}` 的末格式化引用**（优先于新增+删除+改名）
 
 有些 bibitem 以僵尸状态存在，是因为论文在正文中使用了纯文本引用格式如 `(Author et al., Year)` 而非 `\cite{key}`。检测并替换：
