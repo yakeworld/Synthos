@@ -42,7 +42,7 @@ for dirpath, dirnames, filenames in os.walk(root):
 
 ```python
 # Before (hardcoded):
-GITHUB_TOKEN = "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"
+GITHUB_TOKEN="[REDACTED]"
 
 # After (env var):
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN', '')
@@ -58,7 +58,7 @@ with open(fpath, 'rb') as f:
 
 # Find the exact byte pattern (even if display is masked)
 # Replace at byte level
-old_bytes = b'#GITHUB_TOKEN = "***"\nGITHUB_TOKEN = "***"'
+old_bytes = b'#GITHUB_TOKEN="[REDACTED]"\nGITHUB_TOKEN="[REDACTED]"'
 new_bytes = b"# GitHub token — set via GITHUB_TOKEN environment variable.\n# DO NOT hardcode tokens in source files.\nGITHUB_TOKEN = os.environ.get('GITHUB_TOKEN', '')\n"
 
 data = data.replace(old_bytes, new_bytes)
@@ -88,8 +88,8 @@ git rm --cached .git/credentials  # if tracked
 
 ```bash
 # ~/.bashrc or ~/.zshrc — add at the end, outside the interactive-only guard
-export GITHUB_TOKEN="github_pat_..."
-export SEMANTIC_SCHOLAR_API_KEY="s2k-..."
+export GITHUB_TOKEN="[REDACTED]"
+export SEMANTIC_SCHOLAR_API_KEY="[REDACTED]"
 ```
 
 Note: `~/.bashrc` on Ubuntu has `case $- in *i*) ;; *) return;; esac` which exits for non-interactive shells. Credentials set after this guard will NOT be available to subprocesses. If needed, also set in `~/.profile`.
