@@ -142,3 +142,8 @@ skills/skill_registry.json
 skills/skill_tree.json
 skills/SKILL_TREE.md
 docs/promotion/
+
+# ============================================
+# 15. 专利工具（含内部专利信息，不入库）
+# ============================================
+skills/patent-disclosure/
