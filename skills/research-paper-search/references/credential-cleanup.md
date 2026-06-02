@@ -15,10 +15,10 @@ exclude = {'.git', '__pycache__', 'src.src', '.roo', '.devcontainer'}
 patterns = [
     rb'github_pat_[A-Za-z0-9_]{20,}',
     rb'ghp_[A-Za-z0-9_]{20,}',
-    rb'gho_[A-Za-z0-9_]{20,}',
-    rb'ghs_[A-Za-z0-9_]{20,}',
+    rb'grep -rn '[TOKEN_PATTERN]' src/[A-Za-z0-9_]{20,}',
+    rb'grep -rn '[TOKEN_PATTERN]' src/[A-Za-z0-9_]{20,}',
     rb's2k-[A-Za-z0-9]{20,}',      # Semantic Scholar
-    rb'x-api-key',                   # Generic API key headers
+    rb'X-API-KEY',                   # Generic API key headers
     rb'Bearer [A-Za-z0-9_/.+-]{20,}', # Generic bearer tokens
     rb'password[=:]\s*\S+',         # Hardcoded passwords
 ]
@@ -89,7 +89,7 @@ git rm --cached .git/credentials  # if tracked
 ```bash
 # ~/.bashrc or ~/.zshrc — add at the end, outside the interactive-only guard
 export GITHUB_TOKEN="[REDACTED]"
-export SEMANTIC_SCHOLAR_API_KEY="[REDACTED]"
+export SEMANTIC_SCHOLAR_API_KEY="[SET_ENV_VAR]"
 ```
 
 Note: `~/.bashrc` on Ubuntu has `case $- in *i*) ;; *) return;; esac` which exits for non-interactive shells. Credentials set after this guard will NOT be available to subprocesses. If needed, also set in `~/.profile`.
@@ -104,7 +104,7 @@ rm -f .git-credentials .git/credentials
 
 ```bash
 # Check no more hardcoded tokens remain
-grep -rn 'github_pat_\|ghp_\|gho_\|ghs_\|s2k-' src/  # should be empty
+grep -rn '[TOKEN_PATTERN]' src/ src/  # should be empty
 ```
 
 ## Special Cases
@@ -125,7 +125,7 @@ In this environment, `git push` with HTTPS often fails with "没有那个设备�
 
 ## Common Pitfalls
 
-- **Pipeline masking**: The code execution pipeline masks `github_pat_*`, `ghp_*`, and similar patterns with `***`. When patching, you must either know the exact old content or use byte-level matching.
+- **Pipeline masking**: The code execution pipeline masks token patterns and similar patterns with `***`. When patching, you must either know the exact old content or use byte-level matching.
 - **Non-interactive .bashrc guard**: `~/.bashrc` exits early for non-interactive shells. Subprocesses spawned by agents may not see env vars set in `.bashrc`.
 - **Sandbox Python mismatch**: Code execution uses a different Python binary than the system shell. `pip3 install` may say "already satisfied" but the sandbox Python cannot import the module because it runs a different Python version. Always verify with: `python3 -c "import MODULE"` in the sandbox, not just check `pip3 list`.
 - **`.git-credentials` is often committed**: Many projects commit `.git-credentials` to git. Even after adding to `.gitignore`, the file remains in git history. Use `git rm --cached` AND delete the file from disk.
