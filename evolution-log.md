@@ -75,3 +75,17 @@ Lesson: state.json must be committed after every cycle.
 **结果**: score 1.0, EXCELLENT
 
 **教训**: 扁平层有重复 skill 文件会导致 Hermes agent listing 虚高计数（121 → 真实值 120）。定期的扁平层检查可防止此问题。
+
+### P0 Absorption — 2026-06-03
+
+**From ARIS** (wanshuiyin/Auto-claude-code-research-in-sleep, 9.3k⭐):
+- Cross-model adversarial review → quality-gate L0.2 Karma door + Layer C adversarial review
+- Research Wiki concept → knowledge-extraction persistent store
+- 13 named workflows (W1-W6) → paper-pipeline enhanced classification
+- Meta-optimize self-evolution → evolution skill bundle pattern
+
+**From Claude Code Phase 2** (anthropics/claude-code, 123k⭐):
+- Karma moderation → quality-gate L0.2 soft-feedback door
+- Assertion-based reliability → falsification-validation 4-layer assertion protocol
+
+**Changes**: 4 files (quality-gate, falsification-validation, evolution, absorption records)

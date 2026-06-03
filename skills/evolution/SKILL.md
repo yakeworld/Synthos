@@ -49,12 +49,14 @@ related_skills: [project-experience-distillation, quality-gate, conversation-to-
 
 已吸收外部技能记录：
 
-| 来源 | 评分 | 文件 |
-|:-----|:----:|:-----|
-| handsomestWei/patent-disclosure-skill v1.8.5 | 4.6 | `references/absorption-patent-disclosure.md` |
-| Agent4S (Zheng et al. 2025, arXiv:2506.23692) | 4.6 | `references/absorption-agent4s.md` |
-| PaperSpine V2 (WUBING2023) | 4.6 | `references/absorption-paperspine-v2.md` |
-| nature-paper2ppt (GARCH-QUANT) | 4.6 | `references/absorption-nature-paper2ppt.md` |
+| 来源 | 评分 | 文件 | 状态 |
+|:-----|:----:|:-----|:-----|
+| handsomestWei/patent-disclosure-skill v1.8.5 | 4.6 | `references/absorption-patent-disclosure.md` | ✅ |
+| Agent4S (Zheng et al. 2025, arXiv:2506.23692) | 4.6 | `references/absorption-agent4s.md` | ✅ |
+| PaperSpine V2 (WUBING2023) | 4.6 | `references/absorption-paperspine-v2.md` | ✅ |
+| nature-paper2ppt (GARCH-QUANT) | 4.6 | `references/absorption-nature-paper2ppt.md` | ✅ |
+| **wanshuiyin/ARIS (Auto-claude-code-research-in-sleep)** | **9.5** | `references/absorption-aris.md` | 🆕 |
+| **anthropics/claude-code Phase 2 (Karma+Assertion)** | **8.5** | `references/absorption-claude-code-phase2.md` | 🆕 |
 
 ### 设计原则：模型无关性
 
