@@ -1,7 +1,7 @@
 ---
 name: systematic-review
 description: "Systematic review and meta-analysis workflow assistant. Covers PRISMA flow, search strategy design, study selection, quality assessment, data extraction, and synthesis support."
-version: 1.0.0
+version: 1.1.0
 author: Hermes Agent
 license: MIT
 metadata:
@@ -361,6 +361,106 @@ For papers flagged as potentially inflated:
 - Check if the authors' later papers acknowledge or address the flaw
 - Document whether the flaw is explicitly mentioned, obfuscated, or absent from the methods section
 
+### Extension: Full-Text Methodology Verification Protocol
+
+Abstract-level detection (above) is a useful triage step. For papers flagged as high-inflation, **full-text verification** is needed — downloading the PDF, locating the methods section, and identifying the exact paragraph-level evidence of methodological violations.
+
+#### Step 1: Download target PDFs
+
+For each flagged paper, obtain the PDF using priority order:
+
+| Priority | Source | Method |
+|:--------:|:-------|:-------|
+| 1 | Open Access (Semantic Scholar OA field) | `curl -sL "{oa_url}" -o {key}.pdf` |
+| 2 | arXiv | `curl -sL "https://arxiv.org/pdf/{arxiv_id}" -o {key}.pdf` |
+| 3 | Sci-Hub via curl_cffi | Python `curl_cffi` + Sci-Hub domain rotation + Referer header |
+| 4 | paper-manager download_one.py | `python3 /path/to/download_one.py {doi} {path}` |
+| 5 | Blocked/Marked | Write to missing list with reason |
+
+**Verification**: every downloaded file must pass `head -c 5 {file}.pdf` → `%PDF-`.
+
+#### Step 2: Extract full text
+
+```bash
+pdftotext {paper}.pdf - > /tmp/{key}_text.txt
+# Or use markitdown for better formatting
+uvx markitdown {paper}.pdf > /tmp/{key}_md.md
+```
+
+#### Step 3: Locate the methods section
+
+Search for key methodological phrases that reveal pipeline order:
+
+```bash
+# Search for preprocessing before splitting (LEAKAGE signal)
+grep -n -i "up.sampl\|SMOTE\|oversampl\|imput\|scale\|balanc" /tmp/{key}_text.txt | head -20
+
+# Search for train/test split
+grep -n -i "train.*test\|split\|80.*20\|70.*30\|CV\|cross.val\|fold" /tmp/{key}_text.txt | head -20
+
+# Search for cross-validation
+grep -n -i "fold\|cross.val\|CV\|k.fold\|stratified" /tmp/{key}_text.txt | head -10
+```
+
+#### Step 4: Read the precise preprocessing → split sequence
+
+The critical question is **order**: does preprocessing happen *before* or *after* train-test split?
+
+Read the 5-10 lines surrounding each match from Step 3. Determine which sequence applies:
+
+| Sequence | Verdict | Example quote |
+|:---------|:--------|:--------------|
+| "Preprocessing technique was applied. After that, the data was split into train/test." | 🔴 **LEAKAGE** — synthetic/processed samples leak into test set | `"the up-sampling technique has been used to balance both datasets. After that, 80% of the datasets are used as training data and 20% as testing data"` |
+| "First, train/test split. Then, preprocessing was applied only to the training fold." | ✅ Clean | `"within each fold of cross-validation, we apply SMOTE exclusively on the training subset"` |
+| "Cross-validation was used." + "SMOTE was applied." (no order specified) | 🟡 Ambiguous — assume leakage unless clarified | |
+
+#### Step 5: Extract exact performance claims
+
+From the abstract and results section, extract the reported performance numbers:
+
+```bash
+grep -E "(accuracy|AUC|F1|precision|recall|sensitivity|specificity)" /tmp/{key}_text.txt | grep -E "[0-9]+\.[0-9]+" | head -10
+```
+
+For each number, document:
+- **Metric name** (Accuracy, AUC, F1, Recall)
+- **Claimed value** (e.g., 0.99)
+- **Model** (e.g., Extra Trees, XGBoost+SMOTEENN)
+- **Method used** (up-sampling, SMOTE, SMOTEENN, etc.)
+
+#### Step 6: Map claim to known leakage baseline
+
+Compare the claimed value against the proper-isolation baseline for the same dataset:
+
+| Dataset | Proper-isolation F1 | Leaky F1 | Source |
+|:--------|:-------------------:|:--------:|:-------|
+| PIDD (768, 34.9% prevalence) | 0.664 (Helix LDA) | 0.738 (Leaky) | Pima CRISP-DM |
+| CDC BRFSS (50K, 13.8%) | 0.451 (Helix AdaBoost) | 0.768 (Leaky) | Pima CRISP-DM |
+| Early Diabetes (520, 61.5%) | 0.930 (Helix LR) | 0.915 (Leaky) | Pima CRISP-DM |
+
+Mapping rule:
+- **Claim ≈ Leaky baseline** → inflation confirmed
+- **Claim ≈ Proper-isolation baseline** → likely clean methodology
+- **Claim > Leaky baseline** → investigate for additional data leakage or overfitting
+
+#### Step 7: Produce evidence table
+
+For each verified paper, produce a row in the comparison table:
+
+| Reference | Claimed Metric | Key Leakage Evidence | Verdict |
+|:----------|:--------------|:--------------------|:--------|
+| Shams2025 | AUC=0.99 | P.3: "up-sampling → After that, 80/20 split" | 🔴 Leakage confirmed |
+| Li2024 | F1=0.95 | Baseline F1=0.27 → +355% with SMOTEENN | 🔴 Leakage inferred |
+
+#### Step 8: Use as convergent evidence in Discussion
+
+When writing a paper that includes cross-dataset validation (Helix vs. Leaky), cite the full-text literature audit as **independent convergent evidence**:
+
+- "Our Leaky protocol produced F1=0.768 on CDC BRFSS. The published literature reports AUC=0.99 under identical leaky conditions (Shams2025), confirming our controlled experimental finding."
+- "The only BRFSS study using proper stratified CV (Tennessee2025) reports F1=0.37, consistent with our Helix-isolated AdaBoost result (F1=0.451)."
+
+This transforms the paper's claim from "we measured inflation in our lab" to "we measured it, and the published literature independently confirms the pattern."
+
 ### Reporting
 
 Include a summary table in the review:
@@ -369,10 +469,19 @@ Include a summary table in the review:
 | Author Year | 98.7% | Global SMOTE; no CV | 🔴 Very High |
 | Author Year | 89% | No zero-value correction | 🟡 Moderate |
 
-### Related Skills
+### Pitfalls (Flaw Analysis)
+
+- **PDF download is not the same as content verification**: many downloaded files are HTML disguised as PDFs. Always check `%PDF-` header.
+- **Abstract-only inference is risky**: some papers mention "cross-validation" in the abstract but the methods section reveals the CV is applied incorrectly (e.g., global SMOTE before CV). Full-text verification is essential.
+- **False positives in citation count**: Papers claiming "10-fold CV" may still have leakage if feature selection or preprocessing isn't fold-isolated. Don't accept "CV" as proof of cleanliness.
+- **Baseline unsampled performance**: When a paper reports both unsampled and SMOTE-augmented performance, the gap between them is a strong indicator of leakage magnitude. A gap >100% F1 inflation from sampling alone is diagnostic of data leakage.
+- **Not every inflated claim is fraud**: Some authors simply follow community norms in their field that haven't yet recognized the data leakage problem. Frame findings as methodological critique, not personal accusation.
+
+### Related Skills & References
 
 - `academic-paper-completion` → `references/inflated-metrics-detection.md` — full detection methodology
 - `academic-paper-completion` → `references/pidd-inflated-metrics-table.md` — concrete worked example with 10 PIDD papers
+- `systematic-review` → `references/brfss-literature-methodology-audit-2026-06-03.md` — full worked example with 6 BRFSS papers
 
 ## Narrative Synthesis Process
 

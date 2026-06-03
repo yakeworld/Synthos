@@ -115,6 +115,73 @@ hermes cron create --name synthos-evolution-full --schedule "0 3 * * *" --repeat
   --prompt "你是 Synthos 进化引擎。执行完整的 PROBE→BENCHMARK→EXTERNAL→DIAGNOSE→IMPROVE→VERIFY→RECORD..."
 ```
 
+### Cron 执行实战陷阱（2026-06-03 新增）
+
+**陷阱4：State 文件被 .gitignore 忽略**
+- **症状**：`git add evolution-state.json evolution-log.md` 报错「被 .gitignore 忽略」
+- **根因**：`.gitignore` 中显式列出了 `/evolution-state.json` 和 `/evolution-log.md`（安全策略隔离运行时文件）
+- **修复**：使用 `git add -f evolution-state.json evolution-log.md` 强制添加
+- **预防**：在 RECORD 步骤的 git commit 指令中，始终使用 `git add -f` 而非 `git add`
+- **验证**：`git status` 确认文件已 staging 再 commit
+
+**陷阱5：Cron 执行导致分离头指针（Detached HEAD）**
+- **症状**：git commit 后在 `（分离头指针 xxxxxx）` 状态，而非在 main 分支上
+- **根因**：cron job 执行时 git HEAD 可能指向某个 commit 而非分支（取决于 cron 进程的 cwd 和 git state）
+- **修复**：
+  ```bash
+  # 所有 commit 完成后：
+  git checkout main
+  git merge <last-commit-hash>
+  ```
+- **预防**：在 RECORD 步骤末尾增加 `git checkout main && git merge HEAD`，或一开始就 `git checkout main` 确保在分支上
+- **注意**：如果 merge 导致 fast-forward，说明分支无分歧——安全。如果有冲突，说明 cron 外有人改了 main——需要人工处理
+
+**陷阱6：扁平层 skill 重复文件虚高计数**
+- **症状**：Hermes agent 的 available_skills 列表显示 N+1 个技能，但实际只有 N 个唯一技能
+- **根因**：`skills/` 根目录下存在与子目录 SKILL.md 同名的扁平 `.md` 文件（如 `skills/pdf-download-racing.md` vs `skills/research/pdf-download-racing/SKILL.md`），二者 YAML frontmatter 中 name 字段相同
+- **检测**：在 PROBE 步骤中增加以下检查：
+  ```bash
+  # 检查扁平层 .md 文件的 name 是否与子目录 SKILL.md 重复
+  cd /media/yakeworld/sda2/Synthos
+  python3 -c "
+  import os, yaml
+  skills_dir = 'skills'
+  seen = {}
+  for root, dirs, files in os.walk(skills_dir):
+      for f in files:
+          if f == 'SKILL.md':
+              with open(os.path.join(root, f)) as fh:
+                  c = fh.read()
+              if c.startswith('---'):
+                  fm = yaml.safe_load(c.split('---', 2)[1])
+                  if fm and 'name' in fm:
+                      seen[fm['name']] = seen.get(fm['name'], []) + [os.path.relpath(os.path.join(root, f), skills_dir)]
+  # 检查扁平层 .md
+  for fname in os.listdir(skills_dir):
+      if fname.endswith('.md') and fname != 'SKILL_TREE.md':
+          fpath = os.path.join(skills_dir, fname)
+          if os.path.isfile(fpath):
+              with open(fpath) as fh:
+                  c = fh.read()
+              if c.startswith('---'):
+                  fm = yaml.safe_load(c.split('---', 2)[1])
+                  if fm and 'name' in fm:
+                      seen[fm['name']] = seen.get(fm['name'], []) + [fname]
+  for name, paths in seen.items():
+      if len(paths) > 1:
+          print(f'DUPLICATE: {name} appears in {paths}')
+  "
+  ```
+- **修复**：删除扁平层的重复文件（保留子目录 SKILL.md 中的正式版本）
+- **参考**：cycle-59 发现 `skills/pdf-download-racing.md` 是 `skills/research/pdf-download-racing/SKILL.md` 的重复，删除后 unique skill count 从 121 校正为 120
+
+**陷阱7：远程 push 在 cron 中失败**
+- **症状**：`git push origin main` 报错「Authentication failed」
+- **根因**：cron 进程没有 GitHub 凭据（SSH agent 不可用，HTTPS token 未配置）
+- **修复**：在 cron job 中放弃 push 或配置 `credential.helper cache` + time-limited token
+- **预防**：cron job 的 RECORD 步骤中 push 失败是预期的——commit 到本地 main 即可。push 在有人交互时手动执行
+- **规则**：cron 中 git push 失败不应阻止 cycle 完成。如果 push 失败，在 cycle report 中记录 "push failed (cron — no auth)" 并继续
+
 ### 关键陷阱与教训（2026-06-02 新增）
 
 **陷阱1：吸收潜力崩塌（Uncommitted Skills → False Low Absorption）**

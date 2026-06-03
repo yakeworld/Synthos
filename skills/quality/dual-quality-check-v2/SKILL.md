@@ -108,6 +108,9 @@ graph TD
    SMOTE是否在分割前?     → "全局SMOTE" = LEAKAGE
    KNN k=1?               → 记忆数据集，高偏估计
 ③ 记录原文段落+行号 → 写入Discussion
+
+**Full-text verification protocol**: For a detailed step-by-step guide on downloading PDFs, pinpointing methodological errors via pdftotext, and building the evidence chain, see `references/brfss-literature-methodology-audit-2026-06-03.md`. This worked example covers: finding papers on a target dataset → checking OA availability → downloading full text → converting to text → searching for preprocessing/split keywords → documenting exact sentences → comparing against Helix vs Leaky experiments.
+
 ```
 
 **步骤4: 产出表格**
@@ -1698,6 +1701,7 @@ Unlike prior investigations that relied on [method with known limitation] and we
 - `references/cuteye-auto-bib-cleanup-2026-06-01.md` — 自动 bib 生成器 `@misc{autoXXXXX}` 僵尸条目清理实战：22条垃圾→删除+16条已验证引用补引，D10a 33%→100%。含 Python 批量 \cite{} 插入技法。 — 跨数据集验证实战：PIDD→Early Diabetes，4数据集消融+Λ比较+Banchhor2021审计
 - `references/bppv-otoconia-auto-zombie-cleanup-2026-05-31.md` — BPPV otoconia simulation 僵尸清理：13个auto-generated条目删除 + 15篇OpenAlex验证引用补引 + 15处\\cite插入。D10a 23%→100%。含sed/Python转义实战、多版本.tex文件陷阱。
 - `references/full-text-methodology-audit-2026-05-31.md` — 全文方法论审计实战：下载OA PDF(Khafaga2022)→精读Methods→定位全局特征选择/离群检测泄漏点。含IEEE付费墙论文(Banchhor2021)从摘要推定泄漏的方法。
+- `references/brfss-literature-methodology-audit-2026-06-03.md` — CDC BRFSS文献全文方法论审计实战：OpenAlex搜索→OA/Sci-Hub下载→pdftotext定位up-sampling/split泄漏语句→Shams2025/Li2024双全文验证→与Helix/Leaky实验对比。含完整7步协议、文献对比链、证据树结构。
 - `references/synthos-system-d10a-fix-2026-06-01.md` — thebibliography D10a修复实战：僵尸→引用改名、13条新增bibitem、计数器更新、companion .bib同步、2遍pdflatex验证：84.58% accuracy低于13.6%患病率的86.4%瞎猜基线。Accuracy在不平衡数据上的误导性 + WEKA全局预处理泄漏推定。
 
 ## 本地优先原则

@@ -61,7 +61,8 @@ metadata:
 | 1 | 本地资产 | 先查，避免重复劳动 |
 | 2 | OpenAlex | 无限制，首选外搜源 |
 | 3 | Semantic Scholar | 串行+3s间隔，补充引用数据 |
-| 4 | arXiv | 备选，服务不稳定时而不可用 |
+| 4 | OpenML | 当需要同一数据集的跨论文基准对比时使用。API: `api.openml.org/api/v1/json/data/list?data_name={name}`。注意：OpenML上的benchmark结果可能有方法学问题（数据泄漏），需配合全文审计判断。当前(2026-06) API不稳定，返回503频繁 — 作为补充源而非主源。 |
+| 5 | arXiv | 备选，服务不稳定时而不可用 |
 
 ## 工作流地图
 
