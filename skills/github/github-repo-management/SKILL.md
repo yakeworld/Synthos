@@ -603,6 +603,22 @@ Check remote contents via API after push:
 curl -s "https://api.github.com/repos/$OWNER/$REPO/contents/" | python3 -c "import sys,json; [print(i['name']) for i in json.load(sys.stdin)]"
 ```
 
+### Push Protection Bypass (GitHub Secret Scanning)
+
+When GitHub secret scanning blocks a push (false positive on documentation with token examples), use `gh api` to create a push-protection bypass:
+
+```bash
+# Create bypass for the specific blocked secret
+gh api repos/$OWNER/$REPO/secret-scanning/push-protection-bypasses -X POST \
+  --raw-field 'reason=false_positive' \
+  --raw-field 'placeholder_id=<FROM_ERROR_MESSAGE>'
+
+# Then retry the push
+git push origin HEAD:main
+```
+
+Reasons accepted by the API: `false_positive`, `used_in_tests`, `will_fix_later`. The bypass expires in ~2 hours. Full protocol in `references/push-protection-bypass.md`.
+
 ### Pitfalls
 - **Push via HTTPS fails in non-interactive environments**: `git push` over HTTPS may fail with `fatal: could not read Password` even when `gh auth login` succeeds. The `gh` credential helper is not available as a standalone `git-credential-gh` binary. Workaround: use `git push` with `https://x-access-token:TOKEN@` in the remote URL, or use the GitHub API to update files directly.
 - **GitHub Token from `~/.bashrc` may not be available**: `~/.bashrc` has `case $- in *i*) ;; *) return;; esac` guard for non-interactive shells. Subprocess Python does not source `.bashrc` automatically. Always pass `env={**os.environ, 'GITHUB_TOKEN': 'TOKEN'}` explicitly to `subprocess.run()`.

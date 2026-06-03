@@ -86,18 +86,38 @@ metadata:
 6. **寻找正确CV论文**: 搜索含"stratified cross-validation"的论文作为反例
 7. **汇聚**: 泄漏论文区间 vs 正确CV论文区间不重合 → 结论成立
 
+### 成熟度三档分级（2026-06-03 新增）
+
+查到的论文不只看被引数，必须按方法学可靠性分级：
+
+| 分级 | 标准 | 例 |
+|:----:|:-----|:----|
+| **Tier 1** 高成熟度 | 正确CV+合理性能+高引用+同行评审 | AUC=0.72-0.80 |
+| **Tier 2** 中等成熟度 | 方法可查但有潜在泄漏风险 | 需验证实现细节 |
+| **Tier 3** 低成熟度 | 明确泄露（80/20+平衡，无CV） | AUC=0.96-0.99 |
+
+**泄漏检测关键词**：`up-sampling before split` / `70-30` / `80-20` / `global SMOTE` / `random oversampling`（无CV即泄漏）
+
+**正确CV关键词**：`stratified cross-validation` / `10-fold` / `k-fold` / `within-fold` / `data isolation`
+
+**铁律**：仅Tier 1和明确审计过的Tier 2才进入Related Work引文。Tier 3只作为反面案例（"声称AUC=0.99但存在严重数据泄漏"）。
+
 ### 典型案例（CDC BRFSS, 2026-06-03）
-- 审计6篇 → 5篇数据泄漏（Shams2025原文验证: "up-sampling → then 80/20 split"）
-- 泄漏论文区间: AUC=0.98-0.99 / Acc=92-98% / F1=0.95
-- 正确CV论文区间 (Tennessee2025): F1=0.37
-- 我方Helix基准: AdaBoost F1=0.451
-- 汇聚证据: 泄漏区间不重合于正确区间 → 结论不可辩驳
+
+| 论文 | Tier | 声称性能 | 判断 | DOI |
+|:-----|:----:|:---------|:-----|:----|
+| Xiong2019, Prev Chronic Dis | **T1** ✅ | AUC=0.72-0.80, Acc=82% | 加权LR考虑调查设计，数值合理 | 10.5888/pcd16.190109 |
+| Quinones2021, Sci Rep | **T1** ✅ | GW-RF空间建模 | Nature子刊，CV+RFE可靠 | 10.1038/s41598-021-85381-5 |
+| Alam2023, Healthcare Analytics | **T2** ⚠️ | 声明"无泄漏" | 需验证SMOTE实现 | 10.1016/j.health.2023.100297 |
+| Shams2023, J Elec Sys Inf Tech | **T3** 🔴 | AUC=**0.99** | 80/20 + up-sampling | 10.1186/s43067-023-00074-5 |
+| Wu2024, Engineering Reports | **T3** 🔴 | Acc=**97.45%** | 随机过采样 | 10.1002/eng2.13080 |
+
+**汇聚证据**：T1区间(AUC=0.72-0.80)与T3区间(AUC=0.96-0.99)完全不重合。我方Helix基准(AdaBoost F1=0.448)证实：患病率越低(CDC 13.9%)，泄漏通胀越严重。
 
 ### 产出
 - 每篇论文的方法学判定（全文定位+行号）
-- 汇聚证据写入Discussion独立验证段
-- BibTeX引用 + PDF全文入库
-| 5 | arXiv | 备选，服务不稳定时而不可用 |
+- Tier分级 + 汇聚证据表 → 写入Discussion独立验证段
+- BibTeX引用 + PDF全文入库（Tier 1+2优先）
 
 ## 工作流地图
 

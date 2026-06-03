@@ -177,7 +177,19 @@ hermes cron create --name synthos-evolution-full --schedule "0 3 * * *" --repeat
 - **修复**：删除扁平层的重复文件（保留子目录 SKILL.md 中的正式版本）
 - **参考**：cycle-59 发现 `skills/pdf-download-racing.md` 是 `skills/research/pdf-download-racing/SKILL.md` 的重复，删除后 unique skill count 从 121 校正为 120
 
-**陷阱7：远程 push 在 cron 中失败**
+**陷阱7：子目录原子（Subdirectory-atom）未被PROBE识别**
+
+- **症状**：PROBE 步骤报告某认知原子 SKILL.md 未找到（如 research-ideation），但文件实际存在于 `skills/research/research-ideation/SKILL.md`
+- **根因**：PROBE 步骤使用固定路径格式 `skills/{atom_name}/SKILL.md`，但部分原子在 `research/` 子目录中
+- **检测方式**：在 PROBE 步骤的 7 原子结构检查中，使用 `find` 而非固定路径：
+  ```bash
+  SKILL_PATH=$(find /media/yakeworld/sda2/Synthos/skills -name "SKILL.md" -path "*research-ideation/SKILL.md" 2>/dev/null | head -1)
+  ```
+  或直接使用 `find skills/ -name SKILL.md | xargs grep -l "^name: research-ideation"`
+- **已知子目录原子**：`research-ideation` → `skills/research/research-ideation/SKILL.md`（其他 6 个原子在 `skills/{atom}/SKILL.md` 顶层）
+- **预防**：PROBE 步骤的原子路径解析应支持 glob 或搜索，而非硬编码 `skills/{atom}/SKILL.md`
+
+**陷阱8：远程 push 在 cron 中失败**
 - **症状**：`git push origin main` 报错「Authentication failed」
 - **根因**：cron 进程没有 GitHub 凭据（SSH agent 不可用，HTTPS token 未配置）
 - **修复**：在 cron job 中放弃 push 或配置 `credential.helper cache` + time-limited token

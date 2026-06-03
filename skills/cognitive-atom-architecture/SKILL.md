@@ -26,6 +26,8 @@ The fundamental unit of scientific work is not an operation (search, write, revi
 
 ## The 7 Cognitive Atoms + 3 Meta-Reflection Atoms (v4.4+)
 
+> **Note**: research-ideation lives at `skills/research/research-ideation/` (under the `research/` category subdirectory), not at the top-level `skills/research-ideation/`. All other atoms are at `skills/{atom}/` directly. This means structural probes must use `find` or name-based search rather than a hardcoded path pattern like `skills/{atom}/SKILL.md`.
+
 The system now distinguishes two atom classes:
 
 - **cognitive atoms**: Directly perform research operations (ACQ, EXT, ASC, GAP, HYP, ARG, VER)
