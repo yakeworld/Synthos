@@ -1569,7 +1569,14 @@ Unlike prior investigations that relied on [method with known limitation] and we
 
    **预防**: 首次建立论文目录时，用 symlink 代替独立文件；`\bibliography{}` 引用的 .bib 文件应与 `06-references/` 下的一致。扫描脚本的 D10a 检查也应扫描 `\bibliography{}` 实际使用的文件，而非硬编码 `06-references/references.bib`。
 
-26. 🔴 **预存双反斜杠 bibitem 条目** — bibitem 键出现 \\\\bibitem{key}（双反斜杠）而非 \\bibitem{key}（单反斜杠）时，LaTeX 静默忽略该条目。扫描工具计数时会算入 D8，但编译后该条目永远不会出现在 .aux 的 \\bibcite{} 列表中。这是零错误静默失败——编译成功、PDF 生成、页面数正确，但引用显示为 [?]。
+26. 🔴 **预存双反斜杠 bibitem 条目** — bibitem 键出现 \\\\\\\\bibitem{key}（双反斜杠）而非 \\\\bibitem{key}（单反斜杠）时，LaTeX 静默忽略该条目。扫描工具计数时会算入 D8，但编译后该条目永远不会出现在 .aux 的 \\\\bibcite{} 列表中。这是零错误静默失败。与陷阱 #8 的区别：陷阱 #8 是 patch 工具在执行替换后创建双反斜杠（模式 B）；本陷阱是原始 .tex 文件中已存在的双反斜杠 bibitem。
+
+28. 🟡 **D9低覆盖率常见于临床医学论文** — 引用多为付费期刊，OA PDF无法下载。D9不是硬性门，而是"证据可验证度"。
+    | D9 | 含义 | 行动 |
+    |:--:|:-----|:------|
+    | ≥80% | 强证据链 | Layer B直接运行 |
+    | 30-80% | 部分验证 | Layer B注明缺失 |
+    | <30% | 仅依赖摘要 | 降级到手动评审 |
 
     根因：手动编辑或从旧模板复制时，LaTeX 控制序列的开头被错误地加倍。这些条目一直显示为僵尸/未引用，实际上是 LaTeX 从未识别过它们。
 
@@ -1624,7 +1631,14 @@ Unlike prior investigations that relied on [method with known limitation] and we
 
    **预防**: 首次建立论文目录时，用 symlink 代替独立文件；`\bibliography{}` 引用的 .bib 文件应与 `06-references/` 下的一致。扫描脚本的 D10a 检查也应扫描 `\bibliography{}` 实际使用的文件，而非硬编码 `06-references/references.bib`。
 
-26. 🔴 **预存双反斜杠 bibitem 条目** — bibitem 键出现 \\\\bibitem{key}（双反斜杠）而非 \\bibitem{key}（单反斜杠）时，LaTeX 静默忽略该条目。扫描工具计数时会算入 D8，但编译后该条目永远不会出现在 .aux 的 \\bibcite{} 列表中。这是零错误静默失败——编译成功、PDF 生成、页面数正确，但引用显示为 [?]。
+26. 🔴 **预存双反斜杠 bibitem 条目** — bibitem 键出现 \\\\\\\\bibitem{key}（双反斜杠）而非 \\\\bibitem{key}（单反斜杠）时，LaTeX 静默忽略该条目。扫描工具计数时会算入 D8，但编译后该条目永远不会出现在 .aux 的 \\\\bibcite{} 列表中。这是零错误静默失败。与陷阱 #8 的区别：陷阱 #8 是 patch 工具在执行替换后创建双反斜杠（模式 B）；本陷阱是原始 .tex 文件中已存在的双反斜杠 bibitem。
+
+28. 🟡 **D9低覆盖率常见于临床医学论文** — 引用多为付费期刊，OA PDF无法下载。D9不是硬性门，而是"证据可验证度"。
+    | D9 | 含义 | 行动 |
+    |:--:|:-----|:------|
+    | ≥80% | 强证据链 | Layer B直接运行 |
+    | 30-80% | 部分验证 | Layer B注明缺失 |
+    | <30% | 仅依赖摘要 | 降级到手动评审 |
 
     根因：手动编辑或从旧模板复制时，LaTeX 控制序列的开头被错误地加倍。这些条目一直显示为僵尸/未引用，实际上是 LaTeX 从未识别过它们。
 
