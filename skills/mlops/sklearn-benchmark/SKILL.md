@@ -1,6 +1,9 @@
 ---
 name: sklearn-benchmark
 description: "设计、运行和优化scikit-learn多模型基准测试。覆盖预赛时序检测、失败模型预判、大数据集模型过滤、OOM防护、并行策略、结果整合。"
+signature: "dataset: str, models: list -> benchmark_report: dict"
+related_skills: [crispdm-helix-experiment, experiment-recipes, huggingface-hub, medical-image-centerline, remote-gpu-training]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.1.0
 author: Synthos
 tags: [sklearn, benchmark, model-evaluation, mlops]

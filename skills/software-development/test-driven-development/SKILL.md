@@ -1,6 +1,9 @@
 ---
 name: test-driven-development
 description: "TDD: enforce RED-GREEN-REFACTOR, tests before code."
+signature: "spec: str -> test_suite: list, code: str"
+related_skills: [agent-orchestration-harness, debugging-hermes-tui-commands, embedded-python-modularization, github-agent-contributions, hermes-agent-skill-authoring]
+allowed-tools: [terminal, file, read_file]
 version: 1.1.0
 author: Hermes Agent (adapted from obra/superpowers)
 license: MIT

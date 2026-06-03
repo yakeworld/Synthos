@@ -14,6 +14,7 @@ description: >-
 version: 1.0.0
 author: Synthos
 signature: "specimen_dir: str, canal: str -> paired_analysis: dict, simulation_results: dict"
+related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, biorxiv, blogwatcher]
 allowed-tools: terminal Read Write
 tags: [scc, bppv, vestibular, morphometry, epley, semicircular-canal, kinematic-simulation, bony-membranous]
 metadata:

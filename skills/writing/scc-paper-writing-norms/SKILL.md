@@ -1,6 +1,8 @@
 ---
 name: scc-paper-writing-norms
 description: "SCC论文写作规范与质量流程。从SCC数学形态学论文(v4)实战提炼：09目录体系、版本追踪、数据溯源、引用验证三阶检查、BibTeX转换、双质检。适用于解剖形态学/生物力学类论文的写作管理。"
+signature: "paper_topic: str -> writing_rules: dict"
+allowed-tools: [terminal, file]
 version: 1.5.0
 tags: [writing, scc, morphology, quality, paper-organization]
 related_skills: [paper-pipeline, dual-quality-check-v2, sci-paper-standard-structure, paper-reference-pipeline]

@@ -1,6 +1,9 @@
 ---
 name: adhd-eye-tracking-review
 description: "ADHD眼动追踪生物标志物系统综述 + 扩展领域：3D眼动追踪|VOR驱动Kappa角标定|多模态融合筛查"
+signature: "input: dict -> output: dict"
+related_skills: [academic-paper-completion, arxiv, biorxiv, blogwatcher, bppv-expert]
+allowed-tools: [terminal, read_file, write_file, search_files]
 compatibility: hermes, opencode
 ---
 

@@ -1,6 +1,9 @@
 ---
 name: biorxiv
 description: "Search and retrieve preprint papers from bioRxiv and medRxiv — the primary preprint servers for biological and medical sciences."
+signature: "query: str -> papers: list[Paper]"
+related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, blogwatcher, bppv-expert]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.0.0
 author: Hermes Agent
 license: MIT

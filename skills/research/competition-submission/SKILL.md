@@ -1,6 +1,9 @@
 ---
 name: competition-submission
 description: "End-to-end preparation of submission materials for AI, tech, and innovation competitions. Extract requirements from PDFs or websites, map project capabilities to scoring criteria, generate all required documents including technical specifications and roadmaps and demo video scripts and form-filling guides, and produce a submission checklist with deadlines. Covers medical education AI contests, general tech innovation competitions, academic conferences, and Chinese government grant competitions. Supports Chinese and English competition formats."
+signature: "competition_metadata: dict -> submission_package: dict"
+related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, biorxiv, blogwatcher]
+allowed-tools: [terminal, file, web, search]
 version: 2.2.0
 license: MIT
 metadata:

@@ -1,6 +1,9 @@
 ---
 name: notion
 description: "Notion API via curl: pages, databases, blocks, search."
+signature: "action: str, params: dict -> result: dict"
+related_skills: [airtable, chinese-form-automation, google-workspace, jupyter-live-kernel, linear]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.0.0
 author: community
 license: MIT

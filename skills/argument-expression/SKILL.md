@@ -4,6 +4,7 @@ description: "Transform hypotheses into structured academic arguments: paper sec
 version: 1.1.0
 author: Synthos Agent
 license: MIT
+related_skills: [association-discovery, ai-outreach, autonomous-core-researcher, claude-code, codex]
 allowed-tools: task_delegation (agent, inline), Read (view, read), Write (write), Execute (bash, code execution)
 signature: "hypotheses: list[Hypothesis], structure: str -> sections: list[Section], references: list[Reference]"
 tags: [argument-expression, academic-writing, paper-sections, evidence-chains, literature-support, citation]

@@ -1,6 +1,9 @@
 ---
 name: chinese-form-automation
 description: "自动填写中文政府/教育/学术申请表格（docx+xlsx模板）。扫描版通知→OCR提取要求→分析模板结构→填充单元格→生成提交指引。适用于教师/医生/科研人员的中国高校、医院、政府机构表单填报。"
+signature: "template: str, data: dict -> filled_form: str"
+related_skills: [airtable, google-workspace, jupyter-live-kernel, linear, maps]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.3.0
 author: Hermes Agent + Synthos
 license: MIT

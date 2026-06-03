@@ -1,6 +1,9 @@
 ---
 name: powerpoint
 description: "Create, read, edit .pptx decks, slides, notes, templates."
+signature: "spec: dict -> pptx_path: str"
+related_skills: [airtable, chinese-form-automation, google-workspace, jupyter-live-kernel, linear]
+allowed-tools: [terminal, file]
 license: Proprietary. LICENSE.txt has complete terms
 ---
 

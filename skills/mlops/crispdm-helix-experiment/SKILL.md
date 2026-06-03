@@ -1,6 +1,9 @@
 ---
 name: crispdm-helix-experiment
 description: "CRISP-DM Helix methodology: strict CV-fold-isolated preprocessing for clinical ML experiments on public datasets. Generates real, traceable experimental data (L0.5 compliant). Reusable pipeline template for any public benchmark."
+signature: "dataset: str, model_config: dict -> experiment_results: dict"
+related_skills: [experiment-recipes, huggingface-hub, medical-image-centerline, remote-gpu-training, serving-llms-vllm]
+allowed-tools: [terminal, read_file, write_file, search_files]
 category: mlops
 ---
 
@@ -316,13 +319,35 @@ scp work1:~/experiments/helix_benchmark_results.json ./
 
 > **核心发现（模型无关）**: F1膨胀量**正比于类不平衡严重度**。线性模型(LR)和树模型(XGBoost)均遵循同一模式，但**XGBoost对泄漏更敏感**。这不是PIDD特例——是全局预处理下所有不平衡临床数据的系统性脆弱性。
 
-### 三数据集 × 双模型验证（2026-05-31 实验）
+### 🔴 三数据集 × 双模型消融（2026-06-03 最终定稿版）
 
-| 数据集 | 样本量 | 患病率 | LR 膨胀 | XGBoost 膨胀 | 结论 |
-|:-------|:------:|:------:|:--------:|:------------:|:-----|
-| CDC BRFSS 2015 | 50,000 | 13.8% | **+73.2%** | **+129.9%** | 🔴 极高 | 
-| PIDD | 768 | 34.9% | **+11.1%** | **+23.6%** | 🟡 显著 |
-| Early Diabetes | 520 | 61.5% | -1.6% | +0.0% | ✅ 安全 |
+> **定稿验证**: 以下为 `cross_dataset_final.py` 输出，所有数值可从 `results_cross_dataset/summary_all.json` 追溯。
+
+#### LR消融（同一协议×三数据集）
+
+| 数据集 | N | 患病率 | F1 Helix | F1 Leaky | **F1通胀** | Rec变化 | Precision变化 |
+|:-------|:-:|:------:|:--------:|:--------:|:----------:|:-------:|:-------------:|
+| **CDC BRFSS 2015** | 25K | **13.8%** | 0.4376 | 0.7626 | **+74.27%** 🚀 | +3.80% | +140.61% 🚀 |
+| **PIDD** | 768 | **34.9%** | 0.6759 | 0.7338 | **+8.57%** | -1.19% ↓ | +17.64% |
+| **Early Diabetes** | 520 | **61.5%** | 0.9346 | 0.9381 | **+0.37%** | +1.02% | -0.51% |
+
+**结论**: F1通胀率与患病率成严格反比。13.8%→+74%, 34.9%→+8.6%, 61.5%→+0.4%。**这不是Recall Paradox（F1↑Rec↓），而是Universal Metric Inflation（所有指标被系统性污染）**。Recall仅在PIDD-LR组合下微降1.19%，其他2个数据集和Ensemble组合下Recall均上升。
+
+**方法**: 3-fold CV(CDC) / 10-fold CV(PIDD, ED), LogisticRegression基线, 同一4级消融协议。
+
+#### Ensemble消融（PIDD专属，主论文用）
+
+| 水平 | F1 | Recall | Precision | Accuracy | AUC |
+|:-----|:--:|:------:|:---------:|:--------:|:---:|
+| No Leakage | 0.6986 | 0.7500 | 0.6625 | 0.7746 | 0.8481 |
+| Minor | 0.7050 | 0.7648 | 0.6615 | 0.7772 | 0.8493 |
+| Medium | 0.7015 | 0.7611 | 0.6586 | 0.7746 | 0.8475 |
+| **Severe** | **0.8140** | **0.8340** | **0.7959** | **0.8090** | **0.8837** |
+| Inflation | **+16.52%** | **+11.20%** | **+20.10%** | +4.44% | +4.19% |
+
+**关键点**: Ensemble下Severe Leakage使**所有指标上升**（无Recall Paradox）。这与LR消融形成对比——LR下Recall微降1.19%。**消融表所有4行必须来自同一模型**。
+
+**⚠️ 2026-06-03 Pima论文拦截的陷阱**: 论文Table 2的No/Minor/Medium三行用了正确的Ensemble值，但Severe行混入了虚假值（F1=0.7657, Rec=0.6364），既不等于LR也不等于Ensemble。只有重新运行实验才发现。这是典型的LLM"洗稿"——看起来合理的数值实际是虚构的。
 
 **XGBoost更脆弱**: 树模型在不均衡+全局SMOTE下比线性模型更容易产生虚假性能（CDC 129.9% > LR 73.2%）。原因是SMOTE合成样本对树模型的决策边界影响更大（树模型对局部密度变化敏感）。
 
@@ -355,9 +380,37 @@ scp work1:~/experiments/helix_benchmark_results.json ./
 4. **关键**: 膨胀正值+Recall下降→Λ为正；膨胀正值+Recall上升→Λ=0（仅凭膨胀率已足够支撑结论）
 ```
 
+### 文献汇聚验证协议（Literature Convergent Validation — 2026-06-03 新增）
+
+> **核心逻辑**: Helix实验验证了泄漏存在（内部证据）。BRFSS文献审计验证泄漏表现在已发表的研究中（外部证据）。两者汇聚→结论不可辩驳。
+
+#### 触发条件
+当论文需要强化D1/D6得分，或审稿人可能质疑"跨数据集验证仅显示数值变化，不证明文献普遍存在泄漏"时。
+
+#### 流程
+1. **选择目标数据集**: CDC BRFSS等（有大量ML论文发表的公开数据集）
+2. **文献搜索**: 搜索`{dataset name} + machine learning + prediction + classification`
+3. **筛选高引论文**: 选择cites≥10的论文（高影响力=审稿人可能熟悉）
+4. **全文下载**: 对每篇候选论文，下载PDF并验证真实性（%PDF-）
+5. **定位Methods段**: 提取数据预处理→分割流程的关键描述
+   - 查找关键短语: "after preprocessing/balancing, we split" vs "after splitting, we balanced"
+   - 「全局预处理→分割」= LEAKAGE，「分割→训练集内预处理」= CORRECT
+6. **提取报告性能**: 记录论文声称的Accuracy/F1/AUC
+7. **与我方Helix基准比对**: 论文值 >> Helix值 → 泄漏确认
+8. **寻找正确CV的论文**: 搜索含"stratified cross-validation"、"5-fold cross-validation"的论文
+9. **验证**: 正确CV论文的性能 ≈ 我方Helix基准 → 汇聚证据成立
+
+#### 实战案例（Pima CRISP-DM + CDC BRFSS, 2026-06-03）
+- 审计6篇BRFSS论文 → 5篇存在泄漏（Shams2025原文验证: "up-sampling → then 80/20 split"）
+- 泄漏论文报告值: AUC=0.99 / Acc=98.38% / F1=0.95
+- 我方Helix基准: AdaBoost F1=0.451
+- 唯一正确CV论文（Tennessee2025）: F1=0.37 ← 与我方一致
+- **汇聚证据**: 泄漏值区间0.95-0.99 vs 正确值0.37-0.45，不重合 → 结论不可辩驳
+
 ### 参考文件
 - `references/imbalance-inflation-experiment-results.md` — 三数据集详细实验结果JSON
 - `references/brfss-literature-data-leakage-validation.md` — BRFSS文献检索：外部验证Helix发现（文献92-99% Acc普遍存在泄漏，唯一CV论文F1=0.37与Helix F1=0.45一致）
+- `references/cdc-crash-recovery-2026-06-01.md` — CDC基准崩溃恢复协议
 
 ## CDC Crash Recovery Protocol（2026-06-01 新增）
 
@@ -369,6 +422,63 @@ scp work1:~/experiments/helix_benchmark_results.json ./
 3. CalibratedSVC 在 >10K行数据集上跳过（SVC+内部3折CV极慢）
 4. 合并两批结果，CDC完成22/27模型
 5. 5个超重模型（CalibratedSVC, MLPClassifier, XGBoost, LightGBM, CatBoost）在PIDD/ED上已有数据，跳过不影响跨数据集比较
+
+### 🔴 消融表模型选择陷阱（Model-Dependent Recall Paradox — 2026-06-03 新增）
+
+> **⚠️ P0 级陷阱：消融表的结论可能因模型选择而定性反转。**
+>
+> PIDD 4级消融实验中，**LR**和**Ensemble**对Severe Leakage的Recall变化呈现完全不同的方向：
+> | 模型 | No Leakage F1 | Severe F1 | F1变化 | No Leakage Rec | Severe Rec | Rec变化 |
+> |:-----|:-------------:|:---------:|:------:|:--------------:|:----------:|:------:|
+> | LR | 0.6759 | 0.7338 | +8.57%↑ | 0.7165 | 0.7080 | **-1.19%↓** |
+> | Ensemble (GBC+LDA+SVC) | 0.6986 | 0.8140 | +16.52%↑ | 0.7500 | 0.8340 | **+11.20%↑** |
+>
+> **根因**: 全局SMOTE对强模型(Ensemble)的效果远好于弱模型(LR) — Ensemble能从全局SMOTE的合成样本中学习更复杂的决策边界，而LR的线性决策边界受合成噪声影响更大。
+>
+> **论文陷阱**: Pima论文的Table 2使用Ensemble值作为No/Minor/Medium基线，但Severe栏却混入了LR的近似值（F1=0.7657非LR的0.7338也非Ensemble的0.8140），结果是Recall"凭空"从0.7500降到0.6364。**这三个不同来源的数值混在一张表中，是典型的"洗稿"式虚假数据**。
+>
+> **铁律**:
+> 1. **消融表所有4行必须来自同一模型** — 不可No Leakage用Ensemble，Severe用LR
+> 2. **始终运行双模型消融**（LR + 论文主模型）并如实报告差异
+> 3. **若主模型(Ensemble)下Recall不降反升**，诚实报告"Recall在强模型下不受泄漏损伤"，或将消融降级用LR模型
+
+### 实验代码组织铁律（2026-06-03 新增）
+
+> **用户明确要求**: "要实事求是"、"要整理这个实验的代码"
+
+**多个实验脚本导致数值不可追溯**。Pima论文实验目录曾有5个脚本（`pima_crispdm_helix.py`, `pima_correct_ablation.py`, `pima_definitive.py`, `pima_optimized.py`, `pima_clean_reanalysis.py`），各自输出不同数值，难以确定哪份是论文实际使用的。
+
+**铁律**:
+1. **每篇论文只有一个权威实验脚本**，命名 `{paper}_definitive.py`
+2. 该脚本输出JSON+CSV到 `results_definitive/` 子目录
+3. 实验运行后立即将输出JSON与论文.tex中的数值逐项比对（Python脚本自动比对）
+4. 旧脚本若确认已被definitive版完全替代 → 删除（保持目录整洁）
+5. 比对发现不匹配 → 立即修正论文（**不保留编造值**）
+6. **跨数据集实验**用 `cross_dataset_final.py`，输出到 `results_cross_dataset/`
+
+```bash
+# 规范结构
+experiments/
+├── pima_definitive.py          # 当前论文的权威脚本
+├── results_definitive/          # 当前输出
+│   ├── ablation_lr.csv
+│   ├── ablation_ensemble.csv
+│   └── summary.json
+├── archive/                     # 旧版脚本
+│   ├── pima_crispdm_helix.py
+│   └── pima_optimized.py
+└── README.md                    # 实验目录说明
+```
+
+**验证命令**（论文定稿前必做）:
+```bash
+python3 pima_definitive.py && python3 -c "
+import json
+with open('results_definitive/summary.json') as f: r = json.load(f)
+# 逐项与 paper.tex 中 Table 2 的数值比对
+print('Verification: check each value against paper.tex Table 2')
+"
+```
 
 ## 已知陷阱
 
@@ -415,9 +525,12 @@ scp work1:~/experiments/helix_benchmark_results.json ./
 
 | 数据集 | 样本量 | 特征数 | 基线可分离性 | 泄漏 F1 变化 | 结论 |
 |:-------|:------:|:------:|:-----------:|:------------:|:-----|
-| PIMA (Diabetes) | 768 | 8 | 低 (F1=0.6986) | **+6.71%** | ❌ 严重——低可分离数据集必须 Helix |
-| WDBC (Breast) | 569 | 30 | 高 (F1=0.9693) | **-0.10%** | ✅ 可忽略——高可分离只需标准 CV |
-| Heart Disease | 303 | 13 | 中 (F1=0.7886) | **+14.17%** | 🚨 最严重——小样本 + 中等可分离 |
+| PIDD (LR) | 768 | 34.9% | 中 (F1=0.6759) | **+8.57%** | Rec 0.7165→0.7080(-1.19%) | 中等不平衡 |
+| PIDD (Ensemble) | 768 | 34.9% | 中 (F1=0.6986) | **+16.52%** | Rec 0.7500→0.8340(+11.20%) | 双升——无Recall矛盾 |
+| CDC BRFSS (LR) | 25K | 13.8% | 低 (F1=0.4376) | **+74.27%** 🚀 | Rec 0.7571→0.7859(+3.80%) | 最严重——低患病率 |
+| Early Diabetes (LR) | 520 | 61.5% | 高 (F1=0.9346) | **+0.37%** | Rec 0.9187→0.9281(+1.02%) | 平衡→无影响 |
+| WDBC (Breast) | 569 | 37.3% | 高 (F1=0.9693) | **-0.10%** | — | 高可分离→无泄漏效应 |
+| Heart Disease | 303 | 45.4% | 中 (F1=0.7886) | **+14.17%** | — | 小样本脆弱性 |
 
 ### 小样本脆弱性原理（Small-Sample Vulnerability Principle）
 

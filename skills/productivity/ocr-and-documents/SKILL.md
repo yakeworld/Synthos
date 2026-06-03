@@ -1,6 +1,9 @@
 ---
 name: ocr-and-documents
 description: "Extract text from PDFs/scans (pymupdf, marker-pdf)."
+signature: "document_path: str -> extracted_text: str"
+related_skills: [airtable, chinese-form-automation, google-workspace, jupyter-live-kernel, linear]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 2.3.0
 author: Hermes Agent
 license: MIT

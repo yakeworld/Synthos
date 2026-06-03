@@ -1,6 +1,9 @@
 ---
 name: moltbook-connector
 description: "子skill | 将Synthos认知原子接入Moltbook AI社交网络。注册→心跳→发帖/回复。父skill: ai-outreach。注意：注册需人类claim(发推验证)，优先使用GitHub Discussions(零注册)代替。"
+signature: "input: dict -> output: dict"
+related_skills: [ai-outreach, autonomous-core-researcher, claude-code, codex, hermes-agent]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.0.0
 author: Synthos
 license: MIT

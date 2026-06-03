@@ -1,6 +1,9 @@
 ---
 name: sci-paper-standard-structure
 description: "Standard IMRaD (Introduction, Methods, Results, Discussion, Conclusion) SCI paper architecture. Philosophical grounding: CARS + Toulmin + Pyramid + Hourglass. Theory-first, technology-second."
+signature: "paper_type: str -> structure_template: dict"
+related_skills: [latex-output, notebooklm-writing-workflow, paper-pipeline, political-proposal, scc-paper-writing-norms]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 2.0.0
 author: Synthos + 临床科研设计与论文写作(2026-05-20)
 license: MIT

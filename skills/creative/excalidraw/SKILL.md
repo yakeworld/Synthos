@@ -1,6 +1,9 @@
 ---
 name: excalidraw
 description: "Hand-drawn Excalidraw JSON diagrams (arch, flow, seq)."
+signature: "spec: dict -> diagram_path: str"
+related_skills: [academic-diagram, architecture-diagram, comfyui, ffmpeg-video-audio-sync, figure-generation]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.0.0
 author: Hermes Agent
 license: MIT

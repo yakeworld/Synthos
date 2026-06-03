@@ -1,6 +1,9 @@
 ---
 name: github-issues
 description: "Create, triage, label, assign GitHub issues via gh or REST."
+signature: "action: str, params: dict -> result: dict"
+related_skills: [github-auth, github-code-review, github-discussions, github-pr-workflow, github-repo-management]
+allowed-tools: [terminal, file, web]
 version: 1.1.0
 author: Hermes Agent
 license: MIT

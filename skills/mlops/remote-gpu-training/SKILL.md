@@ -6,6 +6,9 @@ description: >-
   diagnose and fix common issues (path mismatches, missing modules, 
   workspace symlinks). Use when the user asks to run or fine-tune a model 
   on a remote GPU server.
+signature: "training_script: str, gpu_spec: dict -> result: dict"
+related_skills: [crispdm-helix-experiment, experiment-recipes, huggingface-hub, medical-image-centerline, serving-llms-vllm]
+allowed-tools: [terminal, file, web]
 version: 1.1.0
 author: Synthos Agent
 license: MIT

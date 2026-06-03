@@ -1,6 +1,9 @@
 ---
 name: pdf-download-racing
 description: "并行竞速PDF下载引擎 — curl_cffi TLS指纹绕过 + Sci-Hub域轮换 + LibGen + 域健康探测 + MedData中国医学数据平台。从scansci-pdf吸收的技术：Parallel racing、Domain probing、curl_cffi bypass。依赖 tools/paper-manager/src/ 下的代码。"
+signature: "input: dict -> output: dict"
+related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, biorxiv, blogwatcher]
+allowed-tools: [terminal, file, web]
 version: 1.6.0
 author: Synthos (absorbed from scansci-pdf)
 tags: [download, pdf, sci-hub, libgen, racing, curl-cffi, meddata]
@@ -142,6 +145,43 @@ export MEDDATA_PASSWORD="xxx"
 - **ACM** — ❌ （ACM Digital Library）
 
 **pima-crispdm实测(2026-05-31)**: 7篇IEEE/BMJ/Lancet/Hindawi全部失败。
+
+### Tor SOCKS5 代理下载通道（2026-06-03 新增）
+
+当直连和Sci-Hub均不可达时（如在网络受限环境下），可通过Tor SOCKS5代理下载。
+
+**前提**: 安装并启动Tor
+```bash
+# 安装
+sudo apt-get install tor
+# 启动（通常自动以服务运行）
+tor --RunAsDaemon 1
+# 验证
+curl -s --socks5-hostname 127.0.0.1:9050 "https://check.torproject.org/api/ip"
+# 预期: {"IsTor":true,"IP":"..."}
+```
+
+**下载命令**:
+```bash
+curl -sL --connect-timeout 15 --max-time 60 \
+  --socks5-hostname 127.0.0.1:9050 \
+  "https://arxiv.org/pdf/2312.07577" -o paper.pdf
+```
+
+**已知限制**:
+- ⚠️ 某些学术服务器（如OpenML）主动拦截Tor出口节点
+- ✅ Kaggle 可通过Tor正常访问
+- ✅ arXiv 可通过Tor正常访问
+- ⚠️ Tor出口节点IP频繁变化，被封锁后自动切换
+
+**从GitHub获取免费代理列表的替代方案**（当Tor不可用时）:
+```bash
+# 获取HTTP代理列表
+curl -s "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt" | head -50
+# 使用代理下载
+curl -sL --connect-timeout 8 --max-time 20 -x "http://proxy_ip:port" "https://arxiv.org/pdf/..."
+```
+注意：免费代理速度慢且多被学术站点封锁，Tor更可靠。
 
 ## 后处理：PDF→MarkItDown→Markdown 转换（标准步骤）
 
@@ -356,3 +396,5 @@ Synthos/tools/paper-manager/
 17. **`_fetch_semantic_scholar_data_sync` 原是空桩（已修复）** — `manager/paper_manager.py` 中此函数原为 `return entry`，不查SS API。修复后实际调用SS API补摘要/OA/arXiv。如果enhance后.bib无元数据变化，检查此函数是否已修复。
 18. **自动补充DOI导致僵尸引用** — `auto_fix_d8.py` 把搜索到的DOI追加到 `.bib` 但不在 `.tex` 中插 `\\cite`，产生僵尸引用。`enhance` 命令补充的DO也一样——它们只在.bib中存在，不在.tex中被引用。修复：从.bib删除未被\\cite的条目，或手动插入\\cite到正文。
 19. **`enhance --limit` 生成临时文件** — limit模式创建 `_limit_temp.bib`，完成后应自动清理。如果看到此文件残留，直接删除。
+
+20. **🔴 MedData代答PDF陷阱（2026-06-03发现）** — 当meddata无目标论文全文时，viewtext API返回一个默认代答PDF（1975年BIOCHEMICAL MEDICINE Formate Assay文章，606KB，MD5=fd469bd7cd29446f2800f099e3b71457）。所有不存在的DOI都返回同一文件。检测：同一MD5出现在不同DOI下载结果中 → meddata无此论文。处理：直接标记PAYWALL，跳过重试。

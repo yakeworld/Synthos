@@ -1,6 +1,9 @@
 ---
 name: manim-video
 description: "Manim CE animations: 3Blue1Brown math/algo videos."
+signature: "manim_script: str -> video_path: str"
+related_skills: [academic-diagram, architecture-diagram, comfyui, excalidraw, ffmpeg-video-audio-sync]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.0.0
 platforms: [linux, macos, windows]
 ---

@@ -1,6 +1,9 @@
 ---
 name: huggingface-hub
 description: "HuggingFace hf CLI: search/download/upload models, datasets."
+signature: "action: str, params: dict -> result: dict"
+related_skills: [crispdm-helix-experiment, experiment-recipes, medical-image-centerline, remote-gpu-training, serving-llms-vllm]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.0.0
 author: Hugging Face
 license: MIT

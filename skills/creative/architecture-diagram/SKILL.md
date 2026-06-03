@@ -1,6 +1,9 @@
 ---
 name: architecture-diagram
 description: "Dark-themed SVG architecture/cloud/infra diagrams as HTML."
+signature: "spec: dict -> svg_path: str"
+related_skills: [academic-diagram, comfyui, excalidraw, ffmpeg-video-audio-sync, figure-generation]
+allowed-tools: [terminal, file]
 version: 1.0.0
 author: Cocoon AI (hello@cocoon-ai.com), ported by Hermes Agent
 license: MIT

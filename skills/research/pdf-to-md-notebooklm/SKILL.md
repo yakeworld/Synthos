@@ -1,6 +1,9 @@
 ---
 name: pdf-to-md-notebooklm
 description: PDF→Markdown→NotebookLM 全流程管线。支持批量上传、自动类型检测、大文件处理。
+signature: "pdf_paths: list -> md_paths: list"
+related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, biorxiv, blogwatcher]
+allowed-tools: [terminal, file, web]
 version: 2.2.0
 author: Synthos
 tags: [d7, literature, notebooklm, markdown, acq, batch]

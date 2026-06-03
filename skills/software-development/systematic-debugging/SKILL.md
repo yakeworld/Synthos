@@ -1,6 +1,9 @@
 ---
 name: systematic-debugging
 description: "4-phase root cause debugging: understand bugs before fixing."
+signature: "symptom: str -> root_cause: str, fix: str"
+related_skills: [agent-orchestration-harness, debugging-hermes-tui-commands, embedded-python-modularization, github-agent-contributions, hermes-agent-skill-authoring]
+allowed-tools: [terminal, file, read_file]
 version: 1.1.0
 author: Hermes Agent (adapted from obra/superpowers)
 license: MIT

@@ -1,6 +1,9 @@
 ---
 name: google-workspace
 description: "Gmail, Calendar, Drive, Docs, Sheets via gws CLI or Python."
+signature: "action: str, params: dict -> result: dict"
+related_skills: [airtable, chinese-form-automation, jupyter-live-kernel, linear, maps]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.1.0
 author: Nous Research
 license: MIT

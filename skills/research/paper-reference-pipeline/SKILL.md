@@ -1,6 +1,9 @@
 ---
 name: paper-reference-pipeline
 description: "论文参考文献全流程管线：NotebookLM筛选→bib生成→本地增强(SS元数据)→PDF获取(3级竞速)→Markdown转换→回传NotebookLM。含D8≥30参考文献标准与自动修复。"
+signature: "input: dict -> output: dict"
+related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, biorxiv, blogwatcher]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 2.5.0
 tags: [references, bibtex, pdf, notebooklm, pipeline, d8, quality-check]
 ---

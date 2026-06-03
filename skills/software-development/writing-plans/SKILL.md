@@ -1,6 +1,9 @@
 ---
 name: writing-plans
 description: "Write implementation plans: bite-sized tasks, paths, code."
+signature: "goal: str -> plan_path: str"
+related_skills: [agent-orchestration-harness, debugging-hermes-tui-commands, embedded-python-modularization, github-agent-contributions, hermes-agent-skill-authoring]
+allowed-tools: [terminal, file, read_file]
 version: 1.1.0
 author: Hermes Agent (adapted from obra/superpowers)
 license: MIT

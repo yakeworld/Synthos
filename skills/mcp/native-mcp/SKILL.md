@@ -1,6 +1,9 @@
 ---
 name: native-mcp
 description: "MCP client: connect servers, register tools (stdio/HTTP)."
+signature: "server_spec: dict -> tool_set: list"
+related_skills: [mcp-ecosystem-guide]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.0.0
 author: Hermes Agent
 license: MIT

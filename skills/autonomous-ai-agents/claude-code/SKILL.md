@@ -1,6 +1,9 @@
 ---
 name: claude-code
 description: "Delegate coding to Claude Code CLI (features, PRs)."
+signature: "task: str, context: dict -> result: str"
+related_skills: [ai-outreach, autonomous-core-researcher, codex, hermes-agent, moltbook-connector]
+allowed-tools: [terminal, file]
 version: 2.2.0
 author: Hermes Agent + Teknium
 license: MIT

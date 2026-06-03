@@ -1,6 +1,7 @@
 ---
 name: gradient-alignment-loss
 description: "Gradient Alignment Loss (GAL) — boundary-aware auxiliary loss for medical image segmentation. Predicts segmentation boundary should align with image gradient peaks. Differentiable, self-supervised, no extra labels needed. Experimental record + protocol for validation."
+signature: "model: str, data: str -> loss_report: dict"
 version: 1.0.0
 author: Hermes Agent
 license: MIT

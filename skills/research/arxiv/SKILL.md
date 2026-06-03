@@ -1,6 +1,9 @@
 ---
 name: arxiv
 description: "Search arXiv papers by keyword, author, category, or ID."
+signature: "query: str, limit: int -> papers: list[Paper]"
+related_skills: [academic-paper-completion, adhd-eye-tracking-review, biorxiv, blogwatcher, bppv-expert]
+allowed-tools: [terminal, web, file]
 version: 1.0.0
 author: Hermes Agent
 license: MIT

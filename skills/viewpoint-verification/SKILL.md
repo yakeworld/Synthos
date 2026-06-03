@@ -4,6 +4,7 @@ description: "Multi-angle verification of hypotheses and arguments: counterargum
 version: 1.3.0
 author: Synthos Agent
 license: MIT
+related_skills: [argument-expression, association-discovery, ai-outreach, autonomous-core-researcher, claude-code]
 allowed-tools: Read Write
 signature: "hypothesis: Hypothesis, argument: Argument -> verdict: str, confidence_score: float, counterarguments: list[Counterargument]"
 metadata:

@@ -1,6 +1,9 @@
 ---
 name: systematic-review
 description: "Systematic review and meta-analysis workflow assistant. Covers PRISMA flow, search strategy design, study selection, quality assessment, data extraction, and synthesis support."
+signature: "input: dict -> output: dict"
+related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, biorxiv, blogwatcher]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.1.0
 author: Hermes Agent
 license: MIT

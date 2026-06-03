@@ -1,6 +1,9 @@
 ---
 name: skill-absorption
 description: "双循环进化：内部反思(P0) + 外部吸收(P1)。Cross-project absorption methodology — multi-round cross-project comparison across different paradigms, active project tracking, self-expanding keyword discovery, follow-up/revisit mechanism, and structured absorption proposals. Includes internal reflexive abstraction methodology (5-step capture→abstract→formalize→integrate→elevate cycle). Search GitHub/Hermes/arXiv for external capabilities, evaluate via 5-dimension scoring, generate proposals. Internal reflection (project-experience-distillation + reflexive abstraction) runs FIRST — external absorption fills gaps that internal reflection finds."
+signature: "target: str, confidence: float -> absorption_report: dict"
+related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, biorxiv, blogwatcher]
+allowed-tools: [terminal, file, web, search, delegation]
 metadata:
   type: methodology
   version: "4.3.0"

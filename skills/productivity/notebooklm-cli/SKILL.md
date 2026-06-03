@@ -1,6 +1,9 @@
 ---
 name: notebooklm-cli
 description: "子skill | NotebookLM CLI全功能指南 — 从Q&A知识提取到内容生成(报告/视频/音频/信息图/幻灯片)再到文献检索。响应paper-pipeline的P1阶段调用。v3.2.0新增：source add RPC失陷时的note create降级通路。"
+signature: "action: str, params: dict -> result: dict"
+related_skills: [airtable, chinese-form-automation, google-workspace, jupyter-live-kernel, linear]
+allowed-tools: [terminal, file, web]
 version: 3.5.0
 author: Hermes Agent + Synthos
 license: MIT

@@ -1,6 +1,9 @@
 ---
 name: plan
 description: "Plan mode: write markdown plan to .hermes/plans/, no exec."
+signature: "goal: str -> plan_path: str"
+related_skills: [agent-orchestration-harness, debugging-hermes-tui-commands, embedded-python-modularization, github-agent-contributions, hermes-agent-skill-authoring]
+allowed-tools: [terminal, file, read_file]
 version: 1.0.0
 author: Hermes Agent
 license: MIT

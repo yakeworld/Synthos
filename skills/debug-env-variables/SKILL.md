@@ -1,6 +1,9 @@
 ---
 name: debug-env-variables
 description: Debug environment variable issues across shell boundaries, subprocesses, and application configuration layers.
+signature: "input: dict -> output: dict"
+related_skills: [argument-expression, association-discovery, ai-outreach, autonomous-core-researcher, claude-code]
+allowed-tools: [terminal, file, read_file]
 ---
 
 # Debug Environment Variables

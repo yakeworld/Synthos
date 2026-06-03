@@ -1,6 +1,9 @@
 ---
 name: competition-video-production
 description: "Produce professional demo videos for academic competitions, grants, and pitch events. Covers: PPTX→PNG→MP4 pipeline, narration sync, quality benchmarks (30fps 1080P, ~125kbps), visual design with dark themes and data visualization, and compliance with competition rules (no personal info in videos, anonymous material requirements). User context: medical researcher at Wenzhou hospital competing in China's global digital education innovation contest (AI for Medicine track). Prefers PPTX source over Pillow for image quality, uses Chinese narration via Edge-TTS, targets 6-10 minute MP4 at 1080P for submission to platforms like MeedTAC (chaoxing.com). Key pattern: generate PPTX with python-pptx using professional color palettes (dark navy + accent cards), export PNG at 300 DPI, convert to video segments, concatenate, then merge with narration — always verify video+audio stream durations match within 0.1 seconds."
+signature: "input: dict -> output: dict"
+related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, biorxiv, blogwatcher]
+allowed-tools: [terminal, file, web, search]
 license: CC BY-NC-SA 4.0
 ---
 

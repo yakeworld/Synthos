@@ -1,6 +1,9 @@
 ---
 name: python-docx
 description: "Create, read, edit .docx files using python-docx. Covers reading templates, filling tables and paragraphs, setting Chinese fonts (East Asia rFonts), page setup, table manipulation, preserving structure, and converting between formats. Related to powerpoint (pptx) and ocr-and-documents (PDF extraction)."
+signature: "spec: dict -> docx_path: str"
+related_skills: [airtable, chinese-form-automation, google-workspace, jupyter-live-kernel, linear]
+allowed-tools: [terminal, file]
 version: 1.0.0
 author: Hermes Agent
 license: MIT

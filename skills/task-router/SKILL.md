@@ -7,6 +7,7 @@ description: >-
 version: 1.8.0
 author: Synthos
 license: MIT
+related_skills: [argument-expression, association-discovery, ai-outreach, autonomous-core-researcher, claude-code]
 allowed-tools: shell (bash), Read (view), Write (write), task_delegation (agent, inline), skill_loader (view with file path)
 signature: "query: str, context: dict -> route: str, atom_chain: list[str], execution_mode: str"
 metadata:

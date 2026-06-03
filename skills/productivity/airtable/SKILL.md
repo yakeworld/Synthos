@@ -1,6 +1,9 @@
 ---
 name: airtable
 description: Airtable REST API via curl. Records CRUD, filters, upserts.
+signature: "action: str, params: dict -> result: dict"
+related_skills: [chinese-form-automation, google-workspace, jupyter-live-kernel, linear, maps]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.1.0
 author: community
 license: MIT

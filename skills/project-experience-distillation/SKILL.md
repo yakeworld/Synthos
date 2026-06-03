@@ -1,6 +1,7 @@
 ---
 name: project-experience-distillation
 description: "⚡ 最高优先级技能。From project experience to reusable skill — extract workflow patterns, design principles, and pitfalls from completed project work, abstract them into general form, and formalize as SKILL.md. Also: philosophical implementation gap analysis to drive mechanism-level improvements. The reflexive learning engine of Synthos: self-evolution through self-observation."
+signature: "input: dict -> output: dict"
 version: 2.0.0
 author: Hermes Agent
 license: MIT

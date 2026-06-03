@@ -1,6 +1,7 @@
 ---
 name: notebooklm-writing-workflow
 description: "以NotebookLM Gemini为写作核心引擎的完整论文写作流程。覆盖P2阶段：Introduction/Methods/Results/Discussion/Abstract各节的NotebookLM Q&A生成模板、LaTeX提取与编译、引用交叉验证、版本管理。与paper-pipeline的P2阶段配合使用。吸收自paper-pipeline v3.6.0 + sci-paper-quality-review v1.7.0的实测经验（PD Torsion Review + VOR-Kappa角双论文实战）。"
+signature: "paper_spec: dict -> manuscript_path: str"
 version: 1.0.0
 author: Synthos
 license: MIT

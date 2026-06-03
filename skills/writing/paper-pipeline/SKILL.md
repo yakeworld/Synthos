@@ -1,6 +1,9 @@
 ---
 name: paper-pipeline
 description: "主skill | SCI论文全流程编排器。核心原理：声明与执行分离、逐问收束、节点闸门、闭环进化。v3.9新增模板层：按论文类型预选实验模板(CRISP-DM/消融/对比/理论)。v3.10新增：批量双质检工作流、NotebookLM_唯一命名规范、引用PDF就绪检查。v3.10.1修复：paper-manager搜索导入错误、更新DOI批量下载策略。调用子skill: notebooklm-cli, sci-paper-standard-structure, research-paper-search, sci-paper-quality-review"
+signature: "paper_name: str -> pipeline_report: dict, next_actions: list"
+related_skills: [latex-output, notebooklm-writing-workflow, political-proposal, scc-paper-writing-norms, sci-paper-standard-structure]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 3.12.0
 author: "Synthos + 临床科研设计与论文写作 + 用户杨晓凯"
 license: MIT
@@ -759,7 +762,47 @@ Minimum content: input, step-by-step fitting procedure, output parameters. Use `
 
 9. **🔴 膜性标注文件分裂陷阱（2026-05-29发现）**: 当分析配对组织结构（如骨vs膜、左vs右）时，同一结构的标注可能被意外分割为多个文件（如sp3 ICT的AC_MEM1+AC_MEM2、sp1 microCT的lc_mem+lc_mem2）。表现为弧比（膜/骨）<1.0 或弧长明显短于同一标本的其他管型。检查方法：进入数据目录后先 `ls *mem* *MEM*` 看是否有多个膜性文件。对每对文件计算4种端点连接的间距，最小间距<3mm即可合并。合并后弧比参考：膜性半规管应比骨性长10-40%（AC:1.10-1.22, PC:1.11-1.20, LC:1.26-1.39）。详见 `bony-to-memb-scc-mapping` 技能的 `references/DATA_MERGING_PROTOCOL.md`。
 
-11. **🔴 重复 bibliography 陷阱（2026-05-30 发现）**: 当论文经过多轮跨周期编辑后，`\\bibliography{}` 命令可能被意外重复——一个在附录前，一个在附录后，导致参考文献列表打印两次（PDF 页数虚增 1-2 页）。根因：跨周期编辑时，旧 bibliography 被保留为新段落的前导内容，新 bibliography 又被追加到 `\\end{document}` 前。检测方法：
+11. **🔴 重复 bibliography 陷阱（2026-05-30 发现）**
+
+12. **🔴 派生值不同步陷阱（Derived Value Staleness，2026-06-03 发现）**：L0.5审计或手动修正实验数值后，派生值（百分比、比率、delta值、relative improvement）**不会被自动同步**。这是LLM修复的典型模式错误——LLM精准更新了每个独立数值（F1 0.6759→0.6986, 0.7338→0.7657），但依赖这些数值的计算结果（`+8.6%`, `+6.71%`）保持旧值不变。
+
+13. **🔴 消融表模型混用陷阱（2026-06-03）**：消融表的**所有行必须来自同一模型管线**。Pima案Table 2的No/Minor/Medium三行用Ensemble值，但Severe行F1=0.7657**既非Ensemble(0.8140)也非LR(0.7338)**——完全虚构。导致"Recall从0.7500降至0.6364"这个结论是编造的。**检测**：逐行对比实验JSON所有5个指标，不可只看F1/Recall。**铁律**：若Ensemble下Recall不降反升→诚实用LR做消融或报告双升。
+
+    **检测方法**：找出论文中所有「对比性数值声明」（'improved by X%'、'increase of Y%'、'Z times higher'、'W-fold'），人工核查其计算公式中的原始数值是否与当前论文表中的值一致。
+
+    ```bash
+    # 批量检查：提取所有 X% 声明，定位其引用的原始值
+    grep -oP '(\\+|-)?\\d+\\.?\\d*\\%' paper.tex | sort -u
+    # 然后逐条核对计算公式
+    ```
+
+    **修复**：对每个派生值，重新计算：
+    ```python
+    # Pima实战: (0.7657-0.6986)/0.6986 = 9.6% (旧值8.6%错误)
+    # 修复流程
+    import re
+    tex = open('paper.tex').read()
+    old_pcts = {'+8.6\\%': '+9.6\\%', '+6.71\\%': '+9.6\\%'}
+    for old, new in old_pcts.items():
+        tex = tex.replace(old, new)
+    with open('paper.tex', 'w') as f: f.write(tex)
+    ```
+
+    **Pima实战数字**（2026-06-03）：
+    | 位置 | 旧值 | 新值 | 根因 |
+    |:-----|:----:|:----:|:-----|
+    | Abstract (1处) | +8.6% | +9.6% | 数字更新后未重算 |
+    | Figure 1 (1处) | +8.6% F1 | +9.6% F1 | 同上 |
+    | Contribution #2 (1处) | +8.6% | +9.6% | 同上 |
+    | Results (1处) | +8.6% | +9.6% | 同上 |
+    | Discussion Grounds (1处) | +6.71% | +9.6% | 旧版本残留 |
+    | Discussion Backing (1处) | +8.6% | +9.6% | 同上 |
+    | Conclusion (1处) | +8.6% | +9.6% | 同上 |
+    | **共8处** | — | — | — |
+
+    **预防**：L0.5审计/数据修正完成后，自动执行 `grep -oP '\\+?-?\\d+\\.?\\d*\\%'` 扫描全文，对所有百分比声明做公式一致性检查。
+
+11. **🔴 重复 bibliography 陷阱（2026-05-30 发现）**: 当论文经过多轮跨周期编辑后， `grep -oP '\\+?-?\\d+\\.?\\d*\\%'` 扫描全文，对所有百分比声明做公式一致性检查。: 当论文经过多轮跨周期编辑后，`\\bibliography{}` 命令可能被意外重复——一个在附录前，一个在附录后，导致参考文献列表打印两次（PDF 页数虚增 1-2 页）。根因：跨周期编辑时，旧 bibliography 被保留为新段落的前导内容，新 bibliography 又被追加到 `\\end{document}` 前。检测方法：
 ```bash
 # 检查 \\bibliography{} 出现次数
 grep -c '\\\\bibliography{' paper.tex

@@ -1,6 +1,9 @@
 ---
 name: training-pipeline-principles
 description: Abstract principles and reusable methodologies for multi-stage model training pipelines. Extracted from practice — teacher→distillation→student→hybrid→fine-tune pattern with geometric constraints, domain adaptation via mixed data, and progressive loss scheduling.
+signature: "model_spec: dict -> pipeline_plan: str"
+related_skills: [crispdm-helix-experiment, experiment-recipes, huggingface-hub, medical-image-centerline, remote-gpu-training]
+allowed-tools: [terminal, file, web]
 version: 1.1.0
 author: Synthos Agent
 license: MIT

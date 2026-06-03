@@ -1,6 +1,9 @@
 ---
 name: pubmed
 description: "Deep PubMed/MEDLINE/MEDLINE-in-process/NLM Catalog search, retrieval, and analysis via NCBI E-utilities. Covers query construction, MeSH terms, filtering, batch retrieval, author search, and clinical query refinement."
+signature: "query: str, db: str -> results: list[dict]"
+related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, biorxiv, blogwatcher]
+allowed-tools: [terminal, web, file]
 version: 2.0.0
 author: Hermes Agent
 license: MIT

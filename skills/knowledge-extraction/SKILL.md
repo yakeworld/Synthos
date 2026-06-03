@@ -4,6 +4,7 @@ description: Extract structured knowledge from academic paper metadata and abstr
 version: 1.1.0
 author: Synthos Agent
 license: MIT
+related_skills: [argument-expression, association-discovery, ai-outreach, autonomous-core-researcher, claude-code]
 allowed-tools: Read Write vision_analyze
 signature: "papers: list[Paper] -> knowledge_items: list[KnowledgeItem], field_summary: dict"
 metadata:

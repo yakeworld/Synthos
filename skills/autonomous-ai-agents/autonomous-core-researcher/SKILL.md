@@ -1,8 +1,10 @@
 ---
 name: autonomous-core-researcher
 description: "v3.0 开放边界引擎。无方向约束——预测类/公开数据集/数学建模/仿真/算法类，一切可编码可计算的科研问题。NotebookLM + OpenAlex + 六维假说评分 → 综述/实验/算法，永不停止。"
+signature: "input: dict -> output: dict"
 version: 2.4.0
 author: Synthos + 用户杨晓凯
+related_skills: [ai-outreach, claude-code, codex, hermes-agent, moltbook-connector]
 allowed-tools: terminal skill_view opencode cron job
 metadata:
   tags: [autonomous, research, exploration, continuous, hypothesis]
@@ -759,6 +761,31 @@ for task_item in tracker['notes'].get('execution_strategy', '').split(','):
 ```
 
 **判断口诀**：执行前先验证。策略里写的 ≠ 当前实际状态。D10a=100% 的论文不需要再碰。
+
+#### 验证后清理：Stale Execution Strategy Cleanup
+
+当对照验证发现 **所有策略项均已完成**（全部 verified 且 pending_tasks 为空），不要直接跳过——必须做三件事清除"幽灵策略"：
+
+```
+验证完成（全部已完成）
+  ↓
+Step A — 重写 execution_strategy
+  ├── 旧值存在但内容已过时 → 替换为当前真实状态
+  ├── 旧值为空 → 无操作
+  └── 写入模板: "All X cleanups complete. GPU blocked. Waiting for Y."
+  ↓
+Step B — 更新 last_cycle_work + log
+  ├── last_cycle_work: "Stale execution_strategy verified and cleaned up: [old items summary]"
+  └── agent-log.md: "|[Cron] $(date) | phase=maintenance | action=STALE_STRATEGY_CLEANED | result=Removed outdated items from execution_strategy, all verified done. Next: Z. |"
+  ↓
+Step C — 强制 JSON validate
+  ├── 写入后立即 python3 -c "import json; json.load(open('agent-tracker.json'))"
+  └── 若失败：检查尾逗号、未转义引号、非 ASCII 字符 → 立即修复
+```
+
+**不做此清理的后果**：下轮 cron 再次看到相同的旧策略文本 → 再次认为"可能还有工作要做" → 重新验证已完成的项 → 浪费整轮。**Stale text attracts repeated work.** 清理文本就是中断这个循环。
+
+**2026-06-03 实战**：tracker 仍然写着 "Fix D10a on rvo-ai-screening=29 zombies, ded-ai-screening=33 zombies, cataract=17"，但这三篇已全部 D10a=100%。验证后重写 strategy 为 `"All D10a cleanups complete (50 papers). All _todo/09-background promoted (7 papers). GPU blocked. Waiting for new CPU-feasible direction or GPU upgrade."` → 下轮不再反复验证已完成的项。
 
 ### 21. 🔴 arXiv 预印本没有发表日期 — 无需为每个 arXiv ID 搜索发表版本
 

@@ -1,6 +1,9 @@
 ---
 name: github-auth
 description: "GitHub auth setup: HTTPS tokens, SSH keys, gh CLI login."
+signature: "config: dict -> auth_status: str"
+related_skills: [github-code-review, github-discussions, github-issues, github-pr-workflow, github-repo-management]
+allowed-tools: [terminal, file, web]
 version: 1.1.0
 author: Hermes Agent
 license: MIT

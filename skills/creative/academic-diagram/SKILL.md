@@ -7,6 +7,9 @@ description: >-
   publication-standard dimensions. Covers: figure contract → archetype →
   layout → color → render → verify. Not for data plots (bar, heatmap, trend)
   — use nature-figure skill for those.
+signature: "spec: dict -> figure_path: str"
+related_skills: [architecture-diagram, comfyui, excalidraw, ffmpeg-video-audio-sync, figure-generation]
+allowed-tools: [terminal, file]
 version: 1.3.0
 author: Absorbed from nature-figure (Yuan Yizhe, SJTU) + architecture-diagram (Cocoon AI) + SynthOS experience
 license: MIT

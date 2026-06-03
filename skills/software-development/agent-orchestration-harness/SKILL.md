@@ -7,6 +7,7 @@ description: >-
 version: 1.0.0
 author: Synthos
 license: MIT
+related_skills: [debugging-hermes-tui-commands, embedded-python-modularization, github-agent-contributions, hermes-agent-skill-authoring, k230-canmv-debugging]
 allowed-tools: shell skill_loader Read Write task_delegation file_search
 signature: "requirement: str -> spec_path: str, tasks_path: str, code_paths: list[str], review_passed: bool"
 ---

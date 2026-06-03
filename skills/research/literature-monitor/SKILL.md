@@ -1,6 +1,9 @@
 ---
 name: literature-monitor
 description: "Continuous monitoring of new research papers across multiple sources — arXiv, PubMed, bioRxiv/medRxiv, OpenAlex, and journal TOCs. Automated daily/weekly digests of new papers on your topics."
+signature: "topics: list -> new_papers: list"
+related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, biorxiv, blogwatcher]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.0.0
 author: Hermes Agent
 license: MIT

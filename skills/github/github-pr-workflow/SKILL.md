@@ -1,6 +1,9 @@
 ---
 name: github-pr-workflow
 description: "GitHub PR lifecycle: branch, commit, open, CI, merge."
+signature: "branch: str, title: str -> pr_url: str"
+related_skills: [github-auth, github-code-review, github-discussions, github-issues, github-repo-management]
+allowed-tools: [terminal, file, web]
 version: 1.1.0
 author: Hermes Agent
 license: MIT

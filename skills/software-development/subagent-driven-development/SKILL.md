@@ -1,6 +1,9 @@
 ---
 name: subagent-driven-development
 description: "Execute plans via delegate_task subagents (2-stage review). Includes general task delegation, background processing, and hybrid model orchestration."
+signature: "task: str -> deliverables: list"
+related_skills: [agent-orchestration-harness, debugging-hermes-tui-commands, embedded-python-modularization, github-agent-contributions, hermes-agent-skill-authoring]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.2.0
 author: Hermes Agent (adapted from obra/superpowers) + Synthos
 license: MIT
