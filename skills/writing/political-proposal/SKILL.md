@@ -1,6 +1,9 @@
 ---
 name: political-proposal
 description: "主skill | 参政议政提案全流程自动化管线（民进/政协/人大）。三段式结构（基本情况→存在问题→对策建议），基于公开数据+科研论文反哺的证据驱动提案生成。联动paper-pipeline：一次科研产出，文章+提案双产出。"
+signature: "topic: str -> proposal_path: str"
+related_skills: [latex-output, notebooklm-writing-workflow, paper-pipeline, scc-paper-writing-norms, sci-paper-standard-structure]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.3.0
 author: "Synthos + 民主促进会INSTITUTION_NAME_PLACEHOLDER支部 + 人才Token提案实战 (2026-05-26)"
 license: MIT

@@ -1,6 +1,9 @@
 ---
 name: post-compile-dual-quality-check
 description: "⚡ 论文编译后的自动双质量检查流程。编译成功→自动触发L0.5+L1-L4双质检。强制流程，不等用户问。"
+signature: "paper_dir: str -> quality_report: dict"
+related_skills: [bib-integrity-audit, dual-quality-check-v2, falsification-validation, golden-test-methodology, quality-gate]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.3.0
 author: Hermes Agent
 priority: P0

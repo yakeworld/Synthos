@@ -1,6 +1,9 @@
 ---
 name: hermes-agent
 description: "Configure, extend, or contribute to Hermes Agent."
+signature: "query: str -> config_change: dict"
+related_skills: [ai-outreach, autonomous-core-researcher, claude-code, codex, moltbook-connector]
+allowed-tools: [terminal, file, web]
 version: 2.1.0
 author: Hermes Agent + Teknium
 license: MIT

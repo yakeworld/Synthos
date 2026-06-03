@@ -1,6 +1,8 @@
 ---
 name: bib-integrity-audit
 description: "检测并自动修复参考文献.bib中的LLM生成假DOI条目。逐条Crossref/SS验证→僵尸清理→三源搜索替换→PDF下载→Manifest更新。pima-crispdm实战(2026-05-31)提炼。"
+signature: "bib_path: str -> audit_report: dict"
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 2.0.0
 tags: [bibtex, doi, quality, audit, references, fake-doi]
 related_skills: [paper-reference-pipeline, quality-gate, pdf-download-racing]

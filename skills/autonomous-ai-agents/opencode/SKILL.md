@@ -1,6 +1,9 @@
 ---
 name: opencode
 description: "Delegate coding to OpenCode CLI (features, PR review)."
+signature: "task: str, context: dict -> result: str"
+related_skills: [ai-outreach, autonomous-core-researcher, claude-code, codex, hermes-agent]
+allowed-tools: [terminal, file]
 version: 1.3.0
 author: Hermes Agent + Synthos
 license: MIT

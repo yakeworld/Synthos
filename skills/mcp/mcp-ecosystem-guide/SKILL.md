@@ -1,6 +1,9 @@
 ---
 name: mcp-ecosystem-guide
 description: "Comprehensive MCP (Model Context Protocol) ecosystem knowledge: architecture, common servers, development patterns, security, agent integration, and comparison with traditional APIs. Use when the user asks about MCP concepts, ecosystem, development, or how MCP differs from APIs."
+signature: "topic: str -> guide: str"
+related_skills: [native-mcp]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.0.0
 author: Synthos Research
 license: MIT

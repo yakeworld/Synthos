@@ -1,6 +1,9 @@
 ---
 name: linear
 description: "Linear: manage issues, projects, teams via GraphQL + curl."
+signature: "action: str, params: dict -> result: dict"
+related_skills: [airtable, chinese-form-automation, google-workspace, jupyter-live-kernel, maps]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.0.0
 author: Hermes Agent
 license: MIT

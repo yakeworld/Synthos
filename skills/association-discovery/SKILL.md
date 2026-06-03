@@ -4,6 +4,7 @@ description: "Identify relationships between knowledge items: contradictions, su
 version: 1.3.0
 author: Synthos Agent
 license: MIT
+related_skills: [argument-expression, ai-outreach, autonomous-core-researcher, claude-code, codex]
 allowed-tools: Read Write
 signature: "knowledge_items: list[KnowledgeItem] -> associations: list[Association], research_gaps: list[Gap]"
 metadata:

@@ -1,6 +1,9 @@
 ---
 name: journal-selection-medical-ai
 description: "Systematic methodology for evaluating and ranking SCI journals as publication targets for medical AI / computational health papers."
+signature: "input: dict -> output: dict"
+related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, biorxiv, blogwatcher]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.0.0
 author: Hermes Agent
 license: MIT
@@ -138,6 +141,10 @@ A curated reference of target journals for breast cancer ML / medical AI papers 
 A cycle optimization workflow for systematically improving paper quality before journal submission:
 - `references/cycle-optimization-workflow.md` — iterative optimization workflow, quality assessment rubric, debugging experience (SMOTE crashes, key mismatches)
 
+## Reference Files
+
+- `references/openalex-journal-metrics.md` — OpenAlex API technique for deriving journal impact metrics (2yr_mean_citedness as IF proxy) when `web_search` tool is unavailable. Includes batch mode, interpretation guide, and Pima paper verification data.
+
 ## Pitfalls
 
 - **Don't over-index on IF alone**: A high-IF journal with poor topic fit will reject you faster than a moderate-IF journal with perfect fit
@@ -147,3 +154,24 @@ A cycle optimization workflow for systematically improving paper quality before 
 - **Beware of predatory journals**: Always verify journals are indexed in Scopus/Web of Science/DOAJ
 - **Open access has costs**: Many OA journals charge APCs ($500-$2000+). Factor this into your decision
 - **Preprint strategy**: Consider posting on arXiv/bioRxiv before submission to establish priority
+
+### 🔴 OpenAlex 不返回 IF/JCR 值（2026-06-03 新增）
+
+OpenAlex API 的 `source` 端点不提供 `impact_factor` 或 `jcr_quartile` 字段。替代方案：
+
+| 方法 | 命令 | 说明 |
+|:-----|:-----|:------|
+| 2yr_mean_citedness | `summary_stats.2yr_mean_citedness` | **最佳代理** — 近似IF，定性排序可靠（Q1≈7+, Q2≈4-7, Q3≈2-4） |
+| Scopus/SCI官网 | 浏览器搜索 | 最权威，但需手动查找 |
+| Journal Citation Reports | 需机构权限 | 最准确IF |
+
+```python
+# 用2yr_mean_citedness代理IF
+curl -s "https://api.openalex.org/sources?filter=display_name.search:Patterns" | \
+  python3 -c "import sys,json; s=json.load(sys.stdin)['results'][0]; print(s['display_name'], 'proxy IF=', s['summary_stats']['2yr_mean_citedness'])"
+```
+
+**已知限制**：
+- 部分期刊不返回 `2yr_mean_citedness`（如新收录期刊）
+- 该值来自OpenALex模型估算，与官方JCR IF存在±0.5的偏差
+- 中文期刊覆盖不全

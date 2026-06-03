@@ -1,6 +1,9 @@
 ---
 name: github-code-review
 description: "Review PRs: diffs, inline comments via gh or REST."
+signature: "pr_url: str -> review_comments: list"
+related_skills: [github-auth, github-discussions, github-issues, github-pr-workflow, github-repo-management]
+allowed-tools: [terminal, file, web]
 version: 1.1.0
 author: Hermes Agent
 license: MIT

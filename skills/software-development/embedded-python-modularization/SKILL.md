@@ -1,6 +1,9 @@
 ---
 name: embedded-python-modularization
 description: "Decompose monolithic embedded-Python/Micropython files into maintainable modules — the state.py pattern, deferred-import cycle breaking, lightweight-state discipline, and post-surgery verification. Works on K230, ESP32, RP2040, STM32, and similar platforms where RAM is tight and `global` doesn't scale."
+signature: "monolith_path: str -> module_dir: str"
+related_skills: [agent-orchestration-harness, debugging-hermes-tui-commands, github-agent-contributions, hermes-agent-skill-authoring, k230-canmv-debugging]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.1.0
 author: Synthos
 metadata:

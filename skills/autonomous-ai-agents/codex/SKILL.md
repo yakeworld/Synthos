@@ -1,6 +1,9 @@
 ---
 name: codex
 description: "Delegate coding to OpenAI Codex CLI (features, PRs)."
+signature: "task: str, context: dict -> result: str"
+related_skills: [ai-outreach, autonomous-core-researcher, claude-code, hermes-agent, moltbook-connector]
+allowed-tools: [terminal, file, web]
 version: 1.0.0
 author: Hermes Agent
 license: MIT

@@ -1,6 +1,9 @@
 ---
 name: spike
 description: "Throwaway experiments to validate an idea before build."
+signature: "hypothesis: str -> evidence: dict"
+related_skills: [agent-orchestration-harness, debugging-hermes-tui-commands, embedded-python-modularization, github-agent-contributions, hermes-agent-skill-authoring]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.0.0
 author: Hermes Agent (adapted from gsd-build/get-shit-done)
 license: MIT

@@ -1,6 +1,9 @@
 ---
 name: open-source-community-building
 description: Promote an open-source project and build a contributor community — README optimization, GitHub config, content strategy (Zhihu/Reddit/Twitter), auto-promotion cron, and metrics tracking.
+signature: "repo: str -> community_plan: dict"
+related_skills: [agent-orchestration-harness, debugging-hermes-tui-commands, embedded-python-modularization, github-agent-contributions, hermes-agent-skill-authoring]
+allowed-tools: [terminal, read_file, write_file, search_files]
 tags: [github, community, promotion, open-source, marketing, zhihu, reddit]
 ---
 

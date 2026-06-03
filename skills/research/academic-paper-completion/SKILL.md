@@ -1,6 +1,9 @@
 ---
 name: academic-paper-completion
 description: Complete academic paper lifecycle — from human-in-the-loop writing and iterative quality optimization through LaTeX compilation, citation management, journal selection, and submission readiness. Covers elsarticle compilation, citation key synchronization, paper verification, framework-based writing workflows, SCI-level quality scoring loops, and medical AI journal selection.
+signature: "input: dict -> output: dict"
+related_skills: [adhd-eye-tracking-review, arxiv, biorxiv, blogwatcher, bppv-expert]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.2.0
 platforms: [linux, macos]
 metadata:

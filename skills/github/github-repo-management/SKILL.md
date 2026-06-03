@@ -1,6 +1,9 @@
 ---
 name: github-repo-management
 description: "Clone/create/fork repos; manage remotes, releases."
+signature: "action: str, params: dict -> result: dict"
+related_skills: [github-auth, github-code-review, github-discussions, github-issues, github-pr-workflow]
+allowed-tools: [terminal, file, web]
 version: 1.2.0
 author: Hermes Agent
 license: MIT

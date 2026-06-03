@@ -1,6 +1,9 @@
 ---
 name: openalex
 description: "OpenAlex — the open, free, comprehensive academic paper database covering 250M+ papers, authors, institutions, concepts, and journals across all disciplines. No API key needed, no rate limits."
+signature: "query: str, fields: str -> results: list[dict]"
+related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, biorxiv, blogwatcher]
+allowed-tools: [terminal, web, file]
 version: 1.0.0
 author: Hermes Agent
 license: MIT

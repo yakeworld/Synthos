@@ -1,6 +1,9 @@
 ---
 name: maps
 description: "Geocode, POIs, routes, timezones via OpenStreetMap/OSRM."
+signature: "query: str -> geo_data: dict"
+related_skills: [airtable, chinese-form-automation, google-workspace, jupyter-live-kernel, linear]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.2.0
 author: Mibayy
 license: MIT

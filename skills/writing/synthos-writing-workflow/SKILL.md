@@ -1,6 +1,9 @@
 ---
 name: synthos-writing-workflow
 description: "杨晓凯写作方法论 — PDF→MD管线 + 引用铁律 + 09-dir标准化 + 双质检闭环。核心：凡引必验、凡写必检、凡投必整。"
+signature: "writing_task: str -> output_path: str"
+related_skills: [latex-output, notebooklm-writing-workflow, paper-pipeline, political-proposal, scc-paper-writing-norms]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.0.0
 author: Synthos
 license: MIT

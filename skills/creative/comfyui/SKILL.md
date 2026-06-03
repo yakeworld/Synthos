@@ -1,6 +1,9 @@
 ---
 name: comfyui
 description: "Generate images, video, and audio with ComfyUI — install, launch, manage nodes/models, run workflows with parameter injection. Uses the official comfy-cli for lifecycle and direct REST/WebSocket API for execution."
+signature: "prompt: dict -> image_path: str"
+related_skills: [academic-diagram, architecture-diagram, excalidraw, ffmpeg-video-audio-sync, figure-generation]
+allowed-tools: [terminal, file, web]
 version: 5.0.0
 author: [kshitijk4poor, alt-glitch]
 license: MIT

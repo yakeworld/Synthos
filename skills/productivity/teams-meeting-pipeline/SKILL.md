@@ -1,6 +1,9 @@
 ---
 name: teams-meeting-pipeline
 description: "Operate the Teams meeting summary pipeline via Hermes CLI — summarize meetings, inspect pipeline status, replay jobs, manage Microsoft Graph subscriptions."
+signature: "meeting_id: str -> summary_path: str"
+related_skills: [airtable, chinese-form-automation, google-workspace, jupyter-live-kernel, linear]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.1.0
 author: Hermes Agent + Teknium
 license: MIT

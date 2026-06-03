@@ -1,6 +1,9 @@
 ---
 name: blogwatcher
 description: "Monitor blogs and RSS/Atom feeds via blogwatcher-cli tool."
+signature: "url: str -> feed_items: list"
+related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, biorxiv, bppv-expert]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 2.0.0
 author: JulienTant (fork of Hyaxia/blogwatcher)
 license: MIT

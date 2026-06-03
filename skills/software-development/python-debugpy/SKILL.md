@@ -1,6 +1,9 @@
 ---
 name: python-debugpy
 description: "Debug Python: pdb REPL + debugpy remote (DAP)."
+signature: "script_path: str -> debug_session: str"
+related_skills: [agent-orchestration-harness, debugging-hermes-tui-commands, embedded-python-modularization, github-agent-contributions, hermes-agent-skill-authoring]
+allowed-tools: [terminal, file, read_file]
 version: 1.0.0
 author: Hermes Agent
 license: MIT

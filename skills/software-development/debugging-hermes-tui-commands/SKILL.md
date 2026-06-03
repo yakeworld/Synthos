@@ -1,6 +1,9 @@
 ---
 name: debugging-hermes-tui-commands
 description: "Debug Hermes TUI slash commands: Python, gateway, Ink UI."
+signature: "command_error: str -> fix: str"
+related_skills: [agent-orchestration-harness, embedded-python-modularization, github-agent-contributions, hermes-agent-skill-authoring, k230-canmv-debugging]
+allowed-tools: [terminal, file, read_file]
 version: 1.0.0
 author: Hermes Agent
 license: MIT

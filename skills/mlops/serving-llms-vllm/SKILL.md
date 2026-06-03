@@ -5,6 +5,9 @@ description: >-
   Covers Docker-based deployment, model loading, coexistence with training,
   API usage, quantization (NVFP4/GPTQ/GGUF), and performance tuning.
   Captures the user's specific deployment on work1 (Qwen3.6-35B-NVFP4, TP=4).
+signature: "model: str, config: dict -> endpoint_url: str"
+related_skills: [crispdm-helix-experiment, experiment-recipes, huggingface-hub, medical-image-centerline, remote-gpu-training]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.0.0
 author: Synthos Agent
 license: MIT

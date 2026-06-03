@@ -1,6 +1,9 @@
 ---
 name: researcher-portrait
 description: "创建中国研究者学术面貌档案（researcher portrait）。从中文网站/数据库提取论文、专利、项目、产品等结构化数据，经交叉验证后编制完整的研究者画像。适用于课题申报、竞赛材料、商业计划书、个人履历等场景。"
+signature: "name: str -> portrait_report: dict"
+related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, biorxiv, blogwatcher]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 1.1.0
 author: Hermes Agent + Synthos
 license: MIT

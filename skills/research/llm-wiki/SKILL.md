@@ -1,6 +1,9 @@
 ---
 name: llm-wiki
 description: "Karpathy's LLM Wiki: build/query interlinked markdown KB."
+signature: "knowledge_spec: dict -> wiki_path: str"
+related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, biorxiv, blogwatcher]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 2.1.0
 author: Hermes Agent
 license: MIT

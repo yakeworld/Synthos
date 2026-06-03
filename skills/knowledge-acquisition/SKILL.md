@@ -7,6 +7,7 @@ description: >-
 version: 1.7.0
 author: Synthos
 license: MIT
+related_skills: [argument-expression, association-discovery, ai-outreach, autonomous-core-researcher, claude-code]
 allowed-tools: terminal Read Write task_delegation (bash, view/write, agent, inline)
 signature: "topic: str, sources: list -> papers: list[Paper], total_found: int"
 tags: [academic-search, paper-retrieval, semantic-scholar, pubmed, arxiv, openalex, literature-review]

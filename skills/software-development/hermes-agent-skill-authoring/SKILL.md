@@ -1,6 +1,9 @@
 ---
 name: hermes-agent-skill-authoring
 description: "Design and maintain the skill hierarchy: main-skill (principles + workflow map) → sub-skill (single engineering method) → references (cases/templates). Length standard: main 4-6K, sub 2-4K, refs unlimited. Three-language layer strategy: principles in Classical Chinese (文言), methods in vernacular (白话), commands in English (英文)."
+signature: "query: str -> config_change: dict"
+related_skills: [agent-orchestration-harness, debugging-hermes-tui-commands, embedded-python-modularization, github-agent-contributions, k230-canmv-debugging]
+allowed-tools: [terminal, file, web]
 version: 2.4.0
 author: Synthos
 license: MIT

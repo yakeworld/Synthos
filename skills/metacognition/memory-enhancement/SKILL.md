@@ -1,6 +1,7 @@
 ---
 name: memory-enhancement
 description: "记忆增强与结构化巩固技能。跨会话知识整合+FSRS间隔重复调度+增量阅读管线+知识图谱构建+背景巩固。吸收自：FSRS算法(open-spaced-repetition)、DSR记忆巩固理论(Woźniak/Bjork)、增量阅读法(SuperMemo)、nmem六层层级、lattice0背景巩固、iwe markdown存储模式。Hermes纯协议——零外部代码，与memory/obsidian/cronjob/session_search配合使用。"
+signature: "memories: list -> consolidated_memories: list"
 version: 1.0.0
 author: Synthos
 license: MIT

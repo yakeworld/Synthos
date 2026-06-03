@@ -1,6 +1,9 @@
 ---
 name: dual-quality-check-v2
 description: "Synthos D1-D10十维论文双质量检查：Gemini评审+参考文献标准+全文覆盖+引用质量+文件命名"
+signature: "paper_dir: str -> quality_report: dict, calibrated_score: float"
+related_skills: [bib-integrity-audit, falsification-validation, golden-test-methodology, post-compile-dual-quality-check, quality-gate]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 3.1.0
 tags: [quality, review, d1-d10, evolution, local-first]
 ---
@@ -1457,7 +1460,9 @@ Unlike prior investigations that relied on [method with known limitation] and we
 10. **🔴 形态学论文的L0.5假阴性** — 当`03-code/`目录为空时，不要判定为\"数据虚构\"。这是形态学测量论文的正常状态。数据来源是影像分割软件输出（Avizo/3D Slicer），存放在Tabular数据和Figures中。验证路径是检查Tables中是否有具体测量值（法向量、方向角、偏差角），而非找`.py`文件。
 11. **删除引用后遗漏Cite Chain覆盖验证** —
 11. **NotebookLM CLI `--new` 是破坏性操作** — `notebooklm ask --new` 会删除服务器端全部对话历史（不可恢复）。在未确认源已成功索引前不得使用。替代方案：用 `-c <conversation_id>` 继续现有对话。
-12. **🔴 L0.5基准测试验证陷阱：论文声称的"投票集成"/"最佳模型"值可能是LLM编造，不在实验代码中** — Pima CRISP-DM 论文 L0.5 审计(2026-06-01)发现核心实验声明(Ensemble F1=0.7541, Ablation LDA 表)无对应实验代码。验证方法：搜索 `voting/VotingClassifier/SoftVoting/ensemble` 关键词确认实验脚本存在；对比论文声称值与 benchmark JSON 实际值。仅存在于 .tex 中的实验值 = 未验证。
+12. **🔴 L0.5基准测试验证陷阱：论文声称的"投票集成"/"最佳模型"值可能是LLM编造，不在实验代码中** — Pima CRISP-DM 论文 L0.5 审计(2026-06-01)发现核心实验声明(Ensemble F1=0.7541, Ablation LDA 表)无对应实验代码。
+
+13. **🔴 局部消融表编造陷阱（2026-06-03发现）** — 消融表部分行正确(No/Minor/Medium匹配实验)而另一行(Severe)编造。Pima实战：No/Minor/Medium与Ensemble实验0误差匹配，但Severe行F1=0.7657(实为0.8140)、Rec=0.6364(实为0.8340)等5项全编造。检测：逐行逐指标比对论文表vs实验JSON。根因：LLM为配合Recall Paradox叙事编造了Severe值。修复：用正确实验值替换，修正通胀率和叙事。
 13. **NotebookLM源显示"error"不一定是上传失败** — CLI的 `Unknown source type code 0` 和 `status=error` 是CLI版本与API不同步导致的显示问题。先尝试 `ask` 简单问题验证源是否可读，而非立即删除重传。
 13. **NotebookLM notebook ID截断匹配** — 接受ID任意长度前缀（如 `8e1174cd` 而非全ID），但过短前缀可能匹配错误notebook。始终用可唯一标识的前缀（至少8字符）。
 14. **Section合并去重提D5** — 当相邻Section论述同一概念（如Section 1.3"Governance-Execution Gap"和1.4"Research Gap"讲同一件事），合并后D5 Clarity可提升0.02-0.03。检测：精读时注意"同一个论点是否在不同段落重复出现"。Pima实战(2026-05-31)：1.3+1.4合并→D5 +0.03(D1 +0.02)。

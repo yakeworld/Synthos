@@ -1,6 +1,9 @@
 ---
 name: github-agent-contributions
 description: Design GitHub-based contribution infrastructure for AI agents — AGENTS_CONTRIBUTING.md, verification gates, CI pipelines, trust models, OSS community building, and content strategy — that let external agents submit Issues/PRs with automated validation and human-in-the-loop merge.
+signature: "repo: str, contribution: dict -> pr_url: str"
+related_skills: [agent-orchestration-harness, debugging-hermes-tui-commands, embedded-python-modularization, hermes-agent-skill-authoring, k230-canmv-debugging]
+allowed-tools: [terminal, file, web]
 author: Nous Research
 license: MIT
 version: 1.0.0

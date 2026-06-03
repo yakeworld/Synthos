@@ -1,6 +1,9 @@
 ---
 name: cognitive-atom-architecture
 description: "Methodology for transforming operational skill sets into independent cognitive atoms with strict DAG dependencies, input/output contracts, and Synthos framework alignment. v4.0.0 syncretic framework: Eastern ontology (格物通理/取象通变/天人合一) + Western epistemology (经权度信/墨证求真/庄周观模) + 熵减律·生生之谓易 (ultimate purpose) + 大道至简 (cross-cutting razor)."
+signature: "input: dict -> output: dict"
+related_skills: [argument-expression, association-discovery, ai-outreach, autonomous-core-researcher, claude-code]
+allowed-tools: [terminal, read_file, write_file, search_files]
 version: 4.0.0
 author: Hermes Agent
 license: MIT
