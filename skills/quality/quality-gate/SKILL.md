@@ -393,6 +393,35 @@ grep 'author\s*=' references.bib | grep -iE '(iris|segmentation|breast|cancer|ad
 | 扫描版 (无文本层) | 2 (5%) | ❌ | OCR 或摘要 |
 
 
+## 🟢 Pre-Commit Security Scan (2026-06-03 实战)
+
+> **在 git commit 前扫描待提交文件中的敏感信息，防止泄露到 GitHub。**
+> 实战验证：2026-06-02 发现 skills/patent-disclosure/ 含未公开专利信息，research/ 含 443MB 实验数据。
+> 完整协议: `references/pre-commit-security-scan.md`
+
+### 快速扫描命令
+
+```bash
+# 1. 检查待提交文件中是否有高熵字符串（token/key 模式）
+grep -rn "ghp_\|ghs_\|gho_\|github_pat_" --include="*.md" --include="*.py" .
+
+# 2. 检查真实邮箱和手机号
+grep -rn "[a-zA-Z0-9._%+-]\+@[a-zA-Z0-9.-]\+\.[a-zA-Z]\{2,\}" --include="*.md" .
+
+# 3. 检查用户名/密码硬编码
+grep -rn -i "password\s*=\|username\s*=\|passwd\s*=" --include="*.md" --include="*.py" .
+
+# 4. 检查 .gitignore 是否覆盖大型数据目录
+cat .gitignore | grep -E "(research|data|literature|patent)"
+```
+
+### 触发条件
+
+- 首次 push 到 GitHub
+- 添加大量新文件（>50 个）
+- 添加包含 .npz/.nii 等数据文件的目录
+- .gitignore 修改后
+
 ## 🟢 Karma 软反馈门 (L0.2) — 2026-06-03 自 ARIS+Claude Code 吸收
 
 > **质量不只有「通过/不通过」的二元制，还有「不满意但不至于重做」的微调通道。**

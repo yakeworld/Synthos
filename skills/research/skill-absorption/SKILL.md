@@ -308,6 +308,8 @@ curl -s "https://api.github.com/repos/owner/VeriSci" | python3 -c "import json,s
 **编排协议注入案例**：`references/two-loop-orchestration-absorption.md` — AI-Research-SKILLs双循环编排→ROUTE v1.2.0的完整吸收记录，含实施步骤和陷阱清单。  
 **管线执行协议**：`references/synthos-pipeline-execution-protocol.md` — SynthOS写作端到端管线执行规范（2026-05-18写作闭环审计驱动）。含11条核心规则（严禁模拟输出、多关键词搜索、PDF/BibTeX命名、40篇质量门槛、速率限制等），8项常见陷阱。
 
+**综合项目扫描**：`references/comprehensive-project-scan.md` — 全量扫描已收集数据资产（文献库/实验数据/论文产出/外部GH引用/脚本）的综合评估协议。8维扫描清单 + 优先级排序 + 吸收计划模板。
+
 ### Phase 1: Core Mechanism Injection（立即吸收）
 
 针对小型、自包含、可直接嵌入目标原子的机制。
