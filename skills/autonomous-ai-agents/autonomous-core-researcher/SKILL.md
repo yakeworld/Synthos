@@ -1,7 +1,7 @@
 ---
 name: autonomous-core-researcher
 description: "v3.0 开放边界引擎。无方向约束——预测类/公开数据集/数学建模/仿真/算法类，一切可编码可计算的科研问题。NotebookLM + OpenAlex + 六维假说评分 → 综述/实验/算法，永不停止。"
-version: 2.3.0
+version: 2.4.0
 author: Synthos + 用户杨晓凯
 allowed-tools: terminal skill_view opencode cron job
 metadata:
@@ -733,6 +733,40 @@ agent-tracker 的 notes 字段中，用 `kappa` 替代 `$\kappa$`。
 4. 编译验证
 
 **判断口诀**：替换 bib ≠ 修复引用。Grep 旧作者名查残留。
+
+### 20. 🔴 Stale tracker `notes.execution_strategy` — 不要盲目信任旧的执行策略
+
+**问题**：agent-tracker.json 的 `notes.execution_strategy` 包含上一轮遗留的任务描述（如 "Fix D10a on remaining review papers: rvo=29 zombies"），但这些任务可能已在之前的轮次中被修复，但策略文本未被更新。直接按策略执行会浪费整轮去确认已经完成的工作。
+
+**根因**：每轮只追加 `last_cycle_work` 到 notes，但 `execution_strategy` 是手动写入的自由文本，不会在任务完成后自动清理。当修复工作跨多轮进行时，较早写入的策略项可能已经过时。
+
+**2026-06-03 实战**：tracker 声称 rvo-ai-screening 有 29 个僵尸引用，但 D10a 扫描显示全部 75/75=100%。策略未更新导致一轮验证性扫描的浪费。
+
+**修复**：在 Step 2（扫描论文质量）后、Step 3（选择方向）前，增加一个步骤——**对照验证**：
+```python
+# 对照验证：tracker 声称的问题是否仍然存在
+for task_item in tracker['notes'].get('execution_strategy', '').split(','):
+    # 提取论文名和指标
+    m = re.search(r'(\w+-[\w-]+).*?[\d]+[\s]*[zombie|orphan|D8]', task_item, re.I)
+    if m:
+        paper = m.group(1)
+        # 快速扫描该论文的当前 D10a/D8
+        current_state = quick_d10a_scan(f'outputs/papers/{paper}')
+        if current_state and current_state['d10a'] == 100 and current_state['d8'] >= 30:
+            continue  # 已修复，跳过
+        # 未修复 → 加入本轮待办
+        pending_tasks.append(paper)
+```
+
+**判断口诀**：执行前先验证。策略里写的 ≠ 当前实际状态。D10a=100% 的论文不需要再碰。
+
+### 21. 🔴 arXiv 预印本没有发表日期 — 无需为每个 arXiv ID 搜索发表版本
+
+**问题**：当扫描论文查找"可替换为已发表版的 arXiv 预印本"时，逐一用 OpenAlex 验证所有 arXiv ID 非常耗时（每个约 2-3 秒，50+ ID 需数分钟），且大部分仍为 arXiv-only。
+
+**2026-06-03 实战**：6 个常见 arXiv ID 全部仍为 arXiv-only（OpenEDS2019, CondSeg2024, OpenEDS2020, PupilNet2016, IrisReview2023, EyeGazeVR2024 等均无期刊发表版）。这验证了：在 CV/眼科方向，arXiv 预印本发表为期刊版的比例很低，逐篇搜索的 ROI 不高。
+
+**修复**：对 arXiv 预印本引用，除非有明确理由认为其已发表（如引用其发表的期刊名），否则默认保留为 arXiv 引用。集中搜索可在发现"某论文引用了大量 arXiv 占位符"时执行一次批量搜索（见 `references/arxiv-published-verification.md`），而非每轮都扫。
 
 ### 18. 🔴 僵尸比率扫荡：D8≥30 且 D10a=100% 不等于引用健康
 

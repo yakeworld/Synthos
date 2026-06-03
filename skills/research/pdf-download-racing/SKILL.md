@@ -75,7 +75,8 @@ done
 使用 `scripts/scihub_download.py` 自动完成域探测+HTML解析+Referer下载:
 
 ```bash
-python3 /home/yakeworld/.hermes/skills/research/pdf-download-racing/scripts/scihub_download.py \
+# 脚本实际在 Synthos/tools 下（并非 ~/.hermes/skills/）
+python3 /media/yakeworld/sda2/Synthos/tools/paper-manager/src/downloader/scihub_download.py \
   "10.1016/j.diabres.2021.109119" /tmp/paper.pdf --verbose
 ```
 
@@ -246,9 +247,30 @@ PDF→MD 转换是 **Layer B 双质检** 的前置条件：
 **实战教训**（HCS-3WT乳腺癌 2026-05-31）：pdftotext 提取的 PDF 文本包含 broken ligature（`ﬀ`→乱码），但 TeX 源文件完全干净（仅 5 个注释内 UTF-8 字节）。Layer B 基于提取文本评分，D5=0.70 是提取层问题非源文件问题。**上传 .tex 源文件而非 PDF 提取文本到 NotebookLM 可避免此问题。**
 
 
-### 备选下载策略（当meddata不支持时）
+### 发布商特定下载策略（2026-06-03 新增）
 
-对于meddata不支持的出版社：
+最近（2022+）论文的下载成功率因发布商而异。以下总结自BRFSS文献下载实战：
+
+### ✅ 可直接OA下载的发布商
+| 发布商 | 示例 | 命令模式 | 成功率 |
+|:-------|:-----|:---------|:------:|
+| **PLOS ONE** | Li2024 (10.1371/journal.pone.0311222) | `curl -sL -o paper.pdf "https://journals.plos.org/plosone/article/file?id={doi_id}&type=printable"` | ✅ 100% |
+| **SpringerOpen / BioMed Central** | Shams2025 (10.1186/s43067-023-00074-5) | `curl -sL -o paper.pdf "{journal_url}/counter/pdf/{doi}"` | ✅ 100% |
+| **Hindawi** (PMC镜像) | Alam2022 (PMC9536939) | 通过PMC ID `https://www.ncbi.nlm.nih.gov/pmc/articles/PMC{id}/pdf/` | ⚠️ 有时返回HTML |
+
+### ❌ 被付费墙/Cloudflare阻止的发布商
+| 发布商 | 表现 | 推荐策略 |
+|:-------|:-----|:---------|
+| **Wiley** (Engineering Reports等) | 403 Cloudflare | 尝试Sci-Hub; 失败则标记PAYWALL |
+| **Springer** (IJCIS等付费期刊) | HTML重定向 | 尝试Sci-Hub; 失败则标记PAYWALL |
+| **Hindawi** 直接PDF | Hindawi `downloads.hindawi.com` → 403 Cloudflare | 使用PMC镜像或Sci-Hub |
+| **IEEE** | 付费墙 | 标记PAYWALL |
+
+### Sci-Hub 对2022+论文的局限性
+2026-06-03实测: Sci-Hub对2022年后论文成功率显著下降。
+- Sci-Hub `sci-hub.ru` 返回Hindawi出版商URL → 该URL也被Cloudflare拦截
+- Sci-Hub `sci-hub.ee`/`.wf` 返回403或空PDF
+- **推荐通道顺序**: OA直链 → arXiv → PMC → Sci-Hub → paper-manager download_one.py → PAYWALL标记
 
 1. **arXiv** — 检查论文是否有arXiv版本（SS返回的externalIds中有'ArXiv'字段）
 2. **OpenAccess PDF** — 检查SS的`openAccessPdf.url`字段（有些付费论文有OA版本）

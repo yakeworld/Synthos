@@ -357,6 +357,7 @@ scp work1:~/experiments/helix_benchmark_results.json ./
 
 ### 参考文件
 - `references/imbalance-inflation-experiment-results.md` — 三数据集详细实验结果JSON
+- `references/brfss-literature-data-leakage-validation.md` — BRFSS文献检索：外部验证Helix发现（文献92-99% Acc普遍存在泄漏，唯一CV论文F1=0.37与Helix F1=0.45一致）
 
 ## CDC Crash Recovery Protocol（2026-06-01 新增）
 
