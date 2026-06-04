@@ -45,7 +45,7 @@ def _get_token() -> str:
         headers = {"User-Agent": _USER_AGENT, "Content-Type": "application/json"}
         r = _req.post(SSO_URL, json={
             "username": username, "password": password,
-            "appId": None, "type": "USERNAME", "autoLogin": True,
+            "type": "0",
         }, headers=headers, timeout=15, verify=False)
         
         if r.status_code != 200:

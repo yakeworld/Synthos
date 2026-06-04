@@ -4,7 +4,7 @@ description: "Synthos D1-D10十维论文双质量检查：Gemini评审+参考文
 signature: "paper_dir: str -> quality_report: dict, calibrated_score: float"
 related_skills: [bib-integrity-audit, falsification-validation, golden-test-methodology, post-compile-dual-quality-check, quality-gate]
 allowed-tools: [terminal, read_file, write_file, search_files]
-version: 3.1.0
+version: 3.2.0
 tags: [quality, review, d1-d10, evolution, local-first]
 ---
 
@@ -169,9 +169,21 @@ graph TD
 **阶段 I: 评估（本地 + Gemini）**
 1. D8 本地计数 → .bib 条目数 ≥30
 2. D9 本地扫描 → pdfs/ PDF数
-3. D10a 本地引用匹配 → \cite vs .bib 条目
-4. D1-D7 NotebookLM → 仅当无本地报告时
-5. D10b NotebookLM → 仅当深度引用分析需要时
+3. D10a 本地引用匹配 → \\cite vs .bib 条目
+4. **🔴 L0.5 实验运行检查** — 在信任任何数值声明前，先检查实验代码是否已实际运行产生输出：
+   ```
+   # 检查实验输出目录是否存在
+   test -d 03-code/results_*/ 2>/dev/null && echo "✅ 实验已运行" || echo "❌ 实验未运行"
+   # 检查 JSON/CSV 输出文件
+   find 03-code/ -name "*.json" -o -name "*.csv" 2>/dev/null | head -5
+   ```
+   若实验结果不存在 → 论文所有数值声明（F1/Recall/Precision/Accuracy/AUC/Δ值）均为 LLM 生成的未经验证值。必须：
+   - 先运行实验产生真实输出
+   - 逐条比对论文表 vs 实验输出
+   - 修正不匹配的值
+   - 然后才能进入 Layer B 评审（D3 结果可信度评分必须标注"实验已验证"或"未经验证"）
+5. D1-D7 NotebookLM → 仅当无本地报告时
+6. D10b NotebookLM → 仅当深度引用分析需要时
 
 **阶段 II: 自动修复（发现问题即修）**
 6. D10a < 100% → 激活僵尸引用
@@ -1096,7 +1108,9 @@ def scan_with_aux(paper_dir):
     }
 ```
 
-**遗留限制**：`.aux` 文件只包含最终编译的引用，不包含条件编译或注释掉的 `\cite{}`。但这对 D10a 检查来说恰好正确——我们关心的是实际进入 PDF 的引用。
+**实战参考**（2026-06-04 全库57篇扫描）：pd-dysphagia-2026 (D8=39, all in \\input{} section files) 和 vog-vestibular-review (D8=33) 被报为ZOMBIE, 实际.bbl/.aux验证均为CLEAN。用 `scan_with_aux()` 回退后问题消除。详见 `references/batch-scan-v2-subfile-fix-2026-06-04.md`。
+
+**遗留限制**：`.aux` 文件只包含最终编译的引用，不包含条件编译或注释掉的 `\\cite{}`。但这对 D10a 检查来说恰好正确——我们关心的是实际进入 PDF 的引用。
 
 **判断口诀**：主文件只有 \input{} 无 \cite{} → 查 .bbl 和 .aux 文件。有编译产物的论文用产物扫描比源码扫描更准。
 
@@ -1128,6 +1142,81 @@ find outputs/papers/ -name '*.tex' ! -path '*/09-background/*' ! -path '*/_todo/
   fi
 done
 ```
+
+## ⚡ 扫描结果分类与交叉验证协议（2026-06-04新增）
+
+当运行 `bulk_d8_scan.py` 全库扫描后，**不能直接信任其输出**。bulk scanner 有已知假阳性模式，必须用 `robust-d10a-scanner-2026-06-01.py` 逐篇交叉验证。
+
+### 假阳性分类判定树
+
+扫描结果中的"问题论文"需按此树分类：
+
+```
+扫描显示问题 (D8<30 or D10a<100%)
+  ↓
+├── D8=0 + cite_count>0 + bib_count>0
+│   └── 假阳性: 注释残留陷阱或子目录文件 → robust scanner验证
+│
+├── D10a=0% + cite_count=0 + bib_count>0
+│   └── 骨架论文 (skeleton paper)
+│       ├── 特征: .tex < 100行, 无\cite{}命令, 有完整preamble/abstract
+│       ├── 验证: wc -l paper.tex → <100行确认骨架状态
+│       └── 处置: 标记为"待完成"而非"需修复"
+│
+├── D8=0/D10a=0% for lit-review subdirectory
+│   └── 文献综述笔记 — 正文使用纯文本引用,无bib机制
+│       ├── 特征: 在 lit-reviews/ 子目录下
+│       ├── 验证: grep \cite paper.tex = 0, grep et al paper.tex > 0
+│       └── 处置: 不计入主库扫描,单独标注
+│
+├── D10a<N% + orphans=0 + zombies>0
+│   └── 僵尸条目（有bib无cite）
+│       ├── 真问题: 需激活(插入\cite)或删除
+│       └── 用 robust scanner 确认计数
+│
+├── D10a<N% + orphans>0 + zombies=0
+│   └── 孤儿引用（有cite无bib）→ P0需立即修复
+│
+├── D8<N (如4-13) + D10a=100%
+│   └── 短期论文/专用benchmark论文
+│       ├── 特征: thebibliography模式,仅4-5条引用
+│       ├── 举例: crispdm-heart (D8=4, 仅Heart数据集+3篇方法论)
+│       └── 处置: 标记为"小引用量论文 — 不一定是问题"
+│
+└── 无源文件 (empty dir / only compiled artifacts)
+    ├── 特征: find . -name "*.tex" = 0
+    └── 处置: 标记为"待创建"或"已归档"
+```
+
+### 扫描后验证流程
+
+```
+Step 1: 运行 bulk_d8_scan.py → 产出初始报告
+
+Step 2: 对每个标志论文(D8<30或D10a<100)，用 robust scanner 交叉验证
+  python3 references/robust-d10a-scanner-2026-06-01.py paper.tex [--verbose]
+
+Step 3: 对 D10a=0% 的论文，检查骨架论文特征
+  wc -l paper.tex
+  grep -c '\\cite' paper.tex
+
+Step 4: 对 D8=0 的论文，检查 lit-reviews/ 子目录和源文件位置
+  find . -name "*.tex" 2>/dev/null
+
+Step 5: 对每个验证后的真实问题，按优先级行动
+  └── 在报告中标注: "实际: D8=XX, D10a=XX%" 对比 "扫描显示"
+```
+
+### 2026-06-04 实战参考
+
+58篇论文扫描后, bulk scanner 标记了13个问题：
+- **5个假阳性**（pima-crispdm, 3wd-framework, scc-mathematical-morphology, synthos-system-paper 等 — 注释残留/文件选择错误）
+- **2个骨架论文**（pd-dysphagia-2026, vog-vestibular-review — 真正的待完成工作）
+- **4个真问题**（hcs3wt-breast-cancer D10a=89%, octa-ai-review D10a=97%, crispdm-heart D8=4, eye-tracking-4d D8=13）
+- **2个D8<30**（portable-et-r2 D8=10, eye-tracking-4d D8=13）
+- 33篇 lit-reviews 子目录中的文献综述不计入
+
+**核心教训**: 扫描报告的"问题数"可能是实际问题的2-3倍, 交叉验证是关键。
 
 ## 参考扩展协议（D8<30 → D8≥30）
 
@@ -1698,11 +1787,12 @@ Unlike prior investigations that relied on [method with known limitation] and we
 
 - `scripts/qc_check.py` — D8+D10a快速质检
 - `scripts/d8_d10a_check.py` — 加强版质检，模式A/B自动检测
-- `scripts/bulk_d8_scan.py` — 全库扫描脚本 v2.0（优先级文件选择 + D10a计算 + 孤儿/僵尸检测。2026-05-31更新：不再聚合所有 .tex 文件，改用优先级选主文件）
+- `scripts/bulk_d8_scan.py` — 全库扫描脚本 v2.0（快速但假阳性率~12%）
+- `scripts/batch-robust-scan.py` — 全库鲁棒扫描 + 结果分类脚本 v1.0（封装 robust-d10a-scanner，按假阳性模式自动分类：CLEAN / ZOMBIE / ORPHAN_P0 / SKELETON / SUBFILE / BENCHMARK。`python3 scripts/batch-robust-scan.py [--verbose]`，exit code 0=无孤儿引用, 1=有P0问题）（优先级文件选择 + D10a计算 + 孤儿/僵尸检测。2026-05-31更新：不再聚合所有 .tex 文件，改用优先级选主文件）
 - `scripts/thebibliography_zombie_cleanup.py` — 自动清理 thebibliography 格式论文中的僵尸 bibitem：提取 cite 键 → 过滤未引条目 → 更新计数器 → 备份。`python3 scripts/thebibliography_zombie_cleanup.py paper.tex [--dry-run]`。零孤儿引用才可运行，否则报错退出。
 - `scripts/silent_trap_scanner.py` — 预编译静默引用陷阱检测器。在单遍扫描中同时检查陷阱#22（重音bibitem键）和陷阱#26（预存双反斜杠bibitem）。`python3 scripts/silent_trap_scanner.py paper.tex` 扫描单文件；`python3 scripts/silent_trap_scanner.py --dir outputs/papers/` 批量扫描；`--fix` 自动修复（创建 .bak 备份）。exit code: 0=干净, 1=检测到陷阱, 2=文件错误。
 - `references/robust-d10a-scanner-2026-06-01.py` — 全库D8/D10a扫描脚本，绕过3大陷阱：注释残留\thebibliography、模板占位符\bibliography{<...>}、子目录tex/bib文件。48篇论文实战验证。`python3 references/robust-d10a-scanner-2026-06-01.py /path/to/paper.tex [--verbose]`。
-- `references/zombie-ref-activation-worked-example-2026-05-29.md`
+- `references/octa-ai-review-zombie-cleanup-2026-06-04.md` — octa-ai-review 僵尸清理实战：table zombie (表内纯文本引用缺 `\cite{}`) + 虚假僵尸 (同一领域同姓氏不同作者)。验证分类树协议，D10a 97%→100%。
 - `references/inline-thebibliography-d8-fix-worked-example-2026-05-29.md`
 - `references/fabricated-entry-replacement-2026-05-30.md`
 - `references/nocite-star-fix-workflow-2026-05-30.md`
@@ -1716,12 +1806,15 @@ Unlike prior investigations that relied on [method with known limitation] and we
 - `references/vor-bppv-foundational-refs.md` — VOR/前庭/BPPV/PINN 奠基文献库（31条已验证引用，2026-06-01 vor-sparse-modular cleanup 实战）。用于 D8 补引「层次一」的快速查阅，覆盖 VOR 模型、BPPV 临床、PINN 科学计算、深度学习框架四类。
 - `references/iris-3d-anatomical-opt-zombie-cleanup-2026-06-01.md` — 虹膜3D解剖论文僵尸清理实战：OpenAlex 60%错误率→知识库直接写bib，14篇引用扩展，D10a 47%→100%
 - `references/dual-ellipse-zombie-cleanup-2026-05-31.md` — 双椭圆瞳孔论文僵尸清理：64→42条目，22僵尸删除+23保留引用，D10a 30%→100%。sed引用插入技法+bib按行切分解析演示。
+- `references/d7-doi-supplementation-workflow.md` — D7 DOI补齐工作流（bib缺失DOI → OpenAlex检索 → 验证 → 重评D7 +0.05~0.10）
 - `references/notebooklm-fallback-layer-b-2026-05-31.md` — NotebookLM降级实战：源状态error→PDF文本提取→手动七维评审。含完整降级步骤、评分依据、与Gemini评分差异分析。
 - `references/cuteye-auto-bib-cleanup-2026-06-01.md` — 自动 bib 生成器 `@misc{autoXXXXX}` 僵尸条目清理实战：22条垃圾→删除+16条已验证引用补引，D10a 33%→100%。含 Python 批量 \cite{} 插入技法。 — 跨数据集验证实战：PIDD→Early Diabetes，4数据集消融+Λ比较+Banchhor2021审计
 - `references/bppv-otoconia-auto-zombie-cleanup-2026-05-31.md` — BPPV otoconia simulation 僵尸清理：13个auto-generated条目删除 + 15篇OpenAlex验证引用补引 + 15处\\cite插入。D10a 23%→100%。含sed/Python转义实战、多版本.tex文件陷阱。
 - `references/full-text-methodology-audit-2026-05-31.md` — 全文方法论审计实战：下载OA PDF(Khafaga2022)→精读Methods→定位全局特征选择/离群检测泄漏点。含IEEE付费墙论文(Banchhor2021)从摘要推定泄漏的方法。
 - `references/brfss-literature-methodology-audit-2026-06-03.md` — CDC BRFSS文献全文方法论审计实战：OpenAlex搜索→OA/Sci-Hub下载→pdftotext定位up-sampling/split泄漏语句→Shams2025/Li2024双全文验证→与Helix/Leaky实验对比。含完整7步协议、文献对比链、证据树结构。
-- `references/synthos-system-d10a-fix-2026-06-01.md` — thebibliography D10a修复实战：僵尸→引用改名、13条新增bibitem、计数器更新、companion .bib同步、2遍pdflatex验证：84.58% accuracy低于13.6%患病率的86.4%瞎猜基线。Accuracy在不平衡数据上的误导性 + WEKA全局预处理泄漏推定。
+- `references/wdbc-heart-pidd-three-dataset-comparison.md` — PIDD vs Heart vs WDBC 三种泄漏模式：Recall悖论/均匀膨胀/可忽略。含完整数值对比和写作模板。
+- `references/bulk-scan-2026-06-04.md` — 58篇全库扫描实战：假阳性分类、骨架论文检测、交叉验证流程。每次运行全库扫描后的第一参考范例。
+- `references/wdbc-quality-check-2026-06-04.md` — WDBC CRISP-DM 双质量检查实战：实验未运行检测、companion paper 自引环、手动 Layer B 评审范例。实验未运行检测、companion paper 自引环、手动 Layer B 评审范例。实验未运行检测、companion paper 自引环、手动 Layer B 评审范例。 — thebibliography D10a修复实战：僵尸→引用改名、13条新增bibitem、计数器更新、companion .bib同步、2遍pdflatex验证：84.58% accuracy低于13.6%患病率的86.4%瞎猜基线。Accuracy在不平衡数据上的误导性 + WEKA全局预处理泄漏推定。
 
 ## 本地优先原则
 
