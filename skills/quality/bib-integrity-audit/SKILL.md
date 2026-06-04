@@ -31,7 +31,7 @@ related_skills: [paper-reference-pipeline, quality-gate, pdf-download-racing]
 
 **凡引必验，不验不刊。** 不做DOI验证的引用审计不可信。
 
-参见 `references/pima-crispdm-2026-05-31-case-study.md` 获取完整实战数据。
+参见 `references/pima-crispdm-2026-05-31-case-study.md`（实战）和 `references/pima-reference-cleanup-2026-06-04.md`（Pima D7 0.85→1.0全流程）获取完整实战数据。
 
 ## 完整流程（7步）
 
@@ -82,6 +82,72 @@ if status == 'ok':
 - `Resource not found` ❌ **假DOI**（LLM生成的虚构DOI）
 - 标题不匹配 ⚠️ **真DOI错配**（DOI指向不同论文）
 
+### Step 1.5: 非学术引用清理（arXiv预印本无ID / Kaggle论坛 / 自引）
+
+> **2026-06-04 实战发现（Pima CRISP-DM）：** references.bib 中包含3类不应存在的条目：arXiv预印本无ID（自引 `ProcessDriven`, `IllusionOfPerfection`）、Kaggle数据集页（`KagglePIDD`）、Kaggle论坛帖（`KaggleZeroValues`）。这些条目既无DOI又非已发表学术文献，应替换为已发表替代或删除。
+
+> **2026-06-04 Pima CRISP-DM实战补充：** 替换后需注意D8可能下降（Pima从35→31）。只要D8仍≥30阈值，不需额外补引。同时将替换经验记录为REFERENCE_MANIFEST的注释。
+
+#### 检测信号
+
+| 信号 | 示例 | 判定 |
+|:-----|:------|:------|
+| `@article{` + `journal = {arXiv preprint}` + 无arXiv ID | `ProcessDriven` | 自引预印本 → 删除或补arXiv ID |
+| `@misc{` + `author = {Kaggle}或{Kaggle Community}` | `KagglePIDD` | 数据集/论坛引用 → 替换为学术文献 |
+| `@misc{` + `howpublished = {\\url{https://www.kaggle.com/...}}` | `KaggleZeroValues` | 论坛帖 → 替换为学术文献 |
+| `@article{` + 作者是用户自己 + `journal = {arXiv preprint}` | `IllusionOfPerfection` | 未发表自引 → 删除（正文语义用其他引用支撑） |
+
+#### 替换策略
+
+| 原条目类型 | 替代方案 | 实战示例 |
+|:-----------|:---------|:----------|
+| 自引预印本（论文自己的结果） | 直接删除 \cite — 本论文的结果无需自引 | `ProcessDriven` → 删除 |
+| 自引预印本（文献观察） | 找其他已发表引用替代 | `IllusionOfPerfection` 的"92%论文泄漏" → `Kapoor2024Leakage` 已覆盖 |
+| Kaggle数据集页 | 用原始发表论文替代 | `KagglePIDD` → `Smith1988`（PIDD原始论文） |
+| Kaggle论坛帖 | 找研究同一问题的学术论文 | `KaggleZeroValues` → `Stiglic2012Missing`（J Med Syst, DOI: 10.1007/s10916-012-9822-z） |
+
+#### 执行命令
+
+```bash
+# 1. 在正文中删除/替换 \cite{key}
+python3 -c "
+tex = open('paper.tex').read()
+tex = tex.replace('\\\\cite{BadKey}', '\\\\cite{ReplacementKey}')
+tex = tex.replace('\\\\cite{BadKey, GoodKey}', '\\\\cite{GoodKey}')
+with open('paper.tex', 'w') as f: f.write(tex)
+"
+
+# 2. 从 references.bib 删除对应条目
+python3 << 'PYEOF'
+import re
+bib = open('references.bib').read()
+entries = re.split(r'\n(?=@\w+\{)', bib)
+to_delete = {'ProcessDriven', 'IllusionOfPerfection', 'KagglePIDD', 'KaggleZeroValues'}
+kept = [e for e in entries if not any(k in e for k in to_delete)]
+# 更精确的方式是按key匹配
+# kept = [e for e in entries if re.match(r'@\w+\{', e) and re.match(r'@\w+\{([^,]+),', e).group(1).strip() not in to_delete]
+open('references.bib', 'w').write('\n'.join(kept))
+PYEOF
+
+# 3. 验证
+grep -c 'BadKey' paper.tex        # 应为0
+grep -c 'BadKey' references.bib   # 应为0
+```
+
+#### 验证（D10a + 编译）
+
+```bash
+rm -f paper.aux paper.bbl paper.blg
+pdflatex -interaction=nonstopmode paper.tex 2>&1 | tail -1
+bibtex paper 2>&1 | tail -1
+pdflatex -interaction=nonstopmode paper.tex 2>&1 | tail -1
+pdflatex -interaction=nonstopmode paper.tex 2>&1 | tail -1
+strings paper.log | grep -c 'undefined on input'
+# 应输出 0
+```
+
+**删除非学术引用后，D8可能下降**（Pima从35→31）。确认 D8 ≥ 30 阈值仍在，否则需补引。
+
 ### Step 2: 僵尸引用检测
 
 ```bash
@@ -94,6 +160,58 @@ orphans=$(comm -23 <(echo "$used") <(echo "$bibkeys"))
 ```
 
 **⚠️ 僵尸处理规则**：Zombie条目直接删除。不需要询问用户——它们不在正文中被引用所以删了不影响。
+
+### Step 2.5: DOI补全（从旧备份找回 + OpenAlex搜索）
+
+当文献的DOI缺失但条目本身真实时，按以下顺序补全：
+
+**Tier 0: 旧版bib备份找回**（最快，零API调用）
+```bash
+# 从.bib.bak提取已知DOI
+python3 << 'PYEOF'
+import re
+bak = open('references.bib.bak').read()
+new = open('references.bib').read()
+bak_entries = {}
+for m in re.finditer(r'@\w+\{([^,]+),([^@]+?)\n\}', bak, re.DOTALL):
+    key = m.group(1).strip()
+    doi_m = re.search(r'doi\s*=\s*\{([^}]+)\}', m.group(2))
+    if doi_m: bak_entries[key] = doi_m.group(1)
+for key, doi in bak_entries.items():
+    if f'doi = {{{doi}}}' not in new and f'@{key}' in new:
+        new = new.replace(f'}}\n@', f',\n  doi = {{{doi}}}\n}}\n@')
+open('references.bib', 'w').write(new)
+PYEOF
+```
+
+**Tier 1: 已知经典文献直接写DOI**
+```python
+KNOWN_DOIS = {
+    'Chawla2002': '10.1613/jair.953',
+    'Dietterich1998': '10.1162/089976698300017197',
+    'Lundberg2017SHAP': '10.48550/arXiv.1705.07874',
+    'Saeedi2019': '10.1016/j.diabres.2019.107843',
+    'Zheng2018': '10.1038/nrendo.2017.151',
+    'Collins2015TRIPOD': '10.7326/M14-0698',
+    'Moons2019PROBAST': '10.7326/M18-1376',
+    'Feurer2025OpenML': '10.1016/j.patter.2025.101317',
+}
+```
+
+**Tier 2: OpenAlex精确标题搜索**
+```python
+params = urllib.parse.urlencode({
+    'search': 'exact title keywords',
+    'sort': 'relevance_score:desc', 'per_page': 3
+})
+url = f'https://api.openalex.org/works?{params}'
+req = urllib.request.Request(url)
+req.add_header('User-Agent', 'mailto:ghfdshgf79@gmail.com')
+resp = urllib.request.urlopen(req, timeout=10)
+data = json.loads(resp.read())
+```
+
+**Pima CRISP-DM实战**：19个DOI找回（旧版备份6 + 知识库10 + OpenAlex 3），覆盖率0%→94%
 
 ### Step 3: 三源搜索替换
 

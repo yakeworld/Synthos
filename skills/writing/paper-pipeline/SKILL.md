@@ -294,7 +294,48 @@ done
 
 **注意**：NotebookLM的 `source add` 在后台shell环境中可能因 `bash: 无法设定终端进程组` 报错。正确做法是在交互式终端直接运行，或用 `python3` 脚本调用CLI（见 `scripts/` 目录）。
 
-### 📁 论文草稿来源管理
+### 🔴 工作目录统一铁律 — 所有论文在 Synthos/outputs/papers/ 下
+
+> **2026-06-04 用户明确要求**：所有论文的工作目录统一为 `/media/yakeworld/sda2/Synthos/outputs/papers/{paper-name}/`。不得在多个路径下分散存放同一篇论文。
+
+### 统一规则
+
+| 规则 | 说明 |
+|:-----|:------|
+| **唯一工作目录** | 每篇论文只在一个目录下工作：`Synthos/outputs/papers/{paper-name}/` |
+| **09-子目录体系** | 必须使用标准化结构：01-manuscript / 02-submission / 03-code / 04-data / 05-figures / 06-references / 07-quality / 08-records / 09-background |
+| **PDF存储** | 引用PDF统一在 `06-references/pdfs/`，不在其他路径保留副本 |
+| **外部源→合并** | 其他路径下的论文（如 `投稿文件汇总/crispdm-pima/`）发现后立即合并到 Synthos outputs，合并后该路径废弃 |
+| **合并步骤** | ① 拷贝最新 paper.tex+references.bib 到 `01-manuscript/` 和 `06-references/` ② 拷贝实验代码到 `03-code/experiment/` ③ 拷贝分析文档到 `09-background/` ④ 更新符号链接 ⑤ 验证编译通过 ⑥ 通知用户统一完成 |
+
+### 已知外部源目录（需持续排查）
+
+| 外部源 | 当前状态 | 处理 |
+|:-------|:---------|:-----|
+| `投稿文件汇总/{paper-name}/` | Pima已合并 ✅ | 发现新论文即合并 |
+| `~/桌面/article_todo/` | 8篇待写（6眼动+2前庭） | 启动前先迁入 Synthos outputs |
+| `~/桌面/synthos_paper.tex` | 单文件草稿 | repo版更成熟：outputs/papers/synthos-system-paper/ |
+
+### 合并操作参考（含完整步骤）
+
+具体合并操作的详细步骤、编译验证、实战记录见 `references/paper-dir-unification-workflow.md`。包含：扫描外部源 → 创建09目录 → 拷贝文件 → 建立symlink → 编译验证 → 通知用户的完整闭环。
+
+**合并检测脚本**：
+
+```bash
+# 检查是否有论文在 Synthos outputs 之外有副本
+EXTERNAL_BASE="/media/yakeworld/sda2/投稿文件汇总"
+for d in "$EXTERNAL_BASE"/*/; do
+    name=$(basename "$d")
+    if [ -d "/media/yakeworld/sda2/Synthos/outputs/papers/$name" ]; then
+        echo "⚠️  重复: $name — 已存在于 Synthos outputs"
+    else
+        echo "🆕 未纳入: $name — 需迁移"
+    fi
+done
+```
+
+## 📁 论文草稿来源管理
 
 除 `outputs/papers/` 下的已编排论文外，用户还有两处草稿来源：
 
@@ -314,7 +355,40 @@ done
 5. **NotebookLM上传限流** — 连续上传 > 30个PDF可能触发限流（超时）。建议分批（每次20个，间隔30秒）。
 6. **DOIs vs arXiv IDs** — 同一论文可能同时有DOI和arXiv ID。优先用arXiv下载（免费、稳定、快速）。`10.48550/arXiv.xxxx` 格式的DOI是arXiv代理，不需要Sci-Hub。
 
-## 🔴 论文项目组织铁律（2026-05-30用户明确 + 2026-05-31研究空白审计补充）
+### 🧹 论文完成后的目录清理协议（2026-06-04 Pima实战）
+
+论文通过双质检后，根目录常残留大量垃圾文件。执行以下清理步骤：
+
+```bash
+# Step 1: 移动文件到正确子目录
+mv notebooklm-review.md notebooklm-sources.json 09-background/ 2>/dev/null
+mv QUALITY.md qc-*.md quality-report.md 07-quality/ 2>/dev/null
+mv REFERENCE_MANIFEST.md 06-references/ 2>/dev/null
+mv fig_architecture.pdf Fig_Architecture.* 05-figures/ 2>/dev/null
+mv crisp-dm-pima.ipynb 03-code/ 2>/dev/null
+mv sections/* 09-background/ 2>/dev/null; rmdir sections 2>/dev/null
+
+# Step 2: 删除垃圾文件
+rm -f enhanced-bibtex-*.bib references.bib.bak* bibkey-map.json
+rm -f paper-synthos-v*.tex pima-crispdm-v*.pdf pima-crispdm-v*.tex
+rm -f paper.aux paper.bbl paper.blg paper.log paper.out paper.spl
+rm -rf analysis-submission paper-submission elsarticle pdfs
+
+# Step 3: 同步根目录 bib → 06-references/
+ln -sf 06-references/references.bib references.bib  # 取代根目录独立文件
+
+# Step 4: 清理 01-manuscript/ 中的编译产物
+rm -f 01-manuscript/paper.aux 01-manuscript/paper.bbl 01-manuscript/paper.log
+rm -f 01-manuscript/old-version-*.tex
+```
+
+**判断标准**：论文根目录只保留 `01-09` 九个子目录 + `references.bib`（symlink）。无其他独立文件。
+
+**Pima实战成果**：清理前 ~60个文件（含140条垃圾bib的references.bib），清理后干净目录结构。
+
+---
+
+## 论文项目组织铁律（2026-05-30用户明确 + 2026-05-31研究空白审计补充）
 
 每次论文优化/投稿准备完成后，必须执行以下操作：
 
@@ -965,6 +1039,7 @@ Step 4: 产出
 ### 参考文件
 
 - `references/manuscript-feedback-triage-example-scc.md` — SCC论文6问题的完整溯源过程与修复方案
+- `references/openml-benchmark-insights.md` — OpenML论文研读要点（Feurer2025）：标准化拆分防泄漏 + 泄漏在OpenML上仍存在 + 基准套件引用方法。2026-06-04 Pima论文吸收实战。
 
 10. **🔴 L0.5 数据诚实门**
 - **代码审查先于代码运行**: 即使 `experiment/*.json` 文件已存在，也要先审查代码逻辑再运行。HCS-3WT代码发现3个bug（变量名错误、SMOTE应用到错误子集、FN计算指向最后一个模型）。
