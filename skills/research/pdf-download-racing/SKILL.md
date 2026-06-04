@@ -24,6 +24,7 @@ tags: [download, pdf, sci-hub, libgen, racing, curl-cffi, meddata]
 直接跑技能命令比手写shell快5x，且错误处理更完备。
 
 See also: 
+- `references/crispdm-wdbc-batch-download-2026-06-04.md` — crispdm-wdbc 31篇引文批量下载记录 (8/11 Sci-Hub成功)
 - `references/paper-manager-fallback-2026-06-01.md` — paper-manager `download_one.py` 后备方案，当 Sci-Hub/CAPTCHA 均失败时使用（2026-06-01 实战验证）
 - `references/notebooklm-upload-pitfalls.md` — NotebookLM上传&清理
 - `references/bib-enhancement-pipeline.md` — .bib 增强管线
@@ -89,17 +90,22 @@ python3 /media/yakeworld/sda2/Synthos/tools/paper-manager/src/downloader/scihub_
 3. 存储URL下载时必须带 `Referer: {domain}/{doi}` 头
 4. 三重验证: HTTP 200 + %PDF-头 + 文件大小
 
-### 域健康状态（2026-05-31 实测快照，仅供参考）
+### 域健康状态（2026-06-04 实测快照）
 
 | 域 | 状态 | 说明 |
 |:---|:----:|:-----|
-| `sci-hub.ru` | ✅ 200 | 最稳定，curl_cffi 直连可用 |
+| `sci-hub.ru` | ✅ 200 | 最稳定，curl_cffi 直连可用（2026-06-04 成功下载 Collins2015、Moons2019 等8篇） |
 | `sci-hub.ee` | ✅ 200 | 可用（偶尔403重试） |
-| `sci-hub.wf` | ✅ 200 | 可用 |
+| `sci-hub.wf` | ✅ 200 | 可用（Sci-Hub下载器自动轮换至此域） |
+| `sci-hub.vg` | ✅ 200 | 成功回退域（2026-06-04 实测） |
+| `sci-hub.red` | ✅ 200 | 成功回退域（2026-06-04 实测） |
+| `sci-hub.al` | ✅ 200 | 2026-06-04 实测成功下载 `10.3389/fneur.2020.00602` (663KB, 14页) |
 | `sci-hub.st` | ❌ 403 | 被封禁 |
 | `sci-hub.se` | ❌ DNS失败 | 已失效 |
 | `sci-hub.do` | ❌ DNS失败 | 已失效 |
 | `sci-hub.hkvisa.net` | ⚠️ 301 | 需跟随跳转 |
+
+**2026-06-04 实测**：11 篇 crispdm-wdbc 引文通过 Sci-Hub 下载了 8 篇（73% 成功率）。失败的 3 篇（2022+ Springer/Elsevier）改用 OA 直链或 paper-manager fallback。Sci-Hub 对 2017-2020 年论文覆盖率高，对 2022 年后付费期刊纸成功率下降。
 
 ### Sci-Hub 存储下载（Referer 头是关键）
 
@@ -110,18 +116,25 @@ python3 /media/yakeworld/sda2/Synthos/tools/paper-manager/src/downloader/scihub_
 
 *⚠️ 浏览器导航（browser_navigate）会超时；直接 curl_cffi 更可靠。*
 
-### MedData 源 (2026-05-27 新增)
+### MedData 源 (2026-05-27 新增, 2026-06-04 API分析)
 
-中国医学数据平台 `www.meddata.com.cn` 全文下载。详见 `references/meddata-api.md`。
+中国医学数据平台 `www.meddata.com.cn`（博库数据知识服务平台）全文下载。
+**搜索/浏览界面在 `www.medbooks.com.cn`**，通过 SSO 统一认证后获取 token，
+再到 `www.meddata.com.cn` 的 viewtext API 下载 PDF。两者是同一平台的不同入口。
+详见 `references/meddata-api.md`。
 
 **两种认证方式**:
 1. `MEDDATA_TOKEN` 环境变量 — 手动 `hash:timestamp`
-2. `MEDDATA_USERNAME` + `MEDDATA_PASSWORD` — 自动SSO登录获取（推荐）
+2. `MEDDATA_USERNAME` + `MEDDATA_PASSWORD` — 自动SSO登录获取（推荐，2026-06-04 已验证可用）
 
 ```bash
 export MEDDATA_USERNAME="<MEDDATA_USERNAME>"
 export MEDDATA_PASSWORD="xxx"
 ```
+
+**⚠️ `fileName` 参数核心陷阱**：MedData viewtext API 的 `fileName` 参数使用的是**平台内部ID**（如 `2985248Rpub37800834`），**不是** DOI 去斜杠。`tools/paper-manager/src/sources/meddata.py` 中的 `_make_abstract_id(doi)` 函数（只去掉 `/`）是错误的。修复方向：需要通过 MedData 搜索 API 获取内部 ID 映射。详见 `references/meddata-api.md`。
+
+**2026-06-04 实测**：SSO 自动登录→token交换→viewtext 下载链路完整可用。用已知内部 ID `2985248Rpub37800834` 成功下载 486KB PDF。用 DOI 衍生 ID 全部返回 status=2（论文不在库中）。
 
 ### MedData 出版社支持矩阵（2026-05-31实测）
 
@@ -146,9 +159,9 @@ export MEDDATA_PASSWORD="xxx"
 
 **pima-crispdm实测(2026-05-31)**: 7篇IEEE/BMJ/Lancet/Hindawi全部失败。
 
-### Tor SOCKS5 代理下载通道（2026-06-03 新增）
+### Tor SOCKS5 代理下载通道（2026-06-03 新增，2026-06-04 实战验证）
 
-当直连和Sci-Hub均不可达时（如在网络受限环境下），可通过Tor SOCKS5代理下载。
+> **2026-06-04 实测**: Tor 在此机器上正常运行（`debian-tor` 进程持续运行 + 端口9050监听）。通过 Tor 成功下载了 JAIR OA 论文（Fernandez2018 SMOTE, 483KB）。
 
 **前提**: 安装并启动Tor
 ```bash
@@ -380,7 +393,7 @@ Synthos/tools/paper-manager/
 8. **arXiv vs Sci-Hub** — arXiv DOI 不走Sci-Hub
 9. **🔴 文件名 ≠ bibkey** — Sci-Hub存储的PDF文件名基于真实作者（如 `sun2022.pdf`），但 `.bib` 中键可能是 `IDF2021`。下载后重命名为 `{bibkey}.pdf` 而非保留Sci-Hub原始文件名。
 10. **🔴 PMID: 状态而非DOI** — 早期用 `pmid:` 标注替代DOI的引用，其下载状态可能返回 `NOT_FOUND`。从SS响应中提取DOI后，用DOI重新下载。
-11. **🔴 MedData凭据状态** — `<MEDDATA_USERNAME>`/`<MEDDATA_PASSWORD>` 的SSO返回 modifyPass: 1（密码标记需修改），导致meddata token交换失败。详见 `references/meddata-api.md`。**不要反复重试** — 改密前所有meddata下载不可用。
+11. **🔴 MedData凭据状态** — SSO参数须用 `type=&quot;0&quot;`（非 &quot;USERNAME&quot;）。`modifyPass: 1` 标记导致全文下载不可用时（viewtext返回0字节），需到 medbooks.com.cn 手动改密。详见 `references/meddata-api.md`。
 12. **🔴 MedData出版社白名单** — 只有特定出版社可通过meddata下载。详见 `references/meddata-api.md`。不支持的出版社直接跳到Sci-Hub或SS引用图谱。
 13. **🔴 凭据搜索工作流** — 当被告知"密码在系统里"时：① `session_search('<用户名>')` 查历史会话 → ② `grep -r '<用户名>'` 查脚本/配置文件（特别注意 `batch_*.sh`、`*.py` 中的硬编码）→ ③ 检查 `.env`、`~/.hermes/config`、Firefox `logins.json`。不要仅限于检查 `env` 变量。
 14. **D9路径不一致** — 参考PDF可能同时在 `pdfs/` 和 `enhanced_refs/pdfs/` 下。质检(D9)需扫描两个目录。
@@ -392,9 +405,12 @@ Synthos/tools/paper-manager/
 20. **`_fetch_semantic_scholar_data_sync` 原是空桩（已修复）** — `manager/paper_manager.py` 中此函数原为 `return entry`，不查SS API。修复后实际调用SS API补摘要/OA/arXiv。如果enhance后.bib无元数据变化，检查此函数是否已修复。
 21. **自动补充DOI导致僵尸引用** — `auto_fix_d8.py` 把搜索到的DOI追加到 `.bib` 但不在 `.tex` 中插 `\\cite`，产生僵尸引用。`enhance` 命令补充的DO也一样——它们只在.bib中存在，不在.tex中被引用。修复：从.bib删除未被\\cite的条目，或手动插入\\cite到正文。
 22. **`enhance --limit` 生成临时文件** — limit模式创建 `_limit_temp.bib`，完成后应自动清理。如果看到此文件残留，直接删除。
-23. **🔴 Sci-Hub 全 fail 时尝试 paper-manager download_one.py** — 2026-06-01 实战发现所有 Sci-Hub 域都被 DDoS-Guard 拦截（返回 sw.onedragon.win CAPTCHA），`browser_navigate` 超时，但 `python3 /media/yakeworld/sda2/Synthos/tools/paper-manager/download_one.py <DOI> <path>` 成功下载了 Ekdale2013。详见 `references/paper-manager-fallback-2026-06-01.md`。当 Sci-Hub 全 fail 时应优先尝试此通道，而非反复重试 Sci-Hub。
-17. **`_fetch_semantic_scholar_data_sync` 原是空桩（已修复）** — `manager/paper_manager.py` 中此函数原为 `return entry`，不查SS API。修复后实际调用SS API补摘要/OA/arXiv。如果enhance后.bib无元数据变化，检查此函数是否已修复。
-18. **自动补充DOI导致僵尸引用** — `auto_fix_d8.py` 把搜索到的DOI追加到 `.bib` 但不在 `.tex` 中插 `\\cite`，产生僵尸引用。`enhance` 命令补充的DO也一样——它们只在.bib中存在，不在.tex中被引用。修复：从.bib删除未被\\cite的条目，或手动插入\\cite到正文。
-19. **`enhance --limit` 生成临时文件** — limit模式创建 `_limit_temp.bib`，完成后应自动清理。如果看到此文件残留，直接删除。
+17. **🔴 Sci-Hub 全 fail 时尝试 paper-manager download_one.py** — 2026-06-01 实战发现所有 Sci-Hub 域都被 DDoS-Guard 拦截（返回 sw.onedragon.win CAPTCHA），`browser_navigate` 超时，但 `python3 /media/yakeworld/sda2/Synthos/tools/paper-manager/download_one.py <DOI> <path>` 成功下载了 Ekdale2013。详见 `references/paper-manager-fallback-2026-06-01.md`。当 Sci-Hub 全 fail 时应优先尝试此通道，而非反复重试 Sci-Hub。
 
-20. **🔴 MedData代答PDF陷阱（2026-06-03发现）** — 当meddata无目标论文全文时，viewtext API返回一个默认代答PDF（1975年BIOCHEMICAL MEDICINE Formate Assay文章，606KB，MD5=fd469bd7cd29446f2800f099e3b71457）。所有不存在的DOI都返回同一文件。检测：同一MD5出现在不同DOI下载结果中 → meddata无此论文。处理：直接标记PAYWALL，跳过重试。
+18. **MedData代答PDF陷阱（2026-06-03发现）** — 当meddata无目标论文全文时，viewtext API返回一个默认代答PDF（1975年BIOCHEMICAL MEDICINE Formate Assay文章，606KB，MD5=fd469bd7cd29446f2800f099e3b71457）。所有不存在的DOI都返回同一文件。检测：同一MD5出现在不同DOI下载结果中 → meddata无此论文。处理：直接标记PAYWALL，跳过重试。
+
+19. **🔴 下载前先验证DOI指向正确论文** — bib中的DOI字段可能指向同作者的不同论文。2026-06-04 实测 Kapoor2024：bib 记录 `10.1016/j.patter.2024.100974`（federated learning论文），期望的是「Leakage and the reproducibility crisis」(正确DOI: `10.1016/j.patter.2023.100804`)。所有下载通道失败的原因可能不是通道本身问题，而是DOI错了。先用SS API验证：`curl -s "https://api.semanticscholar.org/graph/v1/paper/DOI:{doi}?fields=title" | python3 -m json.tool`
+
+20. **🔴 `browser_navigate` 工具在 meddata/medbooks 站点超时** — 用 Playwright headless Python 脚本代替：`python3 -c "from playwright.sync_api import sync_playwright; ..."`。headed 模式可通过 background terminal 启动供用户操作，但 `browser_navigate` 工具本身可能因 SPA 加载慢而超时。
+
+21. **🔴 MedData `fileName` 是内部ID，非DOI去斜杠** — `tools/paper-manager/src/sources/meddata.py` 中的 `_make_abstract_id(doi)` 只去掉 `/`（如 `10.3389/fneur.2020.00602` → `10.3389fneur.2020.00602`），但这不对。MedData 使用内部 ID 格式如 `2985248Rpub37800834`。2026-06-04 实测：用用户提供的内部 ID + token 成功下载 486KB PDF，用 DOI 衍生 ID 全部返回 status=2（无此论文）。修复方向：需要通过 MedData **搜索界面 medbooks.com.cn**（非 meddata.com.cn）搜索论文获取内部 ID 映射，而非从 DOI 推导。参见 `references/meddata-api.md`。

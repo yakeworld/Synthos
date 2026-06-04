@@ -908,7 +908,24 @@ NotebookLM问: "List 3-5 high-impact papers NOT cited but should be."
 有标题+作者+无DOI+"pending" ≈ 90%编造概率。
 
 ### Step 1-6: 标准补引
-分析缺口 → OpenAlex主题搜索（串行，间隔2s）→ DOI验证 → 自然位置插入\cite → 编译验证。
+分析缺口 → OpenAlex主题搜索（串行，间隔2s）→ DOI验证 → 自然位置插入\\cite → 编译验证。
+
+### 类别式扩展法（适用于跨学科论文，2026-06-04新增）
+
+当论文涉及多个交叉领域（如数据泄漏 × SMOTE × 临床指南 × CRISP-DM），用领域三层扩展法（经典→综述→领域）可能不自然。改用 **类别式扩展** 按8个主题角色分类：
+
+| 类别 | 每类目标数 | 说明 |
+|:-----|:----------:|:-----|
+| 核心方法论 | 3-5 | 论文直接依据的原始论文 |
+| 基准数据集 | 2-3 | 数据集来源 + benchmark仓库 |
+| 调查综述 | 3-5 | 每个被讨论子领域的高引综述 |
+| 指南/标准 | 2-3 | 报告指南、风险评估工具 |
+| 领域特定应用 | 2-3 | 同一方法在该类数据集的先前应用 |
+| 统计/方法学基础 | 2-3 | CV理论、小样本统计 |
+| 配套/同系论文 | 1-2 | 同一实验室/框架的先前论文 |
+| 可重复性/鲁棒性 | 2-3 | 工具/框架/泄漏检测论文 |
+
+详见实战示例：`references/crispdm-heart-category-d8-expansion-2026-06-04.md`（D8从4扩展到30，横跨8个类别）。
 
 ## 批量 D8/D10a 全库扫描协议
 
@@ -1045,6 +1062,78 @@ print(f'Bib cmd: {bib_cmd}')
 
 **判断口诀**：D8≈2 + bibkey含 `label`/`lamport94` = 假阳性。检查 `\bibliography{}` 而非 `\begin{thebibliography}`。
 
+### ⚡ 扫描坑5：\input{file.tex} 中的 `.tex` 重复追加（2026-06-05追加）
+
+**问题**：当 `\input{}` 命令已包含 `.tex` 扩展名（如 `\input{sections/01_introduction.tex}`），扫描脚本做 `os.path.join(tex_dir, rp + '.tex')` 会生成 `sections/01_introduction.tex.tex`（双 `.tex`），子文件因路径不存在而被静默跳过。导致：
+- `pd-dysphagia-2026` 实战：6个 section 文件全部未被读取 → 35条引用丢失 → D10a=0%, 48 zombies（假阳性）
+- `vog-vestibular-review` 实战：同理，全部引用在 `sections/` 子文件
+
+**实战表现**（2026-06-05 全库53篇扫描）：
+| 论文 | 症状 | 根因 |
+|:-----|:-----|:------|
+| pd-dysphagia-2026 | D10a=0%, 48 zombies, 0 cites | 6个`\input{...tex}`全部`.tex`重复 |
+| vog-vestibular-review | D10a=0%, 33 zombies, 0 cites | 4个`\input{...tex}`全部`.tex`重复 |
+
+**修复**：检查路径是否已以 `.tex` 结尾，不重复追加：
+```python
+rp = m.group(1)
+# Handle both \input{file} and \input{file.tex}
+sp = os.path.join(tex_dir, rp if rp.endswith('.tex') else rp + '.tex')
+```
+
+**检测方法**：首先检查主 `.tex` 中 `\input{}` 使用的是 `\input{file}` 还是 `\input{file.tex}`：
+```bash
+grep -oP '\\\\input\{[^}]+\}' paper.tex | head -5
+# 输出含 .tex} → 陷阱活跃
+# 输出无 .tex} → 默认机制 （rp + '.tex'）正确
+```
+
+**判断口诀**：`\input{file.tex}` → rp 已含 `.tex`，不加后缀；`\input{file}` → 传统做法，加 `.tex`。
+
+### ⚡ 扫描坑6：thebibliography + .aux 共存时的假阴性（2026-06-05追加）
+
+**问题**：当论文使用 thebibliography 模式且有 `.aux` 文件时，扫描脚本先遇到 `aux_cites`（非空），进入 `if aux_cites:` 分支，然后调用 `collect_bib_keys()` 在 `.bib` 文件中搜索 `@type{key,` 条目——但 thebibliography 型论文的引用在 `.tex` 文件本身的 `\bibitem{}` 中，不存在 `.bib` 文件。结果 `bib_keys` 为空集 → `d8=0, d10a=0%`。
+
+**影响**：2026-06-05 实战约 51 篇 thebibliography 型论文中 50% 以上有 `.aux` 文件，全部假阳性。
+
+**修复优先级**（按代码逻辑顺序）：
+1. **先检测 `\begin{thebibliography}`**，再决定是否进入 `.aux`/`collect_bib_keys` 路径
+2. 检测 thebibliography 后：直接从 `active` tex 内容提取 `\bibitem{key}`
+3. 无需检查 `.aux` 或 `.bib` 文件
+
+```python
+# ✅ 正确顺序
+has_thebib = '\\begin{thebibliography}' in active
+
+if has_thebib:
+    # 直接从 tex 获取 bibitem keys
+    bib_keys = set(re.findall(r'\\bibitem(?:\\[[^\\]]*\\])?\\{([^}]+)\\}', active))
+    result['mode'] = 'thebibliography'
+elif aux_cites and not has_thebib:
+    # 仅当不是 thebibliography 时，才尝试 aux-based 收集
+    bib_keys = collect_bib_keys(...)
+```
+
+**验证方法**：对有 `.aux` + thebibliography 的论文，扫描结果应为 D8≥30, D10a=100%，而非 D8=0。
+
+### ⚡ 扫描坑7：`\input{...}` 路径优先级 + 目录名匹配优先级（2026-06-05追加）
+
+**问题**：`find_tex_files()` 函数的优先级队列 `['article_improved.tex', 'v4-paper.tex', 'paper.tex', ...]` 缺少「目录名 + .tex」的匹配策略。当论文主文件名为 `hcs3wt-breast-cancer.tex`（与目录名一致）时，`paper-synthos-v1.tex`（10条引用）可能被误选，而不是 `hcs3wt-breast-cancer.tex`（30条引用, thebibliography）。
+
+**修复**：优先级列表开头插入目录名匹配：
+```python
+dir_name = os.path.basename(paper_dir)
+priority = [dir_name + '.tex', 'article_improved.tex', 'v4-paper.tex',
+            'paper.tex', 'main.tex', 'article.tex']
+```
+
+### ⚡ 排除 `_todo` 存档目录（2026-06-05追加）
+
+`_todo/` 目录包含旧版本论文的版本历史（多个 `.tex` 副本、不同阶段的补充材料）。不应计入全库扫描：
+```python
+SKIP_DIRS = {'_todo', '_docs', '_archive_scripts', 'lit-reviews', ...}
+```
+
 ### ⚡ 扫描坑4：\input{} 子文件中的 \cite{} 不可见（2026-06-02追加）
 
 **问题**：许多 LaTeX 论文使用 `\input{sections/01_introduction.tex}` 将正文分散到子文件中。当扫描脚本只读取主 `.tex` 文件时，只能看到 `\input{}` 命令而看不到其中的 `\cite{}` 命令，导致：
@@ -1110,9 +1199,11 @@ def scan_with_aux(paper_dir):
 
 **实战参考**（2026-06-04 全库57篇扫描）：pd-dysphagia-2026 (D8=39, all in \\input{} section files) 和 vog-vestibular-review (D8=33) 被报为ZOMBIE, 实际.bbl/.aux验证均为CLEAN。用 `scan_with_aux()` 回退后问题消除。详见 `references/batch-scan-v2-subfile-fix-2026-06-04.md`。
 
-**遗留限制**：`.aux` 文件只包含最终编译的引用，不包含条件编译或注释掉的 `\\cite{}`。但这对 D10a 检查来说恰好正确——我们关心的是实际进入 PDF 的引用。
+**遗留限制**：`.aux` 文件只包含最终编译的引用，不包含条件编译或注释掉的 `\\\\cite{}`。但这对 D10a 检查来说恰好正确——我们关心的是实际进入 PDF 的引用。
 
-**判断口诀**：主文件只有 \input{} 无 \cite{} → 查 .bbl 和 .aux 文件。有编译产物的论文用产物扫描比源码扫描更准。
+> ⚡ 坑位联动：如果 subfile 扫描仍报 D10a=0%，检查 `\\input{file.tex}` 是否有 `.tex` 双追加问题（见「扫描坑5」，扫描坑5修复在前、subfile修复在后）。
+
+**判断口诀**：主文件只有 \\input{} 无 \\cite{} → 查 .bbl 和 .aux 文件。有编译产物的论文用产物扫描比源码扫描更准。
 
 当论文使用 elsarticle 模板时，`\bibliography{<your bibdatabase>,reference4}` 中包含模板占位符 `<your bibdatabase>`（不存在的文件名）。此占位符被 bibtex 忽略（因为是模板注释遗留），但扫描脚本会因找不到 `{<your bibdatabase>.bib}` 文件而报 D8=0/D10a=FAIL。
 
@@ -1788,10 +1879,11 @@ Unlike prior investigations that relied on [method with known limitation] and we
 - `scripts/qc_check.py` — D8+D10a快速质检
 - `scripts/d8_d10a_check.py` — 加强版质检，模式A/B自动检测
 - `scripts/bulk_d8_scan.py` — 全库扫描脚本 v2.0（快速但假阳性率~12%）
-- `scripts/batch-robust-scan.py` — 全库鲁棒扫描 + 结果分类脚本 v1.0（封装 robust-d10a-scanner，按假阳性模式自动分类：CLEAN / ZOMBIE / ORPHAN_P0 / SKELETON / SUBFILE / BENCHMARK。`python3 scripts/batch-robust-scan.py [--verbose]`，exit code 0=无孤儿引用, 1=有P0问题）（优先级文件选择 + D10a计算 + 孤儿/僵尸检测。2026-05-31更新：不再聚合所有 .tex 文件，改用优先级选主文件）
-- `scripts/thebibliography_zombie_cleanup.py` — 自动清理 thebibliography 格式论文中的僵尸 bibitem：提取 cite 键 → 过滤未引条目 → 更新计数器 → 备份。`python3 scripts/thebibliography_zombie_cleanup.py paper.tex [--dry-run]`。零孤儿引用才可运行，否则报错退出。
-- `scripts/silent_trap_scanner.py` — 预编译静默引用陷阱检测器。在单遍扫描中同时检查陷阱#22（重音bibitem键）和陷阱#26（预存双反斜杠bibitem）。`python3 scripts/silent_trap_scanner.py paper.tex` 扫描单文件；`python3 scripts/silent_trap_scanner.py --dir outputs/papers/` 批量扫描；`--fix` 自动修复（创建 .bak 备份）。exit code: 0=干净, 1=检测到陷阱, 2=文件错误。
-- `references/robust-d10a-scanner-2026-06-01.py` — 全库D8/D10a扫描脚本，绕过3大陷阱：注释残留\thebibliography、模板占位符\bibliography{<...>}、子目录tex/bib文件。48篇论文实战验证。`python3 references/robust-d10a-scanner-2026-06-01.py /path/to/paper.tex [--verbose]`。
+- `scripts/d10a_bulk_scan.py` — 全库扫描脚本 v3.0（修复5大陷阱：thebibliography+aux假阴性、\input{...tex}双.tex、目录名优先级、_todo排除、`\c`转义。53篇证真阳性率96.2%）
+- `scripts/batch-robust-scan.py` — 全库鲁棒扫描 + 结果分类脚本 v1.0
+- `scripts/thebibliography_zombie_cleanup.py` — 自动清理 thebibliography 格式论文中的僵尸 bibitem
+- `scripts/silent_trap_scanner.py` — 预编译静默引用陷阱检测器
+- `references/bulk-scan-methodology-v3-2026-06-05.md` — v3批量扫描方法论，含3个新陷阱修复详情和优先级文件选择策略
 - `references/octa-ai-review-zombie-cleanup-2026-06-04.md` — octa-ai-review 僵尸清理实战：table zombie (表内纯文本引用缺 `\cite{}`) + 虚假僵尸 (同一领域同姓氏不同作者)。验证分类树协议，D10a 97%→100%。
 - `references/inline-thebibliography-d8-fix-worked-example-2026-05-29.md`
 - `references/fabricated-entry-replacement-2026-05-30.md`
@@ -1800,7 +1892,7 @@ Unlike prior investigations that relied on [method with known limitation] and we
 - `references/scc-paper-reference-correction-2026-05-30.md` — 引用内容修正完整闭环实战（φ虚构/错误元数据/冗余引用 → OpenAlex验证 → 双删/替换 → 空行清理 → manifest同步 → 提交包同步）
 - `references/scc-paper-d9-resolution-2026-05-30.md` — D9 PDF缺失处理实战：多方法下载失败 → 逐篇缺失说明表 → 引用完整性规则应用
 - `references/scc-paper-citation-quality-report-2026-05-30.md` — 引用质量检查报告范例：逐篇BibItem+PDF+引用位置+知识点+引用依据
-- `references/thebibliography-to-bibtex-conversion-2026-05-30.md` — thebibliography→.bib 转换工作流（含traps：\b被吃掉、natbib clash、OpenAlex验证）
+- `references/crispdm-heart-category-d8-expansion-2026-06-04.md` — 类别式D8扩展实战：thebibliography 4→30引，8类别横跨数据泄漏/SMOTE/临床指南/CRISP-DM
 - `references/per-ref-citation-quality-report-template.md` — 引文质量逐篇报告模板
 - `references/data-code-provenance-report-template.md` — 数据/代码溯源报告模板
 - `references/vor-bppv-foundational-refs.md` — VOR/前庭/BPPV/PINN 奠基文献库（31条已验证引用，2026-06-01 vor-sparse-modular cleanup 实战）。用于 D8 补引「层次一」的快速查阅，覆盖 VOR 模型、BPPV 临床、PINN 科学计算、深度学习框架四类。
