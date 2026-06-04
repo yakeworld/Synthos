@@ -1,29 +1,42 @@
 ---
 name: knowledge-acquisition
-description: >-
-  多源学术论文检索：Semantic Scholar / PubMed / Crossref / OpenAlex / arXiv / bioRxiv。
-  Agent-native执行，纯skill+curl零Python。含API弹性层、本地缓存、自动回退链。
-  返回论文元数据、摘要、PDF。宁无所得，不取伪术。
-version: 1.7.0
-author: Synthos
+description: 多源学术论文检索：Semantic Scholar / PubMed / Crossref / OpenAlex / arXiv / bioRxiv。
+  Agent-native执行，纯skill+curl零Python。含API弹性层、本地缓存、自动回退链。 返回论文元数据、摘要、PDF。宁无所得，不取伪术。
 license: MIT
-related_skills: [argument-expression, association-discovery, ai-outreach, autonomous-core-researcher, claude-code]
 allowed-tools: terminal Read Write task_delegation (bash, view/write, agent, inline)
-signature: "topic: str, sources: list -> papers: list[Paper], total_found: int"
-tags: [academic-search, paper-retrieval, semantic-scholar, pubmed, arxiv, openalex, literature-review]
 metadata:
-  synthos_atom_type: "cognitive"
-  synthos_version: "1.7.0"
-  synthos_skill_md_hash: "knowledge-acquisition-v1.7.0"
-  synthos_model_tested_on: "2026-05-10T00:00:00Z"
-  synthos_author: "Synthos"
-  synthos_absorbed_from: "Synthos internal (multi-source academic search pattern)"
-  synthos_absorbed_date: "2026-05-10"
-  synthos_io_contract_ref: "references/IO_CONTRACT.md"
-  synthos_asserted_compliance: "P0"
-  synthos_depends_on: "semantic-scholar, pubmed, arxiv, openalex, biorxiv, research-paper-search, scientific-database-lookup"
-  synthos_data_access_level: "raw"
+  synthos_atom_type: cognitive
+  synthos_version: 1.7.0
+  synthos_skill_md_hash: knowledge-acquisition-v1.7.0
+  synthos_model_tested_on: '2026-05-10T00:00:00Z'
+  synthos_author: Synthos
+  synthos_absorbed_from: Synthos internal (multi-source academic search pattern)
+  synthos_absorbed_date: '2026-05-10'
+  synthos_io_contract_ref: references/IO_CONTRACT.md
+  synthos_asserted_compliance: P0
+  synthos_depends_on: semantic-scholar, pubmed, arxiv, openalex, biorxiv, research-paper-search,
+    scientific-database-lookup
+  synthos_data_access_level: raw
+  synthos:
+    author: Synthos
+    signature: 'topic: str, sources: list -> papers: list[Paper], total_found: int'
+    related_skills:
+    - argument-expression
+    - association-discovery
+    - ai-outreach
+    - autonomous-core-researcher
+    - claude-code
+    version: 1.7.0
+    tags:
+    - academic-search
+    - paper-retrieval
+    - semantic-scholar
+    - pubmed
+    - arxiv
+    - openalex
+    - literature-review
 ---
+
 
 # 知识获取 (Knowledge Acquisition)
 

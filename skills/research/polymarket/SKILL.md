@@ -1,14 +1,33 @@
 ---
 name: polymarket
-description: "Query Polymarket: markets, prices, orderbooks, history."
-signature: "query: str -> market_data: dict"
-related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, biorxiv, blogwatcher]
-allowed-tools: [terminal, read_file, write_file, search_files]
-version: 1.0.0
-author: Hermes Agent + Teknium
-tags: [polymarket, prediction-markets, market-data, trading]
-platforms: [linux, macos, windows]
+description: 'Query Polymarket: markets, prices, orderbooks, history.'
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
+platforms:
+- linux
+- macos
+- windows
+metadata:
+  synthos:
+    author: Hermes Agent + Teknium
+    signature: 'query: str -> market_data: dict'
+    related_skills:
+    - academic-paper-completion
+    - adhd-eye-tracking-review
+    - arxiv
+    - biorxiv
+    - blogwatcher
+    version: 1.0.0
+    tags:
+    - polymarket
+    - prediction-markets
+    - market-data
+    - trading
 ---
+
 
 # Polymarket — Prediction Market Data
 

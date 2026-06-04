@@ -1,17 +1,35 @@
 ---
 name: journal-selection-medical-ai
-description: "Systematic methodology for evaluating and ranking SCI journals as publication targets for medical AI / computational health papers."
-signature: "input: dict -> output: dict"
-related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, biorxiv, blogwatcher]
-allowed-tools: [terminal, read_file, write_file, search_files]
-version: 1.0.0
-author: Hermes Agent
+description: Systematic methodology for evaluating and ranking SCI journals as publication
+  targets for medical AI / computational health papers.
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
 license: MIT
 metadata:
   hermes:
-    tags: [Research, Journal, SCI, Publication, Medical-AI, Computational-Health]
+    tags:
+    - Research
+    - Journal
+    - SCI
+    - Publication
+    - Medical-AI
+    - Computational-Health
     related_skills: []
+  synthos:
+    author: Hermes Agent
+    signature: 'input: dict -> output: dict'
+    related_skills:
+    - academic-paper-completion
+    - adhd-eye-tracking-review
+    - arxiv
+    - biorxiv
+    - blogwatcher
+    version: 1.0.0
 ---
+
 
 # Journal Selection for Medical AI Papers
 
@@ -133,45 +151,7 @@ Before submitting to any journal:
 - Prepare supplementary material for potential reviewer requests
 - Have a fallback journal pre-identified
 
-## Reference Files
+## Referen
 
-A curated reference of target journals for breast cancer ML / medical AI papers is maintained in:
-- `references/breast-cancer-ml-journals.md` — detailed metrics and fit scores for specific journals
-
-A cycle optimization workflow for systematically improving paper quality before journal submission:
-- `references/cycle-optimization-workflow.md` — iterative optimization workflow, quality assessment rubric, debugging experience (SMOTE crashes, key mismatches)
-
-## Reference Files
-
-- `references/openalex-journal-metrics.md` — OpenAlex API technique for deriving journal impact metrics (2yr_mean_citedness as IF proxy) when `web_search` tool is unavailable. Includes batch mode, interpretation guide, and Pima paper verification data.
-
-## Pitfalls
-
-- **Don't over-index on IF alone**: A high-IF journal with poor topic fit will reject you faster than a moderate-IF journal with perfect fit
-- **Verify with actual papers**: Always search PubMed/OpenAlex for similar published papers before assuming a journal accepts your topic
-- **Check recent issues**: A journal's scope may have shifted. Look at the last 6 months of publications, not just the Aims page
-- **Account for reviewer expectations**: Q1 journals in medical AI often expect multi-dataset validation; single-dataset papers may be desk-rejected
-- **Beware of predatory journals**: Always verify journals are indexed in Scopus/Web of Science/DOAJ
-- **Open access has costs**: Many OA journals charge APCs ($500-$2000+). Factor this into your decision
-- **Preprint strategy**: Consider posting on arXiv/bioRxiv before submission to establish priority
-
-### 🔴 OpenAlex 不返回 IF/JCR 值（2026-06-03 新增）
-
-OpenAlex API 的 `source` 端点不提供 `impact_factor` 或 `jcr_quartile` 字段。替代方案：
-
-| 方法 | 命令 | 说明 |
-|:-----|:-----|:------|
-| 2yr_mean_citedness | `summary_stats.2yr_mean_citedness` | **最佳代理** — 近似IF，定性排序可靠（Q1≈7+, Q2≈4-7, Q3≈2-4） |
-| Scopus/SCI官网 | 浏览器搜索 | 最权威，但需手动查找 |
-| Journal Citation Reports | 需机构权限 | 最准确IF |
-
-```python
-# 用2yr_mean_citedness代理IF
-curl -s "https://api.openalex.org/sources?filter=display_name.search:Patterns" | \
-  python3 -c "import sys,json; s=json.load(sys.stdin)['results'][0]; print(s['display_name'], 'proxy IF=', s['summary_stats']['2yr_mean_citedness'])"
-```
-
-**已知限制**：
-- 部分期刊不返回 `2yr_mean_citedness`（如新收录期刊）
-- 该值来自OpenALex模型估算，与官方JCR IF存在±0.5的偏差
-- 中文期刊覆盖不全
+---
+*详细内容已移至 references/ 目录。*

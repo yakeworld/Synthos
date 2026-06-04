@@ -1,19 +1,36 @@
 ---
 name: serving-llms-vllm
-description: >-
-  Deploy, manage, and interact with vLLM for high-throughput LLM serving.
-  Covers Docker-based deployment, model loading, coexistence with training,
-  API usage, quantization (NVFP4/GPTQ/GGUF), and performance tuning.
-  Captures the user's specific deployment on work1 (Qwen3.6-35B-NVFP4, TP=4).
-signature: "model: str, config: dict -> endpoint_url: str"
-related_skills: [crispdm-helix-experiment, experiment-recipes, huggingface-hub, medical-image-centerline, remote-gpu-training]
-allowed-tools: [terminal, read_file, write_file, search_files]
-version: 1.0.0
-author: Synthos Agent
+description: Deploy, manage, and interact with vLLM for high-throughput LLM serving.
+  Covers Docker-based deployment, model loading, coexistence with training, API usage,
+  quantization (NVFP4/GPTQ/GGUF), and performance tuning. Captures the user's specific
+  deployment on work1 (Qwen3.6-35B-NVFP4, TP=4).
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
 license: MIT
-tags: [vllm, serving, inference, llm, docker, mlops]
 dependencies: []
+metadata:
+  synthos:
+    author: Synthos Agent
+    signature: 'model: str, config: dict -> endpoint_url: str'
+    related_skills:
+    - crispdm-helix-experiment
+    - experiment-recipes
+    - huggingface-hub
+    - medical-image-centerline
+    - remote-gpu-training
+    version: 1.0.0
+    tags:
+    - vllm
+    - serving
+    - inference
+    - llm
+    - docker
+    - mlops
 ---
+
 
 # vLLM Serving — High-Throughput LLM Serving
 

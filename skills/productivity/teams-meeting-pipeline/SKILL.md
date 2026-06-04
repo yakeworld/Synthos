@@ -1,23 +1,44 @@
 ---
 name: teams-meeting-pipeline
-description: "Operate the Teams meeting summary pipeline via Hermes CLI — summarize meetings, inspect pipeline status, replay jobs, manage Microsoft Graph subscriptions."
-signature: "meeting_id: str -> summary_path: str"
-related_skills: [airtable, chinese-form-automation, google-workspace, jupyter-live-kernel, linear]
-allowed-tools: [terminal, read_file, write_file, search_files]
-version: 1.1.0
-author: Hermes Agent + Teknium
+description: Operate the Teams meeting summary pipeline via Hermes CLI — summarize
+  meetings, inspect pipeline status, replay jobs, manage Microsoft Graph subscriptions.
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
 license: MIT
 prerequisites:
-  env_vars: [MSGRAPH_TENANT_ID, MSGRAPH_CLIENT_ID, MSGRAPH_CLIENT_SECRET]
-  commands: [hermes]
+  env_vars:
+  - MSGRAPH_TENANT_ID
+  - MSGRAPH_CLIENT_ID
+  - MSGRAPH_CLIENT_SECRET
+  commands:
+  - hermes
 metadata:
   hermes:
-    tags: [Teams, Microsoft Graph, Meetings, Productivity, Operations]
+    tags:
+    - Teams
+    - Microsoft Graph
+    - Meetings
+    - Productivity
+    - Operations
     related_docs:
-      - /docs/guides/microsoft-graph-app-registration
-      - /docs/user-guide/messaging/teams-meetings
-      - /docs/guides/operate-teams-meeting-pipeline
+    - /docs/guides/microsoft-graph-app-registration
+    - /docs/user-guide/messaging/teams-meetings
+    - /docs/guides/operate-teams-meeting-pipeline
+  synthos:
+    author: Hermes Agent + Teknium
+    signature: 'meeting_id: str -> summary_path: str'
+    related_skills:
+    - airtable
+    - chinese-form-automation
+    - google-workspace
+    - jupyter-live-kernel
+    - linear
+    version: 1.1.0
 ---
+
 
 # Teams Meeting Pipeline
 

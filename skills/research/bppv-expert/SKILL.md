@@ -1,29 +1,41 @@
 ---
 name: bppv-expert
-version: 1.0.0
-author: Synthos Agent
 license: MIT
-related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, biorxiv, blogwatcher]
 allowed-tools: file_read
-signature: "topic: str -> treatment_plan: dict, clinical_guidance: str"
-description: >-
-  Structured BPPV (Benign Paroxysmal Positional Vertigo) medical knowledge
+description: 'Structured BPPV (Benign Paroxysmal Positional Vertigo) medical knowledge
   extracted from AKNE knowledge graph. Covers diagnosis techniques (Dix-Hallpike,
-  supine head flexion test), repositioning maneuvers (Epley, Gufoni, Semont,
-  Barbecue, roll-over), canalith conversion mechanisms, 3D biomechanical
-  simulation, and clinical decision workflows. Source: AKNE wiki (126 nodes,
-  137 edges, proven correctness via falsification testing).
-tags: [bppv, vestibular, vertigo, diagnosis, repositioning, medical-expert]
+  supine head flexion test), repositioning maneuvers (Epley, Gufoni, Semont, Barbecue,
+  roll-over), canalith conversion mechanisms, 3D biomechanical simulation, and clinical
+  decision workflows. Source: AKNE wiki (126 nodes, 137 edges, proven correctness
+  via falsification testing).'
 metadata:
-  synthos_atom_type: "extended"
-  synthos_skill_md_hash: "bppv-expert-v1.0.0"
-  synthos_model_tested_on: "2026-05-15T00:00:00Z"
-  synthos_author: "Synthos Agent"
-  synthos_absorbed_from: "AKNE wiki (proven correctness via falsification testing)"
-  synthos_absorbed_date: "2026-05-15"
-  synthos_data_access_level: "verified_only"
-  synthos_depends_on: "knowledge-acquisition"
+  synthos_atom_type: extended
+  synthos_skill_md_hash: bppv-expert-v1.0.0
+  synthos_model_tested_on: '2026-05-15T00:00:00Z'
+  synthos_author: Synthos Agent
+  synthos_absorbed_from: AKNE wiki (proven correctness via falsification testing)
+  synthos_absorbed_date: '2026-05-15'
+  synthos_data_access_level: verified_only
+  synthos_depends_on: knowledge-acquisition
+  synthos:
+    author: Synthos Agent
+    signature: 'topic: str -> treatment_plan: dict, clinical_guidance: str'
+    related_skills:
+    - academic-paper-completion
+    - adhd-eye-tracking-review
+    - arxiv
+    - biorxiv
+    - blogwatcher
+    version: 1.0.0
+    tags:
+    - bppv
+    - vestibular
+    - vertigo
+    - diagnosis
+    - repositioning
+    - medical-expert
 ---
+
 
 # BPPV Expert — Extended Skill for Synthos
 

@@ -1,18 +1,38 @@
 ---
 name: github-discussions
-description: "Create, list, search, and manage GitHub Discussions via GraphQL API."
-signature: "action: str, params: dict -> result: dict"
-related_skills: [github-auth, github-code-review, github-issues, github-pr-workflow, github-repo-management]
-allowed-tools: [terminal, file, web]
-version: 1.0.0
-author: Hermes Agent
+description: Create, list, search, and manage GitHub Discussions via GraphQL API.
+allowed-tools:
+- terminal
+- file
+- web
 license: MIT
-platforms: [linux, macos, windows]
+platforms:
+- linux
+- macos
+- windows
 metadata:
   hermes:
-    tags: [GitHub, Discussions, A2A, GraphQL]
-    related_skills: [github-auth, github-issues, github-repo-management]
+    tags:
+    - GitHub
+    - Discussions
+    - A2A
+    - GraphQL
+    related_skills:
+    - github-auth
+    - github-issues
+    - github-repo-management
+  synthos:
+    author: Hermes Agent
+    signature: 'action: str, params: dict -> result: dict'
+    related_skills:
+    - github-auth
+    - github-code-review
+    - github-issues
+    - github-pr-workflow
+    - github-repo-management
+    version: 1.0.0
 ---
+
 
 # GitHub Discussions Management
 

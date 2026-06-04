@@ -1,20 +1,40 @@
 ---
 name: notion
-description: "Notion API via curl: pages, databases, blocks, search."
-signature: "action: str, params: dict -> result: dict"
-related_skills: [airtable, chinese-form-automation, google-workspace, jupyter-live-kernel, linear]
-allowed-tools: [terminal, read_file, write_file, search_files]
-version: 1.0.0
-author: community
+description: 'Notion API via curl: pages, databases, blocks, search.'
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
 license: MIT
-platforms: [linux, macos, windows]
+platforms:
+- linux
+- macos
+- windows
 metadata:
   hermes:
-    tags: [Notion, Productivity, Notes, Database, API]
+    tags:
+    - Notion
+    - Productivity
+    - Notes
+    - Database
+    - API
     homepage: https://developers.notion.com
+  synthos:
+    author: community
+    signature: 'action: str, params: dict -> result: dict'
+    related_skills:
+    - airtable
+    - chinese-form-automation
+    - google-workspace
+    - jupyter-live-kernel
+    - linear
+    version: 1.0.0
 prerequisites:
-  env_vars: [NOTION_API_KEY]
+  env_vars:
+  - NOTION_API_KEY
 ---
+
 
 # Notion API
 

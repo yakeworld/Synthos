@@ -1,18 +1,40 @@
 ---
 name: debugging-hermes-tui-commands
-description: "Debug Hermes TUI slash commands: Python, gateway, Ink UI."
-signature: "command_error: str -> fix: str"
-related_skills: [agent-orchestration-harness, embedded-python-modularization, github-agent-contributions, hermes-agent-skill-authoring, k230-canmv-debugging]
-allowed-tools: [terminal, file, read_file]
-version: 1.0.0
-author: Hermes Agent
+description: 'Debug Hermes TUI slash commands: Python, gateway, Ink UI.'
+allowed-tools:
+- terminal
+- file
+- read_file
 license: MIT
-platforms: [linux, macos, windows]
+platforms:
+- linux
+- macos
+- windows
 metadata:
   hermes:
-    tags: [debugging, hermes-agent, tui, slash-commands, typescript, python]
-    related_skills: [python-debugpy, node-inspect-debugger, systematic-debugging]
+    tags:
+    - debugging
+    - hermes-agent
+    - tui
+    - slash-commands
+    - typescript
+    - python
+    related_skills:
+    - python-debugpy
+    - node-inspect-debugger
+    - systematic-debugging
+  synthos:
+    author: Hermes Agent
+    signature: 'command_error: str -> fix: str'
+    related_skills:
+    - agent-orchestration-harness
+    - embedded-python-modularization
+    - github-agent-contributions
+    - hermes-agent-skill-authoring
+    - k230-canmv-debugging
+    version: 1.0.0
 ---
+
 
 # Debugging Hermes TUI Slash Commands
 
@@ -112,44 +134,6 @@ If a command exists in the TUI but doesn't show in autocomplete:
 
 4. **Command persists config but doesn't apply live.** For TUI-local commands, updating `config.set` is not enough. Also patch the relevant nanostore state immediately (usually `patchUiState(...)`) and pass any new state through rendering components. Example: `/details collapsed` must update live detail visibility, not just save `details_mode`; in-session global `/details <mode>` may need a separate command-override flag so live commands can override built-in section defaults while startup/config sync preserves default-expanded thinking/tools behavior.
 
-5. **Gateway dispatch silently ignores the command.** The gateway only dispatches commands it knows about. Check `GATEWAY_KNOWN_COMMANDS` (derived from `COMMAND_REGISTRY` automatically) includes the canonical name. If the command is `cli_only` with a `gateway_config_gate`, verify the gated config value is truthy.
+5. **Gateway dispatch silently ignores the command.** The gateway only dispatches commands it knows about. Check `GATEWAY_KNOWN_COMMANDS` (derived from `COMMAND_REGISTRY
 
-## Debugging Tactics
-
-When surface-level inspection doesn't reveal the bug:
-
-- **Python side hangs or misbehaves:** use the `python-debugpy` skill to break inside `_SlashWorker.exec` or the command handler. `remote-pdb` set at the handler entry is the fastest path.
-- **Ink side not reacting:** use the `node-inspect-debugger` skill to break in `app.tsx`'s slash dispatch or the local command branch. `sb('dist/app.js', <line>)` after `npm run build`.
-- **Registry mismatch / unclear which side is wrong:** compare the canonical `COMMAND_REGISTRY` entry against the TUI's local command list side-by-side.
-
-## Pitfalls
-
-- Don't forget to set the appropriate category for the command in `CommandDef` (e.g., "Session", "Configuration", "Tools & Skills", "Info", "Exit")
-- Make sure any aliases are properly registered in the `aliases` tuple — no other file changes are needed, everything downstream (Telegram menu, Slack mapping, autocomplete, help) derives from it
-- For commands with subcommands, ensure the `subcommands` tuple in `CommandDef` matches what's in the TUI code
-- `cli_only=True` commands won't work in gateway/messaging platforms — unless you add a `gateway_config_gate` and the gate is truthy
-- After adding live UI state, search every consumer of the old prop/helper and thread the new state through all render paths, not just the active streaming path. TUI detail rendering has at least two important paths: live `StreamingAssistant`/`ToolTrail` and transcript/pending `MessageLine` rows. A `/clean` pass should explicitly check both.
-- Rebuild the TUI (`npm --prefix ui-tui run build`) before testing — tsx watch mode may lag on first launch
-
-## Verification
-
-After fixing:
-
-1. Rebuild the TUI:
-   ```bash
-   cd /home/bb/hermes-agent && npm --prefix ui-tui run build
-   ```
-
-2. Run the TUI and test the command:
-   ```bash
-   hermes --tui
-   ```
-
-3. Type `/` and verify the command appears in autocomplete suggestions with the expected description and args hint.
-
-4. Execute the command and confirm:
-   - Expected behavior fires
-   - Any persisted config updates correctly (`read_file ~/.hermes/config.yaml`)
-   - Live UI state reflects the change immediately (not just after restart)
-
-5. If the command is also gateway-available, test it from at least one messaging platform (or run the gateway tests: `scripts/run_tests.sh tests/gateway/`).
+... (内容截断，详见 references/)

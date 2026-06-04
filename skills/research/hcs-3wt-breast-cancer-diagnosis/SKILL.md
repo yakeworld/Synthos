@@ -1,10 +1,23 @@
 ---
 name: hcs-3wt-breast-cancer-diagnosis
-description: HCS-3WT (Hybrid Cascade-Stacking Three-Way Triage) breast cancer diagnostic AI system — architecture, evaluation, and troubleshooting.
-signature: "data_path: str -> diagnosis_report: dict"
-related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, biorxiv, blogwatcher]
-allowed-tools: [terminal, read_file, write_file, search_files]
+description: HCS-3WT (Hybrid Cascade-Stacking Three-Way Triage) breast cancer diagnostic
+  AI system — architecture, evaluation, and troubleshooting.
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
+metadata:
+  synthos:
+    signature: 'data_path: str -> diagnosis_report: dict'
+    related_skills:
+    - academic-paper-completion
+    - adhd-eye-tracking-review
+    - arxiv
+    - biorxiv
+    - blogwatcher
 ---
+
 
 # HCS-3WT Breast Cancer Diagnostic AI System
 

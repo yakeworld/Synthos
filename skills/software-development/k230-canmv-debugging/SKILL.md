@@ -1,20 +1,33 @@
 ---
 name: k230-canmv-debugging
 category: autonomous-ai-agents
-description: K230 CanMV board debugging — serial REPL, ampy transfers, hardware encoder pipeline, sensor init order, and import quirks specific to Kendryte K230 / Micropython / CanMV v1.4.
-signature: "error: str -> fix: str"
-related_skills: [agent-orchestration-harness, debugging-hermes-tui-commands, embedded-python-modularization, github-agent-contributions, hermes-agent-skill-authoring]
-allowed-tools: [terminal, file, read_file]
+description: K230 CanMV board debugging — serial REPL, ampy transfers, hardware encoder
+  pipeline, sensor init order, and import quirks specific to Kendryte K230 / Micropython
+  / CanMV v1.4.
+allowed-tools:
+- terminal
+- file
+- read_file
 triggers:
-  - K230 board
-  - CanMV
-  - Kendryte
-  - Micropython embedded debugging
-  - serial REPL
-  - ampy upload
-  - eye tracker hardware
-  - gc2093 camera sensor
+- K230 board
+- CanMV
+- Kendryte
+- Micropython embedded debugging
+- serial REPL
+- ampy upload
+- eye tracker hardware
+- gc2093 camera sensor
+metadata:
+  synthos:
+    signature: 'error: str -> fix: str'
+    related_skills:
+    - agent-orchestration-harness
+    - debugging-hermes-tui-commands
+    - embedded-python-modularization
+    - github-agent-contributions
+    - hermes-agent-skill-authoring
 ---
+
 
 # K230 CanMV Board Debugging
 

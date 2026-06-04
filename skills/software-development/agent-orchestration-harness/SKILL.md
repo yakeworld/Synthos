@@ -1,16 +1,23 @@
 ---
 name: agent-orchestration-harness
-description: >-
-  Hermes（大脑）+ OpenCode（双手）双Agent工程化分工协议。
-  Hermes负责需求拆解/规范/架构检查，OpenCode负责代码生成/文件创建/验证。
+description: Hermes（大脑）+ OpenCode（双手）双Agent工程化分工协议。 Hermes负责需求拆解/规范/架构检查，OpenCode负责代码生成/文件创建/验证。
   >=80%置信度直接执行，不等人确认。
-version: 1.0.0
-author: Synthos
 license: MIT
-related_skills: [debugging-hermes-tui-commands, embedded-python-modularization, github-agent-contributions, hermes-agent-skill-authoring, k230-canmv-debugging]
 allowed-tools: shell skill_loader Read Write task_delegation file_search
-signature: "requirement: str -> spec_path: str, tasks_path: str, code_paths: list[str], review_passed: bool"
+metadata:
+  synthos:
+    author: Synthos
+    signature: 'requirement: str -> spec_path: str, tasks_path: str, code_paths: list[str],
+      review_passed: bool'
+    related_skills:
+    - debugging-hermes-tui-commands
+    - embedded-python-modularization
+    - github-agent-contributions
+    - hermes-agent-skill-authoring
+    - k230-canmv-debugging
+    version: 1.0.0
 ---
+
 
 # Agent Orchestration Harness — 双Agent工程化分工协议
 

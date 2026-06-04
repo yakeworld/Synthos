@@ -1,11 +1,25 @@
 ---
 name: markitdown-convert
 description: Convert PDF/Office files to Markdown using Microsoft MarkItDown
-signature: "file_path: str -> md_path: str"
-related_skills: [airtable, chinese-form-automation, google-workspace, jupyter-live-kernel, linear]
-allowed-tools: [terminal, read_file, write_file, search_files]
-platforms: [linux, macos]
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
+platforms:
+- linux
+- macos
+metadata:
+  synthos:
+    signature: 'file_path: str -> md_path: str'
+    related_skills:
+    - airtable
+    - chinese-form-automation
+    - google-workspace
+    - jupyter-live-kernel
+    - linear
 ---
+
 
 # MarkItDown → Markdown 转换
 

@@ -1,20 +1,39 @@
 ---
 name: blogwatcher
-description: "Monitor blogs and RSS/Atom feeds via blogwatcher-cli tool."
-signature: "url: str -> feed_items: list"
-related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, biorxiv, bppv-expert]
-allowed-tools: [terminal, read_file, write_file, search_files]
-version: 2.0.0
-author: JulienTant (fork of Hyaxia/blogwatcher)
+description: Monitor blogs and RSS/Atom feeds via blogwatcher-cli tool.
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
 license: MIT
-platforms: [linux, macos, windows]
+platforms:
+- linux
+- macos
+- windows
 metadata:
   hermes:
-    tags: [RSS, Blogs, Feed-Reader, Monitoring]
+    tags:
+    - RSS
+    - Blogs
+    - Feed-Reader
+    - Monitoring
     homepage: https://github.com/JulienTant/blogwatcher-cli
+  synthos:
+    author: JulienTant (fork of Hyaxia/blogwatcher)
+    signature: 'url: str -> feed_items: list'
+    related_skills:
+    - academic-paper-completion
+    - adhd-eye-tracking-review
+    - arxiv
+    - biorxiv
+    - bppv-expert
+    version: 2.0.0
 prerequisites:
-  commands: [blogwatcher-cli]
+  commands:
+  - blogwatcher-cli
 ---
+
 
 # Blogwatcher
 

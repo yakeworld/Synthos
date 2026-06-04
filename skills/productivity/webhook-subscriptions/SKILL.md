@@ -1,15 +1,35 @@
 ---
 name: webhook-subscriptions
-description: "Webhook subscriptions: event-driven agent runs."
-signature: "webhook_spec: dict -> subscription_url: str"
-related_skills: [airtable, chinese-form-automation, google-workspace, jupyter-live-kernel, linear]
-allowed-tools: [terminal, read_file, write_file, search_files]
-version: 1.1.0
-platforms: [linux, macos, windows]
+description: 'Webhook subscriptions: event-driven agent runs.'
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
+platforms:
+- linux
+- macos
+- windows
 metadata:
   hermes:
-    tags: [webhook, events, automation, integrations, notifications, push]
+    tags:
+    - webhook
+    - events
+    - automation
+    - integrations
+    - notifications
+    - push
+  synthos:
+    signature: 'webhook_spec: dict -> subscription_url: str'
+    related_skills:
+    - airtable
+    - chinese-form-automation
+    - google-workspace
+    - jupyter-live-kernel
+    - linear
+    version: 1.1.0
 ---
+
 
 # Webhook Subscriptions
 

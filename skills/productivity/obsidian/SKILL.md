@@ -1,11 +1,26 @@
 ---
 name: obsidian
 description: Read, search, create, and edit notes in the Obsidian vault.
-signature: "action: str, params: dict -> result: dict"
-related_skills: [airtable, chinese-form-automation, google-workspace, jupyter-live-kernel, linear]
-allowed-tools: [terminal, read_file, write_file, search_files]
-platforms: [linux, macos, windows]
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
+platforms:
+- linux
+- macos
+- windows
+metadata:
+  synthos:
+    signature: 'action: str, params: dict -> result: dict'
+    related_skills:
+    - airtable
+    - chinese-form-automation
+    - google-workspace
+    - jupyter-live-kernel
+    - linear
 ---
+
 
 # Obsidian Vault
 

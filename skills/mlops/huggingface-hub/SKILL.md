@@ -1,15 +1,36 @@
 ---
 name: huggingface-hub
-description: "HuggingFace hf CLI: search/download/upload models, datasets."
-signature: "action: str, params: dict -> result: dict"
-related_skills: [crispdm-helix-experiment, experiment-recipes, medical-image-centerline, remote-gpu-training, serving-llms-vllm]
-allowed-tools: [terminal, read_file, write_file, search_files]
-version: 1.0.0
-author: Hugging Face
+description: 'HuggingFace hf CLI: search/download/upload models, datasets.'
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
 license: MIT
-tags: [huggingface, hf, models, datasets, hub, mlops]
-platforms: [linux, macos, windows]
+platforms:
+- linux
+- macos
+- windows
+metadata:
+  synthos:
+    author: Hugging Face
+    signature: 'action: str, params: dict -> result: dict'
+    related_skills:
+    - crispdm-helix-experiment
+    - experiment-recipes
+    - medical-image-centerline
+    - remote-gpu-training
+    - serving-llms-vllm
+    version: 1.0.0
+    tags:
+    - huggingface
+    - hf
+    - models
+    - datasets
+    - hub
+    - mlops
 ---
+
 
 # Hugging Face CLI (`hf`) Reference Guide
 

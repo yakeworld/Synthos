@@ -1,10 +1,24 @@
 ---
 name: ffmpeg-video-audio-sync
-description: Debug and fix FFmpeg video-audio synchronization issues including duration mismatches, sample rate problems, and MP4 concatenation pitfalls. Covers ffprobe diagnostics, stream trimming, audio conversion, and verification of synced output.
-signature: "video_path: str -> synced_path: str"
-related_skills: [academic-diagram, architecture-diagram, comfyui, excalidraw, figure-generation]
-allowed-tools: [terminal, read_file, write_file, search_files]
+description: Debug and fix FFmpeg video-audio synchronization issues including duration
+  mismatches, sample rate problems, and MP4 concatenation pitfalls. Covers ffprobe
+  diagnostics, stream trimming, audio conversion, and verification of synced output.
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
+metadata:
+  synthos:
+    signature: 'video_path: str -> synced_path: str'
+    related_skills:
+    - academic-diagram
+    - architecture-diagram
+    - comfyui
+    - excalidraw
+    - figure-generation
 ---
+
 
 # FFmpeg Video-Audio Sync Troubleshooting
 

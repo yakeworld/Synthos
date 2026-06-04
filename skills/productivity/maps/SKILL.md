@@ -1,20 +1,48 @@
 ---
 name: maps
-description: "Geocode, POIs, routes, timezones via OpenStreetMap/OSRM."
-signature: "query: str -> geo_data: dict"
-related_skills: [airtable, chinese-form-automation, google-workspace, jupyter-live-kernel, linear]
-allowed-tools: [terminal, read_file, write_file, search_files]
-version: 1.2.0
-author: Mibayy
+description: Geocode, POIs, routes, timezones via OpenStreetMap/OSRM.
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
 license: MIT
-platforms: [linux, macos, windows]
+platforms:
+- linux
+- macos
+- windows
 metadata:
   hermes:
-    tags: [maps, geocoding, places, routing, distance, directions, nearby, location, openstreetmap, nominatim, overpass, osrm]
+    tags:
+    - maps
+    - geocoding
+    - places
+    - routing
+    - distance
+    - directions
+    - nearby
+    - location
+    - openstreetmap
+    - nominatim
+    - overpass
+    - osrm
     category: productivity
-    requires_toolsets: [terminal]
-    supersedes: [find-nearby]
+    requires_toolsets:
+    - terminal
+    supersedes:
+    - find-nearby
+  synthos:
+    author: Mibayy
+    signature: 'query: str -> geo_data: dict'
+    related_skills:
+    - airtable
+    - chinese-form-automation
+    - google-workspace
+    - jupyter-live-kernel
+    - linear
+    version: 1.2.0
 ---
+
 
 # Maps Skill
 

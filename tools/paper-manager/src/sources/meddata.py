@@ -1,11 +1,13 @@
-"""
-meddata.com.cn full-text download source.
+"""meddata.com.cn full-text download source.
 
 Supports two auth modes:
 1. Direct token: set MEDDATA_TOKEN env var
 2. Auto-login: set MEDDATA_USERNAME + MEDDATA_PASSWORD env vars
 
 Auth flow: SSO login → bucToken → meddata token → viewtext PDF download
+
+fileName format: {DOI_no_slash} (e.g. 10.3389fneur.2020.00602)
+The fileName can be arbitrary; DOI_no_slash is a convenient convention.
 """
 import logging, os, re
 import requests as _req
@@ -20,7 +22,16 @@ _USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
 
 
 def _make_abstract_id(doi: str) -> str:
-    """Convert DOI to abstractId: remove '/'."""
+    """Convert DOI to meddata fileName.
+    
+    Format: {DOI_no_slash}
+    e.g. DOI=10.3389/fneur.2020.00602
+         → fileName=10.3389fneur.2020.00602
+    
+    Note: fileName can be any arbitrary string; DOI_no_slash is a convenient choice.
+    The `doi` parameter in full_look must be the real DOI of the target paper.
+    The `pmid` parameter in full_look can be any number.
+    """
     return doi.replace('/', '')
 
 
@@ -122,7 +133,7 @@ def try_meddata(doi: str, output_path: str, **kwargs) -> dict | None:
         # Fallback: try full_look API for fileUrl
         logger.debug(f"meddata viewtext returned HTTP {r.status_code}, trying full_look...")
         r2 = _req.get(f"{BASE_URL}/api/abstract/full_look",
-                     params={'token': token, 'abstractId': abstract_id, 'pmid': '1', 'doi': abstract_id},
+                     params={'token': token, 'abstractId': abstract_id, 'pmid': '1', 'doi': doi},
                      headers=headers, timeout=15)
         
         if r2.status_code == 200:
