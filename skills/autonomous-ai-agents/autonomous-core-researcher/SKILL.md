@@ -2,7 +2,7 @@
 name: autonomous-core-researcher
 description: "v3.0 开放边界引擎。无方向约束——预测类/公开数据集/数学建模/仿真/算法类，一切可编码可计算的科研问题。NotebookLM + OpenAlex + 六维假说评分 → 综述/实验/算法，永不停止。"
 signature: "input: dict -> output: dict"
-version: 2.4.0
+version: 2.5.0
 author: Synthos + 用户杨晓凯
 related_skills: [ai-outreach, claude-code, codex, hermes-agent, moltbook-connector]
 allowed-tools: terminal skill_view opencode cron job
@@ -46,9 +46,38 @@ metadata:
   │      │   (grep -c '\\\\cite{' paper.tex  >0 而 grep -c '@article' *.bib ==0
   │      │    且 grep -c 'thebibliography' paper.tex ==0)
   │      ├─ 检查 空目录/空 .tex 文件
+  │      ├─ ⚡ 检查 completed_papers vs filesystem 一致性
+  │      │   ｜ `completed_papers` 列表是自报告产物，可能包含历史版本的论文
+  │      │   ｜ （标准化09-dir体系建立前完成的论文仍为平铺目录结构）
+  │      │   ｜ 或包含已证伪的实验报告而非正式论文。
+  │      │   ｜ 扫描时对每个 completed_papers 条目验证：
+  │      │   ｜   ① 目录是否存在且有 .tex/.bib 文件
+  │      │   ｜   ② 是否有 01-manuscript/ + 06-references/ 标准化子目录
+  │      │   ｜   ③ 是否有 07-quality/quality-report.md
+  │      │   ｜   ④ 若非标准化结构 → 标记为 LEGACY_PAPER 而非视为问题
+  │      │   ｜   ⑤ 若为空09-dir壳（只有子目录无内容）→ 标记为 STUB
+  │      ├─ ⚡ 检查 thebibliography 模式被 grep 误判为 D8=0
+  │      │   ｜ grep -cP '^@\w+\{' 只匹配 .bib 文件，对 thebibliography 论文
+  │      │   ｜ 产生假阴性（D8=0）。修正：先检测 .tex 中是否有
+  │      │   ｜ \begin{thebibliography}，若有则从 .tex 提取 \bibitem 计数。
+  │      │   ｜ 优先用 python3 脚本而非 grep 行：
+  │      │   ｜   python3 -c "
+  │      │   ｜   import re
+  │      │   ｜   tex = open('paper.tex').read()
+  │      │   ｜   lines = [l for l in tex.split(chr(10))
+  │      │   ｜             if not l.strip().startswith('%')]
+  │      │   ｜   active = chr(10).join(lines)
+  │      │   ｜   if r'\\\\begin{thebibliography}' in active:
+  │      │   ｜       keys = re.findall(r'\\\\bibitem\{([^}]+)\}', active)
+  │      │   ｜       print(f'thebib mode: D8={len(keys)}')
+  │      │   ｜   elif r'\\\\bibliography{' in active:
+  │      │   ｜       # 标准 .bib 模式
+  │      │   ｜       ...
+  │      │   ｜   "
   │      └─ 高效做法：用 dual-quality-check-v2 的 bulk_d8_scan.py
   │          (python3 /path/to/skills/quality/dual-quality-check-v2/scripts/bulk_d8_scan.py)
   │          一行扫描所有45+篇论文的D8/D10a/D9/nocite/QC状态
+  │      └─ 文件系统一致性验证脚本: references/completed-papers-fs-verification.md
   ├─ Step 3: 选择方向（优化论文/文献扫描/静默退出）
   └─ Step 4: 执行并记录到 agent-log.md
        └──→ 完成即退出，不等下一轮
