@@ -1217,7 +1217,9 @@ NotebookLM 不支持原生跨笔记本链接。创建映射文档作为桥梁:
 
 15. **论文版本管理：上传前先删旧版** — NotebookLM 对同一论文的多版本会分散 Gemini 的注意力，导致评审上下文过大。上传新版本前，先用 Python 客户端删除所有旧版本论文 source。然后通过 `note create` 上传新版本（`source add` 失败时的降级通路）。
 
-17. **`source clean` 只能检测精确重复和错误源** — `source clean` 只查找: (1) 内容完全相同的重复 source；(2) 上传失败的 URL source（404/403）。它**不检测**：同标题的多个版本（可能来源于不同时间的同一次 `add-research`）、不同 URL 的同内容论文、旧版论文。当 `source clean` 报告 "already clean" 但 source 数量远高于预期时（如 726 个），问题不是精确重复，而是不同版本的堆积。解决方案：用 Python 客户端脚本（`references/source-dedup-script.md`）按标题分组去重。
+17. **`source clean` 只能检测精确重复和错误源** — `source clean` 只查找: (1) 内容完全相同的重复 source；(2) 上传失败的 URL source（404/403）。它**不检测**：同标题的多个版本（可能来源于不同时间的同一次 `add-research`）、不同 URL 的同内容论文、旧版论文。当 `source clean` 报告 already clean 但 source 数量远高于预期时（如 726 个），问题不是精确重复，而是不同版本的堆积。解决方案：用 Python 客户端脚本（`references/source-dedup-script.md`）按标题分组去重。
+
+29. **⚠️ `source clean --dry-run` 与 `-y` 实际执行结果可能不一致** — `source clean --dry-run` 发现错误源（如 `error_status`），但紧接着执行 `source clean -y` 可能报 already clean。原因有两种可能：(a) `--dry-run` 本身触发了某种内部状态清理（已验证：dry-run 后实际执行前 source 已消失）；(b) 该错误源是瞬时的，在两次调用之间已经被后端自动回收。**建议**：如果期望清理已知的错误源，直接执行 `source clean -y` 即可（即使输出 already clean 也代表当前已无错误源），不需要强制匹配 `--dry-run` 的预期结果。若仍需确认，用 `source list | grep error` 手动验证。
 
 24. **⚠️ Slide-deck 下载认证失败时的重建工作流** — `notebooklm download slide-deck` 可能因 cookies 过期或多账号 authuser 路由问题（触发 `received HTML instead of media file` 错误）而无法下载。但 Gemini 已经成功生成了内容。如果 `notebooklm list` 显示 `status=completed` 但下载失败，用以下两步恢复：
     ```bash

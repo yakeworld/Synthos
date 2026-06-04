@@ -379,7 +379,27 @@ if key in INSTITUTIONAL_REPORTS:
     d9_denom -= 1  # 不计入分母
 ```
 
-## 不可自动修复的情况
+### 🚩 API返回的论文与期望不符（DOI真但指向不同论文）
+
+**现象**：用 bib 中记录的 DOI 查 SS API，返回的论文标题完全不同（如 `10.1016/j.patter.2024.100974` 返回 "Privacy preservation for federated learning" 而非期望的 "Leakage and the reproducibility crisis"）。
+
+**根因**：bib 中的 DOI 字段写错了——指向同作者不同论文。
+
+**处理**：
+1. 不信任 bib 的 DOI 字段——用 SS 搜索论文标题来验证
+2. 对比 SS 返回标题 vs bib 标题
+3. 标题不匹配时，用标题搜索找正确 DOI
+4. 只更新 DOI 字段，bibkey 不动
+
+```bash
+# 验证
+curl -s "https://api.semanticscholar.org/graph/v1/paper/DOI:{doi}?fields=title,year"
+
+# 搜索正确DOI
+curl -s "https://api.semanticscholar.org/graph/v1/paper/search?query={title}&limit=3&fields=title,externalIds"
+```
+
+**2026-06-04 实战**：Kapoor2024 bib中记录 `10.1016/j.patter.2024.100974`，正确应为 `10.1016/j.patter.2023.100804`。
 
 1. **SS+OpenAlex均搜不到**（4条/44条=9%无法自动修复）
 2. **有真实DOI但meddata不支持**（IEEE/BMJ/Lancet=强付费墙）

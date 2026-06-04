@@ -472,6 +472,16 @@ EXTERNAL step 中检测到候选项目后：
 5. SKILL.md被意外覆盖→每次Patch前备份到 backups/
 6. 误将模型能力与进化能力等同：进化引擎的结构化步骤（PROBE/BENCHMARK/DIAGNOSE/IMPROVE/VERIFY/RECORD）不依赖大模型理解力。不要因为当前模型不够强就跳过进化循环——本地7B模型做这些操作一样好。进化速度瓶颈是EDIT_BUDGET和cron频率，不是模型推理能力。
 
+7. 🔴 **RECORD 阶段必须先做凭据泄露检查**（2026-06-04 用户特别提醒）。git commit 前执行：
+   ```bash
+   # 检查本次commit是否含密码/密钥值
+   git diff --cached -S "password" --name-only
+   git diff --cached -S "PASSWORD" --name-only
+   git diff --cached -S "7730" --name-only  # 或其他已知密码前缀
+   ```
+   若发现任何疑似凭据的字符串，**中断 commit**，移除后重新 staging。密码、API key、token 必须从环境变量读取，绝不硬编码。
+   这一检查比所有其他验证优先级更高——凭据泄露一旦 commit，即便删除也永久存在于 git 历史。
+
 ## 工作目录
 
 | 路径 | 用途 |
