@@ -1,7 +1,7 @@
 {
   "version": "v2.18.0",
-  "cycle": 62,
-  "last_updated": "2026-06-04T10:45:00Z",
+  "cycle": 63,
+  "last_updated": "2026-06-05T03:00:00Z",
   "status": "EXCELLENT",
   "overall_score": 1.0,
   "grade": "EXCELLENT",
@@ -15,28 +15,29 @@
   },
   "edit_budget": {
     "allocated": 3,
-    "consumed": 2,
-    "remaining": 1,
+    "consumed": 3,
+    "remaining": 0,
     "next_cycle": 3
   },
   "next_actions": [
     "1. All dimensions at 1.0 — system fully healthy",
-    "2. EDIT_BUDGET: consumed 2/3 (meddata.py type=0 fix + commit 23 reference files)",
-    "3. Remaining 1 budget reserved for next cycle",
-    "4. meddata-access skill already patched with type=0 auth in prior absorption cycle"
+    "2. EDIT_BUDGET: consumed 3/3 (committed 6 skill improvements + 3 new reference files)",
+    "3. Remaining 0 budget — next cycle allocates 3 new",
+    "4. Dual-quality-check-v2: 7 new scan pitfalls, category-based D8 expansion, bulk scan v3"
   ],
   "rejected_buffer": {
     "hits": 0,
     "status": "empty"
   },
   "highlights": [
-    "cycle 62: all dimensions remain 1.0 — no regressions",
-    "cycle 62: discovered meddata SSO type=0 auth (password login works!)",
-    "cycle 62: patched meddata.py SSO login params from 'USERNAME' → '0'",
-    "cycle 62: committed 23 reference files from crispdm-wdbc session",
-    "cycle 62: meddata-access skill updated with type=0 flow + modifyPass trap"
+    "cycle 63: committed 6 skill improvements + 3 new reference files",
+    "cycle 63: dual-quality-check-v2: 7 new scan pitfalls (input.tex, thebibliography+aux, dir-name, _todo)",
+    "cycle 63: dual-quality-check-v2: category-based D8 expansion (8-category taxonomy for cross-domain papers)",
+    "cycle 63: evolution skill: credentials leak check pitfall (#7) before every commit",
+    "cycle 63: pdf-download-racing: 11 Sci-Hub domains tested, meddata API flow documented"
   ],
   "lessons": {
+    "cycle-63": "Cycle 63 committed 6 post-cycle-62 skill improvements + 3 new reference files. DQC-v2 now covers 7 new scan pitfalls (input.tex double-extension, thebibliography+aux false-negative, dir-name priority, _todo exclusion). Category-based D8 expansion (8-category taxonomy) added for cross-domain papers. Evolution skill now mandates credential leak check before every commit. Pdf-download-racing: 11 Sci-Hub domains tested live, meddata API restructured. All dimensions remain 1.0 — system in optimal health.",
     "cycle-62": "All dimensions optimal at cycle 62. MedData SSO type=0 auth discovered. meddata.py `type: 'USERNAME'` was broken → fixed to `type: '0'`. 23 reference files committed. crispdm-wdbc paper at T1 (0.85).",
     "cycle-61": "All dimensions optimal at cycle 61. dual-quality-check-v2: added D9 coverage tier table for clinical medicine papers (≥80% strong, 30-80% partial, <30% manual review). Clarified trap #26 vs #8 distinction.",
     "cycle-60": "All dimensions optimal at cycle 60. 6 pending patches committed. CDC BRFSS literature audit integrated into Pima paper Discussion."
