@@ -1,16 +1,26 @@
 ---
 name: 3d-curve-fitting-figures
-description: >-
-  3D曲线拟合图的生成规范：从点云到拟合曲线到出版级Figure。
-  覆盖拟合重建陷阱、多标本复合布局、分段数据合并、argsort路径错乱。
+description: 3D曲线拟合图的生成规范：从点云到拟合曲线到出版级Figure。 覆盖拟合重建陷阱、多标本复合布局、分段数据合并、argsort路径错乱。
   配合figure-generation skill使用。
-signature: "input: dict -> output: dict"
-related_skills: [figure-generation]
-allowed-tools: [terminal, read_file, write_file, search_files]
-version: 1.2.0
-author: Synthos
-tags: [figure-generation, 3d-fitting, curve-fitting, scientific-figures]
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
+metadata:
+  synthos:
+    author: Synthos
+    signature: 'input: dict -> output: dict'
+    related_skills:
+    - figure-generation
+    version: 1.2.0
+    tags:
+    - figure-generation
+    - 3d-fitting
+    - curve-fitting
+    - scientific-figures
 ---
+
 
 # 3D曲线拟合图
 

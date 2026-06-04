@@ -1,18 +1,38 @@
 ---
 name: jupyter-live-kernel
-description: "Iterative Python via live Jupyter kernel (hamelnb)."
-signature: "task: str -> notebook_output: dict"
-related_skills: [airtable, chinese-form-automation, google-workspace, linear, maps]
-allowed-tools: [terminal, read_file, write_file, search_files]
-version: 1.0.0
-author: Hermes Agent
+description: Iterative Python via live Jupyter kernel (hamelnb).
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
 license: MIT
-platforms: [linux, macos, windows]
+platforms:
+- linux
+- macos
+- windows
 metadata:
   hermes:
-    tags: [jupyter, notebook, repl, data-science, exploration, iterative]
+    tags:
+    - jupyter
+    - notebook
+    - repl
+    - data-science
+    - exploration
+    - iterative
     category: data-science
+  synthos:
+    author: Hermes Agent
+    signature: 'task: str -> notebook_output: dict'
+    related_skills:
+    - airtable
+    - chinese-form-automation
+    - google-workspace
+    - linear
+    - maps
+    version: 1.0.0
 ---
+
 
 # Jupyter Live Kernel (hamelnb)
 

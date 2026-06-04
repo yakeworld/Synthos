@@ -1,26 +1,36 @@
 ---
 name: experiment-recipes
-version: 1.1.0
-author: Synthos
 license: MIT
-related_skills: [crispdm-helix-experiment, huggingface-hub, medical-image-centerline, remote-gpu-training, serving-llms-vllm]
 allowed-tools: Read
-description: >-
-  ML训练配方与预设——架构选择、训练循环、优化器、调度器、混合精度、内存优化、调试。
-  提炼自实战经验，非外部代码搬运。每个配方记录原理而非逐行代码。
-signature: "input: dict -> output: dict"
-tags: [training, recipes, ml, pytorch, reference]
+description: ML训练配方与预设——架构选择、训练循环、优化器、调度器、混合精度、内存优化、调试。 提炼自实战经验，非外部代码搬运。每个配方记录原理而非逐行代码。
 metadata:
-  synthos_atom_type: "reference"
-  synthos_version: "1.1.0"
-  synthos_skill_md_hash: "experiment-recipes-v1.1.0"
-  synthos_model_tested_on: "2026-05-15T00:00:00Z"
-  synthos_data_access_level: "raw"
-  synthos_author: "Synthos"
-  synthos_absorbed_from: "Synthos internal (ML training recipes from实战经验)"
-  synthos_absorbed_date: "2026-05-15"
-  synthos_depends_on: "knowledge-acquisition"
+  synthos_atom_type: reference
+  synthos_version: 1.1.0
+  synthos_skill_md_hash: experiment-recipes-v1.1.0
+  synthos_model_tested_on: '2026-05-15T00:00:00Z'
+  synthos_data_access_level: raw
+  synthos_author: Synthos
+  synthos_absorbed_from: Synthos internal (ML training recipes from实战经验)
+  synthos_absorbed_date: '2026-05-15'
+  synthos_depends_on: knowledge-acquisition
+  synthos:
+    author: Synthos
+    signature: 'input: dict -> output: dict'
+    related_skills:
+    - crispdm-helix-experiment
+    - huggingface-hub
+    - medical-image-centerline
+    - remote-gpu-training
+    - serving-llms-vllm
+    version: 1.1.0
+    tags:
+    - training
+    - recipes
+    - ml
+    - pytorch
+    - reference
 ---
+
 
 # Experiment Recipes / 实验配方参考
 

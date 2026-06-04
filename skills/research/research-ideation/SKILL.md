@@ -1,32 +1,43 @@
 ---
 name: research-ideation
-description: >-
-  研究创意发散与认知引擎（RIF+CCF）。三层架构：Layer 1（10操作框架）→ 产出研究方向候选；
-  Layer 2（8认知引擎）→ 产出认知洞察；Layer 3（组合协议）→ 编排执行流程。
-  将研究问题转化为多维度创意方向和认知洞察。先发散后收敛，多角度扫描领域机会。
-version: 2.1.0
-author: Synthos
+description: 研究创意发散与认知引擎（RIF+CCF）。三层架构：Layer 1（10操作框架）→ 产出研究方向候选； Layer 2（8认知引擎）→
+  产出认知洞察；Layer 3（组合协议）→ 编排执行流程。 将研究问题转化为多维度创意方向和认知洞察。先发散后收敛，多角度扫描领域机会。
 license: MIT
-related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, biorxiv, blogwatcher]
 allowed-tools: Read Write
 dependencies:
-  - knowledge-acquisition
-  - association-discovery
-signature: "research_question: str -> research_candidates: list[ResearchCandidate], cognitive_insights: list[CognitiveInsight]"
-tags: [research-ideation, brainstorming, cognitive-engine, research-direction, exploration]
+- knowledge-acquisition
+- association-discovery
 metadata:
-  synthos_atom_type: "cognitive"
-  synthos_version: "2.1.0"
-  synthos_skill_md_hash: "research-ideation-v2.1.0"
-  synthos_model_tested_on: "2026-05-10T00:00:00Z"
-  synthos_author: "Synthos"
-  synthos_absorbed_from: "Synthos internal (research ideation methodology)"
-  synthos_absorbed_date: "2026-05-10"
-  synthos_io_contract_ref: "references/IO_CONTRACT.md"
-  synthos_asserted_compliance: "P1"
-  synthos_data_access_level: "raw"
-  synthos_depends_on: "knowledge-acquisition, association-discovery"
+  synthos_atom_type: cognitive
+  synthos_version: 2.1.0
+  synthos_skill_md_hash: research-ideation-v2.1.0
+  synthos_model_tested_on: '2026-05-10T00:00:00Z'
+  synthos_author: Synthos
+  synthos_absorbed_from: Synthos internal (research ideation methodology)
+  synthos_absorbed_date: '2026-05-10'
+  synthos_io_contract_ref: references/IO_CONTRACT.md
+  synthos_asserted_compliance: P1
+  synthos_data_access_level: raw
+  synthos_depends_on: knowledge-acquisition, association-discovery
+  synthos:
+    author: Synthos
+    signature: 'research_question: str -> research_candidates: list[ResearchCandidate],
+      cognitive_insights: list[CognitiveInsight]'
+    related_skills:
+    - academic-paper-completion
+    - adhd-eye-tracking-review
+    - arxiv
+    - biorxiv
+    - blogwatcher
+    version: 2.1.0
+    tags:
+    - research-ideation
+    - brainstorming
+    - cognitive-engine
+    - research-direction
+    - exploration
 ---
+
 
 ## 原理层·文言
 

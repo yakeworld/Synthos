@@ -1,11 +1,27 @@
 ---
 name: falsification-validation
-description: Systematic approach to validating AI agent skills through falsification tests and Bayesian trust estimation. Instead of trying to prove a skill works, actively try to prove it fails, then update trust probability based on evidence. Use when creating, updating, or assessing the reliability of any skill. Must produce quantifiable quality metrics and evidence.
-signature: "skill_name: str -> test_results: dict"
-related_skills: [bib-integrity-audit, dual-quality-check-v2, golden-test-methodology, post-compile-dual-quality-check, quality-gate]
-allowed-tools: [terminal, read_file, write_file, search_files]
+description: Systematic approach to validating AI agent skills through falsification
+  tests and Bayesian trust estimation. Instead of trying to prove a skill works, actively
+  try to prove it fails, then update trust probability based on evidence. Use when
+  creating, updating, or assessing the reliability of any skill. Must produce quantifiable
+  quality metrics and evidence.
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
 license: MIT
+metadata:
+  synthos:
+    signature: 'skill_name: str -> test_results: dict'
+    related_skills:
+    - bib-integrity-audit
+    - dual-quality-check-v2
+    - golden-test-methodology
+    - post-compile-dual-quality-check
+    - quality-gate
 ---
+
 
 ## 原理层·文言
 

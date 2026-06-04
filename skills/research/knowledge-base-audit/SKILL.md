@@ -1,10 +1,23 @@
 ---
 name: knowledge-base-audit
-description: Audit and maintain personal knowledge management systems (AKNE, NotebookLM, Obsidian vaults, etc.) to keep them healthy and evolving.
-signature: "kb_path: str -> audit_report: dict"
-related_skills: [academic-paper-completion, adhd-eye-tracking-review, arxiv, biorxiv, blogwatcher]
-allowed-tools: [terminal, read_file, write_file, search_files]
+description: Audit and maintain personal knowledge management systems (AKNE, NotebookLM,
+  Obsidian vaults, etc.) to keep them healthy and evolving.
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
+metadata:
+  synthos:
+    signature: 'kb_path: str -> audit_report: dict'
+    related_skills:
+    - academic-paper-completion
+    - adhd-eye-tracking-review
+    - arxiv
+    - biorxiv
+    - blogwatcher
 ---
+
 
 # Knowledge Base Audit & Maintenance
 

@@ -1,32 +1,42 @@
 ---
 name: figure-generation
-description: >-
-  科研图表创建：Figure契约方法论——结论Claim→证据层级→面板映射→出口契约→审核。
-  支持Nature语义色板（蓝主-绿正-红基+中性色），16种排版模式。兼容所有SCI/会议图表场景。
-version: 1.1.0
-author: Synthos
+description: 科研图表创建：Figure契约方法论——结论Claim→证据层级→面板映射→出口契约→审核。 支持Nature语义色板（蓝主-绿正-红基+中性色），16种排版模式。兼容所有SCI/会议图表场景。
 license: MIT
-related_skills: [academic-diagram, architecture-diagram, comfyui, excalidraw, ffmpeg-video-audio-sync]
 allowed-tools:
-  - terminal (Python plotting, shell)
-  - file_read (data inspection)
-  - file_search (data location)
-  - execute (data preprocessing, code execution)
-  - file_write (figure scripts)
-signature: "input: claim, evidence_levels -> output: figure_contract, publication_ready_figure"
-tags: [figure-generation, data-visualization, scientific-figures, nature-style, publication-ready]
+- terminal (Python plotting, shell)
+- file_read (data inspection)
+- file_search (data location)
+- execute (data preprocessing, code execution)
+- file_write (figure scripts)
 metadata:
-  synthos_atom_type: "extended"
-  synthos_version: "1.1.0"
-  synthos_skill_md_hash: "figure-generation-v1.1.0"
-  synthos_model_tested_on: "2026-05-15T00:00:00Z"
-  synthos_data_access_level: "verified_only"
-  synthos_priority: "P2"
-  synthos_author: "Synthos"
-  synthos_absorbed_from: "Synthos internal (originally from research-paper-search skill)"
-  synthos_absorbed_date: "2026-05-15"
-  synthos_depends_on: "knowledge-acquisition"
+  synthos_atom_type: extended
+  synthos_version: 1.1.0
+  synthos_skill_md_hash: figure-generation-v1.1.0
+  synthos_model_tested_on: '2026-05-15T00:00:00Z'
+  synthos_data_access_level: verified_only
+  synthos_priority: P2
+  synthos_author: Synthos
+  synthos_absorbed_from: Synthos internal (originally from research-paper-search skill)
+  synthos_absorbed_date: '2026-05-15'
+  synthos_depends_on: knowledge-acquisition
+  synthos:
+    author: Synthos
+    signature: 'input: claim, evidence_levels -> output: figure_contract, publication_ready_figure'
+    related_skills:
+    - academic-diagram
+    - architecture-diagram
+    - comfyui
+    - excalidraw
+    - ffmpeg-video-audio-sync
+    version: 1.1.0
+    tags:
+    - figure-generation
+    - data-visualization
+    - scientific-figures
+    - nature-style
+    - publication-ready
 ---
+
 
 ## 原理层·文言
 

@@ -1,20 +1,26 @@
 ---
 name: task-router
-description: >-
-  Synthos系统入口。路由用户查询到正确的认知原子链或执行模式。
-  四模式：标准链 / 探索循环 / 研究双循环 / 并行执行。
-  Agent-native执行，纯skill驱动零Python。
-version: 1.8.0
-author: Synthos
+description: Synthos系统入口。路由用户查询到正确的认知原子链或执行模式。 四模式：标准链 / 探索循环 / 研究双循环 / 并行执行。 Agent-native执行，纯skill驱动零Python。
 license: MIT
-related_skills: [argument-expression, association-discovery, ai-outreach, autonomous-core-researcher, claude-code]
-allowed-tools: shell (bash), Read (view), Write (write), task_delegation (agent, inline), skill_loader (view with file path)
-signature: "query: str, context: dict -> route: str, atom_chain: list[str], execution_mode: str"
+allowed-tools: shell (bash), Read (view), Write (write), task_delegation (agent, inline),
+  skill_loader (view with file path)
 metadata:
-  synthos_atom_type: "cognitive"
-  synthos_depends_on: "all-cognitive-atoms"
-  synthos_data_access_level: "raw"
+  synthos_atom_type: cognitive
+  synthos_depends_on: all-cognitive-atoms
+  synthos_data_access_level: raw
+  synthos:
+    author: Synthos
+    signature: 'query: str, context: dict -> route: str, atom_chain: list[str], execution_mode:
+      str'
+    related_skills:
+    - argument-expression
+    - association-discovery
+    - ai-outreach
+    - autonomous-core-researcher
+    - claude-code
+    version: 1.8.0
 ---
+
 
 # Task Router — Synthos 系统入口
 

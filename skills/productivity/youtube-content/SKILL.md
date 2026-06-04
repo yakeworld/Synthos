@@ -1,11 +1,26 @@
 ---
 name: youtube-content
-description: "YouTube transcripts to summaries, threads, blogs."
-signature: "url: str -> transcript: str, summary: str"
-related_skills: [airtable, chinese-form-automation, google-workspace, jupyter-live-kernel, linear]
-allowed-tools: [terminal, read_file, write_file, search_files]
-platforms: [linux, macos, windows]
+description: YouTube transcripts to summaries, threads, blogs.
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
+platforms:
+- linux
+- macos
+- windows
+metadata:
+  synthos:
+    signature: 'url: str -> transcript: str, summary: str'
+    related_skills:
+    - airtable
+    - chinese-form-automation
+    - google-workspace
+    - jupyter-live-kernel
+    - linear
 ---
+
 
 # YouTube Content Tool
 

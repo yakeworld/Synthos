@@ -1,21 +1,34 @@
 ---
 name: nature-paper2ppt
-description: "Nature-style Chinese PPTX from academic papers — argument-driven slide generation with figure-first layout optimization. Extracts paper argument, selects evidence figures, writes Chinese slide content + speaker notes, builds real .pptx deck (python-pptx). Cross-platform Python stack (PyMuPDF, Pillow, python-pptx)."
-version: 1.0.0
-author: Synthos + GARCH-QUANT (absorbed)
+description: Nature-style Chinese PPTX from academic papers — argument-driven slide
+  generation with figure-first layout optimization. Extracts paper argument, selects
+  evidence figures, writes Chinese slide content + speaker notes, builds real .pptx
+  deck (python-pptx). Cross-platform Python stack (PyMuPDF, Pillow, python-pptx).
 license: MIT
-related_skills: [academic-diagram, architecture-diagram, comfyui, excalidraw, ffmpeg-video-audio-sync]
 allowed-tools: shell Read Write file_search
-signature: "source: str (PDF|text|notes) -> presentation: PPTX, qa_report: MD, figure_assets: list[Image]"
 metadata:
-  synthos_atom_type: "extended"
-  synthos_version: "1.0.0"
-  synthos_skill_md_hash: "da875dcf6601e2738ebd94a85bc8a0d9"
-  synthos_data_access_level: "verified_only"
-  absorbed_from: "https://github.com/GARCH-QUANT/garch-nature-paper2ppt"
-  absorption_date: "2026-05-21"
-  absorption_notes: "Full absorption of Nature Paper2PPT skill. Key innovation: figure-first layout optimization — asymmetric slide composition, evidence hierarchy, Nature-style page design. Python cross-platform stack (PyMuPDF/Pillow/python-pptx)."
+  synthos_atom_type: extended
+  synthos_version: 1.0.0
+  synthos_skill_md_hash: da875dcf6601e2738ebd94a85bc8a0d9
+  synthos_data_access_level: verified_only
+  absorbed_from: https://github.com/GARCH-QUANT/garch-nature-paper2ppt
+  absorption_date: '2026-05-21'
+  absorption_notes: 'Full absorption of Nature Paper2PPT skill. Key innovation: figure-first
+    layout optimization — asymmetric slide composition, evidence hierarchy, Nature-style
+    page design. Python cross-platform stack (PyMuPDF/Pillow/python-pptx).'
+  synthos:
+    author: Synthos + GARCH-QUANT (absorbed)
+    signature: 'source: str (PDF|text|notes) -> presentation: PPTX, qa_report: MD,
+      figure_assets: list[Image]'
+    related_skills:
+    - academic-diagram
+    - architecture-diagram
+    - comfyui
+    - excalidraw
+    - ffmpeg-video-audio-sync
+    version: 1.0.0
 ---
+
 
 # Nature Paper2PPT — 科学论文转Nature风格PPT
 
