@@ -197,3 +197,51 @@ Lesson: state.json must be committed after every cycle.
 **结果**: score 1.0, EXCELLENT
 
 **教训**: 连续多周期所有维度均为最优。改进重点从「修复退化」转向「提交积压改进」——这符合系统成熟期的正常模式。
+
+### Cycle 65 — 2026-06-06 (qwen3.6-35b-nvfp4 本地执行)
+
+**模式**: 完整 11 步进化循环 (PROBE→BENCHMARK→EXTERNAL→DIAGNOSE→IMPROVE→VERIFY→RECORD)
+**触发**: Cron 定时进化 full job (03:00 UTC)
+**模型**: qwen3.6-35b-nvfp4 (local ~35B params)
+
+**前置状态**: cycle 63, score 1.0, all dimensions 1.0, edit_budget 3/3 consumed
+⚠️ **发现状态滞后**: git 已有 cycle-64 commit，但 state.json 仍显示 cycle 63
+
+**DRIFT_CHECK**: 🟡 状态漂移 — state.json 落后 1 个周期
+
+**PROBE**: 
+- 7/10 核心原子通过 (1.0/1.0) — 4 个缺少 metadata.synthos
+- 110 SKILL.md, 109/110 YAML valid (99.1%), 1 编码错误 (memory-optimization-system)
+- 100/110 有 version, 54/110 有 signature
+- 110/110 git tracked (all committed)
+
+**BENCHMARK**: 0.95/1.0 — YAML 109/110 (99.1%), version 100/110, signature 54/110
+
+**EXTERNAL**: 无新吸收候选
+
+**DIAGNOSE**: 
+- structural: 0.90 (4 核心原子缺少 metadata.synthos)
+- benchmark: 0.95
+- optimize_effect: 1.00 (budget 3/3 可用)
+- coverage: 1.00
+- absorption_potential: 1.00 (git clean)
+- constitutional: 1.00
+
+**IMPROVE** (EDIT_BUDGET: consumed 3/3):
+1. 更新 state.json 从 cycle 63 到 65，记录 cycle 64 OpenClaw 吸收上下文
+2. 提交 51 个文件 (50 pending + state.json):
+   - 35 删除: autonomous-core-researcher SKILL.md + 34 reference/script/template (意圖移除)
+   - 7 修改 SKILL.md: crispdm-helix-experiment, quality-gate (v2.10.0), openalex, research-paper-search, latex-output (v1.1.0), paper-pipeline (双模式)
+   - 2 修改 references: writing-pipeline-checklist.md, public-dataset-prediction-paper-absorbed.md
+   - 7 新文件: cleveland-heart-leakage-experiment.md, pdf-compile-batch.py, assemble_pdf_from_steps.py, pdf-compilation-flow.md, pdf-compilation-silent-failure.md, orchestrator-compilation-gap.md, vhit-ml-papers-for-bppv-pinn.md
+3. git status clean ✅
+
+**VERIFY**: 无退化, git clean, 110 SKILL.md 全部 committed
+
+**结果**: score 0.97, EXCELLENT
+
+**教训**: 
+1. 多 agent 运行进化循环时，state.json 必须在每个 cycle 后更新，否则会产生状态滞后
+2. autonomous-core-researcher 的 35 文件删除是有意为之 — 其功能现在由 Hermes-agent 直接执行模式 (cron 触发) 处理
+3. memory-optimization-system/SKILL.md 在 4999 位置有损坏字节 — 未来 cycle 需修复
+4. 4 个核心原子缺少 metadata.synthos.version 和 signature 字段 — 待补充
