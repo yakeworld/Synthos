@@ -131,6 +131,41 @@ G1通过 → 只做EXT → G2通过 → 只做ASC → G3通过 → 只做HYP →
 
 ---
 
+## G7b: DOI 完整性自动补全（2026-06-05 新增）
+
+> D7 < 0.80 的常见原因：DOI 缺失、假 DOI、DOI 前缀不匹配。此流程自动检测并修复。
+
+### 触发条件
+- Layer B 评审 D7 < 0.80
+- DOI 覆盖率 < 90%
+- `grep -c 'doi\s*=' references.bib` < `grep -c '^@' references.bib` × 0.9
+
+### 自动修复流程
+
+| 步骤 | 命令 | 目的 |
+|:-----|:-----|:-----|
+| 1 | `grep -c '^@' references.bib && grep -c 'doi\s*=' references.bib` | 统计覆盖率 |
+| 2 | `grep -oP 'doi\s*=\s*\{[^}]+\}' references.bib \| sort \| uniq -d` | 检测重复 DOI |
+| 3 | 逐条 Crossref: `curl "https://api.crossref.org/works/$doi" \| python3 -c "import sys,json; print(json.load(sys.stdin).get('status','ERROR'))"` | 验证 DOI 真实性 |
+| 4 | 对缺失 DOI 条目执行 Crossref 搜索补全 | 自动补全 |
+
+### 修复策略
+
+| DOI 问题 | 修复方法 |
+|----------|---------|
+| 期刊论文无 DOI | Crossref API 搜索标题+作者补全 |
+| 数据集无 DOI | 查找对应原始论文 DOI（如 UCI dataset → Wolberg 1997 Cancer） |
+| 机构报告无 DOI | EU Publications Office / 官方 DOI |
+| 重复 DOI | pdfinfo 确认正确条目 → 删除错误条目 |
+| 假 DOI | Crossref 返回 failed → 标记假 DOI → SS 搜索替换 |
+
+### 完成后
+- 更新 `qc-d8-refs.md` 记录修复
+- 重编译 LaTeX（pdflatex × 2）
+- Layer B 重评 D7
+
+---
+
 ## 反模拟铁律（v2.1 新增 — 最高优先级）
 
 > 本节的优先级高于所有其他检查项。**模拟执行 = 闸门自动不通过，不论产出质量如何。**

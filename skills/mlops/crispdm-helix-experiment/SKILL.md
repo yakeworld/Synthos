@@ -71,11 +71,15 @@ for fold, (train_idx, test_idx) in enumerate(skf.split(X, y)):
 
 | 数据集 | N | 患病率 | Helix F1 | Leaky F1 | 差异 |
 |:-------|:-:|:------:|:--------:|:--------:|:----:|
-| Dataset A | 768 | 34.9% | 0.6986 | 0.7657 | +9.6% |
-| Dataset B | 569 | 37.3% | 0.8140 | 0.8220 | +1.0% |
+| PIDD | 768 | 34.9% | 0.6986 | 0.7657 | +9.6% |
+| Cleveland Heart | 303 | 45.9% | 0.8274 | 0.8106 | -2.0% |
+| WDBC | 569 | 37.3% | 0.8140 | 0.8220 | +1.0% |
+
+**注意**: 同一泄漏机制在不同数据集上表现截然不同（PIDD: Recall Paradox +9.6%, Cleveland: Negligible/反向 -2.0%, WDBC: Universal Inflation +1.0%）。不可跨数据集推广泄漏损伤模式。
 
 ## 参考文件
 
 - `references/helix-pipeline-template.py` — 完整Helix实验代码
 - `references/cross-dataset-protocol.md` — 跨数据集验证协议
 - `references/leakage-patterns.md` — 四种泄漏模式详解
+- `references/cleveland-heart-leakage-experiment.md` — Cleveland Heart 泄漏消融实验（Negligible/反向模式）

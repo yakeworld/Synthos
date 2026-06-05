@@ -34,84 +34,83 @@ metadata:
 | 节点闸门 | **节不过则停，门不通则返** | 每阶段完成必经质量门 |
 | 闭环进化 | **投完不弃，检之改之** | 投稿后仍可自检修订 |
 | 论文即验证 | **文以验法，技乃所产** | 可复用的技能才是真正产出 |
+| 持续推进 | **流水线不间歇，论文逐个推进** | paper-orchestrator常驻后台，非cron定时触发 |
+
+## 两种运行模式
+
+| 模式 | 方式 | 适用场景 |
+|:-----|:------|:---------|
+| **持续运行** | `paper-orchestrator.py` (tmux常驻) | 论文队列批量处理，24小时不中断 |
+| **定时触发** | cron jobs (每次独立会话) | 监控、扫描、报告等轻量任务 |
+| **手动触发** | 用户直接调用 | 单篇论文深度处理 |
+
+### 持续运行模式
+
+`paper-orchestrator.py` 是常驻后台的论文管线Worker，通过tmux保持持久会话。
+
+**启动方式：**
+```bash
+tmux new-session -d -s paper-orch -n worker
+tmux send-keys -t paper-orch:worker "cd /home/yakeworld/.hermes/scripts && python3 paper-orchestrator.py" Enter
+```
+
+**生命周期：**
+- 持续扫描队列，每10秒检查一次
+- 对每篇论文：检查状态 → 读取缺失步骤 → 调用API → 更新状态
+- 处理完自动进入队列下一位（按完成度从低到高）
+- 支持优雅停止（SIGTERM/SIGINT），异常自动重试3次
+- 每步完成后sleep(5)让GPU喘气
+- 日志：`/home/yakeworld/.hermes/cron/logs/paper-orchestrator.log`
+- PID文件：`/home/yakeworld/.hermes/cron/logs/paper-orchestrator.pid`
+
+**Control commands:**
+```bash
+python3 paper-orchestrator.py start  # 启动
+python3 paper-orchestrator.py stop   # 优雅停止
+python3 paper-orchestrator.py status # 查看队列状态
+python3 paper-orchestrator.py tail   # 实时查看日志
+```
+
+**⚠️ 2026-06-05: Script missing.** `paper-orchestrator.py` is referenced by this skill but does not exist on disk at `scripts/paper-orchestrator.py` or any known path. The cron jobs `paper-orchestrator` and any workflow relying on it will fail with `ModuleNotFoundError`. Either:
+1. Create the orchestrator script (see design in skill body), OR
+2. Disable the `paper-orchestrator` cron job until script exists, OR
+3. Process papers manually via `cron` → `step_gap_analysis` → `step_abstract` → manual writing of remaining steps.
+
+**Important**: Papers completed via manual cron processing (without orchestrator) will NOT have a full `paper.tex` assembled. The `assemble_pdf_from_steps.py` script only pulls the last step file into a minimal .tex. To get a full compiled PDF, the orchestrator must have assembled `paper.tex` from all 8 steps during the original write phase. If paper.tex is missing or minimal:
+- Check if `01-manuscript/paper.tex` exists and has >100 lines
+- If not, manual assembly is needed (read all step_*.md files and concatenate)
+- See reference: `references/pdf-compilation-flow.md`
+
+**处理逻辑：**
+1. 扫描所有论文目录 (`/media/yakeworld/sda2/Synthos/outputs/papers/`)
+2. 优先处理有内容但进度低的论文（有.tex或.abstract.md）
+3. 按IMRaD标准顺序：gap_analysis → abstract → intro → method → results → discussion → ref_check → quality_check
+4. 每步输出保存到 `01-manuscript/step_<步骤名>.md`
+5. 更新 `state.json` 记录完成步骤
+
+### PDF 编译（cron 手动触发）
+
+当 cron 完成所有 8 步后，需手动触发 PDF 编译：
+```bash
+python3 /media/yakeworld/sda2/Synthos/skills/writing/latex-output/scripts/assemble_pdf_from_steps.py <paper_dir>/01-manuscript
+pdflatex -interaction nonstopmode paper.tex
+pdflatex -interaction nonstopmode paper.tex  # 第二次消除 cross-reference
+```
+详细流程见 `references/pdf-compilation-flow.md`。
+
+### 定时触发模式（保留用于监控/扫描）
+
+- `synthos-evolution-probe` (每6h) → 轻量进化检查
+- `papers-daily-scan` (每6h) → 质量检查
+- `literature-monitor` (每天) → 文献监控
+- `bib-standardization` (每天) → 引用标准化
+- `daily-papers-report` (每天) → 日报生成
+- `synthos-evolution-full` (每天) → 完整11步进化
+- `autonomous-core-researcher` (每3h) → 最重的科研探索
+
+**关键区别：**
+- ✗ 持续运行模式不再是"每次cron触发都是全新的会话"
+- ✓ 所有任务都是cron定时触发 → 运行 → 退出 → 仅适用于监控/扫描任务
+- ✓ 论文处理任务由常驻进程处理，保持上下文连续性
 
 ## 六阶段流程
-
-```
-P0: 预检闸门 → D10a僵尸/孤儿检测 + bib完整性检查
-  │   D10a<100% + zombie>0 → bibitem完整性验证(quality-gate)
-  │   D10a<100% + orphan>0 → 正文补插入引用
-  ↓
-P1: 文献检索 → notebooklm-cli逐问法 → Gap/Hypothesis
-  ↓
-P2: 论文构建 → Results→Methods→Discussion→Introduction (NotebookLM逐节Q&A)
-  ↓
-P3: LaTeX编译 → pdflatex → 版本文件对比
-  ↓
-P4: 双质检 → quality-gate (L0.5 + Layer A/B) → 修订循环
-  ↓
-P5: 投稿准备 → 目录标准化 + 提交包同步
-  ↓
-P6: 技能提炼 → project-experience-distillation → 进evolution
-```
-
-## 关键规则
-
-| 规则 | 说明 |
-|:-----|:------|
-| **NotebookLM优先** | 所有论文节必须通过notebooklm ask逐节由Gemini生成，跳过=违规。若NotebookLM上传返回400错误，改用`references/notebooklm-fallback-lit-search.md` web_search 5方向法 |
-| **09-目录体系** | 01-manuscript / 02-submission / 03-code / 04-data / 05-figures / 06-references / 07-quality / 08-records / 09-background |
-| **双质检** | Layer A(本地7维) + Layer B(Gemini评审)，校准分=min(A,B) |
-| **修订循环** | 不达标→自动修订，连续3轮无进展→降级目标期刊 |
-| **工作目录** | 所有论文统一在 Synthos/outputs/papers/{paper-name}/ |
-| **P6强制** | 论文完成后必须提炼skill+修补陷阱+记录进化 |
-
-## 编译策略
-
-```bash
-# 方式A（推荐 — thebibliography内嵌，无需bibtex）：
-pdflatex paper.tex && pdflatex paper.tex
-
-# 方式B（外部.bib文件，需bibtex）：
-pdflatex paper.tex && bibtex paper && pdflatex paper.tex && pdflatex paper.tex
-
-# 判断：参考文献≤25篇用方式A（thebibliography），≥30篇用方式B（.bib文件）
-```
-
-## 子skill映射
-
-| 阶段 | 加载skill | 产出 |
-|:-----|:----------|:-----|
-| P-1文献检索 | `research-paper-search` | 候选文献集 |
-| P1知识提取 | `notebooklm-cli` (逐问法) **或 web_search 5方向法** | Gap/Hypothesis |
-| P2论文写作 | `notebooklm-cli` (逐节ask) | LaTeX节文件 |
-| P3编译 | `latex-output` | PDF |
-| P4质检 | `quality-gate` | 质量报告 |
-| P5投稿 | — | 提交包 |
-| P6提炼 | `project-experience-distillation` | 新skill/修补 |
-
-## 关键陷阱
-
-| 陷阱 | 说明 |
-|:-----|:------|
-| **NotebookLM 400上传错误** | 新notebook上传.ipynb/PDF返回400错误 → 跳过NotebookLM，改用web_search 5方向法做文献检索（`references/notebooklm-fallback-lit-search.md`），直接写论文 |
-| **delegate_task大文件超时** | 委托子agent处理源文件>40KB或>500行时，会因token数超限而失败。必须先提取结构/关键内容再传参，或不使用delegate_task直接处理 |
-| **手稿中的中文注释** | 从work目录提取BPPV手稿时，中文注释行(含Unicode范围\\u4e00-\\u9fff)需要过滤。使用python3检测并保留纯英文行 |
-| **子agent作者信息造假** | 委托delegate_task/subagent写论文时，子agent常使用虚假作者信息（如Yake Wei/weiyake@example.edu）。需在任务描述中显式指定：作者Xiaokai Yang（zhriye@wzhospital.cn），通讯作者Xiaokai Yang, Department of Neurology, Wenzhou People's Hospital |
-
-### T3→T2推高协议
-
-系统综述审核的常见瓶颈（D2/D3/D7）及修复策略见 `references/t3-to-t2-push-protocol.md`。核心：D7全引用→D4 PRISMA流程图→D2误差传播算法→T2(0.80+)推高。T1需要临床验证数据。
-
-## 参考文件
-
-- `references/notebooklm-fallback-lit-search.md` — NotebookLM故障时备用文献检索方案（web_search 5方向法）
-- `references/cron-paper-ingestion.md` — Cron论文入库模式（批量手稿→管线）
-- `references/manuscript-merging-strategy.md` — 手稿合并模式（同类手稿→一篇论文）
-- `references/code-to-paper-workflow.md` — 从已有notebook代码直接生成论文的快捷管线（跳过P1）
-- `references/work-directory-scanning.md` — 从work目录发现未论文化的实验代码和手稿
-- `references/t3-to-t2-push-protocol.md` — 系统综述T3→T2推高策略
-- `references/paper-section-generation.md` — 各节Q&A模板
-- `references/latex-editing-pitfalls.md` — LaTeX编辑陷阱
-- `references/paper-dir-unification-workflow.md` — 目录统一协议
-- `references/submission-preparation.md` — 投稿准备清单

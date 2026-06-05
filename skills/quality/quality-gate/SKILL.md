@@ -9,7 +9,7 @@ allowed-tools:
 - search_files
 metadata:
   synthos:
-    version: 2.9.0
+    version: 2.10.0
     priority: P0
     atom_type: meta-quality
     author: Synthos
@@ -74,6 +74,7 @@ metadata:
 | G5 ARG | 论文论证+引用全文验证 | 无虚构引用+无僵尸/孤儿 |
 | G6 VER | 观点验证 | 验证通过 |
 | G7 latex | 编译验证 | cite×bib×pdf三维匹配 |
+| G7b DOI补全 | DOI 完整性 | ≥90%条目有DOI，缺失自动补全+Crossref验证 |
 
 详细检查清单见 `references/writing-pipeline-checklist.md`。
 
@@ -101,6 +102,45 @@ Layer B: NotebookLM Gemini 7维评审
 - 实验数值必须有实验代码（不可编造）
 - 消融表所有行必须来自同一模型管线
 - 派生值同步检查：修改原始值后重算百分比/ratio
+- **D7 < 0.80 或 DOI 覆盖率 < 90% → 必须自动补全，不跳过 G7b → 不进入 Layer B 重评**
+
+## Protocol/Design 论文质量门特例
+
+协议论文（Protocol/Design Paper）的 D3（结果）维度天然受限——结果为理论设计值或仿真结果，非真实临床数据。评估时需区分：
+
+| 论文类型 | D3 通过基线 | 原因 |
+|----------|-------------|------|
+| 实验论文（含真实数据） | ≥0.75 | 结果应有实测值、显著性检验 |
+| Protocol/Design 论文 | ≥0.55 | 结果为理论设计值 + 仿真/Monte Carlo |
+| Method 论文（算法创新） | ≥0.70 | 结果应有对比实验（即使仅仿真） |
+
+**D3 增强路径（protocol → T1）**：
+1. 补充仿真代码（不只是描述，要实际跑代码产生数值）→ D3 0.55 → 0.75
+2. 与小样本真实数据（N≥50）做初步验证 → D3 0.75 → 0.85+
+3. 补充 baseline 对比（standard LR, RF, XGBoost）→ D3 0.75 → 0.80+
+
+**D3 降级场景**：
+- 理论设计值无仿真支撑 → D3 < 0.50 → FAIL
+- 仅有数值目标无实际运行 → D3 0.40-0.50 → T3 or FAIL
+
+## D1 "First" 声称限定规则
+
+连续使用 "first" 声称需满足：
+1. **必须加限定词**：改为 "to our knowledge, the first..." 或 "the first X that Y"
+2. **限定范围**：不泛化到整个领域，限定到具体场景（如 "for PD silent aspiration" 而非 "for all neurological disorders"）
+3. **PROSPERO/ClinicalTrials.gov 搜索记录**是支撑 "first protocol" 声称的必要证据
+4. 单篇论文 "first" 声称 ≤ 2 处，过多会触发审稿人质疑
+
+## G7b DOI 自动补全协议（v2.10.0 新增）
+
+**铁律**：D7 < 0.80 或 DOI 覆盖率 < 90% → 不跳过，必须自动补全，不进入 Layer B 重评。
+
+执行顺序：
+1. 统计覆盖率：`grep -c '^@' references.bib && grep -c 'doi\s*=' references.bib`
+2. 对缺失 DOI 条目：期刊论文 → Crossref 搜索补全；数据集 → 找原始论文 DOI（如 UCI dataset → Wolberg 1997 Cancer）；机构报告 → EU Publications Office
+3. 对已有 DOI 条目：逐条 `curl "https://api.crossref.org/works/$doi"` → 检测假 DOI（status≠ok）
+4. 重复 DOI → pdfinfo 确认 → 保留正确条目
+5. 更新 qc-d8-refs.md → 重编译 pdflatex × 2 → 重新触发 Layer B 评审
 
 ## 参考文件
 
