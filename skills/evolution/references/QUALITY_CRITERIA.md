@@ -23,8 +23,11 @@
 | Score | Condition |
 |-------|-----------|
 | 1.0 | Description ≥100 characters, contains concrete keywords |
+| 0.8 | Description 40-99 characters (reference-style: concise, detail in references/) |
 | 0.5 | Description ≥50 characters |
-| 0.0 | Description <50 characters or missing |
+| 0.0 | Description <40 characters or missing |
+
+> **Reference-style skills** (e.g., hypothesis-generation, knowledge-extraction): These use a two-tier architecture — concise SKILL.md (~19 lines, ~40 char description) + rich references/ + golden/. They are NOT structurally deficient; they score 0.8 on description and 1.0 on reference files (see 1.5 below).
 
 ### 1.4 Allowed-tools (weight: 0.10)
 
@@ -45,6 +48,8 @@ Scored as: count of present files / 4 (IO_CONTRACT, EVIDENCE_SCHEMA, BOUNDARY, C
 | 2/4 | 0.50 |
 | 1/4 | 0.25 |
 | 0/4 | 0.0 |
+
+> **Reference-style skills**: If the SKILL.md contains "references/" and the skill has ≥3 files in references/ directory, this section automatically scores 1.0 regardless of the specific file types present. The richness of the references directory itself is the quality signal.
 
 ## 2. API Health (knowledge-acquisition only, weight: 0.20)
 

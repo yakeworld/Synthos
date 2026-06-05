@@ -32,7 +32,7 @@ metadata:
 | 登录 | `notebooklm login` | `references/cli-cheatsheet.md` |
 | 列表 | `notebooklm list` | — |
 | 切换 | `notebooklm use <partial_id>` | — |
-| 问答 | `notebooklm ask "问题"` | 逐问法见下 |
+| 问答 | `notebooklm ask "问题"` | 逐问法见下。**注意：回答需30-60s**，超时设为≥90s |
 | 搜索 | `notebooklm source add-research "query"` | 导入网页源(非PDF) |
 | 上传 | `notebooklm source add file.pdf` | v0.4.1+自动类型检测 |
 | PDF上传 | `source add "https://arxiv.org/pdf/{id}"` | arXiv URL直传 |
@@ -54,6 +54,9 @@ metadata:
 
 ## 关键陷阱
 
+- ⚠️ **.ipynb文件上传400错误**: NotebookLM不支持ipynb格式上传，返回400 Bad Request。解决方法：提取代码cell为文本文件后再上传或转markdown后用`--type text`模式
+- ⚠️ **symlink文件被拒绝**: 默认拒绝symlink路径，需加 `--follow-symlinks` 参数
+- ⚠️ ask超时: NotebookLM回答需30-60s，timeout至少设90s（默认可不够）
 - ⚠️ 传入Markdown: `source add "$(cat file.md)" --type text`（非 `file.md`）
 - ⚠️ YAML frontmatter导致`---`被click解析错误: 上传前剥离
 - ⚠️ 无文本层PDF: 用 `pdftotext pdf - | wc -c` 检查，≈0则用arXiv URL直传

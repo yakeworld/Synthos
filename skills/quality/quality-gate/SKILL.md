@@ -106,6 +106,7 @@ Layer B: NotebookLM Gemini 7维评审
 
 - `references/writing-pipeline-checklist.md` — G1-G7详细检查清单
 - `references/bibitem-integrity-verification.md` — Bibitem完整性验证
+- `references/systematic-review-layer-b-patterns.md` — Layer B(Gemini)系统综述D4/D7弱项修复模式
 - `references/ref-citation-audit-protocol.md` — 引用审计协议
 - `references/data-leakage-audit-protocol.md` — 数据泄露审计
 - `references/full-claim-l05-verification-2026-06-01.md` — 全量声明L0.5验证

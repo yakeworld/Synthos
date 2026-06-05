@@ -37,9 +37,11 @@
 输出：drift_level (🟢/🟡/🔶/🔴)
 失败处理：🟢→继续 🟡→记录 🔶→记录+重置 🔴→记录lessons+通知用户
 
-## 第四步：PROBE — 结构探测
+## 第4步：PROBE — 结构探测
 
 用7原子结构健康检查表（文件名、描述长度、allowed-tools等10项）。评分公式见 QUALITY_CRITERIA.md。
+
+> **[v2.18] Reference-style skill recognition** — 5个原子技能（EXT/ASC/HYP/ARG/VER）使用两-tier架构：精简SKILL.md（~19行，~40字符description）+ rich references/ + golden/。这些不是结构缺陷，而是架构选择。QUALITY_CRITERIA.md 1.3和1.5节已更新以识别此模式。PROBE测试必须识别 references/ 目录存在且文件≥3 为有效引用型技能。
 
 ## 第五步：BENCHMARK — 功能测试+Golden验证（v2.12 新增自动数据集）
 

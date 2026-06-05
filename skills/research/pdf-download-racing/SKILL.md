@@ -58,12 +58,13 @@ export MEDDATA_PASSWORD="..."
 
 ## 智能 Cloudflare 绕过
 
-`scripts/smart_download.py` 提供两层下载策略：
+`tools/paper-manager/src/smart_download.py` 提供两层下载策略：
 1. 先用 `requests.get()` 尝试
 2. 检测到 Cloudflare（403/503/429 + cf标识）→ 自动重试 `curl_cffi (impersonate="chrome")`
 
 ```python
-from scripts.smart_download import smart_download
+import sys; sys.path.insert(0, 'tools/paper-manager/src')
+from smart_download import smart_download
 result = smart_download(url, timeout=30)
 if result['ok'] and result['content'][:4] == b'%PDF':
     # 下载成功
