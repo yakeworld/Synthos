@@ -1,10 +1,10 @@
 ---
 name: evolution
-description: ⚡ P0 自进化引擎。Synthos evolution engine v2.17 — 四态决策+硬收敛+GEPA反射分析+自动基准+Pareto优化+外部吸收+教训学习+黄金验证+自扩关键词+漂移检测+渐进披露+Git即记忆。
+description: ⚡ P0 自进化引擎。Synthos evolution engine v2.20 — 四态决策+硬收敛+GEPA反射分析+自动基准+Pareto优化+外部吸收+教训学习+黄金验证+自扩关键词+漂移检测+渐进披露+Git即记忆。Hooks注入+置信度评分+并行Agent审计+会话上下文注入+Prompt Snippets。
 license: MIT
 metadata:
   synthos:
-    version: 2.18.0
+    version: 2.20.0
     priority: P0
     atom_type: meta-evolution
     author: Synthos
@@ -17,6 +17,48 @@ metadata:
 ---
 
 # Evolution Engine — 自进化引擎
+
+## 外部吸收记录 (v2.20 新增)
+
+> 吸收自 anthropics/claude-code (130,221⭐, 2026-06-05, 分数 4.5/5.0)
+
+### Claude Code 关键方法论注入
+
+| Claude Code 机制 | Synthos 注入点 | 效果 |
+|:-----------------|:---------------|:-----|
+| Hooks 系统 (PreToolUse, SessionStart, Stop) | evolution + quality-gate | 结构约束 > prompt 约束 |
+| 自信度评分 (0-100, 阈值 80 过滤假阳性) | quality-gate | 大幅减少误报 |
+| 并行 Agent 独立审计 (4 agents) | task-router | 并行编排增强 |
+| 会话初始化注入上下文 (SessionStart) | evolution | 渐进披露机制 |
+| 对话分析 (自动识别需防错行为) | evolution (增强 Nudge) | 行为监测增强 |
+| Prompt Snippets (工具过度触发/过度工程化) | quality-gate | Prompt 优化 |
+
+### 验证结论
+
+**Claude Code 130K⭐ 验证了 Synthos SKILL.md 范式：相同哲学，不同实现。**
+
+### 吸收记录文件
+
+- `references/absorption-claude-code-skills-2026-06-05.md` — 完整吸收记录 (5 层提取 + 关键教训)
+
+## 吸收方法论清单
+
+> 所有吸收遵循 Synthos 吸收标准 (P7: 拒绝搬运，只取方法论)。每次吸收完成:
+> 1. 读文档/代码 → 理解核心方法论
+> 2. 五维评分 → 决定是否吸收
+> 3. 方法论提取 → 剥离具体实现，提取可移植原理
+> 4. 文言提炼 → 压缩为 3-5 条文言格言
+> 5. 注入融合 → 进入 Synthos 现有技能协议
+> 6. 记录 → evolution-log 记录吸收过程
+
+### 历史吸收 (按时间排序)
+
+| 项目 | 分数 | 状态 | 注入点 | 日期 |
+|:-----|:----:|:-----|:-------|:-----|
+| autocontext (3.9) | absorbed | improvement-loop + knowledge-inheritance + trace-continuity | evolution protocol | 2026-06-05 |
+| PaperDebugger (3.3) | absorbed_methodology | Research→Critique→Revision + conference-style review | quality-gate + P0 + paper-pipeline | 2026-06-05 |
+| 724-office (3.8) | absorbed_methodology | Nudge Registry + Trigger Functions + Auto-Inject Hints | evolution + quality-gate | 2026-06-05 |
+| Claude Code (4.5) | absorbed_methodology | Hooks + Confidence Scoring + Parallel Agents + Session Start Context | evolution + quality-gate + task-router | 2026-06-05 |
 
 ## 核心流程
 
@@ -72,6 +114,83 @@ cat BENCHMARKS.md | grep -E "Pass|Fail|Score"
 - `BENCHMARKS.md` — 自动数据集基准
 - `skill_registry.json` — 技能注册表更新
 
+## v2.19 注入 (autocontext absorption)
+
+### improvement-loop auto-crystallize
+CRYSTALLIZE 步骤新增自动检测：同一任务模式成功执行 ≥3 次 → 输出 pending_review SKILL.md 草稿。
+文言：去芜存菁，留真去伪。
+
+### knowledge-inheritance contract
+evolution-state.json 新增 `inherited_knowledge` 字段，记录跨轮知识传递。
+文言：前鉴不丢，后事之师。
+
+### trace-continuity markers
+evolution-log.md 新增 `kept` / `discarded` 标记，区分成功/失败迭代。
+文言：迭代有约，出必有痕。
+
+详见: references/evolution_protocol_v2.19.md (11步完整流程) 和 references/absorption-autocontext-2026-06-05.md
+
+## 自动持续迭代协议 (v2.20)
+
+> 用户指令: "自动持续迭代，判断用户回答，超过阈值自动执行"
+> 条件: score≥0.85 + status=healthy + 无rejected buffer + 连续健康<20轮
+
+当上述条件全部满足时，自动进入下一进化周期，无需人工干预。
+每次自动迭代记录到 evolution-log.md，追加 lesson 到 lessons.jsonl。
+
+### 阈值矩阵
+
+| 场景 | 行为 |
+|:-----|:-----|
+| score≥0.85 + healthy + 无rejected + 连续<20 | ⚡ 自动继续下一周期 |
+| score<0.85 OR degraded OR rejected>0 OR 连续≥20 | 🔴 停止，人工审查 |
+
+## 参考文件
+
+- `references/evolution-cycle-detail.md` — 完整周期流程Deep Dive
+- `references/evolution_protocol.md` — 11步执行协议 (v2.17)
+- `references/evolution_protocol_v2.19.md` — 11步执行协议 (v2.19完整注入)
+- `references/absorption-standard.md` — 吸收标准体系（五维比较+质量门）
+- `references/absorption-autocontext-2026-06-05.md` — autocontext方法论吸收记录
+- `references/absorption-paperdebugger-2026-06-05.md` — PaperDebugger方法论吸收记录
+- `references/absorption-724-office-2026-06-05.md` — 724-office Nudge System吸收记录
+- `references/auto-continuation-protocol.md` — 自动持续迭代协议（阈值+条件）
+
+### Nudge 系统注入 (724-office absorption)
+
+> 吸收自: wangziqi06/724-office (MIT)
+> 文言: 用结构使错误不可能 | 检测有工具不用，自动注入提示继续
+
+Nudge 系统 = 结构行为校正 (Structural Behavior Correction)。核心机制：
+
+1. **Nudge Registry** — 注册行为触发规则（trigger_fn: ctx → bool）
+2. **Trigger Functions** — 检测 LLM 有工具但未使用的场景
+3. **Auto-Inject Hints** — 自动注入提示让 LLM 继续执行
+4. **Max Fires Limit** — 防止循环触发（每会话 max_fires=1）
+
+内建规则:
+| 规则 | 触发条件 | 效果 |
+|:-----|:---------|:-----|
+| search_nearby_no_location | 搜索返回结果但未发位置卡 | 提示发送位置 |
+| said_recorded_no_write | 说"已记录"但未写文件 | 提示写入文件 |
+| said_scheduled_no_schedule | 说"已安排"但未调用调度 | 提示调用 schedule |
+| structured_data_no_render | 回复含结构化数据但未渲染 | 提示调用 render_page |
+| self_reflect_no_report | 给出行为分析但未用 soul_report | 提示生成行为报告 |
+
+注入点: evolution protocol OPTIMIZE 步骤 → LLM 行为监测 + 自动提示注入。
+
+### Research→Critique→Revision 流水线注入 (PaperDebugger)
+
+> 吸收自: PaperDebugger/paperdebugger (AGPL-3.0, 方法论)
+> 文言: 格物通理，立言成章 | 分段审核，逐段精进 | 引用可溯，证据可验
+
+注入点: paper-pipeline + quality-gate。三个子门:
+1. **Researcher** — 文献定位与上下文分析
+2. **Reviewer** — 会议审稿人风格的分段结构化评审
+3. **Enhancer** — 上下文感知的精修改写
+
+详见: references/absorption-paperdebugger-2026-06-05.md
+
 ## 参考文件
 
 - `references/evolution-cycle-detail.md` — 完整周期流程Deep Dive
@@ -79,3 +198,16 @@ cat BENCHMARKS.md | grep -E "Pass|Fail|Score"
 - `references/gepa-reflection.md` — GEPA反射式分析协议
 - `references/benchmark-automation.md` — 自动基准测试
 - `references/drift-detection.md` — 漂移检测和宪法集成
+- `references/absorption-standard.md` — 吸收标准体系（五维比较+质量门）
+- `references/absorption-paperdebugger-2026-06-05.md` — PaperDebugger方法论吸收记录（XtraMCP流水线、conference-style review、citation verification）
+- `references/absorption-autocontext-2026-06-05.md` — autocontext方法论吸收记录（improvement-loop、knowledge-inheritance、trace-continuity）
+- `references/absorption-autocontext-2026-06-05.md` — autocontext方法论吸收记录
+- `references/IO_CONTRACT.md` — IO契约格式
+- `references/EVIDENCE_SCHEMA.md` — 证据schema
+- `references/BOUNDARY.md` — 边界声明
+- `references/LESSONS.md` — 历史教训集
+- `references/project-health-assessment.md` — 手动健康评估
+- `references/SKILL_TREE.md` — 技能树结构
+- `references/QUALITY_CRITERIA.md` — 质量评分标准
+- `references/CHANGE_LOG.md` — 变更日志
+- `references/ABSORPTION.md` — 吸收通用流程

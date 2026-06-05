@@ -97,7 +97,106 @@ Step 3: PubMed搜索 → 有结果且标题匹配 → ✅ PASS
 
 ---
 
-## 四、参考命令速查
+## 四、修复工作流：检测 → 替换 → 验证
+
+当 bibitem 被确认为虚构（数据库无匹配），执行以下修复流程：
+
+### 阶段1：确认虚构范围
+
+```bash
+# Step 1a: D10a扫描找出所有僵尸引用（有cite无PDF）
+# Step 1b: 对每个僵尸引用，用OpenAlex搜索标题 + 第一作者
+# Step 1c: 如果数据库无匹配 → 标记为「FABRICATED」
+```
+
+**虚构引用特征**（2026-06-05实战总结）：
+| 特征 | 示例 | 危险等级 |
+|:-----|:-----|:--------:|
+| 无DOI字段 | `Chua2024`（无doi=） | 🔴 |
+| 作者列为"and others"（非标准格式） | `author = {Chua, K. and others}` | 🔴 |
+| 作者名为单字母缩写 | `Gr, S.` | 🔴 |
+| 期刊名与常见的该领域论文模式不符 | `J. Healthc. Eng.` 发表综述 | 🟡 |
+| 年份极近/未来 | `2024`, `2025` | 🟡 |
+| OpenAlex搜索0结果 | 精确标题搜索无匹配 | 🔴 确认虚构 |
+
+### 阶段2：搜索验证替代引用
+
+搜索真实论文替换每个虚构引用。使用OpenAlex（无速率限制）：
+
+```python
+# 搜索策略：提取虚构引用的核心概念 + 上下文需求
+# 例：Chua2024声称"PD患者吸入性肺炎风险3.30倍"
+# → 搜索 "aspiration pneumonia risk factors Parkinson's disease"
+# → 找到 Langmore1998 (Predictors of Aspiration Pneumonia, Dysphagia, 859 cites)
+```
+
+**替换原则**：
+1. **上下文匹配**：新引用必须支持原文中同一论证点（不要改变正文论证逻辑）
+2. **引用影响优先**：选高引用论文（Cited-by count高，知名期刊）
+3. **OA优先**：优先选Open Access（方便PDF下载）
+4. **年份合理**：新引用年份应早于论文写作年份
+
+### 阶段3：更新Bib文件
+
+```python
+# 用OpenAlex获取新引用的完整元数据
+url = f"https://api.openalex.org/works/doi:{doi}"
+data = json.loads(urllib.request.urlopen(url).read())
+
+# 构建标准BibTeX条目
+# 关键字段：author, title, journal, year, volume, pages, doi
+```
+
+**规范**：
+- 所有字段使用大括号 `{...}` 
+- journal名用 `{\\textit{Journal Name}}`
+- doi字段用小写，不带 `https://doi.org/` 前缀
+- 作者格式：`Last, First and Last, First`
+
+### 阶段4：更新Tex引用键
+
+```bash
+# 全局替换\cite{OLD_KEY} → \cite{NEW_KEY}
+# 检查文件：sections/*.tex 和主 paper.tex
+sed -i 's/\\\\cite{OLD_KEY}/\\\\cite{NEW_KEY}/g' sections/*.tex paper.tex
+```
+
+### 阶段5：重编译验证
+
+```bash
+# 全流程编译
+pdflatex paper.tex && bibtex paper && pdflatex paper.tex && pdflatex paper.tex
+
+# 验证：无 undefined citation
+grep -i "undefined" paper.log  # 应无输出
+
+# 验证：旧虚构引用不再出现
+grep -c "OLD_KEY" paper.bbl paper.aux  # 应 = 0
+```
+
+### 阶段6：更新审计记录
+
+```
+D10a变更: X% → Y%
+僵尸引用: N → 0
+虚构引用替换: M个
+新增PDF: K个
+```
+
+### 实战案例：pd-dysphagia-2026（2026-06-05）
+
+| 虚构引用 | 替换引用 | 替换依据 |
+|:---------|:---------|:---------|
+| Chua2024 | Langmore1998 (Dysphagia, 859 cites) | PD吸入性肺炎风险预测 |
+| Kalf2023 | Suttrup2015 (Dysphagia, 466 cites) | PD吞嚥障礙流行病學 |
+| MarieSainte2021 | Brodsky2016 (Chest) | 吞嚥篩查準確性 |
+| Dey2023 | Costantini2023 (Sensors, OA) | ML用於吞嚥障礙預測 |
+| Gr2024 | Volkert2019 (Clin Nutr, OA) | 老年營養指南 |
+| Cabral2025 | Varoquaux2022 (npj Digital Med, OA) | ML數據泄漏方法學失誤 |
+
+**结果**：6个虚构引用→6个已验证引用，编译通过，0 undefined。
+
+## 五、参考命令速查
 
 ```bash
 # SS搜索

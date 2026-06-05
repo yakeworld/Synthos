@@ -25,8 +25,8 @@ notebooklm status                         # Check active context
 | Add Google Drive | `notebooklm source add-drive` |
 | Add YouTube | `notebooklm source add <url>` |
 | Summarize notebook | `notebooklm summary` |
-| Generate report | `notebooklm artifact generate report` |
-| Generate audio | `notebooklm artifact generate audio` |
+| Generate report | `notebooklm generate report "prompt"` |
+| Generate audio | `notebooklm generate audio "prompt"` |
 | Download artifact | `notebooklm artifact download report <id>` |
 | Share with user | `notebooklm share add email@domain.com` |
 | Search sources | `notebooklm source fulltext "keyword"` |
