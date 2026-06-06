@@ -16,7 +16,6 @@ metadata:
     - argument-expression
     - association-discovery
     - ai-outreach
-    - autonomous-core-researcher
     - claude-code
     version: 1.8.0
 ---

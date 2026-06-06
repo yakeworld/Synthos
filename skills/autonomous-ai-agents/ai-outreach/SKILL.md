@@ -24,7 +24,6 @@ metadata:
     author: Synthos
     signature: 'input: dict -> output: dict'
     related_skills:
-    - autonomous-core-researcher
     - claude-code
     - codex
     - hermes-agent

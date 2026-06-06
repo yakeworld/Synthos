@@ -27,8 +27,21 @@ for i, line in enumerate(lines, 1):
 | — | U+2014 | 从Word/浏览器复制，em-dash | 替换为 `---` |
 | ' | U+2019 | smart/curly quote | 替换为 `'` |
 | " | U+201C/U+201D | smart double quotes | 替换为 `"` |
-| · | U+00B7 | 中圆点（常见于公式） | `\cdot` |
+| · | U+00B7 | 中圆点（常见于公式） | `\\cdot` |
 | 篇 | U+7BC7 | 文件名混入中文 | 删除 |
+| 文以验法 | U+6587/U+4EE5/U+9A8C/U+6CD5 | Synthos哲学引用 | "paper validates method" |
+
+## Synthos 特定案例
+
+Synthos哲学引用中的CJK字符是paper.tex编译失败的高频原因。每次编译前搜索：
+```bash
+grep -P '[\x{4e00}-\x{9fff}]' paper.tex
+```
+
+常见替换表：
+- "文以验法" → "paper validates method"
+- "道生一" → "the way produces one"  
+- "苟日新" → "if you can renew yourself in a day"
 
 ## 预防
 

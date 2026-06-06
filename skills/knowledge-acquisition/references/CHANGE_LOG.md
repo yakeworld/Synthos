@@ -1,5 +1,11 @@
 # CHANGE_LOG.md — knowledge-acquisition
 
+## v1.6.0 — 2026-06-06
+
+**变更类型**: 核心修复 — NCBI eFetch retmode=json 系统性破坏
+**描述**: NCBI June 2026 API 变更导致 eFetch 的 retmode=json 对单 ID 请求返回原始整数（非 JSON）。所有 eFetch 调用必须使用 retmode=xml。此修复已在 `research-paper-search` skill 中记录（`references/efetch-response-quirks.md` v31）。所有 PubMed eFetch 相关代码已验证使用 retmode=xml（无中断）。
+**影响的组件**: knowledge-acquisition, research-paper-search, autonomous-core-researcher（所有依赖 PubMed eFetch 的技能）
+
 ## v1.5.0 — 2026-05-18
 
 **变更类型**: 核心规范强制 — 写作闭环审计驱动
