@@ -49,7 +49,9 @@ delegate_task(
 - paper-inventory.md: 更新状态
 
 ## 陷阱
-- [^xx] 引用标记→\cite{xx} 可能漏转换 → 编译检查 undefined refs
-- 手稿中英文混杂 → 中文背景注释需过滤
+- [^xx] 引用标记→\\cite{xx} 可能漏转换 → 编译检查 undefined refs
+- 手稿中英文混杂 → 中文背景注释需过滤（LaTeX默认不支持CJK字符）
 - 大文件(>800行) → 先提取结构再委托
 - `elsarticle` vs `article` 模板 → 始终用 elsarticle（团队标准）
+- **step_gap_analysis.md 可被覆盖**: NotebookLM或orchestrator重新扫描时，可能用摘要替换原始的D1-D10a结构分析。在gap分析写入paper步骤前，确认step_gap_analysis.md保持完整D1-D10a结构。如果已被替换（文件变小、结构消失），从agent-tracker.json的notes字段重建。
+- **中文哲学引用导致LaTeX编译失败**: Synthos哲学引用（如"文以验法"）在paper.tex中会触发LaTeX Unicode错误。编译前搜索CJK字符并替换为英文等效表达。

@@ -51,3 +51,4 @@ metadata:
 - `references/mesh-terms.md` — 眼动/前庭MeSH术语列表
 - `references/clinical-queries.md` — 临床查询过滤器详解
 - `references/batch-retrieval.md` — 批量检索和XML解析
+- `references/efetch-response-quirks.md` — efetch 可能返回 text/plain 或 HTML（非JSON/XML）；esummary key 是 PMID 不在 pubmed 下；idlist 键名小写

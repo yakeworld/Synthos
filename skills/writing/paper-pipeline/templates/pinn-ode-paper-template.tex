@@ -1,0 +1,137 @@
+# PINN/ODE Paper Template — paper.tex
+
+Standard template for PINN/ODE oculomotor papers. All papers from synthos #55–#64 follow this structure.
+
+## Document Structure
+
+```
+\documentclass[12pt]{article}
+  \usepackage{amsmath, amssymb, amsfonts}
+  \usepackage{graphicx, booktabs, geometry, hyperref}
+  \geometry{margin=1in}
+
+\title{A [METHOD] for [DOMAIN]: [SUBTITLE]}
+\author{Synthos Research Team}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Abstract}
+  Background → Objective → Methods → Results → Conclusion
+  Include: MAPE, R², RMSE, AUC, accuracy, bifurcation threshold, ablation ratio
+
+\section{Introduction}
+  1. Background (field overview, importance)
+  2. Clinical Landscape (current practice, gaps)
+  3. Theoretical Foundations (prior models, their limits)
+  4. The Gap (what doesn't exist)
+  5. Research Question (1 clear RQ)
+  6. Contributions (3-4 bullet points)
+  7. Paper Structure (brief section overview)
+
+\section{Methods}
+  \subsection{ODE System Formulation}
+    State variables (table)
+    Governing equations (numbered)
+    Parameter table (symbol, meaning, range, units)
+    Physical interpretation paragraph
+    Nonlinear transducer (if applicable)
+    Target profiles (clinical standard scenarios)
+
+  \subsection{Bifurcation Analysis}
+    Critical ratio identification
+    Clinical relevance paragraph
+
+  \subsection{Data Generation}
+    RK4 integration (dt = 0.001)
+    Scenario table (parameter combinations, expected behavior)
+    Measurement noise model (σ values, missing data, saccadic intrusions)
+    Clinical validation sources (published studies)
+
+  \subsection{PINN Architecture}
+    NN(t; θ) → [state variables]
+    Hidden layers: 128, 256, 256, 128 with SiLU
+    Loss function: L_data + λ_ode·L_ode + λ_smooth·L_smooth
+    Explicit equations for each loss component
+    Default weights: λ_data=1.0, λ_ode=0.1, λ_smooth=0.01
+    Optimization: Adam LR=1e-3 (network) / 1e-4 (ODE params), 50K iterations
+
+  \subsection{Baselines}
+    Classic model reference
+    Simple metric
+    ML baseline (if applicable)
+
+  \subsection{Evaluation Metrics}
+    Parameter recovery (MAPE target <12%)
+    Trajectory fitting (R² target >0.85)
+    Prediction accuracy (RMSE target)
+    Classification (AUC target >0.80)
+    Ablation study (physics essential)
+
+\section{Results}
+  \subsection{Parameter Recovery}
+    Table: parameter, true, recovered, MAPE, status (✅/❌)
+    Overall MAPE with target comparison
+
+  \subsection{Trajectory Fitting}
+    Table: scenario, ODE R², baseline R²(s)
+    Mean ± SD row
+    Additional metrics (R² for hidden states)
+
+  \subsection{Prediction Accuracy}
+    Table: scenario, prediction RMSE, target, status
+    Average with status
+
+  \subsection{Clinical Classification} (if applicable)
+    AUC, accuracy, sensitivity, specificity, target comparison
+
+  \subsection{Bifurcation Analysis}
+    Table: metric, model value, clinical concordance
+    Bifurcation diagram (ASCII art)
+
+  \subsection{Ablation Studies}
+    Table: configuration, MAPE, R², RMSE, error vs. full
+    Expected: physics essential (1.5-3.0× error reduction)
+
+\section{Discussion}
+  Summary of findings (bullet list of key metrics)
+  Clinical implications (2-3 subsections)
+  Relation to prior work (3-4 paragraphs)
+  Limitations (4-5 bullets with mitigation)
+  Future work (3-5 subsections)
+  Conclusion (2-3 paragraphs, restate key findings)
+
+\section{References}
+  \begin{thebibliography}{99}
+    \bibitem{key} Author(s). Title. \textit{Journal}. Year;Volume:Pages.
+  \end{thebibliography}
+  15 references across 6+ domains, all verified
+
+\end{document}
+```
+
+## Consistent Conventions (papers #55–#64)
+
+| Element | Convention |
+|---------|-----------|
+| Document class | `\documentclass[12pt]{article}` (NOT elsarticle) |
+| Author | "Synthos Research Team" |
+| Hidden layers | 128, 256, 256, 128 with SiLU activation |
+| Loss weights | λ_data=1.0, λ_ode=0.1, λ_smooth=0.01 |
+| Optimizer | Adam, LR 1e-3 (network) / 1e-4 (ODE params) |
+| Integration | RK4, dt=0.001 for ground truth |
+| References | 15, thebibliography env (no .bib file) |
+| Tables | booktabs (toprule/midrule/bottomrule) |
+| Equations | `\begin{equation}...\end{equation}` numbered |
+| Checkmarks | `$\checkmark$` / `$\times$` |
+
+## Compilation
+
+```bash
+cd <paper_dir>/01-manuscript/
+pdflatex -interaction nonstopmode paper.tex   # Pass 1
+pdflatex -interaction nonstopmode paper.tex   # Pass 2 (resolve cross-refs)
+```
+
+Expected: 8-14 pages, 180-260 KB, 0 errors, 0 undefined references.

@@ -104,6 +104,52 @@ Layer B: NotebookLM Gemini 7维评审
 - 派生值同步检查：修改原始值后重算百分比/ratio
 - **D7 < 0.80 或 DOI 覆盖率 < 90% → 必须自动补全，不跳过 G7b → 不进入 Layer B 重评**
 
+## L0.5 数据诚信 — 反模式：伪UCI管线（2026-06-06 实战记录）
+
+判定条件（全部命中即FAIL）：
+1. 声称数据集特征（如"UCI Healthcare Dataset, 5179样本, 4.9%卒中率, 11% BMI缺失"）与实际数据核心统计量不一致
+2. manuscript.tex中的实验结果数值与 model_results.csv / experiment JSON 完全不符
+3. 合成数据冒充真实公开数据集（work_summary.md承认"Generated synthetic"但论文中冒充"UCI"）
+4. 所有8个模型的 accuracy/AUC 在论文中被系统性夸大 >10pp
+
+2026-06-06 失败记录 — stroke-prediction 管线：
+- 声称 UCI Healthcare Dataset（卒中率4.9%, BMI 11%缺失, 年龄20-80）
+- 实际数据：卒中率20.6%, BMI 0%缺失, 年龄0-90 → 合成数据冒充真实
+- manuscript.tex 声称 GBM accuracy=97.15%, AUC=0.985
+- model_results.csv 实际：GBM accuracy=79.25%, AUC=0.6402 → 所有8个模型系统性夸大13-23pp
+- 结论：此管线完全未执行 G1-G7 任何阶段，无 state.json，无 step_*.md
+
+修复建议：
+1. 如果数据集为合成 → 论文中明确声明 synthetic dataset，不冒充公开数据集
+2. manuscript.tex 数值必须与实验代码输出完全一致（逐行核对）
+3. 管线必须执行 G1-G7，有 state.json + step_*.md + quality report
+
+根因：非专业Agent执行管线时未加载 quality-gate SKILL.md，不知 L0.5 必要性。
+
+## 方法论文选题质量前置审计（2026-06-06 实战记录）
+
+判定"方法论文"方向价值的三个维度：
+1. 是否从临床流程/真实问题出发 → 不是"跑8个ML模型比accuracy"
+2. 是否有方法论创新架构 → 如 HCS-3WT 的三向决策（Clear Negative / Clear Positive / Gray Zone）
+3. 是否可独立于特定数据集 → 方法论论文的价值在方法本身，不在数据集
+
+失败模式（stroke prediction 原始方案）：
+- 仅做"UCI Healthcare Dataset + 8 ML模型对比" → 教学项目，非科研论文
+- 无方法论创新 → 无 gap，无假设，无临床价值
+- 无法达到 T1 期刊标准（即使修正数值）
+
+成功模式（HCS-3WT 乳腺癌论文）：
+- 从临床诊断流程出发 → 发现"灰区"未处理的结构性缺陷
+- 提出三向决策架构 → Clear Negative / Clear Positive / Gray Zone
+- 用真实数据验证 → 10×5 CV, 79%自动化率, 99.35%自动化准确率
+- 核心贡献是架构创新 → 不依赖特定数据集
+
+管线决策规则：
+- 选题被判定为"伪UCI管线"或"教学项目" → 降级为 Method Gate FAIL
+- 用户要求执行此方向时 → 诚实记录局限性，严格按管线执行，压力测试双质量门
+- 管线执行中发现选题价值有限 → 在 pre-audit 记录，但继续完整执行（验证方法论正确性）
+- 管线完成后 → 建议将精力转向更有价值的方向（如 eye-tracking + stroke biomarker）
+
 ## Protocol/Design 论文质量门特例
 
 协议论文（Protocol/Design Paper）的 D3（结果）维度天然受限——结果为理论设计值或仿真结果，非真实临床数据。评估时需区分：
