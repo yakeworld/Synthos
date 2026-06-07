@@ -6,6 +6,7 @@ metadata:
   synthos:
     version: 1.0.0
     author: Synthos
+    signature: 'skill_set: query_params -> paper_results: list'
 ---
 
 # OpenAlex — 学术论文数据库搜索
@@ -99,12 +100,25 @@ python3 -c "import json; data=json.load(open('/tmp/result.json'))..."
 - **修复**：两步模式 — `curl -s ... > /tmp/file.json` 然后 `python3 -c "...open('/tmp/file.json')..."`
 - **注意**：`curl -v` 也消耗 stdout，始终用 `-s`
 
+### 7. 关键词假阳性模式（v86 — 2026-06-08）
+
+OpenAlex 中常见关键词（"neural network", "differential equation", "model"）产生大量假阳性。
+
+**已知假阳性模式**：
+- `"neural network"` → 材料科学/电子/机器人/计算机视觉论文（neural interface electronics, vibrotactile feedback, primate vision）
+- `"differential equation"` → 热力学/交通预测/分子传输论文
+- `"fixation"` → 植物学/蛋白质进化/分子传输论文
+- `"cochlear"` → 音乐治疗/动物行为/语音处理论文
+
+**验证规则**：OpenAlex 返回高计数 + PubMed 返回 0 → 几乎确定假阳性。必须阅读 top-3 标题和摘要确认实际方法。详见 `references/false-positive-keyword-pattern.md`。
+
 ## 参考文件
 
 - `references/openalex-troubleshooting.md` — 历史调试记录
 - `references/openalex-complete-guide.md` — 完整使用指南（白空间验证协议、过滤参数、解析示例）
 - `references/openalex-competitive-papers.md` — 关键竞争性论文及其分析方法（PMID 39810187 PD 眼动诊断, BPPV-ML 论文）
 - `references/openalex-cloudflare-block.md` — Cloudflare JS challenge 检测和回退处理（2026-06-05 新增）
+- `references/false-positive-keyword-pattern.md` — 常见关键词假阳性模式：neural network→materials/electronics, differential equation→thermodynamics/traffic, fixation→molecular transport/botany. PubMed=0 + OA高计数 = 几乎确定假阳性
 
 ## 陷阱: PubMed 论文可能改变竞争空间状态
 

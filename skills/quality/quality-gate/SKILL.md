@@ -78,6 +78,14 @@ metadata:
 
 详细检查清单见 `references/writing-pipeline-checklist.md`。
 
+## Layer B 评分阈值（NotebookLM 产出）
+
+| 分数 | 判定 | 动作 |
+|------|------|------|
+| ≥0.85 | T1 通过 | 可直接进入校准分 G1-G7 计算 |
+| 0.75-0.84 | T2 临界 | 需改进后复检 |
+| <0.75 | 不通过 | 退回写作阶段 |
+
 ## 双质量评分
 
 ```
@@ -181,12 +189,141 @@ Layer B: NotebookLM Gemini 7维评审
 
 **铁律**：D7 < 0.80 或 DOI 覆盖率 < 90% → 不跳过，必须自动补全，不进入 Layer B 重评。
 
+**局限**：DOI 覆盖率受限于文献学事实。Pre-DOI era 论文、未接入 Crossref 的期刊/会议论文集、数据集论文可能无法补全 DOI。G7b 要求补全尝试但不强求 90% 当所有尝试均失败时，在 quality-report.md 中记录不可补原因。
+
 执行顺序：
-1. 统计覆盖率：`grep -c '^@' references.bib && grep -c 'doi\s*=' references.bib`
+1. 统计覆盖率：`grep -c '^@' references.bib && grep -c 'doi\\s*=' references.bib`
 2. 对缺失 DOI 条目：期刊论文 → Crossref 搜索补全；数据集 → 找原始论文 DOI（如 UCI dataset → Wolberg 1997 Cancer）；机构报告 → EU Publications Office
 3. 对已有 DOI 条目：逐条 `curl "https://api.crossref.org/works/$doi"` → 检测假 DOI（status≠ok）
 4. 重复 DOI → pdfinfo 确认 → 保留正确条目
-5. 更新 qc-d8-refs.md → 重编译 pdflatex × 2 → 重新触发 Layer B 评审
+5. 对无法补全的条目：通过 PubMed esummary（`elocationid` 为空）或 Crossref 404 确认无 DOI → 标记为合理例外
+6. 更新 qc-d8-refs.md → 重编译 pdflatex × 2 → 重新触发 Layer B 评审
+
+**不可补全情形（见 references/crossref-doi-lookup-edge-cases-2026-06-07.md）**：
+- 1997 年前论文（DOI 系统建立前）
+- PAKDD/NeurIPS 等未接入 Crossref 的会议论文集
+- 1995 年前未接入 Crossref 的老期刊论文
+- 数据集/仓库论文（DOI 存在但 Crossref 映射错误）
+
+## 管线完整性审计 — 批量扫描与统一化协议 (2026-06-07 新增)
+
+### 触发条件
+
+当论文管线出现以下任一症状时，应执行完整审计：
+- 论文目录数 ≥ 50 篇
+- Layer B 质检覆盖率 < 50%
+- 有 tex 无 bib > 50%
+- 有 state.json 但无 quality report > 30%
+- 双目录/无 symlink 或目录结构不统一
+
+### 审计流程（四步）
+
+**Step 1: 全面扫描**
+- 遍历 `outputs/papers/` 下所有论文目录
+- 对每篇记录：has_tex, has_bib, has_state.json, has_layer_b, has_quality_report, d8, d10a, score, score_label
+- 分类：complete (tex+bib+state+quality) / pipeline (tex+bib无state) / partial (有state或step无完整) / empty (无任何痕迹)
+- **PARTIAL 论文关键特征**: 实测 54/55 篇有.tex但完全缺失 references.bib。0.2% 极值是 dual-ellipse-fitting 有 tex+bib。.bib 缺失意味着无法计算 D8/D10a，需单独处理——不是清理而是从头生成 bib。四类论文策略不同：
+  - COMPLETE → DOI 补全/引用微调
+  - PIPELINE → 清理孤儿/僵尸，确保 D10a≥95%
+  - PARTIAL → 需先生成 references.bib（无法直接 D8 扫描）
+  - EMPTY → 完整管线重建
+
+**Step 2: 问题识别**
+- D8/D10a/DOI 检查：对每篇有 references.bib 的论文，逐篇统计引用匹配
+- Layer B 缺口：标记所有 T1/T2 论文和完整管线论文中缺 Layer B 的
+- 引用问题：孤儿（cited∉bib）、僵尸（bib∉cited）、DOI覆盖率
+
+**Step 3: 任务编排**
+- 生成 `paper-queue.json`，按优先级排序：
+  - P1: 紧急修复（bib为空、孤儿+僵尸、T1缺Layer B）
+  - P1: DOI 补全（覆盖率 <90%）
+  - P2: 批量 D8/D10a 检查（按论文类型分组为 1-3 个 batch 任务）
+- 批量任务格式：包含 `papers` 数组，处理时一次性处理所有论文
+
+**Step 4: 统一化执行**
+- 对每篇论文补充统一的目录结构：
+  ```
+  paper-name/
+  ├── 01-manuscript/      # paper.tex, references.bib, step_*.md
+  ├── 06-references/      # PDFs, references.bib
+  ├── 07-quality/         # quality-report.md (或 qc-d8-refs.md)
+  └── state.json          # 管线状态
+  ```
+- 每篇必须有的文件：paper.tex(≥5000字)、references.bib(≥30条)、quality-report.md、state.json
+
+### 批量任务设计原则
+
+- 84个单篇任务 → 合并为 11个任务（减少87%）
+- repair/layer_b/doi_fix 保持单独（需具体处理）
+- d8_d10a_doi 按论文管线类型批量合并（COMPLETE/PIPELINE/PARTIAL）
+- cron 每 30 分钟执行一次，每次处理 1 个任务
+- 批量任务（d8_d10a_batch）一次处理所有论文
+
+### 审计结果模板
+
+审计报告写入 `outputs/researchaudit/paper-status-audit-YYYY-MM-DD.md`，包含：
+- 总体统计（总数/完整管线/部分管线/空白/Layer B覆盖率）
+- T1 论文表（校准分/D8/D10a/DOI/Layer B/管线状态）
+- 分类明细（complete/pipeline/partial/empty）
+- D8/D10a/DOI 检查清单
+- Layer B 质检缺口
+- G1-G7 管线执行审计
+- 统一规范建议
+
+### 关键陷阱
+
+- **Paper.tex 双位置**：根目录和 `01-manuscript/` 都可能存在，只统计根级别（`-maxdepth 2`）
+- **Queue 格式**：`paper-queue.json` 使用 `"papers"` 数组用于批量任务（d8_d10a_batch），repair/layer_b/doi_fix 为单篇任务。批量任务需一次性处理所有论文，不可跳过。
+- **引用孤儿不等于管线失败**：bib 为空可能是手动删除了文件，但 tex 中的引用仍存在。需区分"管线未执行"（无state无step）vs "管线执行了但引用丢失"（有state有step但bib空）
+- **L0.5 伪UCI管线**：合成数据冒充真实数据集且 L0.5 全部命中 → 整个管线 FAIL，不可通过后续步骤
+- **Paper.tex 双位置**：根目录和 `01-manuscript/` 都可能存在，只统计根级别（`-maxdepth 2`）
+- **Queue 格式**：`paper-queue.json` 使用 `"papers"` 数组用于批量任务（d8_d10a_batch），repair/layer_b/doi_fix 为单篇任务。批量任务需一次性处理所有论文，不可跳过。
+- **引用孤儿不等于管线失败**：bib 为空可能是手动删除了文件，但 tex 中的引用仍存在。需区分"管线未执行"（无state无step）vs "管线执行了但引用丢失"（有state有step但bib空）
+- **多 bib 文件环境**：项目根目录和 01-manuscript/、06-references/ 可能各有 references.bib。执行 repair 任务时必须检查所有 bib 文件并同步更新；修复后验证所有副本一致。
+- **审计报告可能过时**：paper-status-audit-*.md 是历史快照，不反映中间修复。执行 repair/repair 任务时应先独立运行 D8/D10a/DOI 扫描确认当前状态，而非直接依赖审计报告中的孤儿/僵尸数字。
+- **多 tex 文件环境**：01-manuscript/ 和根目录可能各自有 .tex。修复引用时应以最新管线版本（通常有最多 cite 且 bib 条目完整的）为主；根目录旧版 tex 的 key mismatch（如 Wolberg1999Breast vs Wolberg1997Breast）应统一为正确键名。
+- **BibTeX key 不一致**：同一文献可能在 tex 中使用不同 key（如 Wolberg1999Breast vs Wolberg1997Breast），需全文统一。修复时应以 bib 文件中的 key 为准。
+- **DOI 解析≠文献匹配**：Crossref 解析的 DOI 可能指向正确格式但内容不匹配的文献（如 Arch Surg 的 DOI 不是 AQCH 论文）。添加 DOI 前必须精确验证标题、作者、期刊、年份四维匹配。见 `references/crossref-doi-lookup-edge-cases-2026-06-07.md`。
+- **DOI 不可补全情形**：Pre-DOI era 论文（1997年前）、未接入 Crossref 的老期刊、部分会议论文集（PAKDD/NeurIPS）、数据集/仓库论文 — 这些不是工具问题而是文献学事实。G7b 协议允许合理例外，不应强制 90%。见 `references/crossref-doi-lookup-edge-cases-2026-06-07.md`。
+- **PubMed 确认无 DOI**：PubMed esummary 的 `elocationid` 字段为空 = 该文献确实无 DOI（非工具问题）。
+- **Crossref `filter` 参数陷阱**：在 `/works` 路由中，年份过滤必须使用 `filter=from-date=YYYY,to-date=YYYY`，**不能**使用 `from=YYYY&to=YYYY` 作为查询参数——后者返回 400 Bad Request。见 `references/crossref-doi-lookup-pattern.md`。
+- **多源耗尽协议**：DOI 搜索必须依次尝试 Crossref → Semantic Scholar → PubMed → DOI resolver。任一来源成功即记录。全部失败且论文年代 < 2000 → 标记为合理例外。见 `references/membranous-scc-doi-fix-2026-06-07.md`。
+- **DOI 搜索年份参数**：Semantic Scholar API 不支持年份过滤，Crossref API 的年份过滤必须用 `filter=` 参数。PubMed 使用 `[Date - Publication]` 字段标签。不同 API 的年份过滤机制不同，不可混用。
+- **BibTeX DOI 字段检测**：使用 `re.search(r'\\bdoi\\s*=\\s*\\{', entry, re.IGNORECASE)` 而非 `'doi=' in entry`，因为空格和大小写可能不一致。见 `references/crossref-doi-lookup-pattern.md`。
+
+## 补充说明：docx 引用格式提取（2026-06-07 新增）
+
+当论文以 .docx 格式提供而非 .tex 时，引用格式可能是 `[N]`（如 `[1]`, `[5, 6]`, `[12, 13, 14]`）。使用 python-docx 提取段落文本后：
+
+- 错误方法：`re.findall(r'\[(\d+)\]', text)` — 会漏掉 `[5, 6]` 中的 5 和 6（因为中间有逗号）
+- 正确方法：`re.findall(r'\[([^\]]+)\]', text)` 然后对每个匹配用 `re.findall(r'\d+', match)` 提取所有数字
+
+参见 `references/docx-citation-extraction-2026-06-07.md` 获取完整示例。
+
+## 补充说明：系统综述 meta 分析论文评估模式（2026-06-07 新增）
+
+系统综述/Meta 分析论文的质量评估有固定检查清单：
+
+**方法学合规性（必查）**：
+- PRISMA 2020 引用与流程图
+- PROSPERO/ClinicalTrials.gov 注册编号
+- QUADAS-2/QUAPAS 质量评估
+- 统计方法：Bivariate 随机效应、HSROC、Deeks 漏斗图、Spearman 阈值效应、I² 异质性、Meta 回归
+
+**引用质量**：D8≥30、D10a 孤儿=0/僵尸=0、DOI≥90%（或合理例外）
+
+**结构**：IMRaD + Abstract + Limitations + 补充材料（Tables/Figures）
+
+**典型 7 维评分范围**：
+- D1 科学贡献：0.75-0.85（首次系统综述较高，有类似综述较低）
+- D2 方法学：0.85-0.95（PRISMA+PROSPERO+QUAPAS 齐全可高）
+- D3 结果可信度：0.65-0.80（DOR 低则偏低，样本量大则偏高）
+- D4 完整性：0.80-0.90（IMRaD 完整 + 补充材料丰富）
+- D5 清晰性：0.75-0.85
+- D6 新颖性：0.65-0.80（首次综述较高）
+- D7 引用质量：0.70-0.85（D8/D10a/DOI 达标则高）
+
+**校准分通常落在 0.75-0.82 区间（T2 通过）**。通过 Layer B 可提升或下降 0.02-0.05。
 
 ## 参考文件
 
@@ -198,3 +335,10 @@ Layer B: NotebookLM Gemini 7维评审
 - `references/full-claim-l05-verification-2026-06-01.md` — 全量声明L0.5验证
 - `references/pre-commit-security-scan.md` — 提交前安全扫描
 - `references/gap-hypothesis-congruence.md` — G5d空假一致性门
+- `references/pipeline-completeness-audit-2026-06-07.md` — 2026-06-07 全面审计实例
+- `references/crossref-doi-lookup-pattern.md` — Crossref DOI 搜索模式与陷阱（分层搜索、400错误修复、thebibliography→BibTeX转换）
+- `references/crossref-doi-lookup-edge-cases-2026-06-07.md` — DOI 不可补全场景（Pre-DOI、会议论文集、数据集论文、Crossref陷阱）
+- `references/doi-fix-off-axis-iris-2026-06-07.md` — off-axis-iris DOI fix 实战记录
+- `references/membranous-scc-doi-fix-2026-06-07.md` — membranous-scc-reconstruction 4篇pre-DOI era论文完整排查记录
+- `references/d8-d10a-partial-paper-execution-2026-06-07.md` — PARTIAL 论文 D8/D10a 批量扫描执行记录：54/55 篇缺失 .bib，4 类管线策略差异
+- `references/docx-citation-extraction-2026-06-07.md` — docx 格式论文的引用格式提取方法（[N] 和 [5, 6] 组合引用处理）
