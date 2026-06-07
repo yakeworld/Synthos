@@ -310,7 +310,19 @@ H₃: 可解释性方法(视盘分割+RNFL厚度图)正向影响临床信任度
 | `paper.tex` 引用 `sections/` 子目录 | 如 `pd-dysphagia-2026/` — 计数需合并所有文件 |
 | 多处质量文件 | `QUALITY.md` (大写) vs `quality-report.md` (小写+连字) — 两者都要检查 |
 
-## agent-log.md 格式
+## PubMed 标题提取陷阱（⚠️ v87 新增）
+
+当需要通过 PubMed 搜索结果获取标题时，**禁止**使用 `esummary` → `pubmed_articles` 路径（`pubmed_articles` key 不存在）。必须使用 `esummary` → 顶层 UID 键 → `title` 路径。详见 `references/pubmed-esummary-title-extraction.md`。
+
+## 扫描模板脚本
+
+可复用的 PubMed/OpenAlex 扫描脚本：`scripts/pubmed-openalex-scan-template.py`。包含 5 个方向轮转扫描、候选验证、新候选发现和 OpenAlex 假阳性检测。复制后修改查询即可运行。
+
+## 历史扫描结果参考
+
+最新扫描结果记录在 `references/scan-v87-results.md`（v87: 2026-06-08）。
+
+## 安全注意
 
 ```
 | YYYY-MM-DD HH:MM | 阶段: X | 行动: Y | 结果: Z |

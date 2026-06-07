@@ -56,3 +56,4 @@ ACQ → EXT → ASC → GAP → HYP → ARG → VER
 - `references/atom-creation-template.md` — 新原子创建模板
 - `references/dag-topology.md` — DAG拓扑定义
 - `references/contract-schema.md` — I/O契约Schema
+- `references/cross-system-bridging.md` — 跨系统连接模式（两个独立系统之间的双向桥接，Synthos→AKNE案例）

@@ -46,16 +46,24 @@ curl -s "http://export.arxiv.org/api/query?search_query=all:vestibular+AND+all:e
 
 ## Python 3.12 OpenAlex Querying
 
-> ⚠️ Python 3.12's `urllib.request.urlopen()` rejects `%20` URL-encoded spaces with "URL can't contain control characters." See `references/openalex-python-312-url-quirk.md`.
+> ⚠️ **Python 3.12 urllib rejects ALL spaces in URL path** — not just `%20`-encoded ones, but bare spaces too. `urllib.request.urlopen()` raises `InvalidURL: URL can't contain control characters` for any space character in the query string portion of the URL.
+
+> ⚠️ **Old advice (WRONG): bare spaces in query** — `url=f"...?search={query}"` where `query` contains spaces will FAIL. The previous convention of "bare spaces are fine" was incorrect and causes `InvalidURL` errors.
+
+> ⚠️ **Correct approach**: use `urllib.parse.quote_plus(query, safe=' ')` to encode spaces as `+` (plus sign, which is valid in URL path).
 
 ```python
-# SAFE: bare spaces in query, no urllib.parse.quote()
+# CORRECT — quote_plus with safe=' ' preserves literal spaces in the query string
+from urllib.parse import quote_plus
 query = "PINN fluid dynamics"
-url = f"https://api.openalex.org/works?search={query}&per_page=3"
+safe_query = quote_plus(query, safe=' ')
+url = f"https://api.openalex.org/works?search={safe_query}&per_page=3"
 req = urllib.request.Request(url)
-with urllib.request.urlopen(req, timeout=10) as r:
+with urllib.request.urlopen(req, timeout=15) as r:
     d = json.loads(r.read())
 ```
+
+> ⚠️ **Why this matters**: OpenAlex search queries almost always contain spaces. All OpenAlex queries in this project MUST use `quote_plus(query, safe=' ')` or the request fails silently with InvalidURL.
 
 ## PubMed eSearch 键名陷阱（v4 — 2026-06-06）
 
@@ -101,10 +109,13 @@ ids = d.get("esearchresult", {}).get("idlist", [])
 | 预印本 | `arxiv` |
 | 多学科 | `openalex` |
 | 摘要提取 | `knowledge-extraction` |
-| 白空间扫描 | 见 `references/white-space-scan-2026-06-05.md` — 多层验证协议 |
-| 3域验证 | 见 `references/3-domain-gap-verification.md` — PubMed 3-domain gap verification protocol for cron sessions |
+| 3域验证 | 见 `references/3-domain-gap-verification.md` — PubMed 3-domain gap verification protocol for cron sessions (方法域/理论域/传统域) |
+| OpenAlex PINN关键词假阳性 | 见 `references/openalex-pin-n-keyword-false-positive.md` — OpenAlex搜索"PINN"时，"PINN"可能出现在摘要文本中作为不同缩写或词组的一部分，而非指Physics-Informed Neural Networks。必须逐条阅读摘要确认实际方法学。 |
 | OpenAlex URL encoding | 见 `references/openalex-python-312-url-quirk.md` — Python 3.12 urllib.request rejects %20-encoded spaces in URLs; use bare spaces or quote_plus() |
 | 参考文献验证 | 见 `scripts/verify_refs_template.py` — 论文参考文献OpenAlex交叉验证脚本模板 |
-| PubMed 扫描模板 | 见 `scripts/pubmed_scan_template.py` — 可复用的5方向PubMed扫描脚本（含idlist键名修复）|
+| PubMed 扫描模板 | 见 `scripts/pubmed_scan_template.py` — 可复用的5方向PubMed扫描脚本（含idlist键名修复，无curl|python3管道）|
+| Terminal 安全扫描阻塞 | 见 `references/terminal-security-scan-blocking.md` — `curl | python3` 管道被安全扫描拦截（tirith:curl_pipe_shell），必须写入脚本文件再执行，或用 urllib stdlib 替代 |
 | PubMed OR 假阳性 | 见 `references/pubmed-or-false-positive-severity.md` — PubMed OR查询假阳性量级数据与阈值规则 |
 | PubMed esummary 结构 | 见 `references/pubmed-esummary-flat-structure.md` — esummary JSON 扁平结构陷阱（key是PMID，不在pubmed下） |
+| OpenAlex 关键词假阳性模式（v86） | 见 `references/false-positive-keyword-pattern.md`（openalex skill）— neural network→materials/electronics, differential equation→thermodynamics/traffic, fixation→molecular transport/botany. PubMed=0 + OA高计数 = 几乎确定假阳性 |
+| v86 综合扫描结果 | 见 `references/v86-scan-results.md` — 第86轮扫描：120+白空间确认稳定，83篇论文完成，cochlear-vestibular-coupling-PINN作为Paper 84候选 |
