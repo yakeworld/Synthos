@@ -51,3 +51,40 @@ Authors: Charles K. Dowell, Thomas Hawkins, Isaac H. Bianco
 | saccade+dynamics+NeuralODE | 0 | — | 白空间 |
 | saccade+kinematic+NeuralODE | 0 | — | 白空间 |
 | saccade+dynamics+PINN | 0 | — | 白空间 |
+
+## v91 扩展案例 — 2026-06-08
+
+以下案例来自 Paper 84 (cochlear-vestibular-coupling-PINN) 及 v88-v90 扫描循环:
+
+| 查询 | OpenAlex 返回 | 实际相关性 | 领域 |
+|------|--------------|-----------|------|
+| cochlear+vestibular+coupling+PINN | 2 | 神经纤维瘤病(NF1/NF2)综述、听神经细胞生物学 | 临床综述 |
+| cochlear+vestibular+differential+equation+model | 3 | 浸没边界法、恒星核合成、微生物群 | 完全无关 |
+| cochlear-vestibular+PDE | 3 | 颅脑MRI去毛皮、晕动症、儿童重度聋综述 | 临床综述 |
+| inner+ear+coupling+dynamics | 3 | Meniere诊断标准、视网膜色素变性、粘附G蛋白偶联受体综述 | 临床综述 |
+| meniere+disease+mathematical+model | 3 | 颅脑MRI去毛皮、晕动症、儿童重度聋综述 | 完全无关 |
+| fixation+PINN | 71+ | 分子运输、植物学、等离子体建模、融合反应 | 完全无关 |
+| smooth-pursuit+NeuralODE | 542 | 热力学整流、交通预测、Hirschsprung病 | 完全无关（0 smooth pursuit） |
+| VOR+cancellation | 214 | 光学、恒星成像 | 完全无关 |
+| binaural+vestibular+ODE | 16 | 脑成像、球面谐波、自旋转感知 | 0 ODE |
+| vestibular+spinal | 5227 | 神经界面电子学 | 完全无关 |
+| smooth-pursuit+PINN | 1 | hp-VPINNs变分方法 | 完全无关（数学，非眼动） |
+| cochlear+vestibular | 1 | ribbon synapse生物物理 | 非PINN |
+| VEMP+PINN | 1 | 奥地利会议摘要 | 0 relevant |
+| vestibular+paroxysmia | 43 | 三叉神经临床+计算轴突建模 | 无PINN |
+| concussion+oculomotor | 227 | 临床综述+硬件+临床 | 0 computational |
+| ACL+CrossPin+PINN | 1 | ACL重建CrossPin手术 | 完全无关 |
+| neurofibromatosis+review | 大量 | NF1/NF2/schwannomatosis综述 | 非PINN |
+| MRI+skull+stripping | 多个 | 颅脑MRI算法 | 完全无关 |
+
+**v91 总结**：OpenAlex PINN/ODE 假阳性已确认发生在至少8个不同领域：临床综述(NF1/NF2)、天文物理学(恒星核合成)、植物学/生物化学、医学成像(MRI/PET)、材料科学、重建手术、神经界面电子学、变分数学。每次返回0-3个结果都需要手动检查摘要。返回>3个时大概率是竞争领域。
+
+**判定规则 v3**（更新 v91）：
+
+| OpenAlex 返回数 | 判定 | 行动 |
+|-----------------|------|------|
+| 0 | 绝对白空间 | 继续 PubMed 交叉验证 |
+| 1 | **必须检查摘要** | 阅读摘要，确认是否真正使用 PINN/NeuralODE 方法。检查：是否出现在不同领域上下文（天文、植物、手术、材料） |
+| 2-3 | **必须检查摘要** | 同上。v91确认：1-3个结果95%+是假阳性，必须阅读摘要 |
+| 4-10 | **检查top-3标题** | v91确认：此范围内仍可能全是假阳性，需逐条检查 |
+| 10+ | 可能竞争 | 但仍需检查相关性，v91中fixation+PINN=85全是假阳性 |

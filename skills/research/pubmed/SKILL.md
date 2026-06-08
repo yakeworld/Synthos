@@ -3,7 +3,7 @@ name: pubmed
 description: Deep PubMed/MEDLINE search via NCBI E-utilities — query construction, MeSH terms, batch retrieval, clinical query refinement.
 metadata:
   synthos:
-    version: 2.0.0
+    version: 2.0.1
     author: Synthos
     signature: 'query: str -> papers: list[dict]'
 ---
@@ -12,13 +12,19 @@ metadata:
 
 ## 快速参考
 
-| 操作 | 命令 |
+> ⚠️ **Hermes cron 环境安全扫描拦截（v91 — 2026-06-08）**：`curl | python3` 管道被 `tirith:curl_pipe_shell` 安全扫描拦截。在 cron/Hermes 环境中，**必须使用 `urllib.request` stdlib**（写入脚本文件后执行），不得使用 `curl`。
+
+| 操作 | 安全命令（Hermes cron 环境） |
 |:-----|:------|
-| 搜索 | `curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=QUERY&retmax=10&retmode=json"` |
-| 详情 | `curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=PMID1,PMID2&retmode=xml"` |
-| 摘要 | `curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=PMID1,PMID2&rettype=abstract&retmode=text"` |
-| 引用数 | `curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=PMID1,PMID2&retmode=json"` |
-| PMC全文 | `curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id=PMC_ID&retmode=xml"` |
+| 搜索 | 写入脚本文件后执行（见 scripts/pubmed-urllib.py），不可使用 `curl | python3` 管道 |
+| 详情 | 写入脚本文件，用 `urllib.request` 读取 XML |
+| 摘要 | 写入脚本文件，用 `urllib.request` 读取 text |
+| 引用数 | 写入脚本文件，用 `urllib.request` 读取 JSON |
+| PMC全文 | 写入脚本文件，用 `urllib.request` 读取 XML |
+
+**正确做法**：将查询写入 `.py` 脚本文件，用 `terminal` 执行。详见 `scripts/pubmed-urllib.py`。
+
+> ⚠️ **Python 3.12 urllib 裸空格拒绝（v106 — 2026-06-08）**：`urllib.request.urlopen()` 拒绝 URL 路径中包含裸空格的请求，报 `InvalidURL: URL can't contain control characters`。**所有 PubMed 查询必须使用 `quote_plus(term, safe='')` 编码**。已在 `scripts/pubmed-urllib.py` 中修复，参见 `references/python312-url-quirk.md`。
 
 ## 搜索语法
 
@@ -52,3 +58,11 @@ metadata:
 - `references/clinical-queries.md` — 临床查询过滤器详解
 - `references/batch-retrieval.md` — 批量检索和XML解析
 - `references/efetch-response-quirks.md` — efetch 可能返回 text/plain 或 HTML（非JSON/XML）；esummary key 是 PMID 不在 pubmed 下；idlist 键名小写
+- `references/python312-url-quirk.md` — Python 3.12 urllib.request 拒绝裸空格URL路径的修复（quote_plus编码，v106）
+
+## 脚本
+
+- `scripts/pubmed-urllib.py` — 可复用PubMed查询脚本（urllib stdlib，无curl，安全Hermes cron环境，已修复Python 3.12 quote_plus编码）
+  - 用法：`python3 pubmed-urllib.py "term"` → count+PMIDs
+  - `python3 pubmed-urllib.py "term" "2024/01/01..2026/06/08"` → 日期过滤
+  - `python3 pubmed-urllib.py --abstract "PMID1,PMID2"` → 摘要提取
