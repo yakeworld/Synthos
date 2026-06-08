@@ -38,8 +38,10 @@ metadata:
 - **cell访问**: `cell.text_frame.paragraphs`（非 `cell.paragraphs`）→ 详见 `references/python-pptx-table-cell-pitfall.md`
 - **word_wrap**: 必须显式设置 `cell.text_frame.word_wrap = True`
 - **表格样式**: 每行交替背景色用 `i % 2`；header行用不同颜色
-- **多页模板**: 定义 helper 函数（`header()`, `footer()`, `snum()`, `shp()`）统一风格
+- **多页模板**: 定义 helper 函数（`header()`, `footer()`, `snum()`, `shp()`, `tb()`, `mkcard()`）统一风格
 - **字体**: 必须设置 `font.name = 'Microsoft YaHei'` 保证中文字体正确渲染
+- **add_slide layout**: 空 Presentation 用 `prs.slide_layouts[6]`（BLANK），已有PPT用 `[0]`（TITLE）或 `[1]`（CONTENT）
+- **形状填充**: `MSO_SHAPE.RIGHT_ARROW` 等形状默认 `_NoneFill`，必须先 `.fill.solid()` 再设 `fore_color.rgb`
 
 ## 脚本
 

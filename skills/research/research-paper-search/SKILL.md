@@ -80,7 +80,7 @@ ids = d.get("esearchresult", {}).get("idlist", [])
 ## PubMed esummary 扁平结构陷阱（v42 — 2026-06-06）
 
 > ⚠️ **`esummary` 响应结构**: 条目位于 `d["result"]` 下，key 是 PMID 字符串。不在 `d["result"]["pubmed"]` 或 `d["pubmed"]` 下。使用 `d.get(pid, {})` 时若 `pid` 不在 `result` 直接子级 → 返回 `{}`，所有标题变成 `"N/A"`。
->
+
 > **验证**: 每次 esummary 后检查 `d.get("result", {}).get("pubmed")` 是否为 None。如果是 → 扁平结构，需要用 `for pid in d.get("result", {}): ...` 迭代。
 
 ## XML efetch 解析（v31 — retmode=json 系统性破坏）
@@ -119,3 +119,4 @@ ids = d.get("esearchresult", {}).get("idlist", [])
 | PubMed esummary 结构 | 见 `references/pubmed-esummary-flat-structure.md` — esummary JSON 扁平结构陷阱（key是PMID，不在pubmed下） |
 | OpenAlex 关键词假阳性模式（v86） | 见 `references/false-positive-keyword-pattern.md`（openalex skill）— neural network→materials/electronics, differential equation→thermodynamics/traffic, fixation→molecular transport/botany. PubMed=0 + OA高计数 = 几乎确定假阳性 |
 | v86 综合扫描结果 | 见 `references/v86-scan-results.md` — 第86轮扫描：120+白空间确认稳定，83篇论文完成，cochlear-vestibular-coupling-PINN作为Paper 84候选 |
+| v97 综合扫描结果 | 见 `references/v97-scan-results.md` — 第97轮扫描：170+白空间确认稳定，85篇论文完成。重大假阳性：acoustic-vestibular-evoked-PINN=80(肿瘤生物学/有限元分析, 非PINN/ODE)。12附加候选全部ABSOLUTE WHITE PubMed=0。 |

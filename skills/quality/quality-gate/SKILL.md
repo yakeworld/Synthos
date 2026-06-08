@@ -335,7 +335,9 @@ Layer B: NotebookLM Gemini 7维评审
 - `references/full-claim-l05-verification-2026-06-01.md` — 全量声明L0.5验证
 - `references/pre-commit-security-scan.md` — 提交前安全扫描
 - `references/gap-hypothesis-congruence.md` — G5d空假一致性门
-- `references/pipeline-completeness-audit-2026-06-07.md` — 2026-06-07 全面审计实例
+- `references/pipeline-completeness-audit-2026-06-08.md` — 2026-06-08 更新：107篇论文，Layer B 42%，T1 2篇，T2 8篇
+- `references/pipeline-completeness-audit-2026-06-07.md` — 2026-06-07 首次全面审计
+- `references/quality-report-location-discovery-2026-06-08.md` — 质量报告位置发现：4-5种文件名模式在不同目录下的扫描策略，2026-06-08实战记录
 - `references/crossref-doi-lookup-pattern.md` — Crossref DOI 搜索模式与陷阱（分层搜索、400错误修复、thebibliography→BibTeX转换）
 - `references/crossref-doi-lookup-edge-cases-2026-06-07.md` — DOI 不可补全场景（Pre-DOI、会议论文集、数据集论文、Crossref陷阱）
 - `references/doi-fix-off-axis-iris-2026-06-07.md` — off-axis-iris DOI fix 实战记录
