@@ -20,8 +20,16 @@ metadata:
     version: 1.8.0
 ---
 
-
 # Task Router — Synthos 系统入口
+
+## IO_CONTRACT
+
+- **input**: `query: str` — 用户原始查询
+- **input**: `context: dict` — 当前会话上下文（含已执行原子、历史输出）
+- **output**: `route: str` — 选择模式（standard_chain / exploration_loop / research_double_loop / parallel_execution）
+- **output**: `atom_chain: list[str]` — 目标认知原子链（按依赖顺序）
+- **output**: `execution_mode: str` — 具体执行模式描述
+- **output**: `status: dict` — 路由决策日志（含 confidence, alternatives_considered）
 
 ## 原理层·文言
 

@@ -30,6 +30,15 @@ metadata:
 
 # Quality Gate — 质量闸门
 
+## IO_CONTRACT
+
+- **input**: `deliverable: str` — 待评估交付物标识（论文/技能/代码/文档）
+- **input**: `quality_requirements: dict` — 质量要求（G1-G7 阈值、SCI 维度、领域特定标准）
+- **input**: `context: dict` — 项目上下文（来源、目标、约束）
+- **output**: `gate_result: dict` — 闸门结果（pass/fail + 详细评分 + 问题列表）
+- **output**: `dimension_scores: dict` — 各维度评分（科学贡献/方法学/结果/完整性/清晰性/新颖性/引用）
+- **output**: `action_items: list[dict]` — 待修复项清单（含优先级和修复建议）
+
 ## 核心理念（文言）
 
 | 白话 | 文言 | 义 |
