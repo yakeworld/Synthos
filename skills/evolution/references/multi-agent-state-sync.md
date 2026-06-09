@@ -40,3 +40,27 @@ fi
 ## Lesson
 
 > 心随境转，先对齐后行动。状态同步是进化的第一步。
+
+### Git 路径陷阱（ls-files 返回相对路径）
+
+> **陷阱：`git ls-files` 和 `git status --porcelain` 返回相对路径，`os.path.exists()` 需要绝对路径。**
+>
+> Cycle 68 发现：`git ls-files` 返回 110 行相对路径。这些路径在 `/tmp/hermes_sandbox`
+> CWD 下全部 `os.path.exists()` → False，导致误判 110 文件"缺失"。实际文件全在。
+>
+> **修复规则**: 1) `git ls-files` 仅用于数量统计。2) `os.path.join(WORKDIR, path)` 构建绝对路径。
+> 3) `os.walk()` 统计磁盘 SKILL.md 数量。4) `git status --porcelain` 结果同样需 WORKDIR 前缀。
+>
+> 文言: 名同实异，路不同基
+
+### Paper-Pipeline 删除未追踪陷阱
+
+> **陷阱：删除 SKILL.md 后 git status 标记 "D"，但 state.json 不更新。**
+>
+> Cycle 68：paper-pipeline/SKILL.md 被删除后 git status 显示 "D"，state.json 仍 110 tracked。
+> PROBE 用 git ls-files 得 110，os.walk 得 109，产生不一致。
+>
+> **修复规则**: 1) "D " 行 = 已删除的 SKILL.md。2) 删除后必须 git add rm + commit + 更新 state.json。
+> 3) 批量删除时在 IMPROVE 步骤一次性处理（git add -A + commit）。
+>
+> 文言: 删必录，录必同步

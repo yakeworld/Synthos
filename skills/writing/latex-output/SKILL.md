@@ -23,6 +23,19 @@ metadata:
 - 错误写法：`pdflatex -interaction nonstop_mode paper.tex` → FATAL exit code 1
 - 正确写法：`pdflatex -interaction nonstopmode paper.tex`
 
+### pdflatex Font Expansion Error (Cron Environment)
+- **现象**: `pdflatex` 编译失败，报错 `! pdfTeX error (font expansion): auto expansion is only possible with scalable fonts`，当 `paper.tex` 包含 `\usepackage{microtype}` 时。
+- **根因**: Cron 环境中的 CM 字体（Computer Modern）不是可缩放字体，microtype 的字体扩展功能不可用。
+- **修复**: 从 paper.tex 中移除 `\usepackage{microtype}`。这是所有 cron 环境 LaTeX 编译的已知限制。
+- **影响**: 移除 microtype 不影响 PDF 内容质量，仅影响字距调整——对 SCI 论文质量无实质影响。
+- **已知**: 2026-06-09 Paper 117 (orthokeratology-corneal-ODE) 首次遭遇此问题，移除后成功编译。
+
+### Citation Counting Convention
+- In-text equations: 直接嵌入正文段落中的 `\text{...}` 或行内公式，不计入 displayed equations 计数
+- Displayed equations: `equation` 环境中的公式，每行一个计数
+- 典型分布: 2-3 个 displayed equations + 0-2 个 in-text equations（paper.tex 中用 text 标注）
+- 示例 Paper 117: 2 equations in text, 2 displayed equations, 7 tables, 17 references
+
 ### 步骤组装顺序
 - 从 step_*.md 组装 .tex 时，按 IMRaD 顺序提取 LaTeX 内容：
   gap_analysis → abstract → intro → method → results → discussion

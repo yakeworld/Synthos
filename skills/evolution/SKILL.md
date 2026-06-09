@@ -18,6 +18,16 @@ metadata:
 
 # Evolution Engine — 自进化引擎
 
+## IO_CONTRACT
+
+- **input**: `cycle: int` — 当前进化周期编号
+- **input**: `prev_state: dict` — 上一周期 evolution-state.json 快照
+- **input**: `lessons: dict` — 历史教训（近30天）
+- **input**: `skill_inventory: list[Skill]` — 全部 110 技能清单
+- **output**: `evolution_report: dict` — 完整进化报告（含 score, dimensions, improvements, lessons）
+- **output**: `new_state: evolution-state.json` — 更新后的状态文件
+- **output**: `log_entry: evolution-log.md` — 追加日志条目
+
 ## 外部吸收记录 (v2.20 新增)
 
 > 吸收自 anthropics/claude-code (130,221⭐, 2026-06-05, 分数 4.5/5.0)
