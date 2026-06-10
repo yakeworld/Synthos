@@ -62,7 +62,25 @@ metadata:
 
 ## 脚本
 
-- `scripts/pubmed-urllib.py` — 可复用PubMed查询脚本（urllib stdlib，无curl，安全Hermes cron环境，已修复Python 3.12 quote_plus编码）
+|- `scripts/pubmed-urllib.py` — 可复用PubMed查询脚本（urllib stdlib，无curl，安全Hermes cron环境，已修复Python 3.12 quote_plus编码）
   - 用法：`python3 pubmed-urllib.py "term"` → count+PMIDs
   - `python3 pubmed-urllib.py "term" "2024/01/01..2026/06/08"` → 日期过滤
   - `python3 pubmed-urllib.py --abstract "PMID1,PMID2"` → 摘要提取
+
+## IO_CONTRACT
+
+**输入**:
+- `query: str` — PubMed搜索查询（支持MeSH、标题、摘要、作者、DOI、日期、文献类型字段）
+- `api_key: str (optional)` — NCBI API key（提升速率限制3→10 req/s）
+- `date_range: str (optional)` — 日期范围过滤器（"YYYY/MM/DD..YYYY/MM/DD"）
+- `max_results: int (optional, default=100)` — 最大返回结果数
+
+**输出**:
+- `papers: list[dict]` — 论文列表，每项包含: title, authors, journal, pubdate, pmid, abstract, mesh_terms, citation_count
+- `total_count: int` — 符合查询条件的论文总数
+- `query_used: str` — 实际执行的搜索查询
+
+**副作用**:
+- 调用NCBI E-utilities API（需网络访问）
+- 遵守速率限制：免费3 req/s，有key 10 req/s
+- 所有请求必须通过 `urllib.request`（cron安全，非curl管道）
