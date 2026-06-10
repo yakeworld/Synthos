@@ -155,3 +155,7 @@ metadata:
 - [ ] 混合精度配置与用户GPU型号兼容
 - [ ] 调试清单覆盖至少Karpathy原始配方核心项
 - [ ] 本技能不提供逐行代码——Agent应理解原理后自行生成
+
+## See Also
+
+- `references/multi-task-ablation-design.md` — 多任务模型消融试验设计（分割+参数回归+时序，27组实验模板，半监督策略）
