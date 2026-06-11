@@ -86,6 +86,52 @@ def header(slide):
 ```
 
 ### 新增幻灯片布局陷阱
+- 页面尺寸：宽13.333英寸，高7.5英寸。所有元素必须在此范围内。
+- 双栏：每栏≤3.4英寸；三栏：每栏≤2.8英寸。
+- 可用高度≈6.7英寸（减去标题0.4、分隔线0.1、页脚0.3）。
+- `col=0 if i<2 else (1 if i<4 else (2 if i<6 else 0))` 错误——i=0,1都得到col=0。用 `i%N`。
+- 7/8项目布局：偶数完美填满（4/6/8），奇数用2列多行（7→2×4，末行1个）。
+- 脚本存 `project/code/`，不存 `/tmp`。
+
+### 嵌套元组解包陷阱（PPTX循环生成）
+
+当数据是 `[(ypos, title, lines), ...]` 三层嵌套时，绝对不要写：
+- `for i, (ypos, title, lines) in enumerate(data)` — `enumerate` 返回 `(i, tuple)`，解包成4个值但目标3个位 → `ValueError: too many values to unpack`
+- `for i, title, lines, ypos in data` — `enumerate` 返回 `(i, tuple)`，解包成4个值但目标3个 → `ValueError: not enough values to unpack`
+
+**正确做法：去掉 enumerate，直接迭代**：
+```python
+for (ypos, title, lines) in [
+    (2.1, "SynthOS深度演化", [...]),
+    (3.7, "PD/AD超早期无创筛查", [...]),
+]:
+    # 直接用 ypos, title, lines
+```
+
+### 脚本存放约定
+
+所有PPTX生成脚本统一存到项目目录 `code/` 子目录，**不要存 `/tmp`**：
+- `/tmp` 随 session 消失，跨 session 无法复用
+- 项目 `code/` 目录：可审查、可追溯、可继承
+- 示例：`~/瓯越英才申报材料/code/gen_pptx.py`
+
+## 参考文件
+
+| 路径 | 用途 |
+|:-----|:-----|
+| references/competition-material-preparation.md | 证明材料准备模板 |
+| references/design-token-extraction.md | 设计令牌提取 |
+| references/ppt-quality-review-checklist.md | 质量审查清单 |
+| references/pptx-generation-template.md | 结构化多页PPTX模板（含嵌套元组解包陷阱、脚本存放约定） |
+| references/pptx-layout-pitfalls.md | 布局陷阱 |
+| references/python-pptx-direct-edit.md | Python-pptx直接XML编辑 |
+| references/python-pptx-table-cell-pitfall.md | 表格单元格陷阱 |
+| references/single-page-visualization-pattern.md | 单页可视化模式 |
+| references/vor-digital-twin-ppt-technical-extraction.md | VOR数字孪生PPT技术提取 |
+| references/pptx-nested-tuple-unpacking.md | 嵌套元组解包陷阱详解 |
+| references/pptx-script-storage-convention.md | 脚本存放约定：项目code/目录 |
+
+---
 
 **`prs.slides.add_slide()` 必须有 layout 参数**。空 presentation 使用 `prs.slide_layouts[6]`（BLANK 布局）：
 
