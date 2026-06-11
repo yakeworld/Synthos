@@ -18,6 +18,14 @@ metadata:
 
 # Research Paper Search
 
+## IO_CONTRACT
+
+- **input**: `query: str` — 搜索关键词（如 "vestibular eye tracking"）
+- **input**: `domains: list[str]` — 目标领域（如 ["PubMed", "OpenAlex", "arXiv"]）
+- **input**: `max_results: int` — 每源最大返回数
+- **output**: `papers: list[dict]` — 论文列表，每项含 {title, authors, year, source, doi, url, abstract}
+- **output**: `source_stats: dict` — 各源结果计数 {semantic_scholar: N, pubmed: N, ...}
+
 ## 搜索编排
 
 | 源 | API | 特点 |
@@ -120,3 +128,4 @@ ids = d.get("esearchresult", {}).get("idlist", [])
 | OpenAlex 关键词假阳性模式（v86） | 见 `references/false-positive-keyword-pattern.md`（openalex skill）— neural network→materials/electronics, differential equation→thermodynamics/traffic, fixation→molecular transport/botany. PubMed=0 + OA高计数 = 几乎确定假阳性 |
 | v86 综合扫描结果 | 见 `references/v86-scan-results.md` — 第86轮扫描：120+白空间确认稳定，83篇论文完成，cochlear-vestibular-coupling-PINN作为Paper 84候选 |
 | v97 综合扫描结果 | 见 `references/v97-scan-results.md` — 第97轮扫描：170+白空间确认稳定，85篇论文完成。重大假阳性：acoustic-vestibular-evoked-PINN=80(肿瘤生物学/有限元分析, 非PINN/ODE)。12附加候选全部ABSOLUTE WHITE PubMed=0。 |
+| step_quality_check.md JSON 解析 — LaTeX 反斜杠陷阱 | 见 `references/latex-escape-json-parsing-fix.md` — step_quality_check.md 中的 JSON 块常含 LaTeX 数学表达式的反斜杠（如 `\sigma`），导致 Python json.loads() 报 Invalid \escape。提供修复代码和 15+ 受影响论文清单。 |

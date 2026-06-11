@@ -13,6 +13,7 @@ allowed-tools:
 license: MIT
 metadata:
   synthos:
+    version: 1.0.0
     signature: 'skill_name: str -> test_results: dict'
     related_skills:
     - bib-integrity-audit

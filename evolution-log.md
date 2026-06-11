@@ -423,3 +423,46 @@ Key Lessons:
 ### Untracked Files (NOT committed)
 - references/scan-results-2026-06-10.md — paper library scan output (reference artifact)
 - 瓯越英才申报材料.zip — Chinese government application form (non-Synthos file)
+
+### Cycle 71 -- 2026-06-12 (automated cron execution)
+
+Model: qwen3.6-35b-nvfp4 (custom provider)
+
+#### Benchmark Results (actual)
+- Total SKILL.md files: 109
+- Git tracked: 109/109 (100%)
+- Valid YAML: 108/109 (99.08%)
+- Version present: 100/109 (91.74%)
+- Signature present: 55/109 (50.46%)
+- IO_CONTRACT present: 6/109 (5.50%)
+- Encoding errors: 0/109
+- **Benchmark score: 0.488** (formula: version_pct*0.33 + signature_pct*0.33 + io_contract_pct*0.34)
+
+#### Previous Cycle (70) Actual Benchmark
+- Version: 99/109, Signature: 55/109, IO_CONTRACT: 5/109
+- Actual: 0.4818 (state claimed 0.7479 — 55% overclaim)
+
+#### Improvements Made
+1. Added `IO_CONTRACT` to `research-paper-search/SKILL.md` (input: query+domains+max_results → output: papers+source_stats)
+2. Added `version: 1.0.0` to `falsification-validation/SKILL.md`
+
+#### Score Changes
+- structural: 1.0 → 1.0 (unchanged, 109/109 tracked, 0 dirty)
+- benchmark: 0.4818 → 0.488 (+0.0062)
+- overall: 0.9835 → 0.9147 (state correction: actual benchmark much lower than claimed)
+- grade: EXCELLENT → GOOD
+
+#### Edit Budget
+- Consumed: 2/3 (1 IO_CONTRACT + 1 version addition)
+- Remaining: 1
+- Files modified: 2 dirty SKILL.md (need git commit)
+
+#### Persistent Issues
+- 9 skills missing version (ffmpeg-video-audio-sync, debug-env-variables, markitdown-convert, obsidian, youtube-content, hcs-3wt-breast-cancer-diagnosis, knowledge-base-audit, k230-canmv-debugging, root SKILL.md)
+- 54 skills missing signature
+- 103 skills missing IO_CONTRACT
+- Systemic: bulk-edit required, not feasible within per-cycle budget
+
+#### State Correction Note
+Cycle 71 corrects the state.json benchmark overclaim pattern. Since cycle 68, state claimed benchmark scores were 20-60% higher than actual. Cycle 71 now uses actual calculated values going forward. The structural dimension at 1.0 was masking the true state — the actual bottleneck is benchmark (0.488), not structural (1.0).
+
