@@ -1,6 +1,10 @@
 ---
 name: notion
-description: 'Notion API via curl: pages, databases, blocks, search.'
+description: 'Notio
+## 原理层·文言
+
+> 文以验法，技乃所产。'Notion API via curl: pages, databases, blocks, search.'。
+n API via curl: pages, databases, blocks, search.'
 allowed-tools:
 - terminal
 - read_file

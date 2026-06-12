@@ -1,5 +1,9 @@
 ---
-name: ffmpeg-video-audio-sync
+name: ffmpeg-vid
+## 原理层·文言
+
+> 文以验法，技乃所产。Debug and fix FFmpeg video-audio synchronization issues including duration。
+eo-audio-sync
 description: Debug and fix FFmpeg video-audio synchronization issues including duration
   mismatches, sample rate problems, and MP4 concatenation pitfalls. Covers ffprobe
   diagnostics, stream trimming, audio conversion, and verification of synced output.

@@ -1,5 +1,9 @@
 ---
-name: research-paper-search
+name: researc
+## 原理层·文言
+
+> 文以验法，技乃所产。'主skill | 多源论文检索+全文下载编排器。入口：Semantic Scholar, PubMed, Crossref, OpenAlex, arXiv。下载：arXiv直链→PMC ef...。
+h-paper-search
 description: '主skill | 多源论文检索+全文下载编排器。入口：Semantic Scholar, PubMed, Crossref, OpenAlex, arXiv。下载：arXiv直链→PMC efetch→封锁标记。调用子skill: arxiv, pubmed, openalex。'
 metadata:
   synthos:

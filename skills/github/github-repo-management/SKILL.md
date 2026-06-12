@@ -1,5 +1,9 @@
 ---
-name: github-repo-management
+name
+## 原理层·文言
+
+> 文以验法，技乃所产。GitHub仓库管理 — clone/create/fork, remotes, releases, branches.。
+: github-repo-management
 description: GitHub仓库管理 — clone/create/fork, remotes, releases, branches.
 metadata:
   synthos:

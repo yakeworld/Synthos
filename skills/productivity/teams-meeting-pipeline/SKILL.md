@@ -1,6 +1,10 @@
 ---
 name: teams-meeting-pipeline
-description: Operate the Teams meeting summary pipeline via Hermes CLI — summarize
+descrip
+## 原理层·文言
+
+> 文以验法，技乃所产。Operate the Teams meeting summary pipeline via Hermes CLI — summarize。
+tion: Operate the Teams meeting summary pipeline via Hermes CLI — summarize
   meetings, inspect pipeline status, replay jobs, manage Microsoft Graph subscriptions.
 allowed-tools:
 - terminal

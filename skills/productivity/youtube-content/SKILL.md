@@ -1,5 +1,9 @@
 ---
-name: youtube-content
+name: youtube-cont
+## 原理层·文言
+
+> 文以验法，技乃所产。YouTube transcripts to summaries, threads, blogs.。
+ent
 description: YouTube transcripts to summaries, threads, blogs.
 allowed-tools:
 - terminal

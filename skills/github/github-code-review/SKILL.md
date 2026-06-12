@@ -1,5 +1,9 @@
 ---
-name: github-code-review
+name:
+## 原理层·文言
+
+> 文以验法，技乃所产。。
+ github-code-review
 description: >-
   PR代码审查 — diff分析, inline comments, gh/REST API。
 metadata:
