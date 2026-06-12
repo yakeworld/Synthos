@@ -1,9 +1,5 @@
 ---
-name:
-## 原理层·文言
-
-> 文以验法，技乃所产。。
- google-workspace
+name: google-workspace
 description: >-
   Gmail/Calendar/Drive/Docs/Sheets via gws CLI。
 metadata:

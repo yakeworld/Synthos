@@ -1,7 +1,7 @@
 ---
 name: paper-pipeline
 description: "主skill | SCI论文全流程编排器。核心原理：声明与执行分离、逐问收束、节点闸门、闭环进化。v3.9新增模板层：按论文类型预选实验模板(CRISP-DM/消融/对比/理论)。v3.10新增：批量双质检工作流、NotebookLM_唯一命名规范、引用PDF就绪检查。v3.10.1修复：paper-manager搜索导入错误、更新DOI批量下载策略。调用子skill: notebooklm-cli, sci-paper-standard-structure, research-paper-search, sci-paper-quality-review"
-version: 3.12.0
+version: 3.13.0
 author: "Synthos + 临床科研设计与论文写作 + 用户杨晓凯"
 license: MIT
 metadata:
@@ -934,3 +934,5 @@ Step 4: 产出
   | 文献中引用的数值 | 文献报告、据X报道、与文献值一致 | 我们发现、这是一个发现 |
   | 基于文献比对的推论 | 提出假设、推测、一致的可能性 | 证实、揭示、这证明 |
   **执行检查**：L0.5数据门增加「声明分类」步骤——提取所有带发现/discovery/揭示/reveal的句子，逐一问：基于我们的数据还是文献引用？文献引用类一律降级。只有拟合/实验/代码直接输出的数值才能用发现。
+
+18. **🟡 natbib conflicts with thebibliography (2026-06-12 Paper 187)**: When using `\begin{thebibliography}` (plain BibTeX in-text entries), do NOT load `\usepackage{natbib}`. It causes "Bibliography not compatible with author-year citations" error at compile. Fix: remove natbib, use plain `\cite{key}`. When using BibTeX mode (`.bib` file + `\bibliography{}`), use natbib for `\citep{}`, `\citet{}` author-year format. **Decision tree**: thebibliography in tex → no natbib; separate .bib file → natbib ok.

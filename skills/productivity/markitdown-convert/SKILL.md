@@ -1,9 +1,5 @@
 ---
-name: markitdown-
-## 原理层·文言
-
-> 文以验法，技乃所产。Convert PDF/Office files to Markdown using Microsoft MarkItDown。
-convert
+name: markitdown-convert
 description: Convert PDF/Office files to Markdown using Microsoft MarkItDown
 allowed-tools:
 - terminal

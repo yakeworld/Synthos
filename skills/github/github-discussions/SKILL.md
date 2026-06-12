@@ -1,10 +1,6 @@
 ---
 name: github-discussions
-descr
-## 原理层·文言
-
-> 文以验法，技乃所产。Create, list, search, and manage GitHub Discussions via GraphQL API.。
-iption: Create, list, search, and manage GitHub Discussions via GraphQL API.
+description: Create, list, search, and manage GitHub Discussions via GraphQL API.
 allowed-tools:
 - terminal
 - file

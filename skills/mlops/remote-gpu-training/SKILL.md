@@ -1,9 +1,5 @@
 ---
-name:
-## 原理层·文言
-
-> 文以验法，技乃所产。。
- remote-gpu-training
+name: remote-gpu-training
 description: >-
   远程GPU训练工作流 — SSH连接, env setup, scp脚本, tmux后台训练。
 metadata:

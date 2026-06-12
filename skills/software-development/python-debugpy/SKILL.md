@@ -1,9 +1,5 @@
 ---
-name: python-
-## 原理层·文言
-
-> 文以验法，技乃所产。Python Debugpy。
-debugpy
+name: python-debugpy
 description: Python Debugpy
 license: MIT
 metadata:

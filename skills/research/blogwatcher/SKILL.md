@@ -1,10 +1,6 @@
 ---
 name: blogwatcher
-description: 
-## 原理层·文言
-
-> 文以验法，技乃所产。Monitor blogs and RSS/Atom feeds via blogwatcher-cli tool.。
-Monitor blogs and RSS/Atom feeds via blogwatcher-cli tool.
+description: Monitor blogs and RSS/Atom feeds via blogwatcher-cli tool.
 allowed-tools:
 - terminal
 - read_file

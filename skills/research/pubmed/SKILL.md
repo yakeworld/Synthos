@@ -1,9 +1,5 @@
 ---
-name:
-## 原理层·文言
-
-> 文以验法，技乃所产。Deep PubMed/MEDLINE search via NCBI E-utilities — query construction, MeSH terms, batch retrieval...。
- pubmed
+name: pubmed
 description: Deep PubMed/MEDLINE search via NCBI E-utilities — query construction, MeSH terms, batch retrieval, clinical query refinement.
 metadata:
   synthos:

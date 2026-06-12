@@ -1,9 +1,5 @@
 ---
-name: debugging-hermes-tui-comma
-## 原理层·文言
-
-> 文以验法，技乃所产。'Debug Hermes TUI slash commands: Python, gateway, Ink UI.'。
-nds
+name: debugging-hermes-tui-commands
 description: 'Debug Hermes TUI slash commands: Python, gateway, Ink UI.'
 allowed-tools:
 - terminal

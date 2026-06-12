@@ -1,9 +1,5 @@
 ---
-name:
-## 原理层·文言
-
-> 文以验法，技乃所产。。
- memory-enhancement
+name: memory-enhancement
 description: >-
   记忆增强与结构化巩固 — FSRS间隔重复+增量阅读+知识图谱。
 metadata:

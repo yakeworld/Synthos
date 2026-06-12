@@ -1,9 +1,5 @@
 ---
-name:
-## 原理层·文言
-
-> 文以验法，技乃所产。。
- test-driven-development
+name: test-driven-development
 description: >-
   TDD — RED-GREEN-REFACTOR强制流程, 先测试再代码。
 metadata:
