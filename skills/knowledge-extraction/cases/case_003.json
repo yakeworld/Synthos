@@ -1,0 +1,12 @@
+{
+  "raw_papers": [
+    {
+      "title": "Some Paper Without Abstract",
+      "doi": "",
+      "abstract": "",
+      "year": 2024,
+      "authors": ["Author A"],
+      "source": "pubmed"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "hypotheses": [
+    {
+      "id": "hyp_001",
+      "text": "A multi-feature eye-tracking protocol combining fixation-duration variability, saccadic latency, and blink rate can achieve ≥80% sensitivity and ≥75% specificity for ADHD screening in clinical settings.",
+      "novelty_score": 0.7,
+      "feasibility_score": 0.65,
+      "testability": "testable",
+      "rationale": "Single eye-tracking metrics have shown moderate diagnostic accuracy; combining multiple features may yield clinically acceptable performance. A feasibility score of 0.65 indicates reasonable practical implementation potential."
+    }
+  ],
+  "raw_papers": [
+    {
+      "id": "10.1007/s10802-022-00956-4",
+      "title": "Eye-tracking based attention assessment in children with ADHD: A feasibility study",
+      "authors": ["Rodriguez, C.", "Gonzalez-Castro, P.", "Cueli, M."],
+      "year": 2022,
+      "journal": "Journal of Abnormal Child Psychology",
+      "abstract": "A feasibility study examining the use of a 15-minute eye-tracking protocol in 30 children diagnosed with ADHD. Results showed that 93% of children completed the protocol successfully, with high test-retest reliability (ICC = 0.85) for fixation duration measures."
+    }
+  ],
+  "structure": "methods"
+}

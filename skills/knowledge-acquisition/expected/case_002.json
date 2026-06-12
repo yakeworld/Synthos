@@ -1,0 +1,40 @@
+{
+  "papers": [
+    {
+      "title": "AI-based eye tracking technology for screening ADHD symptoms in children",
+      "doi": "10.3389/fpsyt.2023.1260031",
+      "year": 2023,
+      "authors": ["Chen X", "Wang S", "Yang X"],
+      "abstract_snippet": "OBJECTIVE: To explore the potential of using artificial intelligence (AI)-based eye tracking technology on a tablet for screening Attention-deficit/hyperactivity disorder (ADHD) symptoms in children."
+    },
+    {
+      "title": "Eye tracking in attention-deficit/hyperactivity disorder: a systematic review of the literature on oculomotor findings",
+      "doi": "10.3389/fpsyt.2024.1328491",
+      "year": 2024,
+      "authors": ["Marzocchi GM", "Spagna A", "Cantarella A"],
+      "abstract_snippet": "This systematic review synthesizes oculomotor findings from eye-tracking studies in ADHD, identifying consistent patterns in saccade latency, antisaccade errors, and fixation stability."
+    },
+    {
+      "title": "眼动追踪技术在注意缺陷多动障碍儿童筛查中的应用进展",
+      "doi": "10.3760/cma.j.cn115682-20230905-02060",
+      "year": 2024,
+      "authors": ["张明", "李华", "王磊"],
+      "abstract_snippet": "眼动追踪技术作为一种非侵入性的神经生物学评估方法，在注意缺陷多动障碍（ADHD）儿童的早期筛查中展现出巨大潜力。"
+    },
+    {
+      "title": "Eye-tracking-based prediction of ADHD symptoms in children: a deep learning approach",
+      "doi": "10.1016/j.bspc.2022.104178",
+      "year": 2022,
+      "authors": ["Alam MN", "Hossain MA", "Amin MA"],
+      "abstract_snippet": "Eye-tracking technology has emerged as a promising tool for the early detection and monitoring of Attention Deficit Hyperactivity Disorder (ADHD) symptoms in children."
+    },
+    {
+      "title": "Utility of eye tracking in the diagnosis of attention-deficit/hyperactivity disorder: a systematic review",
+      "doi": "10.1016/j.neubiorev.2020.09.011",
+      "year": 2020,
+      "authors": ["Lev A", "Braw Y", "Elbaum T"],
+      "abstract_snippet": "A systematic review of eye-tracking studies for ADHD diagnosis, evaluating the utility of various eye movement paradigms including saccade tasks, fixation tasks, and smooth pursuit."
+    }
+  ],
+  "total_found": 5
+}

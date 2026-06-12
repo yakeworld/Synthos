@@ -1,0 +1,57 @@
+% TikZ PRISMA 2020 Flow Diagram Template
+% For systematic review papers in elsarticle + thebibliography mode
+% Usage: Place in paper directory, \input{tikz-prisma-flow} in Methods section
+% Requires: \usepackage{tikz} + \usetikzlibrary{shapes.geometric, arrows, positioning, fit}
+% Verify: Compile once to check no "Runaway argument" errors from % characters
+%
+% Customization:
+%   - n = 1,247 → replace with your database search total
+%   - n = 86 → replace with your other-source total
+%   - n = 1,089 → total after dedup
+%   - n = 981 → title/abstract excluded
+%   - n = 108 → full-text assessed
+%   - n = 80 → full-text excluded (adjust reasons)
+%   - n = 28 → studies included
+
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  box/.style={rectangle, draw, rounded corners=2mm, minimum width=4.5cm, minimum height=0.8cm, align=center, font=\small, fill=blue!8},
+  arrow/.style={->, >=stealth, thick},
+  label/.style={font=\small\itshape}
+]
+
+% Top: Identification
+\node[box] (records) at (0,0) {Records identified\\through database search\\(n = 1,247)};
+\node[box, right=3.5cm of records] (other) {Additional records\\from other sources\\(n = 86)};
+\node[box, below=1.2cm of records, xshift=1.75cm] (total) {Records after duplicates removed\\(n = 1,089)};
+\draw[arrow] (records.south) -- (total.west);
+\draw[arrow] (other.south) -| (total.east);
+
+% Screening
+\node[box, below=1.2cm of total] (screened) {Records screened\\(n = 1,089)};
+\draw[arrow] (total.south) -- (screened.north);
+\node[box, right=3.5cm of screened] (excluded1) {Records excluded\\--- Title/abstract\\(n = 981)};
+\draw[arrow] (screened.east) -- (excluded1.west);
+
+% Eligibility
+\node[box, below=1.2cm of screened] (fulltext) {Full-text articles\\assessed for eligibility\\(n = 108)};
+\draw[arrow] (screened.south) -- (fulltext.north);
+\node[box, right=3.5cm of fulltext] (excluded2) {Full-text excluded\\(n = 80) \\--- No quantitative metrics\\--- Duplicate method\\--- Non-English};
+\draw[arrow] (fulltext.east) -- (excluded2.west);
+
+% Included
+\node[box, below=1.2cm of fulltext, fill=green!8] (included) {Studies included\\in qualitative synthesis\\(n = 28)};
+\draw[arrow] (fulltext.south) -- (included.north);
+
+% Labels
+\node[label, left=0.3cm of records] {Identification};
+\node[label, left=0.3cm of screened] {Screening};
+\node[label, left=0.3cm of fulltext] {Eligibility};
+\node[label, left=0.3cm of included] {Included};
+
+\end{tikzpicture}}
+\caption{PRISMA flow diagram of the study selection process.}
+\label{fig:prisma}
+\end{figure}

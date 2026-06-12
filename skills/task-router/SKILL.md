@@ -5,20 +5,13 @@ license: MIT
 allowed-tools: shell (bash), Read (view), Write (write), task_delegation (agent, inline),
   skill_loader (view with file path)
 metadata:
-  synthos_atom_type: cognitive
-  synthos_depends_on: all-cognitive-atoms
-  synthos_data_access_level: raw
   synthos:
-    author: Synthos
-    signature: 'query: str, context: dict -> route: str, atom_chain: list[str], execution_mode:
-      str'
-    related_skills:
-    - argument-expression
-    - association-discovery
-    - ai-outreach
-    - claude-code
-    version: 1.8.0
----
+    priority: P0
+    atom_type: cognitive-router
+    description: Synthos系统入口。路由用户查询到正确的认知原子链或执行模式。 四模式：标准链 / 探索循环 / 研究双循环 / 并行执行。
+    signature: ['query: str, context: dict -> route: str, atom_chain: list[str], execution_mode: str'] -> ['route: str, atom_chain: list[str], execution_mode: str, pipeline_trace: pipeline_trace.json']
+    related_skills: [knowledge-acquisition, knowledge-extraction, association-discovery, hypothesis-generation, argument-expression, viewpoint-verification, evolution]
+
 
 # Task Router — Synthos 系统入口
 
@@ -77,7 +70,9 @@ metadata:
 **四模式选择矩阵：**
 
 | 模式 | 适用 | 原子链 | 行为 |
-|:-----|:-----|:-------|:-----|
+|:---
+  io_contract: input: ['query: str, context: dict -> route: str, atom_chain: list[str], execution_mode: str', 'output: ['route: str, atom_chain: list[str], execution_mode: str, pipeline_trace: pipeline_trace.json']
+--|:-----|:-------|:-----|
 | **标准链** | 一次性查询：搜索文献/提取信息/写段文字 | ACQ→EXT→ARG 或 自定义短链 | 顺序执行，每步完报告 |
 | **探索循环** | 需迭代优化的单一问题 | HYP→ARG→VER, 循环 | 提出→检验→修改, 循环≥2次 |
 | **研究双循环** | 完整研究任务：文献+发现+假说+论文 | ACQ→EXT→ASC→GAP→HYP→ARG→VER | 外环(计划)+内环(执行) |

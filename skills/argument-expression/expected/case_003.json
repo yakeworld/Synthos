@@ -1,0 +1,90 @@
+{
+  "sections": [
+    {
+      "section_type": "introduction",
+      "heading": "Introduction",
+      "paragraphs": [
+        "The relationship between screen time exposure in early childhood and subsequent attention-deficit/hyperactivity disorder (ADHD) symptoms has become a prominent public health concern. With children increasingly exposed to digital media from infancy, understanding the long-term neurocognitive consequences is essential for developing evidence-based screen time guidelines. Madigan et al. (2019) demonstrated in a prospective cohort of 2,441 children that higher screen time at age 3 was associated with greater ADHD symptom scores at age 5 (β = 0.13, 95% CI: 0.07–0.19), even after adjusting for socioeconomic status and parental education.",
+        "However, the mechanisms underlying this association remain poorly understood. Two primary pathways have been hypothesized: a direct effect on attentional networks through rapid stimulus-reward conditioning, and an indirect effect mediated by sleep disruption. Li et al. (2020) reported a significant dose-response relationship between daily screen time and sleep problems in a meta-analysis of 32 studies (OR = 1.32 per additional hour), with stronger effects for interactive screen use.",
+        "In this paper, we present a comprehensive investigation of two hypotheses. First, we test whether increased screen time during early childhood (ages 3–5) is associated with elevated ADHD symptom scores at age 8, controlling for socioeconomic status and parental education (Hypothesis 1). Second, we examine whether this association is partially mediated by reduced sleep duration and quality (Hypothesis 2). We build on prior findings that sleep duration mediates the relationship between screen time and attention problems in early adolescence (Guerrero et al., 2021) and extend this to a younger developmental period."
+      ],
+      "arguments": [
+        {
+          "id": "arg_001",
+          "premise": "Higher screen time at age 3 is associated with greater ADHD symptoms at age 5 in a large prospective cohort.",
+          "claim": "Increased screen time during early childhood is associated with elevated ADHD symptom scores at age 8.",
+          "evidence": ["10.1001/jamapediatrics.2019.2856"]
+        },
+        {
+          "id": "arg_002",
+          "premise": "Screen time shows a dose-response relationship with sleep problems in children.",
+          "claim": "Sleep disruption is a plausible mediator of the screen time–ADHD relationship.",
+          "evidence": ["10.1016/j.jsr.2020.08.004", "10.1016/j.bandc.2021.105726"]
+        }
+      ]
+    },
+    {
+      "section_type": "methods",
+      "heading": "Methods",
+      "paragraphs": [
+        "We propose to analyze data from the All Our Families longitudinal cohort, following 2,441 children from age 3 to age 8. Screen time will be measured via parent-reported daily hours of television, computer, and mobile device use at ages 3, 4, and 5. ADHD symptoms at age 8 will be assessed using the Conners' Parent Rating Scale–Revised, short form. Sleep duration and quality will be measured using the Children's Sleep Habits Questionnaire administered at ages 4, 5, and 6.",
+        "Mediation analysis will be conducted using structural equation modeling with bias-corrected bootstrapped confidence intervals (5,000 resamples). The direct path from screen time (ages 3–5 average) to ADHD symptoms (age 8) will be estimated alongside the indirect path through sleep measures (ages 4–6 average). All models will include socioeconomic status, parental education, and baseline attention scores at age 3 as covariates.",
+        "Sensitivity analyses will include (1) multiple imputation for missing data, (2) propensity score matching to address confounding by indication, and (3) a negative control analysis using fine motor skills as an outcome not expected to be affected by screen time."
+      ],
+      "arguments": [
+        {
+          "id": "arg_003",
+          "premise": "Mediation analysis with bootstrapped confidence intervals can quantify direct and indirect pathways.",
+          "claim": "The proposed SEM approach will provide rigorous evidence for or against the mediation hypothesis.",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "section_type": "results",
+      "heading": "Results",
+      "paragraphs": [
+        "We expect that higher average screen time (ages 3–5) will be positively associated with ADHD symptom scores at age 8 (direct effect). If the mediation hypothesis is supported, we expect a significant indirect effect through sleep duration/quality, with the direct effect attenuating after accounting for the mediator. Based on prior effect sizes (Madigan et al., 2019; Guerrero et al., 2021), we anticipate total effects in the range of β = 0.10–0.15. We further hypothesize that the proportion mediated through sleep will be between 15% and 30%.",
+        "Sensitivity analyses are expected to confirm the robustness of the main findings. Propensity score matching should yield comparable effect sizes, and the negative control analysis is predicted to show no significant association between screen time and fine motor skills."
+      ],
+      "arguments": [
+        {
+          "id": "arg_004",
+          "premise": "Prior longitudinal studies have found consistent but small effect sizes for the screen time–ADHD association.",
+          "claim": "Our analysis will replicate these findings and further quantify the mediating role of sleep.",
+          "evidence": ["10.1001/jamapediatrics.2019.2856", "10.1016/j.bandc.2021.105726"]
+        }
+      ]
+    },
+    {
+      "section_type": "discussion",
+      "heading": "Discussion",
+      "paragraphs": [
+        "This study is expected to provide the first formal mediation analysis examining sleep as a mechanism linking early childhood screen time to ADHD symptoms at age 8. If confirmed, our findings would have direct implications for clinical guidelines: interventions targeting sleep hygiene in screen-using children could mitigate some of the attentional risks. The projected 15–30% mediation proportion suggests that while sleep is an important pathway, other mechanisms (e.g., reward system sensitization, reduced real-world social interaction) likely also contribute.",
+        "Limitations include reliance on parent-reported screen time and sleep measures, potential residual confounding, and the observational design precluding causal inference. Future studies should incorporate objective screen time tracking (e.g., mobile device logging) and actigraphy-based sleep measurement to improve measurement precision. Replication in diverse socioeconomic and cultural contexts is essential before broad generalization."
+      ],
+      "arguments": [
+        {
+          "id": "arg_005",
+          "premise": "Sleep hygiene interventions are modifiable and can be implemented at the family level.",
+          "claim": "Screen time reduction guidelines should include sleep hygiene recommendations as a complementary strategy.",
+          "evidence": ["10.1016/j.jsr.2020.08.004"]
+        }
+      ]
+    }
+  ],
+  "references": [
+    {
+      "id": "10.1001/jamapediatrics.2019.2856",
+      "formatted": "Madigan, S., Browne, D., Racine, N., Mori, C., & Tough, S. (2019). Association of screen time with attention-deficit/hyperactivity disorder symptoms in children: A longitudinal cohort study. JAMA Pediatrics."
+    },
+    {
+      "id": "10.1016/j.jsr.2020.08.004",
+      "formatted": "Li, C., Cheng, G., Sha, T., Cheng, W., & Yan, Y. (2020). Screen time and sleep problems in school-aged children: A systematic review and dose-response meta-analysis. Journal of Sleep Research."
+    },
+    {
+      "id": "10.1016/j.bandc.2021.105726",
+      "formatted": "Guerrero, M. D., Barnes, J. D., Chaput, J. P., & Tremblay, M. S. (2021). Sleep duration mediates the relationship between screen time and attention problems in early adolescence. Brain and Cognition."
+    }
+  ]
+}

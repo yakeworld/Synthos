@@ -5,37 +5,13 @@ description: 多源学术论文检索：Semantic Scholar / PubMed / Crossref / O
 license: MIT
 allowed-tools: terminal Read Write task_delegation (bash, view/write, agent, inline)
 metadata:
-  synthos_atom_type: cognitive
-  synthos_version: 1.7.0
-  synthos_skill_md_hash: knowledge-acquisition-v1.7.0
-  synthos_model_tested_on: '2026-05-10T00:00:00Z'
-  synthos_author: Synthos
-  synthos_absorbed_from: Synthos internal (multi-source academic search pattern)
-  synthos_absorbed_date: '2026-05-10'
-  synthos_io_contract_ref: references/IO_CONTRACT.md
-  synthos_asserted_compliance: P0
-  synthos_depends_on: semantic-scholar, pubmed, arxiv, openalex, biorxiv, research-paper-search,
-    scientific-database-lookup
-  synthos_data_access_level: raw
   synthos:
-    author: Synthos
-    signature: 'topic: str, sources: list -> papers: list[Paper], total_found: int'
-    related_skills:
-    - argument-expression
-    - association-discovery
-    - ai-outreach
-    - autonomous-core-researcher
-    - claude-code
-    version: 1.7.0
-    tags:
-    - academic-search
-    - paper-retrieval
-    - semantic-scholar
-    - pubmed
-    - arxiv
-    - openalex
-    - literature-review
----
+    priority: P0
+    atom_type: cognitive-atom
+    description: External knowledge acquisition — search PubMed, Semantic Scholar, OpenAlex, arXiv, bioRxiv, etc.
+    signature: ['query: str, sources: list[str], date_range: str -> candidates: list[PaperCandidate]'] -> ['candidates: list[PaperCandidate] (title, doi, source, relevance, abstract_summary, pdf_url)']
+    related_skills: [knowledge-extraction, association-discovery, hypothesis-generation, argument-expression, research-paper-search, academic-diagram, nature-paper2ppt]
+
 
 
 # 知识获取 (Knowledge Acquisition)
@@ -68,7 +44,9 @@ Agent-native认知原子。使用技能库+终端curl检索学术文献，零Pyt
 ## 输入契约
 
 | 字段 | 类型 | 必需 | 说明 |
-|:-----|:-----|:----:|:-----|
+|:-----|:---
+  io_contract: input: ['query: str, sources: list[str], date_range: str -> candidates: list[PaperCandidate]', 'output: ['candidates: list[PaperCandidate] (title, doi, source, relevance, abstract_summary, pdf_url)']
+--|:----:|:-----|
 | topic | string | ✅ | 研究主题 / 关键问题 |
 | keywords | list[str] | ❌ | 具体关键词（不提供则自动从 topic 推导） |
 | source_priority | list[str] | ❌ | 数据源优先级（默认: S2→PubMed→arXiv→OpenAlex→Crossref→bioRxiv） |

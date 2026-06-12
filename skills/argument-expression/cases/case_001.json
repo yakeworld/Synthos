@@ -1,0 +1,31 @@
+{
+  "hypotheses": [
+    {
+      "id": "hyp_001",
+      "text": "Eye-tracking measures of visual attention during reading tasks can reliably distinguish ADHD-diagnosed children from neurotypical controls.",
+      "novelty_score": 0.7,
+      "feasibility_score": 0.6,
+      "testability": "testable",
+      "rationale": "Prior work suggests oculomotor differences in ADHD, but standardized reading-based paradigms remain underexplored as a diagnostic screening tool."
+    },
+    {
+      "id": "hyp_002",
+      "text": "The combination of saccadic latency and fixation duration features outperforms single-metric classifiers in ADHD vs. control discrimination.",
+      "novelty_score": 0.65,
+      "feasibility_score": 0.55,
+      "testability": "testable",
+      "rationale": "Multi-feature eye-tracking models have shown promise in other neurodevelopmental disorders but are rarely benchmarked systematically in ADHD."
+    }
+  ],
+  "raw_papers": [
+    {
+      "id": "10.1016/j.biopsych.2023.01.001",
+      "title": "Oculomotor abnormalities in attention-deficit/hyperactivity disorder: A systematic review and meta-analysis",
+      "authors": ["Munoz, D. P.", "Armstrong, I. T.", "Everling, S."],
+      "year": 2023,
+      "journal": "Biological Psychiatry",
+      "abstract": "This meta-analysis of 47 studies found consistent evidence for increased saccadic latency and reduced fixation stability in individuals with ADHD compared to controls. Effect sizes were moderate to large for prosaccade tasks."
+    }
+  ],
+  "structure": "introduction"
+}

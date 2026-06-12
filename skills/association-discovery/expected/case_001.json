@@ -1,0 +1,47 @@
+{
+  "associations": [
+    {
+      "type": "contradiction",
+      "item1": "10.3389/fpsyt.2023.1260031",
+      "item2": "10.3390/brainsci13050703",
+      "item1_title": "AI-Extracted Eye-Tracking Features for ADHD Screening: A Tablet-Based Approach",
+      "item2_title": "Unraveling ADHD Through Eye Tracking: Pupil Metrics Do Not Outperform Traditional Diagnostic Methods",
+      "description": "Chen et al. report 89% sensitivity for AI-extracted eye-tracking features in ADHD screening, while the Unraveling ADHD study finds pupil-based eye-tracking metrics achieve only 57% sensitivity, concluding that eye-tracking does not outperform traditional rating scales. This contradiction likely stems from different eye-tracking paradigms (AI-extracted saccadic features vs. raw pupil metrics) and different classification approaches (ML integration vs. individual metric comparison).",
+      "confidence": 0.82,
+      "significance": "This contradiction highlights a critical methodological gap in ADHD eye-tracking research: the choice of eye-tracking features and analytical approach may determine whether the technology appears effective or not. Resolving this is essential for clinical translation."
+    }
+  ],
+  "research_gaps": [
+    {
+      "type": "methodology_gap",
+      "description": "No head-to-head comparison of AI-integrated eye-tracking features versus raw pupilometric metrics exists within a single study using the same population and apparatus.",
+      "confidence": 0.88,
+      "evidence": "Chen 2023 (AI features, positive) and Unraveling ADHD 2023 (raw pupil metrics, null) use different paradigms, populations, and analytical pipelines, making direct comparison impossible (KnowledgeItem.id=10.3389/fpsyt.2023.1260031, KnowledgeItem.id=10.3390/brainsci13050703)",
+      "priority": "high"
+    },
+    {
+      "type": "population_gap",
+      "description": "Existing ADHD eye-tracking studies lack diverse population validation across different age ranges, comorbidities, and ADHD subtypes, limiting generalizability of both positive and null findings.",
+      "confidence": 0.75,
+      "evidence": "Chen 2023 samples ages 6–14 only; Unraveling ADHD 2023 does not report subtype-stratified analyses. Neither study includes ADHD-inattentive vs. combined type comparisons.",
+      "priority": "medium"
+    }
+  ],
+  "knowledge_graph": {
+    "nodes": [
+      {"id": "10.3389/fpsyt.2023.1260031", "label": "AI Eye-Tracking ADHD Screening (Chen 2023)", "year": 2023, "type": "paper", "domain": "pediatric_psychiatry"},
+      {"id": "10.3390/brainsci13050703", "label": "Unraveling ADHD Eye Tracking Pupil Metrics (2023)", "year": 2023, "type": "paper", "domain": "pediatric_psychiatry"}
+    ],
+    "edges": [
+      {"id": "assoc_001", "source": "10.3389/fpsyt.2023.1260031", "target": "10.3390/brainsci13050703", "type": "contradiction", "confidence": 0.82}
+    ],
+    "statistics": {
+      "total_nodes": 2,
+      "total_edges": 1,
+      "contradictions": 1,
+      "supplements": 0,
+      "evolutions": 0,
+      "gaps": 2
+    }
+  }
+}

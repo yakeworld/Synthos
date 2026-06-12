@@ -1,0 +1,16 @@
+{
+  "hypothesis": {
+    "id": "hyp_001",
+    "text": "Cognitive behavioral therapy (CBT) is effective for reducing symptoms in mild-to-moderate depression."
+  },
+  "argument": {
+    "text": "Cognitive behavioral therapy is one of the most empirically supported psychotherapies for depression. Multiple meta-analyses and large-scale randomized controlled trials have consistently demonstrated that CBT produces moderate-to-large effect sizes in reducing depressive symptoms compared to control conditions. The evidence base includes over 100 RCTs with diverse populations, long-term follow-up data showing maintained gains, and direct comparisons showing non-inferiority to antidepressant medication for mild-to-moderate cases.",
+    "supporting_evidence": [
+      "Cuijpers, P., et al. (2023). Psychological treatment of depression: A meta-analytic database of randomized trials. World Psychiatry, 22(3), 443-454.",
+      "Hofmann, S. G., et al. (2022). The efficacy of cognitive behavioral therapy: A review of meta-analyses. Cognitive Therapy and Research, 46(5), 805-830."
+    ]
+  },
+  "context": {
+    "domain": "clinical psychology and mental health"
+  }
+}

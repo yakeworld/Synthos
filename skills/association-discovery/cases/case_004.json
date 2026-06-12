@@ -1,0 +1,21 @@
+{
+  "knowledge_items": [
+    {
+      "id": "10.1007/s00787-023-01872-2",
+      "title": "Reading Performance and Eye Movement Patterns in Children with ADHD: A Naturalistic Classroom Study",
+      "key_findings": [
+        "Children with ADHD exhibit significantly more regressive saccades during reading compared to typically developing peers (p<0.001)",
+        "Fixation duration on connected text is 18% shorter in ADHD readers, correlating with lower reading comprehension scores",
+        "Eye movement abnormalities during reading correlate with teacher-reported inattention (r=0.54, p<0.001)"
+      ],
+      "key_themes": ["ADHD", "eye-tracking", "reading performance", "eye movements", "classroom assessment"],
+      "methodology": "cross_sectional_comparative",
+      "methods_detail": "Naturalistic classroom-based eye-tracking study of reading behavior in 164 children (82 ADHD, 82 controls), ages 8–12",
+      "domain": "pediatric_psychiatry",
+      "sample_size": 164,
+      "year": 2023,
+      "evidence_level": "cross_sectional",
+      "limitations": ["Classroom environment introduces uncontrolled variables", "Cross-sectional design limits causal interpretation", "Reading material difficulty not individually calibrated"]
+    }
+  ]
+}

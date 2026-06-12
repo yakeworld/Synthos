@@ -1,0 +1,46 @@
+{
+  "hypotheses": [
+    {
+      "id": "hyp_001",
+      "text": "Baseline eye-tracking features (saccadic latency variability, fixation stability) that discriminate ADHD from controls in screening studies will predict individual differences in treatment response to VR-based eye-tracking training, such that children with more pronounced baseline oculomotor abnormalities will show greater post-training improvement in attentional control (measured by CPT performance and teacher ratings).",
+      "rationale": "The knowledge gap (gap_001) identifies that no study connects discriminative eye-tracking biomarkers with treatment response prediction, despite assoc_003 showing the translational bridge from screening to intervention. Using first-principles reasoning from predictive biomarker literature in psychiatry, it is plausible that the same features that distinguish diagnostic groups also index neural circuit malleability and thus predict training outcomes.",
+      "source": "research_gap",
+      "source_ref": "gap_001",
+      "novelty_score": 0.78,
+      "feasibility_score": 0.58,
+      "testability": "testable",
+      "required_n": "n=120 (60 VR training, 60 active control) with baseline and post-intervention eye-tracking and CPT assessment, 80% power for medium effect (d=0.5)"
+    },
+    {
+      "id": "hyp_002",
+      "text": "Eye-tracking biomarkers validated in pediatric ADHD populations will generalize to adult ADHD with reduced discriminative accuracy (estimated 10–15% AUC reduction), and different oculomotor features (e.g., anticipatory saccades vs. fixation stability) will emerge as more discriminative in adults due to developmental changes in fronto-striatal circuit maturation.",
+      "rationale": "The population gap (gap_002) highlights the complete absence of adult ADHD eye-tracking research. Since fronto-striatal circuits implicated in oculomotor control continue maturing into early adulthood, pediatric-derived biomarkers may not directly transfer. This hypothesis operationalizes a cross-population generalization test with a developmental moderation prediction, using Bayesian reasoning to set prior expectations based on known neurodevelopmental trajectories.",
+      "source": "research_gap",
+      "source_ref": "gap_002",
+      "novelty_score": 0.72,
+      "feasibility_score": 0.65,
+      "testability": "testable",
+      "required_n": "n=200 (100 adult ADHD, 100 adult controls), ages 18–45, using the same tablet-based eye-tracking paradigm as Chen 2023"
+    },
+    {
+      "id": "hyp_003",
+      "text": "Combining structured CPT eye-tracking metrics (from assoc_001/assoc_002) with naturalistic reading eye-tracking metrics (from assoc_002) into a multi-context oculomotor assessment battery will improve ADHD classification accuracy by ≥8% over any single-context measurement, because task-general and context-specific attentional deficits provide additive diagnostic information.",
+      "rationale": "The supplement relationship (assoc_002) between CPT eye-tracking and reading eye-tracking suggests these capture distinct but complementary aspects of attentional dysfunction. No existing study combines both contexts. This hypothesis uses a Bayesian integration framework predicting that the conditional independence of these measurement contexts yields additive diagnostic value, a novel approach in the field.",
+      "source": "supplement",
+      "source_ref": "assoc_002",
+      "novelty_score": 0.65,
+      "feasibility_score": 0.70,
+      "testability": "testable",
+      "required_n": "n=250 (125 ADHD, 125 controls) completing both CPT and reading eye-tracking sessions, counterbalanced"
+    }
+  ],
+  "metadata": {
+    "total_hypotheses": 3,
+    "mean_novelty": 0.717,
+    "mean_feasibility": 0.643,
+    "from_gaps": 2,
+    "from_contradictions": 0,
+    "from_other": 0,
+    "from_supplement": 1
+  }
+}

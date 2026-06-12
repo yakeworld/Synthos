@@ -1,0 +1,12 @@
+{
+  "raw_papers": [
+    {
+      "title": "Longitudinal association between eye gaze fixation on social information and neurodevelopmental symptoms in children",
+      "doi": "10.1002/pcn5.70095",
+      "abstract": "AIM: This large-scale, longitudinal, community-based study aimed to analyze the association between specific neurodevelopmental symptoms and the duration of eye gaze fixation on social information. METHODS: A longitudinal study involving 2101 participants utilized a generalized linear model (GLM) to examine associations between the duration of eye gaze fixation on social information at age 4 years and subscale scores of the Strengths and Difficulties Questionnaire (SDQ) at ages 6-7. RESULTS: GLM analysis revealed that shorter durations of eye gaze fixation on social information at age 4 years were significantly associated with emotional problems and peer problems, and with hyperactivity/inattention ADHD at ages 6-7 years. CONCLUSION: These findings demonstrate the ability to detect not only peer problems characteristic of ASD but also hyperactivity/inattention characteristic of ADHD longitudinally.",
+      "year": 2025,
+      "authors": ["Orui M", "Ishikuro M", "Obara T"],
+      "source": "pubmed"
+    }
+  ]
+}

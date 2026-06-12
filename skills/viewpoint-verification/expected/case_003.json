@@ -1,0 +1,37 @@
+{
+  "verdict": "insufficient_evidence",
+  "confidence_score": 0.20,
+  "counterarguments": [
+    {
+      "type": "evidence_gap",
+      "strength": 0.90,
+      "content": "The claim is based on a single cross-sectional study of only 85 participants with no longitudinal follow-up. Predicting disease onset 5–10 years before symptoms requires prospective cohort data with serial biomarker measurements and verified clinical endpoints, which is entirely absent."
+    },
+    {
+      "type": "evidence_gap",
+      "strength": 0.85,
+      "content": "The correlation with amyloid PET in only 30 participants is insufficient to establish biomarker X as a reliable surrogate. No independent replication cohort, ROC curve analysis, or standardized cut-off values have been reported."
+    },
+    {
+      "type": "generalizability_challenge",
+      "strength": 0.70,
+      "content": "Cross-sectional associations between a biomarker and MCI do not establish temporal precedence. Many blood-based biomarkers show promise in cross-sectional studies but fail to predict progression in longitudinal designs due to confounding by age, comorbidities, and medication use."
+    },
+    {
+      "type": "alternative_explanation",
+      "strength": 0.50,
+      "content": "The observed elevation of biomarker X could reflect a general neuroinflammatory or neurodegenerative response rather than Alzheimer's-specific pathology. Without comparison groups of other dementias (e.g., frontotemporal, Lewy body), specificity remains unknown."
+    }
+  ],
+  "falsification_conditions": [
+    "If a prospective cohort study (N ≥ 500, ≥5 years follow-up) finds that baseline biomarker X levels do not predict time to conversion from cognitively normal to MCI or AD, the prediction claim is falsified.",
+    "If the AUC for biomarker X in distinguishing MCI from controls is below 0.70 in a replication sample of ≥200 participants, the diagnostic claim is falsified.",
+    "If biomarker X levels correlate strongly with renal function or inflammatory markers but not with AD-specific pathology at autopsy, the specificity claim is falsified."
+  ],
+  "weaknesses": [
+    "Extrapolating from a small cross-sectional pilot study to a 5–10 year predictive claim is a severe inferential leap.",
+    "No longitudinal data, no replication cohort, no established cut-off thresholds.",
+    "The claim of 'paradigm shift' is premature and unsupported by the evidence presented.",
+    "No comparison with existing biomarkers (e.g., plasma p-tau217, neurofilament light) to demonstrate incremental predictive value."
+  ]
+}

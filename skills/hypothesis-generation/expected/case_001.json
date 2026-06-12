@@ -1,0 +1,34 @@
+{
+  "hypotheses": [
+    {
+      "id": "hyp_001",
+      "text": "In children aged 6–14 undergoing ADHD diagnostic evaluation, AI-extracted saccadic eye-tracking features will demonstrate significantly higher sensitivity (≥80%) for ADHD classification compared to raw pupilometric metrics when both are collected simultaneously from the same participants using a standardized tablet-based paradigm, with diagnosis confirmed by structured clinical interview (K-SADS-PL).",
+      "rationale": "The contradiction between Chen 2023 (89% sensitivity using AI-extracted saccadic features) and Unraveling ADHD 2023 (57% sensitivity using raw pupil metrics) cannot be resolved without a direct head-to-head comparison. The primary source of discrepancy is hypothesized to be the feature extraction and analytic approach rather than the underlying signal. A within-subjects design controlling for population, apparatus, and diagnostic gold standard would isolate the effect of analytical approach on screening accuracy.",
+      "source": "contradiction",
+      "source_ref": "assoc_001",
+      "novelty_score": 0.68,
+      "feasibility_score": 0.72,
+      "testability": "testable",
+      "required_n": "n=200 (100 ADHD, 100 controls) for 80% power at α=0.05, estimated from effect sizes in Chen 2023"
+    },
+    {
+      "id": "hyp_002",
+      "text": "The discrepancy between AI-extracted and raw eye-tracking biomarker performance in ADHD screening can be attributed to the information-theoretic advantage of multi-feature integration (saccadic latency + fixation + micro-saccades) over single-metric approaches (pupil diameter alone), rather than to differences in eye-tracking hardware or study population demographics.",
+      "rationale": "The contradiction gap (gap_001) identifies that no study has simultaneously compared multi-feature AI integration vs. single-metric analysis. This hypothesis operationalizes a mechanistic explanation for the contradiction: feature diversity and ML integration, not paradigm choice per se, drive screening accuracy. This could be tested by systematically adding features to a baseline pupil-only model using the same dataset.",
+      "source": "research_gap",
+      "source_ref": "gap_001",
+      "novelty_score": 0.73,
+      "feasibility_score": 0.65,
+      "testability": "testable",
+      "required_n": "Can be tested on any existing eye-tracking ADHD dataset with both raw pupil and derived fixation/saccade features"
+    }
+  ],
+  "metadata": {
+    "total_hypotheses": 2,
+    "mean_novelty": 0.705,
+    "mean_feasibility": 0.685,
+    "from_gaps": 1,
+    "from_contradictions": 1,
+    "from_other": 0
+  }
+}

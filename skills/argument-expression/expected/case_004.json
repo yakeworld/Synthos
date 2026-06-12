@@ -1,0 +1,9 @@
+{
+  "sections": [],
+  "references": [],
+  "error": {
+    "code": "MISSING_HYPOTHESES",
+    "message": "Missing hypotheses: at least one hypothesis is required for argument expression.",
+    "details": "The argument-expression skill requires at least one hypothesis with a non-empty text field. Received an empty list."
+  }
+}

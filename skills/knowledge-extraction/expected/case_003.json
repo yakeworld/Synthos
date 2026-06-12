@@ -1,0 +1,26 @@
+{
+  "extracted_knowledge": [
+    {
+      "id": "item_0",
+      "title": "Some Paper Without Abstract",
+      "abstract": "",
+      "key_findings": ["Abstract not available"],
+      "methodology": "unspecified",
+      "methods_detail": "",
+      "domain": "general_medicine",
+      "limitations": ["Cannot extract — no abstract available"],
+      "key_themes": [],
+      "sample_size": null,
+      "year": 2024,
+      "evidence_level": "unspecified"
+    }
+  ],
+  "field_summary": {
+    "total_papers_processed": 1,
+    "year_range": "2024",
+    "dominant_methodologies": ["unspecified"],
+    "key_themes_aggregated": [],
+    "identified_contradictions": [],
+    "knowledge_gaps": ["Insufficient data for gap analysis — only 1 paper with no abstract"]
+  }
+}
