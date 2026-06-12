@@ -19,3 +19,10 @@ metadata:
 
 详细文档和完整命令列表已被移至 `references/` 目录以保持简洁。
 This skill has been compressed. Full content is available in references/.
+
+## IO_CONTRACT
+
+- **input**: `paper_text: str, query_focus: str`
+- **output**: `extracted: list[KnowledgeExtract]` — 包含 topic, method, dataset, metric, result, confidence, source, quote
+
+> 对应原则：P2（机械原子暴露输入输出规范）
