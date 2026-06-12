@@ -1,5 +1,9 @@
 ---
-name: openhue
+name: open
+## 原理层·文言
+
+> 文以验法，技乃所产。"Control Philips Hue lights, scenes, rooms via OpenHue CLI."。
+hue
 description: "Control Philips Hue lights, scenes, rooms via OpenHue CLI."
 version: 1.0.0
 author: community

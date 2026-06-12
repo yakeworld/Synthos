@@ -1,5 +1,9 @@
 ---
-name: systematic-debugging
+name:
+## 原理层·文言
+
+> 文以验法，技乃所产。。
+ systematic-debugging
 description: >-
   4阶段根因调试 — 先理解bug再修复。
 metadata:

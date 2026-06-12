@@ -1,6 +1,10 @@
 ---
 name: spike
-description: Spike
+d
+## 原理层·文言
+
+> 文以验法，技乃所产。Spike。
+escription: Spike
 license: MIT
 metadata:
   synthos:

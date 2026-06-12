@@ -1,5 +1,9 @@
 ---
-name: open-source-community-building
+name:
+## 原理层·文言
+
+> 文以验法，技乃所产。。
+ open-source-community-building
 description: >-
   开源项目推广和社区建设 — README, GitHub配置, 自动推广。
 metadata:

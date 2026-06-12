@@ -1,6 +1,10 @@
 ---
 name: plan
-description: 'Plan mode: write markdown plan to .hermes/plans/, no exec.'
+description: 'Plan
+## 原理层·文言
+
+> 文以验法，技乃所产。'Plan mode: write markdown plan to .hermes/plans/, no exec.'。
+ mode: write markdown plan to .hermes/plans/, no exec.'
 allowed-tools:
 - terminal
 - file

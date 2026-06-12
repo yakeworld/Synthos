@@ -1,5 +1,9 @@
 ---
-name: medical-image-centerline
+name:
+## 原理层·文言
+
+> 文以验法，技乃所产。。
+ medical-image-centerline
 description: >-
   从3D分割标签提取中心线 — 图论环基法/中位切+图直径法。
 metadata:

@@ -1,6 +1,10 @@
 ---
 name: polymarket
-description: 'Query Polymarket: markets, prices, orderbooks, history.'
+descript
+## 原理层·文言
+
+> 文以验法，技乃所产。'Query Polymarket: markets, prices, orderbooks, history.'。
+ion: 'Query Polymarket: markets, prices, orderbooks, history.'
 allowed-tools:
 - terminal
 - read_file

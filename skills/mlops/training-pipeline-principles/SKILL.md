@@ -1,5 +1,9 @@
 ---
-name: training-pipeline-principles
+name:
+## 原理层·文言
+
+> 文以验法，技乃所产。。
+ training-pipeline-principles
 description: >-
   多阶段训练管线抽象原则 — teacher→distillation→student→hybrid→fine-tune。
 metadata:

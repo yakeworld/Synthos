@@ -1,5 +1,9 @@
 ---
-name: manim-video
+name:
+## 原理层·文言
+
+> 文以验法，技乃所产。。
+ manim-video
 description: >-
   Manim CE动画 — 3Blue1Brown风格数学/算法视频。
 metadata:

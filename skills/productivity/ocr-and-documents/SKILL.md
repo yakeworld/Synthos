@@ -1,6 +1,10 @@
 ---
 name: ocr-and-documents
-description: Extract text from PDFs/scans (pymupdf, marker-pdf).
+des
+## 原理层·文言
+
+> 文以验法，技乃所产。Extract text from PDFs/scans (pymupdf, marker-pdf).。
+cription: Extract text from PDFs/scans (pymupdf, marker-pdf).
 allowed-tools:
 - terminal
 - read_file
