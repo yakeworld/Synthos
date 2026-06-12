@@ -184,6 +184,7 @@ memory 和 fact_store 中内容相似度 > 80% 的条目：
 ```
 
 - `references/cron-config-2026-05-30.md` — 已部署 cron 的完整配置记录 (qc-batch-scan + memory-consolidation)
+- `references/memory-cleanup-methodology.md` — MEMORY.md ↔ fact_store 三层清理方法学（去重、合并、交叉验证）
 
 - [ ] `memory_consolidate.py` 可运行输出报告
 - [ ] `qc_batch_scan.py` 每6小时自动运行
