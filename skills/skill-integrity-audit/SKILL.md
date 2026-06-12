@@ -102,7 +102,8 @@ cp -r "$sda2_dir/$skill" "$HOME/.hermes/skills/$skill"
 
 | 资源 | 说明 |
 |------|------|
-| `scripts/skill_quality_audit_v4.py` | 技能质量自动审计与修复 Cron 脚本 |
+| `references/skill-quality-audit-2026-06-12.md` | paper-pipeline 断裂事件完整记录 |
+| `references/privacy-scanning-git-repo.md` | Git 仓库隐私扫描方法论 — 检测 token、密钥、密码、手机号、邮箱等敏感信息是否泄露 |
 | `references/skill-quality-audit-v2-2026-06-12.md` | 技能质量审计报告 v2 |
 | `references/skill-quality-baseline.md` | 2026-06-13 更新后质量基线数据 |
 | `references/skill-missing-incident-2026-06-12.md` | paper-pipeline 断裂事件记录 |

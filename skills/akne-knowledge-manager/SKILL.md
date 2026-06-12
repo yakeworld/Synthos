@@ -1,29 +1,30 @@
 ------
 name: akne-knowledge-manager
-description: AKNE 知识管理系统的双向整合审计、Synthos-桥接诊断、知识流分析。与 akne-maintenance 不同，专注两系统间的连接质量而非内部运维。
+description: AKNE 知识管理系统的双向整合审计、Synthos-桥接诊断、知识流分析、内容级审计。与 akne-maintenance 不同，专注两系统间的连接质量及知识内容质量而非内部运维。
 triggers:
-  - 
+  - 需要审计 AKNE 知识库内容质量（矛盾检测、版本簇、研究空白）
+  - 需要 Synthos 与 AKNE 双向整合检查
+  - 需要跨系统连接诊断和知识流分析
 metadata:
   synthos:
     priority: P1
     atom_type: domain-skill
-    description: AKNE 知识管理系统的双向整合审计、Synthos-桥接诊断、知识流分析。
-    signature: 'akne_graph: str, synthos_graph: str -> integration_report: dict'
-    related_skills: [akne-maintenance, synthos-akne-bridge, knowledge-extraction, association-discovery]
+    description: "AKNE 知识管理系统的双向整合审计、Synthos-桥接诊断、知识流分析、内容级审计"
+    signature: 'akne_graph: str, synthos_graph: str -> integration_report: dict + content_audit: dict'
+    related_skills: [akne-maintenance, synthos-akne-bridge, knowledge-extraction, association-discovery, knowledge-acquisition]
 ---
-  io_contract: input: ['akne_graph: str, synthos_graph: str -> integration_report: dict', 'output: ['integration_report: dict (bridge_points: list[str], knowledge_flow: dict, issues: list[str])']'
+  io_contract: input: ['akne_graph: str, synthos_graph: str -> integration_report: dict + content_audit: dict', 'output: ['integration_report: dict (bridge_points: list[str], knowledge_flow: dict, issues: list[str])', 'content_audit: dict (contradictions: list, version_clusters: list, research_gaps: list, hypotheses: list)']']
 
 
+# AKNE Knowledge Manager — 整合审计 + 内容级审计
 
-
-# AKNE Knowledge Manager — 整合审计
-
-> 专注 Synthos 与 AKNE 之间的双向整合质量。
-> 与 `akne-maintenance` 的区别：后者管内部运维（诊断、修复、向量填充），本技能管跨系统连接。
+> 专注 Synthos 与 AKNE 之间的双向整合质量 + 知识内容质量。
+> 与 `akne-maintenance` 的区别：后者管内部运维（诊断、修复、向量填充），本技能管跨系统连接和内容质量。
 
 ## 核心问题
 
 Synthos 是论文产出管线，AKNE 是个人知识图谱。两者通过 `synthos-akne-bridge-v2.py` 桥接。
+内容质量问题：版本冗余、矛盾声明、研究空白、假设不明确。
 
 ## 快速诊断命令
 
@@ -49,18 +50,22 @@ python3 scripts/asset_audit.py
 4. **Wiki 污染** — `wiki/index.md` 和 `wiki/log.md` 末尾不应有 `[X, Y]::` 垃圾
 5. **守护进程状态** — `logs/auto_evolve.pid` 应存在且进程存活
 
-## 当前状态（2026-06-10 修复后）
+## 当前状态（2026-06-13 审计后）
 
 ### 图谱统计
 
-| 指标 | 值 |
-|------|-----|
-| 总节点 | 1475 |
-| 总边 | 6130 |
-| 连通节点 | 1468/1475 (99.5%) |
-| Synthos 论文 | 148（0孤立） |
-| Synthos 技能 | 25（0孤立） |
-| Synthos 杂项 | 7（子目录/非论文） |
+| 指标 | 值 | 备注 |
+|------|-----|------|
+| 总节点 | 1475 | |
+| 总边 | 6130 | |
+| 连通节点 | 1468/1475 (99.5%) | 7 孤立 synthos_misc |
+| Synthos 论文 | 148（0孤立） | |
+| Synthos 技能 | 25（0孤立） | |
+| Synthos 杂项 | 7（子目录/非论文） | 孤立，可清理 |
+| 版本簇 | 70+ | 跨多个研究领域 |
+| 内容矛盾 | 3处 | 1处致命(单位错误) |
+| 研究空白 | 5个 | Gap1-5 |
+| 科学假设 | 7个 | H1-H7 |
 
 ### 双向知识流
 
@@ -165,6 +170,76 @@ for t,c in sorted(types.items(), key=lambda x:-x[1]):
 # 检查 paper_concept/concept_paper/source_category/category_paper 是否都 > 0
 ```
 
+## 内容级审计（2026-06-13 新增）
+
+`akne-maintenance` 管运维，本技能管跨系统连接，**内容级审计**管知识质量。三者互补。
+
+### 1. 内容矛盾检测
+
+读取同主题源文件，提取"创新点"、"关键"、"假设"、"应该"、"不同于"、"错误"等信号词行，对比同一概念在不同文件中的声明。
+
+典型矛盾类型：
+- **数值矛盾**：同一参数在不同文件取值不同（如虹膜/眼球半径 2:1 vs 独立参数）
+- **方法矛盾**：不同文件主张不同技术方案（单椭圆 vs 双椭圆），无版本标注
+- **单位错误**：数量级错误（如耳石密度 nm vs μm，差1000倍）— 此为**致命级**矛盾
+- **方法缺陷自述**：文件自己指出某种方法"存在缺陷"但未提供替代方案验证
+
+检测方法：
+```python
+# 1. 读取同主题所有源文件（从 metadata.category 分组）
+# 2. 提取关键声明行（含信号词：创新点/关键/假设/应该/不同于/错误/尚未/未知/问题/局限）
+# 3. 对比同一概念在不同文件中的声明
+# 4. 标注矛盾等级：致命(单位错误) / 严重(方法冲突) / 轻微(理解深化)
+```
+
+2026-06-13 审计发现 3 处矛盾：
+1. **耳石密度单位错误（致命）** — `BPPV拟真参数设置.md` 中"半径 0.5~15nm"应为"μm"
+2. **虹膜/眼球半径比例不一致（严重）** — 部分文件用 2:1 固定比例，部分作为独立参数
+3. **单椭圆 vs 双椭圆（轻微）** — 两种方法并存但无版本关系标注
+
+### 2. 版本簇管理
+
+源文件按 basename stem（去除日期、-1/-2/-3、---草稿后缀）聚类。同 stem 的文件视为版本簇。
+
+管理规则：
+- 每个簇保留**最新/最完整**版本（按创建时间和文件大小判断）
+- 其余文件标记为 `archived` 或移入 `archive/` 子目录
+- 保留文件在 metadata 中新增 `version`, `replaces`, `supersedes` 字段
+- 矛盾的文件标注 `controversial` 标记
+
+2026-06-13 审计识别 70+ 版本簇，主要分布在：
+- 双椭圆拟合（6 个版本）
+- 3D眼球模型虹膜分割（4 个版本）
+- 半规管空间姿态测量（4 个版本）
+- 后半规管短臂侧结石（3 个版本）
+- Dix-Hallpike 试验分析（3 个版本）
+
+### 3. 研究空白识别
+
+通过对比源文件中的"创新点"、"已有成果"和"尚未"、"未知"、"问题"等词，识别 5 类空白（2026-06-13 审计发现）：
+
+| 编号 | 空白类型 | 示例 |
+|------|---------|------|
+| Gap 1 | 有框架缺验证 | 瞳孔虚像校正有数学框架但缺实验验证 |
+| Gap 2 | 数学完整缺实验 | 3D虹膜椭圆反推数学完整但缺真实数据验证 |
+| Gap 3 | 仿真框架有错 | BPPV物理引擎可运行但耳石密度参数单位错误 |
+| Gap 4 | 概念完整缺转化 | 3D眼震分析概念完整但缺临床标准化图谱 |
+| Gap 5 | 初步探索缺系统 | 跨疾病眼动标志物有初步文献但缺统一体系 |
+
+### 4. 科学假设提取
+
+从源文件中提取可检验假设的 3 步法：
+1. 定位有明确量化目标的声明（如"误差 < X"、"准确率 > Y%"）
+2. 定位有明确因果关系的假设（如"A 与 B 成反比"）
+3. 标注验证难度（低/中/高）和优先级（P0/P1）
+
+2026-06-13 审计提取 7 个假设（H1-H7），覆盖领域：
+- 三维虹膜：H1（双椭圆误差<1px）、H2（3D分割Dice>0.95）、H6（角膜曲率反比关系）
+- BPPV：H3（短臂侧漏诊率>60%）
+- 三维眼动：H4（3D轨迹分类>95%）
+- 跨疾病：H5（前庭特征=神经退行性疾病早期标志物）
+- 半规管姿态：H7（法向量法优于夹角平均法）
+
 ## 常见修复
 
 ### 新增孤立论文
@@ -224,9 +299,48 @@ for fpath in files:
 ### 目录不规范
 运行 `fix_bridge.py` 将 flat 文件归入 `01-manuscript`/`06-references`/`07-quality` 子目录。
 
+### 图谱-磁盘同步（新增 2026-06-13）
+删除文件后必须同步 graph.json：
+1. 删除源文件
+2. 运行磁盘扫描，列出所有 .md 文件
+3. 对比 graph.json 中 source 节点：磁盘有但图无 → 添加节点；图有但磁盘无 → 删除节点+边
+4. 检查被删除节点是否曾是某"保留文件"的同名副本 → 恢复这些保留文件的类别边
+5. 检查 source_category 节点是否仍有文件指向 → 无指向的孤立 category 节点删除
+6. 最终验证：孤立节点=0，论文连接=100%，技能连接=100%
+
+**关键原则**：文件删除和图更新是两个独立操作，必须都完成才算修复完成。
+
+### 文件去重策略（新增 2026-06-13）
+
+两级匹配去重：
+1. **精确 basename 匹配**：同一文件名在不同目录 → 真正重复，保留最大文件
+2. **激进 stem 匹配**：去除日期/版本后缀后比较 → 发现版本簇（如 `文件名-1.md`/`文件名.md`），保留最新/最大版本
+
+去重后必须恢复"保留文件"的类别边，否则这些文件会成为孤立节点。
+
+### 致命内容矛盾修正
+2026-06-13 发现：`BPPV拟真参数设置.md` 中"耳石半径 0.5~15nm"为**数量级错误**，应为 0.5~15mm 或 500~15000μm。
+**修复**：直接修改源文件中的数值，并添加注释说明正确量级来源。
+
+### 版本簇合并
+2026-06-13 识别 70+ 版本簇。
+**修复模式**：
+1. 按 basename stem 聚类（使用 difflib.SequenceMatcher 或直接去后缀）
+2. 对每个簇：按创建时间戳和文件大小确定"最终版"
+3. 最终版保留，其余移入 `archive/` 或标记为 `archived`
+4. 在最终版 metadata 中新增 `version`、`replaces`、`supersedes` 字段
+
+### 文件矛盾标注
+对有矛盾但非错误的文件（如 2:1 比例 vs 独立参数）：
+**修复模式**：
+1. 标注 `controversial: true`
+2. 在 metadata 中新增 `controversy_note` 字段说明矛盾双方立场
+3. 标注哪方是"已验证"、哪方是"假设"
+
 ## 参考文件
 
-`references/synthos-akne-integration-audit.md` — 2026-06-10 修复后完整数据。含边类型分布、双向路径示例、诊断命令、修复历史。旧审计数据已归档替换。
+- `references/synthos-akne-integration-audit.md` — 2026-06-10 修复后完整数据。含边类型分布、双向路径示例、诊断命令、修复历史。旧审计数据已归档替换。
+- `references/content-audit-aug2026.md` — 2026-06-13 内容级审计详细记录。含 3 处矛盾详情、70+ 版本簇清单、5 个研究空白、7 个科学假设。
 
 ## 修复模式速查
 
@@ -239,3 +353,6 @@ for fpath in files:
 | Wiki 污染 | grep 正则 `^\[\s*[^]]*\]\s*::.*$` 删除 |
 | 单向边 | 为每个 edge (a→b) 添加反向边 (b→a)，区分 link_type |
 | 守护停止 | 检查 logs/auto_evolve.pid，pkill 后 nohup 重启 |
+| 致命内容矛盾 | 修正数值/单位，添加注释 |
+| 版本簇冗余 | 聚类→保留最终版→其余归档 |
+| 文件矛盾 | 标注 controversial + 说明双方立场 |

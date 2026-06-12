@@ -128,3 +128,17 @@ git status --porcelain | grep "SKILL.md" | grep "^[ M]" | wc -l
 > If a previous cycle committed to git but didn't update state.json, the next
 > cycle's LOAD_STATE reads stale data. Always check `git log --oneline | grep "cycle-" | head -1`
 > against state.json's cycle number after LOAD_STATE.
+
+### Skill Tree Growth Trap (Cycle 72)
+> **New**: When the skill tree changes size (109→194 in cycle 72), the denominator
+> in `pct = count/total` changes but state.json keeps old numerators. The benchmark
+> scalar is NOT incrementally updatable — any merge/cron-sync that changes skill
+> count requires full recalculation.
+>
+> In cycle 72: state.json claimed benchmark=0.488 (based on 109 skills), but
+> actual was 0.1195 (at 194 skills) — 75% discrepancy. Root cause: new skills
+> lacked version/signature/IO_CONTRACT, and state.json numerators were stale.
+>
+> **Rule**: On LOAD_STATE, always check `find skills/ -name SKILL.md | wc -l`.
+> If the count differs from state, mark benchmark as stale and recalculate from scratch.
+> See references/skill-tree-growth-trap.md for full detail.
