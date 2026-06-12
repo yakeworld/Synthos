@@ -1,9 +1,5 @@
 ---
-name:
-## 原理层·文言
-
-> 文以验法，技乃所产。。
- requesting-code-review
+name: requesting-code-review
 description: >-
   提交前代码审查 — 安全扫描+质量门+自动修复。
 metadata:

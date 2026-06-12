@@ -1,9 +1,5 @@
 ---
-name:
-## 原理层·文言
-
-> 文以验法，技乃所产。。
- linear
+name: linear
 description: >-
   Linear项目管理 — issues/projects/teams via GraphQL。
 metadata:

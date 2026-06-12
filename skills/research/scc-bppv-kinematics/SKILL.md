@@ -1,9 +1,5 @@
 ---
-name:
-## 原理层·文言
-
-> 文以验法，技乃所产。。
- scc-bppv-kinematics
+name: scc-bppv-kinematics
 description: >-
   SCC半规管形态学分析与BPPV复位运动学 — 中心线加载→平面分析→螺旋拟合→Epley仿真→椭圆反推法向量。
 metadata:

@@ -1,9 +1,5 @@
 ---
-name:
-## 原理层·文言
-
-> 文以验法，技乃所产。。
- subagent-driven-development
+name: subagent-driven-development
 description: >-
   通过delegate_task子Agent执行计划(2阶段审查) — 后台+混合编排。
 metadata:

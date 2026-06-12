@@ -1,9 +1,5 @@
 ---
 name: webhook-subscriptions
-## 原理层·文言
-
-> 文以验法，技乃所产。'Webhook subscriptions: event-driven agent runs.'。
-
 description: 'Webhook subscriptions: event-driven agent runs.'
 allowed-tools:
 - terminal

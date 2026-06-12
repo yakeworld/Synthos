@@ -1,9 +1,5 @@
 ---
-name:
-## 原理层·文言
-
-> 文以验法，技乃所产。。
- writing-plans
+name: writing-plans
 description: >-
   编写实施计划 — 小任务/路径/代码, 输出.hermes/plans/。
 metadata:

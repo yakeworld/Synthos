@@ -1,9 +1,5 @@
 ---
-name
-## 原理层·文言
-
-> 文以验法，技乃所产。Fix papers where \begin{thebibliography} has entries but ZERO \cite{} commands in the text. A com...。
-: citation-integrity-fix
+name: citation-integrity-fix
 description: Fix papers where \begin{thebibliography} has entries but ZERO \cite{} commands in the text. A common LLM generation failure mode. Covers D10a detection, citation mapping, $ escaping, double-backslash traps.
 version: 1.0.0
 author: "Synthos"

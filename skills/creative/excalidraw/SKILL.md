@@ -1,10 +1,6 @@
 ---
 name: excalidraw
-description: H
-## 原理层·文言
-
-> 文以验法，技乃所产。Hand-drawn Excalidraw JSON diagrams (arch, flow, seq).。
-and-drawn Excalidraw JSON diagrams (arch, flow, seq).
+description: Hand-drawn Excalidraw JSON diagrams (arch, flow, seq).
 allowed-tools:
 - terminal
 - read_file

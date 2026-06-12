@@ -1,10 +1,6 @@
 ---
 name: codex
-description: Deleg
-## 原理层·文言
-
-> 文以验法，技乃所产。Delegate coding to OpenAI Codex CLI (features, PRs).。
-ate coding to OpenAI Codex CLI (features, PRs).
+description: Delegate coding to OpenAI Codex CLI (features, PRs).
 allowed-tools:
 - terminal
 - file

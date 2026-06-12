@@ -1,10 +1,6 @@
 ---
 name: huggingface-hub
-descri
-## 原理层·文言
-
-> 文以验法，技乃所产。'HuggingFace hf CLI: search/download/upload models, datasets.'。
-ption: 'HuggingFace hf CLI: search/download/upload models, datasets.'
+description: 'HuggingFace hf CLI: search/download/upload models, datasets.'
 allowed-tools:
 - terminal
 - read_file

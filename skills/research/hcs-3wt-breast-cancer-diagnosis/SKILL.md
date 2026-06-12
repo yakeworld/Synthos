@@ -1,9 +1,5 @@
 ---
-name: hcs-3wt-b
-## 原理层·文言
-
-> 文以验法，技乃所产。HCS-3WT (Hybrid Cascade-Stacking Three-Way Triage) breast cancer diagnostic。
-reast-cancer-diagnosis
+name: hcs-3wt-breast-cancer-diagnosis
 description: HCS-3WT (Hybrid Cascade-Stacking Three-Way Triage) breast cancer diagnostic
   AI system — architecture, evaluation, and troubleshooting.
 allowed-tools:

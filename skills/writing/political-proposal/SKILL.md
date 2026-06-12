@@ -1,9 +1,5 @@
 ---
-name:
-## 原理层·文言
-
-> 文以验法，技乃所产。。
- political-proposal
+name: political-proposal
 description: >-
   参政议政提案全流程(民进/政协/人大) — 三段式: 基本情况→问题→对策。
 metadata:

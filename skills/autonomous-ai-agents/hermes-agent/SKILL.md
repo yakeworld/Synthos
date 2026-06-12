@@ -1,9 +1,5 @@
 ---
-name: herm
-## 原理层·文言
-
-> 文以验法，技乃所产。Configure, extend, or contribute to Hermes Agent — the open-source AI agent framework by Nous Res...。
-es-agent
+name: hermes-agent
 description: Configure, extend, or contribute to Hermes Agent — the open-source AI agent framework by Nous Research.
 allowed-tools:
 - terminal

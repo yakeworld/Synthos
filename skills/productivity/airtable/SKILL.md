@@ -1,9 +1,5 @@
 ---
-name:
-## 原理层·文言
-
-> 文以验法，技乃所产。。
- airtable
+name: airtable
 description: >-
   Airtable REST API — 记录CRUD, 筛选, upsert。
 metadata:

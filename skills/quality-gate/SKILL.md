@@ -639,6 +639,10 @@ iris-3d-anatomical-opt 论文 L0.5 审计中发现两种引用缺失错误：
 4. G7通过→自动加载 `sci-paper-quality-review`
 5. SCI评审通过→自动加载 `project-experience-distillation`
 
+## P6 进化记录（Paper 187 scleral-remodeling-ODE）
+
+- **2026-06-12**: Paper 187 completed. Clean compile: 0 errors, 0 warnings, 17/17 bibitems cited, D10a=100%. **Trap discovered**: `natbib` conflicts with `thebibliography` — causes "Bibliography not compatible with author-year citations" error. Fix: remove natbib when using thebibliography (plain `\cite{}`). See paper-pipeline trap update.
+
 ## 参考文件
 
 - references/writing-pipeline-checklist.md — G1-G7详细检查清单

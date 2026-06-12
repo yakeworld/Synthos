@@ -1,9 +1,5 @@
 ---
-name:
-## 原理层·文言
-
-> 文以验法，技乃所产。。
- literature-monitor
+name: literature-monitor
 description: >-
   多源论文持续监控 — arXiv/PubMed/bioRxiv/OpenAlex日报/周报。
 metadata:

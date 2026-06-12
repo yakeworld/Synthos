@@ -1,9 +1,5 @@
 ---
-name: cla
-## 原理层·文言
-
-> 文以验法，技乃所产。Delegate coding to Claude Code CLI — features, PRs, refactoring, review.。
-ude-code
+name: claude-code
 description: Delegate coding to Claude Code CLI — features, PRs, refactoring, review.
 allowed-tools:
 - terminal

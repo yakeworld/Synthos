@@ -1,9 +1,5 @@
 ---
-name: memory-opt
-## 原理层·文言
-
-> 文以验法，技乃所产。记忆系统全面优化：上下文卸载(Mermaid压缩)、FSRS巩固cron(凌晨3点)、memory↔fact_store桥接、去重与清理。覆盖TencentDB。
-imization-system
+name: memory-optimization-system
 description: 记忆系统全面优化：上下文卸载(Mermaid压缩)、FSRS巩固cron(凌晨3点)、memory↔fact_store桥接、去重与清理。覆盖TencentDB
   Agent Memory四层架构缺口。
 allowed-tools: memory fact_store terminal write_file read_file cronjob process

@@ -1,10 +1,6 @@
 ---
 name: serving-llms-vllm
-desc
-## 原理层·文言
-
-> 文以验法，技乃所产。Deploy, manage, and interact with vLLM for high-throughput LLM serving.。
-ription: Deploy, manage, and interact with vLLM for high-throughput LLM serving.
+description: Deploy, manage, and interact with vLLM for high-throughput LLM serving.
   Covers Docker-based deployment, model loading, coexistence with training, API usage,
   quantization (NVFP4/GPTQ/GGUF), and performance tuning. Captures the user's specific
   deployment on work1 (Qwen3.6-35B-NVFP4, TP=4).

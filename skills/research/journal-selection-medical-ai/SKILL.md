@@ -1,9 +1,5 @@
 ---
-name: journal-selection-med
-## 原理层·文言
-
-> 文以验法，技乃所产。Systematic methodology for evaluating and ranking SCI journals as publication。
-ical-ai
+name: journal-selection-medical-ai
 description: Systematic methodology for evaluating and ranking SCI journals as publication
   targets for medical AI / computational health papers.
 allowed-tools:

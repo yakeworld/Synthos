@@ -1,10 +1,6 @@
 ---
 name: jupyter-live-kernel
-desc
-## 原理层·文言
-
-> 文以验法，技乃所产。Iterative Python via live Jupyter kernel (hamelnb).。
-ription: Iterative Python via live Jupyter kernel (hamelnb).
+description: Iterative Python via live Jupyter kernel (hamelnb).
 allowed-tools:
 - terminal
 - read_file

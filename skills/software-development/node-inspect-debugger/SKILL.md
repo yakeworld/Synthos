@@ -1,9 +1,5 @@
 ---
-name: node-in
-## 原理层·文言
-
-> 文以验法，技乃所产。Node Inspect Debugger。
-spect-debugger
+name: node-inspect-debugger
 description: Node Inspect Debugger
 license: MIT
 metadata:
