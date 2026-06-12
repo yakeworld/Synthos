@@ -1,0 +1,28 @@
+{
+  "sections": [
+    {
+      "section_type": "introduction",
+      "heading": "Introduction",
+      "paragraphs": [
+        "The classification of attention-deficit/hyperactivity disorder (ADHD) using eye-tracking data has traditionally relied on hand-engineered features such as saccadic latency, fixation duration, and blink rate. While these feature-based approaches have demonstrated moderate diagnostic accuracy, they are inherently limited by the researcher's prior assumptions about which gaze parameters are clinically relevant. End-to-end deep learning models offer an alternative paradigm that learns discriminative patterns directly from raw gaze coordinates without manual feature engineering.",
+        "Recent advances in deep learning for time-series classification—particularly fully convolutional networks and attention-based architectures—have achieved state-of-the-art results on multivariate physiological time-series benchmarks. Extending these methods to raw eye-tracking data is a natural next step. We propose that end-to-end deep learning models trained on raw gaze coordinates can outperform traditional feature-based classifiers for ADHD screening [hyp_001].",
+        "Furthermore, we hypothesize that a convolutional neural network operating on spatiotemporal gaze heatmaps—representing the spatial distribution of gaze over time—can achieve >85% accuracy in ADHD versus control classification without requiring manual feature engineering [hyp_002]. This approach exploits the spatial structure of visual attention patterns, which may capture subtle differences in attentional deployment that are lost when gaze data is reduced to summary statistics."
+      ],
+      "arguments": [
+        {
+          "id": "arg_001",
+          "premise": "Deep learning models have achieved state-of-the-art results on multivariate physiological time-series classification benchmarks.",
+          "claim": "End-to-end deep learning models trained on raw eye-tracking gaze coordinates can outperform hand-engineered feature-based classifiers for ADHD screening.",
+          "evidence": []
+        },
+        {
+          "id": "arg_002",
+          "premise": "Gaze heatmaps capture the spatial distribution of visual attention, which may preserve subtle diagnostic patterns lost in summary statistics.",
+          "claim": "A CNN operating on spatiotemporal gaze heatmaps can achieve >85% accuracy for ADHD classification.",
+          "evidence": []
+        }
+      ]
+    }
+  ],
+  "references": []
+}

@@ -1,0 +1,34 @@
+{
+  "extracted_knowledge": [
+    {
+      "id": "10.3389/fpsyt.2023.1260031",
+      "title": "AI-based eye tracking technology for screening ADHD symptoms in children",
+      "abstract": "OBJECTIVE: To explore the potential of using artificial intelligence (AI)-based eye tracking technology on a tablet for screening Attention-deficit/hyperactivity disorder (ADHD) symptoms in children...",
+      "key_findings": [
+        "CNN-based eye tracking on tablet reliably discriminated ADHD (n=112) from TD (n=325) children",
+        "Diagnosis and age had significant effects on fixation task performance",
+        "Tablet-based screening provides potential for ADHD assessment outside clinical settings"
+      ],
+      "methodology": "cross_sectional_comparative",
+      "methods_detail": "End-to-end CNN appearance-based model; prosaccade/antisaccade paradigm (14+14 trials); two-way MANOVA",
+      "domain": "pediatric_psychiatry",
+      "limitations": [
+        "Binary classification only (ADHD vs TD), no subtype differentiation",
+        "Imbalanced sample sizes (112 vs 325)",
+        "No external validation cohort"
+      ],
+      "key_themes": ["ai_screening", "tablet_eye_tracking", "child_adhd", "attention_inhibition"],
+      "sample_size": 437,
+      "year": 2023,
+      "evidence_level": "cross_sectional"
+    }
+  ],
+  "field_summary": {
+    "total_papers_processed": 1,
+    "year_range": "2023",
+    "dominant_methodologies": ["cross_sectional_comparative"],
+    "key_themes_aggregated": ["ai_screening (1)", "tablet_eye_tracking (1)", "child_adhd (1)"],
+    "identified_contradictions": [],
+    "knowledge_gaps": ["No subtype differentiation — binary ADHD vs TD only"]
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "verdict": "partially_supported",
+  "confidence_score": 0.30,
+  "counterarguments": [
+    {
+      "type": "direct_contradiction",
+      "strength": 0.85,
+      "content": "Clinical interviews capture rich contextual, developmental, and multi-informant data that eye-tracking alone cannot assess. ADHD diagnosis requires evaluation of symptom pervasiveness across settings (school, home, social), age of onset, functional impairment, and differential diagnosis from anxiety, depression, and learning disorders—none of which can be determined from gaze patterns alone."
+    },
+    {
+      "type": "generalizability_challenge",
+      "strength": 0.65,
+      "content": "The 80-85% accuracy reported by machine learning studies is typically achieved in controlled research settings with carefully screened, homogeneous samples. Real-world clinical populations include comorbidities (e.g., anxiety, autism, tic disorders) that affect eye-tracking measures, likely reducing diagnostic accuracy significantly."
+    },
+    {
+      "type": "alternative_explanation",
+      "strength": 0.55,
+      "content": "Eye-tracking may best serve as a complementary screening tool rather than a replacement. Comparable accuracy to inter-rater reliability does not imply equivalence in diagnostic validity—sensitivity and specificity requirements differ for screening (high sensitivity preferred) versus diagnostic confirmation (high specificity preferred)."
+    }
+  ],
+  "falsification_conditions": [
+    "If eye-tracking sensitivity drops below 70% in a multi-site real-world clinical sample with comorbidities, the claim of replacement is falsified.",
+    "If the positive predictive value of eye-tracking screening is below 0.60 in populations with low ADHD prevalence (<5%), the screening cannot replace clinical interview which maintains higher PPV through clinical judgment.",
+    "If eye-tracking measures cannot differentiate ADHD from anxiety disorders (which also show altered gaze patterns), the specificity claim is falsified."
+  ],
+  "weaknesses": [
+    "The argument equates classification accuracy with diagnostic equivalence, ignoring the broader diagnostic function of clinical interviews.",
+    "The evidence cited is from controlled research settings and may not generalize to diverse clinical contexts.",
+    "The argument does not address differential diagnosis—how eye-tracking would distinguish ADHD from other conditions with similar attentional profiles."
+  ]
+}

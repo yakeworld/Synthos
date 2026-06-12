@@ -1,0 +1,70 @@
+{
+  "associations": [
+    {
+      "type": "evolution",
+      "item1": "10.1016/j.jalz.2022.06.001",
+      "item2": "10.1038/s41591-023-02544-x",
+      "item1_title": "Blood-Based Biomarkers for Early Alzheimer's Disease Detection (2022)",
+      "item2_title": "Multi-Modal Biomarker Fusion with Machine Learning for Alzheimer's Disease (2023)",
+      "description": "The 2022 cross-sectional study established single-modality blood biomarkers (pTau217, NfL) as viable for early AD detection. The 2023 study represents a methodological evolution by integrating multiple modalities (blood + MRI + CSF) with machine learning, achieving significantly higher accuracy on a larger, more diverse sample (n=500 vs n=120).",
+      "confidence": 0.90,
+      "significance": "This evolution demonstrates the expected progression from single-modality to multi-modal approaches in biomarker research, validating the hypothesis that integration yields superior diagnostic performance."
+    },
+    {
+      "type": "evolution",
+      "item1": "10.1038/s41591-023-02544-x",
+      "item2": "10.1001/jama.2024.0210",
+      "item1_title": "Multi-Modal Biomarker Fusion with Machine Learning for Alzheimer's Disease (2023)",
+      "item2_title": "Blood and Imaging Biomarkers for AD: Meta-Analysis of 15 Studies (2024)",
+      "description": "The 2023 multi-modal study demonstrated the promise of biomarker integration on a single large cohort. The 2024 meta-analysis synthesizes evidence across 15 independent studies (n=4,280), confirming and generalizing the finding that combined blood+imaging panels outperform single-modality approaches, while also identifying assay heterogeneity as a key barrier.",
+      "confidence": 0.93,
+      "significance": "The meta-analysis represents a natural evidence-level evolution from single-cohort (Level III) to systematic synthesis (Level I), providing population-level validation and identifying next-step barriers for clinical translation."
+    },
+    {
+      "type": "supplement",
+      "item1": "10.1016/j.jalz.2022.06.001",
+      "item2": "10.1001/jama.2024.0210",
+      "item1_title": "Blood-Based Biomarkers for Early Alzheimer's Disease Detection (2022)",
+      "item2_title": "Blood and Imaging Biomarkers for AD: Meta-Analysis of 15 Studies (2024)",
+      "description": "The 2022 cross-sectional study provides foundational evidence for plasma pTau217's discriminative ability, which the 2024 meta-analysis incorporates as part of its pooled analysis. The meta-analysis supplements the single-cohort finding by providing population-level effect estimates and identifying the heterogeneity that limits clinical deployment.",
+      "confidence": 0.75,
+      "significance": "The supplement relationship shows how primary research findings feed into higher-level evidence synthesis, with the meta-analysis adding context about generalizability limitations not visible in the primary study."
+    }
+  ],
+  "research_gaps": [
+    {
+      "type": "methodology_gap",
+      "description": "No prospective randomized trial has directly compared biomarker-guided early diagnosis versus standard clinical assessment for Alzheimer's disease outcomes. Current evidence is limited to cross-sectional classification accuracy and retrospective meta-analyses.",
+      "confidence": 0.91,
+      "evidence": "All three studies (2022 cross-sectional, 2023 ML fusion, 2024 meta-analysis) remain at observational/cross-sectional evidence level. No RCT evidence for biomarker-guided AD management exists in this set.",
+      "priority": "high"
+    },
+    {
+      "type": "population_gap",
+      "description": "Biomarker studies predominantly sample Caucasian populations from North America and Europe. Validation across Asian, African, and Hispanic populations is severely lacking, raising questions about cross-ethnic validity of pTau217 thresholds.",
+      "confidence": 0.78,
+      "evidence": "The 2024 meta-analysis notes limited geographic diversity; the 2022 study (n=120) and 2023 study (n=500) do not report race/ethnicity-stratified analyses.",
+      "priority": "medium"
+    }
+  ],
+  "knowledge_graph": {
+    "nodes": [
+      {"id": "10.1016/j.jalz.2022.06.001", "label": "Blood Biomarkers AD Detection (2022)", "year": 2022, "type": "paper", "domain": "neurology"},
+      {"id": "10.1038/s41591-023-02544-x", "label": "Multi-Modal ML Biomarker Fusion (2023)", "year": 2023, "type": "paper", "domain": "neurology"},
+      {"id": "10.1001/jama.2024.0210", "label": "AD Biomarkers Meta-Analysis (2024)", "year": 2024, "type": "paper", "domain": "neurology"}
+    ],
+    "edges": [
+      {"id": "assoc_001", "source": "10.1016/j.jalz.2022.06.001", "target": "10.1038/s41591-023-02544-x", "type": "evolution", "confidence": 0.90},
+      {"id": "assoc_002", "source": "10.1038/s41591-023-02544-x", "target": "10.1001/jama.2024.0210", "type": "evolution", "confidence": 0.93},
+      {"id": "assoc_003", "source": "10.1016/j.jalz.2022.06.001", "target": "10.1001/jama.2024.0210", "type": "supplement", "confidence": 0.75}
+    ],
+    "statistics": {
+      "total_nodes": 3,
+      "total_edges": 3,
+      "contradictions": 0,
+      "supplements": 1,
+      "evolutions": 2,
+      "gaps": 2
+    }
+  }
+}

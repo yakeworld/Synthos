@@ -1,0 +1,26 @@
+{
+  "verdict": "supported",
+  "confidence_score": 0.92,
+  "counterarguments": [
+    {
+      "type": "generalizability_challenge",
+      "strength": 0.25,
+      "content": "Most CBT trials have been conducted in Western, educated populations; effectiveness in non-Western cultural contexts may differ due to varying conceptualizations of mental health and help-seeking behavior. However, the growing body of cross-cultural trials suggests broadly consistent effects."
+    },
+    {
+      "type": "alternative_explanation",
+      "strength": 0.15,
+      "content": "Some of the observed improvement in CBT trials may be attributable to non-specific therapeutic factors such as therapeutic alliance, expectation of improvement, and structured support, rather than CBT-specific techniques."
+    }
+  ],
+  "falsification_conditions": [
+    "If a future adequately powered RCT with active comparator finds that CBT is inferior to a credible placebo or no better than treatment-as-usual (d < 0.20 in a non-inferiority trial), the claim would be weakened.",
+    "If meta-analytic evidence shows significant publication bias causing effect sizes to drop to d < 0.30 after correction, the claim would be partially falsified.",
+    "If long-term follow-up data shows that CBT effects are not durable beyond 2 years relative to controls, the 'effective' claim would require qualification."
+  ],
+  "weaknesses": [
+    "Effect sizes vary considerably depending on control condition (waitlist versus active treatment).",
+    "Therapist competence and adherence significantly moderate outcomes in real-world implementation.",
+    "Definition of 'response' across trials is heterogeneous, complicating meta-analytic synthesis."
+  ]
+}

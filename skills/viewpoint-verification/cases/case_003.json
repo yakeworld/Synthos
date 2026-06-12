@@ -1,0 +1,15 @@
+{
+  "hypothesis": {
+    "id": "hyp_001",
+    "text": "Novel biomarker X in plasma can predict Alzheimer's disease onset 5-10 years before clinical symptoms appear."
+  },
+  "argument": {
+    "text": "A recent cross-sectional study of 85 participants found that levels of novel biomarker X were significantly elevated in individuals with mild cognitive impairment compared to healthy controls (p = 0.03). The biomarker also correlated with amyloid PET imaging results in a subset of 30 participants. These preliminary findings suggest that biomarker X could serve as an early, non-invasive blood test for predicting Alzheimer's disease years before symptom onset, potentially enabling earlier intervention and better treatment outcomes. Given the accessibility of blood-based testing compared to PET scans and lumbar punctures, biomarker X represents a paradigm shift in Alzheimer's diagnostics.",
+    "supporting_evidence": [
+      "Chen, Y., et al. (2025). Plasma biomarker X as a potential early indicator of Alzheimer's disease pathology: A cross-sectional pilot study. Journal of Alzheimer's Disease, 98(1), 115-128."
+    ]
+  },
+  "context": {
+    "domain": "neurology and biomarker research"
+  }
+}

@@ -4,9 +4,12 @@ description: >-
   识别知识项间关系 — 矛盾/补充/进化/支持/扩展/相似/空白。构建知识图谱。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
----
+    priority: P0
+    atom_type: cognitive-atom
+    description: Identify relationships between knowledge items — contradiction/supplement/evolution/support/expansion/similarity/gap.
+    signature: ['knowledge_items: list[KnowledgeItem] -> relationships: list[Relationship]'] -> ['relationships: list[Relationship] (source, target, type, strength, evidence)']
+    related_skills: [hypothesis-generation, knowledge-extraction, knowledge-acquisition, argument-expression, viewpoint-verification]
+
 
 # Association Discovery
 

@@ -1,21 +1,77 @@
----
+------
 name: debug-env-variables
-description: Debug environment variable issues across shell boundaries, subprocesses,
-  and application configuration layers.
-allowed-tools:
-- terminal
-- file
-- read_file
+description: Debug environment variable issues across shell boundaries, subprocesses, and application configuration layers.
+---
+
+# Debug Environment Variables
+
+## 原理层·文言
+
+> 环境之变，变量之惑。
+> 壳有界而境无边，子不知父之所有。
+> 知其源则知其变，明其界则明其惑。
+
+##
+DevOps — environment configuration, subprocess shells, credential injection.
+
+## When to Use
+- Environment variables work in interactive shell but not in scripts
+- `subprocess.run(shell=True)` seems to lose environment variables
+- API keys, tokens, or credentials are empty at runtime despite being set
+- `.bashrc`/`.profile`/`.env` files seem to be ignored by automated processes
+
+## Pitfalls
+
+### The Non-Interactive Shell Trap
+Bash's `.bashrc` contains this guard by default:
+```bash
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+```
+Non-interactive shells (e.g., `bash -c 
+
+  io_contract: input: ['process_info: str, env_vars: dict -> debug_report: dict', 'output: ['debug_report: dict (missing_vars: list[str], invalid_vars: list[str], suggestions: list[str])']
+
+
+# Debug Environment Variables
+
+## 原理层·文言
+
+> 环境之变，变量之惑。
+> 壳有界而境无边，子不知父之所有。
+> 知其源则知其变，明其界则明其惑。
+
+##
+DevOps — environment configuration, subprocess shells, credential injection.
+
+## When to Use
+- Environment variables work in interactive shell but not in scripts
+- `subprocess.run(shell=True)` seems to lose environment variables
+- API keys, tokens, or credentials are empty at runtime despite being set
+- `.bashrc`/`.profile`/`.env` files seem to be ignored by automated processes
+
+## Pitfalls
+
+### The Non-Interactive Shell Trap
+Bash's `.bashrc` contains this guard by default:
+```bash
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+```
+Non-interactive shells (e.g., `bash -c 
 metadata:
   synthos:
-    signature: 'input: dict -> output: dict'
-    related_skills:
-    - argument-expression
-    - association-discovery
-    - ai-outreach
-    - autonomous-core-researcher
-    - claude-code
+    priority: P2
+    atom_type: tool
+    description: Debug environment variable issues across shell boundaries, subprocesses, and application configuration layers.
+    signature: 'process_info: str, env_vars: dict -> debug_report: dict'
+    related_skills: [paper-cron-scan, paper-pipeline, paper-references-scanning, research-paper-search]
 ---
+
 
 
 # Debug Environment Variables

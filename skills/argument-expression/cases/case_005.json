@@ -1,0 +1,21 @@
+{
+  "hypotheses": [
+    {
+      "id": "hyp_001",
+      "text": "End-to-end deep learning models trained on raw eye-tracking gaze coordinates outperform hand-engineered feature-based classifiers for ADHD screening.",
+      "novelty_score": 0.8,
+      "feasibility_score": 0.5,
+      "testability": "testable",
+      "rationale": "Deep learning approaches have shown promise in time-series classification but have rarely been applied to raw eye-tracking data for ADHD diagnostics."
+    },
+    {
+      "id": "hyp_002",
+      "text": "A convolutional neural network operating on spatiotemporal gaze heatmaps can achieve >85% accuracy in ADHD versus control classification without requiring manual feature engineering.",
+      "novelty_score": 0.75,
+      "feasibility_score": 0.45,
+      "testability": "testable",
+      "rationale": "CNN-based approaches for gaze heatmap analysis are emerging in neuroscience but have not been benchmarked against traditional feature-based methods in ADHD populations."
+    }
+  ],
+  "structure": "introduction"
+}

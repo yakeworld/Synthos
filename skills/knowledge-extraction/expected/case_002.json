@@ -1,0 +1,34 @@
+{
+  "extracted_knowledge": [
+    {
+      "id": "10.1002/pcn5.70095",
+      "title": "Longitudinal association between eye gaze fixation on social information and neurodevelopmental symptoms in children",
+      "abstract": "AIM: This large-scale, longitudinal, community-based study...",
+      "key_findings": [
+        "Shorter eye gaze fixation on social info at age 4 predicted ADHD hyperactivity/inattention at ages 6-7 (n=2,101)",
+        "Also predicted emotional problems and peer problems (ASD-related)",
+        "First large-scale longitudinal demonstration of eye tracking predicting later ADHD symptoms"
+      ],
+      "methodology": "longitudinal_cohort",
+      "methods_detail": "Community-based cohort (n=2,101); eye tracking at age 4; SDQ at ages 6-7; GLM analysis",
+      "domain": "developmental_psychiatry",
+      "limitations": [
+        "Single eye-tracking metric (fixation duration on social info)",
+        "No intermediate timepoint measurements",
+        "SDQ is screening tool, not diagnostic interview"
+      ],
+      "key_themes": ["longitudinal_prediction", "social_attention", "early_screening", "adhd_asd_overlap"],
+      "sample_size": 2101,
+      "year": 2025,
+      "evidence_level": "cohort"
+    }
+  ],
+  "field_summary": {
+    "total_papers_processed": 1,
+    "year_range": "2025",
+    "dominant_methodologies": ["longitudinal_cohort"],
+    "key_themes_aggregated": ["longitudinal_prediction (1)", "social_attention (1)", "early_screening (1)"],
+    "identified_contradictions": [],
+    "knowledge_gaps": ["Only one eye-tracking metric used — multi-metric approach needed"]
+  }
+}

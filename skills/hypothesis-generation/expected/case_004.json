@@ -1,0 +1,16 @@
+{
+  "error": {
+    "code": "MISSING_INPUT",
+    "message": "Missing associations and research_gaps",
+    "description": "When both associations and research_gaps are empty arrays or absent, the atom should return _err(\"Missing associations and research_gaps\") instead of proceeding with hypothesis generation. This edge case tests proper input validation."
+  },
+  "hypotheses": [],
+  "metadata": {
+    "total_hypotheses": 0,
+    "mean_novelty": 0.0,
+    "mean_feasibility": 0.0,
+    "from_gaps": 0,
+    "from_contradictions": 0,
+    "from_other": 0
+  }
+}

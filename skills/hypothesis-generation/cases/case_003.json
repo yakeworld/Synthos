@@ -1,0 +1,36 @@
+{
+  "associations": [
+    {
+      "id": "assoc_001",
+      "type": "contradiction",
+      "item1": "10.3389/fpsyt.2023.1260031",
+      "item2": "10.3390/brainsci13050703",
+      "item1_title": "AI-Extracted Eye-Tracking Features for ADHD Screening: A Tablet-Based Approach",
+      "item2_title": "Unraveling ADHD Through Eye Tracking: Pupil Metrics Do Not Outperform Traditional Diagnostic Methods",
+      "description": "Positive (89% sensitivity) versus null (57% sensitivity) findings for eye-tracking ADHD screening, depending on feature extraction approach.",
+      "confidence": 0.82,
+      "significance": "Determines whether eye-tracking has clinical utility for ADHD screening."
+    },
+    {
+      "id": "assoc_002",
+      "type": "evolution",
+      "item1": "10.1016/j.jalz.2022.06.001",
+      "item2": "10.1038/s41591-023-02544-x",
+      "item1_title": "Blood Biomarkers for Early AD Detection (2022)",
+      "item2_title": "Multi-Modal ML Biomarker Fusion for AD (2023)",
+      "description": "Methodological evolution from single-modality blood biomarkers to multi-modal ML-driven biomarker fusion in Alzheimer's disease.",
+      "confidence": 0.90,
+      "significance": "Demonstrates paradigm shift in biomarker research methodology that may cross-apply to psychiatry."
+    }
+  ],
+  "research_gaps": [
+    {
+      "id": "gap_001",
+      "type": "knowledge_gap",
+      "description": "Machine learning-based multi-modal biomarker integration, despite proving effective in Alzheimer's disease neurology, has not been systematically applied to ADHD diagnosis where both behavioral and neurophysiological (eye-tracking, EEG) data could benefit from similar fusion approaches.",
+      "confidence": 0.80,
+      "evidence": "AD biomarker studies (2022–2024) show ML multi-modal fusion achieves AUC 0.94. ADHD studies (Chen 2023, Unraveling ADHD 2023) use single-modality eye-tracking only, without multi-modal integration.",
+      "priority": "high"
+    }
+  ]
+}

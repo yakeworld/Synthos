@@ -4,9 +4,12 @@ description: >-
   科学假设生成原子(HYP) — 研究空白→结构化可检验假说。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
----
+    priority: P0
+    atom_type: cognitive-atom
+    description: Generate scientifically falsifiable hypotheses from research gaps.
+    signature: ['research_gap: str, domain_knowledge: str, constraints: dict -> hypotheses: list[Hypothesis]'] -> ['hypotheses: list[Hypothesis] (statement, falsifiability_test, supporting_evidence, counter_evidence)']
+    related_skills: [association-discovery, knowledge-extraction, knowledge-acquisition, argument-expression, viewpoint-verification]
+
 
 # Hypothesis Generation
 

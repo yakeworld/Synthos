@@ -1,0 +1,55 @@
+{
+  "knowledge_items": [
+    {
+      "id": "10.1007/s10802-023-01064-x",
+      "title": "Eye Tracking Continuous Performance Test for ADHD Assessment: A Randomized Comparison",
+      "key_findings": [
+        "Eye-tracking integrated continuous performance test (CPT) shows moderate discriminability for ADHD (AUC=0.74)",
+        "Omission errors and reaction time variability are the strongest CPT-based predictors of ADHD diagnosis",
+        "Combining eye-tracking metrics with CPT scores improves classification by 6% over CPT alone"
+      ],
+      "key_themes": ["ADHD", "eye-tracking", "continuous performance test", "attention assessment"],
+      "methodology": "randomized_controlled_trial",
+      "methods_detail": "Randomized comparison of standard CPT vs eye-tracking integrated CPT in 312 children aged 7–13 (156 ADHD, 156 controls)",
+      "domain": "pediatric_psychiatry",
+      "sample_size": 312,
+      "year": 2023,
+      "evidence_level": "rct",
+      "limitations": ["Single-site study limits generalizability", "Short-term assessment may not capture trait stability", "No medication washout protocol reported"]
+    },
+    {
+      "id": "10.1161/STROKEAHA.2023.044611",
+      "title": "Neuroimaging Predictors of Post-Stroke Cognitive Recovery: A Longitudinal MRI Study",
+      "key_findings": [
+        "Hippocampal volume at 3 months post-stroke predicts cognitive recovery trajectory at 12 months (β=0.42, p<0.01)",
+        "White matter integrity in the fornix is associated with memory recovery independent of lesion volume",
+        "Early neuroimaging biomarkers account for 34% of variance in 12-month cognitive outcomes"
+      ],
+      "key_themes": ["stroke", "neuroimaging", "MRI", "cognitive recovery", "biomarkers"],
+      "methodology": "longitudinal_cohort",
+      "methods_detail": "Longitudinal cohort study with 3-month and 12-month MRI follow-up, n=198 ischemic stroke survivors, cognitive battery at both timepoints",
+      "domain": "neurology",
+      "sample_size": 198,
+      "year": 2023,
+      "evidence_level": "cohort",
+      "limitations": ["Moderate sample size for neuroimaging analyses", "Loss to follow-up at 12 months (14%)", "Single neuroimaging modality without PET or DTI integration"]
+    },
+    {
+      "id": "10.1001/jamapsychiatry.2023.3052",
+      "title": "Pharmacogenetic Predictors of SSRI Response in Major Depressive Disorder: A Genome-Wide Association Study",
+      "key_findings": [
+        "A polygenic risk score comprising 47 SNPs predicts SSRI non-response at 8 weeks (OR=1.68, p=3.2×10⁻⁸)",
+        "CYP2C19 metabolizer status significantly affects escitalopram plasma levels and side effect burden",
+        "Pharmacogenetic-guided treatment selection reduces time to remission by 2.3 weeks compared to standard care"
+      ],
+      "key_themes": ["depression", "pharmacotherapy", "pharmacogenetics", "SSRI", "genome-wide association"],
+      "methodology": "genome_wide_association_study",
+      "methods_detail": "GWAS of SSRI treatment response in 2,847 MDD patients with prospective 8-week treatment outcome assessment",
+      "domain": "psychiatry",
+      "sample_size": 2847,
+      "year": 2023,
+      "evidence_level": "cohort",
+      "limitations": ["European ancestry only limits cross-ethnic applicability", "GWAS signal concentrated in non-coding regions with unclear biological mechanism", "Single antidepressant class (SSRIs) may not generalize to other treatments"]
+    }
+  ]
+}

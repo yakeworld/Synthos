@@ -1,0 +1,13 @@
+{
+  "associations": [],
+  "research_gaps": [
+    {
+      "id": "gap_001",
+      "type": "method_gap",
+      "description": "No validated naturalistic classroom-based eye-tracking protocol exists for ADHD assessment. Existing eye-tracking paradigms are conducted in laboratory or clinical settings, which may not capture real-world attentional dynamics and may limit ecological validity and clinical adoption.",
+      "confidence": 0.75,
+      "evidence": "Reading Performance in ADHD (2023) used a naturalistic classroom setting but is a single cross-sectional study without replication or protocol validation. No standardized methodology exists for classroom-based eye-tracking in ADHD assessment.",
+      "priority": "high"
+    }
+  ]
+}

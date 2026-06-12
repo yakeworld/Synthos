@@ -1,0 +1,26 @@
+{
+  "associations": [],
+  "research_gaps": [
+    {
+      "type": "methodology_gap",
+      "description": "A single cross-sectional observational study on reading eye-tracking in ADHD provides no comparative or convergent evidence. Key gaps include absence of longitudinal tracking of eye movement patterns, lack of intervention studies targeting reading-related eye movement abnormalities, and no comparison with other ADHD assessment modalities.",
+      "confidence": 0.70,
+      "evidence": "Only one KnowledgeItem available (10.1007/s00787-023-01872-2). No comparative, contradictory, or evolutionary associations can be formed due to insufficient knowledge items for pairwise analysis.",
+      "priority": "medium"
+    }
+  ],
+  "knowledge_graph": {
+    "nodes": [
+      {"id": "10.1007/s00787-023-01872-2", "label": "Reading Eye Movements in ADHD (2023)", "year": 2023, "type": "paper", "domain": "pediatric_psychiatry"}
+    ],
+    "edges": [],
+    "statistics": {
+      "total_nodes": 1,
+      "total_edges": 0,
+      "contradictions": 0,
+      "supplements": 0,
+      "evolutions": 0,
+      "gaps": 1
+    }
+  }
+}

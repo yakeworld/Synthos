@@ -1,0 +1,55 @@
+{
+  "associations": [
+    {
+      "id": "assoc_001",
+      "type": "contradiction",
+      "item1": "10.3389/fpsyt.2023.1260031",
+      "item2": "10.3390/brainsci13050703",
+      "item1_title": "AI-Extracted Eye-Tracking Features for ADHD Screening (Chen 2023)",
+      "item2_title": "Unraveling ADHD Through Eye Tracking: Pupil Metrics (2023)",
+      "description": "AI-extracted eye-tracking features show 89% sensitivity for ADHD screening, while raw pupil metrics show only 57% sensitivity, with conflicting conclusions about clinical utility.",
+      "confidence": 0.82,
+      "significance": "Core methodological debate in ADHD eye-tracking field."
+    },
+    {
+      "id": "assoc_002",
+      "type": "supplement",
+      "item1": "10.1007/s10802-023-01064-x",
+      "item2": "10.1007/s00787-023-01872-2",
+      "item1_title": "Eye Tracking CPT for ADHD (2023)",
+      "item2_title": "Reading Eye Movements in ADHD Children (2023)",
+      "description": "CPT-based eye-tracking and naturalistic reading eye-tracking provide complementary perspectives on attentional dysfunction in ADHD—structured task performance vs. real-world reading behavior.",
+      "confidence": 0.70,
+      "significance": "Suggests that eye-tracking measures across different task contexts may provide complementary diagnostic information."
+    },
+    {
+      "id": "assoc_003",
+      "type": "evolution",
+      "item1": "10.1016/j.chb.2024.010101",
+      "item2": "10.3389/fpsyt.2023.1260031",
+      "item1_title": "Dual System Cognitive Enhancement with VR and Eye-Tracking Training for ADHD (2024)",
+      "item2_title": "AI-Extracted Eye-Tracking Features for ADHD Screening (Chen 2023)",
+      "description": "The 2024 VR+eye-tracking intervention study builds on the screening findings from Chen 2023 by using eye-tracking as both an assessment and training modality, representing an application evolution from diagnosis to intervention.",
+      "confidence": 0.78,
+      "significance": "Shows translational potential of eye-tracking biomarkers beyond screening into intervention design."
+    }
+  ],
+  "research_gaps": [
+    {
+      "id": "gap_001",
+      "type": "knowledge_gap",
+      "description": "No study has investigated whether eye-tracking features that are discriminative for ADHD screening (identified in cross-sectional studies) can serve as predictive biomarkers for treatment response to eye-tracking-based interventions (such as the VR+eye-tracking training paradigm).",
+      "confidence": 0.82,
+      "evidence": "assoc_003 connects screening research (Chen 2023) with intervention research (Dual System VR 2024), but no study bridges these by testing whether screening biomarkers predict training outcomes.",
+      "priority": "high"
+    },
+    {
+      "id": "gap_002",
+      "type": "population_gap",
+      "description": "Existing ADHD eye-tracking studies focus predominantly on school-aged children (ages 6–14). No studies have validated eye-tracking biomarkers or training protocols in adult ADHD populations, adolescents (15–18), or preschool-aged children (3–5), leaving the developmental trajectory of eye-tracking biomarkers unknown.",
+      "confidence": 0.85,
+      "evidence": "All five studies cited across associations focus on children aged 6–14. Adult ADHD populations (prevalence ~2.5%) are entirely unrepresented in the eye-tracking ADHD literature sampled.",
+      "priority": "high"
+    }
+  ]
+}

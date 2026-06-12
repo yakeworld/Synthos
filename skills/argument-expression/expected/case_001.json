@@ -1,0 +1,33 @@
+{
+  "sections": [
+    {
+      "section_type": "introduction",
+      "heading": "Introduction",
+      "paragraphs": [
+        "Attention-deficit/hyperactivity disorder (ADHD) is one of the most prevalent neurodevelopmental disorders in childhood, affecting approximately 5-7% of school-aged children worldwide. Current diagnostic protocols rely primarily on clinical interviews, behavioral rating scales, and subjective reports from parents and teachers, which are time-consuming and subject to rater bias. There is a growing need for objective, scalable screening tools that can complement traditional assessment methods.",
+        "Eye-tracking technology has emerged as a promising avenue for objective neurocognitive assessment. Prior research has documented consistent oculomotor abnormalities in individuals with ADHD, including increased saccadic latency and reduced fixation stability (Munoz et al., 2023). A meta-analysis of 47 studies found moderate-to-large effect sizes for prosaccade tasks, suggesting that eye movement parameters may serve as reliable biomarkers for ADHD (Munoz et al., 2023). However, most existing studies have used highly controlled laboratory paradigms that are difficult to translate into clinical practice.",
+        "In this study, we investigate whether eye-tracking measures of visual attention during naturalistic reading tasks can reliably distinguish ADHD-diagnosed children from neurotypical controls (Hypothesis 1). Furthermore, we examine whether combining saccadic latency and fixation duration features outperforms single-metric classifiers in ADHD versus control discrimination (Hypothesis 2). By leveraging standardized reading-based paradigms, we aim to bridge the gap between laboratory-based eye-tracking research and clinically applicable screening tools."
+      ],
+      "arguments": [
+        {
+          "id": "arg_001",
+          "premise": "Current ADHD diagnostic methods are subjective and time-consuming, creating a need for objective screening tools.",
+          "claim": "Eye-tracking measures of visual attention during reading tasks can serve as reliable ADHD screening biomarkers.",
+          "evidence": ["10.1016/j.biopsych.2023.01.001"]
+        },
+        {
+          "id": "arg_002",
+          "premise": "Oculomotor abnormalities such as increased saccadic latency and reduced fixation stability are consistently observed in ADHD.",
+          "claim": "These eye-tracking features can be used as quantitative diagnostic markers for ADHD screening.",
+          "evidence": ["10.1016/j.biopsych.2023.01.001"]
+        }
+      ]
+    }
+  ],
+  "references": [
+    {
+      "id": "10.1016/j.biopsych.2023.01.001",
+      "formatted": "Munoz, D. P., Armstrong, I. T., & Everling, S. (2023). Oculomotor abnormalities in attention-deficit/hyperactivity disorder: A systematic review and meta-analysis. Biological Psychiatry."
+    }
+  ]
+}

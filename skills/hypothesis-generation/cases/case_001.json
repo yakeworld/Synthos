@@ -1,0 +1,25 @@
+{
+  "associations": [
+    {
+      "id": "assoc_001",
+      "type": "contradiction",
+      "item1": "10.3389/fpsyt.2023.1260031",
+      "item2": "10.3390/brainsci13050703",
+      "item1_title": "AI-Extracted Eye-Tracking Features for ADHD Screening: A Tablet-Based Approach",
+      "item2_title": "Unraveling ADHD Through Eye Tracking: Pupil Metrics Do Not Outperform Traditional Diagnostic Methods",
+      "description": "Chen et al. report 89% sensitivity for AI-extracted eye-tracking features in ADHD screening, while the Unraveling ADHD study finds pupil-based metrics achieve only 57% sensitivity. The contradiction likely stems from differences in feature extraction approach (AI-integrated saccadic features vs. raw pupilometry) and analytic pipeline.",
+      "confidence": 0.82,
+      "significance": "Resolving this contradiction is critical for determining whether eye-tracking has clinical utility for ADHD screening, and if so, which paradigm should be pursued."
+    }
+  ],
+  "research_gaps": [
+    {
+      "id": "gap_001",
+      "type": "contradiction_gap",
+      "description": "No single study has directly compared AI-integrated eye-tracking features against raw pupilometric metrics for ADHD screening using the same population, apparatus, and gold standard diagnostic protocol.",
+      "confidence": 0.88,
+      "evidence": "Chen 2023 uses tablet-based ML-extracted features (n=437, positive finding) while Unraveling ADHD 2023 uses lab-based pupilometry (n=186, null finding). Different paradigms, populations, and analytical pipelines prevent direct comparison.",
+      "priority": "high"
+    }
+  ]
+}

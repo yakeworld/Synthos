@@ -1,0 +1,33 @@
+{
+  "papers": [
+    {
+      "title": "Deficits in saccade inhibition in children with attention-deficit/hyperactivity disorder",
+      "doi": "10.1016/j.biopsycho.2021.108179",
+      "year": 2021,
+      "authors": ["Pritchard VE", "Neumann E", "Rucklidge JJ"],
+      "abstract_snippet": "This study examined saccade inhibition deficits in children with ADHD using antisaccade and prosaccade tasks, finding significantly higher error rates in the ADHD group."
+    },
+    {
+      "title": "Antisaccade performance in ADHD: a systematic review and meta-analysis",
+      "doi": "10.1016/j.neubiorev.2019.10.002",
+      "year": 2020,
+      "authors": ["Rommelse NNJ", "Van der Stigchel S", "Sergeant JA"],
+      "abstract_snippet": "A meta-analysis of antisaccade performance in ADHD, demonstrating robust deficits in saccade inhibition with large effect sizes across multiple studies."
+    },
+    {
+      "title": "Saccadic eye movements in children with attention-deficit/hyperactivity disorder: a systematic review",
+      "doi": "10.1016/j.neubiorev.2022.104798",
+      "year": 2022,
+      "authors": ["Muñoz DP", "Armstrong IT", "Everling S"],
+      "abstract_snippet": "This systematic review examines saccadic eye movement abnormalities in children with ADHD, highlighting consistent impairments in saccade latency and accuracy."
+    },
+    {
+      "title": "Proactive and reactive saccade inhibition in ADHD: a systematic review and meta-analysis",
+      "doi": "10.1016/j.neubiorev.2021.11.004",
+      "year": 2022,
+      "authors": ["Overtoom CCE", "Kenemans JL", "Verbatten MN"],
+      "abstract_snippet": "A meta-analytic review examining proactive and reactive saccade inhibition mechanisms in ADHD across antisaccade and stop-signal paradigms."
+    }
+  ],
+  "total_found": 4
+}

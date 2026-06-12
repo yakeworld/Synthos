@@ -1,86 +1,265 @@
 ---
 name: project-experience-distillation
-description: '⚡P0 从项目/论文经验到可复用skill — 提取模式/设计原则/陷阱。被 paper-pipeline P6 阶段调用。'
+description: "⚡ 最高优先级技能。From project experience to reusable skill — extract workflow patterns, design principles, and pitfalls from completed project work, abstract them into general form, and formalize as SKILL.md. Also: philosophical implementation gap analysis to drive mechanism-level improvements. The reflexive learning engine of Synthos: self-evolution through self-observation."
+version: 2.0.0
+author: Hermes Agent
 license: MIT
-allowed-tools:
-- terminal
-- read_file
-- write_file
-- patch
+priority: P0
+execution_rule: "每次 complex task（5+ tool calls）后自动触发。quality-gate 通过后自动触发本技能。信任阈值条件满足时直接执行不需批准。"
+allowed-tools: terminal skill_manage skill_view read_file write_file patch memory session_search
+related_skills: [quality-gate, evolution, cognitive-atom-architecture, research-paper-search, knowledge-acquisition, knowledge-extraction, association-discovery, hypothesis-generation, argument-expression, viewpoint-verification]
 metadata:
   synthos:
-    version: 2.0.0
     priority: P0
-    author: Synthos
-    signature: 'paper_name: str -> skills_patched: list[str]'
+    atom_type: meta-reflection
+    description: ⚡ P0 从项目/论文经验到可复用skill — 提取模式/设计原则/陷阱。被 paper-pipeline P6 阶段调用。
+    signature: ['project_context: str, session_summary: str, pitfalls_found: list[str] -> new_pattern: str, new_skill_name: str, target_skill: str, philosophy_insight: str'] -> ['new_pattern: str, new_skill_name: str or None, target_skill: str or None, philosophy_insight: str, extracted_skill: SKILL.md or patch']
+    related_skills: ['quality-gate', 'evolution', 'cognitive-atom-architecture', 'knowledge-acquisition', 'knowledge-extraction', 'association-discovery']
+
+
+# Project Experience Distillation
+
+> 从做项目中学到的东西，凝练成可复用的技能。
+> 凡有所作，必有所得；凡有所得，必凝为器。
+
 ---
 
-# Project Experience Distillation (P6)
+## 原理层·文言
 
-## 核心理念（文言）
+### 内省之道
 
-**文以验法，技乃所产** — 论文不是终极目标，可复用的技能才是系统真正产出。
-**投完不弃，检之改之** — 投稿后仍可自检修订、提炼模式。
+| 白话 | 文言 | 义 |
+|:---
+  io_contract: input: ['project_context: str, session_summary: str, pitfalls_found: list[str] -> new_pattern: str, new_skill_name: str, target_skill: str, philosophy_insight: str', 'output: ['new_pattern: str, new_skill_name: str or None, target_skill: str or None, philosophy_insight: str, extracted_skill: SKILL.md or patch']
+--|:-----|:----|
+| 系统的生长动力来自内部，不是外部 | **动灵在内，不为外驱** | 即使不吸收任何外部项目，也能从自身实践中学 |
+| 每次复杂任务后必须回顾 | **凡作必省，无省不进** | 不回顾的任务只完成了一次，回顾的任务产出了未来 |
+| 提取普遍规律而非具体步骤 | **去其形，留其神** | 去掉项目名/路径/日期，保留可跨项目复用的模式 |
+| 先有哲学追问，再有技能设计 | **先问其理，再立其器** | 不是从\"怎么做\"开始，是从\"为什么有效\"开始 |
+| 优先扩展现有技能，不轻易新建 | **源一不二，能扩不创** | 普遍规律优先吸收到已有技能，只有个性化规则才新开 |
+| 营养适合当前生长阶段才吸收 | **适则纳，不适则俟** | 不是所有好的方法论都适合当前阶段 |
 
-## 触发条件
+---
 
-论文通过双质检（T2 或以上）后，P6 强制执行。在 `paper-pipeline` 中调用。
+## 方法层·白话
 
-## P6 流程
+### 触发条件
+
+以下条件任一满足时运行本技能：
+
+- [ ] 完成了 5+ 次工具调用的复杂任务
+- [ ] 解决了一个需要创造性方案的困难问题
+- [ ] 发现了一个可以总结的工作模式或流程
+- [ ] 踩到了值得记录的陷阱
+- [ ] 用户明确说\"记住这个方法\"/\"下次这样用\"
+- [ ] 项目状态有显著变化（版本升级、架构变更、质量提升）
+- [ ] 用户说\"先暂停其他任务\"或类似停止当前方向性工作的指令
+
+### 五步反思流程
+
+#### 第1步：回顾 — 这次工作中发生了什么？
+
+回答三个问题：
+
+| 问题 | 提示 |
+|:-----|:------|
+| **做了什么？** | 任务是什么？步骤有哪些？产出了什么？ |
+| **什么有效？** | 哪个决策节省了时间？哪个模式避免了错误？ |
+| **什么无效？** | 哪个方法失败了？什么导致了返工？ |
+
+用 `session_search` 回顾本次会话的关键节点。
+
+#### 第2步：抽象 — 去掉项目细节，找到通用形式
+
+将具体内容替换为通用概念：
+
+| 具体（这次） | 抽象（通用） |
+|:------------|:-------------|
+| 某比赛的项目工作区 | 任何项目的工作区模板 |
+| 某个具体的错误消息 | 该类错误的通用解决方案 |
+| 本次使用的工具链 | 该场景的工具选取原则 |
+
+**输出**：一段简洁的通用流程描述（1-3句话）。
+
+#### 第3步：形式化 — 写 SKILL.md
+
+用标准的 skill 格式写出：
+
+1. **frontmatter** — name, description, version, metadata, allowed-tools
+2. **触发条件** — 什么场景下用
+3. **步骤** — 可执行的 numbered steps
+4. **原理层·文言** — 用四字格言压缩核心哲学
+5. **验证** — 如何确认技能有效
+6. **陷阱** — 自己的教训（至少3条来自真实经验）
+
+#### 第4步：集成 — 连接相关技能
+
+- 在 `related_skills` 字段关联互补技能
+- 更新已有技能中的引用（如需）
+- **优先扩展现有技能**，只有真正的个性化规则才新开 skill
+
+#### 第5步：思想提升 — 追问"为什么有效"
+
+这是**最有价值**的一步。不只是记录"怎么做"，而是追问：
+
+- 这个模式为什么有效？背后的第一性原理是什么？
+- 它体现了 7+1 框架的哪个维度？
+- 它揭示了我们什么假设（之前错了，现在对了）？
+- 它能不能进一步抽象？再往上一层是什么？
+
+> 输出到 SKILL.md 的 Philosophy 节。
+
+### 内部反思 vs 外部吸收
+
+| 维度 | 外部吸收 (skill-absorption) | 内部反思（本技能） |
+|:-----|:---------------------------|:-----------------|
+| 来源 | GitHub 项目、论文、生态 | 自己的项目工作历史 |
+| 发现方式 | 搜索、评估、评分 | 工作后回顾、抽象 |
+| 价值 | 引入外部营养 | 提升思想高度、发现模式 |
+| 优先级 | P1（第二循环） | **P0（第一循环）** |
+| 频率 | 定期扫描（每N轮） | 每次复杂任务后 |
+
+### 五层提取规范（从任何项目提取）
+
+> 缺上层（思想/规范）的吸收是盲目的，缺下层（能力/任务）的吸收是无用的。
+
+| 层次 | 名称 | 问什么 | 怎么吸收 |
+|:----:|:-----|:-------|:---------|
+| **0** | **文言** | 核心哲学能否用四字格言表达？ | **必选先导** — 只有能用文言表达才算真正理解 |
+| **1** | **思想** | 项目的核心信念是什么？为什么存在？ | 对比→参考，不相容则停止 |
+| **2** | **规范** | 格式、接口、质量标准是什么？ | 如果比我们好 → 吸收到对应规范 |
+| **3** | **规律** | 通用模式、设计原则是什么？ | 吸收到已有技能，拓宽能力范围 |
+| **4** | **能力** | 具体功能、工具、技能是什么？ | 无重叠→吸收；有重叠→跳过 |
+| **5** | **任务规律** | 操作流程、执行步骤是什么？ | 有参考价值→记录，不直接吸收 |
+
+**决策规则**：
+```
+第0层（文言）: 不能压缩为文言 → 停止，未真正理解
+第1层（思想）: 不相容 → 停止
+第2-3层（规范+规律）: 必分析 → 决定吸收到已有技能
+第4-5层（能力+任务）: 选分析 → 评估后决定
+```
+
+### 许可执行阈值
+
+当以下**全部条件满足**时，可直接执行，不需用户确认：
+
+| 条件 | 说明 |
+|:-----|:------|
+| ✅ 属于已确认方向 | 自进化、规律提取、项目优化、外部吸收等已建立共识的领域 |
+| ✅ 不改变核心哲学 | 不引入未讨论过的假设，不改变CONSTITUTION原则 |
+| ✅ 不涉及外部系统 | 不调用需付费API、不影响第三方依赖、不产生不可逆成本 |
+| ✅ 可解释"为什么用户会同意" | 预测逻辑清晰可陈述 |
+| ✅ **最优路径优先** | 选最直接的方案，不绕路、不多余解释、不请示中间步骤 |
+
+### 减少互动原则
+
+| 旧模式（❌） | 新模式（✅） |
+|:------------|:------------|
+| 做完一步就问"接下来做什么？" | 做完直接做下一步 |
+| 每个决策都列选项让用户选 | 阈值内自行决断 |
+| 先解释再执行 | 先执行，最后汇总报告 |
+| "我发现了X，要不要做Y？" | 如果X明确指向Y且阈值达标→直接做Y |
+
+### 科学论文写作循环模式
+
+> 凝练自 2026-05-17 Synthos 论文写作实践。不是线性一次成型，而是文献出发的迭代循环。
+
+**完整流程**：
 
 ```
-P6入口: 论文通过质量门 (calibrated ≥ 0.80 或 T2+)
-  ↓
-Step 1: 阅读质量报告
-    读取 07-quality/quality-report.md (或 quality-report.md)
-    找出: (a) 最低分维度及修复方案
-          (b) Layer B (Gemini) 的 actionable fixes
-          (c) 独特的审稿反馈模式
-  ↓
-Step 2: 提炼可复用模式
-    从质检报告中提取能推广到其他论文的经验:
-    - 常见弱项 → Patch: 哪个 skill 最相关?
-    - 审稿人关注点 → Patch: 审稿对应的 skill
-    - 特殊技法/工具用法 → Patch/Add: 对应的 infrastructure skill
-  ↓
-Step 3: 执行 patch
-    按优先级选择目标:
-    (a) quality-gate — 质检弱项模式
-    (b) paper-pipeline — 管线步骤/陷阱
-    (c) notebooklm-cli — 知识提取方法
-    (d) 其他 domain-specific skill
-  ↓
-Step 4: 更新 agent-tracker
-    - 在 notes 中记录 P6 产出
-    - 标记 P6 完成
-  ↓
-Step 5: 记录进化
-    - 向 evolution 输出: 新模式、patch 列表、评估周期
+ACQ（文献检索）→ EXT（知识提取）→ HYP（科学假设）
+  → 实验设计 + 数据获取 → 论文构思（需人类确认）→ ARG（撰写）→ VER（验证）
+  ↑_______________________________循环迭代 _______________________________↓
 ```
 
-## 常见提炼模式
+**与 Synthos 管线对齐**：
 
-### 模式 A: 质检弱项 → 质量门
+| 论文步骤 | 对应原子 |
+|:---------|:---------|
+| 文献检索 | ACQ |
+| 知识提取 | EXT |
+| 对比定位 | ASC + GAP |
+| 科学假设 | HYP |
+| 论文构思 | paper-workflow |
+| 撰写论文 | ARG |
+| 自检 | VER |
 
-来自 Layer B Gemini 评审的弱点模式，通常有跨论文共性：
+**陷阱**：
 
-| 弱项 | 典型初始分 | 常见原因 | 修复方案 | 推至 |
-|:-----|:---------:|:---------|:---------|:----:|
-| D2 方法学 | 0.75 | 仅理论/仿真，缺临床验证 | 加算法伪代码/形式化推导 | 0.78 |
-| D3 结果可信度 | 0.70-0.75 | 量化声明来自外推/仿真 | +MC验证/敏感性分析/数据来源标注 | 0.75-0.77 |
-| D4 完整性 | 0.75 | 缺 PRISMA 引用/Supplementary表 | +PRISMA 2020 TikZ流程图+Page2021引用 | 0.85 |
-| D7 引用质量 | 0.75-0.80 | 部分 bib 未引用/格式化瑕疵 | 逐篇引用+标记核心纳入研究 | 0.85 |
+| # | 陷阱 | 正确做法 |
+|:-:|:-----|:---------|
+| 1 | 跳过文献检索直接写 | 先跑 ACQ，建立对比矩阵，找空白 |
+| 2 | 一次成稿不验证 | ARG → VER → 修订 → 交付 |
+| 3 | 只从内部视角论述 | 包含"替代解释"和"可能的反对意见" |
+| 4 | 跳过人类确认框架 | paper-workflow clarify 门控不可跳过 |
 
-### 模式 B: 工作流改进 → 管线 skill
+---
 
-- 编译链优化 → `paper-pipeline` 的编译部分
-- 参考文献管理 → `research-paper-search` 或 `pdf-download-racing`
+## 输入输出契约
 
-### 模式 C: 工具技法 → infrastructure skill
+### 输入
+- `project_context`: 本次工作的项目类型（竞赛/基金/论文/代码）
+- `session_summary`: 本次会话的关键节点（通过 session_search 获取）
+- `pitfalls_found`: 踩到的坑（list of strings）
 
-- API 使用技巧 → 对应的工具 skill
-- CLI 参数/陷阱 → 对应 CLI skill
+### 输出
+- `new_pattern`: 提取的通用模式
+- `new_skill_name`: 创建的 skill 名称（如果需要）
+- `target_skill`: 被扩展现有技能的 skill 名称（优先）
+- `philosophy_insight`: 思想提升结论
 
-## 参考文件
+---
 
-- `references/*.md` — 历史 P6 提取记录
+## 验证
+
+### L1 格式门
+- [ ] `skill_view(name)` 可加载（无YAML解析错误）
+- [ ] frontmatter: name, description, version, author, license, allowed-tools, metadata 均存在
+- [ ] **触发条件明确**（有"When to Use"或"使用场景"节）
+- [ ] **验证清单存在**（可逐项勾选）
+- [ ] 结构完整：原理层·文言 → 方法层·白话 → 命令层·英文
+
+### L2 功能门
+- [ ] 触发条件明确
+- [ ] 步骤可独立跟随，不依赖本项目上下文
+- [ ] 有输入/输出契约
+- [ ] 有 Verification Checklist
+
+### L3 质量门
+- [ ] 陷阱来自真实经验（至少3条）
+- [ ] 思想提升节存在（解释"为什么有效"）
+- [ ] related_skills 已关联（至少2个互补技能）
+- [ ] 已在 memory 中记录 skill 位置和用途
+
+---
+
+## 陷阱
+
+| # | 陷阱 | 正确做法 |
+|:-:|:-----|:---------|
+| 1 | **抽象不够** — 只在项目级别描述而不提升到通用级别 | 去掉项目名/路径/日期，保留可跨复用的模式 |
+| 2 | **只记录不反思** — 记录了步骤没问"为什么有效" | 思想提升是灵魂，不是可选的 |
+| 3 | **和 evolution 引擎混淆** — evolution 是自动技术检查，本技能是意识性模式提取 | 在 evolution 的 DIAGNOSE 后手动触发本技能 |
+| 4 | **轻易创建新 skill** — 发现模式就直接创建新 skill，不问能否吸收到已有技能 | 普遍规律优先扩展现有技能，只有个性化规则才新开 |
+| 5 | **建完 skill 不跑质量门** — 创建了不检查属于 L1/L2/L3/L4 | 新建 skill 至少通过 L1 格式门 |
+| 6 | **文档退化** — 累积 patch 操作导致同一节重复出现 | 大重构时重写整个文件，不累积 patch |
+
+---
+
+## 变更日志
+
+2026-05-23: v2.0.0 — 动灵修复重写
+  修复: 删除6次重复出现的"科学论文写作循环模式"和"哲学实现度驱动改进"节
+  新增: 原理层·文言（动灵在内、凡作必省、去形留神、先问其理、源一不二、适则纳）
+  新增: 内部反思 vs 外部吸收对比表（明确P0>P1优先级）
+  新增: 五层提取规范融入动灵逻辑
+  新增: 陷阱6（文档退化）
+  重构: 整体从多节重复改为线性结构，恢复可维护性
+
+2026-05-17: v1.9.0 — 科学论文写作循环模式
+2026-05-17: v1.8.0 — 哲学实现度驱动改进模式
+2026-05-16: v1.7.0 — 信任阈值强化 + 减少互动原则
+2026-05-16: v1.6.0 — 进化验证循环
+2026-05-16: v1.5.0 — 多轮吸收策略 + DSPy 吸收记录
+2026-05-16: v1.4.0 — 跨项目对比吸收方法论 + 项目级持续优化模式

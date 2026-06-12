@@ -48,6 +48,13 @@ metadata:
 - 格式不匹配时，脚本产生空 .tex。使用 `references/manual-assembly-workflow.md` 中的手动组装模式
 - 或创建符号链接：`ln -s step_introduction.md step_intro.md`
 
+### Unescaped `$` in Text Mode (2026-06-12)
+- **现象**: `LaTeX Error: Command \end{abstract} invalid in math mode`
+- **根因**: 文本模式中的 `$`（如 `$15 billion`、`$15B+`）被解释为进入数学模式，导致 `\end{abstract}` 在数学模式下被调用。
+- **修复**: 转义所有文本中的货币符号：`\$15 billion` 而非 `$15 billion`。
+- **检测方法**: 编辑后扫描 `grep -n '\$[0-9]' paper.tex`，修复所有 `\$数字` 模式。
+- **已知**: 2026-06-12 Paper 137 (ciliary-body-ODE) 首次遭遇，abstract 中 `$15 billion` 导致编译失败。
+
 ## 支持文件
 
 - `references/BIBTEX_FORMAT.md` — BibTeX citation format standard

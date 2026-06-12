@@ -1,0 +1,23 @@
+{
+  "hypotheses": [
+    {
+      "id": "hyp_001",
+      "text": "A standardized naturalistic classroom-based eye-tracking protocol can be developed and validated for ADHD assessment, achieving comparable discriminability (within ±5% AUC) to laboratory-based eye-tracking CPT paradigms while demonstrating superior ecological validity as measured by teacher-rated classroom functioning correlation.",
+      "rationale": "The method gap (gap_001) identifies that classroom-based eye-tracking for ADHD lacks validation as a standardized assessment protocol. Drawing from the general principle that ecologically valid assessments improve real-world prediction (first principles reasoning), a protocol development study would establish hardware specifications, task parameters, normative data, and diagnostic thresholds. The methodology would build on the naturalistic approach of the Reading Performance study while incorporating structured elements from validated CPT paradigms.",
+      "source": "research_gap",
+      "source_ref": "gap_001",
+      "novelty_score": 0.55,
+      "feasibility_score": 0.70,
+      "testability": "testable",
+      "required_n": "Minimum 300 participants (150 ADHD, 150 controls) across 3–5 classrooms for protocol development and cross-validation"
+    }
+  ],
+  "metadata": {
+    "total_hypotheses": 1,
+    "mean_novelty": 0.55,
+    "mean_feasibility": 0.70,
+    "from_gaps": 1,
+    "from_contradictions": 0,
+    "from_other": 0
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "sections": [
+    {
+      "section_type": "methods",
+      "heading": "Proposed Methods",
+      "paragraphs": [
+        "We propose a multi-feature eye-tracking protocol designed to screen for ADHD in children aged 6–12 years in clinical settings. The protocol is built upon prior feasibility work demonstrating that a 15-minute eye-tracking assessment achieves 93% completion rates and high test-retest reliability in ADHD populations (Rodriguez et al., 2022).",
+        "Participants will complete a structured reading task consisting of three blocks: (1) a passive viewing block with natural scene images (baseline), (2) a word-reading block with single-word presentations, and (3) a passage-reading block with connected text. Eye movements will be recorded using a Tobii Pro Spectrum at 120 Hz. The primary outcome measures are: fixation-duration variability (standard deviation of fixation durations), mean saccadic latency, and blink rate per minute.",
+        "Feature extraction will be performed using the EyeLink Data Viewer and custom Python scripts. For each participant, we will extract the three primary features and train a random forest classifier with 10-fold cross-validation to discriminate ADHD from control participants. The model will be evaluated on sensitivity, specificity, positive predictive value, and area under the receiver operating characteristic curve.",
+        "A target sample size of 120 participants (60 ADHD, 60 controls) has been calculated based on a power analysis (α = 0.05, β = 0.80, anticipated AUC = 0.78). The protocol is designed to be completed within 20 minutes total, including calibration, task administration, and debriefing, making it feasible for integration into routine clinical workflows."
+      ],
+      "arguments": [
+        {
+          "id": "arg_001",
+          "premise": "A 15-minute eye-tracking protocol has demonstrated 93% completion rates and high test-retest reliability in ADHD populations.",
+          "claim": "A similar multi-feature protocol can be feasibly implemented in clinical settings for ADHD screening.",
+          "evidence": ["10.1007/s10802-022-00956-4"]
+        },
+        {
+          "id": "arg_002",
+          "premise": "Combining multiple eye-tracking features (fixation variability, saccadic latency, blink rate) captures complementary aspects of attentional dysfunction.",
+          "claim": "A multi-feature classifier will achieve ≥80% sensitivity and ≥75% specificity.",
+          "evidence": []
+        }
+      ]
+    }
+  ],
+  "references": [
+    {
+      "id": "10.1007/s10802-022-00956-4",
+      "formatted": "Rodriguez, C., Gonzalez-Castro, P., & Cueli, M. (2022). Eye-tracking based attention assessment in children with ADHD: A feasibility study. Journal of Abnormal Child Psychology."
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "hypotheses": [],
+  "raw_papers": [
+    {
+      "id": "10.1038/s41598-020-78929-0",
+      "title": "A machine learning approach for ADHD classification using eye-tracking data",
+      "authors": ["Deng, S.", "Zhang, Y.", "Cheng, H."],
+      "year": 2020,
+      "journal": "Scientific Reports",
+      "abstract": "A machine learning framework using eye-tracking features achieved 82% accuracy in classifying ADHD versus control participants in a sample of 120 children."
+    }
+  ],
+  "structure": "introduction"
+}
