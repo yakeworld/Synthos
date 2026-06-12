@@ -167,3 +167,10 @@ notebooklm source add "$(cat pdfs/{bibkey}.md)" --type text --title "{bibkey}" -
 - **Allowed tools**: shell, task_delegation, Read, Write
 - **Output**: JSON with papers list + search_meta
 - **Zero Python**: 全部使用 shell+curl，无Python运行时依赖
+
+## IO_CONTRACT
+
+- **input**: `query: str, sources: list[str], max_results: int, date_range: str`
+- **output**: `candidates: list[PaperCandidate]` — 包含 title, doi, source, relevance, abstract_summary, pdf_url
+
+> 对应原则：P2（机械原子暴露输入输出规范）

@@ -131,3 +131,9 @@ PMID 39810187 (J Transl Med 2025) 在 PD-saccade-ML 方向上使用了 SVM/RF/NN
 2. PubMed 搜索同一方向 → 获取 PMID
 3. efetch 获取摘要 → 检查方法和特征
 4. 如果使用了目标指标 + ML, 该方向为竞争空间
+## IO_CONTRACT
+
+- **input**: `query: str, filters: dict, max_results: int, sort: str`
+- **output**: `papers: list[Paper]` — 包含 title, doi, abstract, year, authors, source, open_access_url
+
+> 对应原则：P2（机械原子暴露输入输出规范）
