@@ -1,0 +1,49 @@
+---
+
+name: productivity
+description: 生产力工具 — Airtable、Google Workspace、Linear、Notion、Jupyter等。
+triggers:
+  - 需要执行productivity下的子技能
+metadata:
+  synthos:
+    priority: P2
+    atom_type: parent-skill
+    description: "父级技能 — 生产力工具 — Airtable、Google Workspace、Linear、Notion、Jupyter等。"
+    signature: 'productivity -> sub-skills: [airtable, chinese-form-automation, google-workspace]'
+    related_skills: ["airtable", "chinese-form-automation", "google-workspace", "jupyter-live-kernel", "linear"]
+---
+
+# productivity
+
+> 父级技能目录，包含 17 个子技能。
+> 子技能通过Hermes技能加载机制自动发现，无需显式调用。
+
+## 子技能
+
+- `airtable`
+- `chinese-form-automation`
+- `google-workspace`
+- `jupyter-live-kernel`
+- `linear`
+- `maps`
+- `markitdown-convert`
+- `nano-pdf`
+- `notebooklm-cli`
+- `notion`
+- `obsidian`
+- `ocr-and-documents`
+- `powerpoint`
+- `python-docx`
+- `teams-meeting-pipeline`
+- `webhook-subscriptions`
+- `youtube-content`
+
+## 使用方式
+
+直接调用子技能名称即可：
+
+```
+skill_view(name='airtable')  # 加载第一个子技能
+```
+
+父级SKILL.md仅作为目录索引，实际执行由子技能完成。
