@@ -586,3 +586,38 @@ Next cycle priority: Add version to 2 more high-impact skills or add IO_CONTRACT
 - discarded: none
 
 ---
+
+## 2026-06-13 Cron Quality Improvement (07:30Z)
+
+- **vhit-pinn-ode**: G3 Reference Health fixed — added missing bibitem for `laureys2001`
+- D10a improved from 94.1% (16/17) to 100.0% (17/17)
+- Orphans: 1 → 0, Zombies: 0
+- soft_fails: 3 → 2 (G4 Metric Consistency, G7 Reproducibility remain)
+- G2, G3, G6 all PASS now
+- Remaining: G4 (metric consistency), G7 (reproducibility) prevent PASS
+- Files modified: paper.tex, state.json, step_g1g7_gate_check.md, step_quality_check.md, paper-queue.json
+
+
+## Cycle 74 — 2026-06-13T19:07:45.944808+00:00
+
+**Target**: benchmark (IO_CONTRACT) | **Commit**: 275086b
+
+### Changes
+- Added IO_CONTRACT to arxiv/SKILL.md (arXiv paper search)
+- Committed 21 untracked category SKILL.md + 1 dirty ode-simulation-tuning
+
+### Metrics
+| Metric | Before | After | Delta |
+|:-------|:------:|:-----:|:-----:|
+| benchmark | 0.4134 | 0.4150 | +0.0016 |
+| IO_CONTRACT | 12/219 (5.5%) | 13/219 (5.9%) | +1 |
+| Dirty SKILL.md | 22 | 0 | -22 |
+| Overall | 0.8408 | 0.8463 | +0.0055 |
+
+### IO_CONTRACT Coverage (13/219)
+evolution, task-router, quality-gate, knowledge-acquisition, knowledge-extraction, openalex, pubmed, research-paper-search, research-ideation, cognitive-atom-architecture, synthos, synthos-probe, skill-integrity-audit, **arxiv 🆕**
+
+### Lessons
+- **kept**: arxiv IO_CONTRACT added, +0.0016 benchmark — incremental gain, cumulative
+- **kept**: 21 untracked category SKILL.md committed, structural clean
+- **kept**: IO_CONTRACT bottleneck: 206/219 (94.1%) missing — systemic long-term task

@@ -1,13 +1,13 @@
 {
   "version": "v2.21.0",
-  "cycle": 73,
-  "last_updated": "2026-06-13T06:35:00.000000+00:00",
+  "cycle": 74,
+  "last_updated": "2026-06-13T19:07:39.601305+00:00",
   "status": "OK",
-  "overall_score": 0.8506,
+  "overall_score": 0.8463,
   "grade": "OK",
   "dimensions": {
-    "structural": 0.9339,
-    "benchmark": 0.3545,
+    "structural": 0.95,
+    "benchmark": 0.415,
     "optimize_effect": 1.0,
     "coverage": 1.0,
     "absorption_potential": 1.0,
@@ -15,29 +15,28 @@
   },
   "edit_budget": {
     "allocated": 3,
-    "consumed": 2,
-    "remaining": 1,
+    "consumed": 3,
+    "remaining": 0,
     "next_cycle": 3
   },
   "next_actions": [
-    "1. cycle-73: added IO_CONTRACT to knowledge-acquisition, knowledge-extraction, openalex (3 core research skills)\n   — benchmark improved 0.3514→0.3545, IO_CONTRACT 7→9 (3.2%→4.1%)\n   — structural improved 0.9193→0.9339 (dirty penalty cleared)\n   — Git status: clean after commit b87618f",
-    "2. Version: 159/219 (72.6%) — unchanged\n   Signature: 67/219 (30.6%) — unchanged\n   IO_CONTRACT: 9/219 (4.1%) — improved by 2 via evolution (was 7→9, +2)",
-    "3. Git tracked: 196/219 (89.5%) — unchanged\n   23 SKILL.md untracked (apple, creative, devops, email, gaming, github, hermes, kg-bridge, maintenance, mcp, media, metacognition, mlops, productivity, quality, red-teaming, shared, smart-home, social-media, software-development, synthos, writing)",
-    "4. YAML valid: 206/219 (94.1%) — 13 skills have encoding errors\n   Dirty SKILL.md: 0 (cleared)",
-    "5. EDIT_BUDGET: consumed 2/3 (2 IO_CONTRACT additions). 1 remaining for next cycle.",
-    "6. Next cycle: add version to 1-2 more high-impact research skills OR add IO_CONTRACT to 1 more skill"
+    "cycle-74: added IO_CONTRACT to arxiv — benchmark 0.4134→0.4150, IO_CONTRACT 12→13",
+    "cycle-74: committed 21 untracked category SKILL.md + 1 dirty ode-simulation-tuning — Git clean",
+    "Version: 157/219 (71.7%), Signature: 105/219 (47.9%), IO_CONTRACT: 13/219 (5.9%)",
+    "Dirty SKILL.md: 0. EDIT_BUDGET: consumed 3/3. Next cycle: 3 fresh.",
+    "Next: add IO_CONTRACT to biorxiv, paper-pipeline, or quality-gate"
   ],
   "rejected_buffer": {
     "hits": 0,
     "status": "empty"
   },
   "highlights": [
-    "cycle 71: added IO_CONTRACT to research-paper-search (highest-impact research skill)",
-    "cycle 71: added version to falsification-validation (quality/skill validation)",
-    "cycle 71: benchmark improved 0.4818→0.488 (version 99→100, IO_CONTRACT 5→6)",
-    "cycle 71: structural remains 1.0 (109/109 tracked, 108/109 YAML, 0 dirty, 0 encoding errors)",
-    "cycle 71: status downgraded EXCELLENT→GOOD — actual benchmark 0.488 is much lower than claimed 0.7479",
-    "cycle 71: 0.9147 overall score, grade=GOOD"
+    "cycle 73: added IO_CONTRACT to knowledge-acquisition, knowledge-extraction, openalex",
+    "cycle 73: benchmark 0.3514→0.3545, structural 0.9193→0.9339",
+    "cycle 74: added IO_CONTRACT to arxiv (arXiv paper search)",
+    "cycle 74: benchmark 0.4134→0.4150, IO_CONTRACT 12→13 (+1)",
+    "cycle 74: committed 21 untracked + 1 dirty SKILL.md — Git clean, structural ~0.95",
+    "cycle 74: status=OK, overall=0.8463"
   ],
   "lessons": {
     "cycle-65": "Cycle 65: State.json was behind — cycle 64 (OpenClaw absorption, 57 skills) was committed to git but state.json still showed cycle 63. Fixed by syncing state to cycle 65 with full cycle 64 context. 50 pending uncommitted changes identified (35 deletions for autonomous-core-researcher cleanup, 7 modified SKILL.md, 2 modified references, 7 untracked files). State not yet updated to reflect these pending changes — they will be committed in cycle 66. Memory-optimization-system SKILL.md has encoding corruption (1 byte at pos 4999).",
