@@ -1,4 +1,5 @@
-------
+---
+
 name: paper-cron-scan
 description: '论文管线 Cron 扫描 — 轻量级白空间扫描、旋转方向轮转、日志追加。每次 Cron 运行执行：读取 tracker → 扫描 PubMed/OpenAlex 5个旋转方向 → 验证候选白空间 → 追加 agent-log.md → 更新 last_run。'
 category: writing

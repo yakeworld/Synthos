@@ -11,7 +11,7 @@ metadata:
     description: External knowledge acquisition — search PubMed, Semantic Scholar, OpenAlex, arXiv, bioRxiv, etc.
     signature: ['query: str, sources: list[str], date_range: str -> candidates: list[PaperCandidate]'] -> ['candidates: list[PaperCandidate] (title, doi, source, relevance, abstract_summary, pdf_url)']
     related_skills: [knowledge-extraction, association-discovery, hypothesis-generation, argument-expression, research-paper-search, academic-diagram, nature-paper2ppt]
-
+---
 
 
 # 知识获取 (Knowledge Acquisition)

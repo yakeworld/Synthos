@@ -16,6 +16,7 @@ metadata:
     description: ⚡ P0 从会话提取高价值信息→记忆。动灵三问: 生长方向?框架维度?发酵潜力?+宪法护栏(记忆不能覆写CONSTITUTION)+凝练压缩策略。防记忆膨胀同时保留高信号事实。每条记忆标注生长方向和发酵潜力。
     signature: ['session_summary: str, memory_usage: float -> saved_entries: list[str], replaced_entries: list[str], remaining_space: int'] -> ['saved_entries: list[str], replaced_entries: list[str], remaining_space: int']
     related_skills: ['quality-gate', 'conversation-to-memory', 'conversation-to-memory', 'memory-enhancement']
+---
 
 
 # Conversation → Memory
