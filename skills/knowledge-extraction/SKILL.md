@@ -9,6 +9,7 @@ metadata:
     description: Extract structured knowledge from papers, notebooks, or documents.
     signature: ['document: str, extraction_mode: str, schema: dict -> knowledge_items: list[KnowledgeItem]'] -> ['knowledge_items: list[KnowledgeItem] (finding, method, limitation, relevance, source)']
     related_skills: [association-discovery, hypothesis-generation, knowledge-acquisition]
+---
 
 
 # Knowledge Extraction

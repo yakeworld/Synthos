@@ -10,6 +10,7 @@ metadata:
     description: Scan paper library for citation health: D8 (bib entry count), D10a (cite-to-bib match rate), orphans, zombies.
     signature: ['paper_dir: str -> scan_result: dict'] -> ['scan_result: dict (d8, d10a, orphans, zombies, bib_health_report)']
     related_skills: [knowledge-extraction, knowledge-acquisition, paper-cron-scan, paper-pipeline]
+---
 
 
 # Paper References Scanning (D8/D10a)

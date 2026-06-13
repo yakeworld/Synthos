@@ -9,6 +9,7 @@ metadata:
     description: Multi-angle verification of hypotheses/arguments — counterproof, falsification tests, robustness checks, Bayesian confidence scoring.
     signature: ['hypothesis: str, evidence: list[Evidence] -> verification_result: dict'] -> ['verification_result: dict (confidence_score, counterarguments, robustness_checks, falsification_tests)']
     related_skills: [argument-expression, hypothesis-generation, association-discovery, knowledge-extraction, knowledge-acquisition]
+---
 
 
 # Viewpoint Verification

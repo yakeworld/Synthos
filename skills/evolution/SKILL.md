@@ -9,6 +9,7 @@ metadata:
     description: ⚡ P0 自进化引擎。Synthos evolution engine v2.20 — 四态决策+硬收敛+GEPA反射分析+自动基准+Pareto优化+外部吸收+教训学习+黄金验证+自扩关键词+漂移检测+渐进披露+Git即记忆。
     signature: ['cycle: int, prev_state: dict, lessons: dict, skill_inventory: list[Skill] -> evolution_report: dict'] -> ['evolution_report: dict, new_state: evolution-state.json, log_entry: evolution-log.md, new_state: evolution-state.json']
     related_skills: [project-experience-distillation, quality-gate, cognitive-atom-architecture, research-paper-search]
+---
 
 
 # Evolution Engine — 自进化引擎

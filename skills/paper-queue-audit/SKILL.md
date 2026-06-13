@@ -1,5 +1,5 @@
-------
-name: paper-queue-audit
+---
+
 name: paper-queue-audit
 metadata:
   synthos:
@@ -9,7 +9,12 @@ metadata:
     signature: 'papers_dir: str -> queue_report: dict'
     related_skills: [paper-pipeline, quality-gate, paper-cron-scan, paper-references-scanning]
 ---
-  io_contract: input: ['papers_dir: str -> queue_report: dict', 'output: ['queue_report: dict (stage_distribution, bottleneck_papers, stuck_papers)']
+io_contract:
+  input:
+    - 'papers_dir: str -> queue_report: dict'
+  output:
+    - 'queue_report: dict (stage_distribution, bottleneck_papers, stuck_papers)'
+---
 
 
 

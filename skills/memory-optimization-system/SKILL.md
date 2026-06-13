@@ -1,6 +1,7 @@
-------
+---
+
 name: memory-optimization-system
-description: 
+description: 记忆系统全面优化：上下文卸载(Mermaid压缩)、FSRS巩固cron(凌晨3点)、memory↔fact_store双写。
 metadata:
   synthos:
     priority: P1
@@ -9,7 +10,12 @@ metadata:
     signature: 'memory_content: str, usage_stats: dict -> optimized_memory: str'
     related_skills: [conversation-to-memory, quality-gate, conversation-to-memory, conversation-to-memory, memory-enhancement]
 ---
-  io_contract: input: ['memory_content: str, usage_stats: dict -> optimized_memory: str', 'output: ['optimized_memory: str, consolidation_report: dict (gains: list[str], losses: list[str], fsrs_schedule: dict)']
+io_contract:
+  input:
+    - 'memory_content: str, usage_stats: dict -> optimized_memory: str'
+  output:
+    - 'optimized_memory: str, consolidation_report: dict (gains: list[str], losses: list[str], fsrs_schedule: dict)'
+---
 
 
 

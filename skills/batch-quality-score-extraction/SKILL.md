@@ -1,4 +1,5 @@
-------
+---
+
 name: batch-quality-score-extraction
 description: 批量处理论文 step_quality_check.md 中的 quality_score 并写入 state.json。处理 LaTeX 反斜杠陷阱和多种分数格式。
 ---

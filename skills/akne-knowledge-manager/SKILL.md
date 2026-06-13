@@ -1,4 +1,4 @@
-------
+---
 name: akne-knowledge-manager
 description: AKNE 知识管理系统的双向整合审计、Synthos-桥接诊断、知识流分析、内容级审计。与 akne-maintenance 不同，专注两系统间的连接质量及知识内容质量而非内部运维。
 triggers:
@@ -12,8 +12,13 @@ metadata:
     description: "AKNE 知识管理系统的双向整合审计、Synthos-桥接诊断、知识流分析、内容级审计"
     signature: 'akne_graph: str, synthos_graph: str -> integration_report: dict + content_audit: dict'
     related_skills: [akne-maintenance, synthos-akne-bridge, knowledge-extraction, association-discovery, knowledge-acquisition]
+io_contract:
+  input:
+    - 'akne_graph: str, synthos_graph: str -> integration_report: dict + content_audit: dict'
+  output:
+    - 'integration_report: dict (bridge_points: list[str], knowledge_flow: dict, issues: list[str])'
+    - 'content_audit: dict (contradictions: list, version_clusters: list, research_gaps: list, hypotheses: list)'
 ---
-  io_contract: input: ['akne_graph: str, synthos_graph: str -> integration_report: dict + content_audit: dict', 'output: ['integration_report: dict (bridge_points: list[str], knowledge_flow: dict, issues: list[str])', 'content_audit: dict (contradictions: list, version_clusters: list, research_gaps: list, hypotheses: list)']']
 
 
 # AKNE Knowledge Manager — 整合审计 + 内容级审计

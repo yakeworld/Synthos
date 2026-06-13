@@ -1,8 +1,7 @@
-------
+---
+
 name: akne-maintenance
-description: 维护个人知识管理系统AKNE — 图谱诊断、修复、向量填充、源文件覆盖、Wiki清理、自动进化守护。覆盖AKNE仓库的完整运维生命周期。
-triggers:
-  - 
+description: 维护个人知识库系统AKNE — 图谱诊断、修复、向量填充、源文件覆盖、Wiki清理、自动进化守护。覆盖AKNE仓库的完整运维生命周期。
 metadata:
   synthos:
     priority: P1
@@ -11,7 +10,12 @@ metadata:
     signature: 'akne_state: str -> maintenance_report: dict'
     related_skills: [akne-knowledge-manager, synthos-akne-bridge, knowledge-extraction, knowledge-acquisition]
 ---
-  io_contract: input: ['akne_state: str -> maintenance_report: dict', 'output: ['maintenance_report: dict (node_counts: int, edge_counts: int, health_score: float, issues: list[str])']']
+io_contract:
+  input:
+    - 'akne_state: str -> maintenance_report: dict'
+  output:
+    - 'maintenance_report: dict (node_counts: int, edge_counts: int, health_score: float, issues: list[str])'
+---
 
 
 

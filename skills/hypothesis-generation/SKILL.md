@@ -9,6 +9,7 @@ metadata:
     description: Generate scientifically falsifiable hypotheses from research gaps.
     signature: ['research_gap: str, domain_knowledge: str, constraints: dict -> hypotheses: list[Hypothesis]'] -> ['hypotheses: list[Hypothesis] (statement, falsifiability_test, supporting_evidence, counter_evidence)']
     related_skills: [association-discovery, knowledge-extraction, knowledge-acquisition, argument-expression, viewpoint-verification]
+---
 
 
 # Hypothesis Generation
