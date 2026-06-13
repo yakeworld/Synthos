@@ -10,6 +10,12 @@ metadata:
 
 # Arxiv
 
+## IO_CONTRACT
+
+- **input**: `query_params: dict` — 搜索参数（keyword/author/category/id/max_results/date_range）
+- **output**: `paper_results: list[dict]` — 论文列表（title/authors/abstract/arxiv_id/pdf_url/date）
+- **side_effects**: arXiv API HTTP GET → 无状态变更
+
 详细内容请加载此skill后按需执行。核心流程和命令已提炼如下：
 
 ## 快速参考
