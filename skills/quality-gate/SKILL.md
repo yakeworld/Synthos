@@ -6,16 +6,19 @@ author: Hermes Agent
 license: MIT
 priority: P0
 execution_rule: "无skill_view记录=门不通过。每次任务完成前必过此门。写作管线每原子执行前必须先skill_view()，pipeline_trace记录skill_version+steps_executed。G5引用质量门为最关键门。"
-signature: "deliverable: str, quality_matrix: dict, target_level: str -> gate_result: GateResult, gaps: list[Gap]"
+signature: |
+  deliverable: str, quality_matrix: dict, target_level: str -> gate_result: GateResult, gaps: list[Gap] | gate_result: GateResult (L0-L4), quality_score: float, improvement_plan: str, gaps: list[Gap]
 related_skills: [project-experience-distillation, evolution, sci-paper-quality-review, paper-pipeline, knowledge-acquisition, knowledge-extraction, association-discovery, hypothesis-generation, argument-expression, viewpoint-verification]
 metadata:
   synthos:
     priority: P0
     atom_type: meta-quality
     description: ⚡ P0 闸门技能。四层质量架构：①响应级漂移检查 ②项目级L1-L4交付闸门 ③论文管线G1-G7原子闸门 ④SCI内容评审。
-    signature: ['deliverable: str, quality_matrix: dict, target_level: str -> gate_result: GateResult, gaps: list[Gap]'] -> ['gate_result: GateResult (L0-L4), quality_score: float, improvement_plan: str, gaps: list[Gap]']
+    signature: |
+      deliverable: str, quality_matrix: dict, target_level: str -> gate_result: GateResult, gaps: list[Gap] | gate_result: GateResult (L0-L4), quality_score: float, improvement_plan: str, gaps: list[Gap]
     related_skills: ['project-experience-distillation', 'evolution', 'sci-paper-quality-review', 'paper-pipeline', 'knowledge-acquisition', 'knowledge-extraction', 'association-discovery', 'hypothesis-generation', 'argument-expression', 'viewpoint-verification']
 
+---
 
 # Quality Gate — 质量闸门
 

@@ -10,9 +10,11 @@ metadata:
     priority: P0
     atom_type: meta-architecture
     description: Transform operational skill sets into independent cognitive atoms with strict DAG dependencies, input/output contracts, and Synthos framework alignment.
-    signature: ['skill_set: set[str], architecture_version: str, constitution_compliance: bool -> atom_def: CognitiveAtom, dag: DAG'] -> ['atom_defs: list[CognitiveAtom], dependency_graph: dict, non_overlap_report: list[str]']
+    signature: |
+      skill_set: set[str], architecture_version: str, constitution_compliance: bool -> atom_def: CognitiveAtom, dag: DAG | atom_defs: list[CognitiveAtom], dependency_graph: dict, non_overlap_report: list[str]
     related_skills: [project-experience-distillation, evolution, task-router, research-ideation]
 
+---
 
 ⚠️ **This skill was accidentally overwritten on 2026-05-13 during an nsfc-grant-audit edit. The content below is a reconstruction. Reference files are intact.** ⚠️
 
