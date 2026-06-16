@@ -1,13 +1,13 @@
 {
   "version": "v2.22.0",
-  "cycle": 77,
-  "last_updated": "2026-06-16T03:00:00+00:00",
+  "cycle": 78,
+  "last_updated": "2026-06-16T19:06:23+00:00",
   "status": "OK",
-  "overall_score": 0.9073,
+  "overall_score": 0.9076,
   "grade": "OK",
   "dimensions": {
     "structural": 0.9272,
-    "benchmark": 0.5167,
+    "benchmark": 0.5182,
     "optimize_effect": 1.0,
     "coverage": 1.0,
     "absorption_potential": 1.0,
@@ -20,12 +20,10 @@
     "next_cycle": 3
   },
   "next_actions": [
-    "cycle-77: Fixed YAML closing --- on 3 P0 skills (task-router, quality-gate, cognitive-atom-architecture) — valid YAML 211→214/220, structural 0.9142→0.9272",
-    "cycle-77: 6 remaining broken YAML: project-experience-distillation, research-skill-audit, sci-paper-quality-review, nsfc-grant-audit, paper-pipeline, root SKILL.md — all missing closing --- delimiter",
-    "cycle-77: 156 dirty SKILL.md from cycles 74-76 still uncommitted — dragging structural down by ~0.05",
-    "cycle-77: IO_CONTRACT 16/220 (7.3%), Signature 109/220 (49.5%), Version 219/220 (99.5%)",
-    "Benchmark: 0.5167 (actual) vs 0.378 (state-claimed at cycle 76) — actual is 36.7% HIGHER, reverse self-deception detected (state was UNDER-estimating)",
-    "Next: commit dirty files to clear structural penalty, then fix remaining 5 SKILL.md YAML closings, then add IO_CONTRACT to high-impact skills"
+    "cycle-78: Added IO_CONTRACT to 3 core cognitive atoms (argument-expression, association-discovery, hypothesis-generation) — IO_CONTRACT 16→19/222 (8.56%), benchmark 0.5136→0.5182",
+    "cycle-78: 203 skills still missing IO_CONTRACT (91.4% gap) — systemic bottleneck",
+    "cycle-78: 155 dirty SKILL.md still uncommitted — structural drag persists",
+    "Next: commit dirty files, then IO_CONTRACT to quality-gate/paper-pipeline/nsfc-grant-audit"
   ],
   "rejected_buffer": {
     "hits": 0,
@@ -41,7 +39,8 @@
     "cycle 76: added IO_CONTRACT to memory-optimization-system (P0), systematic-review, skill-absorption (P1) — IO_CONTRACT 17→20, benchmark 0.3730→0.3776",
     "cycle 76: corrected benchmark from state-claimed 0.418 to actual 0.3776 — honest self-correction",
     "cycle 77: Fixed YAML closing --- delimiter on 3 P0 skills — valid YAML 211→214/220 (97.3%), structural 0.9142→0.9272",
-    "cycle 77: Reverse self-deception: state-claimed benchmark 0.378 but actual 0.5167 — the probe methodology fix revealed that many 'broken YAML' files were probe artifacts, not real file issues"
+    "cycle 77: Reverse self-deception: state-claimed benchmark 0.378 but actual 0.5167 — the probe methodology fix revealed that many 'broken YAML' files were probe artifacts, not real file issues",
+    "cycle 78: Added IO_CONTRACT to 3 core cognitive atoms — benchmark 0.5136→0.5182 (+0.0046)"
   ],
   "lessons": {
     "cycle-65": "Cycle 65: State.json was behind — cycle 64 (OpenClaw absorption, 57 skills) was committed to git but state.json still showed cycle 63. Fixed by syncing state to cycle 65 with full cycle 64 context. 50 pending uncommitted changes identified (35 deletions for autonomous-core-researcher cleanup, 7 modified SKILL.md, 2 modified references, 7 untracked files). State not yet updated to reflect these pending changes — they will be committed in cycle 66. Memory-optimization-system SKILL.md has encoding corruption (1 byte at pos 4999).",

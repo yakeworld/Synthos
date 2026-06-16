@@ -763,3 +763,20 @@ evolution, task-router, quality-gate, knowledge-acquisition, knowledge-extractio
 - Structural: 0.95 (3 dirty files from edits)
 - Edit budget: 3/3 consumed
 - Status: OK
+
+## Cycle 78 — 2026-06-16T19:06:23+00:00
+
+**Status**: OK | **Score**: 0.9076 | **Grade**: OK
+
+### Improvements
+- IO_CONTRACT ×3: argument-expression, association-discovery, hypothesis-generation (P0 core atoms)
+- IO_CONTRACT: 16→19/222 (8.56%), benchmark 0.5136→0.5182 (+0.0046)
+
+### Lessons
+- Marginal gain ~0.0046 per IO_CONTRACT addition — consistent with cycle 71 prediction
+- 203 skills still lack IO_CONTRACT — full coverage needs ~68 cycles at current rate
+- 155 dirty files still uncommitted — structural drag accumulating
+
+### Budget
+Allocated: 3, Consumed: 3, Remaining: 0, Next: 3
+
