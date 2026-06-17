@@ -13,6 +13,13 @@ metadata:
       grant_proposal: str, review_criteria: dict -> audit_report: dict | audit_report: dict (dimensions: list[dict], scores: dict, improvements: list[str])
     related_skills: [quality-gate, paper-pipeline, knowledge-acquisition, knowledge-extraction, association-discovery, hypothesis-generation, argument-expression, viewpoint-verification]
 
+---
+
+## IO_CONTRACT
+
+- **input**: `grant_proposal: str` — 课题申报书/标书/可行性报告，`review_criteria: dict` — 评审标准矩阵
+- **output**: `audit_report: dict` — 包含 dimensions (九维评分), scores, improvements 的评审报告
+- **side_effects**: 生成 review_report.md 评审文件，更新 research-audit 目录
 
 # NSFC Grant Audit — 课题评审编排器
 

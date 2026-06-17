@@ -13,6 +13,13 @@ metadata:
       paper_name: str -> pipeline_report: dict | pipeline_report: dict (stage, status, quality_score, next_step)
     related_skills: [quality-gate, evolution, project-experience-distillation, knowledge-acquisition, knowledge-extraction, association-discovery, hypothesis-generation, argument-expression, viewpoint-verification, sci-paper-quality-review, conversation-to-memory, knowledge-extraction, knowledge-acquisition, academic-atom-architecture]
 
+---
+
+## IO_CONTRACT
+
+- **input**: `paper_name: str` — 论文目录名，相对于 papers/ 目录
+- **output**: `pipeline_report: dict` — 包含 stage, status, quality_score, next_step 的流水线报告
+- **side_effects**: 更新论文目录下的 state.json、quality_check.md、LaTeX 源文件及编译产物
 
 # Paper Pipeline — 科研全流程编排器（哲学驱动版）
 
