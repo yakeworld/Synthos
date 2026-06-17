@@ -1,6 +1,7 @@
 ---
 name: hermes-agent
 description: Configure, extend, or contribute to Hermes Agent — the open-source AI agent framework by Nous Research.
+version: 1.0.0
 allowed-tools:
 - terminal
 - file
@@ -11,7 +12,9 @@ metadata:
     version: 2.1.0
     author: Synthos
     signature: 'query: str -> config_change: dict'
+
 ---
+
 
 # Hermes Agent
 

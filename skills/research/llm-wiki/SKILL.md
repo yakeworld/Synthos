@@ -1,12 +1,15 @@
 ---
 name: llm-wiki
 description: >-
+version: 1.0.0
   Karpathy式LLM Wiki — 构建/查询互链Markdown知识库。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
+
 ---
+
 
 # Llm Wiki
 

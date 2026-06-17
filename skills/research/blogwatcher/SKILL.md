@@ -1,6 +1,7 @@
 ---
 name: blogwatcher
 description: Monitor blogs and RSS/Atom feeds via blogwatcher-cli tool.
+version: 1.0.0
 allowed-tools:
 - terminal
 - read_file
@@ -32,7 +33,9 @@ metadata:
 prerequisites:
   commands:
   - blogwatcher-cli
+
 ---
+
 
 
 # Blogwatcher

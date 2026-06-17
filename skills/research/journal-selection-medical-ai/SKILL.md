@@ -1,6 +1,7 @@
 ---
 name: journal-selection-medical-ai
 description: Systematic methodology for evaluating and ranking SCI journals as publication
+version: 1.0.0
   targets for medical AI / computational health papers.
 allowed-tools:
 - terminal
@@ -28,7 +29,9 @@ metadata:
     - biorxiv
     - blogwatcher
     version: 1.0.0
+
 ---
+
 
 
 # Journal Selection for Medical AI Papers

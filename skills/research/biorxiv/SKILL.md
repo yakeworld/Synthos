@@ -1,12 +1,15 @@
 ---
 name: biorxiv
 description: >-
+version: 1.0.0
   bioRxiv/medRxiv预印本搜索 — 生物医学预印本首选。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
+
 ---
+
 
 # Biorxiv
 

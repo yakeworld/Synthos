@@ -3,6 +3,7 @@ name: bppv-expert
 license: MIT
 allowed-tools: file_read
 description: 'Structured BPPV (Benign Paroxysmal Positional Vertigo) medical knowledge
+version: 1.0.0
   extracted from AKNE knowledge graph. Covers diagnosis techniques (Dix-Hallpike,
   supine head flexion test), repositioning maneuvers (Epley, Gufoni, Semont, Barbecue,
   roll-over), canalith conversion mechanisms, 3D biomechanical simulation, and clinical
@@ -34,7 +35,9 @@ metadata:
     - diagnosis
     - repositioning
     - medical-expert
+
 ---
+
 
 
 # BPPV Expert — Extended Skill for Synthos

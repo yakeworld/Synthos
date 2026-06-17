@@ -2,6 +2,7 @@
 
 name: github
 description: GitHub工作流 — PR审查、Issue管理、仓库管理、CI/CD。
+version: 1.0.0
 triggers:
   - 需要执行github下的子技能
 metadata:
@@ -11,7 +12,9 @@ metadata:
     description: "父级技能 — GitHub工作流 — PR审查、Issue管理、仓库管理、CI/CD。"
     signature: 'github -> sub-skills: [codebase-inspection, github-auth, github-code-review]'
     related_skills: ["codebase-inspection", "github-auth", "github-code-review", "github-discussions", "github-issues"]
+
 ---
+
 
 # github
 

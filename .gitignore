@@ -25,6 +25,14 @@ secrets*
 # 4. 通用敏感文件模式
 # ============================================
 *.key
+*.p12
+*.pfx
+id_ed25519
+id_ed25519.pub
+id_rsa
+id_rsa.pub
+secrets.json
+token.json
 *.pem
 *.crt
 credentials*

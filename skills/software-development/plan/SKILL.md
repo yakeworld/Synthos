@@ -1,6 +1,7 @@
 ---
 name: plan
 description: 'Plan mode: write markdown plan to .hermes/plans/, no exec.'
+version: 1.0.0
 allowed-tools:
 - terminal
 - file
@@ -30,7 +31,9 @@ metadata:
     - github-agent-contributions
     - hermes-agent-skill-authoring
     version: 1.0.0
+
 ---
+
 
 
 # Plan Mode

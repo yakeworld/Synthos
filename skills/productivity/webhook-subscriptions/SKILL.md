@@ -1,6 +1,7 @@
 ---
 name: webhook-subscriptions
 description: 'Webhook subscriptions: event-driven agent runs.'
+version: 1.0.0
 allowed-tools:
 - terminal
 - read_file
@@ -28,7 +29,9 @@ metadata:
     - jupyter-live-kernel
     - linear
     version: 1.1.0
+
 ---
+
 
 
 # Webhook Subscriptions

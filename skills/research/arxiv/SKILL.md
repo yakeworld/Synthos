@@ -1,12 +1,15 @@
 ---
 name: arxiv
 description: >-
+version: 1.0.0
   arXiv论文搜索 — 按关键词/作者/类别/ID检索。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
+
 ---
+
 
 # Arxiv
 

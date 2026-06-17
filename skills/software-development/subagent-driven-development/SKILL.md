@@ -1,12 +1,15 @@
 ---
 name: subagent-driven-development
 description: >-
+version: 1.0.0
   通过delegate_task子Agent执行计划(2阶段审查) — 后台+混合编排。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
+
 ---
+
 
 # Subagent Driven Development
 

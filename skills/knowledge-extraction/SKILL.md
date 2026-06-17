@@ -1,15 +1,18 @@
 ---
 name: knowledge-extraction
 description: >-
+version: 1.0.0
   从学术论文元数据和摘要中提取结构化知识 — 返回JSON。
 metadata:
   synthos:
     priority: P0
     atom_type: cognitive-atom
     description: Extract structured knowledge from papers, notebooks, or documents.
-    signature: ['document: str, extraction_mode: str, schema: dict -> knowledge_items: list[KnowledgeItem]'] -> ['knowledge_items: list[KnowledgeItem] (finding, method, limitation, relevance, source)']
+    signature: "document: str, extraction_mode: str, schema: dict -> knowledge_items: list[KnowledgeItem] -> knowledge_items: list[KnowledgeItem] (finding, method, limitation, relevance, source)"
     related_skills: [association-discovery, hypothesis-generation, knowledge-acquisition]
+
 ---
+
 
 
 # Knowledge Extraction

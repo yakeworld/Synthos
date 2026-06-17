@@ -1,6 +1,7 @@
 ---
 name: hcs-3wt-breast-cancer-diagnosis
 description: HCS-3WT (Hybrid Cascade-Stacking Three-Way Triage) breast cancer diagnostic
+version: 1.0.0
   AI system — architecture, evaluation, and troubleshooting.
 allowed-tools:
 - terminal
@@ -16,7 +17,9 @@ metadata:
     - arxiv
     - biorxiv
     - blogwatcher
+
 ---
+
 
 
 # HCS-3WT Breast Cancer Diagnostic AI System

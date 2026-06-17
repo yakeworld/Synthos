@@ -2,6 +2,7 @@
 
 name: social-media
 description: 社交媒体 — X/Twitter发帖、搜索、DM。
+version: 1.0.0
 triggers:
   - 需要执行social-media下的子技能
 metadata:
@@ -11,7 +12,9 @@ metadata:
     description: "父级技能 — 社交媒体 — X/Twitter发帖、搜索、DM。"
     signature: 'social-media -> sub-skills: [xurl]'
     related_skills: ["xurl"]
+
 ---
+
 
 # social-media
 

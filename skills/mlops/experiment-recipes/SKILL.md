@@ -3,6 +3,7 @@ name: experiment-recipes
 license: MIT
 allowed-tools: Read
 description: ML训练配方与预设——架构选择、训练循环、优化器、调度器、混合精度、内存优化、调试。 提炼自实战经验，非外部代码搬运。每个配方记录原理而非逐行代码。
+version: 1.0.0
 metadata:
   synthos_atom_type: reference
   synthos_version: 1.1.0
@@ -29,7 +30,9 @@ metadata:
     - ml
     - pytorch
     - reference
+
 ---
+
 
 
 # Experiment Recipes / 实验配方参考

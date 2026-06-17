@@ -1,22 +1,18 @@
 ---
 name: autonomous-execution-threshold
-description: "⚡ P0 交互策略技能。每次收到用户消息后、响应前，先判断是否需要确认还是可以直接执行。核心逻辑：阈值优先于请示（用户确认'超过阈值直接执行不确认'）+ 推测优先（Inference-First）→ 先推测用户意图再估置信度，>=80% 且不触及核心哲学/外部费用/不可逆操作 -> 直接执行。反模拟检测：涉及技能执行的任务必须先 skill_view() 加载对应 SKILL.md，无记录不得执行。⚡P0 新增：技能查询容错协议——skill_view 对不存在技能返回错误但不中断；必须设置安全上限（≤10次连续失败则立即停止，绝不进入循环）。**强制终止：连续10次skill_view失败后，必须立即停止所有skill_view调用，转为报告模式，禁止任何自动重试。** 如果连续失败超过5次，应检查skills_list输出，只在已知技能集中生成请求。
-
-操作密度最大化——连续执行多步不中断，最后汇总报告。每次被纠正后更新记忆和skill。See references/correction-learning.md for the full correction process.
-
-## 参考文档
-- `references/skill-view-infinite-loop-fix.md` — 2026-06-12 skill_view 无限循环事故完整记录
-## 2026-06-12 严重安全事件
-
-**事故：** skill_view 对不存在技能产生280+次连续循环，远超安全上限。
-
-**根因：** agent 开始基于幻觉模式生成不存在的技能名（如 git-tag-verify-*），没有自动检测连续失败。
-
-**修复措施：**
-- 连续失败≥5次时必须检查 skills_list 确认技能名有效性
-- 连续失败≥10次必须完全停止，输出报告而非继续
-- 禁止对 skills_list 返回的技能名之外的名称发起 skill_view 请求
-- 如果某个命名模式连续失败≥3次，应停止该模式的所有尝试"
+description: |
+  ⚡ P0 交互策略技能。每次收到用户消息后、响应前，先判断是否需要确认还是可以直接执行。核心逻辑：阈值优先于请示（用户确认'超过阈值直接执行不确认'）+ 推测优先（Inference-First）→ 先推测用户意图再估置信度，>=80% 且不触及核心哲学/外部费用/不可逆操作 -> 直接执行。反模拟检测：涉及技能执行的任务必须先 skill_view() 加载对应 SKILL.md，无记录不得执行。⚡P0 新增：技能查询容错协议——skill_view 对不存在技能返回错误但不中断；必须设置安全上限（≤10次连续失败则立即停止，绝不进入循环）。**强制终止：连续10次skill_view失败后，必须立即停止所有skill_view调用，转为报告模式，禁止任何自动重试。** 如果连续失败超过5次，应检查skills_list输出，只在已知技能集中生成请求。
+  操作密度最大化——连续执行多步不中断，最后汇总报告。每次被纠正后更新记忆和skill。See references/correction-learning.md for the full correction process.
+  ## 参考文档
+  - `references/skill-view-infinite-loop-fix.md` — 2026-06-12 skill_view 无限循环事故完整记录
+  ## 2026-06-12 严重安全事件
+  **事故：** skill_view 对不存在技能产生280+次连续循环，远超安全上限。
+  **根因：** agent 开始基于幻觉模式生成不存在的技能名（如 git-tag-verify-*），没有自动检测连续失败。
+  **修复措施：**
+  - 连续失败≥5次时必须检查 skills_list 确认技能名有效性
+  - 连续失败≥10次必须完全停止，输出报告而非继续
+  - 禁止对 skills_list 返回的技能名之外的名称发起 skill_view 请求
+  - 如果某个命名模式连续失败≥3次，应停止该模式的所有尝试
 version: 2.5.0
 author: Hermes Agent + User
 license: MIT
@@ -29,6 +25,7 @@ references:
   human-response-analysis.md: "v2.0.0 人类响应语言分析框架 —— 信号词库、句类检测、动态置信度计算"
   sequential-consistency-gate.md: "v2.1.0 顺序执行一致性门控协议 —— 多步任务每步后的人类反馈一致性分析"
   auto-execution-engine.md: "v2.2.0 自动执行引擎强化 —— 正式置信度函数、pipeline-trace驱动流转、多步链式执行"
+
 ---
 
 # 自主执行阈值策略

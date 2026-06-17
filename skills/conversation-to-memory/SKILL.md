@@ -7,16 +7,20 @@ license: MIT
 priority: P0
 execution_rule: "每次质量门PASS后自动执行。复杂任务结束时自动检查记忆空间。循环迭代中每条记忆自检再commit。"
 allowed-tools: memory session_search
-signature: "session_summary: str, memory_usage: float -> saved_entries: list[str], replaced_entries: list[str], remaining_space: int"
+signature: |
+  session_summary: str, memory_usage: float -> saved_entries: list[str], replaced_entries: list[str], remaining_space: int | saved_entries: list[str], replaced_entries: list[str], remaining_space: int
 related_skills: [quality-gate, conversation-to-memory, memory-enhancement]
 metadata:
   synthos:
     priority: P1
     atom_type: meta-reflection
-    description: ⚡ P0 从会话提取高价值信息→记忆。动灵三问: 生长方向?框架维度?发酵潜力?+宪法护栏(记忆不能覆写CONSTITUTION)+凝练压缩策略。防记忆膨胀同时保留高信号事实。每条记忆标注生长方向和发酵潜力。
-    signature: ['session_summary: str, memory_usage: float -> saved_entries: list[str], replaced_entries: list[str], remaining_space: int'] -> ['saved_entries: list[str], replaced_entries: list[str], remaining_space: int']
+    description: "⚡ P0 从会话提取高价值信息→记忆。动灵三问: 生长方向?框架维度?发酵潜力?+宪法护栏(记忆不能覆写CONSTITUTION)+凝练压缩策略。防记忆膨胀同时保留高信号事实。每条记忆标注生长方向和发酵潜力。"
+    signature: |
+      session_summary: str, memory_usage: float -> saved_entries: list[str], replaced_entries: list[str], remaining_space: int | saved_entries: list[str], replaced_entries: list[str], remaining_space: int
     related_skills: ['quality-gate', 'conversation-to-memory', 'conversation-to-memory', 'memory-enhancement']
+
 ---
+
 
 
 # Conversation → Memory

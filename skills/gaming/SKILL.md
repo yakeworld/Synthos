@@ -2,6 +2,7 @@
 
 name: gaming
 description: 游戏服务器 — Minecraft模组服务器、宝可梦模拟器。
+version: 1.0.0
 triggers:
   - 需要执行gaming下的子技能
 metadata:
@@ -11,7 +12,9 @@ metadata:
     description: "父级技能 — 游戏服务器 — Minecraft模组服务器、宝可梦模拟器。"
     signature: 'gaming -> sub-skills: [minecraft-modpack-server, pokemon-player]'
     related_skills: ["minecraft-modpack-server", "pokemon-player"]
+
 ---
+
 
 # gaming
 

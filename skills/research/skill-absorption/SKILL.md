@@ -1,6 +1,7 @@
 ---
 name: skill-absorption
 description: 双循环进化：内部反思(P0) + 外部吸收(P1)。Cross-project absorption methodology — multi-round cross-project comparison, active project tracking, self-expanding keyword discovery. 动灵驱动吸收(Entelechy-Driven Absorption v4.3).
+version: 4.3
 allowed-tools:
 - terminal
 - file
@@ -12,7 +13,18 @@ metadata:
     version: 4.3.0
     priority: P1
     signature: 'target: str -> absorption_report: dict'
+
 ---
+
+
+## IO_CONTRACT
+
+- **input**: `target: str` — 待吸收的外部项目/技能标识
+- **input**: `source_analysis: dict` — 外部源分析结果（compatibility, transferability, novelty）
+- **input**: `keyword_pool: list[str]` — 自扩展关键词池
+- **output**: `absorption_report: dict` — 吸收决策报告（decision: absorb/reject/defer, reason, transformed_skills）
+- **output**: `project_tracker_update: dict` — 项目追踪数据库更新
+- **output**: `keyword_expansion: list[str]` — 新增关键词
 
 # Skill Absorption Engine v3.0
 

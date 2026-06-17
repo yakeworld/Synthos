@@ -1,6 +1,7 @@
 ---
 name: youtube-content
 description: YouTube transcripts to summaries, threads, blogs.
+version: 1.0.0
 allowed-tools:
 - terminal
 - read_file
@@ -19,7 +20,9 @@ metadata:
     - google-workspace
     - jupyter-live-kernel
     - linear
+
 ---
+
 
 
 # YouTube Content Tool

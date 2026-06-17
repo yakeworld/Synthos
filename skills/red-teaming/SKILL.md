@@ -2,6 +2,7 @@
 
 name: red-teaming
 description: 红队测试 — LLM越狱攻击（Parseltongue、GODMODE、ULTRAPLINIAN）。
+version: 1.0.0
 triggers:
   - 需要执行red-teaming下的子技能
 metadata:
@@ -11,7 +12,9 @@ metadata:
     description: "父级技能 — 红队测试 — LLM越狱攻击（Parseltongue、GODMODE、ULTRAPLINIAN）。"
     signature: 'red-teaming -> sub-skills: [godmode]'
     related_skills: ["godmode"]
+
 ---
+
 
 # red-teaming
 

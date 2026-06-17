@@ -1,12 +1,15 @@
 ---
 name: latex-output
 description: >-
+version: 1.0.0
   Synthos assembled_output.json → 会议级LaTeX (.tex/.bib/figures)。
 metadata:
   synthos:
     version: 1.1.0
     author: Synthos
+
 ---
+
 
 # Latex Output
 

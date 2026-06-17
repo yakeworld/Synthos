@@ -1,6 +1,7 @@
 ---
 name: akne-knowledge-manager
 description: AKNE 知识管理系统的双向整合审计、Synthos-桥接诊断、知识流分析、内容级审计。与 akne-maintenance 不同，专注两系统间的连接质量及知识内容质量而非内部运维。
+version: 1.0.0
 triggers:
   - 需要审计 AKNE 知识库内容质量（矛盾检测、版本簇、研究空白）
   - 需要 Synthos 与 AKNE 双向整合检查
@@ -18,7 +19,9 @@ io_contract:
   output:
     - 'integration_report: dict (bridge_points: list[str], knowledge_flow: dict, issues: list[str])'
     - 'content_audit: dict (contradictions: list, version_clusters: list, research_gaps: list, hypotheses: list)'
+
 ---
+
 
 
 # AKNE Knowledge Manager — 整合审计 + 内容级审计

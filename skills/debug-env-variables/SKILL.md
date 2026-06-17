@@ -2,7 +2,10 @@
 
 name: debug-env-variables
 description: Debug environment variable issues across shell boundaries, subprocesses, and application configuration layers.
+version: 1.0.0
+
 ---
+
 
 # Debug Environment Variables
 

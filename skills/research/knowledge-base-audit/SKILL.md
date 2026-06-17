@@ -1,6 +1,7 @@
 ---
 name: knowledge-base-audit
 description: Audit and maintain personal knowledge management systems (AKNE, NotebookLM,
+version: 1.0.0
   Obsidian vaults, etc.) to keep them healthy and evolving.
 allowed-tools:
 - terminal
@@ -16,7 +17,9 @@ metadata:
     - arxiv
     - biorxiv
     - blogwatcher
+
 ---
+
 
 
 # Knowledge Base Audit & Maintenance

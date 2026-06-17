@@ -1,6 +1,7 @@
 ---
 name: falsification-validation
 description: Systematic approach to validating AI agent skills through falsification
+version: 1.0.0
   tests and Bayesian trust estimation. Instead of trying to prove a skill works, actively
   try to prove it fails, then update trust probability based on evidence. Use when
   creating, updating, or assessing the reliability of any skill. Must produce quantifiable
@@ -21,7 +22,9 @@ metadata:
     - golden-test-methodology
     - post-compile-dual-quality-check
     - quality-gate
+
 ---
+
 
 
 ## 原理层·文言

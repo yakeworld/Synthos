@@ -2,6 +2,7 @@
 
 name: creative
 description: 创意内容生成 — ASCII艺术、信息图、漫画、动画、PPT、设计原型。
+version: 1.0.0
 triggers:
   - 需要执行creative下的子技能
 metadata:
@@ -11,7 +12,9 @@ metadata:
     description: "父级技能 — 创意内容生成 — ASCII艺术、信息图、漫画、动画、PPT、设计原型。"
     signature: 'creative -> sub-skills: [academic-diagram, architecture-diagram, ascii-art]'
     related_skills: ["academic-diagram", "architecture-diagram", "ascii-art", "ascii-video", "baoyu-comic"]
+
 ---
+
 
 # creative
 

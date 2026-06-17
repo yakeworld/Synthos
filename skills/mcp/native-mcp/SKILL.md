@@ -1,12 +1,15 @@
 ---
 name: native-mcp
 description: >-
+version: 1.0.0
   MCP客户端 — 连接服务器, 注册工具(stdio/HTTP)。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
+
 ---
+
 
 # Native Mcp
 

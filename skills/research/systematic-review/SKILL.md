@@ -1,14 +1,26 @@
 ---
 name: systematic-review
 description: 系统综述与Meta分析工作流助手 — PRISMA流程、搜索策略设计、研究选择、质量评估、数据提取和综合支持。
+version: 1.0.0
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
     signature: 'topic: str -> review_plan: dict'
+
 ---
 
+
 # Systematic Review Workflow
+
+## IO_CONTRACT
+
+- **input**: `topic: str` — 系统综述研究主题
+- **input**: `search_engines: list[str]` — 目标数据库（PubMed/Scopus/WoS/Cochrane）
+- **input**: `pico_framework: dict` — PICO 框架定义（Population, Intervention, Comparison, Outcome）
+- **output**: `review_plan: dict` — 综述执行方案（search_strategy, screening_criteria, quality_tool, extraction_form）
+- **output**: `prisma_flowchart: str` — PRISMA 流程图（TikZ 代码）
+- **output**: `checklist: dict` — PRISMA 2020 Checklist 逐项状态
 
 ## 核心流程
 

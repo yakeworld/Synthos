@@ -1,6 +1,7 @@
 ---
 name: github-discussions
 description: Create, list, search, and manage GitHub Discussions via GraphQL API.
+version: 4.2
 allowed-tools:
 - terminal
 - file
@@ -31,7 +32,9 @@ metadata:
     - github-pr-workflow
     - github-repo-management
     version: 1.0.0
+
 ---
+
 
 
 # GitHub Discussions Management

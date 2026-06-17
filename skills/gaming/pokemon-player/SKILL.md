@@ -1,9 +1,12 @@
 ---
 name: pokemon-player
 description: "Play Pokemon via headless emulator + RAM reads."
+version: 1.0.0
 tags: [gaming, pokemon, emulator, pyboy, gameplay, gameboy]
 platforms: [linux, macos, windows]
+
 ---
+
 # Pokemon Player
 
 Play Pokemon games via headless emulation using the `pokemon-agent` package.

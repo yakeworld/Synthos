@@ -1,12 +1,15 @@
 ---
 name: pubmed
 description: Deep PubMed/MEDLINE search via NCBI E-utilities — query construction, MeSH terms, batch retrieval, clinical query refinement.
+version: 1.0.0
 metadata:
   synthos:
     version: 2.0.1
     author: Synthos
     signature: 'query: str -> papers: list[dict]'
+
 ---
+
 
 # PubMed Search
 

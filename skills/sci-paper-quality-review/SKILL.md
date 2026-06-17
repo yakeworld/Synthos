@@ -25,7 +25,8 @@ metadata:
     priority: P1
     atom_type: pipeline
     description: 7-dim SCI paper quality review — structural contribution/methodology/results/integrity/novelty/citation.
-    signature: ['paper: str, quality_matrix: dict -> review_result: dict'] -> ['review_result: dict (scores: [D1-D7], overall_score, improvement_plan)']
+    signature: |
+      paper: str, quality_matrix: dict -> review_result: dict | review_result: dict (scores: [D1-D7], overall_score)
     related_skills: ['quality-gate', 'evolution', 'paper-pipeline', 'project-experience-distillation']
 
 

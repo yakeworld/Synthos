@@ -1,6 +1,7 @@
 ---
 name: knowledge-acquisition
 description: 多源学术论文检索：Semantic Scholar / PubMed / Crossref / OpenAlex / arXiv / bioRxiv。
+version: 1.0.0
   Agent-native执行，纯skill+curl零Python。含API弹性层、本地缓存、自动回退链。 返回论文元数据、摘要、PDF。宁无所得，不取伪术。
 license: MIT
 allowed-tools: terminal Read Write task_delegation (bash, view/write, agent, inline)
@@ -9,9 +10,11 @@ metadata:
     priority: P0
     atom_type: cognitive-atom
     description: External knowledge acquisition — search PubMed, Semantic Scholar, OpenAlex, arXiv, bioRxiv, etc.
-    signature: ['query: str, sources: list[str], date_range: str -> candidates: list[PaperCandidate]'] -> ['candidates: list[PaperCandidate] (title, doi, source, relevance, abstract_summary, pdf_url)']
+    signature: "query: str, sources: list[str], date_range: str -> candidates: list[PaperCandidate] -> candidates: list[PaperCandidate] (title, doi, source, relevance, abstract_summary, pdf_url)"
     related_skills: [knowledge-extraction, association-discovery, hypothesis-generation, argument-expression, research-paper-search, academic-diagram, nature-paper2ppt]
+
 ---
+
 
 
 # 知识获取 (Knowledge Acquisition)

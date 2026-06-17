@@ -2,6 +2,7 @@
 
 name: software-development
 description: 软件开发 — Agent编排、调试、嵌入式Python、眼动追踪平台、开源贡献。
+version: 1.0.0
 triggers:
   - 需要执行software-development下的子技能
 metadata:
@@ -11,7 +12,9 @@ metadata:
     description: "父级技能 — 软件开发 — Agent编排、调试、嵌入式Python、眼动追踪平台、开源贡献。"
     signature: 'software-development -> sub-skills: [agent-orchestration-harness, debugging-hermes-tui-commands, embedded-python-modularization]'
     related_skills: ["agent-orchestration-harness", "debugging-hermes-tui-commands", "embedded-python-modularization", "eye-tracking-platform", "github-agent-contributions"]
+
 ---
+
 
 # software-development
 
@@ -41,6 +44,7 @@ metadata:
 
 - `references/codex-vllm-debugging.md` — Codex CLI 调用本地 vLLM 的完整调试记录与结论（硬编码限制、shim 测试、清理决策）
 - `references/opencode-model-routing.md` — opencode 多模型路由配置、API key 注入陷阱、Hermes vs opencode 路由差异
+- `references/opencode-chinese-input.md` — OpenCode 中文输入问题诊断（GTK_IM_MODULE fcitx vs fcitx5、PTY 模式限制）
 
 ## 使用方式
 

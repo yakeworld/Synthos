@@ -2,6 +2,7 @@
 
 name: writing
 description: 写作辅助 — 引用完整性修复、LaTeX输出、政治提案、标准论文结构。
+version: 1.0.0
 triggers:
   - 需要执行writing下的子技能
 metadata:
@@ -11,7 +12,9 @@ metadata:
     description: "父级技能 — 写作辅助 — 引用完整性修复、LaTeX输出、政治提案、标准论文结构。"
     signature: 'writing -> sub-skills: [citation-integrity-fix, latex-output, political-proposal]'
     related_skills: ["citation-integrity-fix", "latex-output", "political-proposal", "sci-paper-standard-structure"]
+
 ---
+
 
 # writing
 

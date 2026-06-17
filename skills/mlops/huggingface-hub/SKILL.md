@@ -1,6 +1,7 @@
 ---
 name: huggingface-hub
 description: 'HuggingFace hf CLI: search/download/upload models, datasets.'
+version: 1.0.0
 allowed-tools:
 - terminal
 - read_file
@@ -29,7 +30,9 @@ metadata:
     - datasets
     - hub
     - mlops
+
 ---
+
 
 
 # Hugging Face CLI (`hf`) Reference Guide

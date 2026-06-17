@@ -1,6 +1,7 @@
 ---
 name: memory-optimization-system
 description: 记忆系统全面优化：上下文卸载(Mermaid压缩)、FSRS巩固cron(凌晨3点)、memory↔fact_store桥接、去重与清理。覆盖TencentDB
+version: 1.0.0
   Agent Memory四层架构缺口。
 allowed-tools: memory fact_store terminal write_file read_file cronjob process
 metadata:
@@ -17,12 +18,23 @@ metadata:
     execution_rule: 本技能在会话中持续生效。使用以下自动规则： (1) 工具输出>10KB → 建议卸载到 context_refs/*.md
       (2) 会话结束前 memory 超 90% → 建议清理 (3) 发现 memory ↔ fact_store 重复 → 合并 (4) 复杂任务结束
       → 运行 consolidation 检查
+
 ---
+
 
 
 # 记忆系统全面优化
 
 > **记非日记，长养为要。散则聚之，独则连之。**
+
+## IO_CONTRACT
+
+- **input**: `context_size: int` — 当前会话上下文大小（bytes/lines）
+- **input**: `memory_entries: list[dict]` — memory + fact_store 快照
+- **input**: `consolidation_trigger: str` — 触发类型（qc_scan / cron_consolidation / context_overflow / session_end）
+- **output**: `optimization_report: dict` — 优化结果（offloaded: list, merged: list, cleaned: list）
+- **output**: `context_refs: list[str]` — 卸载的 context_refs/*.md 路径
+- **output**: `metrics: dict` — 优化前后内存使用对比
 
 ## 已部署组件
 

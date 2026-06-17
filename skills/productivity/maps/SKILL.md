@@ -1,6 +1,7 @@
 ---
 name: maps
 description: Geocode, POIs, routes, timezones via OpenStreetMap/OSRM.
+version: 1.0.0
 allowed-tools:
 - terminal
 - read_file
@@ -41,7 +42,9 @@ metadata:
     - jupyter-live-kernel
     - linear
     version: 1.2.0
+
 ---
+
 
 
 # Maps Skill

@@ -2,11 +2,14 @@
 
 name: dataset-discovery
 description: Dataset discovery across platforms — OpenML, Kaggle, UCI, Crossref, Semantic Scholar. Platform capabilities, API quirks, and search workflows.
+version: 1.0.0
 allowed-tools:
 - terminal
 - file
 - web
+
 ---
+
 
 # Dataset Discovery
 

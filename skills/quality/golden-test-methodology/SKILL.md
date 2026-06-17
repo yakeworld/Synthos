@@ -1,6 +1,7 @@
 ---
 name: golden-test-methodology
 description: 'Methodology for creating, maintaining, and evaluating golden test suites
+version: 1.0.0
   across all skills. Defines: three-file golden structure (GOLDEN_SET.md + cases/
   + expected/), weighted verification criteria, coverage scoring, and DIAGNOSE integration.
   Covers the systematic gap where golden coverage is the weakest dimension in a multi-skill
@@ -17,7 +18,9 @@ metadata:
     - quality-gate
     - project-experience-distillation
     version: 1.0.0
+
 ---
+
 
 
 # Golden Test Methodology

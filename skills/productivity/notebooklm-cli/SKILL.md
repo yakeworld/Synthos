@@ -1,6 +1,7 @@
 ---
 name: notebooklm-cli
 description: 子skill | NotebookLM CLI全功能指南 — Q&A知识提取、内容生成(报告/视频/音频/信息图/幻灯片)、文献检索。响应paper-pipeline的P1阶段调用。
+version: 1.0.0
 allowed-tools:
 - terminal
 - file
@@ -11,7 +12,9 @@ metadata:
     version: 3.5.0
     author: Synthos
     signature: 'action: str, params: dict -> result: dict'
+
 ---
+
 
 # NotebookLM CLI — 知识大脑
 

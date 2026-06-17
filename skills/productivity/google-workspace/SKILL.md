@@ -1,12 +1,15 @@
 ---
 name: google-workspace
 description: >-
+version: 1.0.0
   Gmail/Calendar/Drive/Docs/Sheets via gws CLI。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
+
 ---
+
 
 # Google Workspace
 

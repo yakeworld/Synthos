@@ -1,6 +1,7 @@
 ---
 name: serving-llms-vllm
 description: Deploy, manage, and interact with vLLM for high-throughput LLM serving.
+version: 1.0.0
   Covers Docker-based deployment, model loading, coexistence with training, API usage,
   quantization (NVFP4/GPTQ/GGUF), and performance tuning. Captures the user's specific
   deployment on work1 (Qwen3.6-35B-NVFP4, TP=4).
@@ -29,7 +30,9 @@ metadata:
     - llm
     - docker
     - mlops
+
 ---
+
 
 
 # vLLM Serving — High-Throughput LLM Serving

@@ -2,13 +2,16 @@
 
 name: ode-simulation-tuning
 description: '⚡ P0 Simulation tuning for ODE/2-ODE papers — systematic metric optimization. Covers R², AUC, accuracy, MAPE, ablation, bifurcation, and Sobol sensitivity tuning for computational dynamical models.'
+version: 1.0.0
 linked_files:
   references:
     - references/paper-125-scleral-case-study.md
     - references/paper-126-corneal-tension-case-study.md
     - references/paper-129-choroidal-first-pass.md — first 2-ODE paper that passed all metrics without any simulation iteration (zero-tuning, written with pre-tuned embedded metrics)
     - references/paper-144-macular-degeneration-case-study.md — biphasic secondary variable response (compensation-then-failure pattern)
+
 ---
+
 
 # ode-simulation-tuning
 ## ⚡ P0 Simulation tuning for ODE/2-ODE papers — systematic metric optimization

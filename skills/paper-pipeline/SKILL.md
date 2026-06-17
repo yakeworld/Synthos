@@ -9,7 +9,8 @@ metadata:
     priority: P1
     atom_type: pipeline
     description: SCI论文全流程编排器。核心原理：声明与执行分离、逐问收束、节点闸门、闭环进化。
-    signature: ['paper_name: str -> pipeline_report: dict'] -> ['pipeline_report: dict (stage, status, quality_score, next_step)']
+    signature: |
+      paper_name: str -> pipeline_report: dict | pipeline_report: dict (stage, status, quality_score, next_step)
     related_skills: [quality-gate, evolution, project-experience-distillation, knowledge-acquisition, knowledge-extraction, association-discovery, hypothesis-generation, argument-expression, viewpoint-verification, sci-paper-quality-review, conversation-to-memory, knowledge-extraction, knowledge-acquisition, academic-atom-architecture]
 
 
