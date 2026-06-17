@@ -1,6 +1,7 @@
 ---
 name: songwriting-and-ai-music
 description: "Songwriting craft and Suno AI music prompts."
+version: 1.0.0
 tags: [songwriting, music, suno, parody, lyrics, creative]
 platforms: [linux, macos, windows]
 triggers:
@@ -11,7 +12,9 @@ triggers:
   - parody song
   - adapting a song
   - AI music generation
+
 ---
+
 
 # Songwriting & AI Music Generation
 

@@ -1,6 +1,7 @@
 ---
 name: excalidraw
 description: Hand-drawn Excalidraw JSON diagrams (arch, flow, seq).
+version: 1.0.0
 allowed-tools:
 - terminal
 - read_file
@@ -32,7 +33,9 @@ metadata:
     - ffmpeg-video-audio-sync
     - figure-generation
     version: 1.0.0
+
 ---
+
 
 
 # Excalidraw Diagram Skill

@@ -1,0 +1,42 @@
+{
+  "last_cron_run": "2026-06-14T15:23:00Z",
+  "last_action": "g6-verification-diplopia-binocular-fusion-ODE",
+  "papers_total": 95,
+  "papers_completed": 95,
+  "mean_quality": 49.4,
+  "queue_synced": true,
+  "next_action_needed": "Continue quality improvement on CONDITIONAL gate papers. Paper_100 (qs=75, G7 SOFT_FAIL remaining). Other CONDITIONAL papers at qs=72-81 need G7 reproducibility checks. Paper_101_optokinetic-reflex-PINN (qs=82, CONDITIONAL, G6_SOFT_FAIL) is highest-value target for next G6 verification.",
+  "improvements_this_run": {
+    "paper": "Paper_100_fixation-vernier-PINN",
+    "fix_type": "g6_verification",
+    "before": "G6 SOFT_FAIL: first-mover claim unverified",
+    "after": "G6 PASS: first-mover claim independently verified via PubMed+OpenAlex. ABSOLUTE WHITE CONFIRMED. Zero competing PINN/ODE dynamical models of fixation vernier disparity dynamics.",
+    "quality_score_improvement": 3,
+    "quality_score_before": 72,
+    "quality_score_after": 75,
+    "soft_fails_before": 2,
+    "soft_fails_after": 1,
+    "gates_promoted": ["G6: SOFT_FAIL→PASS"],
+    "query_results": {
+      "pubmed_vernier_disparity_computational": 0,
+      "pubmed_fixation_vernier_model": "10 harmless",
+      "pubmed_vernier_PINN": 0,
+      "pubmed_vernier_acuity_dynamical": "1 harmless (Victor 1999)",
+      "pubmed_fixation_disparity_computational": 0,
+      "pubmed_fixation_stability_PINN": 0,
+      "openalex_competitors": 0,
+      "competing_papers_found": 0
+    }
+  },
+  "queue_sync_notes": [
+    "2026-06-13T18:30Z: 112-presbyopia-lens-stiffening-ODE: Root paper.tex synced with fixed 01-manuscript version. D10a=100% confirmed. Clean compile: 0 errors, 0 warnings, 6 pages, 211170 bytes."
+  ],
+  "actions_this_run": {
+    "112-presbyopia-lens-stiffening-ODE": {
+      "issue": "Root paper.tex was the stale unfixed version despite state.json showing D10a=100%. The fix was applied to 01-manuscript/paper.tex but never synced back.",
+      "cause": "The citation fix process modifies the source step file (01-manuscript) but the root paper.tex (which gets compiled) was not updated. This is a systematic gap in the fix workflow.",
+      "fix": "Copied 01-manuscript/paper.tex to root paper.tex. Compiled twice. Verified D10a=100%, 0 errors, 0 warnings.",
+      "result": "Root paper.tex now matches fixed version. D10a=100% confirmed. Compile clean. Paper remains CONDITIONAL (qs=85, soft_fails: G2, G4, G6, G7)."
+    }
+  }
+}

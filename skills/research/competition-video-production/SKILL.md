@@ -1,12 +1,15 @@
 ---
 name: competition-video-production
 description: >-
+version: 1.0.0
   竞赛/基金/路演的专业演示视频制作管线 — PPTX→PNG→MP4, 旁白同步。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
+
 ---
+
 
 # Competition Video Production
 

@@ -1,0 +1,25 @@
+{
+  "name": "akne-integration-validation",
+  "description": "验证AKNE与Synthos的双向整合质量",
+  "input": {
+    "akne_path": "str",
+    "synthos_path": "str"
+  },
+  "expected": {
+    "integration_score": "float",
+    "bridge_points": "list",
+    "knowledge_flow": "dict"
+  },
+  "test_cases": [
+    {
+      "name": "full-sync",
+      "input": {
+        "akne_path": "/akne",
+        "synthos_path": "/synthos"
+      },
+      "expected": {
+        "integration_score": 0.95
+      }
+    }
+  ]
+}

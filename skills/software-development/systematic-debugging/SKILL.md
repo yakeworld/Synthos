@@ -1,12 +1,15 @@
 ---
 name: systematic-debugging
 description: >-
+version: 1.0.0
   4阶段根因调试 — 先理解bug再修复。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
+
 ---
+
 
 # Systematic Debugging
 

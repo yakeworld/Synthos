@@ -2,6 +2,7 @@
 
 name: apple
 description: Apple生态工具链 — macOS/iOS设备管理、提醒事项、备忘录、查找设备。
+version: 1.0.0
 triggers:
   - 需要执行apple下的子技能
 metadata:
@@ -11,7 +12,9 @@ metadata:
     description: "父级技能 — Apple生态工具链 — macOS/iOS设备管理、提醒事项、备忘录、查找设备。"
     signature: 'apple -> sub-skills: [apple-notes, apple-reminders, findmy]'
     related_skills: ["apple-notes", "apple-reminders", "findmy", "imessage", "macos-computer-use"]
+
 ---
+
 
 # apple
 

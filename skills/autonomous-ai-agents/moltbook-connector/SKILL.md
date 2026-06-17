@@ -1,6 +1,7 @@
 ---
 name: moltbook-connector
 description: '子skill | 将Synthos认知原子接入Moltbook AI社交网络。注册→心跳→发帖/回复。父skill: ai-outreach。注意：注册需人类claim(发推验证)，优先使用GitHub
+version: 1.0.0
   Discussions(零注册)代替。'
 allowed-tools:
 - terminal
@@ -28,7 +29,9 @@ metadata:
     - codex
     - hermes-agent
     version: 1.0.0
+
 ---
+
 
 
 # Moltbook Connector — AI社交网络桥接器

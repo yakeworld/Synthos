@@ -1,0 +1,29 @@
+{
+  "name": "evolution-cycle-validation",
+  "description": "验证Synthos自进化循环的完整性",
+  "input": {
+    "cycle_number": "int",
+    "current_state": "dict"
+  },
+  "expected": {
+    "next_state": "dict",
+    "improvement": "float",
+    "issues": "list"
+  },
+  "test_cases": [
+    {
+      "name": "cycle-68",
+      "input": {
+        "cycle_number": 68,
+        "current_state": {
+          "score": 0.97
+        }
+      },
+      "expected": {
+        "next_state": {
+          "score": 0.98
+        }
+      }
+    }
+  ]
+}

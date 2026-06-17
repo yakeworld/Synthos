@@ -2,7 +2,10 @@
 name: repo-path-sanity
 class: infrastructure
 description: Diagnose and fix broken directory relationships when ~/Synthos and /media/yakeworld/sda2/Synthos diverge into independent copies instead of symlink.
+version: 1.0.0
+
 ---
+
 
 # Repository Path Sanity Check
 

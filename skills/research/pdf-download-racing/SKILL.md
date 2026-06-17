@@ -1,6 +1,7 @@
 ---
 name: pdf-download-racing
 description: 并行竞速PDF下载引擎 — curl_cffi TLS指纹绕过 + Sci-Hub域轮换 + LibGen + MedData。依赖 tools/paper-manager/src/。
+version: 1.0.0
 metadata:
   synthos:
     version: 1.7.0
@@ -10,7 +11,9 @@ metadata:
     - paper-pipeline
     absorbed_skills:
     - meddata-access
+
 ---
+
 
 # PDF Download Racing
 

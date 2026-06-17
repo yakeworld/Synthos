@@ -1,6 +1,7 @@
 ---
 name: claude-code
 description: Delegate coding to Claude Code CLI — features, PRs, refactoring, review.
+version: 1.0.0
 allowed-tools:
 - terminal
 - file
@@ -10,7 +11,9 @@ metadata:
     version: 1.0.0
     author: Synthos
     signature: 'task: str -> result: dict'
+
 ---
+
 
 # Claude Code Delegation
 

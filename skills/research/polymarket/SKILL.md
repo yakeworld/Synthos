@@ -1,6 +1,7 @@
 ---
 name: polymarket
 description: 'Query Polymarket: markets, prices, orderbooks, history.'
+version: 1.0.0
 allowed-tools:
 - terminal
 - read_file
@@ -26,7 +27,9 @@ metadata:
     - prediction-markets
     - market-data
     - trading
+
 ---
+
 
 
 # Polymarket — Prediction Market Data

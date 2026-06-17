@@ -1,12 +1,15 @@
 ---
 name: sci-paper-standard-structure
 description: >-
+version: 1.0.0
   标准IMRaD论文结构 — CARS+图尔敏+金字塔+沙漏。理论优先。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
+
 ---
+
 
 # Sci Paper Standard Structure
 

@@ -2,6 +2,7 @@
 
 name: synthos-akne-bridge
 description: Synthos 与 AKNE 之间双向桥接 — 论文目录规范化、技能连接、逆向边创建、Wiki 清理、自动守护重启、内容摘要注入、向量化补全。与 akne-maintenance（内部运维）和 akne-knowledge-manager（审计诊断）不同，本技能管具体的桥接操作。
+version: 1.0.0
 metadata:
   synthos:
     priority: P1
@@ -9,7 +10,9 @@ metadata:
     description: Synthos 与 AKNE 之间双向桥接 — 论文目录规范化、技能连接、逆向边创建、Wiki 清理、自动守护重启、内容摘要注入、向量化补全。
     signature: 'synthos_state: str, akne_state: str -> bridge_report: dict'
     related_skills: [akne-knowledge-manager, akne-maintenance, knowledge-extraction, knowledge-acquisition, paper-pipeline, kg-bridge]
+
 ---
+
 io_contract:
   input:
     - 'synthos_state: str, akne_state: str -> bridge_report: dict'

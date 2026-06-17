@@ -2,6 +2,7 @@
 
 name: shared
 description: 共享资源 — 跨技能引用的通用资源。
+version: 1.0.0
 triggers:
   - 需要执行shared下的子技能
 metadata:
@@ -11,7 +12,9 @@ metadata:
     description: "父级技能 — 共享资源 — 跨技能引用的通用资源。"
     signature: 'shared -> sub-skills: [references]'
     related_skills: ["references"]
+
 ---
+
 
 # shared
 

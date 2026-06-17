@@ -2,6 +2,7 @@
 
 name: mcp
 description: MCP集成 — 模型上下文协议服务器配置与工具注册。
+version: 1.0.0
 triggers:
   - 需要执行mcp下的子技能
 metadata:
@@ -11,7 +12,9 @@ metadata:
     description: "父级技能 — MCP集成 — 模型上下文协议服务器配置与工具注册。"
     signature: 'mcp -> sub-skills: [mcp-ecosystem-guide, native-mcp]'
     related_skills: ["mcp-ecosystem-guide", "native-mcp"]
+
 ---
+
 
 # mcp
 

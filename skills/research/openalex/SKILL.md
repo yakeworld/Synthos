@@ -1,13 +1,16 @@
 ---
 name: openalex
 description: >-
+version: 1.0.0
   OpenAlex学术论文数据库搜索 — 250M+论文, 无需API key, 无速率限制。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
     signature: 'skill_set: query_params -> paper_results: list'
+
 ---
+
 
 # OpenAlex — 学术论文数据库搜索
 

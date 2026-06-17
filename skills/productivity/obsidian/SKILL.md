@@ -1,6 +1,7 @@
 ---
 name: obsidian
 description: Read, search, create, and edit notes in the Obsidian vault.
+version: 1.0.0
 allowed-tools:
 - terminal
 - read_file
@@ -19,7 +20,9 @@ metadata:
     - google-workspace
     - jupyter-live-kernel
     - linear
+
 ---
+
 
 
 # Obsidian Vault

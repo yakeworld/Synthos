@@ -1,6 +1,7 @@
 ---
 
 name: paper-queue-audit
+version: 1.0.0
 metadata:
   synthos:
     priority: P1

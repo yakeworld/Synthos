@@ -8,10 +8,13 @@ metadata:
   synthos:
     priority: P1
     atom_type: pipeline
-    description: Main skill | Multi-source paper search + full-text download orchestrator. Entry: Semantic Scholar, PubMed, Crossref, OpenAlex.
-    signature: ['topic: str, sources: list[str], date_range: str -> search_results: list[Paper]'] -> ['search_results: list[Paper] (title, doi, source, relevance, abstract, pdf_url)']
+    description: "Main skill | Multi-source paper search + full-text download orchestrator. Entry: Semantic Scholar, PubMed, Crossref, OpenAlex."
+    signature: |
+      topic: str, sources: list[str], date_range: str -> search_results: list[Paper] | search_results: list[Paper] (title, doi, source, relevance, abstract, pdf_url)
     related_skills: [knowledge-acquisition, knowledge-extraction, association-discovery, hypothesis-generation, paper-pipeline, paper-cron-scan, paper-references-scanning]
+
 ---
+
 
 
 # Research Paper Search — 论文检索全文下载编排器

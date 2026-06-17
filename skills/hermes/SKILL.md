@@ -2,6 +2,7 @@
 
 name: hermes
 description: Hermes Agent管理 — Cron生命周期、配置、工具管理。
+version: 1.0.0
 triggers:
   - 需要执行hermes下的子技能
 metadata:
@@ -11,7 +12,9 @@ metadata:
     description: "父级技能 — Hermes Agent管理 — Cron生命周期、配置、工具管理。"
     signature: 'hermes -> sub-skills: [hermes-scheduler]'
     related_skills: ["hermes-scheduler"]
+
 ---
+
 
 # hermes
 

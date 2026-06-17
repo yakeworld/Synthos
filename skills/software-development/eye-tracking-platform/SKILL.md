@@ -2,6 +2,7 @@
 name: eye-tracking-platform
 category: software-development
 description: >-
+version: 1.0.0
   三维眼动追踪平台 — K230嵌入式眼动仪硬件规格、AI推理管线、
   眼球追踪模型、数据采集与临床分析。覆盖：K230+CanMV固件、
   AI2D硬件加速预处理、KPU神经网络推理、眼动数据后处理、
@@ -35,7 +36,9 @@ metadata:
     - references/k230-inference-pipeline.md: 推理管线详解 — AI2D预处理、KPU推理、后处理算法、置信度计算、数据输出格式
     - references/k230-eye-models.md: 眼球追踪模型清单 — eye_gaze.kmodel、face_detection.kmodel、ocular_seg.kmodel等
     - references/k230-embedded-architecture.md: 软件架构总览 — 采集层/预处理层/推理层三层管线、config.py/hardware.py/state.py模块职责
+
 ---
+
 
 # Eye Tracking Platform — 三维眼动追踪系统
 

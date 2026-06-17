@@ -1,6 +1,7 @@
 ---
 name: bci-wenzhou
 description: >-
+version: 1.0.0
   温州脑机接口临床应用示范基地 — 政策方案、座谈会材料、用户资产映射、发言策略。
   覆盖：政策方案分析、用户技术资产盘点、政策对齐、讨论会策略、发言草稿、
   瓯越英才申报关联。
@@ -9,9 +10,11 @@ metadata:
     priority: P1
     atom_type: domain-skill
     description: 温州脑机接口临床应用示范基地 — 政策方案、座谈会材料、用户资产映射、发言策略。覆盖：政策方案分析、用户技术资产盘点、政策对齐、讨论会策略、发言草稿、瓯越英才申报关联。
-    signature: ['policy_area: str, user_assets: str -> policy_doc: str'] -> ['policy_doc: str (policy_analysis: dict, user_assets: list[str], policy_alignment: dict, discussion_strategy: str, speech_draft: str)']
+    signature: "policy_area: str, user_assets: str -> policy_doc: str -> policy_doc: str (policy_analysis: dict, user_assets: list[str], policy_alignment: dict, discussion_strategy: str, speech_draft: str)"
     related_skills: [knowledge-extraction, knowledge-acquisition, argument-expression, paper-pipeline, nsfc-grant-audit]
+
 ---
+
 
 
 # 温州脑机接口临床应用示范基地

@@ -2,6 +2,7 @@
 
 name: devops
 description: DevOps运维 — Cron任务管理、看板编排、worker管理。
+version: 1.0.0
 triggers:
   - 需要执行devops下的子技能
 metadata:
@@ -11,7 +12,9 @@ metadata:
     description: "父级技能 — DevOps运维 — Cron任务管理、看板编排、worker管理。"
     signature: 'devops -> sub-skills: [cron-system-maintenance, kanban-orchestrator, kanban-worker]'
     related_skills: ["cron-system-maintenance", "kanban-orchestrator", "kanban-worker"]
+
 ---
+
 
 # devops
 

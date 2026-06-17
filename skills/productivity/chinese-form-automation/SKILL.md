@@ -1,12 +1,15 @@
 ---
 name: chinese-form-automation
 description: >-
+version: 1.0.0
   自动填写中文政府/教育/学术申请表 — docx+xlsx模板填充。
 metadata:
   synthos:
     version: 1.1.0
     author: Synthos
+
 ---
+
 
 # Chinese Form Automation
 

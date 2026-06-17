@@ -1,6 +1,7 @@
 ---
 name: teams-meeting-pipeline
 description: Operate the Teams meeting summary pipeline via Hermes CLI — summarize
+version: 1.0.0
   meetings, inspect pipeline status, replay jobs, manage Microsoft Graph subscriptions.
 allowed-tools:
 - terminal
@@ -37,7 +38,9 @@ metadata:
     - jupyter-live-kernel
     - linear
     version: 1.1.0
+
 ---
+
 
 
 # Teams Meeting Pipeline

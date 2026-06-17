@@ -1,0 +1,41 @@
+{
+  "name": "caa-architecture-validation",
+  "description": "验证认知原子架构的完整性和一致性",
+  "input": {
+    "atom_name": "string",
+    "atom_type": "string (method-skill/domain-skill)",
+    "required_files": [
+      "SKILL.md",
+      "IO_CONTRACT.md",
+      "BOUNDARY.md",
+      "EVIDENCE_SCHEMA.md"
+    ]
+  },
+  "expected": {
+    "all_required_files_exist": "boolean",
+    "io_contract_valid": "boolean",
+    "boundary_defined": "boolean",
+    "evidence_defined": "boolean"
+  },
+  "test_cases": [
+    {
+      "name": "valid-class-skill",
+      "input": {
+        "atom_name": "test-skill",
+        "atom_type": "domain-skill",
+        "required_files": [
+          "SKILL.md",
+          "IO_CONTRACT.md",
+          "BOUNDARY.md",
+          "EVIDENCE_SCHEMA.md"
+        ]
+      },
+      "expected": {
+        "all_required_files_exist": true,
+        "io_contract_valid": true,
+        "boundary_defined": true,
+        "evidence_defined": true
+      }
+    }
+  ]
+}

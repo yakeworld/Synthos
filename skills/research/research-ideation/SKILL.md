@@ -1,6 +1,7 @@
 ---
 name: research-ideation
 description: 研究创意发散与认知引擎（RIF+CCF）。三层架构：Layer 1（10操作框架）→ 产出研究方向候选； Layer 2（8认知引擎）→
+version: 1.0.0
   产出认知洞察；Layer 3（组合协议）→ 编排执行流程。 将研究问题转化为多维度创意方向和认知洞察。先发散后收敛，多角度扫描领域机会。
 license: MIT
 allowed-tools: Read Write
@@ -36,7 +37,9 @@ metadata:
     - cognitive-engine
     - research-direction
     - exploration
+
 ---
+
 
 
 ## 原理层·文言

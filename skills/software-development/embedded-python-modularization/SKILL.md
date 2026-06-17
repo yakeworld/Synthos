@@ -1,6 +1,7 @@
 ---
 name: embedded-python-modularization
 description: >-
+version: 1.0.0
   嵌入式Python模块化 — state.py模式, 延迟导入, 循环依赖消除。
   以K230 CanMV项目为参照：state.py集中管理全局状态，config.py负责配置加载/保存/缓存，
   hardware.py做硬件抽象（OLED/按键/摄像头/WiFi），inference.py管理推理生命周期。
@@ -11,7 +12,9 @@ metadata:
     author: Synthos
     absorbed_skills:
     - embedded-python-modularization (原v1.0)
+
 ---
+
 
 # Embedded Python Modularization
 

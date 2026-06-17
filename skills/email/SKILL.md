@@ -2,6 +2,7 @@
 
 name: email
 description: 电子邮件管理 — Himalaya CLI邮件收发、搜索。
+version: 1.0.0
 triggers:
   - 需要执行email下的子技能
 metadata:
@@ -11,7 +12,9 @@ metadata:
     description: "父级技能 — 电子邮件管理 — Himalaya CLI邮件收发、搜索。"
     signature: 'email -> sub-skills: [himalaya]'
     related_skills: ["himalaya"]
+
 ---
+
 
 # email
 

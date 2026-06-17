@@ -2,6 +2,7 @@
 name: k230-canmv-debugging
 category: autonomous-ai-agents
 description: K230 CanMV board debugging — serial REPL, ampy transfers, hardware encoder
+version: 1.4
   pipeline, sensor init order, and import quirks specific to Kendryte K230 / Micropython
   / CanMV v1.4.
 allowed-tools:
@@ -26,7 +27,9 @@ metadata:
     - embedded-python-modularization
     - github-agent-contributions
     - hermes-agent-skill-authoring
+
 ---
+
 
 
 # K230 CanMV Board Debugging

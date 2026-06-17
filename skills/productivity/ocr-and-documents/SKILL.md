@@ -1,6 +1,7 @@
 ---
 name: ocr-and-documents
 description: Extract text from PDFs/scans (pymupdf, marker-pdf).
+version: 1.0.0
 allowed-tools:
 - terminal
 - read_file
@@ -28,7 +29,9 @@ metadata:
     - jupyter-live-kernel
     - linear
     version: 2.3.0
+
 ---
+
 
 
 # PDF & Document Extraction

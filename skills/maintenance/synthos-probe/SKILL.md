@@ -1,12 +1,15 @@
 ---
 name: synthos-probe
 description: 轻量级读取检查：验证 Synthos 认知原子（7核心原子）的结构完整性和全量 SKILL.md 基准。
+version: 1.0.0
 license: MIT
 references:
   - references/cycle-68-probe-record.md
   - references/cron-vs-human-probe-discrepancy-2026-06-09.md
   - references/systemic-gap-analysis-2026-06-09.md
+
 ---
+
 
 # Synthos Probe — 7-Atom Structural Check
 

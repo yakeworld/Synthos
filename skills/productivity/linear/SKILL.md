@@ -1,12 +1,15 @@
 ---
 name: linear
 description: >-
+version: 1.0.0
   Linear项目管理 — issues/projects/teams via GraphQL。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
+
 ---
+
 
 # Linear
 

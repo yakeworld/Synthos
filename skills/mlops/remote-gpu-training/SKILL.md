@@ -1,12 +1,15 @@
 ---
 name: remote-gpu-training
 description: >-
+version: 1.0.0
   远程GPU训练工作流 — SSH连接, env setup, scp脚本, tmux后台训练。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
+
 ---
+
 
 # Remote Gpu Training
 

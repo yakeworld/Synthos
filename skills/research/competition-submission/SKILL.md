@@ -1,6 +1,7 @@
 ---
 name: competition-submission
 description: End-to-end preparation of AI/tech/innovation competition submissions. Extract requirements, map to scoring criteria, generate documents, produce submission checklist. Covers medical AI, tech innovation, academic conferences, Chinese government grants.
+version: 1.0.0
 allowed-tools:
 - terminal
 - file
@@ -12,7 +13,9 @@ metadata:
     version: 2.0.0
     author: Synthos
     signature: 'competition_doc: str -> submission_package: dict'
+
 ---
+
 
 # Competition Submission Pipeline
 

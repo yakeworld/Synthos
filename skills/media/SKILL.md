@@ -2,6 +2,7 @@
 
 name: media
 description: 媒体内容 — GIF搜索、音乐生成、音谱分析、Spotify控制。
+version: 1.0.0
 triggers:
   - 需要执行media下的子技能
 metadata:
@@ -11,7 +12,9 @@ metadata:
     description: "父级技能 — 媒体内容 — GIF搜索、音乐生成、音谱分析、Spotify控制。"
     signature: 'media -> sub-skills: [gif-search, heartmula, songsee]'
     related_skills: ["gif-search", "heartmula", "songsee", "spotify"]
+
 ---
+
 
 # media
 

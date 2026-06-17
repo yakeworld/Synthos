@@ -1,6 +1,7 @@
 ---
 name: agent-orchestration-harness
 description: Hermes（大脑）+ OpenCode（双手）双Agent工程化分工协议。 Hermes负责需求拆解/规范/架构检查，OpenCode负责代码生成/文件创建/验证。
+version: 1.0.0
   >=80%置信度直接执行，不等人确认。
 license: MIT
 allowed-tools: shell skill_loader Read Write task_delegation file_search
@@ -16,7 +17,9 @@ metadata:
     - hermes-agent-skill-authoring
     - k230-canmv-debugging
     version: 1.0.0
+
 ---
+
 
 
 # Agent Orchestration Harness — 双Agent工程化分工协议

@@ -2,6 +2,7 @@
 
 name: maintenance
 description: Synthos维护 — 认知原子结构完整性验证。
+version: 1.0.0
 triggers:
   - 需要执行maintenance下的子技能
 metadata:
@@ -11,7 +12,9 @@ metadata:
     description: "父级技能 — Synthos维护 — 认知原子结构完整性验证。"
     signature: 'maintenance -> sub-skills: [synthos-probe]'
     related_skills: ["synthos-probe"]
+
 ---
+
 
 # maintenance
 

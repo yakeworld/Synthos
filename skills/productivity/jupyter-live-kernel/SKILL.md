@@ -1,6 +1,7 @@
 ---
 name: jupyter-live-kernel
 description: Iterative Python via live Jupyter kernel (hamelnb).
+version: 1.0.0
 allowed-tools:
 - terminal
 - read_file
@@ -31,7 +32,9 @@ metadata:
     - linear
     - maps
     version: 1.0.0
+
 ---
+
 
 
 # Jupyter Live Kernel (hamelnb)

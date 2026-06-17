@@ -2,8 +2,11 @@
 
 name: v32-multi-direction-scan
 description: Standardized v32 multi-direction PubMed+OpenAlex scan protocol for autonomous-core-researcher cron runs.
+version: 1.0.0
 category: research
+
 ---
+
 
 # v32 Multi-Direction Scan Protocol
 

@@ -1,6 +1,7 @@
 ---
 name: debugging-hermes-tui-commands
 description: 'Debug Hermes TUI slash commands: Python, gateway, Ink UI.'
+version: 1.0.0
 allowed-tools:
 - terminal
 - file
@@ -33,7 +34,9 @@ metadata:
     - hermes-agent-skill-authoring
     - k230-canmv-debugging
     version: 1.0.0
+
 ---
+
 
 
 # Debugging Hermes TUI Slash Commands

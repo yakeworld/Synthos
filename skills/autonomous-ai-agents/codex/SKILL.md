@@ -1,6 +1,7 @@
 ---
 name: codex
 description: Delegate coding to OpenAI Codex CLI (features, PRs).
+version: 1.0.0
 allowed-tools:
 - terminal
 - file
@@ -31,7 +32,9 @@ metadata:
     - hermes-agent
     - moltbook-connector
     version: 1.0.0
+
 ---
+
 
 
 # Codex CLI

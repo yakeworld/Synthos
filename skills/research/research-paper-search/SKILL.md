@@ -1,6 +1,7 @@
 ---
 name: research-paper-search
 description: '主skill | 多源论文检索+全文下载编排器。入口：Semantic Scholar, PubMed, Crossref, OpenAlex, arXiv。下载：arXiv直链→PMC efetch→封锁标记。调用子skill: arxiv, pubmed, openalex。'
+version: 1.0.0
 metadata:
   synthos:
     version: 1.0.0
@@ -14,7 +15,9 @@ metadata:
   - references/pubmed-api-key-casing.md
   - references/pubmed-template-query-antipatterns.md — v22: OR-heavy DEFAULT_QUERIES produce massive false positives; all queries must use AND composition
   - references/efetch-response-quirks.md — v27: efetch may return text/plain or HTML instead of JSON/XML; rate-limit behavior; esummary key is PMID
+
 ---
+
 
 # Research Paper Search
 

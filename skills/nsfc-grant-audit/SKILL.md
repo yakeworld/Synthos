@@ -9,7 +9,8 @@ metadata:
     priority: P1
     atom_type: domain-skill
     description: 主skill | 国自然/省科技厅/市科技局三级课题评审编排器。九维评审矩阵。
-    signature: ['grant_proposal: str, review_criteria: dict -> audit_report: dict'] -> ['audit_report: dict (dimensions: list[dict], scores: dict, improvements: list[str])']
+    signature: |
+      grant_proposal: str, review_criteria: dict -> audit_report: dict | audit_report: dict (dimensions: list[dict], scores: dict, improvements: list[str])
     related_skills: [quality-gate, paper-pipeline, knowledge-acquisition, knowledge-extraction, association-discovery, hypothesis-generation, argument-expression, viewpoint-verification]
 
 

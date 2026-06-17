@@ -1,6 +1,7 @@
 ---
 name: nature-paper2ppt
 description: Nature-style Chinese PPTX from academic papers — argument-driven slide
+version: 1.0.0
   generation with figure-first layout optimization. Extracts paper argument, selects
   evidence figures, writes Chinese slide content + speaker notes, builds real .pptx
   deck (python-pptx). Cross-platform Python stack (PyMuPDF, Pillow, python-pptx).
@@ -27,7 +28,9 @@ metadata:
     - excalidraw
     - ffmpeg-video-audio-sync
     version: 1.0.0
+
 ---
+
 
 
 # Nature Paper2PPT — 科学论文转Nature风格PPT

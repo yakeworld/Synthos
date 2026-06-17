@@ -1,6 +1,7 @@
 ---
 name: node-inspect-debugger
 description: Node Inspect Debugger
+version: 1.0.0
 license: MIT
 metadata:
   synthos:
@@ -14,7 +15,9 @@ allowed-tools:
 - write_file
 - search_files
 - task_delegation
+
 ---
+
 
 # node-inspect-debugger
 

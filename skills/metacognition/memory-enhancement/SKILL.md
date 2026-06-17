@@ -1,12 +1,15 @@
 ---
 name: memory-enhancement
 description: >-
+version: 1.0.0
   记忆增强与结构化巩固 — FSRS间隔重复+增量阅读+知识图谱。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
+
 ---
+
 
 # Memory Enhancement
 

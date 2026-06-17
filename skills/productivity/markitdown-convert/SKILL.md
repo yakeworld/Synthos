@@ -1,6 +1,7 @@
 ---
 name: markitdown-convert
 description: Convert PDF/Office files to Markdown using Microsoft MarkItDown
+version: 1.0.0
 allowed-tools:
 - terminal
 - read_file
@@ -18,7 +19,9 @@ metadata:
     - google-workspace
     - jupyter-live-kernel
     - linear
+
 ---
+
 
 
 # MarkItDown → Markdown 转换

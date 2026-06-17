@@ -2,6 +2,7 @@
 
 name: productivity
 description: 生产力工具 — Airtable、Google Workspace、Linear、Notion、Jupyter等。
+version: 1.0.0
 triggers:
   - 需要执行productivity下的子技能
 metadata:
@@ -11,7 +12,9 @@ metadata:
     description: "父级技能 — 生产力工具 — Airtable、Google Workspace、Linear、Notion、Jupyter等。"
     signature: 'productivity -> sub-skills: [airtable, chinese-form-automation, google-workspace]'
     related_skills: ["airtable", "chinese-form-automation", "google-workspace", "jupyter-live-kernel", "linear"]
+
 ---
+
 
 # productivity
 
