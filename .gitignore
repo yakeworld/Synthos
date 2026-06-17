@@ -155,3 +155,10 @@ docs/promotion/
 # 15. 专利工具（含内部专利信息，不入库）
 # ============================================
 skills/patent-disclosure/
+
+# AKNE data — symlink to remote, do not track
+akne/
+
+cron-output-*.json
+cron-run-report-*.md
+cron-state.json

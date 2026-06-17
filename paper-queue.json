@@ -21,7 +21,7 @@
     "last_updated": "2026-06-16T10:00:00Z",
     "notes": {
       "orphan_onboarding_2026-06-16": "Orphan onboarded from disk. D10a=100%% (82/82, 0 orphans, 0 zombies). Layer B avg=0.84 (T2 PASS). elsarticle systematic review. Clean compile: 28pp, 323KB, 0 errors, 0 warnings. qs=84, CONDITIONAL safeguard.",
-      "queue_sync_2026-06-16T10": "CONDITIONAL→PASS. State.json already has all G1-G7 PASS, D10a=100% (82/82), Layer B=0.84, clean compile 28pp."
+      "queue_sync_2026-06-16T10": "CONDITIONAL\u2192PASS. State.json already has all G1-G7 PASS, D10a=100% (82/82), Layer B=0.84, clean compile 28pp."
     }
   },
   {
@@ -38,7 +38,7 @@
     "last_updated": "2026-06-15T18:09:54Z",
     "notes": {
       "orphan_onboarding_2026-06-16": "D10a=100% (25/25, 0 orphans, 0 zombies). Clean compile: 21pp, 262KB. Clinical BPPV simulation study (Unity 3D + PhysX). qs=60, CONDITIONAL.",
-      "repair_2026-06-15": "Paper Repair Agent: qs 60→84, CONDITIONAL→PASS. g1g7_gate_check_passed."
+      "repair_2026-06-15": "Paper Repair Agent: qs 60\u219284, CONDITIONAL\u2192PASS. g1g7_gate_check_passed."
     }
   },
   {
@@ -461,8 +461,8 @@
     ],
     "last_updated": "2026-06-13T13:00:00Z",
     "notes": {
-      "2026-06-13": "G3 Reference Health improved: D10a 94.1%→100.0%, orphans 1→0",
-      "gate_fix": "Corrected gate_status CONDITIONAL → PASS. All gates PASS, 0 soft/hard fails."
+      "2026-06-13": "G3 Reference Health improved: D10a 94.1%\u2192100.0%, orphans 1\u21920",
+      "gate_fix": "Corrected gate_status CONDITIONAL \u2192 PASS. All gates PASS, 0 soft/hard fails."
     }
   },
   {
@@ -513,7 +513,7 @@
     "last_updated": "2026-06-14T22:05:00Z",
     "notes": {
       "2026-06-14T14:08Z": "Queue sync: qs 65->81 (state.json was ahead)",
-      "2026-06-14T22:05:00Z": "G2+G4+G7→PASS: Variant B auto-gate false-positive resolution. qs 81→93. 3 template-evidence SOFT_FAILs resolved. Clean recompile: 7 pages, 282884 bytes, 0 errors."
+      "2026-06-14T22:05:00Z": "G2+G4+G7\u2192PASS: Variant B auto-gate false-positive resolution. qs 81\u219293. 3 template-evidence SOFT_FAILs resolved. Clean recompile: 7 pages, 282884 bytes, 0 errors."
     }
   },
   {
@@ -594,7 +594,7 @@
     "notes": {
       "citation_fix": "Fixed orphan bibliography: D10a 12% -> 100% (25/25 cited, 0 orphans, 0 zombies). 24 cite references added. Clean compile: 0 errors, 0 undefined citations, 6 pages. G6 SOFT_FAIL: first-mover claim requires verification.",
       "quality_check": "2026-06-13T16:00:00Z: Layer A quality check completed. D10a=100% (25/25), clean compile. G6 SOFT_FAIL (first-mover claim). Layer B evaluation pending.",
-      "2026-06-13T19:00Z": "G6 first-mover claim verified: PubMed computational hemodynamics eye ODE=0, PubMed PINN ocular=3 (drug transport not blood flow), OpenAlex PINN+ocular blood flow=0. Closest competitors: IOP structural models, drug transport PINN. G6 SOFT_FAIL→PASS. All G1-G7 now PASS. 9 overfull hbox warnings (cosmetic). Ready for Layer B review.",
+      "2026-06-13T19:00Z": "G6 first-mover claim verified: PubMed computational hemodynamics eye ODE=0, PubMed PINN ocular=3 (drug transport not blood flow), OpenAlex PINN+ocular blood flow=0. Closest competitors: IOP structural models, drug transport PINN. G6 SOFT_FAIL\u2192PASS. All G1-G7 now PASS. 9 overfull hbox warnings (cosmetic). Ready for Layer B review.",
       "Queue sync 2026-06-13T19:00": "qs 92->92, gate CONDITIONAL->PASS"
     },
     "g1g7_status": "ALL_PASS"
@@ -826,7 +826,7 @@
     ],
     "last_updated": "2026-06-12T14:35:45.529735",
     "notes": {
-      "2026-06-15T06:57:00Z": "Empty gate fix: Variant E. qs 0.89→89, gate ''→PASS. Clean compile D10a=100% (30/30)."
+      "2026-06-15T06:57:00Z": "Empty gate fix: Variant E. qs 0.89\u219289, gate ''\u2192PASS. Clean compile D10a=100% (30/30)."
     }
   },
   {
@@ -1028,7 +1028,7 @@
     ],
     "last_updated": "2026-06-14T08:17:22Z",
     "notes": {
-      "2026-06-14T12:57Z": "D10a phantom fix: added rauch2018 (D10a 93.3%->100%). G6 first-mover claim independently verified — ABSOLUTE WHITE CONFIRMED. qs 60->66. 4 SOFT_FAILs remaining: G2, G3, G4, G7. Clean compile: 5 pages, 0 errors.",
+      "2026-06-14T12:57Z": "D10a phantom fix: added rauch2018 (D10a 93.3%->100%). G6 first-mover claim independently verified \u2014 ABSOLUTE WHITE CONFIRMED. qs 60->66. 4 SOFT_FAILs remaining: G2, G3, G4, G7. Clean compile: 5 pages, 0 errors.",
       "Queue sync 2026-06-14T08:17": "qs 66->86, gate CONDITIONAL->PASS"
     }
   },
@@ -1055,7 +1055,7 @@
     "last_updated": "2026-06-14T14:47:00Z",
     "notes": {
       "2026-06-14T14:08Z": "Queue sync: qs 60->68 (state.json was ahead)",
-      "2026-06-14T14:47Z": "G6 first-mover claim independently verified via PubMed+OpenAlex. Q1-Q6 all 0 genuine competitors. 'tear film'+PINN=0, 'tear film dynamics'+ODE=0, 'tear film'+dynamical+model=0. Q4: 7 PDE thin-film model hits (all harmless). Closest prior art: arXiv 2210.03593 — ODEs as data-fitting tool for FL intensity, NOT first-principles compartment ODE model. ABSOLUTE WHITE CONFIRMED. G6 SOFT_FAIL->PASS. qs 68->71. Remaining: G2, G4, G7 (3 SOFT_FAILs).",
+      "2026-06-14T14:47Z": "G6 first-mover claim independently verified via PubMed+OpenAlex. Q1-Q6 all 0 genuine competitors. 'tear film'+PINN=0, 'tear film dynamics'+ODE=0, 'tear film'+dynamical+model=0. Q4: 7 PDE thin-film model hits (all harmless). Closest prior art: arXiv 2210.03593 \u2014 ODEs as data-fitting tool for FL intensity, NOT first-principles compartment ODE model. ABSOLUTE WHITE CONFIRMED. G6 SOFT_FAIL->PASS. qs 68->71. Remaining: G2, G4, G7 (3 SOFT_FAILs).",
       "Queue sync \"2026-06-14T21:58:01Z\"": "qs 71->86, gate CONDITIONAL->PASS"
     }
   },
@@ -1083,7 +1083,7 @@
     "last_updated": "2026-06-13T18:30:00Z",
     "notes": {
       "2026-06-13T09:57Z": "Citation fix: D10a improved from 53% to 100% (15/15). Added 7 cite references. quality_score 70->85. G3: SOFT_FAIL->PASS. Clean compile: 6 pages, 211170 bytes, 0 errors.",
-      "2026-06-13T18:30Z": "Root paper.tex synced with fixed 01-manuscript version. D10a=100% confirmed. Clean compile: 0 errors, 0 warnings, 6 pages, 211170 bytes. Root tex was stale — fix was only in 01-manuscript.",
+      "2026-06-13T18:30Z": "Root paper.tex synced with fixed 01-manuscript version. D10a=100% confirmed. Clean compile: 0 errors, 0 warnings, 6 pages, 211170 bytes. Root tex was stale \u2014 fix was only in 01-manuscript.",
       "Queue sync 2026-06-13T18:30": "qs 85->85, gate CONDITIONAL->PASS"
     }
   },
@@ -1108,8 +1108,8 @@
     ],
     "last_updated": "2026-06-13T17:25:00Z",
     "notes": {
-      "desync_fixed": "2026-06-13: Directory was lost but all 10 steps were completed. Marked as completed based on queue data. Directory missing — cannot verify paper.tex quality.",
-      "directory_status": "MISSING — paper directory not found in /home/yakeworld/synthos/outputs/papers/ or /home/yakeworld/Synthos/papers/",
+      "desync_fixed": "2026-06-13: Directory was lost but all 10 steps were completed. Marked as completed based on queue data. Directory missing \u2014 cannot verify paper.tex quality.",
+      "directory_status": "MISSING \u2014 paper directory not found in /home/yakeworld/synthos/outputs/papers/ or /home/yakeworld/Synthos/papers/",
       "steps": [
         "method",
         "intro",
@@ -1123,7 +1123,7 @@
         "publication"
       ],
       "recommendation": "Cannot verify quality without paper.tex. If needed, re-run from step files.",
-      "2026-06-13T17:25:00Z": "Citation fix applied: 0→14 citations, D10a 0%→100%, clean compile, quality_score 25→85, gate_status PASS"
+      "2026-06-13T17:25:00Z": "Citation fix applied: 0\u219214 citations, D10a 0%\u2192100%, clean compile, quality_score 25\u219285, gate_status PASS"
     },
     "stage": "quality_check_complete"
   },
@@ -1349,8 +1349,8 @@
     ],
     "last_updated": "2026-06-14T09:10:00+08:00",
     "notes": {
-      "last_fix": "2026-06-13T00:19:43Z: Citation fix applied. D10a=100%, 0 orphans, 0 zombies. Quality score 82→90. G3 SOFT_FAIL→PASS.",
-      "queue_sync": "Queue entry synced to match state.json (qs=26/HARD_FAIL → qs=90/PASS)",
+      "last_fix": "2026-06-13T00:19:43Z: Citation fix applied. D10a=100%, 0 orphans, 0 zombies. Quality score 82\u219290. G3 SOFT_FAIL\u2192PASS.",
+      "queue_sync": "Queue entry synced to match state.json (qs=26/HARD_FAIL \u2192 qs=90/PASS)",
       "verification": "Manual check confirms: 15 citations matching 15 bibitems, D10a=100%",
       "Queue sync 2026-06-14T09:10": "qs 90->26, gate PASS->HARD_FAIL"
     },
@@ -1379,7 +1379,7 @@
     ],
     "last_updated": "2026-06-13T14:00:00Z",
     "notes": {
-      "2026-06-13_fix": "Citation orphan fix: 0→16 cited, D10a 0%→100%. 3-state→4-state fix. Markdown headers→LaTeX. G3,G4,G7 SOFT_FAIL→PASS. Clean compile: 0 errors, 15 pages, 202977 bytes. quality_score=82, gate_status=PASS."
+      "2026-06-13_fix": "Citation orphan fix: 0\u219216 cited, D10a 0%\u2192100%. 3-state\u21924-state fix. Markdown headers\u2192LaTeX. G3,G4,G7 SOFT_FAIL\u2192PASS. Clean compile: 0 errors, 15 pages, 202977 bytes. quality_score=82, gate_status=PASS."
     }
   },
   {
@@ -1436,9 +1436,9 @@
     "last_updated": "2026-06-15T06:07:07.754691+00:00",
     "reason": "no_repair_needed",
     "notes": {
-      "queue_sync_2026-06-15T10:56": "Variant F stale FAIL→CONDITIONAL: state confirmed D10a=100%, clean compile. qs 25→60, gate FAIL→CONDITIONAL",
+      "queue_sync_2026-06-15T10:56": "Variant F stale FAIL\u2192CONDITIONAL: state confirmed D10a=100%, clean compile. qs 25\u219260, gate FAIL\u2192CONDITIONAL",
       "auto_gate_fix_2026-06-15T11:32": "Variant A: G2/G4/G5/G6 template SOFT_FAILs->PASS. D10a=100%, G6 ABSOLUTE WHITE (6 PubMed=0), metrics verified, nystagmus content removed from Table 3. qs 60->80, gate CONDITIONAL->PASS, soft_fails 5->0. Clean compile: 11 pages, 318KB, 0 errors.",
-      "queue_sync_2026-06-15T06:07": "Stale queue synced: qs 80→80, gate PASS→PASS"
+      "queue_sync_2026-06-15T06:07": "Stale queue synced: qs 80\u219280, gate PASS\u2192PASS"
     }
   },
   {
@@ -1540,7 +1540,7 @@
     "last_updated": "2026-06-15T10:06:12Z",
     "reason": "no_repair_needed",
     "notes": {
-      "auto_gate_fix_2026-06-15T10:06:12Z": "Auto-gate false-positive fix (Variant A + stale G1 HARD_FAIL). D10a=100% (15/15). All G1-G7 PASS. CONDITIONAL→PASS. Code/Data section present."
+      "auto_gate_fix_2026-06-15T10:06:12Z": "Auto-gate false-positive fix (Variant A + stale G1 HARD_FAIL). D10a=100% (15/15). All G1-G7 PASS. CONDITIONAL\u2192PASS. Code/Data section present."
     }
   },
   {
@@ -1591,7 +1591,7 @@
     "last_updated": "2026-06-15T10:06:12Z",
     "reason": "no_repair_needed",
     "notes": {
-      "auto_gate_fix_2026-06-15T10:06:12Z": "Auto-gate false-positive fix (Variant A). D10a=100% (18/18). All G1-G7 PASS. CONDITIONAL→PASS. Code/Data section present."
+      "auto_gate_fix_2026-06-15T10:06:12Z": "Auto-gate false-positive fix (Variant A). D10a=100% (18/18). All G1-G7 PASS. CONDITIONAL\u2192PASS. Code/Data section present."
     }
   },
   {
@@ -1616,7 +1616,7 @@
     "last_updated": "2026-06-15T10:06:12Z",
     "reason": "no_repair_needed",
     "notes": {
-      "auto_gate_fix_2026-06-15T10:06:12Z": "Auto-gate false-positive fix (Variant A). D10a=100% (20/20). All G1-G7 PASS. CONDITIONAL→PASS. Code/Data section present."
+      "auto_gate_fix_2026-06-15T10:06:12Z": "Auto-gate false-positive fix (Variant A). D10a=100% (20/20). All G1-G7 PASS. CONDITIONAL\u2192PASS. Code/Data section present."
     }
   },
   {
@@ -1641,7 +1641,7 @@
     "last_updated": "2026-06-15T10:06:12Z",
     "reason": "no_repair_needed",
     "notes": {
-      "auto_gate_fix_2026-06-15T10:06:12Z": "Auto-gate false-positive fix (Variant A). D10a=100% (20/20). All G1-G7 PASS. CONDITIONAL→PASS. Code/Data section present."
+      "auto_gate_fix_2026-06-15T10:06:12Z": "Auto-gate false-positive fix (Variant A). D10a=100% (20/20). All G1-G7 PASS. CONDITIONAL\u2192PASS. Code/Data section present."
     }
   },
   {
@@ -1831,7 +1831,7 @@
     "last_updated": "2026-06-15T06:07:07.754691+00:00",
     "reason": "no_repair_needed",
     "notes": {
-      "queue_sync_2026-06-15T06:07": "Stale queue synced: qs None→75, gate PASS→PASS"
+      "queue_sync_2026-06-15T06:07": "Stale queue synced: qs None\u219275, gate PASS\u2192PASS"
     }
   },
   {
@@ -1942,7 +1942,7 @@
     ],
     "last_updated": "2026-06-15T22:52:00Z",
     "notes": {
-      "initial_onboard": "2026-06-15T14:11:46Z: Orphan paper onboarded. Prose variant: D10a 0%→100% (16/16). Clean compile: 12pp/249KB. qs=60, CONDITIONAL.",
+      "initial_onboard": "2026-06-15T14:11:46Z: Orphan paper onboarded. Prose variant: D10a 0%\u2192100% (16/16). Clean compile: 12pp/249KB. qs=60, CONDITIONAL.",
       "g1g7_gate_check_2026-06-15T22:13": "Full G1-G7 gate check. qs 60->65. 3 SOFT_FAILs remaining (G2 template, G4 ablation ratio, G7 Code section). CONDITIONAL.",
       "auto_gate_fix_2026-06-15T22:52": "G2/G4/G7 SOFT_FAIL->PASS. Ablation ratio 2.1x->2.6x corrected. Code section added. qs 65->75, CONDITIONAL->PASS, 0 SOFT_FAILs."
     }
@@ -1971,7 +1971,7 @@
     "notes": {
       "repaired_2026-06-15T12:14:03": "D10a 0->100% (15/15), Code section added, template SOFT_FAILs->PASS, qs 25",
       "repaired_2026-06-15T12:14:29": "D10a 0->100% (15/15), Code section added, template SOFT_FAILs->PASS, qs 73",
-      "queue_sync_2026-06-15T06:07": "Stale queue synced: qs 73→73, gate PASS→PASS"
+      "queue_sync_2026-06-15T06:07": "Stale queue synced: qs 73\u219273, gate PASS\u2192PASS"
     }
   },
   {
@@ -1996,7 +1996,7 @@
     "last_updated": "2026-06-15T10:56:00Z",
     "reason": "no_repair_needed",
     "notes": {
-      "queue_sync_2026-06-15T10:56": "Variant F stale FAIL→PASS: state confirmed D10a=100%, clean compile. qs 25→70, gate FAIL→PASS"
+      "queue_sync_2026-06-15T10:56": "Variant F stale FAIL\u2192PASS: state confirmed D10a=100%, clean compile. qs 25\u219270, gate FAIL\u2192PASS"
     }
   },
   {
@@ -2021,7 +2021,7 @@
     "last_updated": "2026-06-15T10:56:00Z",
     "reason": "no_repair_needed",
     "notes": {
-      "queue_sync_2026-06-15T10:56": "Variant F stale FAIL→PASS: state confirmed D10a=100%, clean compile. qs 25→70, gate FAIL→PASS"
+      "queue_sync_2026-06-15T10:56": "Variant F stale FAIL\u2192PASS: state confirmed D10a=100%, clean compile. qs 25\u219270, gate FAIL\u2192PASS"
     }
   },
   {
@@ -2046,7 +2046,7 @@
     "last_updated": "2026-06-15T10:56:00Z",
     "reason": "no_repair_needed",
     "notes": {
-      "queue_sync_2026-06-15T10:56": "Variant F stale FAIL→PASS: state confirmed D10a=100%, clean compile. qs 25→70, gate FAIL→PASS"
+      "queue_sync_2026-06-15T10:56": "Variant F stale FAIL\u2192PASS: state confirmed D10a=100%, clean compile. qs 25\u219270, gate FAIL\u2192PASS"
     }
   },
   {
@@ -2071,7 +2071,7 @@
     "last_updated": "2026-06-15T10:56:00Z",
     "reason": "no_repair_needed",
     "notes": {
-      "queue_sync_2026-06-15T10:56": "Variant F stale FAIL→PASS: state confirmed D10a=100%, clean compile. qs 25→70, gate FAIL→PASS"
+      "queue_sync_2026-06-15T10:56": "Variant F stale FAIL\u2192PASS: state confirmed D10a=100%, clean compile. qs 25\u219270, gate FAIL\u2192PASS"
     }
   },
   {
@@ -2096,7 +2096,7 @@
     "last_updated": "2026-06-15T10:56:00Z",
     "reason": "no_repair_needed",
     "notes": {
-      "queue_sync_2026-06-15T10:56": "Variant F stale FAIL→PASS: state confirmed D10a=100%, clean compile. qs 25→70, gate FAIL→PASS"
+      "queue_sync_2026-06-15T10:56": "Variant F stale FAIL\u2192PASS: state confirmed D10a=100%, clean compile. qs 25\u219270, gate FAIL\u2192PASS"
     }
   },
   {
@@ -2120,8 +2120,8 @@
     ],
     "last_updated": "2026-06-16T18:07:31Z",
     "notes": {
-      "d10a_fix_2026-06-17": "D10a 0%→100% (15/15). Zero-bib fix. qs 70→78, T4_PASS→CONDITIONAL.",
-      "g6_g2_g4_promotion_2026-06-17": "G6 ABSOLUTE WHITE (0/6 PubMed found PINN+BPPV competitors). G2+G4 template SOFT_FAILs promoted. qs 78→88, CONDITIONAL→PASS, 0 SQFT_FAILs. 14pp/253KB clean compile."
+      "d10a_fix_2026-06-17": "D10a 0%\u2192100% (15/15). Zero-bib fix. qs 70\u219278, T4_PASS\u2192CONDITIONAL.",
+      "g6_g2_g4_promotion_2026-06-17": "G6 ABSOLUTE WHITE (0/6 PubMed found PINN+BPPV competitors). G2+G4 template SOFT_FAILs promoted. qs 78\u219288, CONDITIONAL\u2192PASS, 0 SQFT_FAILs. 14pp/253KB clean compile."
     },
     "reason": "no_repair_needed"
   },
@@ -2147,7 +2147,7 @@
     "last_updated": "2026-06-15T10:56:00Z",
     "reason": "no_repair_needed",
     "notes": {
-      "queue_sync_2026-06-15T10:56": "Variant F stale FAIL→PASS: state confirmed D10a=100%, clean compile. qs 25→70, gate FAIL→PASS"
+      "queue_sync_2026-06-15T10:56": "Variant F stale FAIL\u2192PASS: state confirmed D10a=100%, clean compile. qs 25\u219270, gate FAIL\u2192PASS"
     }
   },
   {
@@ -2198,7 +2198,7 @@
     "reason": "auto_gate_false_positive_fix",
     "notes": {
       "repaired_2026-06-15T12:11:56": "Variant F auto-gate fix: D10a=100%, Code section added, template SOFT_FAILs->PASS, qs 68",
-      "queue_sync_2026-06-15T06:07": "Stale queue synced: qs 68→68, gate PASS→PASS",
+      "queue_sync_2026-06-15T06:07": "Stale queue synced: qs 68\u219268, gate PASS\u2192PASS",
       "repaired_2026-06-16T17:27:34": "Variant F auto-gate fix: D10a=100%, Code section added, template SOFT_FAILs->PASS, qs 68"
     }
   },
@@ -2225,7 +2225,7 @@
     "reason": "auto_gate_false_positive_fix",
     "notes": {
       "repaired_2026-06-15T12:11:56": "Variant F auto-gate fix: D10a=100%, Code section added, template SOFT_FAILs->PASS, qs 65",
-      "queue_sync_2026-06-15T06:07": "Stale queue synced: qs 65→65, gate PASS→PASS",
+      "queue_sync_2026-06-15T06:07": "Stale queue synced: qs 65\u219265, gate PASS\u2192PASS",
       "repaired_2026-06-16T17:27:34": "Variant F auto-gate fix: D10a=100%, Code section added, template SOFT_FAILs->PASS, qs 65"
     }
   },
@@ -2252,7 +2252,7 @@
     "reason": "auto_gate_false_positive_fix",
     "notes": {
       "repaired_2026-06-15T12:11:56": "Variant F auto-gate fix: D10a=100%, Code section added, template SOFT_FAILs->PASS, qs 65",
-      "queue_sync_2026-06-15T06:07": "Stale queue synced: qs 65→65, gate PASS→PASS",
+      "queue_sync_2026-06-15T06:07": "Stale queue synced: qs 65\u219265, gate PASS\u2192PASS",
       "repaired_2026-06-16T17:27:34": "Variant F auto-gate fix: D10a=100%, Code section added, template SOFT_FAILs->PASS, qs 65"
     }
   },
@@ -2279,7 +2279,7 @@
     "reason": "auto_gate_false_positive_fix",
     "notes": {
       "repaired_2026-06-15T12:11:56": "Variant F auto-gate fix: D10a=100%, Code section added, template SOFT_FAILs->PASS, qs 65",
-      "queue_sync_2026-06-15T06:07": "Stale queue synced: qs 65→65, gate PASS→PASS",
+      "queue_sync_2026-06-15T06:07": "Stale queue synced: qs 65\u219265, gate PASS\u2192PASS",
       "repaired_2026-06-16T17:27:34": "Variant F auto-gate fix: D10a=100%, Code section added, template SOFT_FAILs->PASS, qs 65"
     }
   },
@@ -2333,7 +2333,7 @@
     "notes": {
       "enumerate_fix_2026-06-15": "Variant F auto-gate false positive. Enumerate->thebibliography (15/15 cited), Code section added, compile clean (12pp, 203KB). qs 25->55. G6 SOFT_FAIL remains.",
       "g6_verification_2026-06-15T13:27": "G6 verified: ABSOLUTE WHITE (0 ODE/PINN models of PAN). qs 55->65, CONDITIONAL->PASS. All 7 gates PASS, 0 soft_fails.",
-      "queue_sync_2026-06-15T06:07": "Stale queue synced: qs 65→65, gate PASS→PASS"
+      "queue_sync_2026-06-15T06:07": "Stale queue synced: qs 65\u219265, gate PASS\u2192PASS"
     }
   },
   {
@@ -2387,8 +2387,8 @@
     "last_updated": "2026-06-15T18:09:54Z",
     "reason": "no_repair_needed",
     "notes": {
-      "auto_gate_fix_2026-06-15T10:06:12Z": "Partial fix: G3→PASS (D10a=100%), G7→PASS (Code section). G2/G4/G5/G6 remain HARD_FAIL with substantive evidence (implausible AUC=1.0, truncated Methods, corneal ODE prior art). qs 50→65. HARD_FAIL→HARD_FAIL.",
-      "repair_2026-06-15": "Paper Repair Agent: qs 60→75, CONDITIONAL→PASS. g4_soft_fail_resolved."
+      "auto_gate_fix_2026-06-15T10:06:12Z": "Partial fix: G3\u2192PASS (D10a=100%), G7\u2192PASS (Code section). G2/G4/G5/G6 remain HARD_FAIL with substantive evidence (implausible AUC=1.0, truncated Methods, corneal ODE prior art). qs 50\u219265. HARD_FAIL\u2192HARD_FAIL.",
+      "repair_2026-06-15": "Paper Repair Agent: qs 60\u219275, CONDITIONAL\u2192PASS. g4_soft_fail_resolved."
     }
   },
   {
@@ -2400,7 +2400,7 @@
     "last_updated": "2026-06-16T01:26:00Z",
     "notes": {
       "orphan_onboarding_2026-06-16": "Orphan onboarded. D10a=100% (73/73). Systematic review of kappa angle calibration in BPPV VOG diagnosis. 30pp, 451KB. 3 SOFT_FAILs: G2, G4, G6.",
-      "auto_gate_fix_2026-06-16T01:26": "G6 ABSOLUTE WHITE confirmed via PubMed 6-query battery (ALL ZERO). G2/G4/G6 template SOFT_FAILs→PASS. qs 60→75, CONDITIONAL→PASS. 0 SOFT_FAILs."
+      "auto_gate_fix_2026-06-16T01:26": "G6 ABSOLUTE WHITE confirmed via PubMed 6-query battery (ALL ZERO). G2/G4/G6 template SOFT_FAILs\u2192PASS. qs 60\u219275, CONDITIONAL\u2192PASS. 0 SOFT_FAILs."
     }
   },
   {
@@ -2469,7 +2469,7 @@
     "notes": {
       "ghost_cleanup_2026-06-15": "Ghost entry cleaned: ghost_entry_no_paper_tex. Status was completed.",
       "ghost_fix_2026-06-16": "Ghost entry: gate_status forced to PASS (no paper.tex to evaluate)",
-      "ghost_fix_2026-06-17T14:06:33": "ghost_entry_no_paper_tex — gate_status corrected PASS->FAIL (state.json authoritative, no paper.tex on disk)"
+      "ghost_fix_2026-06-17T14:06:33": "ghost_entry_no_paper_tex \u2014 gate_status corrected PASS->FAIL (state.json authoritative, no paper.tex on disk)"
     }
   },
   {
@@ -2493,7 +2493,7 @@
     "last_updated": "2026-06-16T16:06:13Z",
     "reason": "ghost_entry_no_paper_tex",
     "notes": {
-      "ghost_cleanup": "Ghost cleaned 2026-06-16T16:06:13Z — no paper.tex on disk"
+      "ghost_cleanup": "Ghost cleaned 2026-06-16T16:06:13Z \u2014 no paper.tex on disk"
     }
   },
   {
@@ -2622,7 +2622,7 @@
     "last_updated": "2026-06-16T14:09:40.578824Z",
     "reason": "no_repair_needed",
     "notes": {
-      "repair_2026-06-16T22": "Zero-bibliography fix: D10a 0%→100% (23/23). qs=82, CONDITIONAL.",
+      "repair_2026-06-16T22": "Zero-bibliography fix: D10a 0%\u2192100% (23/23). qs=82, CONDITIONAL.",
       "gate_promotion_2026-06-16T22": "CONDITIONAL->PASS. All G1-G7 PASS, D10a=100%, soft_fails=0."
     }
   },
@@ -2643,8 +2643,8 @@
     "last_updated": "2026-06-16T03:43:00Z",
     "notes": {
       "initial_onboard_2026-06-16": "Orphan paper onboarded. D8=10 (after removing 7 cross-project contaminated bibitems). D10a=50.0% (5/10). Clean compile: 13pp/215KB, 0 errors. qs=60, CONDITIONAL. Needs D10a fix + G1-G7 gate check.",
-      "d10a_fix_2026-06-16": "D10a 50%→100% (10/10, 0 orphans, 0 zombies). Clean compile: 13pp/216KB, 0 errors. qs 60→68.",
-      "g1g7_gate_check_2026-06-16": "Full G1-G7 gate check. All 7 gates PASS. G6 deep-verified (ABSOLUTE_WHITE). Code/Data section added. qs 68→80, CONDITIONAL→PASS. 0 SOFT_FAILs."
+      "d10a_fix_2026-06-16": "D10a 50%\u2192100% (10/10, 0 orphans, 0 zombies). Clean compile: 13pp/216KB, 0 errors. qs 60\u219268.",
+      "g1g7_gate_check_2026-06-16": "Full G1-G7 gate check. All 7 gates PASS. G6 deep-verified (ABSOLUTE_WHITE). Code/Data section added. qs 68\u219280, CONDITIONAL\u2192PASS. 0 SOFT_FAILs."
     }
   },
   {
@@ -2664,7 +2664,7 @@
     "last_updated": "2026-06-16T04:22:00Z",
     "notes": {
       "initial_onboard": "2026-06-15T20:02:32Z: Orphan paper onboarded. D10a=100% (65/65). Clean compile: 27pp/338KB, 0 undefined. elsarticle+natbib resolved on 2nd pass. qs=65, CONDITIONAL.",
-      "repair_2026-06-16": "G1-G7 gate check: qs 65→85, CONDITIONAL→PASS. All 7 gates PASS, 0 SOFT_FAILs."
+      "repair_2026-06-16": "G1-G7 gate check: qs 65\u219285, CONDITIONAL\u2192PASS. All 7 gates PASS, 0 SOFT_FAILs."
     }
   },
   {
@@ -2689,7 +2689,7 @@
     "last_updated": "2026-06-16T05:30:00Z",
     "notes": {
       "orphan_onboarding_2026-06-16": "D10a=100% (15/15, 0 orphans, 0 zombies). Clean compile: 10pp, 184KB. qs=75, CONDITIONAL. G6 SOFT_FAIL (synthetic data + first-mover claim).",
-      "g6_verified_2026-06-16": "G6 verified via PubMed 6-query battery. ABSOLUTE WHITE. qs 75→80, CONDITIONAL→PASS. 0 SOFT_FAILs."
+      "g6_verified_2026-06-16": "G6 verified via PubMed 6-query battery. ABSOLUTE WHITE. qs 75\u219280, CONDITIONAL\u2192PASS. 0 SOFT_FAILs."
     }
   },
   {
@@ -2764,7 +2764,7 @@
     "last_updated": "2026-06-16T08:15:00Z",
     "notes": {
       "orphan_onboarding_2026-06-16": "Pre-reviewed orphan. D10a=100% (53/53, 0 orphans, 0 zombies). Layer B avg=0.89 (T1 PASS). elsarticle systematic review. Clean compile: 17pp, 414KB, 0 errors. qs=89, CONDITIONAL.",
-      "queue_sync_2026-06-16": "Stale CONDITIONAL→PASS. state.json already had all G1-G7 PASS."
+      "queue_sync_2026-06-16": "Stale CONDITIONAL\u2192PASS. state.json already had all G1-G7 PASS."
     }
   },
   {
@@ -2789,7 +2789,7 @@
     "last_updated": "2026-06-16T08:51:00Z",
     "notes": {
       "orphan_onboarding_2026-06-16": "Layer-B-reviewed orphan. D10a=100% (51/51, 0 orphans, 0 zombies). Layer B avg=0.82. Systematic review of kappa angle calibration. Clean compile: 29pp, 408KB, 0 errors, 0 warnings. qs=82, CONDITIONAL.",
-      "queue_sync_2026-06-16": "Stale CONDITIONAL→PASS. state.json already had all G1-G7 PASS."
+      "queue_sync_2026-06-16": "Stale CONDITIONAL\u2192PASS. state.json already had all G1-G7 PASS."
     }
   },
   {
@@ -2914,7 +2914,7 @@
     "notes": {
       "orphan_onboarding_2026-06-16": "Orphan onboarded from disk. LAYER_B_REVIEWED. D10a=100% (33/33). Layer B avg=0.82 (T2 PASS). 10 non-fatal compile errors (PDF OK, 25pp/447KB). qs=82, CONDITIONAL safeguard.",
       "queue_sync_2026-06-16T12:01": "CONDITIONAL->PASS. All G1-G7 PASS verified.",
-      "variant_j_promotion_2026-06-17T10": "CONDITIONAL→PASS. D10a=100% (33/33, modular tex), all G1-G7 PASS, Layer B=0.82 (T2). State.json promoted. Queue already PASS."
+      "variant_j_promotion_2026-06-17T10": "CONDITIONAL\u2192PASS. D10a=100% (33/33, modular tex), all G1-G7 PASS, Layer B=0.82 (T2). State.json promoted. Queue already PASS."
     },
     "reason": "no_repair_needed"
   },
@@ -2940,9 +2940,9 @@
     "last_updated": "2026-06-17T18:24:00Z",
     "notes": {
       "orphan_onboarding_2026-06-16": "Layer-B-Reviewed orphan. D10a=100%. LB=0.66. qs=66, CONDITIONAL.",
-      "repair_2026-06-16T06:49:10Z": "Code/Data Availability section added. G4 SOFT_FAIL retained (paper has incomplete quantitative results — tables show \"TBD pending training completion\"). Clean compile: 17pp, 302KB, 0 errors, 0 undefined citations.",
-      "repair_2026-06-17T06:00Z": "G4 SOFT_FAIL→PASS (auto-gate false positive: hypothesis is well-formed, falsifiable, gap-linked. Results TBD affects G6 verification, not G4 generation). CONDITIONAL retained due to Layer B=0.66 (D3=0.00 no empirical results, D4=0.30 incomplete sections) — needs training completion. D10a=100% (30/30), clean compile, D8=30 refs. qs 70→78.",
-      "variant_k_diagnosis_2026-06-17T08:06:04Z": "Variant K: genuine Layer-B CONDITIONAL — skip cron",
+      "repair_2026-06-16T06:49:10Z": "Code/Data Availability section added. G4 SOFT_FAIL retained (paper has incomplete quantitative results \u2014 tables show \"TBD pending training completion\"). Clean compile: 17pp, 302KB, 0 errors, 0 undefined citations.",
+      "repair_2026-06-17T06:00Z": "G4 SOFT_FAIL\u2192PASS (auto-gate false positive: hypothesis is well-formed, falsifiable, gap-linked. Results TBD affects G6 verification, not G4 generation). CONDITIONAL retained due to Layer B=0.66 (D3=0.00 no empirical results, D4=0.30 incomplete sections) \u2014 needs training completion. D10a=100% (30/30), clean compile, D8=30 refs. qs 70\u219278.",
+      "variant_k_diagnosis_2026-06-17T08:06:04Z": "Variant K: genuine Layer-B CONDITIONAL \u2014 skip cron",
       "variant_k_diagnosis_2026-06-17": "Variant K: genuine Layer-B CONDITIONAL. Layer B avg=0.66 (<T3=0.75). Skip cron."
     }
   },
@@ -2956,7 +2956,7 @@
     "last_updated": "2026-06-16T12:17:00Z",
     "notes": {
       "orphan_onboarding_2026-06-16": "CLEAN_COMPILE orphan. D10a 0%->100%. Clean compile. qs=60, CONDITIONAL.",
-      "g1g7_gate_check_2026-06-16T12:17": "Variant E2 partial gate evaluation. G2 PASS (IMRaD, gap, contributions). G4 PASS (all 7 metrics match). G6 ABSOLUTE WHITE (6 PubMed=0 genuine competitors). qs 60→72, CONDITIONAL→PASS, 0 SOFT_FAILs."
+      "g1g7_gate_check_2026-06-16T12:17": "Variant E2 partial gate evaluation. G2 PASS (IMRaD, gap, contributions). G4 PASS (all 7 metrics match). G6 ABSOLUTE WHITE (6 PubMed=0 genuine competitors). qs 60\u219272, CONDITIONAL\u2192PASS, 0 SOFT_FAILs."
     }
   },
   {
@@ -2975,8 +2975,8 @@
     ],
     "last_updated": "2026-06-16T13:35:00Z",
     "notes": {
-      "initial": "orphan_onboarding_2026-06-16T12:55: CLEAN_COMPILE orphan. D10a 0%%→100%% (17/17, 0 orphans, 0 zombies). 3 fabricated/contaminated refs removed. Clean compile: 9pp/162KB, 0 errors. qs=60, CONDITIONAL.",
-      "g1g7_gate_check_2026-06-16T13:35": "qs 60→80, CONDITIONAL→PASS. Full G1-G7 gate check. All 7 PASS."
+      "initial": "orphan_onboarding_2026-06-16T12:55: CLEAN_COMPILE orphan. D10a 0%%\u2192100%% (17/17, 0 orphans, 0 zombies). 3 fabricated/contaminated refs removed. Clean compile: 9pp/162KB, 0 errors. qs=60, CONDITIONAL.",
+      "g1g7_gate_check_2026-06-16T13:35": "qs 60\u219280, CONDITIONAL\u2192PASS. Full G1-G7 gate check. All 7 PASS."
     },
     "current_step": "publication"
   },
@@ -2994,8 +2994,8 @@
     ],
     "last_updated": "2026-06-16T06:49:10Z",
     "notes": {
-      "orphan_onboarding_2026-06-16T13:35": "CLEAN_COMPILE orphan. D10a 0%→100% (16/16, 0 orphans, 0 zombies). 11pp/193KB, 0 errors. qs=70, CONDITIONAL.",
-      "repair_2026-06-16T06:49:10Z": "Code/Data Availability section added. G4 SOFT_FAIL→PASS (synthetic-only validation is structural limitation for PINN papers per Raissi2019, Lu2021). Fixed lonely \\item errors (missing \\begin{enumerate}). Clean compile: 11pp, 194KB, 0 errors, 0 warnings."
+      "orphan_onboarding_2026-06-16T13:35": "CLEAN_COMPILE orphan. D10a 0%\u2192100% (16/16, 0 orphans, 0 zombies). 11pp/193KB, 0 errors. qs=70, CONDITIONAL.",
+      "repair_2026-06-16T06:49:10Z": "Code/Data Availability section added. G4 SOFT_FAIL\u2192PASS (synthetic-only validation is structural limitation for PINN papers per Raissi2019, Lu2021). Fixed lonely \\item errors (missing \\begin{enumerate}). Clean compile: 11pp, 194KB, 0 errors, 0 warnings."
     }
   },
   {
@@ -3036,7 +3036,7 @@
     "last_updated": "2026-06-16T08:18:43Z",
     "notes": {
       "orphan_onboarding_2026-06-16": "NEEDS_WORK orphan onboarded. D10a=100% (30/30, 0 orphans, 0 zombies). elsarticle clinical simulation study (Unity 3D + PhysX). Clean compile: 15pp, 258KB, 0 errors. qs=75, CONDITIONAL.",
-      "repair_2026-06-16T08:18:43Z": "G4 accepted (virtual sim limitation) → CONDITIONAL→PASS. qs 88."
+      "repair_2026-06-16T08:18:43Z": "G4 accepted (virtual sim limitation) \u2192 CONDITIONAL\u2192PASS. qs 88."
     },
     "reason": "no_repair_needed"
   },
@@ -3055,7 +3055,7 @@
     "last_updated": "2026-06-16T08:18:43Z",
     "notes": {
       "orphan_onboarding_2026-06-16": "CLEAN_COMPILE orphan onboarded from disk. D10a=100% (26/26, 0 orphans, 0 zombies). Clean compile: 0 errors, 4 benign hyperref warnings. elsarticle clinical BPPV simulation study. qs=70, CONDITIONAL safeguard.",
-      "repair_2026-06-16T08:18:43Z": "G4 accepted (virtual sim limitation) → CONDITIONAL→PASS. qs 85."
+      "repair_2026-06-16T08:18:43Z": "G4 accepted (virtual sim limitation) \u2192 CONDITIONAL\u2192PASS. qs 85."
     },
     "reason": "no_repair_needed"
   },
@@ -3074,7 +3074,7 @@
     ],
     "last_updated": "2026-06-16T08:44:41Z",
     "notes": {
-      "g6_g4_promotion_2026-06-16T16:30": "G4+G6 SOFT_FAIL→PASS. qs 60→78. Published (PMID 40035862)."
+      "g6_g4_promotion_2026-06-16T16:30": "G4+G6 SOFT_FAIL\u2192PASS. qs 60\u219278. Published (PMID 40035862)."
     }
   },
   {
@@ -3092,7 +3092,7 @@
     "last_updated": "2026-06-16T09:27:59Z",
     "notes": {
       "orphan_onboarding_2026-06-16T08:23:35Z": "CLEAN_COMPILE orphan onboarded. D10a=100% (10/10). Clean compile: 5pp, 0 errors. qs=60, CONDITIONAL.",
-      "auto_gate_fix_2026-06-16T09:27:59Z": "auto_gate_false_positive_fix_2026-06-16T09:27:59Z: Auto-gate false positive resolution (Variant A). Literature review paper — G4 metrics consistency SOFT_FAIL doesn't apply (no experimental metrics), G6 first-mover SOFT_FAIL doesn't apply (review). Both promoted to PASS. D10a=100%% (10/10) verified. Clean compile: 5pp, 0 errors, 0 warnings. qs 60→78, CONDITIONAL→PASS. 0 remaining SOFT_FAILs."
+      "auto_gate_fix_2026-06-16T09:27:59Z": "auto_gate_false_positive_fix_2026-06-16T09:27:59Z: Auto-gate false positive resolution (Variant A). Literature review paper \u2014 G4 metrics consistency SOFT_FAIL doesn't apply (no experimental metrics), G6 first-mover SOFT_FAIL doesn't apply (review). Both promoted to PASS. D10a=100%% (10/10) verified. Clean compile: 5pp, 0 errors, 0 warnings. qs 60\u219278, CONDITIONAL\u2192PASS. 0 remaining SOFT_FAILs."
     }
   },
   {
@@ -3111,7 +3111,7 @@
     "last_updated": "2026-06-16T10:12:38Z",
     "notes": {
       "orphan_onboarding_2026-06-16": "Orphan onboarded from disk. D10a=100% (25/25, 0 orphans, 0 zombies). Clean compile: 10pp, 169KB, 0 errors, 0 warnings. qs=78, CONDITIONAL safeguard.",
-      "repair_2026-06-16": "CONDITIONAL→PASS. All G1-G7 PASS. qs 78→84. Clean compile: 10pp/172KB, 0 errors, 4 benign hyperref Unicode warnings. Paper is a clinical simulation study with virtual vestibular model (Unity 3D + PhysX)."
+      "repair_2026-06-16": "CONDITIONAL\u2192PASS. All G1-G7 PASS. qs 78\u219284. Clean compile: 10pp/172KB, 0 errors, 4 benign hyperref Unicode warnings. Paper is a clinical simulation study with virtual vestibular model (Unity 3D + PhysX)."
     }
   },
   {
@@ -3213,8 +3213,8 @@
     ],
     "last_updated": "2026-06-17T18:00:00+08:00",
     "notes": {
-      "orphan_onboarding_2026-06-17": "Orphan onboarded from disk (09-manuscript/). 15 bibitems, D10a=60% (9/15 cited, 6 suspected fabricated). Clean compile 7pp, 0 errors. qs=45, CONDITIONAL — needs fabricated ref replacement + full gate check.",
-      "d10a_fix_2026-06-17T18": "D10a 60%%→100%%, 6 fabricated refs replaced with PubMed-verified. qs 45→78, CONDITIONAL→PASS."
+      "orphan_onboarding_2026-06-17": "Orphan onboarded from disk (09-manuscript/). 15 bibitems, D10a=60% (9/15 cited, 6 suspected fabricated). Clean compile 7pp, 0 errors. qs=45, CONDITIONAL \u2014 needs fabricated ref replacement + full gate check.",
+      "d10a_fix_2026-06-17T18": "D10a 60%%\u2192100%%, 6 fabricated refs replaced with PubMed-verified. qs 45\u219278, CONDITIONAL\u2192PASS."
     },
     "reason": "no_repair_needed"
   },
@@ -3231,8 +3231,8 @@
     ],
     "last_updated": "2026-06-17T18:23:00Z",
     "notes": {
-      "orphan_onboarding_2026-06-17": "Onboarded from subdirectory orphan. D10a=100% (30/30). Layer A avg=0.81. Clean compile: 14pp, 488KB. qs=81, CONDITIONAL — needs clinical data completion.",
-      "variant_j_promotion_2026-06-17": "Variant J promotion: all G1-G7 PASS, D10a=100%, clean compile. CONDITIONAL→PASS."
+      "orphan_onboarding_2026-06-17": "Onboarded from subdirectory orphan. D10a=100% (30/30). Layer A avg=0.81. Clean compile: 14pp, 488KB. qs=81, CONDITIONAL \u2014 needs clinical data completion.",
+      "variant_j_promotion_2026-06-17": "Variant J promotion: all G1-G7 PASS, D10a=100%, clean compile. CONDITIONAL\u2192PASS."
     }
   },
   {
@@ -3245,8 +3245,8 @@
     "steps_completed": [],
     "last_updated": "2026-06-17T19:25:00Z",
     "notes": {
-      "orphan_onboarding_2026-06-17": "Subdirectory orphan onboarded (paper/paper.tex). D10a=100% (13/13, 0 orphans, 0 zombies). Clean compile: 9pp, 261KB. Layer A avg=0.68 (T3 PASS, T2 FAIL). Design proposal — no empirical results. qs=68, CONDITIONAL. Variant K: needs training completion.",
-      "variant_k_diagnosis_2026-06-17": "Variant K: genuine Layer-B CONDITIONAL — skip cron. No empirical results. D3=0.50 placeholder results."
+      "orphan_onboarding_2026-06-17": "Subdirectory orphan onboarded (paper/paper.tex). D10a=100% (13/13, 0 orphans, 0 zombies). Clean compile: 9pp, 261KB. Layer A avg=0.68 (T3 PASS, T2 FAIL). Design proposal \u2014 no empirical results. qs=68, CONDITIONAL. Variant K: needs training completion.",
+      "variant_k_diagnosis_2026-06-17": "Variant K: genuine Layer-B CONDITIONAL \u2014 skip cron. No empirical results. D3=0.50 placeholder results."
     }
   },
   {
@@ -3258,6 +3258,23 @@
     "last_updated": "2026-06-17T20:12:57.963088",
     "notes": {
       "orphan_onboarding_2026-06-17": "Subdirectory orphan onboarded. D10a=0% (15 orphan bibitems). Clean compile. Needs citation anchoring repair."
+    },
+    "paper_id": "paper-128-retinal-oxygen-metabolism-ODE"
+  },
+  {
+    "paper_id": "paper-127-macular-thermo-ODE",
+    "paper_name": "Computational Dynamical Modeling of Macular Thermoregulation: A 2-ODE Framework for Retinal Temperature Homeostasis",
+    "status": "completed",
+    "current_step": "orphan_onboarding",
+    "quality_score": 45,
+    "gate_status": "CONDITIONAL",
+    "steps_completed": [
+      "compile",
+      "orphan_onboarding"
+    ],
+    "last_updated": "2026-06-17T20:00:00Z",
+    "notes": {
+      "orphan_onboarding_2026-06-17": "Subdirectory orphan onboarded from 09-manuscript/. Clean compile: 7pp, 269KB. D10a=0% (0/15 cited). qs=45, CONDITIONAL. Needs D10a citation repair."
     }
   }
 ]
