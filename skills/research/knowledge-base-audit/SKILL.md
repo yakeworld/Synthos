@@ -1,5 +1,7 @@
 ---
 name: knowledge-base-audit
+io_contract: input: ['knowledge_base: str, audit_type: str -> audit_report: dict', 'output: ['audit_report: dict, recommendations: list[str]]']
+
 description: Audit and maintain personal knowledge management systems (AKNE, NotebookLM,
 version: 1.0.0
   Obsidian vaults, etc.) to keep them healthy and evolving.

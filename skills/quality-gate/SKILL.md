@@ -1,5 +1,7 @@
 ---
 name: quality-gate
+io_contract: input: ['deliverable: str, quality_matrix: dict, target_level: str -> gate_result: GateResult, gaps: list[Gap]', 'output: ['gate_result: GateResult (L0-L4), quality_score: float, improvement_plan: str, gaps: list[Gap]']
+
 description: "⚡ P0 闸门技能。四层质量架构：①响应级漂移检查 ②项目级L1-L4交付闸门 ③论文管线G1-G7原子闸门 ④SCI内容评审。**通用铁律：任务完成→质量评估→不达标→循环执行。** 无skill_view记录=门不通过。G5引用质量为最关键门。G7通过→自动sci-paper-quality-review。"
 version: 2.9.0
 author: Hermes Agent
@@ -627,12 +629,97 @@ iris-3d-anatomical-opt 论文 L0.5 审计中发现两种引用缺失错误：
 | G3 ASC | 关联空白发现 | 关联+空白矩阵 |
 | G4 HYP | 假设生成 | 可证伪假设 |
 | G5 ARG | 论文论证 + **引用全文验证** | **无虚构引用 + 关键参考PDF已转MD上传NotebookLM + 无僵尸/孤儿引用** |
-| — | **G5c NotebookLM参考文献上传前置门** | **🔴 硬性阻断：Layer B执行前必须验证NotebookLM中参考文献源数 ≥ D8×80%。无参考文献全文上架 → 禁止执行Layer B。验证命令：`notebooklm source list -n <nb_id> | grep -c "ready"` 对比 `grep -cP '^@\\w+\\{' references.bib`。详见 dual-quality-check-v2 SKILL.md 的「P0 前置闸门」节。** |
-| — | **G5a 引用审计子门** | **逐篇检查：DOI完整性、PDF存在性、数值准确性、引用上下文适当性（详见 references/ref-citation-audit-protocol.md）** |
+| G6 VER | 观点验证 | 验证通过 |
+| G7 latex | 编译验证 | cite×bib×pdf三维匹配 |
+
+## 论文管线双轨制（2026-06-18 新增）
+
+> **轨道A（论文管线）**和**轨道B（知识库）**是两条平行轨道，不再混用。
+
+### 轨道A：论文管线
+- 进入条件：有paper.tex + status.json
+- 流程：G1-G7质量门禁
+- 输出：ready_for_submission
+
+### 轨道B：知识库
+- 进入条件：无paper.tex但有研究内容
+- 流程：知识条目生成
+- 输出：knowledge_entry_*.md
+
+### 空壳处理
+- 清理空壳（<5文件）→ 删除
+- 归档低价值内容 → _drafts_archive/
+
+详见 `references/dual-track-system.md`
 | — | **G5b 数值声明追溯子门** | **对正文中每个 \\cite{} 附近的数值声明，追溯对应PDF原文确认。不可追溯的数值必须降级措辞或删除。2026-05-30 SCC论文实战：Manoussaki2008中查不到b≈0.02-0.08，修正为泛化引用。详见 paper-reference-pipeline → references/citation-context-verification-scc-2026-05-30.md** |
 | — | **G5d 空假一致性门（Gap-Hypothesis Congruence）** | **双质检阶段，对关键参考文献逐篇回溯其研究空白→对照我方论文的gap/hypothesis→验证贡献定位正确性。防止gap膨胀（少量空白写成领域空白）、gap漂移（引言与结论的gap不一致）、gap已填（写作期间有新文献填补了空白）。详见 references/gap-hypothesis-congruence.md** |
 | G6 VER | 观点验证 | 验证通过 |
 | G7 latex | 编译验证 | cite×bib×pdf三维匹配 |
+
+## 轨道制双轨架构（Dual-Track System）— v2.10.0 新增
+
+> **2026-06-18 实战教训**：101篇论文中 0 篇有 status.json。管线产出了大量输出，但从未执行过任何质量门禁。这是结构性故障——管线只做"生产"不做"验证"。
+
+### 核心问题诊断
+
+| 症状 | 数据 | 根因 |
+|:-----|:----:|:-----|
+| 无paper.tex的论文 | 86篇 | 管线没有"未完成"概念，产出即消失 |
+| 有paper.tex但无status.json | 66篇 | 编译完成 ≠ 质量门通过，但cron没有强制写入status.json |
+| cron产出 ≠ 论文 | 所有cron | autonomous-core-researcher 输出是"研究空白"，不应进入论文管线 |
+
+### 双轨架构
+
+```
+轨道A：高质量论文管线（走G1-G7质量门）
+├── 每篇论文必须有 status.json（记录G1-G7完整链条）
+├── 无status.json = 未完成，不计入"有效产出"
+├── cron的paper-repair和paper-quality-review只处理有明确低分status.json的论文
+└── 论文通过G7后才算一条完整产出
+
+轨道B：研究空白/假设 → 知识库（不进论文管线）
+├── 发现的研究空白、科学假设、文献洞察 → AKNE图谱 + outputs/knowledge/
+├── 不生成.tex，不跑编译，不占论文目录配额
+├── cron的autonomous-core-researcher和literature-monitor产出直接走轨道B
+└── 积累到一定量后，择优选一篇进入轨道A
+```
+
+### 关键决策
+
+| 旧制度 | 新制度 | 理由 |
+|--------|--------|------|
+| 论文管线无门，产出即结束 | 每篇论文必须有status.json，无JSON=未结束 | 无质量门禁的管线只生产废品 |
+| 92篇"无论文"不处理 | 无论文的目录标记为"草稿"或归档 | 管线状态必须可追溯 |
+| cron产出=论文 | cron产出先走轨道B（知识库），论文需手动遴选 | 研究空白积累 ≠ 论文产出 |
+| 论文数量作为KPI | 论文质量是唯一KPI | Synthos是质量驱动，不是数量驱动 |
+
+### 状态定义
+
+```
+论文状态机：
+
+新建目录(空) → 轨道B(有内容无.tex) → 补全.tex → 轨道A(有.tex无status.json)
+                                                    ↓
+                                              paper-repair / quality-review
+                                                    ↓
+                                              有status.json(低分)
+                                                    ↓
+                                              修订循环 → status.json(高分)
+                                                    ↓
+                                              G7通过 → 完整产出 ✅
+```
+
+### 清理协议
+
+| 操作 | 条件 | 去向 |
+|:-----|:----:|:-----|
+| 删除空目录 | 内容<3个文件 | 直接删除 |
+| 归档 | 无内容但有目录结构 | `_drafts_archive/` |
+| 知识库轨道 | 有内容但无.tex | `_knowledge_only/` |
+| 论文管线 | 有.tex无status.json | 补入status.json后走轨道A |
+| 完成论文 | 有.tex有status.json且通过G7 | 保留原位 |
+
+参考: `references/dual-track-paper-system.md`
 
 ## 执行规则
 
