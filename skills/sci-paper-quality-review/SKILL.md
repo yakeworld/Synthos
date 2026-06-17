@@ -29,6 +29,13 @@ metadata:
       paper: str, quality_matrix: dict -> review_result: dict | review_result: dict (scores: [D1-D7], overall_score)
     related_skills: ['quality-gate', 'evolution', 'paper-pipeline', 'project-experience-distillation']
 
+---
+
+## IO_CONTRACT
+
+- **input**: `paper: str` — 论文标识符（路径或目录名），`quality_matrix: dict` — 质量评审矩阵（目标期刊阈值等）
+- **output**: `review_result: dict` — 包含 scores (D1-D7七个维度), overall_score, gaps, revision_plan 的评审结果
+- **side_effects**: 更新论文目录下的 quality_review.md，触发修订循环（如需要）
 
 # SCI 论文质量评审技能
 
