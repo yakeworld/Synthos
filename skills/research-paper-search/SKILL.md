@@ -1,5 +1,7 @@
 ---
 name: research-paper-search
+io_contract: input: ['search_query: str, sources: list[str], max_results: int -> results: list[PaperResult]', 'output: ['results: list[PaperResult], search_stats: dict]']
+
 description: "主skill | 多源论文检索+全文下载编排器。搜索入口：Semantic Scholar, PubMed, Crossref, OpenAlex, arXiv。下载路径：arXiv直链→PMC efetch→Unpaywall→封锁标记。调用子skill: arxiv, pubmed, openalex"
 version: 2.3.0
 author: Synthos
