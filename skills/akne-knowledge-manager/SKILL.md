@@ -345,10 +345,34 @@ for fpath in files:
 2. 在 metadata 中新增 `controversy_note` 字段说明矛盾双方立场
 3. 标注哪方是"已验证"、哪方是"假设"
 
+## 搜索功能
+
+AKNE 搜索通过 `.hermes/scripts/akne-enhanced-search.py` 实现，三层策略：
+1. **实体解析** — 精确/子串/分词/fuzzy 匹配节点名
+2. **图遍历** — 从解析实体出发 2 跳搜索相关节点
+3. **TF-IDF 文本搜索** — 对 1118 个源文件构建索引（40615 词汇），支持中英混合
+
+向量嵌入（1480 条，384 维）已生成并存入 `vectors.db`，脚本支持 `--mode full` 同时启用全部三层。
+
+### 已知问题
+
+- **性能偏慢**：单次 full-mode 搜索约 22 秒（含 TF-IDF 索引全部 1118 个源文件）
+  - 建议：增量更新索引或预构建缓存
+- **Graph 邻居过泛**：多数节点连接在 `sources/科研` 或 `sources/编程` 大类下，缺乏精细分类
+  - 建议：按领域进一步拆分 source_category 节点
+
+### Bug 修复记录
+
+- **2026-06-18**：`fuzzy_node_search` 在 `best=None` 时返回 `(None, 0.0)` 嵌套 tuple，
+  导致 `confidence:.3f` 格式化崩溃。修复：`return best, min(0.8, best_score / 5.0)` →
+  `return (best, min(0.8, best_score / 5.0))`。
+
 ## 参考文件
 
 - `references/synthos-akne-integration-audit.md` — 2026-06-10 修复后完整数据。含边类型分布、双向路径示例、诊断命令、修复历史。旧审计数据已归档替换。
 - `references/content-audit-aug2026.md` — 2026-06-13 内容级审计详细记录。含 3 处矛盾详情、70+ 版本簇清单、5 个研究空白、7 个科学假设。
+- `references/search-performance.md` — 2026-06-18 搜索功能测试报告。含四项查询结果、性能基准、各类查询的准确率评估。
+- `references/akne-vs-obsidian.md` — AKNE 与 Obsidian 架构对比：为何自建知识图谱而非用现成工具。面向人 vs 面向机器的定位差异。
 
 ## 修复模式速查
 

@@ -29,6 +29,7 @@ metadata:
 - `eye-tracking-platform`
 - `github-agent-contributions`
 - `k230-canmv-debugging`
+- `k230-photo-timing`
 - `node-inspect-debugger`
 - `open-source-community-building`
 - `plan`
