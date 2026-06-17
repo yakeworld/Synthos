@@ -91,15 +91,38 @@ for _ in range(5):
 
 ### ampy (preferred)
 
+**ampy run takes LOCAL file paths** — it reads the local file and sends its content to the device via stdin. It does NOT read device files.
+
 ```bash
 ampy -p /dev/ttyACM0 -b 115200 put local_file.py /sdcard/remote.py
 ampy -p /dev/ttyACM0 -b 115200 get /sdcard/remote.py
-ampy -p /dev/ttyACM0 -b 115200 run test_script.py
+ampy -p /dev/ttyACM0 -b 115200 run /tmp/test_script.py   # LOCAL path, not /sdcard/...
 ```
 
-**Blocked when main.py is running.** Solution:
-1. Connect serial, send Ctrl+C to stop main loop
-2. Then use ampy (within the same ~5s window before board reboots)
+**CRITICAL: Do NOT touch the serial port before ampy.** Any serial read/write/open blocks ampy internally. If the board's main.py is flooding the serial port with print statements, ampy will hang/timeout.
+
+**ampy workflow sequence — NEVER open serial first:**
+1. Spawn ampy as a standalone subprocess — it opens its own serial connection. If you open serial first, ampy will hang.
+2. If board is already alive and flooding serial: send Ctrl+C flood (200+) to kill the loop, then IMMEDIATELY spawn ampy as a subprocess — no serial reads/writes between Ctrl+C and ampy.
+3. **ampy succeeds only when no other code is using the serial port.** Each Ctrl+C + serial read attempt consumes the ~5s window before main.py restarts.
+
+**Serial flooding detection:** ampy rc=124 (timeout), 0 bytes output. Serial reads return empty `b''` even after 200+ Ctrl+C. Board may be completely dead (zero output for any input).
+
+**CRITICAL: ampy run returns empty stdout on K230.** The `ampy run` command (which reads a local file and sends it via stdin) returns rc=0 but stdout is ALWAYS 0 bytes on K230 CanMV. This is because the K230's MicroPython `exec_with_output()` does not return captured stdout — the data is lost.
+
+**Workaround for test scripts:**
+1. Write test results to a file on the board (`open('/data/result.txt', 'w').write(...)`)
+2. Use `ampy get` to retrieve the result file
+3. OR use `ampy run` only once per boot cycle and read stdout immediately (not reliable)
+4. For reliable output: use `ampy run` + `ampy get` in separate calls, or use `exec_` (not `run`) to send code via pyboard exec mode.
+
+**CRITICAL: ampy run is unreliable for test scripts.** Empirically, ampy run may succeed on first call (rc=1, captures stdout) but completely hang (rc=124, 0 bytes) on subsequent calls within the same session.
+
+**CRITICAL: Modifying boot.py to be noop breaks ampy entirely.** After replacing boot.py with a noop version (to stop main.py auto-run), ALL ampy operations hang (rc=124, 0 bytes). This is not a serial-flooding issue — it is an ampy protocol stack incompatibility with the noop boot.py state. The board enters REPL but ampy's RAW MODE handshake fails. **Rule: Never replace boot.py with noop if you need ampy afterward.** Instead, modify main.py to suppress serial output, or restore boot.py before testing.
+
+**Solution for dead board:** Physical reset: unplug USB or press RESET button 3s. After reset: ampy immediately — do NOT open serial port first. If ampy fails: rapid Ctrl+C flood (500+) → spawn ampy subprocess immediately.
+
+**gvfs gphoto2 mount limitation:** K230's PTP implementation via gvfs (gphoto2:// URI) can list directory NAMES but CANNOT read or write file contents. `os.listdir()` on the mount point returns directory names but all files are empty. This is a known K230 PTP limitation — the Imaging interface (Class 6) supports directory enumeration but not actual file access. File transfer MUST go through serial/ampy.
 
 ### Base64 via paste mode (fallback)
 
@@ -183,6 +206,28 @@ sensor.run()
 - 2 cameras: csi0 (left), csi1 (right)
 - Max native output: 1920×1080@60
 - Only ONE hardware encoder — dual camera recording not possible at full speed
+
+### K230 MicroPython Python-ism Limitations
+
+K230 CanMV runs a constrained MicroPython — NOT all Python 3 features are available:
+
+- **NO f-strings** — `f'hello {x}'` causes `SyntaxError: invalid syntax`. Use `'%s' % x` or `str.format()` or `+` concatenation.
+- **`str.zfill()` does not exist** — `str.zfill()` is Python 3.6+ CPython only. Use `'%04d' % n` instead.
+- **`sys.path[0]` may be empty or `/`** — use `__file__` or check `sys.path` explicitly.
+- **`sys.setrecursionlimit()` may fail silently** — stack depth is limited by hardware.
+- **`gc.collect()` is essential** before heavy sensor operations — MicroPython GC is manual/periodic, not generational.
+- **`uos.stat()` returns a tuple, NOT stat_result** — `uos.stat(path)` returns a 10-element tuple (POSIX stat struct). File size is at index 6: `uos.stat(path)[6]`. Using `.st_size` (CPython style) causes `AttributeError`.
+
+### Photo save failure diagnostic
+
+When `img.save(path)` returns `False` (or directories created but no files):
+
+1. **Check save path existence** — `uos.stat(path)` should succeed. If the directory doesn't exist, save silently fails.
+2. **Check SD card free space** — use `uos.statvfs()` to verify available space (every 5s, cache result).
+3. **Check file permissions** — `/data/` is writable, `/sdcard/` may be read-only depending on boot config.
+4. **Check image validity** — if `snapshot()` returns `None`, the camera was not running or timed out.
+5. **Check file suffix** — `img.save()` may expect `.bmp` vs `.jpg` — the sensor's native format may differ.
+6. **Throttle is critical** — without interval gating, the main loop fires `snapshot()` thousands of times/second, overwhelming SD card write buffer and causing silent save failures.
 
 ## Import Quirks
 

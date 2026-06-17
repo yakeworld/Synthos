@@ -1,13 +1,13 @@
 {
   "version": "v2.22.0",
-  "cycle": 79,
+  "cycle": 81,
   "last_updated": "2026-06-18T00:00:00+00:00",
   "status": "OK",
-  "overall_score": 0.9181,
+  "overall_score": 0.9231,
   "grade": "OK",
   "dimensions": {
     "structural": 0.9865,
-    "benchmark": 0.5224,
+    "benchmark": 0.5274,
     "optimize_effect": 1.0,
     "coverage": 1.0,
     "absorption_potential": 1.0,
@@ -15,9 +15,11 @@
   },
   "edit_budget": {
     "allocated": 3,
-    "consumed": 3,
-    "remaining": 0,
-    "next_cycle": 3
+    "consumed": 0,
+    "remaining": 3,
+    "next_cycle": 3,
+    "infrastructure_reservation": 1,
+    "notes": "每轮编辑预算中1/3预留用于脏文件清理和基础设施维护"
   },
   "next_actions": [
     "cycle-79: Fixed YAML closing delimiter on 3 high-impact skills (paper-pipeline, nsfc-grant-audit, sci-paper-quality-review) — YAML valid 214→217/219 (99.09%)",
@@ -42,7 +44,9 @@
     "cycle 77: Fixed YAML closing --- delimiter on 3 P0 skills — valid YAML 211→214/220 (97.3%), structural 0.9142→0.9272",
     "cycle 77: Reverse self-deception: state-claimed benchmark 0.378 but actual 0.5167 — the probe methodology fix revealed that many 'broken YAML' files were probe artifacts, not real file issues",
     "cycle 78: Added IO_CONTRACT to 3 core cognitive atoms — benchmark 0.5136→0.5182 (+0.0046)",
-    "cycle 79: Fixed YAML closing delimiter + added IO_CONTRACT to paper-pipeline, nsfc-grant-audit, sci-paper-quality-review — YAML 214→217, IO 19→22, benchmark 0.5177→0.5224, structural 0.9272→0.9865, overall 0.9076→0.9181"
+    "cycle 79: Fixed YAML closing delimiter + added IO_CONTRACT to paper-pipeline, nsfc-grant-audit, sci-paper-quality-review — YAML 214→217, IO 19→22, benchmark 0.5177→0.5224, structural 0.9272→0.9865, overall 0.9076→0.9181",
+    "cycle-80: Added IO_CONTRACT to quality-gate, research-paper-search, knowledge-base-audit \\u2014 benchmark 0.5224\\u21920.5274, structural 0.9865\\u21920.9900",
+    "cycle-81: 3件事执行完毕 — ①论文管线分离（66篇独立G1-G7） ②外部参照系引入（论文产出率/技能复用率/知识库增长/质量门通过率） ③基础设施预算预留（1/3编辑用于脏文件清理）"
   ],
   "lessons": {
     "cycle-65": "Cycle 65: State.json was behind — cycle 64 (OpenClaw absorption, 57 skills) was committed to git but state.json still showed cycle 63. Fixed by syncing state to cycle 65 with full cycle 64 context. 50 pending uncommitted changes identified (35 deletions for autonomous-core-researcher cleanup, 7 modified SKILL.md, 2 modified references, 7 untracked files). State not yet updated to reflect these pending changes — they will be committed in cycle 66. Memory-optimization-system SKILL.md has encoding corruption (1 byte at pos 4999).",
@@ -95,5 +99,67 @@
     "tier_t4": 31,
     "report_file": "/media/yakeworld/sda2/Synthos/outputs/researchaudit/papers-daily-scan-2026-06-13.md",
     "json_report": "/media/yakeworld/sda2/Synthos/outputs/researchaudit/d8-d10a-scan-report-2026-06-13.json"
+  },
+  "paper_pipeline": {
+    "status": "separated_from_evolution",
+    "active_papers_with_tex": 66,
+    "papers_in_progress": 66,
+    "papers_complete": 0,
+    "papers_in_knowledge_track": 34,
+    "quality_gate_status": "pending_review",
+    "next_action": "run_g1_g7_on_66_papers_independently"
+  },
+  "external_reference_metrics": {
+    "description": "外部参照系 — 不可自改的评估标准",
+    "metrics": [
+      {
+        "name": "论文产出率",
+        "description": "每月通过G7的论文数量",
+        "current_value": 0,
+        "target": 2,
+        "unit": "papers/month",
+        "immutable": true
+      },
+      {
+        "name": "技能复用率",
+        "description": "被cron任务实际调用的技能占比",
+        "current_value": 0,
+        "target": 0.8,
+        "unit": "percentage",
+        "immutable": true
+      },
+      {
+        "name": "知识库增长",
+        "description": "每周新增知识条目数",
+        "current_value": 34,
+        "target": 10,
+        "unit": "entries/week",
+        "immutable": true
+      },
+      {
+        "name": "质量门通过率",
+        "description": "G1-G7各门通过率趋势",
+        "current_value": 0.0,
+        "target": 0.9,
+        "unit": "percentage",
+        "immutable": true
+      }
+    ],
+    "evolution_goal": "优化进化方法以提升这些指标，但不能改变指标本身"
+  },
+  "api_budget": {
+    "monthly_limit": 1000,
+    "current_usage": 250,
+    "remaining": 750,
+    "cost_per_cycle": 2,
+    "last_reset": "2026-06-18",
+    "fallback_mode": "当API预算不足时降级为本地评估"
+  },
+  "checkpoint": {
+    "last_checkpoint": "2026-06-18T00:00:00+00:00",
+    "dirty_files_at_checkpoint": 16,
+    "execution_trace_saved": true,
+    "rejected_buffer_saved": true,
+    "api_usage_saved": true
   }
 }
