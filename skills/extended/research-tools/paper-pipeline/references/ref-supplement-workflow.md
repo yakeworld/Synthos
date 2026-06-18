@@ -39,7 +39,7 @@ python3 main.py search "BPPV canalith repositioning" --limit 3
 
 ```bash
 # BPPV 相关
-curl -s "http://export.arxiv.org/api/query?search_query=all:BPPV+AND+all:diagnosis&max_results=5&sortBy=relevance" \
+curl -s "https://export.arxiv.org/api/query?search_query=all:BPPV+AND+all:diagnosis&max_results=5&sortBy=relevance" \
   | python3 -c "
 import sys, re
 text = sys.stdin.read()

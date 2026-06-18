@@ -128,7 +128,7 @@ tools/paper-manager/batch_meddata_all.py
 # ============================================
 # 13. 研究数据 / 文献收藏 / 大型实验数据（不入库）
 # ============================================
-research/
+/research/
 data/
 literature/
 

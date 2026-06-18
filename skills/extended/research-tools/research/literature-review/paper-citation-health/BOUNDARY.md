@@ -1,0 +1,23 @@
+---
+name: paper-citation-health
+description: BOUNDARY.md
+---
+
+# 边界定义: paper-citation-health
+
+## 范围
+定义 paper-citation-health 的能力边界和职责范围。
+
+## 输入
+- 任务/需求描述
+- 目标/预期输出
+
+## 输出
+- 对应工具操作的完整结果
+
+## 边界
+- 不属于本技能范围的工作应路由到其他技能或拒绝
+
+## 边界判定
+- 当任务符合本技能描述时执行
+- 当任务超出本技能描述时拒绝或路由

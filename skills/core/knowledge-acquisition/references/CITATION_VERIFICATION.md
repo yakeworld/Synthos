@@ -48,7 +48,7 @@ curl -s -o /dev/null -w "%{http_code}" "https://api.crossref.org/works/{DOI}"
 ### L2: arXiv ID 验证
 
 ```
-curl -s "http://export.arxiv.org/api/query?id_list={arxiv_id}" | grep -c "<id>"
+curl -s "https://export.arxiv.org/api/query?id_list={arxiv_id}" | grep -c "<id>"
 → ≥1 = arXiv ID 有效
 → 0 = arXiv ID 不存在
 ```
@@ -123,5 +123,5 @@ Agent 阅读论文标题+摘要，判断是否与研究主题相关：
 
 - AutoResearchClaw `researchclaw/literature/verify.py` — 4层验证架构
 - CrossRef API: https://api.crossref.org/works/{doi}
-- arXiv API: http://export.arxiv.org/api/query?id_list={id}
+- arXiv API: https://export.arxiv.org/api/query?id_list={id}
 - Semantic Scholar API: https://api.semanticscholar.org/graph/v1/paper/search
