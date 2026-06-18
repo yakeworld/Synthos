@@ -9,7 +9,7 @@ metadata:
     atom_type: cognitive-atom
     description: Identify relationships between knowledge items — contradiction/supplement/evolution/support/expansion/similarity/gap.
     signature: "knowledge_items: list[KnowledgeItem] -> relationships: list[Relationship] -> relationships: list[Relationship] (source, target, type, strength, evidence)"
-    related_skills: [hypothesis-generation, knowledge-extraction, knowledge-acquisition, argument-expression, viewpoint-verification]
+    related_skills: ["knowledge-acquisition", "knowledge-extraction"]
 ---
 
 

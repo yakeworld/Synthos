@@ -1,5 +1,6 @@
 ---
 name: openhue
+related_skills: []
 description: "Control Philips Hue lights, scenes, rooms via OpenHue CLI."
 version: 1.0.0
 author: community

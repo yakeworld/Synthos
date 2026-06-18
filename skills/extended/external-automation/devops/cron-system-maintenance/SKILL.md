@@ -1,5 +1,6 @@
 ---
 name: cron-system-maintenance
+related_skills: []
 description: 'Cron任务运维：诊断error状态、修复脚本缺陷、验证连接性。覆盖cron job list分析、错误分类、脚本语法验证、prompt更新、vLLM多节点负载均衡。'
 version: 1.0.0
 allowed-tools:

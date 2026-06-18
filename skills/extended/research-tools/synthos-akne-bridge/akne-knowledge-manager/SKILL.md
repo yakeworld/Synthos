@@ -12,7 +12,7 @@ metadata:
     atom_type: domain-skill
     description: "AKNE 知识管理系统的双向整合审计、Synthos-桥接诊断、知识流分析、内容级审计"
     signature: 'akne_graph: str, synthos_graph: str -> integration_report: dict + content_audit: dict'
-    related_skills: [akne-maintenance, synthos-akne-bridge, knowledge-extraction, association-discovery, knowledge-acquisition]
+    related_skills: ["akne-knowledge-manager", "akne-maintenance"]
 io_contract:
   input:
     - 'akne_graph: str, synthos_graph: str -> integration_report: dict + content_audit: dict'

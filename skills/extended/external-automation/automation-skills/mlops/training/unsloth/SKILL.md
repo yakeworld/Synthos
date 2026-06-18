@@ -1,5 +1,6 @@
 ---
 name: unsloth
+related_skills: []
 description: "Unsloth: 2-5x faster LoRA/QLoRA fine-tuning, less VRAM."
 version: 1.0.0
 author: Orchestra Research

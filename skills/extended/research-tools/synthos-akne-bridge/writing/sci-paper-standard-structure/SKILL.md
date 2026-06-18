@@ -1,5 +1,6 @@
 ---
 name: sci-paper-standard-structure
+related_skills: ["argument-expression"]
 description: >-
 version: 1.0.0
   标准IMRaD论文结构 — CARS+图尔敏+金字塔+沙漏。理论优先。

@@ -1,5 +1,6 @@
 ---
 name: evaluating-llms-harness
+related_skills: ["experiment-recipes"]
 description: "lm-eval-harness: benchmark LLMs (MMLU, GSM8K, etc.)."
 version: 1.0.0
 author: Orchestra Research

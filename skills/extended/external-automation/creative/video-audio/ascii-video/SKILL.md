@@ -1,5 +1,6 @@
 ---
 name: ascii-video
+related_skills: []
 description: "ASCII video: convert video/audio to colored ASCII MP4/GIF."
 version: 1.0.0
 platforms: [linux, macos, windows]

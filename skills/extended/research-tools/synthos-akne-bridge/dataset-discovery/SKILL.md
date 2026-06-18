@@ -1,6 +1,7 @@
 ---
 
 name: dataset-discovery
+related_skills: ["healthcare-dataset-discovery"]
 description: Dataset discovery across platforms — OpenML, Kaggle, UCI, Crossref, Semantic Scholar. Platform capabilities, API quirks, and search workflows.
 version: 1.0.0
 allowed-tools:
@@ -55,7 +56,7 @@ metadata:
     atom_type: tool
     description: Dataset discovery across platforms — OpenML, Kaggle, UCI, Crossref, Semantic Scholar.
     signature: 'search_query: str, platforms: list[str] -> dataset_results: list[Dataset]'
-    related_skills: [knowledge-acquisition, knowledge-extraction, healthcare-dataset-discovery]
+    related_skills: ["healthcare-dataset-discovery"]
 ---
 
 

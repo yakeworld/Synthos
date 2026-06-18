@@ -1,5 +1,6 @@
 ---
 name: serving-llms-vllm
+related_skills: []
 description: "vLLM: high-throughput LLM serving, OpenAI API, quantization."
 version: 1.0.0
 author: Orchestra Research

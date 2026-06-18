@@ -1,6 +1,7 @@
 ---
 
 name: ode-simulation-tuning
+related_skills: ["knowledge-extraction"]
 description: '⚡ P0 Simulation tuning for ODE/2-ODE papers — systematic metric optimization. Covers R², AUC, accuracy, MAPE, ablation, bifurcation, and Sobol sensitivity tuning for computational dynamical models.'
 version: 1.0.0
 linked_files:

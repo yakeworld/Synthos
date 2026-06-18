@@ -81,8 +81,7 @@ metadata:
     atom_type: tool
     description: Debug environment variable issues across shell boundaries, subprocesses, and application configuration layers.
     signature: 'process_info: str, env_vars: dict -> debug_report: dict'
-    related_skills: [paper-cron-scan, paper-pipeline, paper-references-scanning, research-paper-search]
----
+    ---
 
 
 

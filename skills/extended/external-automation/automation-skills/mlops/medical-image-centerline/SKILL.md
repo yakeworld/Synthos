@@ -1,5 +1,6 @@
 ---
 name: medical-image-centerline
+related_skills: []
 description: >-
 version: 1.0.0
   从3D分割标签提取中心线 — 图论环基法/中位切+图直径法。

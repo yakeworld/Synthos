@@ -1,5 +1,6 @@
 ---
 name: baoyu-infographic
+related_skills: []
 description: "Infographics: 21 layouts x 21 styles (信息图, 可视化)."
 version: 1.56.1
 author: 宝玉 (JimLiu)

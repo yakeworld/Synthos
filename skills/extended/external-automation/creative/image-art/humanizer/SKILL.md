@@ -10,8 +10,7 @@ metadata:
     tags: [writing, editing, humanize, anti-ai-slop, voice, prose, text]
     category: creative
     homepage: https://github.com/blader/humanizer
-    related_skills: [songwriting-and-ai-music]
----
+    ---
 
 ## IO_CONTRACT
 

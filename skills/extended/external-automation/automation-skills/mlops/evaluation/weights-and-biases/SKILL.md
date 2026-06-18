@@ -1,5 +1,6 @@
 ---
 name: weights-and-biases
+related_skills: []
 description: "W&B: log ML experiments, sweeps, model registry, dashboards."
 version: 1.0.0
 author: Orchestra Research

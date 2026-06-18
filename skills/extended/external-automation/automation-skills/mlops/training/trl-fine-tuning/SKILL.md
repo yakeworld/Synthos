@@ -1,5 +1,6 @@
 ---
 name: fine-tuning-with-trl
+related_skills: []
 description: "TRL: SFT, DPO, PPO, GRPO, reward modeling for LLM RLHF."
 version: 1.0.0
 author: Orchestra Research

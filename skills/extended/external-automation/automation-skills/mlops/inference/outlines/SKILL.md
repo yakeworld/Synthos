@@ -1,5 +1,6 @@
 ---
 name: outlines
+related_skills: []
 description: "Outlines: structured JSON/regex/Pydantic LLM generation."
 version: 1.0.0
 author: Orchestra Research

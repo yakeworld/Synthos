@@ -1,5 +1,6 @@
 ---
 name: hermes-scheduler
+related_skills: []
 description: "Hermes Agent cron job lifecycle management — diagnose failures, migrate providers, load-balance across nodes, create workers, clean up orphan tasks."
 version: 1.1.0
 author: Synthos

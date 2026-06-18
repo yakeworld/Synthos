@@ -1,5 +1,6 @@
 ---
 name: latex-output
+related_skills: ["argument-expression"]
 description: >-
 version: 1.0.0
   Synthos assembled_output.json → 会议级LaTeX (.tex/.bib/figures)。

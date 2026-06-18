@@ -1,5 +1,6 @@
 ---
 name: songwriting-and-ai-music
+related_skills: []
 description: "Songwriting craft and Suno AI music prompts."
 version: 1.0.0
 tags: [songwriting, music, suno, parody, lyrics, creative]

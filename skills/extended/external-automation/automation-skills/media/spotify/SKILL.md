@@ -1,5 +1,6 @@
 ---
 name: spotify
+related_skills: []
 description: "Spotify: play, search, queue, manage playlists and devices."
 version: 1.0.0
 author: Hermes Agent
@@ -10,8 +11,7 @@ prerequisites:
 metadata:
   hermes:
     tags: [spotify, music, playback, playlists, media]
-    related_skills: [gif-search]
----
+    ---
 
 ## IO_CONTRACT
 

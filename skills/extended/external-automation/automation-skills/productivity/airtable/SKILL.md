@@ -1,5 +1,6 @@
 ---
 name: airtable
+related_skills: []
 description: >-
 version: 1.0.0
   Airtable REST API — 记录CRUD, 筛选, upsert。

@@ -1,5 +1,6 @@
 ---
 name: native-mcp
+related_skills: []
 description: >-
 version: 1.0.0
   MCP客户端 — 连接服务器, 注册工具(stdio/HTTP)。

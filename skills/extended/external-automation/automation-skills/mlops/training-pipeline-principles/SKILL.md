@@ -1,5 +1,6 @@
 ---
 name: training-pipeline-principles
+related_skills: []
 description: >-
 version: 1.0.0
   多阶段训练管线抽象原则 — teacher→distillation→student→hybrid→fine-tune。

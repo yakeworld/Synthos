@@ -1,5 +1,6 @@
 ---
 name: creative
+related_skills: ["academic-diagram", "architecture-diagram", "ascii-art", "ascii-video", "baoyu-comic", "baoyu-infographic", "claude-design", "comfyui", "excalidraw", "ffmpeg-video-audio-sync", "figure-generation", "humanizer", "manim-video", "p5js", "pixel-art", "popular-web-designs", "pretext", "sketch", "songwriting-and-ai-music", "touchdesigner-mcp"]
 description: "创意工具 — 图表、视频、图像、代码生成"
 version: 2.0.0
 metadata:

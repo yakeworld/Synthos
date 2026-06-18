@@ -12,7 +12,7 @@ metadata:
     description: Transform operational skill sets into independent cognitive atoms with strict DAG dependencies, input/output contracts, and Synthos framework alignment.
     signature: |
       skill_set: set[str], architecture_version: str, constitution_compliance: bool -> atom_def: CognitiveAtom, dag: DAG | atom_defs: list[CognitiveAtom], dependency_graph: dict, non_overlap_report: list[str]
-    related_skills: [project-experience-distillation, evolution, task-router, research-ideation]
+    related_skills: ["evolution"]
 
 ---
 

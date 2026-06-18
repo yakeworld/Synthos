@@ -13,7 +13,7 @@ metadata:
     atom_type: domain-skill
     description: "KG-AG Bridge: Knowledge Graph — Agent Bridge. 将大型知识图谱接入 Agent 记忆层，查询分层 + 环境隔离 + 语义增强 + 脚本化接口"
     signature: 'graph: KG + agent: Agent -> bridge: layered_queries + constraints + scripts'
-    related_skills: [synthos-akne-bridge, akne-maintenance, akne-knowledge-manager, memory-enhancement, question-answering]
+    related_skills: ["synthos-akne-bridge"]
 
 ---
 

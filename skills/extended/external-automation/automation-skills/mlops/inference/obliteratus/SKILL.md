@@ -1,5 +1,6 @@
 ---
 name: obliteratus
+related_skills: []
 description: "OBLITERATUS: abliterate LLM refusals (diff-in-means)."
 version: 2.0.0
 author: Hermes Agent
@@ -9,8 +10,7 @@ platforms: [linux, macos]
 metadata:
   hermes:
     tags: [Abliteration, Uncensoring, Refusal-Removal, LLM, Weight-Projection, SVD, Mechanistic-Interpretability, HuggingFace, Model-Surgery]
-    related_skills: [vllm, gguf, huggingface-tokenizers]
----
+    ---
 
 ## IO_CONTRACT
 

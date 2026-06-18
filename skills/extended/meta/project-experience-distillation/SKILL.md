@@ -7,7 +7,7 @@ license: MIT
 priority: P0
 execution_rule: "每次 complex task（5+ tool calls）后自动触发。quality-gate 通过后自动触发本技能。信任阈值条件满足时直接执行不需批准。"
 allowed-tools: terminal skill_manage skill_view read_file write_file patch memory session_search
-related_skills: [quality-gate, evolution, cognitive-atom-architecture, research-paper-search, knowledge-acquisition, knowledge-extraction, association-discovery, hypothesis-generation, argument-expression, viewpoint-verification]
+related_skills: ["quality-gate", "research-paper-search"]
 metadata:
   synthos:
     priority: P0
@@ -15,7 +15,7 @@ metadata:
     description: ⚡ P0 从项目/论文经验到可复用skill — 提取模式/设计原则/陷阱。被 paper-pipeline P6 阶段调用。
     signature: |
       project_context: str, session_summary: str, pitfalls_found: list[str] -> new_pattern: str, new_skill_name: str, target_skill: str, philosophy_insight: str | new_pattern: str, new_skill_name: str or None, target_skill: str or None, philosophy_insight: str, extracted_skill: SKILL.md or patch
-    related_skills: ['quality-gate', 'evolution', 'cognitive-atom-architecture', 'knowledge-acquisition', 'knowledge-extraction', 'association-discovery']
+    related_skills: ["quality-gate", "research-paper-search"]
 
 ---
 

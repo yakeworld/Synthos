@@ -1,5 +1,6 @@
 ---
 name: github-auth
+related_skills: []
 description: >-
 version: 1.0.0
   GitHub认证设置 — HTTPS token, SSH key, gh CLI登录。

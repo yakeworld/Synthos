@@ -1,5 +1,6 @@
 ---
 name: citation-bib-crossref
+related_skills: ["knowledge-extraction"]
 description: >-
   Cross-file citation matching between LaTeX \cite{...} calls and .bib entry keys.
   Detects orphans (cited but no bib entry), zombies (bib entry but not cited),
