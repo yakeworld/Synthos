@@ -134,6 +134,7 @@ The core of Synthos is not "zero Python" — at runtime, Python scripts are natu
 1. **文言原理层** (Classical Chinese principles) — Compresses 40-60% of cognitive load into four-character maxims. Language-agnostic, culture-portable.
 2. **SKILL.md 格式规范** — Standardized YAML frontmatter + three-layer content (原理/方法/命令). Any Agent (Hermes, Claude Code, GPT, local models) that reads Markdown can execute.
 3. **任何 Agent 协议可吸收** (Any agent's protocol is absorbable) — Claude Code's hooks, Codex's CLI patterns, GitHub Copilot's slash commands — all can be translated into Synthos's protocol format.
+4. **稳定代码沉淀为脚本** (Stable code codifies to scripts/) — Scripts that are stable, high-reuse, and error-prone should live in `scripts/` directories of skills, not in `/tmp/`. This ensures version control, reproducibility, and debugging stability. **判断标准**: (a) 稳定可靠的核心基础设施（PDF下载、DOI验证等），(b) 高复用率（多个任务/论文反复调用），(c) 易错且需版本控制（如PubMed键名陷阱、OpenAlex URL编码问题）。**不做什么**: 简单的一两行命令不需要脚本，与当前任务相关的临时代码放在/tmp/不创建技能。
 
 ```
 Synthos (protocol-portable)
