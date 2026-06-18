@@ -10,12 +10,20 @@ triggers:
 metadata:
   synthos:
     priority: P1
-    atom_type: method-skill
+    atom_type: domain-skill
     description: "KG-AG Bridge: Knowledge Graph — Agent Bridge. 将大型知识图谱接入 Agent 记忆层，查询分层 + 环境隔离 + 语义增强 + 脚本化接口"
     signature: 'graph: KG + agent: Agent -> bridge: layered_queries + constraints + scripts'
     related_skills: [synthos-akne-bridge, akne-maintenance, akne-knowledge-manager, memory-enhancement, question-answering]
 
 ---
+
+## IO_CONTRACT
+
+- **input**: `data_source: str, bridge_type: str` — 用户请求描述、上下文信息
+- **output**: `kg_output: dict — 知识图谱桥接`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
 
 
 # KG-AG Bridge — 知识图谱 × Agent 桥接方法论

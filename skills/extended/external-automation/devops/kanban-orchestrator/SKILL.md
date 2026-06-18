@@ -8,6 +8,14 @@ metadata:
     related_skills: [kanban-worker]
 ---
 
+## IO_CONTRACT
+
+- **input**: `task_batch: list[str], priorities: dict` — 用户请求描述、上下文信息
+- **output**: `work_items: list — 待办任务列表`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+
 # Kanban Orchestrator — Decomposition Playbook
 
 > The **core worker lifecycle** (including the `kanban_create` fan-out pattern and the "decompose, don't execute" rule) is auto-injected into every kanban process via the `KANBAN_GUIDANCE` system-prompt block. This skill is the deeper playbook when you're an orchestrator profile whose whole job is routing.

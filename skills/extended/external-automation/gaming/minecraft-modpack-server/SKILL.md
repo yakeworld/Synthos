@@ -7,6 +7,14 @@ platforms: [linux, macos]
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `server_spec: str` — 用户请求描述、上下文信息
+- **output**: `server_config: dict — 服务器配置`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+
 
 # Minecraft Modpack Server Setup
 

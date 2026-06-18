@@ -15,6 +15,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `game_type: str, mode: str` — 用户请求描述、上下文信息
+- **output**: `game_state: dict — 游戏状态`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+
 
 # gaming
 

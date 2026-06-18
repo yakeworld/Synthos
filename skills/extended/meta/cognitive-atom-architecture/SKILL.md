@@ -1,4 +1,11 @@
 ---
+
+## IO_CONTRACT
+
+- **input**: `atom_type: str` — 用户请求描述、上下文信息
+- **output**: `architecture_spec: dict — 认知原子架构`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
 name: cognitive-atom-architecture
 description: "Methodology for transforming operational skill sets into independent cognitive atoms with strict DAG dependencies, input/output contracts, and Synthos framework alignment. v4.0.0 syncretic framework: Eastern ontology (格物通理/取象通变/天人合一) + Western epistemology (经权度信/墨证求真/庄周观模) + 熵减律·生生之谓易 (ultimate purpose) + 大道至简 (cross-cutting razor)."
 version: 4.0.0
@@ -8,7 +15,7 @@ tags: [refactoring, architecture, synthos, cognitive-science, skill-design, cons
 metadata:
   synthos:
     priority: P0
-    atom_type: meta-architecture
+    atom_type: meta-reflection
     description: Transform operational skill sets into independent cognitive atoms with strict DAG dependencies, input/output contracts, and Synthos framework alignment.
     signature: |
       skill_set: set[str], architecture_version: str, constitution_compliance: bool -> atom_def: CognitiveAtom, dag: DAG | atom_defs: list[CognitiveAtom], dependency_graph: dict, non_overlap_report: list[str]

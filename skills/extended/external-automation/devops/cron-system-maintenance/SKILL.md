@@ -12,11 +12,19 @@ metadata:
   synthos:
     version: 1.2.0
     priority: P1
-    atom_type: workflow
+    atom_type: pipeline
     author: Synthos
     signature: 'job_list -> diagnose -> fix -> verify'
 
 ---
+
+## IO_CONTRACT
+
+- **input**: `cron_job: str, action: str` — 用户请求描述、上下文信息
+- **output**: `result: dict — cron任务执行结果`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
 
 
 # cron-system-maintenance

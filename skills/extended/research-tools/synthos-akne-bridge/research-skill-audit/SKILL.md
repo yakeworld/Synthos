@@ -154,6 +154,14 @@ For each research skill, verify:
 - [ ] 审计结果已保存为文档
 
 ---
+
+## IO_CONTRACT
+
+- **input**: `skill_path: str, audit_criteria: list` — 用户请求描述、上下文信息
+- **output**: `audit_result: dict — 技能审计报告`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
   io_contract: input: ['skill_inventory: list[Skill], audit_criteria: dict -> audit_report: dict', 'output: ['audit_report: dict (gaps, weak_skills, improvement_suggestions)']
 
 

@@ -15,6 +15,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `email_action: str, email_account: str` — 用户请求描述、上下文信息
+- **output**: `result: dict — 邮件操作结果`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+
 
 # email
 

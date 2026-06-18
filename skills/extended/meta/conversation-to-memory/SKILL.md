@@ -21,6 +21,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `conversation: str, context: str` — 用户请求描述、上下文信息
+- **output**: `memory_entries: list — 记忆条目`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+
 
 
 # Conversation → Memory

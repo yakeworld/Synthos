@@ -10,6 +10,14 @@ metadata:
     signature: 'papers_dir: str -> queue_report: dict'
     related_skills: [paper-pipeline, quality-gate, paper-cron-scan, paper-references-scanning]
 ---
+
+## IO_CONTRACT
+
+- **input**: `queue_file: str` — 用户请求描述、上下文信息
+- **output**: `audit_report: dict — 队列审计报告`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
 io_contract:
   input:
     - 'papers_dir: str -> queue_report: dict'

@@ -22,6 +22,14 @@ io_contract:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `knowledge_type: str, action: str` — 用户请求描述、上下文信息
+- **output**: `result: dict — AKNE知识管理`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+
 
 
 # AKNE Knowledge Manager — 整合审计 + 内容级审计

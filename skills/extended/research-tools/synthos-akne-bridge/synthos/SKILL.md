@@ -1,4 +1,11 @@
 ---
+
+## IO_CONTRACT
+
+- **input**: `operation: str, params: dict` — 用户请求描述、上下文信息
+- **output**: `result: dict — Synthos系统操作`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
 name: synthos
 description: 自主进化科研教学认知操作系统 — 6认知原子 × 3元组件完整Research Pipeline
 version: 1.0.0

@@ -13,6 +13,14 @@ prerequisites:
   commands: [memo]
 ---
 
+## IO_CONTRACT
+
+- **input**: `note_action: str, content: str` — 用户请求描述、上下文信息
+- **output**: `note_result: dict — 备忘录`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+
 # Apple Notes
 
 Use `memo` to manage Apple Notes directly from the terminal. Notes sync across all Apple devices via iCloud.

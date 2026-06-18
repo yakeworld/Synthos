@@ -10,6 +10,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `content: str, format: str` — 用户请求描述、上下文信息
+- **output**: `latex_output: str — LaTeX排版`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+
 
 # Latex Output
 

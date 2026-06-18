@@ -25,6 +25,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `hypothesis: str, test_data: str` — 用户请求描述、上下文信息
+- **output**: `validation_result: dict — 证伪验证结果`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+
 
 
 ## 原理层·文言

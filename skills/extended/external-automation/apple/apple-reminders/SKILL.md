@@ -12,6 +12,14 @@ prerequisites:
   commands: [remindctl]
 ---
 
+## IO_CONTRACT
+
+- **input**: `task: str, list: str` — 用户请求描述、上下文信息
+- **output**: `reminder_status: dict — 提醒事项`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+
 # Apple Reminders
 
 Use `remindctl` to manage Apple Reminders directly from the terminal. Tasks sync across all Apple devices via iCloud.
