@@ -835,3 +835,42 @@ Allocated: 3, Consumed: 3, Remaining: 0, Next: 3
 - **Disk freed from root**: ~500KB (log + cron files)
 - **Git**: 123 commits, 146MB pack (no further compression worthwhile)
 - **Remaining bottleneck**: 196 SKILL.md missing IO_CONTRACT
+
+
+## Cycle 83-84 — Skill Library Restructuring (retroactively committed in cycle-85)
+- **Date**: 2026-06-18~19
+- **Status**: committed retroactively (1129 files, 3 batch commits)
+- **Actions**:
+  - 0 duplicate names, 197/197 (100%) IO_CONTRACT coverage
+  - Organized research/ into 6 sub-categories (paper-retrieval, clinical-research, literature-review, content-production, intelligence-monitoring, research-methodology)
+  - Organized creative/ into 5 sub-categories (diagrams, video-audio, image-art, web-code, tools)
+  - Renamed batch-quality-score-extraction → automation-skills
+  - Standardized 5 atom_type variants
+  - 22 parent-skill files updated with children references
+  - Removed 2 duplicate/empty skills (ocr-and-documents, memory-enhancement)
+- **Git**: 3 commits (state files, skills +1116, ephemeral cleanup -11)
+- **Drift note**: changes existed on filesystem for days but were never committed — discovered in cycle-85 DRIFT_CHECK
+
+## Cycle 85 — YAML Integrity Fix + State Correction
+- **Date**: 2026-06-19
+- **DRIFT_CHECK**: 🟡 YELLOW — state claimed overall=0.99, actual=0.927; 1129 dirty files uncommitted since cycle-74
+- **PROBE**: 7/7 atoms exist, 197 SKILL.md total, 162 git-tracked, 0 dirty (post-commit)
+- **BENCHMARK (pre-fix)**: version=189 (95.9%), signature=83 (42.1%), IO_CONTRACT=197 (100%), benchmark=0.7956
+  - State had claimed benchmark=0.92 — 13.5% overclaim. Formula: 0.959×0.33 + 0.421×0.33 + 1.000×0.34 = 0.7956
+- **IMPROVE** (edit_budget 3/3 consumed):
+  - cognitive-atom-architecture (P0): moved IO_CONTRACT from YAML frontmatter to body (alias error on `**input**`)
+  - project-experience-distillation (P0): fixed block scalar — heading+blockquote between opening `---` and closing `---`
+  - skill-integrity-audit (P0): moved IO_CONTRACT from YAML frontmatter to body
+- **VERIFY**: YAML valid 158→161/197 (80.2%→81.7%), benchmark 0.7956→0.7973 (+0.0017)
+- **Structural**: 0.906→0.910 (atom=1.0, git=0.822, yaml=0.817, dirty=1.0 after commit)
+- **Overall**: 0.927 (structural×0.25 + benchmark×0.25 + optimize×0.10 + coverage×0.10 + absorption×0.10 + constitutional×0.20)
+- **Grade**: OK (unchanged)
+
+### Lessons
+- State overclaim discovered: 0.99→0.927 (6.5% gap). Root cause: bench score was never independently recalculated after cycle-84 restructuring changed skill tree.
+- 31 remaining broken YAML files share identical pattern (IO_CONTRACT with `**input**` alias inside frontmatter) — bulk-fixable with script
+- 5 no-frontmatter files are category indexes (intentional design, not defects)
+- Signature at 42.1% (114/197 missing) is the real benchmark bottleneck — systemic issue needing bulk strategy beyond 3-file budget
+- 1129-file dirty backlog (cycles 74-84) is a process warning: cron evolution cycles must verify git commit success
+- Edit budget 3/3 consumed
+- **Fix next cycle**: bulk-fix 31 alias-error YAML files + consider signature bulk-add strategy
