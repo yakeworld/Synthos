@@ -6,6 +6,8 @@
 - **output**: `result: dict — Synthos系统操作`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
+
+> 对应原则：P2（机械原子暴露输入输出规范）
 name: synthos
 related_skills: ["task-router"]
 description: 自主进化科研教学认知操作系统 — 6认知原子 × 3元组件完整Research Pipeline

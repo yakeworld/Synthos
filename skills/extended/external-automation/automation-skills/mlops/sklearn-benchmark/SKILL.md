@@ -33,6 +33,8 @@ metadata:
 
 > 对应原则：P2（机械原子暴露输入输出规范）
 
+> 对应原则：P2（机械原子暴露输入输出规范）
+
 
 
 
@@ -72,7 +74,7 @@ for rep in range(cv_repeats):
         pipe.fit(X_tr, y_tr)
         yp = pipe.predict(X_te)
         f1_scores.append(f1_score(y_te, yp))
-        
+
 elapsed = time.time() - t0
 print(f'Time: {elapsed:.1f}s ({elapsed/6:.1f}s per fold)')
 # 估算全量：elapsed × N_models × (1 + 慢模型倍率)

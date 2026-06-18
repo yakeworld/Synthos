@@ -19,6 +19,8 @@ metadata:
 
 > 对应原则：P2（机械原子暴露输入输出规范）
 
+> 对应原则：P2（机械原子暴露输入输出规范）
+
 
 # Citation ↔ Bib Cross-Reference Audit
 
@@ -178,7 +180,7 @@ Some papers use `\label{}` for cross-references within the same document:
 ### Case sensitivity
 
 - BibTeX keys are **case-insensitive** for matching purposes
-- `\cite{Bachmann2017}` matches `@article{bachmann2017}` 
+- `\cite{Bachmann2017}` matches `@article{bachmann2017}`
 - The script should normalize to lowercase for comparison
 
 ### Multi-file bib structures

@@ -20,6 +20,8 @@ linked_files:
 
 > 对应原则：P2（机械原子暴露输入输出规范）
 
+> 对应原则：P2（机械原子暴露输入输出规范）
+
 
 
 # ode-simulation-tuning
@@ -139,7 +141,7 @@ This pattern occurs in **degenerative systems with compensatory mechanisms** (e.
 ### Tension/Curvature Systems (P126+)
 For tension/curvature systems, the variable roles differ from biochemical systems:
 - **T (tension)**: starts low (0.40–0.50), structural baseline — like S in biochemical systems
-- **C (curvature control)**: starts very low (0.05–0.35), 
+- **C (curvature control)**: starts very low (0.05–0.35),
 
   io_contract: input: ['ode_model: str, simulation_config: str, target_metrics: dict -> tuned_metrics: dict', 'output: ['tuned_metrics: dict (r2: float, auc: float, accuracy: float, mape: float, ablation_results: dict, bifurcation_analysis: dict, improvement_plan: list[str])']
 
@@ -261,7 +263,7 @@ This pattern occurs in **degenerative systems with compensatory mechanisms** (e.
 ### Tension/Curvature Systems (P126+)
 For tension/curvature systems, the variable roles differ from biochemical systems:
 - **T (tension)**: starts low (0.40–0.50), structural baseline — like S in biochemical systems
-- **C (curvature control)**: starts very low (0.05–0.35), 
+- **C (curvature control)**: starts very low (0.05–0.35),
 metadata:
   synthos:
     priority: P1

@@ -15,6 +15,8 @@ category: research
 
 > 对应原则：P2（机械原子暴露输入输出规范）
 
+> 对应原则：P2（机械原子暴露输入输出规范）
+
 
 
 # v32 Multi-Direction Scan Protocol
@@ -61,7 +63,7 @@ For each direction, execute PubMed targeted query + OpenAlex broad/cited:
 
 ## Key Lessons from v32/v33
 1. PubMed count >1000 → check top 3 titles immediately
-2. 
+2.
 
   io_contract: input: ['scan_directions: list[str] -> scan_results: list[Paper]', 'output: ['scan_results: list[Paper] (title, doi, source, relevance, abstract)']
 
@@ -110,7 +112,7 @@ For each direction, execute PubMed targeted query + OpenAlex broad/cited:
 
 ## Key Lessons from v32/v33
 1. PubMed count >1000 → check top 3 titles immediately
-2. 
+2.
 metadata:
   synthos:
     priority: P2

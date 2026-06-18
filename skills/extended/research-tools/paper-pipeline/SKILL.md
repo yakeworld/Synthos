@@ -20,7 +20,7 @@ metadata:
 - **input**: `paper_name: str` — 论文目录名，相对于 papers/ 目录
 - **output**: `pipeline_report: dict` — 包含 stage, status, quality_score, next_step 的流水线报告
 - **side_effects**: 更新论文目录下的 state.json、quality_check.md、LaTeX 源文件及编译产物
-
+> 对应原则：P2（机械原子暴露输入输出规范）
 # Paper Pipeline — 科研全流程编排器（哲学驱动版）
 
 ## 支持参考文件
@@ -243,7 +243,7 @@ quality_score 加 2 分（从 gap_analysis 基础分提升），新增 knowledge
    - 格式：`{ "candidates": [...], "total_candidates": N, ... }`
    - Python 访问：`queue["candidates"]` 而非 `queue["queue"]`
 
-🔴 **Phase 3 晋升时不要覆盖已存在的 state.json（2026-06-18 实战）**: 
+🔴 **Phase 3 晋升时不要覆盖已存在的 state.json（2026-06-18 实战）**:
    - 4个候选项的 state.json 中 quality_score=70, gate_status=PASS, stage=publication_complete
    - 硬编码 qs=60, gate=PENDING 会创建人为降级，触发不必要的 paper-repair
    - **原则**：读取 state.json 的现有值，honour 它们，只添加 paper-queue.json 条目
@@ -515,7 +515,7 @@ find "$PAPERS" -path "*/refs-md/*.pdf" | wc -l
 ```bash
 # 对每个参考PDF，提取前200字确认真实内容
 for pdf in "$PAPERS"/*/refs-md/*.pdf; do
-    echo "=== $(basename $pdf) ===" 
+    echo "=== $(basename $pdf) ==="
     pdftotext "$pdf" - 2>/dev/null | head -5 | tr '\n' ' ' | head -200
     echo ""
 done
@@ -523,7 +523,7 @@ done
 
 **2026-05-27 实战发现的系统性命名错误**：
 
-| 文件名 | 所在论文 | 实际内容 | 
+| 文件名 | 所在论文 | 实际内容 |
 |:-------|:---------|:---------|
 | `chaudhary2019opensource.pdf` | iris-3d-anatomical-opt | Dedekind半环域代数（arXiv:1907.07162 math.RA） |
 | `perry2020keypoints.pdf` | iris-3d-anatomical-opt | 流行病建模与控制（arXiv:2010.15438 math.OC） |
@@ -544,13 +544,13 @@ PAPERS = "..."  # 论文库路径
 for d in os.listdir(PAPERS):
     dp = f"{PAPERS}/{d}"
     if not os.path.isdir(dp): continue
-    
+
     manifest = {
         'paper': d,
         'bib_entry_count': 0,  # 从references.bib读取
         'refs': []
     }
-    
+
     refdir = f"{dp}/refs-md"
     if os.path.isdir(refdir):
         for f in os.listdir(refdir):
@@ -561,7 +561,7 @@ for d in os.listdir(PAPERS):
                     'size_kb': round(os.path.getsize(fp)/1024, 1),
                     'status': 'ready' if os.path.getsize(fp) > 10000 else 'empty'
                 })
-    
+
     with open(f"{dp}/notebooklm-sources.json", 'w') as f:
         json.dump(manifest, f, indent=2)
 ```
@@ -815,7 +815,7 @@ ssh work1 "find /mnt/nfs/article/<paper> -name '*.tex' -o name '*.pdf' | head -2
 
 35. **🔴 旧管线PDF残留导致目录结构错乱（2026-06-18 实战）**: pima-crispdm管线中`06-references/`根目录包含7个旧管线遗留PDF（不属于当前Bib），pdfs子目录有44个PDF，pdfs_md子目录有40个MD文件——这些是旧管线（NotebookLM导入、历史引用）残留，与当前Bib完全不匹配。根目录本应保持扁平（PDF文件+references.bib），不应有子目录。
 
-36. **🟡 参考文献目录标准化模式 — 参照3d-eyeball-iris-segmentation（2026-06-18 实战）**: 
+36. **🟡 参考文献目录标准化模式 — 参照3d-eyeball-iris-segmentation（2026-06-18 实战）**:
 
 **标准结构**（根目录保持扁平）：
 ```

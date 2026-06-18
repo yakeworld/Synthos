@@ -26,7 +26,7 @@ metadata:
 - **output**: `atom_chain: list[str]` — 目标认知原子链（按依赖顺序）
 - **output**: `execution_mode: str` — 具体执行模式描述
 - **output**: `status: dict` — 路由决策日志（含 confidence, alternatives_considered）
-
+> 对应原则：P2（机械原子暴露输入输出规范）
 ## 原理层·文言
 
 > 路由者，问之所向也。问大则大行，问细则细究。
@@ -123,7 +123,7 @@ for each atom in chain:
   3. 锁定GAP → 定义研究缺口
   4. 生成假说(HYP) → 可证伪预测
   5. 计划子任务 → 交内循环
-  
+
 内循环(执行者):
   对每个子任务:
   1. 提取(EXT) → 精准信息
@@ -149,7 +149,7 @@ chain_example:
   # 提炼论文摘要 → 提取洞见
   - skill: knowledge-acquisition
     args: {topic: "3D eye tracking"}
-  - skill: knowledge-extraction  
+  - skill: knowledge-extraction
     args: {mode: "findings"}        # 自动接收上游 output.papers
   - skill: association-discovery
     args: {mode: "patterns"}        # 自动接收上游 output.knowledge_items

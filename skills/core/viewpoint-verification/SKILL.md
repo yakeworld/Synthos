@@ -25,7 +25,7 @@ metadata:
 - **input**: hypothesis: str
 - **input**: evidence: list[Evidence]
 - **output**: verification_result: dict (confidence_score, counterarguments, robustness_checks, falsification_tests, weaknesses, recommendations)
-
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 详细文档和完整命令列表已被移至 `references/` 目录以保持简洁。
 This skill has been compressed. Full content is available in references/.

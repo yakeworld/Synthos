@@ -13,6 +13,8 @@ version: 1.0.0
 
 > 对应原则：P2（机械原子暴露输入输出规范）
 
+> 对应原则：P2（机械原子暴露输入输出规范）
+
 
 
 # Batch Quality Score Extraction
@@ -40,7 +42,7 @@ Synthos 管线中，每篇论文的 `01-manuscript/step_quality_check.md` 包含
 | `score`(dict) + `total_score` | `total_score * 10` | 7.8 → 78 |
 | `overall_score`(number) | `overall_score * 10` | 6.5 → 65 |
 | `detailed_scores`(dict) | `avg(vals) / max(vals) * 100` | 均值/最大值 → 百分比 |
-| 纯文本（如 
+| 纯文本（如
 
   io_contract: input: ['paper_dirs: list[str] -> scores: dict', 'output: ['scores: dict (paper_name: quality_score, extraction_errors: list[str])]']
 
@@ -70,7 +72,7 @@ Synthos 管线中，每篇论文的 `01-manuscript/step_quality_check.md` 包含
 | `score`(dict) + `total_score` | `total_score * 10` | 7.8 → 78 |
 | `overall_score`(number) | `overall_score * 10` | 6.5 → 65 |
 | `detailed_scores`(dict) | `avg(vals) / max(vals) * 100` | 均值/最大值 → 百分比 |
-| 纯文本（如 
+| 纯文本（如
 metadata:
   synthos:
     priority: P2
