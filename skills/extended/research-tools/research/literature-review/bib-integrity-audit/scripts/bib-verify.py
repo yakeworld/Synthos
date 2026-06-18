@@ -12,6 +12,7 @@ Requirements:
     - requests library
     - Python 3.6+
 """
+import os
 import re
 import sys
 import json
@@ -54,7 +55,7 @@ def parse_bib_file(bib_path):
 
         # Extract fields
         for field in ['doi', 'title', 'authors', 'year', 'journal', 'booktitle', 'publisher']:
-            pattern = rf'{field}\s*=\s*\{{([^}}]+)\}'
+            pattern = r"{}".format(field) + r"\s*=\s*\{([^}]+)\}" + '\n'
             m = re.search(pattern, line)
             if m:
                 if field == 'entry_type':
@@ -113,6 +114,7 @@ def search_semantic_scholar(title, author=None):
         params['query.author'] = author[:50]
     try:
         resp = requests.get(url, timeout=15, params=params, headers={
+            'x-api-key': os.environ.get('SEMANTIC_SCHOLAR_API_KEY', ''),
             'User-Agent': 'synthos-audit/1.0 (yakeworld@wmu.edu.cn)'
         })
         if resp.status_code == 200:
