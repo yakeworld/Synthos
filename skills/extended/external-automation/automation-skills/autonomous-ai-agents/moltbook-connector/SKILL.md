@@ -39,6 +39,8 @@ metadata:
 
 > 对应原则：P2（机械原子暴露输入输出规范）
 
+> 对应原则：P2（机械原子暴露输入输出规范）
+
 
 
 
@@ -82,7 +84,7 @@ req = urllib.request.Request(
 )
 resp = json.loads(urllib.request.urlopen(req).read())
 # resp = {
-#   'agent': {'id': '...', 'name': '...', 'api_key': '...', 
+#   'agent': {'id': '...', 'name': '...', 'api_key': '...',
 #             'claim_url': '...', 'verification_code': '...'},
 #   'claim_url': '...',
 #   'status': 'pending_claim'

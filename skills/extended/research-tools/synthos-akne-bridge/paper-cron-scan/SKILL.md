@@ -15,6 +15,8 @@ category: writing
 
 > 对应原则：P2（机械原子暴露输入输出规范）
 
+> 对应原则：P2（机械原子暴露输入输出规范）
+
 
 
 # Paper Cron Scan — 轻量级 Cron 扫描
@@ -57,9 +59,9 @@ curl -s "https://api.openalex.org/works?search=VOR+PINN&per_page=3&select=title,
 
 **OpenAlex 400 Bad Request 修复（v112）**: OpenAlex search 查询中的空格会导致 HTTP 400。必须使用 `urllib.parse.quote()` 对查询字符串编码，或在 URL 构造前手动替换空格为 `+`。
 
-**OpenAlex count semantics (v153→v195)**: OpenAlex returns `count=0` or `count=-1`. 
+**OpenAlex count semantics (v153→v195)**: OpenAlex returns `count=0` or `count=-1`.
 - `count=0` → ABSOLUTE_WHITE (zero results regardless)
-- `count=-1` → count field not provided; MUST examine `results` array for domain relevance. 
+- `count=-1` → count field not provided; MUST examine `results` array for domain relevance.
   - Empty results → ABSOLUTE_WHITE
   - Keyword-noise only → ABSOLUTE_WHITE (no ODE computational dynamics papers)
   - Contains ODE/dynamics papers → NOT ABSOLUTE_WHITE
@@ -147,7 +149,7 @@ Cron job 的最终响应就是报告内容，自动交付给用户。
   ```bash
   # 错误 — 被拦截
   curl -s "https://eutils.ncbi.nlm.nih.gov/..." | python3 -c "..."
-  
+
   # 正确 — 写脚本后执行
   cat > /tmp/pubmed_scan.py << 'SCRIPT'
   import urllib.request, json

@@ -30,3 +30,5 @@ This skill has been compressed. Full content is available in references/.
 - **output**: `extracted: list[KnowledgeExtract]` — 包含 topic, method, dataset, metric, result, confidence, source, quote
 
 > 对应原则：P2（机械原子暴露输入输出规范）
+
+> 对应原则：P2（机械原子暴露输入输出规范）

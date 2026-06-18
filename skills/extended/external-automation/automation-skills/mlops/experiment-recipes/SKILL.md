@@ -5,7 +5,7 @@ allowed-tools: Read
 description: ML训练配方与预设——架构选择、训练循环、优化器、调度器、混合精度、内存优化、调试。 提炼自实战经验，非外部代码搬运。每个配方记录原理而非逐行代码。
 version: 1.0.0
 metadata:
-  synthos_atom_type: reference
+  synthos_atom_type: tool
   synthos_version: 1.1.0
   synthos_skill_md_hash: experiment-recipes-v1.1.0
   synthos_model_tested_on: '2026-05-15T00:00:00Z'
@@ -37,6 +37,8 @@ metadata:
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
 - **output**: `result: dict — 技能执行结果（结构因技能而异）`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 > 对应原则：P2（机械原子暴露输入输出规范）
 

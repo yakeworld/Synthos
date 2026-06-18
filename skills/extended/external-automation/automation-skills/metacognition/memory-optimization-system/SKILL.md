@@ -37,7 +37,7 @@ metadata:
 - **output**: `optimization_report: dict` — 优化结果（offloaded: list, merged: list, cleaned: list）
 - **output**: `context_refs: list[str]` — 卸载的 context_refs/*.md 路径
 - **output**: `metrics: dict` — 优化前后内存使用对比
-
+> 对应原则：P2（机械原子暴露输入输出规范）
 ## 已部署组件
 
 | 组件 | 脚本 | Cron | 模式 |
@@ -151,7 +151,7 @@ memory 空间 > 90% → 扫描可提升到 fact_store 的条目
   - 含明确实体名（方法/工具/人）→ 适合 fact_store
   - 跨session有效 → 适合 fact_store
   - 仅在当前 session 有用 → 留在 memory 或删除
-  
+
 fact_store → memory:
   - fact_store 中 trust_score > 0.7 且 retrieval_count > 2 → 确保在 memory 中有提及
   - 条件: 当前 memory 空间 < 80%

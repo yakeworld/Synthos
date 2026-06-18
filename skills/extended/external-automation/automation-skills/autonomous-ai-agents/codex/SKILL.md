@@ -42,6 +42,8 @@ metadata:
 
 > 对应原则：P2（机械原子暴露输入输出规范）
 
+> 对应原则：P2（机械原子暴露输入输出规范）
+
 
 
 
@@ -65,48 +67,68 @@ OpenCode 仅用于极轻量的一键脚本，复杂任务一律走 Codex。
 
 Requires the codex CLI and a git repository.
 
+## 多模型多节点 Profile
+
+Codex CLI 支持多 profile 切换不同 vLLM 节点和模型：
+
+| Profile | 节点 | 模型 | 用途 |
+|---------|------|------|------|
+| 默认(无-p) | 100.82.27.51:8000 | qwen3.6-35b-nvfp4 | 主力节点 |
+| -p amax | 100.82.27.51:8000 | Qwen3.6-35B-A3B-GPTQ-Int4 | AMAX 备用 |
+| -p hermes | 100.125.10.93:8000 | qwen3.6-35b-nvfp4 | Hermes 节点 |
+| -p fallback | 100.100.252.99:8000 | qwen3.6-35b-nvfp4 | 第三备用 |
+
+**使用方式：**
+```
+# 主力（默认）
+codex exec "task description" --yolo
+
+# 备用节点
+codex -p amax exec "task description" --yolo
+codex -p hermes exec "task description" --yolo
+codex -p fallback exec "task description" --yolo
+```
+
+**并行任务策略：** 不同任务分配到不同 profile 节点，实现多节点并行负载。
+
 ## Prerequisites
 
 - Codex installed: `npm install -g @openai/codex`
-- OpenAI auth configured: either `OPENAI_API_KEY` or Codex OAuth credentials
-  from the Codex CLI login flow
 - **Must run inside a git repository** — Codex refuses to run outside one
 - Use `pty=true` in terminal calls — Codex is an interactive terminal app
-
-For Hermes itself, `model.provider: openai-codex` uses Hermes-managed Codex
-OAuth from `~/.hermes/auth.json` after `hermes auth add openai-codex`. For the
-standalone Codex CLI, a valid CLI OAuth session may live under
-`~/.codex/auth.json`; do not treat a missing `OPENAI_API_KEY` alone as proof
-that Codex auth is missing.
 
 ## One-Shot Tasks
 
 ```
-terminal(command="codex exec 'Add dark mode toggle to settings'", workdir="~/project", pty=true)
+# 主力节点（默认）
+terminal(command="codex exec 'Add dark mode toggle to settings' --yolo", workdir="~/project", pty=true)
+
+# 备用节点并行
+terminal(command="codex -p hermes exec 'Refactor auth module' --yolo", workdir="~/project", background=true, pty=true)
+terminal(command="codex -p amax exec 'Fix login bug' --yolo", workdir="~/project", background=true, pty=true)
 ```
 
 For scratch work (Codex needs a git repo):
 ```
-terminal(command="cd $(mktemp -d) && git init && codex exec 'Build a snake game in Python'", pty=true)
+terminal(command="cd $(mktemp -d) && git init && codex exec 'Build a snake game in Python' --yolo", pty=true)
 ```
 
 ## Background Mode (Long Tasks)
 
 ```
-# Start in background with PTY
-terminal(command="codex exec --full-auto 'Refactor the auth module'", workdir="~/project", background=true, pty=true)
+# Start in background with PTY (主力节点)
+terminal(command="codex exec --full-auto 'Refactor the auth module' --yolo", workdir="~/project", background=true, pty=true)
+
+# 备用节点并行
+terminal(command="codex -p amax exec --yolo 'Fix issue #42' --yolo", workdir="~/project", background=true, pty=true)
 # Returns session_id
 
 # Monitor progress
 process(action="poll", session_id="<id>")
 process(action="log", session_id="<id>")
-
-# Send input if Codex asks a question
-process(action="submit", session_id="<id>", data="yes")
-
-# Kill if needed
-process(action="kill", session_id="<id>")
 ```
+
+**注意：** 长任务或批量任务优先使用 `--yolo` 模式 + `background=true`，并分配到不同 profile 实现多节点并行。
 
 ## Key Flags
 
@@ -164,8 +186,24 @@ terminal(command="gh pr comment 86 --body '<review>'", workdir="~/project")
 
 1. **Always use `pty=true`** — Codex is an interactive terminal app and hangs without a PTY
 2. **Git repo required** — Codex won't run outside a git directory. Use `mktemp -d && git init` for scratch
-3. **Use `exec` for one-shots** — `codex exec "prompt"` runs and exits cleanly
-4. **`--full-auto` for building** — auto-approves changes within the sandbox
+3. **Use `--yolo`** — No sandbox, no approvals (fastest). For building use `--full-auto` for auto-approve within sandbox
+4. **Multi-node parallel** — 复杂/批量任务分配到不同 profile 节点并行执行（-p amax / -p hermes / -p fallback）
 5. **Background for long tasks** — use `background=true` and monitor with `process` tool
 6. **Don't interfere** — monitor with `poll`/`log`, be patient with long-running tasks
-7. **Parallel is fine** — run multiple Codex processes at once for batch work
+7. **Parallel is fine** — run multiple Codex processes at once with different profiles
+
+## Multi-Node Load Balancing Strategy
+
+```bash
+# Task 1 → 主力节点
+codex exec "task A" --yolo -w /path/to/project
+
+# Task 2 → hermes 节点
+codex -p hermes exec "task B" --yolo -w /path/to/project
+
+# Task 3 → amax 节点
+codex -p amax exec "task C" --yolo -w /path/to/project
+
+# Monitor all in parallel
+process(action="list")
+```

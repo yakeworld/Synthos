@@ -13,6 +13,8 @@ version: 1.0.0
 
 > 对应原则：P2（机械原子暴露输入输出规范）
 
+> 对应原则：P2（机械原子暴露输入输出规范）
+
 
 
 # Debug Environment Variables
@@ -42,7 +44,7 @@ case $- in
       *) return;;
 esac
 ```
-Non-interactive shells (e.g., `bash -c 
+Non-interactive shells (e.g., `bash -c
 
   io_contract: input: ['process_info: str, env_vars: dict -> debug_report: dict', 'output: ['debug_report: dict (missing_vars: list[str], invalid_vars: list[str], suggestions: list[str])']
 
@@ -74,7 +76,7 @@ case $- in
       *) return;;
 esac
 ```
-Non-interactive shells (e.g., `bash -c 
+Non-interactive shells (e.g., `bash -c
 metadata:
   synthos:
     priority: P2

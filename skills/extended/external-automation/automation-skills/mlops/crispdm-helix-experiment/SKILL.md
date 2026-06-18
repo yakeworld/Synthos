@@ -24,6 +24,8 @@ metadata:
 
 > 对应原则：P2（机械原子暴露输入输出规范）
 
+> 对应原则：P2（机械原子暴露输入输出规范）
+
 
 
 # CRISP-DM Helix Experiment Pipeline
@@ -56,13 +58,13 @@ skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 for fold, (train_idx, test_idx) in enumerate(skf.split(X, y)):
     X_train, X_test = X.iloc[train_idx], X.iloc[test_idx]
     y_train, y_test = y.iloc[train_idx], y.iloc[test_idx]
-    
+
     # 预处理（在fold内部！）
     from sklearn.preprocessing import StandardScaler
     scaler = StandardScaler()
     X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test)  # 只用train拟合
-    
+
     # 训练+评估
     # ...
 ```

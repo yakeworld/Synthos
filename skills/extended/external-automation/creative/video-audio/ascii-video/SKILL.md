@@ -14,6 +14,8 @@ platforms: [linux, macos, windows]
 
 > 对应原则：P2（机械原子暴露输入输出规范）
 
+> 对应原则：P2（机械原子暴露输入输出规范）
+
 
 
 # ASCII Video Production Pipeline
