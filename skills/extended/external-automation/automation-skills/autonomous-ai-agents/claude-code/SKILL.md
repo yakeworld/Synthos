@@ -73,6 +73,10 @@ terminal(command="claude 'Task description'", background=true, pty=true, notify_
 - 确认claude CLI已安装: `which claude`
 
 ## Reference
-
+## Reference
 - `references/setup-guide.md` — 安装和配置
 - `references/best-practices.md` — 任务拆分和上下文管理
+
+## 相关技能
+- `codex-cli` — Codex CLI 配置与远程部署（主力编码代理，Responses API）
+- `opencode` — OpenCode CLI（轻量替代，Chat Completions API）

@@ -1,7 +1,7 @@
 ---
 name: codex
-description: Delegate coding to OpenAI Codex CLI (features, PRs).
-version: 1.0.0
+description: "Delegate coding to OpenAI Codex CLI — 主力编码代理。覆盖多节点profile配置、无PTY执行、Cron集成、多模型并行。"
+version: 1.1.0
 allowed-tools:
 - terminal
 - file
@@ -31,7 +31,9 @@ metadata:
     - claude-code
     - hermes-agent
     - moltbook-connector
-    version: 1.0.0
+    version: 1.1.0
+    last_updated: 2026-06-19
+    update_reason: Multi-node profile architecture + cron script conversion
 
 ---
 
@@ -42,18 +44,9 @@ metadata:
 
 > 对应原则：P2（机械原子暴露输入输出规范）
 
-> 对应原则：P2（机械原子暴露输入输出规范）
+# Codex CLI — 主力编码代理
 
-
-
-
-# Codex CLI
-
-Delegate coding tasks to [Codex](https://github.com/openai/codex) via the Hermes terminal. Codex is OpenAI's autonomous coding agent CLI.
-
-## 合成记忆 · 合成记忆
-
-**Codex CLI 是 Synthos 的主力编码代理。** 所有编码任务（功能开发、重构、PR审查、批量issue修复）优先走 Codex。
+> ⚡ Codex CLI 是 Synthos 的主力编码代理。所有编码任务优先走 Codex。
 
 ## When to use
 
@@ -65,11 +58,16 @@ Delegate coding tasks to [Codex](https://github.com/openai/codex) via the Hermes
 
 OpenCode 仅用于极轻量的一键脚本，复杂任务一律走 Codex。
 
-Requires the codex CLI and a git repository.
+## Prerequisites
 
-## 多模型多节点 Profile
+- Codex installed: `npm install -g @openai/codex`
+- **Must run inside a git repository** — Codex refuses to run outside one
+- Use `pty=true` in terminal calls for interactive mode
+- Config at `~/.codex/config.toml`
 
-Codex CLI 支持多 profile 切换不同 vLLM 节点和模型：
+## Multi-Node Profile Architecture
+
+Codex CLI 通过 `-p <profile>` 支持多节点并行：
 
 | Profile | 节点 | 模型 | 用途 |
 |---------|------|------|------|
@@ -78,57 +76,37 @@ Codex CLI 支持多 profile 切换不同 vLLM 节点和模型：
 | -p hermes | 100.125.10.93:8000 | qwen3.6-35b-nvfp4 | Hermes 节点 |
 | -p fallback | 100.100.252.99:8000 | qwen3.6-35b-nvfp4 | 第三备用 |
 
-**使用方式：**
-```
-# 主力（默认）
+Profile 文件位于 `~/.codex/<name>.config.toml`。每个文件独立配置 model、model_provider、base_url、wire_api。
+
+### 使用方式
+
+```bash
+# 主力节点（默认）
 codex exec "task description" --yolo
 
-# 备用节点
-codex -p amax exec "task description" --yolo
+# 备用节点并行
 codex -p hermes exec "task description" --yolo
+codex -p amax exec "task description" --yolo
 codex -p fallback exec "task description" --yolo
 ```
 
-**并行任务策略：** 不同任务分配到不同 profile 节点，实现多节点并行负载。
+### 并行任务策略
 
-## Prerequisites
+不同任务分配到不同 profile 节点，实现多节点并行负载：
 
-- Codex installed: `npm install -g @openai/codex`
-- **Must run inside a git repository** — Codex refuses to run outside one
-- Use `pty=true` in terminal calls — Codex is an interactive terminal app
+```bash
+# Task 1 → 主力节点
+codex exec "task A" --yolo
 
-## One-Shot Tasks
+# Task 2 → hermes 节点（后台）
+codex -p hermes exec "task B" --yolo &
 
+# Task 3 → amax 节点（后台）
+codex -p amax exec "task C" --yolo &
+
+# 等待全部完成
+wait
 ```
-# 主力节点（默认）
-terminal(command="codex exec 'Add dark mode toggle to settings' --yolo", workdir="~/project", pty=true)
-
-# 备用节点并行
-terminal(command="codex -p hermes exec 'Refactor auth module' --yolo", workdir="~/project", background=true, pty=true)
-terminal(command="codex -p amax exec 'Fix login bug' --yolo", workdir="~/project", background=true, pty=true)
-```
-
-For scratch work (Codex needs a git repo):
-```
-terminal(command="cd $(mktemp -d) && git init && codex exec 'Build a snake game in Python' --yolo", pty=true)
-```
-
-## Background Mode (Long Tasks)
-
-```
-# Start in background with PTY (主力节点)
-terminal(command="codex exec --full-auto 'Refactor the auth module' --yolo", workdir="~/project", background=true, pty=true)
-
-# 备用节点并行
-terminal(command="codex -p amax exec --yolo 'Fix issue #42' --yolo", workdir="~/project", background=true, pty=true)
-# Returns session_id
-
-# Monitor progress
-process(action="poll", session_id="<id>")
-process(action="log", session_id="<id>")
-```
-
-**注意：** 长任务或批量任务优先使用 `--yolo` 模式 + `background=true`，并分配到不同 profile 实现多节点并行。
 
 ## Key Flags
 
@@ -137,73 +115,142 @@ process(action="log", session_id="<id>")
 | `exec "prompt"` | One-shot execution, exits when done |
 | `--full-auto` | Sandboxed but auto-approves file changes in workspace |
 | `--yolo` | No sandbox, no approvals (fastest, most dangerous) |
+| `-p <profile>` | Load specific config profile |
+| `-c key=value` | Override a config value (CLI-only) |
+| `--strict-config` | Error on unrecognized config fields |
+
+## One-Shot Tasks (interactive PTY mode)
+
+```bash
+# 主力节点（默认）
+terminal(command="codex exec 'Add dark mode toggle' --yolo", workdir="~/project", pty=true)
+
+# 备用节点并行
+terminal(command="codex -p hermes exec 'Refactor auth' --yolo", workdir="~/project", background=true, pty=true)
+terminal(command="codex -p amax exec 'Fix login' --yolo", workdir="~/project", background=true, pty=true)
+
+# Monitor
+process(action="poll", session_id="<id>")
+process(action="log", session_id="<id>")
+```
+
+For scratch work (Codex needs a git repo):
+```bash
+terminal(command="cd $(mktemp -d) && git init && codex exec 'Build snake game' --yolo", pty=true)
+```
+
+## Background Mode (Long Tasks)
+
+```bash
+terminal(command="codex exec --full-auto 'Refactor auth' --yolo", workdir="~/project", background=true, pty=true)
+
+# 备用节点并行
+terminal(command="codex -p amax exec --yolo 'Fix issue #42'", workdir="~/project", background=true, pty=true)
+
+# Monitor progress
+process(action="poll", session_id="<id>")
+process(action="log", session_id="<id>")
+process(action="wait", session_id="<id>", timeout=300)
+```
+
+**注意：** 长任务或批量任务优先使用 `--yolo` 模式 + `background=true`，并分配到不同 profile 实现多节点并行。
 
 ## PR Reviews
 
-Clone to a temp directory for safe review:
-
-```
+```bash
 terminal(command="REVIEW=$(mktemp -d) && git clone https://github.com/user/repo.git $REVIEW && cd $REVIEW && gh pr checkout 42 && codex review --base origin/main", pty=true)
 ```
 
-## Parallel Issue Fixing with Worktrees
+## Batch PR Reviews with Parallel Worktrees
 
-```
+```bash
 # Create worktrees
 terminal(command="git worktree add -b fix/issue-78 /tmp/issue-78 main", workdir="~/project")
 terminal(command="git worktree add -b fix/issue-99 /tmp/issue-99 main", workdir="~/project")
 
-# Launch Codex in each
+# Launch Codex in each (parallel, different profiles)
 terminal(command="codex --yolo exec 'Fix issue #78: <description>. Commit when done.'", workdir="/tmp/issue-78", background=true, pty=true)
-terminal(command="codex --yolo exec 'Fix issue #99: <description>. Commit when done.'", workdir="/tmp/issue-99", background=true, pty=true)
+terminal(command="codex -p hermes --yolo exec 'Fix issue #99: <description>. Commit when done.'", workdir="/tmp/issue-99", background=true, pty=true)
 
 # Monitor
 process(action="list")
 
 # After completion, push and create PRs
-terminal(command="cd /tmp/issue-78 && git push -u origin fix/issue-78")
-terminal(command="gh pr create --repo user/repo --head fix/issue-78 --title 'fix: ...' --body '...'")
+terminal(command="cd /tmp/issue-78 && git push -u origin fix/issue-78", pty=true)
+terminal(command="cd /tmp/issue-99 && git push -u origin fix/issue-99", pty=true)
 
 # Cleanup
 terminal(command="git worktree remove /tmp/issue-78", workdir="~/project")
 ```
 
-## Batch PR Reviews
+## Cron Integration — Script Pattern
 
-```
-# Fetch all PR refs
-terminal(command="git fetch origin '+refs/pull/*/head:refs/remotes/origin/pr/*'", workdir="~/project")
-
-# Review multiple PRs in parallel
-terminal(command="codex exec 'Review PR #86. git diff origin/main...origin/pr/86'", workdir="~/project", background=true, pty=true)
-terminal(command="codex exec 'Review PR #87. git diff origin/main...origin/pr/87'", workdir="~/project", background=true, pty=true)
-
-# Post results
-terminal(command="gh pr comment 86 --body '<review>'", workdir="~/project")
-```
-
-## Rules
-
-1. **Always use `pty=true`** — Codex is an interactive terminal app and hangs without a PTY
-2. **Git repo required** — Codex won't run outside a git directory. Use `mktemp -d && git init` for scratch
-3. **Use `--yolo`** — No sandbox, no approvals (fastest). For building use `--full-auto` for auto-approve within sandbox
-4. **Multi-node parallel** — 复杂/批量任务分配到不同 profile 节点并行执行（-p amax / -p hermes / -p fallback）
-5. **Background for long tasks** — use `background=true` and monitor with `process` tool
-6. **Don't interfere** — monitor with `poll`/`log`, be patient with long-running tasks
-7. **Parallel is fine** — run multiple Codex processes at once with different profiles
-
-## Multi-Node Load Balancing Strategy
+Codex `exec` works in no-agent cron scripts when prompt is passed as CLI argument (no PTY needed):
 
 ```bash
-# Task 1 → 主力节点
-codex exec "task A" --yolo -w /path/to/project
+#!/bin/bash
+# my-cron-task.sh
+set -euo pipefail
+cd /path/to/project
 
-# Task 2 → hermes 节点
-codex -p hermes exec "task B" --yolo -w /path/to/project
-
-# Task 3 → amax 节点
-codex -p amax exec "task C" --yolo -w /path/to/project
-
-# Monitor all in parallel
-process(action="list")
+# Use a specific profile, no PTY needed
+codex -p hermes exec "## Task description\n\nSteps:\n1. ...\n2. ...\n\nOutput requirements:\n- ...\n" --yolo 2>&1
 ```
+
+**验证：** 运行 `bash script.sh` 而非 `pty=true`。Codex 在无 PTY 环境下正常执行，输出到 stdout。
+
+### Cron 迁移清单
+
+将 cron agent 任务迁移到 Codex 脚本的步骤：
+1. 将 agent 的 prompt 内容提取为 shell 脚本中的 `codex exec` 参数
+2. 设置 `script: <filename>` 在 cron job update
+3. 脚本用 `#!/bin/bash` + `set -euo pipefail` 开头
+4. 用 `cd` 进入正确的工作目录
+5. 选择合适 profile（hermes 用于代码任务，amax 用于进化相关）
+
+- Cron 集成 — 脚本模式通过 `bash script.sh` 执行，codex exec prompt 作为命令行参数传递，完全兼容
+- 多模型多节点 — 通过 `-p` profile 切换不同 vLLM 节点
+- 无 PTY 运行 — `codex exec` 在 cron/脚本环境中无需 PTY
+
+### Cron 脚本模板（内联参考）
+
+```bash
+#!/bin/bash
+# 复制此模板到 ~/.hermes/scripts/<task>.sh
+set -euo pipefail
+WORKDIR="/media/yakeworld/sda2/Synthos"
+PROFILE="-p hermes"
+cd "$WORKDIR"
+codex $PROFILE exec "
+## [任务名称]
+
+[任务描述]
+
+### 执行步骤
+1. [步骤1]
+2. [步骤2]
+
+### 输出要求
+- [输出格式]
+- [输出位置]
+- 只输出关键结果
+" --yolo 2>&1
+```
+
+## 模型兼容性警告
+
+**Codex CLI 仅支持 OpenAI Responses API (`wire_api = "responses"`)。** 不兼容 Chat Completions API 的供应商（DeepSeek、OpenRouter 等）。
+
+详情见 `references/deepseek-compatibility.md`。
+
+## Pitfalls
+
+1. **Codex needs a git repo** — 在非 git 目录运行会直接失败。用 `cd $(mktemp -d) && git init` 创建临时仓库
+2. **PTY required for interactive mode** — `codex`（不带 subcommand）需要 PTY，但 `codex exec` 不需要
+3. **Model metadata warning** — `qwen3.6-35b-nvfp4` 可能报 metadata 缺失警告，但不影响运行
+4. **Cron scripts run without PTY** — cron 的 no_agent 模式通过 `bash script.sh` 执行，Codex exec 需要 prompt 作为 CLI 参数（非 stdin）
+5. **Profile files are independent** — 每个 profile 文件完全独立，不要期望 profile 之间共享配置
+6. **--yolo has NO sandbox** — 完全访问文件系统，确保只用于可信任务
+7. **Multiple profiles = multiple processes** — 不同 profile 是独立进程，不共享 session/memory
+9. **Shell quoting in cron scripts** — Cron 脚本中 prompt 用双引号包裹，内部换行直接写。过长 prompt 注意 shell 命令长度限制（建议 < 4096 字符）
+10. **DeepSeek 不兼容 Codex** — Codex `wire_api` 只接受 `responses`（OpenAI Responses API 格式），DeepSeek 仅提供 OpenAI 兼容的 `chat/completions` 端点。尝试将 DeepSeek 接入 Codex 会失败（401 + `/v1/responses` 端点不存在）。解决方案：DeepSeek 通过 cron agent provider 配置或 OpenCode 使用，不要尝试通过 Codex CLI 调用。

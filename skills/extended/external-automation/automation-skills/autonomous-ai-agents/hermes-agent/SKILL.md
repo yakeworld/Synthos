@@ -124,6 +124,13 @@ custom_providers:
 - 显式设 `provider: custom:amax` 确保走本地
 - 需要 DeepSeek 时临时：`hermes config set model.provider deepseek` 或 job 单独指定
 
+### Codex CLI 远程部署
+远程部署 Codex CLI（如 work1 服务器）见 `codex-cli` 技能。关键要点：
+- 环境变量必须放在 `~/.codex/.env`（codex exec 不 source .bashrc）
+- SSH 传递敏感值用 base64 编码，避免引号嵌套破坏
+- `codex exec --skip-git-repo-check` 用于非 git 目录执行
+- 部署后用 `codex doctor` 验证，`codex exec "echo test"` 验证连通性
+
 ### Delivery 投递
 
 - `deliver: "origin"` 会固化创建时的 receive_id，渠道变更后失效
