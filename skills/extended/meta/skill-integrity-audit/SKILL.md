@@ -1,11 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `skill_path: str` — 用户请求描述、上下文信息
-- **output**: `integrity_report: dict — 技能完整性审计`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: skill-integrity-audit
 description: "技能库断裂诊断与恢复 — 当核心技能缺失、技能库分裂或 cron 引用了不存在的技能时执行。"
 author: "Synthos"
@@ -21,6 +14,13 @@ metadata:
     atom_type: "self-healing"
     category: "infrastructure"
 ---
+
+## IO_CONTRACT
+
+- **input**: `skill_path: str` — 用户请求描述、上下文信息
+- **output**: `integrity_report: dict — 技能完整性审计`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 # Skill Integrity Audit — 技能库断裂诊断与恢复
 

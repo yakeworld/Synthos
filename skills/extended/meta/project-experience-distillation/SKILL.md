@@ -17,13 +17,12 @@ metadata:
       project_context: str, session_summary: str, pitfalls_found: list[str] -> new_pattern: str, new_skill_name: str, target_skill: str, philosophy_insight: str | new_pattern: str, new_skill_name: str or None, target_skill: str or None, philosophy_insight: str, extracted_skill: SKILL.md or patch
     related_skills: ['quality-gate', 'evolution', 'cognitive-atom-architecture', 'knowledge-acquisition', 'knowledge-extraction', 'association-discovery']
 
+---
 
 # Project Experience Distillation
 
 > 从做项目中学到的东西，凝练成可复用的技能。
 > 凡有所作，必有所得；凡有所得，必凝为器。
-
----
 
 ## IO_CONTRACT
 
