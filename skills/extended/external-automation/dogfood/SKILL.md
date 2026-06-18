@@ -9,6 +9,14 @@ metadata:
     related_skills: []
 ---
 
+## IO_CONTRACT
+
+- **input**: `task: str, environment: str` — 用户请求描述、上下文信息
+- **output**: `result: dict — 自我使用测试报告`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+
 # Dogfood: Systematic Web Application QA Testing
 
 ## 原理层·文言

@@ -6,6 +6,14 @@ version: 1.0.0
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `project_root: str` — 用户请求描述、上下文信息
+- **output**: `sanity_report: dict — 路径健康报告`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+
 
 # Repository Path Sanity Check
 

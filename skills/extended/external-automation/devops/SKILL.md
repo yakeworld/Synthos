@@ -15,6 +15,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `pipeline_stage: str` — 用户请求描述、上下文信息
+- **output**: `result: dict — DevOps操作`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+
 
 # devops
 

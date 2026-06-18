@@ -12,6 +12,14 @@ linked_files:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `ode_model: str, params: dict` — 用户请求描述、上下文信息
+- **output**: `tuned_model: dict — ODE模拟调优结果`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+
 
 # ode-simulation-tuning
 ## ⚡ P0 Simulation tuning for ODE/2-ODE papers — systematic metric optimization

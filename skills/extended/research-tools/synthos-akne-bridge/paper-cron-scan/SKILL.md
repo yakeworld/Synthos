@@ -7,6 +7,14 @@ category: writing
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `paper_dir: str` — 用户请求描述、上下文信息
+- **output**: `scan_report: dict — 论文扫描报告`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+
 
 # Paper Cron Scan — 轻量级 Cron 扫描
 

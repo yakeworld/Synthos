@@ -7,6 +7,14 @@ platforms: [linux, macos, windows]
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `game_state: str, actions: list` — 用户请求描述、上下文信息
+- **output**: `game_response: dict — 宝可梦游戏响应`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+
 # Pokemon Player
 
 Play Pokemon games via headless emulation using the `pokemon-agent` package.

@@ -10,6 +10,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `manuscript: str, review_type: str` — 用户请求描述、上下文信息
+- **output**: `review_report: dict — 质量审查报告`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+
 
 # Sci Paper Quality Review
 

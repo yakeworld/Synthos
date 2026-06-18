@@ -13,6 +13,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `description: str, dimensions: tuple` — 用户请求描述、上下文信息
+- **output**: `ascii_output: str — ASCII艺术`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+
 # ASCII Art Skill
 
 Multiple tools for different ASCII art needs. All tools are local CLI programs or free REST APIs — no API keys required.

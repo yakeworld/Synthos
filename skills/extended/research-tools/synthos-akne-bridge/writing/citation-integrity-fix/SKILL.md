@@ -7,6 +7,14 @@ license: MIT
 tags: [latex, citation, bib, paper-quality, thebibliography]
 ---
 
+## IO_CONTRACT
+
+- **input**: `bib_file: str, citation_check: str` — 用户请求描述、上下文信息
+- **output**: `integrity_report: dict — 引文完整性报告`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+
 # Citation Integrity Fix
 
 > Fix papers where \begin{thebibliography} has entries but ZERO \cite{} commands in the text body. A common LLM generation failure mode.

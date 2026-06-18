@@ -7,6 +7,14 @@ license: MIT
 category: research
 ---
 
+## IO_CONTRACT
+
+- **input**: `paper: str, rubric: dict` — 用户请求描述、上下文信息
+- **output**: `scores: dict — 评分`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+
 # Quality Score Assignment — Stuck-at-Complete-Steps Papers
 
 > Papers with all steps completed in `steps_completed` but no `quality_score` in `state.json` must get a quality score assigned during advancement. Never leave `quality_score` as null/None.

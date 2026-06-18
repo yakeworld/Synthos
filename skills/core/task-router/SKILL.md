@@ -8,7 +8,7 @@ allowed-tools: shell (bash), Read (view), Write (write), task_delegation (agent,
 metadata:
   synthos:
     priority: P0
-    atom_type: cognitive-router
+    atom_type: parent-skill
     description: Synthos系统入口。路由用户查询到正确的认知原子链或执行模式。 四模式：标准链 / 探索循环 / 研究双循环 / 并行执行。
     signature: |
       query: str, context: dict -> route: str, atom_chain: list[str], execution_mode: str | route: str, atom_chain: list[str], execution_mode: str, pipeline_trace: pipeline_trace.json

@@ -14,6 +14,14 @@ metadata:
     related_skills: [browser]
 ---
 
+## IO_CONTRACT
+
+- **input**: `task: str, app: str` — 用户请求描述、上下文信息
+- **output**: `result: dict — macOS操作结果`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+
 # macOS Computer Use (universal, any-model)
 
 You have a `computer_use` tool that drives the Mac in the **background**.

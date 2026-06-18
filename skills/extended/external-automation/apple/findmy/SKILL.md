@@ -10,6 +10,14 @@ metadata:
     tags: [FindMy, AirTag, location, tracking, macOS, Apple]
 ---
 
+## IO_CONTRACT
+
+- **input**: `device_query: str` — 用户请求描述、上下文信息
+- **output**: `location_data: dict — 设备位置`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+
 # Find My (Apple)
 
 Track Apple devices and AirTags via the FindMy.app on macOS. Since Apple doesn't
