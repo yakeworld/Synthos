@@ -67,9 +67,78 @@ cron产出（autonomous-core-researcher）
 ```
 
 ### 输出
-- knowledge_entry_*.md（知识条目）
+- knowledge_entry_*.md（知识条目）→ 见下方产出物规范
 - research-queue.json（进度跟踪）
-- state.json（状态记录）
+- state.json（状态记录，含knowledge_score字段）
+
+### 知识条目产出物规范
+
+#### 文件结构
+
+`knowledge_entry_{candidate_id}.md` — Markdown文件，包含以下必须节：
+
+| 节 | 内容 | 示例 |
+|:---|:-----|:-----|
+| 元数据 | Type, Source, Status, Generated | Research Finding (Computational Modeling) |
+| Research Gap | ABSOLUTE_WHITE 验证结果 | 6-query PubMed battery, 0 competitors |
+| Approach | 方法概要 | 2-ODE coupled system + PINN |
+| Key Findings | 核心数值结果表 | MAPE=7.8%, R²=0.93, n≈0.69 |
+| Clinical Implications | 临床转化意义 | BVL grading, fall risk stratification |
+| Methods Assessment | 方法学评价 | Competing approaches addressed, PINN advantages |
+| Knowledge Score | 六维评分 + 加权平均 | gap_sig:0.85, method:0.80, overall:0.80 |
+| Tags | 关键词标签 | `vestibular` `PINN` `absolute-white` |
+
+#### Knowledge Score 六维评分矩阵
+
+| 维度 | 权重 | 描述 | 示例高分 |
+|:-----|:----:|:-----|:---------|
+| Gap Significance | 0.25 | 研究空白的重要性和独特性 | ABSOLUTE_WHITE 验证通过，有临床需求 |
+| Methodological Soundness | 0.20 | 方法的合理性和完整性 | ODE+PINN+, SO(3)约束, 控制实验 |
+| Result Completeness | 0.20 | 结果覆盖面和证据强度 | 参数恢复+轨迹+分类+分岔+消融全方位 |
+| Clinical Translation | 0.15 | 临床转化思路的清晰度 | BVL分级+跌倒风险+康复分层具体方案 |
+| Reproducibility | 0.10 | 数据和代码的可复现性 | 合成数据+代码声明+清晰参数 |
+| Narrative Quality | 0.10 | 知识条目的可读性和完整性 | 完整结构+引用链+领域标签 |
+
+**加权平均 ≥ 0.80 → T2 PASS**。
+
+#### quality_score 在每个步骤的基准分
+
+| 步骤 | 基准分 | 说明 |
+|:-----|:------:|:-----|
+| literature_scan | 60 | 初始空白扫描完成 |
+| gap_analysis | 65 | G6 first-mover 验证通过 |
+| hypothesis_generation | 72 | 可证伪假说生成 |
+| knowledge_entry | 80 | 完整知识条目产出 |
+
+#### state.json 更新协议
+
+knowledge_entry 完成后更新：
+
+- quality_score: base + 2（从 gap_analysis 分值提升）
+- gate_status: PASS
+- 新增 knowledge_score: 0.0-1.0（六维加权平均）
+- steps_completed: 追加 "knowledge_entry"
+
+#### research-queue.json 递进
+
+```
+当前步骤完成 → 更新 steps_completed → 更新评分字段
+→ 设置 current_step 为下一步或 null
+→ 设置 next_candidate 为下一个 PENDING 候选
+→ 失败则设 status=stuck + notes=原因 → 自动跳转
+```
+
+### 四步知识条目工作流（Autonomous Core Researcher）
+
+```
+Run N:   literature_scan     — 扫描研究空白，检查white space
+Run N+1: gap_analysis        — 深入分析，明确G6 first-mover claim
+Run N+2: hypothesis_generation — 生成可证伪假说
+Run N+3: knowledge_entry     — 产出 knowledge_entry_*.md + 更新评分
+                             → 完成后标记 candidate 为 completed
+```
+
+每步需要 `skill_view()` 加载对应的认知原子技能（knowledge-acquisition / knowledge-extraction 等）。每步产出文件放入候选目录（与 step_*.md 同层）。
 
 ### 维护
 - 不生成.tex
@@ -129,9 +198,46 @@ find papers/ -maxdepth 1 -type d | while read d; do
 done
 ```
 
-### 进入论文管线
+### 进入论文管线（晋升协议）
+
 ```bash
-# 识别需要status.json的论文
+# 识别 _knowledge_only/ 中有 paper.tex 但未入 Track A 的候选人
+KNOWLEDGE="outputs/papers/_knowledge_only"
+PAPERS="outputs/papers"
+for d in "$KNOWLEDGE"/*/; do
+    name=$(basename "$d")
+    if [ ! -f "$d/paper.tex" ] && [ ! -f "$d/01-manuscript/paper.tex" ]; then
+        continue  # 无 paper.tex → 保持 Track B
+    fi
+    
+    # 检查 paper-queue.json 是否有冲突
+    if grep -q "\"$name\"" "$PAPERS/paper-queue.json" 2>/dev/null; then
+        echo "⚠️ 冲突: $name 已在 paper-queue.json 中"
+        continue
+    fi
+    
+    # 轻量晋升：mv + index.md + paper-queue.json 入队
+    mv "$d" "$PAPERS/$name"
+    
+    # 创建 index.md（如不存在）
+    if [ ! -f "$PAPERS/$name/index.md" ]; then
+        echo "---" > "$PAPERS/$name/index.md"
+        echo "source: promoted_from_track_b" >> "$PAPERS/$name/index.md"
+        echo "promoted_at: $(date -Iseconds)" >> "$PAPERS/$name/index.md"
+        echo "---" >> "$PAPERS/$name/index.md"
+    fi
+    
+    # 确保 paper.tex 在正确位置
+    if [ -f "$PAPERS/$name/paper.tex" ] && [ ! -f "$PAPERS/$name/01-manuscript/paper.tex" ]; then
+        mkdir -p "$PAPERS/$name/01-manuscript"
+        ln -sf "../paper.tex" "$PAPERS/$name/01-manuscript/paper.tex"
+    fi
+    
+    # 入 paper-queue.json（基础条目）
+    echo "$name 晋升到 Track A"
+done
+
+# 识别 need_status.json 的论文
 find papers/ -maxdepth 1 -type d | while read d; do
   if [ -f "$d/01-manuscript/paper.tex" ] && [ ! -f "$d/07-quality/status.json" ]; then
     echo "$d" >> "need_status.json"

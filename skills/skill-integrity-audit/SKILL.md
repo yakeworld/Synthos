@@ -87,12 +87,15 @@ cp -r "$sda2_dir/$skill" "$HOME/.hermes/skills/$skill"
 - 为所有类级别 SKILL.md 注入原理层（文言文）
 - 跳过 8 个非目录条目
 
-### 质量基线 (2026-06-13)
+### 质量基线 (2026-06-18 更新)
 
-- 总技能：157（含嵌套工具级）
-- 优秀 (≥77.8%)：7 个（5%）— evolution, task-router, knowledge-acquisition 等
-- 低质 (<44.4%)：135 个（94%）— 大部分缺少结构文件
-- **平均质量：14.6%，中位数：12.5%**
+- 总技能：260（sda2 217 + hermes 43，含嵌套工具级）
+- 嵌套父级覆盖：100%（27个有子技能的父级目录全部有SKILL.md）
+- quality-gate：从20%结构完整度提升至100%（补充BOUNDARY/IO_CONTRACT/EVIDENCE_SCHEMA/CHANGE_LOG/golden）
+- 命名冲突清理：删除5个顶层精简版，保留嵌套完整版
+- 优秀 (≥77.8%)：12个（evolution, task-router, knowledge-acquisition, association-discovery, hypothesis-generation, viewpoint-verification, argument-expression, knowledge-extraction, paper-pipeline, synthos, quality-gate, + evolution的嵌套子技能）
+- 低质 (<44.4%)：大幅减少（之前135个，大部分是缺少结构文件的工具级技能，合理）
+- **跨目录同名现象**：sda2和hermes存在同名技能是正常镜像冗余，不影响hermes skills list注册
 
 ### 核心原则
 
@@ -109,3 +112,4 @@ cp -r "$sda2_dir/$skill" "$HOME/.hermes/skills/$skill"
 | `references/skill-missing-incident-2026-06-12.md` | paper-pipeline 断裂事件记录 |
 | `references/git-credential-debug.md` | GitHub 认证调试完整路径 |
 | `references/skill-philosophy-class-vs-tool.md` | 类级别 vs 工具级别技能质量要求差异 |
+| `references/audit-2026-06-18.md` | 2026-06-18技能库审计与修复报告 — quality-gate结构补全、命名冲突清理、嵌套父级SKILL.md补全、跨目录同名分析 |

@@ -25,9 +25,10 @@ triggers:
 - CanMV
 metadata:
   synthos:
-    version: 1.0.0
+    version: 1.0.1
     author: Synthos
     signature: 'eye_raw_frame -> gaze_params: dict'
+    update_note: 'v1.0.1 (2026-06-18): Added 3DeepVOG paper reference with full citation, abstracts, and technical comparison with K230. Added ContraineF→3DeepVOG terminology trap and two-sphere eyeball model methodology.'
     linked_subskills:
     - k230-canmv-debugging: K230板级调试（串口REPL、ampy传输、硬件编码器管线、传感器初始化顺序）
     - embedded-python-modularization: 嵌入式Python模块化（state.py模式、延迟导入、循环依赖消除）
@@ -36,6 +37,7 @@ metadata:
     - references/k230-inference-pipeline.md: 推理管线详解 — AI2D预处理、KPU推理、后处理算法、置信度计算、数据输出格式
     - references/k230-eye-models.md: 眼球追踪模型清单 — eye_gaze.kmodel、face_detection.kmodel、ocular_seg.kmodel等
     - references/k230-embedded-architecture.md: 软件架构总览 — 采集层/预处理层/推理层三层管线、config.py/hardware.py/state.py模块职责
+    - references/3deepvog-paper.md: 3DeepVOG论文（两球眼球模型、瞳孔/虹膜分割、旋动追踪、临床验证）— 用户"ContraineF"实际指此论文
 
 ---
 
@@ -182,3 +184,18 @@ CSI       resize      .kmodel
 ### 双摄同步丢帧
 - 双摄像头同步录制时可能丢帧，导致实际FPS低于理论值
 - 推荐单摄模式达到摄像头最大FPS@90
+
+### 术语识别陷阱
+- **"ContraineF"** 是语音输入/OCR识别对 **"3DeepVOG"** 的常见误读（见 references/3deepvog-paper.md）。当用户提到 "ContraineF"、"contrainef"、"contra net" 等变体时，优先搜索 3DeepVOG 论文而非虚构内容。
+
+## Key 3D Eye Tracking Methodologies
+
+### Two-Sphere Anatomical Eyeball Model
+- **3DeepVOG** (Zhao et al. 2026, PMC12880844): Two-sphere model with corneal refraction correction, ~0.1° accuracy, >300fps. Uses mini-patch template matching for torsion.
+- User's own work: 3D eyeball modeling via K230 + geometric reconstruction + pupil/iris segmentation via .kmodel inference
+- Both approaches use geometrically interpretable estimation rather than pure black-box DL regression
+
+### Clinical Validation Framework
+- Compare against clinical gold-standard VOG system in healthy controls
+- Measure: saccadic peak velocity, smooth pursuit gain, OKN slow-phase velocity
+- Concept proof: capture pathological eye movements (e.g., vestibular nystagmus)
