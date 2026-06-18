@@ -426,3 +426,27 @@ Tier 4: MedData (需 MEDDATA_API_KEY)
 2. Tor 电路构建（Python socks 模块）
 3. torify 命令测试
 4. 出口节点 IP 验证
+
+## Google Scholar 搜索 (2026-06-19 新增)
+
+`scripts/google_scholar.py` — Google Scholar 论文搜索
+
+```bash
+python3 google_scholar.py "vestibular eye tracking" --max 10
+python3 google_scholar.py "vestibular" --year-from 2024 --year-to 2026 --author "Smith"
+python3 google_scholar.py "vestibular" --no-tor  # 不使用Tor（默认启用）
+```
+
+⚠️ **网络限制**: Google Scholar (scholar.google.com) 的 443 端口在沙箱环境中被屏蔽。
+- 此脚本在本地/非受限网络环境中工作
+- 需要 Tor SOCKS5H 代理来绕过 IP 封禁
+- 请求频率建议 ≤10 queries/min（Google Scholar 反爬）
+- 返回 403/CAPTCHA 时自动降级
+
+**依赖**: requests, beautifulsoup4
+
+**已知问题**:
+- Google Scholar 无官方 API
+- 反爬机制严格（Cloudflare + CAPTCHA）
+- 分页需手动处理（start 参数）
+- 引用数不精确（GS 不暴露准确引用数）
