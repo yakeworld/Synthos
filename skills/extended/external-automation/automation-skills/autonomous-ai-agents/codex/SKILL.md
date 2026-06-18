@@ -49,12 +49,19 @@ metadata:
 
 Delegate coding tasks to [Codex](https://github.com/openai/codex) via the Hermes terminal. Codex is OpenAI's autonomous coding agent CLI.
 
+## 合成记忆 · 合成记忆
+
+**Codex CLI 是 Synthos 的主力编码代理。** 所有编码任务（功能开发、重构、PR审查、批量issue修复）优先走 Codex。
+
 ## When to use
 
-- Building features
+- Building features (⚡ 默认选择)
 - Refactoring
 - PR reviews
 - Batch issue fixing
+- 复杂编码任务（多文件、多步骤、需自主规划）
+
+OpenCode 仅用于极轻量的一键脚本，复杂任务一律走 Codex。
 
 Requires the codex CLI and a git repository.
 

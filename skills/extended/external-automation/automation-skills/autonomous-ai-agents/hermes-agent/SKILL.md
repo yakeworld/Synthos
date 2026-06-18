@@ -1,5 +1,6 @@
 ---
 name: hermes-agent
+related_skills: []
 description: Configure, extend, or contribute to Hermes Agent — the open-source AI agent framework by Nous Research.
 version: 1.0.0
 allowed-tools:

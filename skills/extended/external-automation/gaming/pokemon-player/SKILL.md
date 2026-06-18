@@ -1,5 +1,6 @@
 ---
 name: pokemon-player
+related_skills: []
 description: "Play Pokemon via headless emulator + RAM reads."
 version: 1.0.0
 tags: [gaming, pokemon, emulator, pyboy, gameplay, gameboy]

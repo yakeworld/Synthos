@@ -7,6 +7,7 @@
 
 > 对应原则：P2（机械原子暴露输入输出规范）
 name: synthos-probe
+related_skills: []
 description: 轻量级读取检查：验证 Synthos 认知原子（7核心原子）的结构完整性和全量 SKILL.md 基准。
 version: 1.0.0
 license: MIT

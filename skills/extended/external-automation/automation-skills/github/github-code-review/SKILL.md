@@ -1,5 +1,6 @@
 ---
 name: github-code-review
+related_skills: []
 description: >-
 version: 1.0.0
   PR代码审查 — diff分析, inline comments, gh/REST API。

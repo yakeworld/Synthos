@@ -1,5 +1,6 @@
 ---
 name: google-workspace
+related_skills: []
 description: >-
 version: 1.0.0
   Gmail/Calendar/Drive/Docs/Sheets via gws CLI。

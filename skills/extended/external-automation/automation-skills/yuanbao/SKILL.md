@@ -1,13 +1,13 @@
 ---
 name: yuanbao
+related_skills: []
 description: "Yuanbao (元宝) groups: @mention users, query info/members."
 version: 1.0.0
 platforms: [linux, macos, windows]
 metadata:
   hermes:
     tags: [yuanbao, mention, at, group, members, 元宝, 派, 艾特]
-    related_skills: []
----
+    ---
 
 ## IO_CONTRACT
 

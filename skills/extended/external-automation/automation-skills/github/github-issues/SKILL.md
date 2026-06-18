@@ -1,5 +1,6 @@
 ---
 name: github-issues
+related_skills: []
 description: >-
 version: 1.0.0
   创建/分类/标记/分配GitHub issues — gh或REST API。

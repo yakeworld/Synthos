@@ -1,5 +1,6 @@
 ---
 name: apple-reminders
+related_skills: []
 description: "Apple Reminders via remindctl: add, list, complete."
 version: 1.0.0
 author: Hermes Agent

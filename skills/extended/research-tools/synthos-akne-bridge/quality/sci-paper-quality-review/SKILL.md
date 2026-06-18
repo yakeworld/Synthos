@@ -1,5 +1,6 @@
 ---
 name: sci-paper-quality-review
+related_skills: ["argument-expression"]
 description: >-
 version: 1.0.0
   论文7维SCI质量评审 — 科学贡献/方法学/结果/完整性/清晰性/新颖性/引用。

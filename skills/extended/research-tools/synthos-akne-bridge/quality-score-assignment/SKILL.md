@@ -1,5 +1,6 @@
 ---
 name: quality-score-assignment
+related_skills: ["knowledge-extraction"]
 description: Quick-scorer for assigning quality_score to stuck-at-complete-steps papers. Covers D7 reference audit, D3 data source check, D4 structural completeness, D5 compilation check, and auto threshold assignment.
 version: 1.0.0
 author: Hermes Agent

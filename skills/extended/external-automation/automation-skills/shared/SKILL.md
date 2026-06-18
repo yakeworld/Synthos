@@ -11,9 +11,7 @@ metadata:
     atom_type: parent-skill
     description: "父级技能 — 共享资源 — 跨技能引用的通用资源。"
     signature: 'shared -> sub-skills: [references]'
-    related_skills: ["references"]
-
----
+    ---
 
 ## IO_CONTRACT
 

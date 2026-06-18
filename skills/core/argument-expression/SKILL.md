@@ -9,7 +9,7 @@ metadata:
     atom_type: cognitive-atom
     description: Structure academic arguments — thesis, evidence chains, literature support.
     signature: "hypothesis: str, evidence: list[Evidence] -> argument: str -> argument: str (thesis, claims, evidence_chains, literature_support, counterarguments)"
-    related_skills: [hypothesis-generation, association-discovery, knowledge-extraction, knowledge-acquisition, viewpoint-verification, sci-paper-standard-structure]
+    related_skills: ["knowledge-acquisition", "knowledge-extraction", "association-discovery", "hypothesis-generation"]
 ---
 
 

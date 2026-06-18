@@ -1,5 +1,6 @@
 ---
 name: popular-web-designs
+related_skills: []
 description: 54 real design systems (Stripe, Linear, Vercel) as HTML/CSS.
 version: 1.0.0
 author: Hermes Agent + Teknium (design systems sourced from VoltAgent/awesome-design-md)

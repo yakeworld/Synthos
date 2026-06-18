@@ -1,5 +1,6 @@
 ---
 name: skill-integrity-audit
+related_skills: []
 description: "技能库断裂诊断与恢复 — 当核心技能缺失、技能库分裂或 cron 引用了不存在的技能时执行。"
 author: "Synthos"
 version: "2.1.0"

@@ -1,5 +1,6 @@
 ---
 name: biomechanical-regulation-ode
+related_skills: []
 description: 'Building computational dynamical models of physiological regulation systems using 2-ODE systems with PINN training. Covers model formulation, bifurcation analysis, Sobol sensitivity, and ablation studies. Paper 115 IOP model is the primary reference.'
 version: 1.0.0
 category: mlops

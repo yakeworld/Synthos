@@ -1,5 +1,6 @@
 ---
 name: opencode
+related_skills: []
 description: >-
 version: 1.0.0
   委托OpenCode CLI编码 — 功能开发/PR审查。
@@ -21,4 +22,6 @@ metadata:
 
 # Opencode
 
-委托OpenCode CLI编码 — 功能开发/PR审查。
+> ⚠️ **已降级为轻量替代。** Codex CLI 是主力编码代理。OpenCode 仅用于极轻量的临时脚本任务，复杂编码一律走 Codex。
+
+委托OpenCode CLI编码 — 仅限一次性简单脚本。

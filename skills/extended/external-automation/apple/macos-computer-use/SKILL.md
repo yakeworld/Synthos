@@ -11,8 +11,7 @@ metadata:
   hermes:
     tags: [computer-use, macos, desktop, automation, gui]
     category: desktop
-    related_skills: [browser]
----
+    ---
 
 ## IO_CONTRACT
 

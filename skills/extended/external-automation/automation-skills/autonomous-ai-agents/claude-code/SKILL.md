@@ -1,5 +1,6 @@
 ---
 name: claude-code
+related_skills: []
 description: Delegate coding to Claude Code CLI — features, PRs, refactoring, review.
 version: 1.0.0
 allowed-tools:

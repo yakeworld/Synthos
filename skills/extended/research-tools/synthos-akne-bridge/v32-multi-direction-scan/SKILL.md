@@ -1,6 +1,7 @@
 ---
 
 name: v32-multi-direction-scan
+related_skills: ["knowledge-acquisition", "knowledge-extraction", "hypothesis-generation", "argument-expression"]
 description: Standardized v32 multi-direction PubMed+OpenAlex scan protocol for autonomous-core-researcher cron runs.
 version: 1.0.0
 category: research

@@ -1,5 +1,6 @@
 ---
 name: computational-ode-modeling
+related_skills: []
 description: >-
 version: 1.0.0
   为 SCI 论文构建稳定的非线性 2-ODE 计算模型。Cubic 双稳态结构、平衡态校准、

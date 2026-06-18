@@ -1,5 +1,6 @@
 ---
 name: llama-cpp
+related_skills: []
 description: llama.cpp local GGUF inference + HF Hub model discovery.
 version: 2.1.2
 author: Orchestra Research

@@ -1,5 +1,6 @@
 ---
 name: imessage
+related_skills: []
 description: Send and receive iMessages/SMS via the imsg CLI on macOS.
 version: 1.0.0
 author: Hermes Agent

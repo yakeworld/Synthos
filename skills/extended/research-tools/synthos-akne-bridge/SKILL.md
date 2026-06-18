@@ -9,7 +9,7 @@ metadata:
     atom_type: domain-skill
     description: Synthos 与 AKNE 之间双向桥接 — 论文目录规范化、技能连接、逆向边创建、Wiki 清理、自动守护重启、内容摘要注入、向量化补全。
     signature: 'synthos_state: str, akne_state: str -> bridge_report: dict'
-    related_skills: [akne-knowledge-manager, akne-maintenance, knowledge-extraction, knowledge-acquisition, paper-pipeline, kg-bridge]
+    related_skills: ["akne-maintenance", "akne-knowledge-manager"]
 
 ---
 

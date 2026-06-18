@@ -1,5 +1,6 @@
 ---
 name: github-pr-workflow
+related_skills: []
 description: >-
 version: 1.0.0
   GitHub PR生命周期 — branch→commit→open→CI→merge。

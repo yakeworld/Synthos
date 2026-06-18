@@ -12,7 +12,7 @@ metadata:
     atom_type: tool
     description: Public healthcare dataset discovery — known accessible sources, dead sources, and API patterns for medical AI research.
     signature: "medical_domain: str -> dataset_results: list[Dataset] -> dataset_results: list[Dataset] (name, source, url, description, access_type, relevance)"
-    related_skills: [dataset-discovery, knowledge-acquisition, knowledge-extraction, healthcare-dataset-discovery, dataset-discovery]
+    related_skills: []
 
 ---
 

@@ -1,5 +1,6 @@
 ---
 name: himalaya
+related_skills: []
 description: "Himalaya CLI: IMAP/SMTP email from terminal."
 version: 1.1.0
 author: community

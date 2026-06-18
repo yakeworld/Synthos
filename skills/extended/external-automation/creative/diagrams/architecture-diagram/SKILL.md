@@ -1,5 +1,6 @@
 ---
 name: architecture-diagram
+related_skills: ["figure-generation"]
 description: >-
 version: 1.0.0
   暗色SVG架构/云/基础设施图 — HTML格式。
