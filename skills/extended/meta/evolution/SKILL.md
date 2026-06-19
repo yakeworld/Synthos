@@ -1,6 +1,9 @@
 ---
+
 name: evolution
 description: ⚡ P0 自进化引擎。Synthos evolution engine v2.20 — 四态决策+硬收敛+GEPA反射分析+自动基准+Pareto优化+外部吸收+教训学习+黄金验证+自扩关键词+漂移检测+渐进披露+Git即记忆。Hooks注入+置信度评分+并行Agent审计+会话上下文注入+Prompt Snippets。
+author: Synthos
+license: MIT
 version: 2.20
 license: MIT
 metadata:
@@ -11,7 +14,9 @@ metadata:
     signature: "cycle: int, prev_state: dict, lessons: dict, skill_inventory: list[Skill] -> evolution_report: dict -> evolution_report: dict, new_state: evolution-state.json, log_entry: evolution-log.md, new_state: evolution-state.json"
     related_skills: [project-experience-distillation, quality-gate, research-paper-search]
 
+
 ---
+
 
 
 
@@ -19,14 +24,11 @@ metadata:
 
 ## IO_CONTRACT
 
-- **input**: `cycle: int` — 当前进化周期编号
-- **input**: `prev_state: dict` — 上一周期 evolution-state.json 快照
-- **input**: `lessons: dict` — 历史教训（近30天）
-- **input**: `skill_inventory: list[Skill]` — 全部 110 技能清单
-- **output**: `evolution_report: dict` — 完整进化报告（含 score, dimensions, improvements, lessons）
-- **output**: `new_state: evolution-state.json` — 更新后的状态文件
-- **output**: `log_entry: evolution-log.md` — 追加日志条目
+- **input**: `current_state: dict, cycle_data: dict` — 任务描述、参数配置
+- **output**: `evolution_report: dict (metrics, recommendations, next_actions)` — 执行结果
+
 > 对应原则：P2（机械原子暴露输入输出规范）
+
 ## 外部吸收记录 (v2.20 新增)
 
 > 吸收自 anthropics/claude-code (130,221⭐, 2026-06-05, 分数 4.5/5.0)

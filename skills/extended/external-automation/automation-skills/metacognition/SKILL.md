@@ -1,8 +1,12 @@
 ---
 
+
 name: metacognition
 description: 元认知 — 自主执行阈值、记忆增强、记忆优化系统。
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 triggers:
   - 需要执行metacognition下的子技能
 metadata:
@@ -13,7 +17,9 @@ metadata:
     signature: 'metacognition -> sub-skills: [autonomous-execution-threshold, memory-enhancement, memory-optimization-system]'
     related_skills: ["autonomous-execution-threshold", "memory-enhancement", "memory-optimization-system"]
 
+
 ---
+
 
 ## IO_CONTRACT
 

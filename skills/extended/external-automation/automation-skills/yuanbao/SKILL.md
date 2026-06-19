@@ -1,13 +1,19 @@
 ---
+
 name: yuanbao
 related_skills: []
 description: "Yuanbao (元宝) groups: @mention users, query info/members."
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
     tags: [yuanbao, mention, at, group, members, 元宝, 派, 艾特]
-    ---
+    
+---
+
 
 ## IO_CONTRACT
 

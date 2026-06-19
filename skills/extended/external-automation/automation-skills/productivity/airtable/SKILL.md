@@ -1,15 +1,23 @@
 ---
+
+
 name: airtable
 related_skills: []
 description: >-
 version: 1.0.0
+license: MIT
+author: Synthos
   Airtable REST API — 记录CRUD, 筛选, upsert。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

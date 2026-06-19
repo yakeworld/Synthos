@@ -1,7 +1,11 @@
 ---
+
 name: youtube-content
 description: YouTube transcripts to summaries, threads, blogs.
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 allowed-tools:
 - terminal
 - read_file
@@ -21,7 +25,9 @@ metadata:
     - jupyter-live-kernel
     - linear
 
+
 ---
+
 
 ## IO_CONTRACT
 

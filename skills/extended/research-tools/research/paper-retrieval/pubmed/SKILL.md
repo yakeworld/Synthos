@@ -1,15 +1,23 @@
 ---
+
+
 name: pubmed
 related_skills: ["knowledge-acquisition"]
 description: Deep PubMed/MEDLINE search via NCBI E-utilities — query construction, MeSH terms, batch retrieval, clinical query refinement.
 version: 1.0.0
+license: MIT
+author: Synthos
 metadata:
   synthos:
     version: 2.0.1
     author: Synthos
     signature: 'query: str -> papers: list[dict]'
 
+
+
 ---
+
+
 
 
 # PubMed Search
@@ -73,14 +81,11 @@ metadata:
 
 ## IO_CONTRACT
 
-**输入**:
-- `query: str` — PubMed搜索查询（支持MeSH、标题、摘要、作者、DOI、日期、文献类型字段）
-- `api_key: str (optional)` — NCBI API key（提升速率限制3→10 req/s）
-- `date_range: str (optional)` — 日期范围过滤器（"YYYY/MM/DD..YYYY/MM/DD"）
-- `max_results: int (optional, default=100)` — 最大返回结果数
+- **input**: `search_query: str, max_results: int` — 任务描述、参数配置
+- **output**: `papers: list[Paper] (pmid, title, authors, abstract, journal)` — 执行结果
+
 > 对应原则：P2（机械原子暴露输入输出规范）
-**输出**:
-- `papers: list[dict]` — 论文列表，每项包含: title, authors, journal, pubdate, pmid, abstract, mesh_terms, citation_count
+
 - `total_count: int` — 符合查询条件的论文总数
 - `query_used: str` — 实际执行的搜索查询
 

@@ -1,8 +1,12 @@
 ---
+
 name: songwriting-and-ai-music
 related_skills: []
 description: "Songwriting craft and Suno AI music prompts."
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 tags: [songwriting, music, suno, parody, lyrics, creative]
 platforms: [linux, macos, windows]
 triggers:
@@ -14,7 +18,9 @@ triggers:
   - adapting a song
   - AI music generation
 
+
 ---
+
 
 ## IO_CONTRACT
 

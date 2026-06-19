@@ -1,15 +1,23 @@
 ---
+
+
 name: google-workspace
 related_skills: []
 description: >-
 version: 1.0.0
+license: MIT
+author: Synthos
   Gmail/Calendar/Drive/Docs/Sheets via gws CLI。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

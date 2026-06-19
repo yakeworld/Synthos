@@ -1,7 +1,11 @@
 ---
+
 name: ffmpeg-video-audio-sync
 description: Debug and fix FFmpeg video-audio synchronization issues including duration
+author: Synthos
+license: MIT
 version: 1.2
+license: MIT
   mismatches, sample rate problems, and MP4 concatenation pitfalls. Covers ffprobe
   diagnostics, stream trimming, audio conversion, and verification of synced output.
 allowed-tools:
@@ -19,7 +23,9 @@ metadata:
     - excalidraw
     - figure-generation
 
+
 ---
+
 
 ## IO_CONTRACT
 

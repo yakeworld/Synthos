@@ -1,8 +1,12 @@
 ---
+
 name: association-discovery
 description: >-
+author: Synthos
+license: MIT
   识别知识项间关系 — 矛盾/补充/进化/支持/扩展/相似/空白。构建知识图谱。
 version: 1.0.0
+license: MIT
 metadata:
   synthos:
     priority: P0
@@ -10,7 +14,9 @@ metadata:
     description: Identify relationships between knowledge items — contradiction/supplement/evolution/support/expansion/similarity/gap.
     signature: "knowledge_items: list[KnowledgeItem] -> relationships: list[Relationship] -> relationships: list[Relationship] (source, target, type, strength, evidence)"
     related_skills: ["knowledge-acquisition", "knowledge-extraction"]
+
 ---
+
 
 
 # Association Discovery

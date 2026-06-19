@@ -1,7 +1,11 @@
 ---
+
 name: knowledge-extraction
 description: >-
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
   从学术论文元数据和摘要中提取结构化知识 — 返回JSON。
 metadata:
   synthos:
@@ -11,7 +15,9 @@ metadata:
     signature: "document: str, extraction_mode: str, schema: dict -> knowledge_items: list[KnowledgeItem] -> knowledge_items: list[KnowledgeItem] (finding, method, limitation, relevance, source)"
     related_skills: ["knowledge-acquisition"]
 
+
 ---
+
 
 
 

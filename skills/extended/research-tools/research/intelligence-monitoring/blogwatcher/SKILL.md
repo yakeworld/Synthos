@@ -1,4 +1,5 @@
 ---
+
 name: blogwatcher
 description: Monitor blogs and RSS/Atom feeds via blogwatcher-cli tool.
 version: 1.0.0
@@ -8,6 +9,7 @@ allowed-tools:
 - write_file
 - search_files
 license: MIT
+author: Synthos
 platforms:
 - linux
 - macos
@@ -34,20 +36,16 @@ prerequisites:
   commands:
   - blogwatcher-cli
 
+
 ---
+
 
 ## IO_CONTRACT
 
-- **input**: `blog_sources: list, keywords: list` — 用户请求描述、上下文信息
-- **output**: `alerts: list — 博客监控`
-
+- **input**: `blog_sources: list[str], keywords: list[str]` — 任务描述、参数配置
+- **output**: `alerts: list[Alert] (source, title, relevance, content_snippet)` — 执行结果
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-
-# Blogwatcher
-
-Track blog and RSS/Atom feed updates with the `blogwatcher-cli` tool. Supports automatic feed discovery, HTML scraping fallback, OPML import, and read/unread article management.
 
 ## Installation
 

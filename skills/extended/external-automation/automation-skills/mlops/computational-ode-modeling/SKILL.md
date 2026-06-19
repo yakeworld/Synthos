@@ -1,8 +1,12 @@
 ---
+
+
 name: computational-ode-modeling
 related_skills: []
 description: >-
 version: 1.0.0
+license: MIT
+author: Synthos
   为 SCI 论文构建稳定的非线性 2-ODE 计算模型。Cubic 双稳态结构、平衡态校准、
   bifurcation 验证、求解器稳定性。覆盖从失败调试到工作模型的完整路径。
 metadata:
@@ -11,7 +15,11 @@ metadata:
     author: Synthos
     signature: 'model_name: str -> stable_ode_system: dict'
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

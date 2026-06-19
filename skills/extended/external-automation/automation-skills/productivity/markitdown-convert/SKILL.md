@@ -1,7 +1,11 @@
 ---
+
 name: markitdown-convert
 description: Convert PDF/Office files to Markdown using Microsoft MarkItDown
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 allowed-tools:
 - terminal
 - read_file
@@ -20,7 +24,9 @@ metadata:
     - jupyter-live-kernel
     - linear
 
+
 ---
+
 
 ## IO_CONTRACT
 

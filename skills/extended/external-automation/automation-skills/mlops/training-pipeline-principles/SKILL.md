@@ -1,15 +1,23 @@
 ---
+
+
 name: training-pipeline-principles
 related_skills: []
 description: >-
 version: 1.0.0
+license: MIT
+author: Synthos
   多阶段训练管线抽象原则 — teacher→distillation→student→hybrid→fine-tune。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

@@ -1,8 +1,12 @@
 ---
 
+
 name: akne-maintenance
 description: 维护个人知识库系统AKNE — 图谱诊断、修复、向量填充、源文件覆盖、Wiki清理、自动进化守护。覆盖AKNE仓库的完整运维生命周期。
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 metadata:
   synthos:
     priority: P1
@@ -11,7 +15,9 @@ metadata:
     signature: 'akne_state: str -> maintenance_report: dict'
     related_skills: []
 
+
 ---
+
 
 ## IO_CONTRACT
 

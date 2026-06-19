@@ -1,14 +1,22 @@
 ---
+
+
 name: github-repo-management
 related_skills: []
 description: GitHub仓库管理 — clone/create/fork, remotes, releases, branches.
 version: 1.0.0
+license: MIT
+author: Synthos
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

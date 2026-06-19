@@ -1,13 +1,26 @@
+---
+name: training
+description: "Directory index for training — mlops/training   模型训练与微调"
+version: 1.0.0
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    atom_type: directory-index
+    description: "Directory index for training"
+    signature: "task_desc: str, context: dict -> result: dict"
+    related_skills: []
+    priority: P2
+
+---
 # mlops/training — 模型训练与微调
 
 ## IO_CONTRACT
 
-- **input**:  — 任务类型、参数配置
-- **output**:  — 执行结果
+- **input**: `dataset: list, model_config: dict, hyperparameters: dict` — 任务描述、参数配置
+- **output**: `trained_model: dict (weights, metadata, metrics)` — 执行结果
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-> mlops 子技能目录，提供 LLM 训练、RLHF/DPO/GRPO 训练、分布式训练框架和优化能力。
 
 ## 子技能
 

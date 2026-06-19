@@ -1,4 +1,5 @@
 ---
+
 name: competition-submission
 related_skills: ["argument-expression"]
 description: End-to-end preparation of AI/tech/innovation competition submissions. Extract requirements, map to scoring criteria, generate documents, produce submission checklist. Covers medical AI, tech innovation, academic conferences, Chinese government grants.
@@ -9,13 +10,16 @@ allowed-tools:
 - web
 - search
 license: MIT
+author: Synthos
 metadata:
   synthos:
     version: 2.0.0
     author: Synthos
     signature: 'competition_doc: str -> submission_package: dict'
 
+
 ---
+
 
 ## IO_CONTRACT
 

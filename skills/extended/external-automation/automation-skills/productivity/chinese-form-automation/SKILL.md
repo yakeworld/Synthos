@@ -1,15 +1,23 @@
 ---
+
+
 name: chinese-form-automation
 related_skills: ["python-docx"]
 description: >-
 version: 1.0.0
+license: MIT
+author: Synthos
   自动填写中文政府/教育/学术申请表 — docx+xlsx模板填充。
 metadata:
   synthos:
     version: 1.1.0
     author: Synthos
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

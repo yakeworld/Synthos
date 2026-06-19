@@ -1,10 +1,16 @@
 ---
 
+
 name: debug-env-variables
 description: Debug environment variable issues across shell boundaries, subprocesses, and application configuration layers.
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
+
 
 ---
+
 
 ## IO_CONTRACT
 

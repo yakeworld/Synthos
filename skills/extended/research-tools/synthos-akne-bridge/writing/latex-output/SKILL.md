@@ -1,15 +1,23 @@
 ---
+
+
 name: latex-output
 related_skills: ["argument-expression"]
 description: >-
 version: 1.0.0
+license: MIT
+author: Synthos
   Synthos assembled_output.json → 会议级LaTeX (.tex/.bib/figures)。
 metadata:
   synthos:
     version: 1.1.0
     author: Synthos
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

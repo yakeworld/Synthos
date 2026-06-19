@@ -1,4 +1,5 @@
 ---
+
 name: journal-selection-medical-ai
 description: Systematic methodology for evaluating and ranking SCI journals as publication
 version: 1.0.0
@@ -9,6 +10,7 @@ allowed-tools:
 - write_file
 - search_files
 license: MIT
+author: Synthos
 metadata:
   hermes:
     tags:
@@ -30,7 +32,9 @@ metadata:
     - blogwatcher
     version: 1.0.0
 
+
 ---
+
 
 ## IO_CONTRACT
 

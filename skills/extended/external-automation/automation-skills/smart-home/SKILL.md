@@ -1,8 +1,12 @@
 ---
 
+
 name: smart-home
 description: 智能家居 — Philips Hue灯光控制。
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 triggers:
   - 需要执行smart-home下的子技能
 metadata:
@@ -13,7 +17,9 @@ metadata:
     signature: 'smart-home -> sub-skills: [openhue]'
     related_skills: ["openhue"]
 
+
 ---
+
 
 ## IO_CONTRACT
 

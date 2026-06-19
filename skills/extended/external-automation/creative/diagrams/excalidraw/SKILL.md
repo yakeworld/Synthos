@@ -1,4 +1,5 @@
 ---
+
 name: excalidraw
 description: Hand-drawn Excalidraw JSON diagrams (arch, flow, seq).
 version: 1.0.0
@@ -8,6 +9,7 @@ allowed-tools:
 - write_file
 - search_files
 license: MIT
+author: Synthos
 dependencies: []
 platforms:
 - linux
@@ -34,7 +36,9 @@ metadata:
     - figure-generation
     version: 1.0.0
 
+
 ---
+
 
 ## IO_CONTRACT
 

@@ -1,8 +1,12 @@
 ---
 
+
 name: quality
 description: 质量保障 — 伪证验证、黄金测试、SCI论文质量评审。
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 triggers:
   - 需要执行quality下的子技能
 metadata:
@@ -13,7 +17,9 @@ metadata:
     signature: 'quality -> sub-skills: [falsification-validation, golden-test-methodology, sci-paper-quality-review]'
     related_skills: ["falsification-validation", "golden-test-methodology", "sci-paper-quality-review"]
 
+
 ---
+
 
 ## IO_CONTRACT
 

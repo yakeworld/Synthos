@@ -1,13 +1,26 @@
+---
+name: models
+description: "Directory index for models — mlops/models   模型架构"
+version: 1.0.0
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    atom_type: directory-index
+    description: "Directory index for models"
+    signature: "task_desc: str, context: dict -> result: dict"
+    related_skills: []
+    priority: P2
+
+---
 # mlops/models — 模型架构
 
 ## IO_CONTRACT
 
-- **input**:  — 任务类型、参数配置
-- **output**:  — 执行结果
+- **input**: `model_type: str, task: str, domain: str` — 任务描述、参数配置
+- **output**: `model_spec: dict (architecture, hyperparameters, training_config)` — 执行结果
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-> mlops 子技能目录，提供特定模型架构的操作能力。
 
 ## 子技能
 

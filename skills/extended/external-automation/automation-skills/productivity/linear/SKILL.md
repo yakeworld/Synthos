@@ -1,15 +1,23 @@
 ---
+
+
 name: linear
 related_skills: []
 description: >-
 version: 1.0.0
+license: MIT
+author: Synthos
   Linear项目管理 — issues/projects/teams via GraphQL。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

@@ -1,7 +1,11 @@
 ---
+
 name: paper-references-scanning
 description: "Scan paper library for citation health: D8 (bib entry count), D10a (cite-to-bib match rate),   orphans, zombies. Class of tasks: LaTeX reference integrity auditing."
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 metadata:
   synthos:
     priority: P1
@@ -12,7 +16,9 @@ metadata:
     related_skills: [knowledge-extraction, knowledge-acquisition, paper-cron-scan, paper-pipeline]
 
 
+
 ---
+
 
 ## IO_CONTRACT
 

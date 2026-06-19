@@ -1,15 +1,23 @@
 ---
+
+
 name: native-mcp
 related_skills: []
 description: >-
 version: 1.0.0
+license: MIT
+author: Synthos
   MCP客户端 — 连接服务器, 注册工具(stdio/HTTP)。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

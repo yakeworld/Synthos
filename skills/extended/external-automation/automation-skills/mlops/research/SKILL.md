@@ -1,3 +1,18 @@
+---
+name: research
+description: "Directory index for research — mlops/research   ML 研究框架"
+version: 1.0.0
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    atom_type: directory-index
+    description: "Directory index for research"
+    signature: "task_desc: str, context: dict -> result: dict"
+    related_skills: []
+    priority: P2
+
+---
 # mlops/research — ML 研究框架
 
 ## IO_CONTRACT

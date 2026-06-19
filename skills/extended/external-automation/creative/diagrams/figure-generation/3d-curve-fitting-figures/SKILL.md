@@ -1,7 +1,11 @@
 ---
+
+
 name: 3d-curve-fitting-figures
 description: 3D曲线拟合图的生成规范：从点云到拟合曲线到出版级Figure。 覆盖拟合重建陷阱、多标本复合布局、分段数据合并、argsort路径错乱。
 version: 1.0.0
+license: MIT
+author: Synthos
   配合figure-generation skill使用。
 allowed-tools:
 - terminal
@@ -21,7 +25,11 @@ metadata:
     - curve-fitting
     - scientific-figures
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

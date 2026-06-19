@@ -1,12 +1,18 @@
 ---
+
 name: minecraft-modpack-server
 related_skills: []
 description: "Host modded Minecraft servers (CurseForge, Modrinth)."
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 tags: [minecraft, gaming, server, neoforge, forge, modpack]
 platforms: [linux, macos]
 
+
 ---
+
 
 ## IO_CONTRACT
 

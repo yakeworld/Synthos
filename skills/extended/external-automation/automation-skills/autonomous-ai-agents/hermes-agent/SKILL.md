@@ -1,4 +1,5 @@
 ---
+
 name: hermes-agent
 related_skills: []
 description: Configure, extend, or contribute to Hermes Agent — the open-source AI agent framework by Nous Research.
@@ -8,13 +9,16 @@ allowed-tools:
 - file
 - web
 license: MIT
+author: Synthos
 metadata:
   synthos:
     version: 2.1.0
     author: Synthos
     signature: 'query: str -> config_change: dict'
 
+
 ---
+
 
 ## IO_CONTRACT
 

@@ -1,5 +1,10 @@
 ---
+
+
 name: political-proposal
+version: 1.0.0
+license: MIT
+author: Synthos
 related_skills: ["hypothesis-generation"]
 description: >-
   参政议政提案全流程(民进/政协/人大) — 三段式: 基本情况→问题→对策。
@@ -7,7 +12,11 @@ metadata:
   synthos:
     version: 1.0.0
     author: Synthos
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

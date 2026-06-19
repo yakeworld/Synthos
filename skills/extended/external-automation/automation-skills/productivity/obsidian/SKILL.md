@@ -1,7 +1,11 @@
 ---
+
 name: obsidian
 description: Read, search, create, and edit notes in the Obsidian vault.
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 allowed-tools:
 - terminal
 - read_file
@@ -21,7 +25,9 @@ metadata:
     - jupyter-live-kernel
     - linear
 
+
 ---
+
 
 ## IO_CONTRACT
 

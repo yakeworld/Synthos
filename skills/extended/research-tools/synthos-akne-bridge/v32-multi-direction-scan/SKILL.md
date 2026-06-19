@@ -1,23 +1,25 @@
 ---
 
+
 name: v32-multi-direction-scan
 related_skills: ["knowledge-acquisition", "knowledge-extraction", "hypothesis-generation", "argument-expression"]
 description: Standardized v32 multi-direction PubMed+OpenAlex scan protocol for autonomous-core-researcher cron runs.
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 category: research
+
 
 ---
 
+
 ## IO_CONTRACT
 
-- **input**: `scan_targets: list` — 用户请求描述、上下文信息
-- **output**: `scan_results: dict — 多维扫描结果`
+- **input**: `research_domain: str, scan_params: dict` — 任务描述、参数配置
+- **output**: `scan_report: dict (findings, gaps, recommendations)` — 执行结果
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-
-
-# v32 Multi-Direction Scan Protocol
 
 ## When to Use
 Every cron run of autonomous-core-researcher after v31 API fix. Standardized pattern for scanning 5 rotation + 5 new directions per run.

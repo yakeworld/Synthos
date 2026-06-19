@@ -1,8 +1,12 @@
 ---
 
+
 name: hermes
 description: Hermes Agent管理 — Cron生命周期、配置、工具管理。
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 triggers:
   - 需要执行hermes下的子技能
 metadata:
@@ -13,7 +17,9 @@ metadata:
     signature: 'hermes -> sub-skills: [hermes-scheduler]'
     related_skills: ["hermes-scheduler"]
 
+
 ---
+
 
 ## IO_CONTRACT
 

@@ -1,7 +1,11 @@
 ---
+
+
 name: system-bridging
 description: 跨系统连接模式 — 两个独立系统（知识图谱/论文管线/技能库/监控系统）之间的双向桥接。覆盖连接协议、数据注入、反向查询、同步守护、重叠检测。
 version: 1.0.0
+license: MIT
+author: Synthos
 metadata:
   synthos:
     author: Synthos
@@ -20,7 +24,11 @@ metadata:
     - cross-reference
     - bridge-protocol
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

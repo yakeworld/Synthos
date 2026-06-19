@@ -1,3 +1,18 @@
+---
+name: memory-optimization-system
+description: "Directory index for memory-optimization-system — > **注意**: 本技能是记忆管理的唯一入口。`memory-enhancement` 已合并至此。"
+version: 1.0.0
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    atom_type: directory-index
+    description: "Directory index for memory-optimization-system"
+    signature: "task_desc: str, context: dict -> result: dict"
+    related_skills: []
+    priority: P2
+
+---
 > **注意**: 本技能是记忆管理的唯一入口。`memory-enhancement` 已合并至此。
 
 ---

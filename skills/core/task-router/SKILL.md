@@ -1,6 +1,9 @@
 ---
+
 name: task-router
 description: Synthos系统入口。路由用户查询到正确的认知原子链或执行模式。 四模式：标准链 / 探索循环 / 研究双循环 / 并行执行。 Agent-native执行，纯skill驱动零Python。
+author: Synthos
+license: MIT
 version: 1.0.0
 license: MIT
 allowed-tools: shell (bash), Read (view), Write (write), task_delegation (agent, inline),
@@ -14,7 +17,9 @@ metadata:
       query: str, context: dict -> route: str, atom_chain: list[str], execution_mode: str | route: str, atom_chain: list[str], execution_mode: str, pipeline_trace: pipeline_trace.json
     related_skills: [knowledge-acquisition, knowledge-extraction, association-discovery, hypothesis-generation, argument-expression, viewpoint-verification, evolution]
 
+
 ---
+
 
 # Task Router — Synthos 系统入口
 

@@ -1,8 +1,12 @@
 ---
 
+
 name: apple
 description: Apple生态工具链 — macOS/iOS设备管理、提醒事项、备忘录、查找设备。
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 triggers:
   - 需要执行apple下的子技能
 metadata:
@@ -13,7 +17,9 @@ metadata:
     signature: 'apple -> sub-skills: [apple-notes, apple-reminders, findmy]'
     related_skills: ["apple-notes", "apple-reminders", "findmy", "imessage", "macos-computer-use"]
 
+
 ---
+
 
 ## IO_CONTRACT
 

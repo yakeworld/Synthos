@@ -1,15 +1,23 @@
 ---
+
+
 name: comfyui
 related_skills: []
 description: >-
 version: 1.0.0
+license: MIT
+author: Synthos
   通过ComfyUI生成图像/视频/音频 — 安装、启动、管理节点/模型、运行工作流。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

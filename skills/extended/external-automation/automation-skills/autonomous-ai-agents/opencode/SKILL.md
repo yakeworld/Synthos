@@ -1,7 +1,11 @@
 ---
+
+
 name: opencode
 description: "OpenCode CLI — 已降级为轻量替代。Codex CLI 是主力编码代理。保留用于极轻量的临时脚本任务。覆盖诊断、配置、多提供商路由、连通性检查。"
 version: 1.1.0
+license: MIT
+author: Synthos
 metadata:
   synthos:
     version: 1.1.0
@@ -10,7 +14,11 @@ metadata:
     description: "OpenCode CLI 诊断与运维 — 进程状态、配置文件、后端连通性、使用历史。非常驻服务，按需启动。"
     priority: P2
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

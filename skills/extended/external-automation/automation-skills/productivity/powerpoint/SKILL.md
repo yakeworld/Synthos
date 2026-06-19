@@ -1,5 +1,10 @@
 ---
+
+
 name: powerpoint
+version: 1.0.0
+license: MIT
+author: Synthos
 description: >-
   创建/读取/编辑.pptx — python-pptx: 幻灯片/表格/模板。
   覆盖环境陷阱（sandbox venv无包→系统Python）、复杂表格、
@@ -12,7 +17,11 @@ metadata:
     related_skills:
     - nature-paper2ppt
     - pil-image-generation
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

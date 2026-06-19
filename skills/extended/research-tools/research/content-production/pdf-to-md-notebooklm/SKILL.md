@@ -1,7 +1,11 @@
 ---
+
+
 name: pdf-to-md-notebooklm
 description: PDF→Markdown→NotebookLM 全流程管线。支持批量上传、自动类型检测、大文件处理。
 version: 1.0.0
+license: MIT
+author: Synthos
 allowed-tools:
 - terminal
 - file
@@ -25,7 +29,11 @@ metadata:
     - acq
     - batch
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

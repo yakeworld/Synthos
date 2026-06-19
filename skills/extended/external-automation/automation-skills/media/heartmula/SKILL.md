@@ -1,13 +1,19 @@
 ---
+
 name: heartmula
 related_skills: []
 description: "HeartMuLa: Suno-like song generation from lyrics + tags."
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
     tags: [music, audio, generation, ai, heartmula, heartcodec, lyrics, songs]
-    ---
+    
+---
+
 
 ## IO_CONTRACT
 

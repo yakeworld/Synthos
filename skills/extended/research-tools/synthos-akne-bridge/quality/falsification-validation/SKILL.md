@@ -1,6 +1,9 @@
 ---
+
 name: falsification-validation
 description: Systematic approach to validating AI agent skills through falsification
+author: Synthos
+license: MIT
 version: 1.0.0
   tests and Bayesian trust estimation. Instead of trying to prove a skill works, actively
   try to prove it fails, then update trust probability based on evidence. Use when
@@ -23,7 +26,9 @@ metadata:
     - post-compile-dual-quality-check
     - quality-gate
 
+
 ---
+
 
 ## IO_CONTRACT
 

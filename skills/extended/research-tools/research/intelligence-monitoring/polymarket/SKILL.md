@@ -1,7 +1,11 @@
 ---
+
+
 name: polymarket
 description: 'Query Polymarket: markets, prices, orderbooks, history.'
 version: 1.0.0
+license: MIT
+author: Synthos
 allowed-tools:
 - terminal
 - read_file
@@ -28,7 +32,11 @@ metadata:
     - market-data
     - trading
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

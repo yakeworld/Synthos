@@ -1,15 +1,23 @@
 ---
+
+
 name: github-auth
 related_skills: []
 description: >-
 version: 1.0.0
+license: MIT
+author: Synthos
   GitHub认证设置 — HTTPS token, SSH key, gh CLI登录。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

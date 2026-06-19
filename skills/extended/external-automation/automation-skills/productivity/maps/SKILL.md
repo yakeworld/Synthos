@@ -1,4 +1,5 @@
 ---
+
 name: maps
 description: Geocode, POIs, routes, timezones via OpenStreetMap/OSRM.
 version: 1.0.0
@@ -8,6 +9,7 @@ allowed-tools:
 - write_file
 - search_files
 license: MIT
+author: Synthos
 platforms:
 - linux
 - macos
@@ -43,7 +45,9 @@ metadata:
     - linear
     version: 1.2.0
 
+
 ---
+
 
 ## IO_CONTRACT
 

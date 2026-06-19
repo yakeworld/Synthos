@@ -1,8 +1,12 @@
 ---
 
+
 name: maintenance
 description: Synthos维护 — 认知原子结构完整性验证。
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 triggers:
   - 需要执行maintenance下的子技能
 metadata:
@@ -13,7 +17,9 @@ metadata:
     signature: 'maintenance -> sub-skills: [synthos-probe]'
     related_skills: ["synthos-probe"]
 
+
 ---
+
 
 ## IO_CONTRACT
 

@@ -1,15 +1,23 @@
 ---
+
+
 name: medical-image-centerline
 related_skills: []
 description: >-
 version: 1.0.0
+license: MIT
+author: Synthos
   从3D分割标签提取中心线 — 图论环基法/中位切+图直径法。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

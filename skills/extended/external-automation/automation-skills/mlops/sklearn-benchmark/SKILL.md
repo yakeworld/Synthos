@@ -1,7 +1,11 @@
 ---
+
+
 name: sklearn-benchmark
 description: 设计、运行和优化scikit-learn多模型基准测试。覆盖预赛时序检测、失败模型预判、大数据集模型过滤、OOM防护、并行策略、结果整合。
 version: 1.0.0
+license: MIT
+author: Synthos
 allowed-tools:
 - terminal
 - read_file
@@ -24,7 +28,11 @@ metadata:
     - model-evaluation
     - mlops
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

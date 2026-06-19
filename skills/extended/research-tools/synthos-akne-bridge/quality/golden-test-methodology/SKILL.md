@@ -1,5 +1,7 @@
 ---
+
 name: golden-test-methodology
+version: 1.0.0
 description: 'Methodology for creating, maintaining, and evaluating golden test suites
 version: 1.0.0
   across all skills. Defines: three-file golden structure (GOLDEN_SET.md + cases/
@@ -7,6 +9,7 @@ version: 1.0.0
   Covers the systematic gap where golden coverage is the weakest dimension in a multi-skill
   system.'
 license: MIT
+author: Synthos
 allowed-tools: skill_view Read Write
 metadata:
   synthos:
@@ -19,7 +22,9 @@ metadata:
     - project-experience-distillation
     version: 1.0.0
 
+
 ---
+
 
 ## IO_CONTRACT
 

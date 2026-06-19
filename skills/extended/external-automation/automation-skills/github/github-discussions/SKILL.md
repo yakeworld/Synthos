@@ -1,4 +1,5 @@
 ---
+
 name: github-discussions
 description: Create, list, search, and manage GitHub Discussions via GraphQL API.
 version: 4.2
@@ -7,6 +8,7 @@ allowed-tools:
 - file
 - web
 license: MIT
+author: Synthos
 platforms:
 - linux
 - macos
@@ -33,7 +35,9 @@ metadata:
     - github-repo-management
     version: 1.0.0
 
+
 ---
+
 
 ## IO_CONTRACT
 
