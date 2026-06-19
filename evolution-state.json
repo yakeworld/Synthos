@@ -1,6 +1,6 @@
 {
-  "version": "v2.29.0",
-  "cycle": 89,
+  "version": "v2.30.0",
+  "cycle": 90,
   "last_updated": "2026-06-20T00:00:00+00:00",
   "status": "OK",
   "overall_score": 0.9125,
@@ -15,15 +15,15 @@
   },
   "edit_budget": {
     "allocated": 3,
-    "consumed": 1,
-    "remaining": 2,
+    "consumed": 2,
+    "remaining": 1,
     "next_cycle": 3,
-    "notes": "cycle-89: Fixed 27 YAML errors (26 alias + 1 block-scalar) — all SKILL.md frontmatter valid"
+    "notes": "cycle-90: Cleaned 178 duplicate > 对应原则 lines across SKILL.md files — 0 duplicates remaining"
   },
   "next_actions": [
-    "cycle-89: Fixed 27 YAML alias errors — moved IO_CONTRACT markdown out of frontmatter, added closing --- where missing",
-    "cycle-89: 0 YAML errors remaining across 198 SKILL.md files",
-    "cycle-89: Remaining: ~150 files with duplicate > 对应原则 lines in body (not breaking YAML)"
+    "cycle-90: Removed duplicate > 对应原则 lines from 178 SKILL.md files (body cleanup)",
+    "cycle-90: 197/198 SKILL.md have exactly one > 对应原则, 0 YAML errors, 0 duplicates",
+    "cycle-90: Remaining: ~130 SKILL.md files missing IO_CONTRACT (large undertaking, may defer)"
   ],
   "rejected_buffer": {
     "hits": 0,
@@ -53,7 +53,8 @@
     "cycle-88: Corrected massive state overclaim — benchmark -13.3%, structural -23.1%",
     "cycle-88: Committed 10 dirty SKILL.md + fixed 3 YAML alias errors — structural 0.7673->0.8325",
     "cycle-88: DRIFT RED — state overclaimed. 29 alias YAML errors remaining. 20 circular deps found.",
-    "cycle-89: Fixed 27 YAML alias errors — 26 > 对应原则 moved from frontmatter to body, 1 block-scalar fixed"
+    "cycle-89: Fixed 27 YAML alias errors — 26 > 对应原则 moved from frontmatter to body, 1 block-scalar fixed",
+    "cycle-90: Removed 178 duplicate > 对应原则 body lines — zero duplicates across all SKILL.md"
   ],
   "lessons": {
     "cycle-65": "Cycle 65: State.json was behind — cycle 64 (OpenClaw absorption, 57 skills) was committed to git but state.json still showed cycle 63.",

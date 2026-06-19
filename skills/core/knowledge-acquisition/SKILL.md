@@ -180,8 +180,6 @@ notebooklm source add "$(cat pdfs/{bibkey}.md)" --type text --title "{bibkey}" -
 
 > 对应原则：P2（机械原子暴露输入输出规范）
 
-> 对应原则：P2（机械原子暴露输入输出规范）
-
 ## 执行脚本
 
 - `../../extended/research-tools/research/paper-retrieval/scripts/multi_source_search.py` — 四源统一检索引擎（Semantic Scholar + PubMed + OpenAlex + arXiv via torsocks）
