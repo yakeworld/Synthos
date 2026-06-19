@@ -90,10 +90,10 @@ Agent-native认知原子。使用技能库+终端curl检索学术文献，零Pyt
 
 | 优先级 | 源 | 回退策略 |
 |:------:|:---|:---------|
-| 1 | Semantic Scholar | 429→OpenAlex |
+| 1 | Semantic Scholar (API Key) → 429→OpenAlex|
 | 2 | PubMed | 无响应→Crossref |
-| 3 | arXiv | HTTP redirect→curl -L |
-| 4 | OpenAlex | 复杂查询→分解为简单短语 |
+| 3 | arXiv (Tor SOCKS5) → HTTPS + curl -L --socks5-hostname 127.0.0.1:9050|
+| 4 | OpenAlex → {word: [positions]} 反转重建摘要|
 | 5 | bioRxiv/medRxiv | 无结果→直接API |
 | 6 | Web scrape | 深度抓取 |
 | 7 | 本地缓存 | 离线兜底 |
@@ -147,13 +147,15 @@ notebooklm source add "$(cat pdfs/{bibkey}.md)" --type text --title "{bibkey}" -
 
 ## 已知陷阱
 
-1. S2 API 429 — 自动重试+OpenAlex回退
+1. S2 API 429 — 使用环境变量 SEMANTIC_SCHOLAR_API_KEY；无 key 则回退 OpenAlex
 2. PubMed rate limit — 串行请求+3s延迟
-3. arXiv API 是 HTTP（非 HTTPS）— 用 `curl -L` 处理301
+3. arXiv API 必须 HTTPS — 通过 Tor SOCKS5（`--socks5-hostname 127.0.0.1:9050`）+ `curl -L`
 4. Crossref `select` 参数 — 逗号分隔字段名
-5. OpenAlex abstract 是 inverted index — 需重建
+5. OpenAlex abstract_inverted_index 格式为 `{word: [positions]}`，需反转重建摘要
 6. PDF 下载失败 — 跳过，不阻塞流程
 7. 缓存过期 — 24h后自动重新检索
+8. arXiv 标题含换行符 — XML 解析后需 `.strip()`
+9. arXiv PDF URL 在 `<link rel="related">`，非 `rel="alternate"`
 
 ## 验证清单
 
@@ -179,3 +181,20 @@ notebooklm source add "$(cat pdfs/{bibkey}.md)" --type text --title "{bibkey}" -
 > 对应原则：P2（机械原子暴露输入输出规范）
 
 > 对应原则：P2（机械原子暴露输入输出规范）
+
+## 执行脚本
+
+- `../../extended/research-tools/research/paper-retrieval/scripts/multi_source_search.py` — 四源统一检索引擎（Semantic Scholar + PubMed + OpenAlex + arXiv via torsocks）
+  - 用法: python3 multi_source_search.py "query" --max 5 --verbose --output result.json
+  - 环境变量: SEMANTIC_SCHOLAR_API_KEY（必需）
+  - 输出: 符合 SKILL.md IO_CONTRACT 的标准 JSON（papers + search_meta + sources_success/failed）
+- `../../extended/research-tools/research/paper-retrieval/scripts/pdf_download_engine.py` — 多源竞速PDF下载引擎
+  - 用法: python3 pdf_download_engine.py DOI_or_arXiv_ID --output path.pdf
+  - 文件名规范: PDF 保存为 {bibkey}.pdf (如 V2019GrandmasterLevelStarcraft.pdf)，基于作者+年份+标题生成 BibTeX 风格标识符
+  - 用法: python3 pdf_download_engine.py --batch candidates.json  # 批量下载
+  - 用法: python3 pdf_download_engine.py --test  # 连通性测试
+  - 下载策略: OA直连(arXiv→Crossref→Unpaywall→PMC) → Sci-Hub(curl_cffi→Tor) → LibGen → MedData（Semantic Scholar + PubMed + OpenAlex + arXiv via torsocks）
+  - 用法: `python3 multi_source_search.py "query" --max 5 --verbose --output result.json`
+  - 环境变量: `SEMANTIC_SCHOLAR_API_KEY`（必需）
+  - 输出: 符合 SKILL.md IO_CONTRACT 的标准 JSON（papers + search_meta + sources_success/failed）
+  - 特性: 自动去重、回退链、速率限制、provenance 标注、exit code 0/1

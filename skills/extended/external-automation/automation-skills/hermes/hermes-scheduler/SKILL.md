@@ -2,7 +2,7 @@
 name: hermes-scheduler
 related_skills: []
 description: "Hermes Agent cron job lifecycle management — diagnose failures, migrate providers, load-balance across nodes, create workers, clean up orphan tasks."
-version: 1.1.0
+version: 1.2.0
 author: Synthos
 license: MIT
 metadata:
@@ -17,9 +17,6 @@ metadata:
 - **output**: `result: dict — 技能执行结果（结构因技能而异）`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
 
 # Hermes Scheduler — Cron Job Lifecycle Management
 
@@ -69,3 +66,14 @@ metadata:
 2. Cron tasks with `no_agent=true` mode deliver stdout directly — they cannot use skills, only shell commands and Python scripts.
 3. Cron tasks with `skills:` field require the agent mode — check that referenced skills exist.
 4. Cron schedule mismatches: if a cron task depends on file system state (e.g., `outputs/papers/`), changes to directory structure can break assumptions.
+5. **Codex provider vLLM model 404**: Cron scripts using `codex -p <profile> exec` silently fail when the model referenced in `~/.codex/<profile>.config.toml` no longer exists on the vLLM endpoint. Symptoms: `ERROR: unexpected status 404 Not Found`, `ERROR: Reconnecting... 1/5` through `5/5`. Diagnostic: check `model` and `base_url` in the config file, compare with working configs (`config.toml`, `hermes.config.toml`). Fix: update the broken config to use a working model name and endpoint. See `references/codex-vllm-404-troubleshooting.md` for the full diagnostic path.
+
+## 支持文件
+
+- `references/cron-compliance-audit-methodology.md` — 合规审计方法论
+- `references/fix-records-2026-06-05.md` — 历史修复记录
+- `references/codex-vllm-404-troubleshooting.md` — Codex vLLM 404故障诊断
+- `references/paper-audit-methodology.md` — 论文审计方法论
+- `references/paper-orchestration-template.md` — 论文编排模板
+- `references/uci-dataset-download.md` — UCI数据集下载
+- `templates/gpu-heartbeat.sh` — GPU心跳监测脚本
