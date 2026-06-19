@@ -161,8 +161,6 @@ For each research skill, verify:
 
 > 对应原则：P2（机械原子暴露输入输出规范）
 
-> 对应原则：P2（机械原子暴露输入输出规范）
-
   io_contract: input: ['skill_inventory: list[Skill], audit_criteria: dict -> audit_report: dict', 'output: ['audit_report: dict (gaps, weak_skills, improvement_suggestions)']
 
 

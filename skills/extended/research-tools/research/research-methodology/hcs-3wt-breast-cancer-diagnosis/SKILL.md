@@ -27,7 +27,6 @@ metadata:
 
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-> 对应原则：P2（机械原子暴露输入输出规范）
 
 
 # HCS-3WT Breast Cancer Diagnostic AI System

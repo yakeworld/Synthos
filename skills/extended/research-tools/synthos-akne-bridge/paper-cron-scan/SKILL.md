@@ -15,8 +15,6 @@ category: writing
 
 > 对应原则：P2（机械原子暴露输入输出规范）
 
-> 对应原则：P2（机械原子暴露输入输出规范）
-
 
 
 # Paper Cron Scan — 轻量级 Cron 扫描

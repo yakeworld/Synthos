@@ -142,8 +142,6 @@ PMID 39810187 (J Transl Med 2025) 在 PD-saccade-ML 方向上使用了 SVM/RF/NN
 
 > 对应原则：P2（机械原子暴露输入输出规范）
 
-> 对应原则：P2（机械原子暴露输入输出规范）
-
 ## 脚本
 
 - `../scripts/openalex_search.py` — OpenAlex 学术搜索（Python 3.12 urllib，正确 URL 编码）
