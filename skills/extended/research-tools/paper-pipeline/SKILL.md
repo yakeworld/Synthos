@@ -1,14 +1,14 @@
 ---
 name: paper-pipeline
-description: "主skill | SCI论文全流程编排器。核心原理：声明与执行分离、逐问收束、节点闸门、闭环进化。v3.9新增模板层。v3.10新增批量双质检。v3.14新增双轨制。**v3.15新增轨道B知识条目四步工作流**（含research-queue初始化、Knowledge Score矩阵、state.json更新协议）。**v3.16新增队列自愈协议**（stale检测、去重、ABSOLUTE WHITE独立验证、Track A碰撞检测）。**v3.17新增多版本Tex引用比较协议，高版本号≠高质量版本。****v3.18新增Track A晋升协议（Phase 3），有paper.tex的_knowledge_only候选自动晋升至管道，不再跳过不处理。**v3.18.1新增Trap#28未注册孤儿检测+批量入职协议（paper-queue.json遗漏同步）。**v3.18.3修复Step 0 Phase 1 物理搬迁缺失**（25篇已入Track A论文残留在_knowledge_only/中未移动），Phase 2新增paper-queue.json预检查避免已入队论文进入Phase 3死循环。**v3.18.4修复P0预检natbib盲区**——natbib论文（`\\citep{}`/`\\citet{}`）的D10a扫描因正则不匹配返回0，新增引用风格自动检测+natbib正则回退。"
-version: 3.18.4
+description: "主skill | SCI论文全流程编排器。v3.18.10新增Trap#42跨项目参考文献污染检测（Synthos Paper ID后缀/占位符键名/空条目/Prose提及无cite）。v3.18.9新增Trap#41 paper-queue.json幽灵条目逆方向。v3.18.5-8: D10a批量扫描+natbib盲区+注释过滤+路由修复。v3.18: Track A晋升协议。v3.16: 队列自愈+ABSOLUTE WHITE独立验证。v3.15: 轨道B四步工作流。"
+version: 3.18.10
 author: "Synthos + 临床科研设计与论文写作 + 用户杨晓凯"
 license: MIT
 metadata:
   synthos:
     priority: P1
     atom_type: pipeline
-    description: SCI论文全流程编排器。核心原理：声明与执行分离、逐问收束、节点闸门、闭环进化。v3.9新增：论文管线双轨制、空壳清理协议。v3.15新增：轨道B知识条目四步工作流。v3.16新增：队列自愈协议。v3.17新增：多版本Tex引用比较协议、版本回退检测、重复引用修复。
+    description: "SCI论文全流程编排器。v3.18.10新增Trap#42跨项目参考文献污染检测。v3.18.9新增Trap#41 paper-queue.json幽灵条目逆方向。v3.18.5-8: D10a批量扫描+natbib盲区+注释过滤+路由修复。v3.18: Track A晋升协议。v3.16: 队列自愈+ABSOLUTE WHITE独立验证。v3.15: 轨道B四步工作流。"
     signature: |
       paper_name: str -> pipeline_report: dict | pipeline_report: dict (stage, status, quality_score, next_step)
     related_skills: [quality-gate, evolution, project-experience-distillation, knowledge-acquisition, knowledge-extraction, association-discovery, hypothesis-generation, argument-expression, viewpoint-verification, sci-paper-quality-review, conversation-to-memory, knowledge-extraction, knowledge-acquisition, academic-atom-architecture, reference-verification]
@@ -27,6 +27,7 @@ metadata:
 
 - `references/3d-curve-fitting-figures.md` — 3D曲线拟合图生成规范
 - `references/citation-count-vs-bib-count.md` — 引用计数与Bib条目数的正确关系（引用>条目数=正常）
+- `references/cross-project-contamination-patterns.md` — 跨项目参考文献污染检测模式（Synthos Paper ID后缀、占位符键名、空条目、prose提及无\cite）（v3.18.10新增）
 - `references/meddata-authentication-debugging.md` — MedData PDF 下载认证系统分析（见 quality-gate/references/，跨技能引用）
 
 | 概念 | 文言 | 义 |
@@ -283,13 +284,18 @@ elif '\\cite{' in tex:
 else:
     cite_pattern = r'\\cite[tp]?\s*\{([^}]+)\}'  # 默认
 
-# 提取cite键
+# 提取cite键 — 逐行过滤，跳过LaTeX注释行（%开头）
+# ⚠️ 全局re.finditer会匹配注释中的\cite{}，导致D10a虚高（Trap #39）
 tex_cites = set()
-for m in re.finditer(cite_pattern, tex):
-    for k in m.group(1).split(','):
-        k = k.strip()
-        if k and k not in ('<label>', 'lamport94'):
-            tex_cites.add(k)
+for line in tex.split('\n'):
+    stripped = line.strip()
+    if stripped.startswith('%'):
+        continue  # 跳过LaTeX注释行
+    for m in re.finditer(cite_pattern, line):
+        for k in m.group(1).split(','):
+            k = k.strip()
+            if k and k not in ('<label>', 'lamport94'):
+                tex_cites.add(k)
 
 # 检测引用模式并提取bib键
 if '\\begin{thebibliography}' in tex:
@@ -594,6 +600,7 @@ done
 
 - `scripts/promote-track-a.py` — 自动晋升 _knowledge_only/ 中有 paper.tex 的候选项至 Track A
 - `scripts/paper-maturity-scan.py` — 扫描论文库成熟度，按评分排序（引用数、D10a、PDF、质控、图表等维度）
+- `scripts/d10a-batch-scan.py` — 批量 D10a 扫描所有 thebibliography 论文，按 zombie 数量排序输出（v3.18.5新增）
 - `scripts/batch-3d-logspiral-fit.py` — 3D对数螺旋拟合批量处理
 - `scripts/batch_logspiral_fit.py` — 3D对数螺旋拟合
 - `scripts/fit_logspiral_3d.py` — 3D对数螺旋拟合核心算法
@@ -863,6 +870,18 @@ grep -c '\\cite{' paper.tex   # 标准
 ```
 若 natbib 变体 > 0，则切换为 natbib 正则：`r'\\(?:cite|citep|citet|citenp|citealp|citealt)\s*(?:\[[^\]]*\])?\s*\{([^}]+)\}'`
 
+**⚠️ 注释中 thebibliography 检测陷阱（2026-06-19 实战）**：elsarticle 模板在 `%%` 注释中包含 `\begin{thebibliography}` 占位符（如 `%% \begin{thebibliography}`），但实际使用 `\bibliography{references}` 外部 .bib。简单的 `in tex` 检测会误判为 thebibliography 模式。**必须逐行检查，跳过以 `%` 开头的注释行**：
+```python
+has_real_thebib = False
+for line in tex.split('\n'):
+    stripped = line.strip()
+    if stripped.startswith('%%') or stripped.startswith('%'):
+        continue
+    if '\\begin{thebibliography}' in stripped:
+        has_real_thebib = True
+        break
+```
+
 **实战数据**：
 | 论文 | 引用风格 | 标准正则匹配 | natbib正则匹配 | Bib条目 | 实际D10a |
 |:-----|:---------|:------------|:--------------|:--------|:---------|
@@ -872,6 +891,124 @@ grep -c '\\cite{' paper.tex   # 标准
 **修复**：v3.18.4 更新 P0 预检脚本 — 引用风格检测 + natbib 正则回退。
 
 37. **🟡 Paper Repair Agent "无可行修复" 的标准报告格式（2026-06-18 实战）**: cron 运行时可能发现队列中所有低分论文都有不可自动化修复的缺陷（Variant K 缺数据、HARD_FAIL 伪造结果、ghost 条目），输出 "0 papers repaired" 是正常且信息丰富的报告，不是失败。
+
+38. **🔴 Zero-citation thebibliography 论文 — D10a 修复只加了 bibitem 未加 `\cite{}` 命令（2026-06-19 实战）**: 批量扫描发现 14/132 篇 thebibliography 论文存在 zombie bibitem（bibliography 中有条目但文本中从未使用 `\cite{}` 引用）。其中 3 篇为**完全零引用**（`pupillary-light-reflex-ODE`, `Paper_101_optokinetic-reflex-PINN`, `182-accommodation-ciliary-muscle-ODE`）——bibliography 被完整构造但从未通过任何 `\cite{}` 命令连接到正文。其它 11 篇有 2-14 个 zombie bibitems。
+
+| 论文 | QS | Bib | Cites | Zombies | 严重程度 |
+|:------|:---:|:---:|:-----:|:-------:|:---------|
+| `pupillary-light-reflex-ODE` | 80 | 20 | **0** | 20 | 🔴 零引用 |
+| `Paper_101_optokinetic-reflex-PINN` | 84 | 15 | **0** | 15 | 🔴 零引用 |
+| `182-accommodation-ciliary-muscle-ODE` | 96 | 13 | **0** | 13 | 🔴 零引用 |
+| `147-lens-capsule-biomechanics-ODE` | 96 | 20 | 6 | 14 | 🟡 70% zombie |
+| `148-corneal-epithelial-wound-healing-ODE` | 78 | 18 | 6 | 12 | 🟡 |
+| `151-ocular-torsion-dynamics-ODE` | 78 | 20 | 9 | 11 | 🟡 |
+| `153-choroidal-blood-flow-ODE` | 78 | 20 | 10 | 10 | 🟡 |
+| `152-intraocular-pressure-rhythm-ODE` | 96 | 20 | 11 | 9 | 🟡 |
+| `086-endolymph-perilymph-coupling-ode` | 75 | 16 | 9 | 8+1 | 🟡 8 zombies + 1 orphan |
+
+**根因**：2026-06-14/15 的多轮 "D10a fix" 运行**只添加了 bibitem 条目但从未在正文中插入 `\cite{}` 命令**。修复后的验证只检查了 "orphan 是否归零"（tex_cites 全部在 bib 中），但未检查 "zombie 是否归零"（bib 条目全部被引用）。这些论文经过编译后 `\cite{}` 缺失不会产生 LaTeX 错误——bibitem 只是静默地被忽略。
+
+**检测协议**（Paper Repair Agent 每次运行时执行）：
+```
+对每篇 thebibliography 论文：
+  ↓
+Step 1: 独立运行 D10a 扫描（不信任 state.json 的 D10a 值）
+Step 2: 计算 zombie_count = len(bib_keys) - len(tex_cites ∩ bib_keys)
+Step 3: 若 zombie_count > 0 → 标记需要清理：
+  ├── 若 cite_count = 0（零引用）→ HARD_FAIL: 论文无正式引用，需人工插入 \cite{}
+  ├── 若 zombie_count ≤ 3 → 删除 zombie bibitems，重编译，更新 state.json
+  └── 若 zombie_count > 3 → 逐个检查 zombie 是否在 prose 中被提及（如 "Lasker et al."）
+       ├── prose 提及 → 转换为 \cite{key} 命令
+       └── 无 prose 提及 → 删除 zombie bibitems
+Step 4: 更新 state.json 的 reference_health 为实际值
+```
+
+**批量扫描脚本**：`scripts/d10a-batch-scan.py` — 扫描所有 thebibliography 论文并按 zombie 数量排序，输出 CSV 格式。用法：`python3 scripts/d10a-batch-scan.py` 或指定论文 `python3 scripts/d10a-batch-scan.py paper_1 paper_2`。
+
+39. **🔴 注释中 \\cite{} 导致 D10a 虚高（2026-06-19 实战）**: `bppv-nystagmus-pinn` 的 paper.tex 第1行为 LaTeX 注释 `% BPPV \\cite{furman2019} Nystagmus PINN \\cite{raissi2019} — Auto-assembled from steps`。全局 `re.finditer(cite_pattern, tex)` 将注释中的 `\\cite{furman2019}` 和 `\\cite{raissi2019}` 计入 tex_cites，使 D10a 从真实的 60%（3/5）虚高至 100%（5/5）。
+
+40. **🔴 d10a-batch-scan.py 模式路由假阳性（2026-06-19 实战）**: elsarticle 模板论文同时包含 `\begin{thebibliography}`（实际使用）和 `\bibliography{references}`（模板残留），旧逻辑 `not has_real_thebib or has_bibcmd` 将 thebibliography 论文误路由到 BibTeX 模式。BibTeX 模式从 `.bib` 文件提取键——若 `.bib` 键集不同于 thebibliography 键集，所有 bib 条目被误报为 zombie。实战：14 篇扫描中 10/14 为假阳性（tinnitus-pinn-ode, bppv-nystagmus-pinn 等实际 D10a=100%，被误标为 80%/0%）。
+
+**根因**：`has_bibcmd = '\\bibliography{' in tex` 对注释中的 `\bibliography{}` 也返回 True（如 `%% \bibliography{references}`）。
+
+**修复（v3.18.8）**：
+```python
+# 1. has_bibcmd 也做逐行注释过滤
+has_bibcmd = False
+for line in tex.split('\n'):
+    if line.strip().startswith('%'): continue
+    if '\\bibliography{' in line: has_bibcmd = True; break
+
+# 2. 路由优先级：真实 thebibliography > BibTeX
+if has_real_thebib:
+    # thebibliography 优先——始终使用内联 bibitem 键
+elif has_bibcmd:
+    # 仅在无 thebibliography 时回退到 BibTeX
+```
+
+**根因**：P0 预检脚本的 cite 提取使用 `re.finditer(cite_pattern, tex)` 对全文做全局匹配，不区分注释行和正文行。之前 2026-06-15 的 "auto-gate fix" 因此错误地声称 D10a=100% 并写入 state.json。
+
+**检测**：逐行读取 tex，跳过以 `%` 开头的行再提取 cite 键。见 P0 预检脚本（已更新为逐行过滤版）。
+
+**实战数据**：
+| 论文 | 注释中 cite | 实际 cite（非注释）| Bib | 声明 D10a | 实际 D10a |
+|:-----|:-----------|:-------------------|:---|:---------|:--------|
+| bppv-nystagmus-pinn | 2 (furman2019, raissi2019) | 3 (chen2018, lasker2025, chaturvedi2026) | 5 | 100% | 60% |
+
+**修复**: 将注释中的 citation 提升到正文适当位置（如 abstract 中首次提及该概念处），删除注释中的 `\\cite{}`。
+
+41. **🟡 paper-queue.json 幽灵条目逆方向 — 队列中有条目但目录已在 _archive/ 或 _drafts_archive/（2026-06-19 实战）**: Trap #28 覆盖了"纸在盘不在队"（disk→queue方向），但反向问题"队在盘不在"同样发生——论文目录被移入 `_archive/` 或 `_drafts_archive/` 后，paper-queue.json 条目未同步标记为 archived。
+
+42. **🔴 跨项目参考文献污染检测 — Synthos Paper ID 后缀 + 占位符键名 + 空条目 + Prose提及无\cite（2026-06-20 实战）**: 早期 D10a 修复运行（2026-06-14/15）构造 bibitems 时误加入了其他 Synthos 论文的内部引用，产生了四类污染模式：
+
+| 模式 | 示例 | 检测方法 |
+|:-----|:-----|:---------|
+| Synthos Paper ID 后缀 | `saccade-kinematic-76`, `endolymph-hydropressure-83` | `grep -E '[a-z]+-[0-9]{2}$'` |
+| 占位符键名 | `computational-baseline` | 不匹配 AuthorYear 格式 |
+| 空条目 | `@Article{nguyen2017long,` 无body | 无 author/title/year 字段 |
+| Prose提及无\cite | `(Raissi et al., 2019)` 无 `\cite{}` | `grep '([A-Z][a-z]+ et al'` |
+
+**实战（2026-06-20）**: 086-endolymph D10a=50%（声称100%），发现7个跨项目zombie（saccade-kinematic-76, endolymph-hydropressure-83, computational-baseline, parnes1999, cohen2021, chen2018, jagtap2022）+ 1个orphan typo（sculer1987→Schuknecht1987）+ 1个prose mention无cite（Raissi et al., 2019）。3d-eyeball发现2个空条目（nguyen2017long, nguyen2020constrained）。
+
+**修复协议**：僵尸键匹配污染模式 → 直接删除（非真实引用）；空条目 → 删除；prose提及有匹配bibitem → 转换为 `\cite{}`。详见 `references/cross-project-contamination-patterns.md`。
+
+**触发场景**：Paper Repair Agent 运行时发现队列中 qs<60 或 gate=FAIL 的条目，但对应目录不存在于 papers/ 根目录。
+
+**幽灵来源**：
+| 目录位置 | 含义 | 处理 |
+|:---------|:-----|:-----|
+| `_archive/<paper>/` | 论文已归档（成熟度不足/方向调整） | 标记 status=archived |
+| `_drafts_archive/<paper>/` | 论文已归档为草稿 | 标记 status=archived |
+| 完全不存在 | 目录已被删除 | 标记 status=archived, reason=missing |
+
+**检测协议**（Paper Repair Agent 每次运行时执行）：
+```
+对每篇待修复论文：
+  ↓
+Step 1: 检查 papers/<paper_id>/ 目录是否存在
+Step 2: 若不存在 → 搜索 _archive/ 和 _drafts_archive/
+Step 3: 若在归档目录中找到 → 更新 queue 条目为 status=archived, reason=ghost_entry_cleanup
+Step 4: 若完全不存在 → 标记 status=archived, reason=missing
+Step 5: 记录清理日志到 queue notes（ghost_cleanup_YYYY-MM-DD）
+```
+
+**实战数据（2026-06-19）**：6 篇幽灵条目发现并清理：
+| Paper ID | 目录位置 | 旧 qs/gate |
+|:----------|:---------|:-----------|
+| 3d-pupil-localization | _archive/ | qs=55, PASS |
+| 3wd-framework-trustworthy-clinical-ai | _archive/ | qs=25, FAIL |
+| intraocular-pressure-ODE | _archive/ | qs=75, HARD_FAIL |
+| eye-tracking-4d | _drafts_archive/ | qs=68, CONDITIONAL |
+| cuteye-model | _drafts_archive/ | qs=78, CONDITIONAL |
+| automated-label-production-pipeline-for-eye-tracking | missing | qs=0, PASS |
+
+**与 Trap #28 的区别**：
+| 维度 | Trap #28（未注册孤儿） | Trap #41（幽灵条目） |
+|:-----|:----------------------|:---------------------|
+| 方向 | disk → queue（纸在盘不在队） | queue → disk（队在盘不在） |
+| 磁盘位置 | papers/ 根目录下 | _archive/ 或 _drafts_archive/ |
+| 目录状态 | 存在且有 paper.tex + state.json | 已归档或已删除 |
+| 修复动作 | 添加到 paper-queue.json | 标记 queue 条目为 archived |
 
 **规范化标准流程（参照3d-eyeball-iris-segmentation）**：
 ```

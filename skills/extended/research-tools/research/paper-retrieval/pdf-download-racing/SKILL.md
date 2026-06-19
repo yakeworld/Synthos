@@ -382,7 +382,6 @@ if result['ok'] and result['content'][:4] == b'%PDF':
 - `references/tor-scihub-vg-workflow.md` — **Tor SOCKS5H + sci-hub.vg 完整工作流（2026-06-19 新增，唯一可靠路径）**
 - `references/meddata-access-absorbed.md` — MedData下载(旧)
 - `references/meddata-api-details.md` — MedData API参数详解(2026-06-04实战)
-- `references/meddata-failure-record.md` — MedData伪PDF问题诊断（Western期刊无收录）
 - `references/paper-manager-fallback.md` — paper-manager降级
 
 ## 脚本
@@ -397,7 +396,7 @@ if result['ok'] and result['content'][:4] == b'%PDF':
 
 ## 统一下载编排器 (v2.0 — 2026-06-19 新增)
 
-`scripts/unified_download.py` — 多源竞速下载引擎
+`../scripts/unified_download.py` — 多源竞速下载引擎
 
 ```
 Tier 1: OA 直连 (arXiv → Crossref/Unpaywall)
@@ -414,7 +413,7 @@ Tier 4: MedData (需 MEDDATA_API_KEY)
 
 ## Tor 连通性测试 (2026-06-19 新增)
 
-`scripts/tor_connectivity_test.py` — 测试 Tor 连通性
+`../scripts/tor_connectivity_test.py` — 测试 Tor 连通性
 
 ```
 用法:
@@ -429,7 +428,7 @@ Tier 4: MedData (需 MEDDATA_API_KEY)
 
 ## Google Scholar 搜索 (2026-06-19 新增)
 
-`scripts/google_scholar.py` — Google Scholar 论文搜索
+`../scripts/google_scholar.py` — Google Scholar 论文搜索
 
 ```bash
 python3 google_scholar.py "vestibular eye tracking" --max 10

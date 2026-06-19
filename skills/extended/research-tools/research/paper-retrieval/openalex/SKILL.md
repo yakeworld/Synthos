@@ -146,7 +146,7 @@ PMID 39810187 (J Transl Med 2025) 在 PD-saccade-ML 方向上使用了 SVM/RF/NN
 
 ## 脚本
 
-- `scripts/openalex_search.py` — OpenAlex 学术搜索（Python 3.12 urllib，正确 URL 编码）
+- `../scripts/openalex_search.py` — OpenAlex 学术搜索（Python 3.12 urllib，正确 URL 编码）
   - 用法: `python3 openalex_search.py "vestibular eye tracking" --max 5`
   - 用法: `python3 openalex_search.py --doi 10.1038/s41586-024-01234-5`
   - 关键: `sort=cited_by_count` + `filter=cited_by_count:1-`（避免零引用污染）
