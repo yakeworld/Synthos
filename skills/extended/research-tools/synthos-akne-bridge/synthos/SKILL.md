@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `operation: str, params: dict` — 用户请求描述、上下文信息
-- **output**: `result: dict — Synthos系统操作`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: synthos
 related_skills: ["task-router"]
 description: 自主进化科研教学认知操作系统 — 6认知原子 × 3元组件完整Research Pipeline
@@ -21,7 +12,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
 
+- **input**: `operation: str, params: dict` — 用户请求描述、上下文信息
+- **output**: `result: dict — Synthos系统操作`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
+# Synthos — 自主进化科研教学认知操作系统
 # Synthos — 自主进化科研教学认知操作系统
 
 > **核心编排 100% SKILL.md；无核心 Python 代码**

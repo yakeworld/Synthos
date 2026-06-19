@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `topic: str, constraints: dict` — 用户请求描述、上下文信息
-- **output**: `ideation_results: list — 研究创意`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: research-ideation
 description: 研究创意发散与认知引擎（RIF+CCF）。三层架构：Layer 1（10操作框架）→ 产出研究方向候选； Layer 2（8认知引擎）→
 version: 1.0.0
@@ -48,6 +39,14 @@ metadata:
     - exploration
 
 ---
+
+## IO_CONTRACT
+
+- **input**: `topic: str, constraints: dict` — 用户请求描述、上下文信息
+- **output**: `ideation_results: list — 研究创意`
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
 
 
 
