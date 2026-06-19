@@ -4,7 +4,7 @@
 
 Navigation index for optional skills: creative tools, productivity, social monitoring, gaming, and platform-specific integrations.
 
-## Skills in this Layer (53 total)
+## Skills in this Layer (60 total)
 
 - **ai-outreach**: 主skill | 在AI可访问的平台上发布信号，引导其他AI智能体了解你的系统。覆盖平台选择(GitHub AGENTS.md/GitHub Discussions/Moltbook/X)、消息撰写(技术性/非推销)、节奏控制、回复监测。v1.1新增：AGENTS.md创建指南、GitHub_Discussions_Cron自动化、Moltbook注册API流程。调用子skill: moltbook-connector, xurl
 - **airtable**: Directory index for airtable: airtable
@@ -24,7 +24,9 @@ Navigation index for optional skills: creative tools, productivity, social monit
 - **email**: 电子邮件管理 — Himalaya CLI邮件收发、搜索。
 - **ffmpeg-video-audio-sync**: Debug and fix FFmpeg video-audio synchronization issues including duration
 - **figure-generation**: 科研图表创建：Figure契约方法论——结论Claim→证据层级→面板映射→出口契约→审核。 支持Nature语义色板（蓝主-绿正-红基+中性色），16种排版模式。兼容所有SCI/会议图表场景。
+- **findmy**: Track Apple devices and AirTags via the FindMy.app on macOS. Since Apple doesn't
 - **gaming**: 游戏服务器 — Minecraft模组服务器、宝可梦模拟器。
+- **gif-search**: Search and download GIFs directly via the Tenor API using curl. No extra tools needed.
 - **google-workspace**: Directory index for google-workspace: google-workspace
 - **heartmula**: HeartMuLa is a family of open-source music foundation models (Apache-2.0) that generates music conditioned on lyrics and tags, with multilingual support. Generates full songs from lyrics + tags. Comparable to Suno for open-source. Includes:
 - **himalaya**: Himalaya is a CLI email client that lets you manage emails from the terminal using IMAP, SMTP, Notmuch, or Sendmail backends.
@@ -35,11 +37,15 @@ Navigation index for optional skills: creative tools, productivity, social monit
 - **llm-wiki**: Directory index for llm-wiki: llm-wiki
 - **macos-computer-use**: You have a `computer_use` tool that drives the Mac in the **background**.
 - **manim-video**: Directory index for manim-video: manim-video
+- **maps**: Geocode, POIs, routes, timezones via OpenStreetMap/OSRM.
+- **markitdown-convert**: Convert PDF/Office files to Markdown using Microsoft MarkItDown
+- **media**: 媒体内容 — GIF搜索、音乐生成、音谱分析、Spotify控制。
 - **minecraft-modpack-server**: Before starting setup, ask the user for:
 - **moltbook-connector**: 子skill | 将Synthos认知原子接入Moltbook AI社交网络。注册→心跳→发帖/回复。父skill: ai-outreach。注意：注册需人类claim(发推验证)，优先使用GitHub version: 1.0.0 Discussions(零注册)代替。
 - **notebooklm-cli**: 子skill | NotebookLM CLI全功能指南 — Q&A知识提取、内容生成(报告/视频/音频/信息图/幻灯片)、文献检索。响应paper-pipeline的P1阶段调用。
 - **notion**: Notion API via curl: pages, databases, blocks, search.
 - **obsidian**: Read, search, create, and edit notes in the Obsidian vault.
+- **openhue**: Control Philips Hue lights and scenes via a Hue Bridge from the terminal.
 - **p5js**: Use when users request: p5.js sketches, creative coding, generative art, interactive visualizations, canvas animations, browser-based visual art, data viz, shader effects, or any p5.js project.
 - **pil-image-generation**: Python Pillow生成科技风格图像。无matplotlib依赖，适合封面/卡片/原子图。
 - **pixel-art**: Convert any image into retro pixel art, then optionally animate it into a short
@@ -48,6 +54,7 @@ Navigation index for optional skills: creative tools, productivity, social monit
 - **popular-web-designs**: 54 real-world design systems ready for use when generating HTML/CSS. Each template captures a
 - **powerpoint**: 创建/读取/编辑.pptx — python-pptx: 幻灯片/表格/模板。 覆盖环境陷阱（sandbox venv无包→系统Python）、复杂表格、 多页模板化PPTX生成。关联 skill: nature-paper2ppt。
 - **pretext**: [`@chenglou/pretext`](https://github.com/chenglou/pretext) is a 15KB zero-dependency TypeScript library by Cheng Lou (React core, ReasonML, Midjourney) for **DOM-free multiline text measurement and layout**. It does one thing: given `(text, font, width)`, return the line breaks, per-line widths, per-grapheme positions, and total height — all via canvas measurement, no reflow.
+- **productivity**: 生产力工具 — Airtable、Google Workspace、Linear、Notion、Jupyter等。
 - **sketch**: Use this skill when the user wants to **see a design direction before committing** to one — exploring a UI/UX idea as disposable HTML mockups. The point is to generate 2-3 interactive variants so the user can compare visual directions side-by-side, not to produce shippable code.
 - **smart-home**: 智能家居 — Philips Hue灯光控制。
 - **social-media**: 社交媒体 — X/Twitter发帖、搜索、DM。
