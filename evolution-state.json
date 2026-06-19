@@ -1,14 +1,14 @@
 {
-  "cycle": 95,
-  "version": "v2.35.0",
+  "cycle": 96,
+  "version": "v2.36.0",
   "last_updated": "2026-06-20T00:00:00+00:00",
   "status": "OK",
-  "overall_score": 0.94,
+  "overall_score": 0.95,
   "grade": "OK",
   "dimensions": {
-    "structural": 0.89,
+    "structural": 0.92,
     "benchmark": 0.8174,
-    "optimize_effect": 0.95,
+    "optimize_effect": 0.98,
     "coverage": 1.0,
     "absorption_potential": 1.0,
     "constitutional": 1.0
@@ -18,16 +18,16 @@
     "consumed": 3,
     "remaining": 0,
     "next_cycle": 3,
-    "notes": "cycle-95: 全面优化 — 3个层索引文件创建, 覆盖全部197个SKILL.md"
+    "notes": "cycle-96: 全面优化完成 — 合并重叠技能, 创建6个composite, 12个redirects, 净减少~3500行"
   },
   "next_actions": [
-    "cycle-95: 3层索引创建完成 (core:88, system:50, optional:60)",
-    "cycle-95: 197/197 SKILL.md覆盖, 0 YAML错误",
-    "cycle-95: 宪法层级: CON > MEM > CMD > SKL > DEF",
-    "cycle-96: 合并重叠技能 (github 8→2, 创意 25→6, MLOps 24→7, 论文 35→10)"
+    "cycle-96: 6个composite创建完成 (github-workflow, creative-tools, mlops-toolchain, productivity-suite, social-monitor, paper-pipeline)",
+    "cycle-96: 12个目录索引文件转为redirects",
+    "cycle-96: 净减少~3500行代码, 197个SKILL.md全部通过YAML验证",
+    "cycle-97: 清理冗余文件, 更新README和文档"
   ],
   "highlights": [
-    "cycle-95: 全面优化 — 3个层索引文件创建, 197/197覆盖, 0 YAML错误",
-    "cycle-95: 全面优化 — 3个层索引文件创建, 197/197覆盖, 0 YAML错误"
+    "cycle-96: 全面优化完成 — 合并重叠技能, 创建6个composite, 12个redirects",
+    "cycle-96: 净减少~3500行代码, 197个SKILL.md全部通过YAML验证"
   ]
 }
