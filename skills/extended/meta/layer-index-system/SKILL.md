@@ -1,0 +1,49 @@
+# System Infrastructure — 系统基础设施
+
+## Purpose
+
+Navigation index for system maintenance: devops, automation, tool integration, and monitoring.
+
+## Skills in this Layer (34 total)
+
+- **3d-curve-fitting-figures**: 3D曲线拟合图的生成规范：从点云到拟合曲线到出版级Figure。 覆盖拟合重建陷阱、多标本复合布局、分段数据合并、argsort路径错乱。
+- **automation-skills**: **触发条件**: 对一批论文（10-34 篇）批量处理 `step_quality_check.md` 中的 quality_score 并写入 `state.json`。
+- **autonomous-ai-agents**: 自主AI智能体编排 — 多Agent协作、委托任务、跨Agent通信。
+- **autonomous-execution-threshold**: **≥80%置信度 = 闭嘴执行。** 不输出推测文案、不给选项、不喊"开始自主执行"口号。用户看到的是执行结果，不是选择题。
+- **chinese-form-automation**: Directory index for chinese-form-automation: chinese-form-automation
+- **claude-code**: Delegate coding to Claude Code CLI — features, PRs, refactoring, review.
+- **codebase-inspection**: Analyze repositories for lines of code, language breakdown, file counts, and code-vs-comment ratios using `pygount`.
+- **codex**: Delegate coding to OpenAI Codex CLI — 主力编码代理。覆盖多节点profile配置、无PTY执行、Cron集成、多模型并行。
+- **cron-system-maintenance**: Cron任务运维：诊断error状态、修复脚本缺陷、验证连接性。覆盖cron job list分析、错误分类、脚本语法验证、prompt更新、vLLM多节点负载均衡。
+- **debug-env-variables**: DevOps — environment configuration, subprocess shells, credential injection.
+- **devops**: DevOps运维 — Cron任务管理、看板编排、worker管理。
+- **dogfood**: This skill guides you through systematic exploratory QA testing of web applications using the browser toolset. You will navigate the application, interact with elements, capture evidence of issues, and produce a structured bug report.
+- **evaluation**: Directory index for evaluation — mlops/evaluation   模型评估与实验追踪
+- **evaluation**: Directory index for evaluation — mlops/evaluation   模型评估与实验追踪
+- **excalidraw**: Hand-drawn Excalidraw JSON diagrams (arch, flow, seq).
+- **hermes**: Hermes Agent管理 — Cron生命周期、配置、工具管理。
+- **hermes-agent**: Configure, extend, or contribute to Hermes Agent — the open-source AI agent framework by Nous Research.
+- **hermes-scheduler**: 本技能适用于以下场景：
+- **kanban-orchestrator**: Create Kanban tasks when any of these are true:
+- **kanban-worker**: Your workspace kind determines how you should behave inside `$HERMES_KANBAN_WORKSPACE`:
+- **maintenance**: Synthos维护 — 认知原子结构完整性验证。
+- **markdown-convert**
+- **mcp**: MCP集成 — 模型上下文协议服务器配置与工具注册。
+- **mcp-ecosystem-guide**: Directory index for mcp-ecosystem-guide: mcp-ecosystem-guide
+- **memory-optimization-system**: Directory index for memory-optimization-system — > **注意**: 本技能是记忆管理的唯一入口。`memory-enhancement` 已合并至此。
+- **metacognition**: 元认知 — 自主执行阈值、记忆增强、记忆优化系统。
+- **native-mcp**: Directory index for native-mcp: native-mcp
+- **opencode**: 1. **非常驻服务** — OpenCode 不是 daemon，按需启动、用完即关。`ps aux | grep opencode` 无进程是正常状态，不是故障。
+- **python-docx**: 创建/读取/编辑.docx — python-docx: 表格/字体/页面设置。
+- **repo-path-sanity**: **Purpose:** Diagnose and fix broken directory relationships when `~/Synthos` and `/media/yakeworld/sda2/Synthos` diverge into independent copies instead of symlink.
+- **shared**: 共享资源 — 跨技能引用的通用资源。
+- **skill-integrity-audit**: | 概念 | 文言 | 义 |
+- **synthos-probe**: Class: maintenance / audit
+- **webhook-subscriptions**: Webhook subscriptions: event-driven agent runs.
+
+## IO_CONTRACT
+
+- **input**: `layer: str, query: str, context: dict` — Layer name, search query, and context
+- **output**: `skill_list: list[dict]` — Filtered list of skills matching the query
+
+> 对应原则：P3（人机分层 — 路由器负责路由，原子负责执行）
