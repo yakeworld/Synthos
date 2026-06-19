@@ -1,18 +1,20 @@
 ---
 name: himalaya
-related_skills: []
-description: "Himalaya CLI: IMAP/SMTP email from terminal."
-version: 1.1.0
-author: community
+description: "Himalaya is a CLI email client that lets you manage emails from the terminal using IMAP, SMTP, Notmuch, or Sendmail backends."
+version: 1.0.0
 license: MIT
-platforms: [linux, macos, windows]
+author: Synthos
 metadata:
-  hermes:
-    tags: [Email, IMAP, SMTP, CLI, Communication]
-    homepage: https://github.com/pimalaya/himalaya
-prerequisites:
-  commands: [himalaya]
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 ## IO_CONTRACT
 

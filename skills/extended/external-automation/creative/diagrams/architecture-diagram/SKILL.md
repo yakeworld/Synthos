@@ -1,21 +1,20 @@
 ---
 
 
+
 name: architecture-diagram
-related_skills: ["figure-generation"]
-description: >-
+description: "Directory index for architecture-diagram: architecture-diagram"
 version: 1.0.0
 license: MIT
 author: Synthos
-  暗色SVG架构/云/基础设施图 — HTML格式。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "system: str, views: list[str] -> architecture_diagram: dict (components, relationships, tech_stack)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

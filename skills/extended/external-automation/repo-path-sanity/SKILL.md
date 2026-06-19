@@ -1,15 +1,20 @@
 ---
-
 name: repo-path-sanity
-class: infrastructure
-description: Diagnose and fix broken directory relationships when ~/Synthos and /media/yakeworld/sda2/Synthos diverge into independent copies instead of symlink.
-author: Synthos
-license: MIT
+description: "**Purpose:** Diagnose and fix broken directory relationships when `~/Synthos` and `/media/yakeworld/sda2/Synthos` diverge into independent copies instead of symlink."
 version: 1.0.0
 license: MIT
-
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 
 ## IO_CONTRACT

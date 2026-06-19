@@ -1,15 +1,20 @@
 ---
 name: findmy
-related_skills: []
-description: "Track Apple devices/AirTags via FindMy.app on macOS."
+description: "Track Apple devices and AirTags via the FindMy.app on macOS. Since Apple doesn't"
 version: 1.0.0
-author: Hermes Agent
 license: MIT
-platforms: [macos]
+author: Synthos
 metadata:
-  hermes:
-    tags: [FindMy, AirTag, location, tracking, macOS, Apple]
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 ## IO_CONTRACT
 

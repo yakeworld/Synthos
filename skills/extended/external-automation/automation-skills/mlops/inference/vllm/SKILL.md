@@ -1,17 +1,20 @@
 ---
-name: serving-llms-vllm
-related_skills: []
-description: "vLLM: high-throughput LLM serving, OpenAI API, quantization."
+name: vllm
+description: "Use when deploying production LLM APIs, optimizing inference latency/throughput, or serving models with limited GPU memory. Supports OpenAI-compatible endpoints, quantization (GPTQ/AWQ/FP8), and tensor parallelism."
 version: 1.0.0
-author: Orchestra Research
 license: MIT
-dependencies: [vllm, torch, transformers]
-platforms: [linux, macos]
+author: Synthos
 metadata:
-  hermes:
-    tags: [vLLM, Inference Serving, PagedAttention, Continuous Batching, High Throughput, Production, OpenAI API, Quantization, Tensor Parallelism]
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 ## IO_CONTRACT
 

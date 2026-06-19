@@ -1,16 +1,20 @@
 ---
 name: obliteratus
-related_skills: []
-description: "OBLITERATUS: abliterate LLM refusals (diff-in-means)."
-version: 2.0.0
-author: Hermes Agent
+description: "9 CLI methods, 28 analysis modules, 116 model presets across 5 compute tiers, tournament evaluation, and telemetry-driven recommendations."
+version: 1.0.0
 license: MIT
-dependencies: [obliteratus, torch, transformers, bitsandbytes, accelerate, safetensors]
-platforms: [linux, macos]
+author: Synthos
 metadata:
-  hermes:
-    tags: [Abliteration, Uncensoring, Refusal-Removal, LLM, Weight-Projection, SVD, Mechanistic-Interpretability, HuggingFace, Model-Surgery]
-    ---
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
+---
+
+
+
 
 ## IO_CONTRACT
 

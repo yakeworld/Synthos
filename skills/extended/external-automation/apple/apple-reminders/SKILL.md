@@ -1,17 +1,20 @@
 ---
 name: apple-reminders
-related_skills: []
-description: "Apple Reminders via remindctl: add, list, complete."
+description: "Use `remindctl` to manage Apple Reminders directly from the terminal. Tasks sync across all Apple devices via iCloud."
 version: 1.0.0
-author: Hermes Agent
 license: MIT
-platforms: [macos]
+author: Synthos
 metadata:
-  hermes:
-    tags: [Reminders, tasks, todo, macOS, Apple]
-prerequisites:
-  commands: [remindctl]
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 ## IO_CONTRACT
 

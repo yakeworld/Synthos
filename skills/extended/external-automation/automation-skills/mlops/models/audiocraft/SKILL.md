@@ -1,17 +1,20 @@
 ---
-name: audiocraft-audio-generation
-related_skills: []
-description: "AudioCraft: MusicGen text-to-music, AudioGen text-to-sound."
+name: audiocraft
+description: "Comprehensive guide to using Meta's AudioCraft for text-to-music and text-to-audio generation with MusicGen, AudioGen, and EnCodec."
 version: 1.0.0
-author: Orchestra Research
 license: MIT
-dependencies: [audiocraft, torch>=2.0.0, transformers>=4.30.0]
-platforms: [linux, macos]
+author: Synthos
 metadata:
-  hermes:
-    tags: [Multimodal, Audio Generation, Text-to-Music, Text-to-Audio, MusicGen]
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 ## IO_CONTRACT
 

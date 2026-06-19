@@ -1,21 +1,20 @@
 ---
 
 
+
 name: adhd-eye-tracking-review
-related_skills: ["knowledge-acquisition"]
-description: >-
+description: "Directory index for adhd-eye-tracking-review: adhd-eye-tracking-review"
 version: 1.0.0
 license: MIT
 author: Synthos
-  ADHD眼动追踪生物标志物系统综述。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "topic: str, search_queries: list -> literature_review: dict (summary, key_findings, gaps, recommendations)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

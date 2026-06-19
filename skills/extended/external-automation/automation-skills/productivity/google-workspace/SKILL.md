@@ -1,21 +1,20 @@
 ---
 
 
+
 name: google-workspace
-related_skills: []
-description: >-
+description: "Directory index for google-workspace: google-workspace"
 version: 1.0.0
 license: MIT
 author: Synthos
-  Gmail/Calendar/Drive/Docs/Sheets via gws CLI。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "task_type: str, params: dict -> workspace_result: dict (docs_created, sheets_populated, calendar_events)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

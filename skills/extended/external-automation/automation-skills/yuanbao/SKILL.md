@@ -1,18 +1,20 @@
 ---
-
 name: yuanbao
-related_skills: []
-description: "Yuanbao (元宝) groups: @mention users, query info/members."
-author: Synthos
-license: MIT
+description: "**Your text reply IS the message sent to the group/user.** The gateway automatically delivers your response text to the chat. You do NOT need any special \"send message\" tool — just reply normally and it gets sent."
 version: 1.0.0
 license: MIT
-platforms: [linux, macos, windows]
+author: Synthos
 metadata:
-  hermes:
-    tags: [yuanbao, mention, at, group, members, 元宝, 派, 艾特]
-    
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 
 ## IO_CONTRACT

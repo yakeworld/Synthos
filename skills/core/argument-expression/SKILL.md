@@ -1,21 +1,19 @@
 ---
 
+
 name: argument-expression
-description: >-
-author: Synthos
-license: MIT
-  将假说转化为结构化学术论证——论文小节、证据链、文献支持。
+description: "Directory index for argument-expression: argument-expression"
 version: 1.0.0
 license: MIT
+author: Synthos
 metadata:
   synthos:
-    priority: P0
-    atom_type: cognitive-atom
-    description: Structure academic arguments — thesis, evidence chains, literature support.
-    signature: "hypothesis: str, evidence: list[Evidence] -> argument: str -> argument: str (thesis, claims, evidence_chains, literature_support, counterarguments)"
-    related_skills: ["knowledge-acquisition", "knowledge-extraction", "association-discovery", "hypothesis-generation"]
-
+    signature: "claims: list[Claim], evidence: list[Evidence] -> argument_chain: ArgumentChain (structure, strengths, gaps, counterarguments)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

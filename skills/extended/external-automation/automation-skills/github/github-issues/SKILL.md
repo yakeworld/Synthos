@@ -1,21 +1,20 @@
 ---
 
 
+
 name: github-issues
-related_skills: []
-description: >-
+description: "Skill: github-issues"
 version: 1.0.0
 license: MIT
 author: Synthos
-  创建/分类/标记/分配GitHub issues — gh或REST API。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "repo: str, filter: dict -> issues: list[Issue] (title, labels, assignee, priority)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

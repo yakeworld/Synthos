@@ -1,21 +1,20 @@
 ---
 name: pil-image-generation
-description: >-
-  Python Pillow图像生成——封面/卡片/原子图/社交推广图。
-  核心技法：渐变背景、六边形绘制、节点布局、双语标注、半透明面板。
-  无matplotlib依赖，纯PIL轻量输出。关联 skill: nature-paper2ppt, powerpoint。
-version: 1.1.0
-author: Synthos
+description: "Python Pillow生成科技风格图像。无matplotlib依赖，适合封面/卡片/原子图。"
+version: 1.0.0
 license: MIT
-allowed-tools: terminal Read Write execute_code
+author: Synthos
 metadata:
-  synthos_atom_type: "extended"
-  synthos_data_access_level: "verified_only"
   synthos:
-    related_skills:
-    - nature-paper2ppt
-    - powerpoint
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 ## IO_CONTRACT
 

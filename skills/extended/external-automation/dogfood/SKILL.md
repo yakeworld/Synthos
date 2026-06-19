@@ -1,18 +1,20 @@
 ---
-
 name: dogfood
-description: "Exploratory QA of web apps: find bugs, evidence, reports."
-author: Synthos
-license: MIT
+description: "This skill guides you through systematic exploratory QA testing of web applications using the browser toolset. You will navigate the application, interact with elements, capture evidence of issues, and produce a structured bug report."
 version: 1.0.0
 license: MIT
-platforms: [linux, macos, windows]
+author: Synthos
 metadata:
-  hermes:
-    tags: [qa, testing, browser, web, dogfood]
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
     related_skills: []
 
 ---
+
+
+
 
 
 ## IO_CONTRACT

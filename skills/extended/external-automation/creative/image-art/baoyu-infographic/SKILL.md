@@ -1,16 +1,20 @@
 ---
 name: baoyu-infographic
-related_skills: []
-description: "Infographics: 21 layouts x 21 styles (信息图, 可视化)."
-version: 1.56.1
-author: 宝玉 (JimLiu)
+description: "Adapted from [baoyu-infographic](https://github.com/JimLiu/baoyu-skills) for Hermes Agent's tool ecosystem."
+version: 1.0.0
 license: MIT
-platforms: [linux, macos, windows]
+author: Synthos
 metadata:
-  hermes:
-    tags: [infographic, visual-summary, creative, image-generation]
-    homepage: https://github.com/JimLiu/baoyu-skills#baoyu-infographic
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 ## IO_CONTRACT
 

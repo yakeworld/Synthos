@@ -1,18 +1,20 @@
 ---
 name: gif-search
-related_skills: []
-description: "Search/download GIFs from Tenor via curl + jq."
-version: 1.1.0
-author: Hermes Agent
+description: "Search and download GIFs directly via the Tenor API using curl. No extra tools needed."
+version: 1.0.0
 license: MIT
-platforms: [linux, macos, windows]
-prerequisites:
-  env_vars: [TENOR_API_KEY]
-  commands: [curl, jq]
+author: Synthos
 metadata:
-  hermes:
-    tags: [GIF, Media, Search, Tenor, API]
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 ## IO_CONTRACT
 

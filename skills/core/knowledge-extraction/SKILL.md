@@ -1,22 +1,19 @@
 ---
 
+
 name: knowledge-extraction
-description: >-
-author: Synthos
-license: MIT
+description: "Directory index for knowledge-extraction: knowledge-extraction"
 version: 1.0.0
 license: MIT
-  从学术论文元数据和摘要中提取结构化知识 — 返回JSON。
+author: Synthos
 metadata:
   synthos:
-    priority: P0
-    atom_type: cognitive-atom
-    description: Extract structured knowledge from papers, notebooks, or documents.
-    signature: "document: str, extraction_mode: str, schema: dict -> knowledge_items: list[KnowledgeItem] -> knowledge_items: list[KnowledgeItem] (finding, method, limitation, relevance, source)"
-    related_skills: ["knowledge-acquisition"]
-
-
+    signature: "paper_content: str, schema: dict -> structured_knowledge: dict (entities, relations, claims, evidence)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

@@ -2,20 +2,20 @@
 
 
 
+
 name: paper-queue-audit
+description: "Directory index for paper-queue-audit: paper-queue-audit"
 version: 1.0.0
 license: MIT
 author: Synthos
 metadata:
   synthos:
+    signature: "queue: list[Paper], priorities: dict -> audit_report: dict (queue_health, missing_items, priority_adjustments)"
+    atom_type: skill
     priority: P1
-    atom_type: pipeline
-    description: Diagnose paper pipeline health — state.json scanning, stage classification, bottleneck detection, queue rebuilding.
-    signature: 'papers_dir: str -> queue_report: dict'
-    related_skills: [paper-pipeline, quality-gate, paper-cron-scan, paper-references-scanning]
-
-
+    related_skills: []
 ---
+
 
 
 

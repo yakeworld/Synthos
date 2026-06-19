@@ -1,21 +1,19 @@
 ---
 
+
 name: association-discovery
-description: >-
-author: Synthos
-license: MIT
-  识别知识项间关系 — 矛盾/补充/进化/支持/扩展/相似/空白。构建知识图谱。
+description: "Directory index for association-discovery: association-discovery"
 version: 1.0.0
 license: MIT
+author: Synthos
 metadata:
   synthos:
-    priority: P0
-    atom_type: cognitive-atom
-    description: Identify relationships between knowledge items — contradiction/supplement/evolution/support/expansion/similarity/gap.
-    signature: "knowledge_items: list[KnowledgeItem] -> relationships: list[Relationship] -> relationships: list[Relationship] (source, target, type, strength, evidence)"
-    related_skills: ["knowledge-acquisition", "knowledge-extraction"]
-
+    signature: "knowledge_base: dict, query: str -> associations: list[Association] (type, strength, confidence, source)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

@@ -1,22 +1,20 @@
 ---
-
-
 name: ode-simulation-tuning
-related_skills: ["knowledge-extraction"]
-description: '⚡ P0 Simulation tuning for ODE/2-ODE papers — systematic metric optimization. Covers R², AUC, accuracy, MAPE, ablation, bifurcation, and Sobol sensitivity tuning for computational dynamical models.'
-author: Synthos
-license: MIT
+description: "When building 2-ODE computational models for SCI papers, the simulation rarely passes all quality gates on first run. Metrics that commonly fail: R² (needs smooth fit), AUC (needs proper distribution comparison), ablation (needs dominant coupling), accuracy (needs clean transitions). This skill captures the systematic tuning methodology used across papers 90–140+."
 version: 1.0.0
 license: MIT
-linked_files:
-  references:
-    - references/paper-125-scleral-case-study.md
-    - references/paper-126-corneal-tension-case-study.md
-    - references/paper-129-choroidal-first-pass.md — first 2-ODE paper that passed all metrics without any simulation iteration (zero-tuning, written with pre-tuned embedded metrics)
-    - references/paper-144-macular-degeneration-case-study.md — biphasic secondary variable response (compensation-then-failure pattern)
-
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 
 ## IO_CONTRACT

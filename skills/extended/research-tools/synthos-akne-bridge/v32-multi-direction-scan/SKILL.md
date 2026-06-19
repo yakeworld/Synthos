@@ -1,17 +1,20 @@
 ---
-
-
 name: v32-multi-direction-scan
-related_skills: ["knowledge-acquisition", "knowledge-extraction", "hypothesis-generation", "argument-expression"]
-description: Standardized v32 multi-direction PubMed+OpenAlex scan protocol for autonomous-core-researcher cron runs.
-author: Synthos
-license: MIT
+description: "Every cron run of autonomous-core-researcher after v31 API fix. Standardized pattern for scanning 5 rotation + 5 new directions per run."
 version: 1.0.0
 license: MIT
-category: research
-
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 
 ## IO_CONTRACT

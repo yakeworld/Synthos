@@ -1,17 +1,20 @@
 ---
 name: unsloth
-related_skills: []
-description: "Unsloth: 2-5x faster LoRA/QLoRA fine-tuning, less VRAM."
+description: "Comprehensive assistance with unsloth development, generated from official documentation."
 version: 1.0.0
-author: Orchestra Research
 license: MIT
-dependencies: [unsloth, torch, transformers, trl, datasets, peft]
-platforms: [linux, macos]
+author: Synthos
 metadata:
-  hermes:
-    tags: [Fine-Tuning, Unsloth, Fast Training, LoRA, QLoRA, Memory-Efficient, Optimization, Llama, Mistral, Gemma, Qwen]
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 ## IO_CONTRACT
 

@@ -1,21 +1,20 @@
 ---
 
 
+
 name: mcp-ecosystem-guide
-related_skills: []
-description: >-
+description: "Directory index for mcp-ecosystem-guide: mcp-ecosystem-guide"
 version: 1.0.0
 license: MIT
 author: Synthos
-  MCP生态知识 — 架构/常用服务器/开发模式/安全/Agent集成。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "query: str -> ecosystem_report: dict (servers, tools, compatibility, recommendations)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

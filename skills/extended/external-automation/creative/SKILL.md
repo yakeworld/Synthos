@@ -1,19 +1,20 @@
 ---
-
 name: creative
-related_skills: ["academic-diagram", "architecture-diagram", "ascii-art", "ascii-video", "baoyu-comic", "baoyu-infographic", "claude-design", "comfyui", "excalidraw", "ffmpeg-video-audio-sync", "figure-generation", "humanizer", "manim-video", "p5js", "pixel-art", "popular-web-designs", "pretext", "sketch", "songwriting-and-ai-music", "touchdesigner-mcp"]
-description: "创意工具 — 图表、视频、图像、代码生成"
+description: "直接调用子技能名称即可：`academic-diagram`、`manim-video`、`comfyui`、`p5js` 等。"
+version: 1.0.0
+license: MIT
 author: Synthos
-license: MIT
-version: 2.0.0
-license: MIT
 metadata:
   synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
     priority: P2
-    atom_type: parent-skill
-    description: "父级技能 — 创意工具 — 涵盖图表、视频音频、图像艺术、网页代码生成"
+    related_skills: []
 
 ---
+
+
+
 
 
 ## IO_CONTRACT

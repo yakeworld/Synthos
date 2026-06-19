@@ -1,16 +1,20 @@
 ---
 name: humanizer
-description: "Humanize text: strip AI-isms and add real voice."
-version: 2.5.1
-author: Siqi Chen (@blader, https://github.com/blader/humanizer), ported by Hermes Agent
+description: "Identify and remove signs of AI-generated text to make writing sound natural and human. Based on Wikipedia's \"Signs of AI writing\" guide (maintained by WikiProject AI Cleanup), derived from observations of thousands of AI-generated text instances."
+version: 1.0.0
 license: MIT
-platforms: [linux, macos, windows]
+author: Synthos
 metadata:
-  hermes:
-    tags: [writing, editing, humanize, anti-ai-slop, voice, prose, text]
-    category: creative
-    homepage: https://github.com/blader/humanizer
-    ---
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
+---
+
+
+
 
 ## IO_CONTRACT
 

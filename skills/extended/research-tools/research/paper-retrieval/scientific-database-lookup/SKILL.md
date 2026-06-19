@@ -1,21 +1,20 @@
 ---
 
 
+
 name: scientific-database-lookup
-related_skills: ["knowledge-acquisition"]
-description: >-
+description: "Directory index for scientific-database-lookup: scientific-database-lookup"
 version: 1.0.0
 license: MIT
 author: Synthos
-  78+科学数据库REST API路由 — 生物信息/化学/临床/神经/材料/物理。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "query: str, database: str -> results: list[Result] (record, source, confidence, metadata)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

@@ -1,16 +1,20 @@
 ---
 name: baoyu-comic
-related_skills: []
-description: "Knowledge comics (知识漫画): educational, biography, tutorial."
-version: 1.56.1
-author: 宝玉 (JimLiu)
+description: "Adapted from [baoyu-comic](https://github.com/JimLiu/baoyu-skills) for Hermes Agent's tool ecosystem."
+version: 1.0.0
 license: MIT
-platforms: [linux, macos, windows]
+author: Synthos
 metadata:
-  hermes:
-    tags: [comic, knowledge-comic, creative, image-generation]
-    homepage: https://github.com/JimLiu/baoyu-skills#baoyu-comic
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 ## IO_CONTRACT
 

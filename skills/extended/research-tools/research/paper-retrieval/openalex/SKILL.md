@@ -1,22 +1,20 @@
 ---
 
 
+
 name: openalex
-related_skills: ["knowledge-acquisition"]
-description: >-
+description: "Directory index for openalex: openalex"
 version: 1.0.0
 license: MIT
 author: Synthos
-  OpenAlex学术论文数据库搜索 — 250M+论文, 无需API key, 无速率限制。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-    signature: 'skill_set: query_params -> paper_results: list'
-
-
-
+    signature: "query: str, filters: dict -> papers: list[Paper] (title, authors, citations, open_access, source)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

@@ -1,21 +1,20 @@
 ---
 
 
+
 name: nsfc-grant-audit
-related_skills: ["knowledge-extraction"]
-description: >-
+description: "Directory index for nsfc-grant-audit: nsfc-grant-audit"
 version: 1.0.0
 license: MIT
 author: Synthos
-  主skill | 国自然/省科技厅/市科技局三级课题评审编排器。九维评审矩阵。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "grant_proposal: dict, guidelines: dict -> audit_report: dict (compliance_score, gaps, suggestions, risk_areas)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

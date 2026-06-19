@@ -1,22 +1,20 @@
 ---
-
-
 name: bib-integrity-audit
+description: "Audit `.bib` reference files across a paper library for:"
 version: 1.0.0
 license: MIT
 author: Synthos
-related_skills: ["knowledge-extraction"]
-description: >-
-  Bibliographic reference integrity auditing for academic LaTeX projects.
-  Covers DOI completeness, suspicious entry detection, cross-file deduplication,
-  and known-DOI completion. Class of tasks: reference list quality assurance.
 metadata:
   synthos:
-    version: 2.0.0
-    author: Synthos
-
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 
 

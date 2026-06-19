@@ -1,15 +1,20 @@
 ---
-
-
 name: debug-env-variables
-description: Debug environment variable issues across shell boundaries, subprocesses, and application configuration layers.
-author: Synthos
-license: MIT
+description: "DevOps — environment configuration, subprocess shells, credential injection."
 version: 1.0.0
 license: MIT
-
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 
 ## IO_CONTRACT

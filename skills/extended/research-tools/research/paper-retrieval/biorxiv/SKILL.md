@@ -1,20 +1,20 @@
 ---
 
 
+
 name: biorxiv
-description: >-
+description: "Directory index for biorxiv: biorxiv"
 version: 1.0.0
 license: MIT
 author: Synthos
-  bioRxiv/medRxiv预印本搜索 — 生物医学预印本首选。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "search_terms: list[str], date_range: str -> preprints: list[Preprint] (title, authors, abstract, url, preprint_id)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

@@ -1,18 +1,20 @@
 ---
-
 name: heartmula
-related_skills: []
-description: "HeartMuLa: Suno-like song generation from lyrics + tags."
-author: Synthos
-license: MIT
+description: "HeartMuLa is a family of open-source music foundation models (Apache-2.0) that generates music conditioned on lyrics and tags, with multilingual support. Generates full songs from lyrics + tags. Comparable to Suno for open-source. Includes:"
 version: 1.0.0
 license: MIT
-platforms: [linux, macos, windows]
+author: Synthos
 metadata:
-  hermes:
-    tags: [music, audio, generation, ai, heartmula, heartcodec, lyrics, songs]
-    
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 
 ## IO_CONTRACT

@@ -1,12 +1,20 @@
 ---
 name: citation-integrity-fix
-related_skills: ["knowledge-extraction"]
-description: Fix papers where \begin{thebibliography} has entries but ZERO \cite{} commands in the text. A common LLM generation failure mode. Covers D10a detection, citation mapping, $ escaping, double-backslash traps.
+description: "```python"
 version: 1.0.0
-author: "Synthos"
 license: MIT
-tags: [latex, citation, bib, paper-quality, thebibliography]
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 ## IO_CONTRACT
 

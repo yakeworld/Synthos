@@ -1,16 +1,20 @@
 ---
-
 name: biomechanical-regulation-ode
-related_skills: []
-description: 'Building computational dynamical models of physiological regulation systems using 2-ODE systems with PINN training. Covers model formulation, bifurcation analysis, Sobol sensitivity, and ablation studies. Paper 115 IOP model is the primary reference.'
-author: Synthos
-license: MIT
+description: "Class-level skill for building computational dynamical models of physiological regulation systems using 2-ODE systems with PINN training. Covers model formulation, bifurcation analysis, Sobol sensitivity, and ablation studies."
 version: 1.0.0
 license: MIT
-category: mlops
-
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 
 ## IO_CONTRACT

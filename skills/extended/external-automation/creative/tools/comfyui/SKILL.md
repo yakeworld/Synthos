@@ -1,21 +1,20 @@
 ---
 
 
+
 name: comfyui
-related_skills: []
-description: >-
+description: "Directory index for comfyui: comfyui"
 version: 1.0.0
 license: MIT
 author: Synthos
-  通过ComfyUI生成图像/视频/音频 — 安装、启动、管理节点/模型、运行工作流。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "prompt: str, model: str, parameters: dict -> image_results: list[Image] (url, dimensions, seed, model_version)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

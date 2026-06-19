@@ -1,21 +1,20 @@
 ---
 
 
+
 name: native-mcp
-related_skills: []
-description: >-
+description: "Directory index for native-mcp: native-mcp"
 version: 1.0.0
 license: MIT
 author: Synthos
-  MCP客户端 — 连接服务器, 注册工具(stdio/HTTP)。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "tool_request: dict -> native_result: dict (output, error_handling, integration_notes)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

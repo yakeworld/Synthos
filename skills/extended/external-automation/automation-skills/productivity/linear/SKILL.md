@@ -1,21 +1,20 @@
 ---
 
 
+
 name: linear
-related_skills: []
-description: >-
+description: "Directory index for linear: linear"
 version: 1.0.0
 license: MIT
 author: Synthos
-  Linear项目管理 — issues/projects/teams via GraphQL。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "project_id: str, status: str -> tasks: list[Task] (id, title, assignee, due_date, priority, status)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

@@ -1,17 +1,20 @@
 ---
-
 name: p5js
-description: "p5.js sketches: gen art, shaders, interactive, 3D."
-author: Synthos
-license: MIT
+description: "Use when users request: p5.js sketches, creative coding, generative art, interactive visualizations, canvas animations, browser-based visual art, data viz, shader effects, or any p5.js project."
 version: 1.0.0
 license: MIT
-platforms: [linux, macos, windows]
+author: Synthos
 metadata:
-  hermes:
-    tags: [creative-coding, generative-art, p5js, canvas, interactive, visualization, webgl, shaders, animation]
-    
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 
 ## IO_CONTRACT

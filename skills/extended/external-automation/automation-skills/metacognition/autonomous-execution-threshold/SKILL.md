@@ -1,33 +1,20 @@
 ---
 name: autonomous-execution-threshold
-related_skills: []
-description: |
-  ⚡ P0 交互策略技能。每次收到用户消息后、响应前，先判断是否需要确认还是可以直接执行。核心逻辑：阈值优先于请示（用户确认'超过阈值直接执行不确认'）+ 推测优先（Inference-First）→ 先推测用户意图再估置信度，>=80% 且不触及核心哲学/外部费用/不可逆操作 -> 直接执行。反模拟检测：涉及技能执行的任务必须先 skill_view() 加载对应 SKILL.md，无记录不得执行。⚡P0 新增：技能查询容错协议——skill_view 对不存在技能返回错误但不中断；必须设置安全上限（≤10次连续失败则立即停止，绝不进入循环）。**强制终止：连续10次skill_view失败后，必须立即停止所有skill_view调用，转为报告模式，禁止任何自动重试。** 如果连续失败超过5次，应检查skills_list输出，只在已知技能集中生成请求。
-  操作密度最大化——连续执行多步不中断，最后汇总报告。**每次任务完成后必须主动报告结果（不等待用户追问"做了吗"或"结果呢"）。报告格式：①做了什么 ②结果如何 ③有问题吗。连续执行+主动报告=完整闭环。**每次被纠正后更新记忆和skill。See references/correction-learning.md for the full correction process.
-  ## 参考文档
-  - `references/skill-view-infinite-loop-fix.md` — 2026-06-12 skill_view 无限循环事故完整记录
-  ## 2026-06-12 严重安全事件
-  **事故：** skill_view 对不存在技能产生280+次连续循环，远超安全上限。
-  **根因：** agent 开始基于幻觉模式生成不存在的技能名（如 git-tag-verify-*），没有自动检测连续失败。
-  **修复措施：**
-  - 连续失败≥5次时必须检查 skills_list 确认技能名有效性
-  - 连续失败≥10次必须完全停止，输出报告而非继续
-  - 禁止对 skills_list 返回的技能名之外的名称发起 skill_view 请求
-  - 如果某个命名模式连续失败≥3次，应停止该模式的所有尝试
-version: 2.5.0
-author: Hermes Agent + User
+description: "**≥80%置信度 = 闭嘴执行。** 不输出推测文案、不给选项、不喊\"开始自主执行\"口号。用户看到的是执行结果，不是选择题。"
+version: 1.0.0
 license: MIT
-priority: P0
-execution_rule: "每次收到用户消息后、思考响应前自动加载本技能。不是'做完了检查'，是'怎么做'的前置决策。涉及技能执行的任务必须检查 pipeline_trace 中是否有 skill_view 记录，否则必须先 skill_view()。\n\n【v1.5.0 新增】预判执行协议 (Predict-Judge-Act)：每次需要决策时，先输出推测+置信度，而非等待用户明确指示。置信度≥80%直接执行不确认（等30秒浪费时间）。"
-references:
-  threshold-matrix.md: "3x3 自主执行阈值矩阵 —— 什么场景可以直接执行 vs 必须确认"
-  correction-learning.md: "被纠正后如何记录到记忆和skill，防止同类问题重复确认"
-  anti-simulation-check.md: "反模拟检测流程 —— 执行前必须检查 skill_view 记录"
-  human-response-analysis.md: "v2.0.0 人类响应语言分析框架 —— 信号词库、句类检测、动态置信度计算"
-  sequential-consistency-gate.md: "v2.1.0 顺序执行一致性门控协议 —— 多步任务每步后的人类反馈一致性分析"
-  auto-execution-engine.md: "v2.2.0 自动执行引擎强化 —— 正式置信度函数、pipeline-trace驱动流转、多步链式执行"
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 ## IO_CONTRACT
 

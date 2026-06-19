@@ -1,15 +1,20 @@
 ---
-
-
-name: batch-quality-score-extraction
-description: 批量处理论文 step_quality_check.md 中的 quality_score 并写入 state.json。处理 LaTeX 反斜杠陷阱和多种分数格式。
-author: Synthos
-license: MIT
+name: automation-skills
+description: "**触发条件**: 对一批论文（10-34 篇）批量处理 `step_quality_check.md` 中的 quality_score 并写入 `state.json`。"
 version: 1.0.0
 license: MIT
-
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 
 ## IO_CONTRACT

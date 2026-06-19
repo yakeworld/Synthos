@@ -1,21 +1,20 @@
 ---
 
 
+
 name: training-pipeline-principles
-related_skills: []
-description: >-
+description: "Skill: training-pipeline-principles"
 version: 1.0.0
 license: MIT
 author: Synthos
-  多阶段训练管线抽象原则 — teacher→distillation→student→hybrid→fine-tune。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "pipeline_type: str, domain: str -> pipeline_spec: dict (stages, optimizers, monitoring, checkpoints)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

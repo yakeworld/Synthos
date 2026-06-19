@@ -1,23 +1,20 @@
 ---
 name: popular-web-designs
-related_skills: []
-description: 54 real design systems (Stripe, Linear, Vercel) as HTML/CSS.
+description: "54 real-world design systems ready for use when generating HTML/CSS. Each template captures a"
 version: 1.0.0
-author: Hermes Agent + Teknium (design systems sourced from VoltAgent/awesome-design-md)
 license: MIT
-tags: [design, css, html, ui, web-development, design-systems, templates]
-platforms: [linux, macos, windows]
-triggers:
-  - build a page that looks like
-  - make it look like stripe
-  - design like linear
-  - vercel style
-  - create a UI
-  - web design
-  - landing page
-  - dashboard design
-  - website styled like
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 ## IO_CONTRACT
 

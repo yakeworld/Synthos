@@ -1,17 +1,20 @@
 ---
-
 name: pokemon-player
-related_skills: []
-description: "Play Pokemon via headless emulator + RAM reads."
-author: Synthos
-license: MIT
+description: "Play Pokemon games via headless emulation using the `pokemon-agent` package."
 version: 1.0.0
 license: MIT
-tags: [gaming, pokemon, emulator, pyboy, gameplay, gameboy]
-platforms: [linux, macos, windows]
-
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 
 ## IO_CONTRACT

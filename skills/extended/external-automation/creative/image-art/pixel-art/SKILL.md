@@ -1,18 +1,20 @@
 ---
 name: pixel-art
-related_skills: []
-description: "Pixel art w/ era palettes (NES, Game Boy, PICO-8)."
-version: 2.0.0
-author: dodo-reach
+description: "Convert any image into retro pixel art, then optionally animate it into a short"
+version: 1.0.0
 license: MIT
-platforms: [linux, macos, windows]
+author: Synthos
 metadata:
-  hermes:
-    tags: [creative, pixel-art, arcade, snes, nes, gameboy, retro, image, video]
-    category: creative
-    credits:
-      - "Hardware palettes and animation loops ported from Synero/pixel-art-studio (MIT) — https://github.com/Synero/pixel-art-studio"
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 ## IO_CONTRACT
 

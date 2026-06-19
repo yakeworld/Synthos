@@ -1,21 +1,20 @@
 ---
 
 
+
 name: literature-monitor
-related_skills: ["knowledge-acquisition"]
-description: >-
+description: "Directory index for literature-monitor: literature-monitor"
 version: 1.0.0
 license: MIT
 author: Synthos
-  多源论文持续监控 — arXiv/PubMed/bioRxiv/OpenAlex日报/周报。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "keywords: list[str], date_range: str -> new_papers: list[Paper] (title, abstract, source, relevance_score)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 
