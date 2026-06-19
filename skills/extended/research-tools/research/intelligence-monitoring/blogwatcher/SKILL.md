@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `blog_sources: list, keywords: list` — 用户请求描述、上下文信息
-- **output**: `alerts: list — 博客监控`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: blogwatcher
 description: Monitor blogs and RSS/Atom feeds via blogwatcher-cli tool.
 version: 1.0.0
@@ -45,6 +36,14 @@ prerequisites:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `blog_sources: list, keywords: list` — 用户请求描述、上下文信息
+- **output**: `alerts: list — 博客监控`
+
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 
 # Blogwatcher

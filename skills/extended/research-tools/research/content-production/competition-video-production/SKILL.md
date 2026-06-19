@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `topic: str, duration: int` — 用户请求描述、上下文信息
-- **output**: `video_script: dict — 竞赛视频`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: competition-video-production
 related_skills: ["manim-video"]
 description: >-
@@ -20,6 +11,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `topic: str, duration: int` — 用户请求描述、上下文信息
+- **output**: `video_script: dict — 竞赛视频`
+
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 # Competition Video Production
 

@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `paper_queries: list` — 用户请求描述、上下文信息
-- **output**: `download_report: dict — PDF下载竞赛`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: pdf-download-racing
 description: 并行竞速PDF下载引擎 — curl_cffi TLS指纹绕过 + Sci-Hub域轮换 + LibGen + MedData。依赖 tools/paper-manager/src/。
 version: 1.0.0
@@ -23,6 +14,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `paper_queries: list` — 用户请求描述、上下文信息
+- **output**: `download_report: dict — PDF下载竞赛`
+
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 # PDF Download Racing
 

@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `grant_proposal: str` — 用户请求描述、上下文信息
-- **output**: `audit_report: dict — NSFC基金审计`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: nsfc-grant-audit
 related_skills: ["knowledge-extraction"]
 description: >-
@@ -20,6 +11,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `grant_proposal: str` — 用户请求描述、上下文信息
+- **output**: `audit_report: dict — NSFC基金审计`
+
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 # Nsfc Grant Audit
 

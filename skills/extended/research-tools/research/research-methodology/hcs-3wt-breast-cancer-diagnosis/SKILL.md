@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `image_data: str, features: dict` — 用户请求描述、上下文信息
-- **output**: `diagnosis_report: dict — 乳腺癌诊断`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: hcs-3wt-breast-cancer-diagnosis
 description: HCS-3WT (Hybrid Cascade-Stacking Three-Way Triage) breast cancer diagnostic
 version: 1.0.0
@@ -29,6 +20,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `image_data: str, features: dict` — 用户请求描述、上下文信息
+- **output**: `diagnosis_report: dict — 乳腺癌诊断`
+
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 
 # HCS-3WT Breast Cancer Diagnostic AI System

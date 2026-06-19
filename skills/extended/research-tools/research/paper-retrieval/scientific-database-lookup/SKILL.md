@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `query: str, database: str` — 用户请求描述、上下文信息
-- **output**: `lookup_results: list — 科学数据库查询`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: scientific-database-lookup
 related_skills: ["knowledge-acquisition"]
 description: >-
@@ -20,6 +11,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `query: str, database: str` — 用户请求描述、上下文信息
+- **output**: `lookup_results: list — 科学数据库查询`
+
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 # Scientific Database Lookup
 

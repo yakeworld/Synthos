@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `search_terms: list` — 用户请求描述、上下文信息
-- **output**: `preprints: list — bioRxiv预印本`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: biorxiv
 description: >-
 version: 1.0.0
@@ -19,6 +10,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `search_terms: list` — 用户请求描述、上下文信息
+- **output**: `preprints: list — bioRxiv预印本`
+
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 # Biorxiv
 

@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `dataset: dict, domain: str` — 用户请求描述、上下文信息
-- **output**: `hypotheses: list — 数据驱动假设`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: data-driven-hypothesis
 related_skills: ["hypothesis-generation"]
 description: '从公开数据出发→数据探索→文献调研→发现gap→提出可验证假设。与"先有假设再找数据"相反，适合公开数据集方向探索。'
@@ -25,6 +16,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `dataset: dict, domain: str` — 用户请求描述、上下文信息
+- **output**: `hypotheses: list — 数据驱动假设`
+
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 # Data-Driven Hypothesis Generation
 

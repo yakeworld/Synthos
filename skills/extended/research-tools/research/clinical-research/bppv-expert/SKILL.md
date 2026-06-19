@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `patient_data: dict, symptoms: str` — 用户请求描述、上下文信息
-- **output**: `treatment_plan: dict — BPPV专家系统`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: bppv-expert
 license: MIT
 allowed-tools: file_read
@@ -47,6 +38,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `patient_data: dict, symptoms: str` — 用户请求描述、上下文信息
+- **output**: `treatment_plan: dict — BPPV专家系统`
+
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 
 # BPPV Expert — Extended Skill for Synthos

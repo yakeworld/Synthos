@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `researcher_name: str` — 用户请求描述、上下文信息
-- **output**: `portrait: dict — 研究者画像`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: researcher-portrait
 related_skills: []
 description: >-
@@ -20,6 +11,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `researcher_name: str` — 用户请求描述、上下文信息
+- **output**: `portrait: dict — 研究者画像`
+
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 # Researcher Portrait
 

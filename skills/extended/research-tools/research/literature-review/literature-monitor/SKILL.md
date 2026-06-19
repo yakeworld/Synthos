@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `keywords: list, sources: list` — 用户请求描述、上下文信息
-- **output**: `monitor_report: dict — 文献监控`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: literature-monitor
 related_skills: ["knowledge-acquisition"]
 description: >-
@@ -20,6 +11,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `keywords: list, sources: list` — 用户请求描述、上下文信息
+- **output**: `monitor_report: dict — 文献监控`
+
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 # Literature Monitor
 

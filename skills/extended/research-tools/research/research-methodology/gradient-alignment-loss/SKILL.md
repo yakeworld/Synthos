@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `model_arch: str, training_data: str` — 用户请求描述、上下文信息
-- **output**: `loss_spec: dict — 梯度对齐损失`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: gradient-alignment-loss
 related_skills: ["knowledge-extraction", "hypothesis-generation"]
 description: >-
@@ -20,6 +11,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `model_arch: str, training_data: str` — 用户请求描述、上下文信息
+- **output**: `loss_spec: dict — 梯度对齐损失`
+
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 # Gradient Alignment Loss
 

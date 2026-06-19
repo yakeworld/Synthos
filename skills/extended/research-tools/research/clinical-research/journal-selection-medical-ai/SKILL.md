@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `paper_topic: str, quality_metrics: dict` — 用户请求描述、上下文信息
-- **output**: `journal_recommendations: list — 期刊推荐`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: journal-selection-medical-ai
 description: Systematic methodology for evaluating and ranking SCI journals as publication
 version: 1.0.0
@@ -41,6 +32,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `paper_topic: str, quality_metrics: dict` — 用户请求描述、上下文信息
+- **output**: `journal_recommendations: list — 期刊推荐`
+
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 
 # Journal Selection for Medical AI Papers
