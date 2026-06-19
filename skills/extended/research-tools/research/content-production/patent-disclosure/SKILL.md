@@ -1,15 +1,19 @@
 ---
+
 name: patent-disclosure
 related_skills: ["knowledge-extraction", "hypothesis-generation"]
 description: "中国专利挖掘发现与交底书生成全流程：扫描项目文档挖掘专利点、讨论融合、基于脱敏模版生成技术交底书、CNIPA查新、生成后自检含逻辑闭环与公式参数一致性 | Patent mining, prior-art search, and disclosure drafting for Chinese patents."
 version: "1.8.5-synthos-2"
+license: MIT
 author: "handsomestWei (original) + Synthos absorbed v1.8.5"
 synthos_absorption_source: "https://github.com/handsomestWei/patent-disclosure-skill"
 synthos_absorption_date: "2026-05-21"
 synthos_absorption_score: 4.6
 synthos_absorption_license: "Apache-2.0"
 tags: [patent, disclosure, cnipa, prior-art, chinese-patent]
+
 ---
+
 
 ## IO_CONTRACT
 

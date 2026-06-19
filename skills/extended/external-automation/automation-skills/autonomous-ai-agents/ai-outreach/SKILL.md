@@ -1,8 +1,8 @@
 ---
+
 name: ai-outreach
-description: '主skill | 在AI可访问的平台上发布信号，引导其他AI智能体了解你的系统。覆盖平台选择(GitHub AGENTS.md/GitHub
 version: 1.0.0
-version: 1.1
+description: '主skill | 在AI可访问的平台上发布信号，引导其他AI智能体了解你的系统。覆盖平台选择(GitHub AGENTS.md/GitHub
   Discussions/Moltbook/X)、消息撰写(技术性/非推销)、节奏控制、回复监测。v1.1新增：AGENTS.md创建指南、GitHub_Discussions_Cron自动化、Moltbook注册API流程。调用子skill:
   moltbook-connector, xurl'
 allowed-tools:
@@ -11,6 +11,7 @@ allowed-tools:
 - write_file
 - search_files
 license: MIT
+author: Synthos
 metadata:
   hermes:
     tags:
@@ -33,7 +34,9 @@ metadata:
     version: 1.1.0
 
 
+
 ---
+
 
 ## IO_CONTRACT
 

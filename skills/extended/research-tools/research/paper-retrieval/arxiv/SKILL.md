@@ -1,9 +1,13 @@
 ---
+
+
 name: arxiv
 related_skills: ["knowledge-acquisition"]
 description: >-
   arXiv论文搜索 — 按关键词/作者/类别/ID检索。支持Tor SOCKS代理访问。
 version: 2.0.0
+license: MIT
+author: Synthos
 metadata:
   synthos:
     version: 2.0.0
@@ -11,7 +15,11 @@ metadata:
     signature: 'query_params: dict -> paper_results: list[dict]'
     related_skills:
     - knowledge-acquisition
+
+
 ---
+
+
 
 
 # arXiv

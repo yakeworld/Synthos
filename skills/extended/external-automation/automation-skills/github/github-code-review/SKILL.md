@@ -1,15 +1,23 @@
 ---
+
+
 name: github-code-review
 related_skills: []
 description: >-
 version: 1.0.0
+license: MIT
+author: Synthos
   PR代码审查 — diff分析, inline comments, gh/REST API。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

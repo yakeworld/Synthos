@@ -1,8 +1,12 @@
 ---
 
+
 name: kg-bridge
 description: Knowledge Graph — Agent Bridge. 将大型知识图谱接入 Agent 记忆层的方法论，覆盖查询分层、环境隔离、语义搜索增强、脚本化接口。
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 triggers:
   - 需要将知识图谱/向量数据库接入 Agent 工作流
   - 图谱节点 > 1000 需要按需检索（非全量注入）
@@ -15,7 +19,9 @@ metadata:
     signature: 'graph: KG + agent: Agent -> bridge: layered_queries + constraints + scripts'
     related_skills: ["synthos-akne-bridge"]
 
+
 ---
+
 
 ## IO_CONTRACT
 

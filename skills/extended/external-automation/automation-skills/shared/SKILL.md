@@ -1,8 +1,12 @@
 ---
 
+
 name: shared
 description: 共享资源 — 跨技能引用的通用资源。
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 triggers:
   - 需要执行shared下的子技能
 metadata:
@@ -11,7 +15,9 @@ metadata:
     atom_type: parent-skill
     description: "父级技能 — 共享资源 — 跨技能引用的通用资源。"
     signature: 'shared -> sub-skills: [references]'
-    ---
+    
+---
+
 
 ## IO_CONTRACT
 

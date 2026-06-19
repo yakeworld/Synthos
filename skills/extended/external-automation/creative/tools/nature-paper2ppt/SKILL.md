@@ -1,4 +1,5 @@
 ---
+
 name: nature-paper2ppt
 description: Nature-style Chinese PPTX from academic papers — argument-driven slide
 version: 1.0.0
@@ -6,6 +7,7 @@ version: 1.0.0
   evidence figures, writes Chinese slide content + speaker notes, builds real .pptx
   deck (python-pptx). Cross-platform Python stack (PyMuPDF, Pillow, python-pptx).
 license: MIT
+author: Synthos
 allowed-tools: shell Read Write file_search
 metadata:
   synthos_atom_type: extended
@@ -29,7 +31,9 @@ metadata:
     - ffmpeg-video-audio-sync
     version: 1.0.0
 
+
 ---
+
 
 ## IO_CONTRACT
 

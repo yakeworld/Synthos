@@ -1,27 +1,30 @@
 ---
+
+
 name: literature-monitor
 related_skills: ["knowledge-acquisition"]
 description: >-
 version: 1.0.0
+license: MIT
+author: Synthos
   多源论文持续监控 — arXiv/PubMed/bioRxiv/OpenAlex日报/周报。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 
-- **input**: `keywords: list, sources: list` — 用户请求描述、上下文信息
-- **output**: `monitor_report: dict — 文献监控`
-
+- **input**: `keywords: list[str], date_range: str` — 任务描述、参数配置
+- **output**: `new_papers: list[Paper] (title, abstract, source, relevance_score)` — 执行结果
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-# Literature Monitor
-
-多源论文持续监控 — arXiv/PubMed/bioRxiv/OpenAlex日报/周报。
 
 ## 数据源选择规则
 

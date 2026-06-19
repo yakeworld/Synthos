@@ -1,4 +1,5 @@
 ---
+
 name: huggingface-hub
 description: 'HuggingFace hf CLI: search/download/upload models, datasets.'
 version: 1.0.0
@@ -8,6 +9,7 @@ allowed-tools:
 - write_file
 - search_files
 license: MIT
+author: Synthos
 platforms:
 - linux
 - macos
@@ -31,7 +33,9 @@ metadata:
     - hub
     - mlops
 
+
 ---
+
 
 ## IO_CONTRACT
 

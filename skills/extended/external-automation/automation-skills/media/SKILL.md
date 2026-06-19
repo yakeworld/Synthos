@@ -1,8 +1,12 @@
 ---
 
+
 name: media
 description: 媒体内容 — GIF搜索、音乐生成、音谱分析、Spotify控制。
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 triggers:
   - 需要执行media下的子技能
 metadata:
@@ -13,7 +17,9 @@ metadata:
     signature: 'media -> sub-skills: [gif-search, heartmula, songsee]'
     related_skills: ["gif-search", "heartmula", "songsee", "spotify"]
 
+
 ---
+
 
 ## IO_CONTRACT
 

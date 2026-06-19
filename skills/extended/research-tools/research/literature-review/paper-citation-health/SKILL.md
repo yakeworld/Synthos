@@ -1,10 +1,16 @@
 ---
+
 name: paper-citation-health
 related_skills: ["knowledge-extraction"]
 description: Scan paper library for D8 (bib entries) and D10a (cite-to-bib match %) health metrics
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
+
 
 ---
+
 
 ## IO_CONTRACT
 

@@ -1,8 +1,12 @@
 ---
 
+
 name: mlops
 description: 机器学习运维 — ODE建模、实验管理、模型训练、推理部署、模型架构。
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 triggers:
   - 需要执行mlops下的子技能
 metadata:
@@ -13,7 +17,9 @@ metadata:
     signature: 'mlops -> sub-skills: [biomechanical-regulation-ode, computational-ode-modeling, crispdm-helix-experiment]'
     related_skills: ["biomechanical-regulation-ode", "computational-ode-modeling", "crispdm-helix-experiment", "evaluation", "experiment-recipes"]
 
+
 ---
+
 
 ## IO_CONTRACT
 

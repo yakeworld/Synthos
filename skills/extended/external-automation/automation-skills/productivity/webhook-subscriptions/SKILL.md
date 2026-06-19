@@ -1,7 +1,11 @@
 ---
+
 name: webhook-subscriptions
 description: 'Webhook subscriptions: event-driven agent runs.'
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 allowed-tools:
 - terminal
 - read_file
@@ -30,7 +34,9 @@ metadata:
     - linear
     version: 1.1.0
 
+
 ---
+
 
 ## IO_CONTRACT
 

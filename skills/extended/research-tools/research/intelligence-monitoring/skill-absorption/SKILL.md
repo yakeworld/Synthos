@@ -1,8 +1,12 @@
 ---
+
 name: skill-absorption
 related_skills: ["project-experience-distillation"]
 description: 双循环进化：内部反思(P0) + 外部吸收(P1)。Cross-project absorption methodology — multi-round cross-project comparison, active project tracking, self-expanding keyword discovery. 动灵驱动吸收(Entelechy-Driven Absorption v4.3).
+author: Synthos
+license: MIT
 version: 4.3
+license: MIT
 allowed-tools:
 - terminal
 - file
@@ -15,7 +19,9 @@ metadata:
     priority: P1
     signature: 'target: str -> absorption_report: dict'
 
+
 ---
+
 
 
 ## IO_CONTRACT

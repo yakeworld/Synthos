@@ -1,11 +1,17 @@
 ---
+
 name: ascii-video
 related_skills: []
 description: "ASCII video: convert video/audio to colored ASCII MP4/GIF."
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 platforms: [linux, macos, windows]
 
+
 ---
+
 
 ## IO_CONTRACT
 

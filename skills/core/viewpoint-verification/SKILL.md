@@ -1,7 +1,11 @@
 ---
+
 name: viewpoint-verification
 description: >-
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
   多角度验证假说/论证——反证、证伪检验、鲁棒性检查、贝叶斯置信度评分。
 metadata:
   synthos:
@@ -11,7 +15,9 @@ metadata:
     signature: "hypothesis: str, evidence: list[Evidence] -> verification_result: dict -> verification_result: dict (confidence_score, counterarguments, robustness_checks, falsification_tests)"
     related_skills: ["knowledge-acquisition", "knowledge-extraction", "association-discovery", "hypothesis-generation", "argument-expression"]
 
+
 ---
+
 
 
 
@@ -22,10 +28,7 @@ metadata:
 ## 快速参考
 ## IO_CONTRACT
 
-- **input**: hypothesis: str
-- **input**: evidence: list[Evidence]
-- **output**: verification_result: dict (confidence_score, counterarguments, robustness_checks, falsification_tests, weaknesses, recommendations)
-> 对应原则：P2（机械原子暴露输入输出规范）
+- **input**: `hypothesis: str, context: dict` — 任务描述、参数配置
+- **output**: `verification_report: dict (score, evidence, counter_evidence, confidence)` — 执行结果
 
-详细文档和完整命令列表已被移至 `references/` 目录以保持简洁。
-This skill has been compressed. Full content is available in references/.
+> 对应原则：P2（机械原子暴露输入输出规范）

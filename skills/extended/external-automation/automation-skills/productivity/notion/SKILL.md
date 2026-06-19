@@ -1,4 +1,5 @@
 ---
+
 name: notion
 description: 'Notion API via curl: pages, databases, blocks, search.'
 version: 1.0.0
@@ -8,6 +9,7 @@ allowed-tools:
 - write_file
 - search_files
 license: MIT
+author: Synthos
 platforms:
 - linux
 - macos
@@ -35,7 +37,9 @@ prerequisites:
   env_vars:
   - NOTION_API_KEY
 
+
 ---
+
 
 ## IO_CONTRACT
 

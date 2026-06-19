@@ -1,14 +1,20 @@
 ---
+
 name: research
 related_skills: ["dspy"]
 description: "学术研究 — 论文检索、文献监控、专利挖掘、系统综述、研究创意。"
+author: Synthos
+license: MIT
 version: 2.0.0
+license: MIT
 metadata:
   synthos:
     priority: P1
     atom_type: parent-skill
     description: "学术研究工具集 — 按功能分为6个子类别"
+
 ---
+
 
 ## IO_CONTRACT
 

@@ -1,15 +1,23 @@
 ---
+
+
 name: mcp-ecosystem-guide
 related_skills: []
 description: >-
 version: 1.0.0
+license: MIT
+author: Synthos
   MCP生态知识 — 架构/常用服务器/开发模式/安全/Agent集成。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

@@ -1,15 +1,23 @@
 ---
+
+
 name: github-pr-workflow
 related_skills: []
 description: >-
 version: 1.0.0
+license: MIT
+author: Synthos
   GitHub PR生命周期 — branch→commit→open→CI→merge。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

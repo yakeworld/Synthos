@@ -1,6 +1,9 @@
 ---
+
 name: bppv-expert
+version: 1.0.0
 license: MIT
+author: Synthos
 allowed-tools: file_read
 description: 'Structured BPPV (Benign Paroxysmal Positional Vertigo) medical knowledge
 version: 1.0.0
@@ -36,7 +39,9 @@ metadata:
     - repositioning
     - medical-expert
 
+
 ---
+
 
 ## IO_CONTRACT
 

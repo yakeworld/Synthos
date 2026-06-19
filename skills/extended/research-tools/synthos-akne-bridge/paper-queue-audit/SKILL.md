@@ -1,7 +1,11 @@
 ---
 
+
+
 name: paper-queue-audit
 version: 1.0.0
+license: MIT
+author: Synthos
 metadata:
   synthos:
     priority: P1
@@ -9,7 +13,11 @@ metadata:
     description: Diagnose paper pipeline health — state.json scanning, stage classification, bottleneck detection, queue rebuilding.
     signature: 'papers_dir: str -> queue_report: dict'
     related_skills: [paper-pipeline, quality-gate, paper-cron-scan, paper-references-scanning]
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

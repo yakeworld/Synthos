@@ -1,15 +1,23 @@
 ---
+
+
 name: llm-wiki
 related_skills: []
 description: >-
 version: 1.0.0
+license: MIT
+author: Synthos
   Karpathy式LLM Wiki — 构建/查询互链Markdown知识库。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

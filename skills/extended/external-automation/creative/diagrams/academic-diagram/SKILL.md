@@ -1,15 +1,23 @@
 ---
+
+
 name: academic-diagram
 related_skills: ["figure-generation"]
 description: >-
 version: 1.0.0
+license: MIT
+author: Synthos
   Nature/CNS投稿级架构/流程/系统示意图 — TikZ白底高对比色板。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

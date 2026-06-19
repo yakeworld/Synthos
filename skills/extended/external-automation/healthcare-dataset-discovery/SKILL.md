@@ -1,7 +1,11 @@
 ---
+
 name: healthcare-dataset-discovery
 description: 'Public healthcare dataset discovery — known accessible sources, dead sources, and API patterns for medical AI research.'
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 allowed-tools:
 - terminal
 - read_file
@@ -14,7 +18,9 @@ metadata:
     signature: "medical_domain: str -> dataset_results: list[Dataset] -> dataset_results: list[Dataset] (name, source, url, description, access_type, relevance)"
     related_skills: []
 
+
 ---
+
 
 ## IO_CONTRACT
 

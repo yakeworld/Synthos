@@ -1,8 +1,12 @@
 ---
 
+
 name: github
 description: GitHub工作流 — PR审查、Issue管理、仓库管理、CI/CD。
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 triggers:
   - 需要执行github下的子技能
 metadata:
@@ -13,7 +17,9 @@ metadata:
     signature: 'github -> sub-skills: [codebase-inspection, github-auth, github-code-review]'
     related_skills: ["codebase-inspection", "github-auth", "github-code-review", "github-discussions", "github-issues"]
 
+
 ---
+
 
 ## IO_CONTRACT
 

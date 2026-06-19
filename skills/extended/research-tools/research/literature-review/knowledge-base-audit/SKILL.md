@@ -1,9 +1,13 @@
 ---
+
 name: knowledge-base-audit
 io_contract: "input: kb_path: str, audit_type: str -> audit_report: dict | output: audit_report: dict, recommendations: list[str]"
 
 description: Audit and maintain personal knowledge management systems (AKNE, NotebookLM,
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
   Obsidian vaults, etc.) to keep them healthy and evolving.
 allowed-tools:
 - terminal
@@ -20,7 +24,9 @@ metadata:
     - biorxiv
     - blogwatcher
 
+
 ---
+
 
 ## IO_CONTRACT
 

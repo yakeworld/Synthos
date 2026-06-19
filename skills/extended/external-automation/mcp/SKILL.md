@@ -1,8 +1,12 @@
 ---
 
+
 name: mcp
 description: MCP集成 — 模型上下文协议服务器配置与工具注册。
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 triggers:
   - 需要执行mcp下的子技能
 metadata:
@@ -13,7 +17,9 @@ metadata:
     signature: 'mcp -> sub-skills: [mcp-ecosystem-guide, native-mcp]'
     related_skills: ["mcp-ecosystem-guide", "native-mcp"]
 
+
 ---
+
 
 ## IO_CONTRACT
 

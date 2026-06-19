@@ -1,4 +1,5 @@
 ---
+
 name: codex
 description: "Delegate coding to OpenAI Codex CLI — 主力编码代理。覆盖多节点profile配置、无PTY执行、Cron集成、多模型并行。"
 version: 1.1.0
@@ -7,6 +8,7 @@ allowed-tools:
 - file
 - web
 license: MIT
+author: Synthos
 platforms:
 - linux
 - macos
@@ -35,7 +37,9 @@ metadata:
     last_updated: 2026-06-19
     update_reason: Multi-node profile architecture + cron script conversion
 
+
 ---
+
 
 ## IO_CONTRACT
 

@@ -1,8 +1,12 @@
 ---
 
+
 name: writing
 description: 写作辅助 — 引用完整性修复、LaTeX输出、政治提案、标准论文结构。
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 triggers:
   - 需要执行writing下的子技能
 metadata:
@@ -13,7 +17,9 @@ metadata:
     signature: 'writing -> sub-skills: [citation-integrity-fix, latex-output, political-proposal]'
     related_skills: ["citation-integrity-fix", "latex-output", "political-proposal", "sci-paper-standard-structure"]
 
+
 ---
+
 
 ## IO_CONTRACT
 

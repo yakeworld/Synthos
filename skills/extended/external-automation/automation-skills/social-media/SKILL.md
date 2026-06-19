@@ -1,8 +1,12 @@
 ---
 
+
 name: social-media
 description: 社交媒体 — X/Twitter发帖、搜索、DM。
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 triggers:
   - 需要执行social-media下的子技能
 metadata:
@@ -13,7 +17,9 @@ metadata:
     signature: 'social-media -> sub-skills: [xurl]'
     related_skills: ["xurl"]
 
+
 ---
+
 
 ## IO_CONTRACT
 

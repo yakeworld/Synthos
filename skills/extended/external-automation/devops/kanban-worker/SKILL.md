@@ -1,25 +1,26 @@
 ---
+
 name: kanban-worker
 related_skills: []
 description: Pitfalls, examples, and edge cases for Hermes Kanban workers. The lifecycle itself is auto-injected into every worker's system prompt as KANBAN_GUIDANCE (from agent/prompt_builder.py); this skill is what you load when you want deeper detail on specific scenarios.
+author: Synthos
+license: MIT
 version: 2.0.0
+license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
     tags: [kanban, multi-agent, collaboration, workflow, pitfalls]
-    ---
+    
+---
+
 
 ## IO_CONTRACT
 
-- **input**: `task_item: dict` — 用户请求描述、上下文信息
-- **output**: `result: dict — 任务完成结果`
+- **input**: `task_list: list[Task], board_state: dict` — 任务描述、参数配置
+- **output**: `updated_board: dict — 执行结果`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-
-# Kanban Worker — Pitfalls and Examples
-
-> You're seeing this skill because the Hermes Kanban dispatcher spawned you as a worker with `--skills kanban-worker` — it's loaded automatically for every dispatched worker. The **lifecycle** (6 steps: orient → work → heartbeat → block/complete) also lives in the `KANBAN_GUIDANCE` block that's auto-injected into your system prompt. This skill is the deeper detail: good handoff shapes, retry diagnostics, edge cases.
 
 ## Workspace handling
 

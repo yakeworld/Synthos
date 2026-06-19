@@ -1,8 +1,12 @@
 ---
 
+
 name: autonomous-ai-agents
 description: 自主AI智能体编排 — 多Agent协作、委托任务、跨Agent通信。
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 triggers:
   - 需要执行autonomous-ai-agents下的子技能
 metadata:
@@ -13,7 +17,9 @@ metadata:
     signature: 'autonomous-ai-agents -> sub-skills: [ai-outreach, claude-code, codex]'
     related_skills: ["ai-outreach", "claude-code", "codex", "hermes-agent", "moltbook-connector"]
 
+
 ---
+
 
 ## IO_CONTRACT
 

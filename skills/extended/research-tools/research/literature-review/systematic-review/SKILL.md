@@ -1,15 +1,23 @@
 ---
+
+
 name: systematic-review
 related_skills: ["association-discovery", "hypothesis-generation"]
 description: 系统综述与Meta分析工作流助手 — PRISMA流程、搜索策略设计、研究选择、质量评估、数据提取和综合支持。
 version: 1.0.0
+license: MIT
+author: Synthos
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
     signature: 'topic: str -> review_plan: dict'
 
+
+
 ---
+
+
 
 
 # Systematic Review Workflow

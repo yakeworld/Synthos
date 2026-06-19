@@ -1,14 +1,20 @@
 ---
+
 name: creative
 related_skills: ["academic-diagram", "architecture-diagram", "ascii-art", "ascii-video", "baoyu-comic", "baoyu-infographic", "claude-design", "comfyui", "excalidraw", "ffmpeg-video-audio-sync", "figure-generation", "humanizer", "manim-video", "p5js", "pixel-art", "popular-web-designs", "pretext", "sketch", "songwriting-and-ai-music", "touchdesigner-mcp"]
 description: "创意工具 — 图表、视频、图像、代码生成"
+author: Synthos
+license: MIT
 version: 2.0.0
+license: MIT
 metadata:
   synthos:
     priority: P2
     atom_type: parent-skill
     description: "父级技能 — 创意工具 — 涵盖图表、视频音频、图像艺术、网页代码生成"
+
 ---
+
 
 ## IO_CONTRACT
 

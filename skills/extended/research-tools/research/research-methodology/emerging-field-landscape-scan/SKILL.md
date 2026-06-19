@@ -1,8 +1,12 @@
 ---
+
 name: emerging-field-landscape-scan
 related_skills: ["knowledge-acquisition", "association-discovery"]
 description: >-
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
   新兴产业方向/技术领域全景扫描方法论 — 政策金字塔检索→竞争格局分析→学术定位挂钩→战略建议产出。
   适用于：参加政策座谈会前准备、判断新兴赛道可行性、定位自身研究在国家级/省级布局中的切入点。
 metadata:
@@ -13,7 +17,9 @@ metadata:
   synthos_depends_on: research-paper-search, political-proposal
   allowed-tools: Read Write Browser Terminal
 
+
 ---
+
 
 ## IO_CONTRACT
 

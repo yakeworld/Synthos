@@ -1,6 +1,8 @@
 ---
+
 name: experiment-recipes
 license: MIT
+author: Synthos
 allowed-tools: Read
 description: ML训练配方与预设——架构选择、训练循环、优化器、调度器、混合精度、内存优化、调试。 提炼自实战经验，非外部代码搬运。每个配方记录原理而非逐行代码。
 version: 1.0.0
@@ -31,7 +33,9 @@ metadata:
     - pytorch
     - reference
 
+
 ---
+
 
 ## IO_CONTRACT
 

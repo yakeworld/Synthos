@@ -1,5 +1,10 @@
 ---
+
+
 name: citation-bib-crossref
+version: 1.0.0
+license: MIT
+author: Synthos
 related_skills: ["knowledge-extraction"]
 description: >-
   Cross-file citation matching between LaTeX \cite{...} calls and .bib entry keys.
@@ -10,17 +15,18 @@ metadata:
   synthos:
     version: 1.0.0
     author: Synthos
+
+
 ---
+
+
 
 ## IO_CONTRACT
 
-- **input**: `paper_info: dict` — 用户请求描述、上下文信息
-- **output**: `bib_enriched: dict — 引文交叉引用`
+- **input**: `paper_list: list[dict]` — 任务描述、参数配置
+- **output**: `citation_report: dict — 执行结果`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-
-# Citation ↔ Bib Cross-Reference Audit
 
 ## Scope
 

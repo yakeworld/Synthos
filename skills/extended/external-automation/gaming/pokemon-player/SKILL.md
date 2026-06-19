@@ -1,12 +1,18 @@
 ---
+
 name: pokemon-player
 related_skills: []
 description: "Play Pokemon via headless emulator + RAM reads."
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 tags: [gaming, pokemon, emulator, pyboy, gameplay, gameboy]
 platforms: [linux, macos, windows]
 
+
 ---
+
 
 ## IO_CONTRACT
 

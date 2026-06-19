@@ -1,8 +1,12 @@
 ---
 
+
 name: devops
 description: DevOps运维 — Cron任务管理、看板编排、worker管理。
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 triggers:
   - 需要执行devops下的子技能
 metadata:
@@ -13,7 +17,9 @@ metadata:
     signature: 'devops -> sub-skills: [cron-system-maintenance, kanban-orchestrator, kanban-worker]'
     related_skills: ["cron-system-maintenance", "kanban-orchestrator", "kanban-worker"]
 
+
 ---
+
 
 ## IO_CONTRACT
 

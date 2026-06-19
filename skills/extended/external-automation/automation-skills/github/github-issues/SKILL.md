@@ -1,15 +1,23 @@
 ---
+
+
 name: github-issues
 related_skills: []
 description: >-
 version: 1.0.0
+license: MIT
+author: Synthos
   创建/分类/标记/分配GitHub issues — gh或REST API。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

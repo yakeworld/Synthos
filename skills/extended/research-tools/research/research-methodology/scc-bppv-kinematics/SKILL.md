@@ -1,15 +1,23 @@
 ---
+
+
 name: scc-bppv-kinematics
 related_skills: ["knowledge-extraction", "hypothesis-generation"]
 description: >-
 version: 1.0.0
+license: MIT
+author: Synthos
   SCC半规管形态学分析与BPPV复位运动学 — 中心线加载→平面分析→螺旋拟合→Epley仿真→椭圆反推法向量。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

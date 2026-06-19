@@ -1,7 +1,11 @@
 ---
+
+
 name: crispdm-helix-experiment
 description: CRISP-DM Helix methodology — strict CV-fold-isolated preprocessing for clinical ML experiments on public datasets. Generates real, traceable L0.5-compliant data.
 version: 1.0.0
+license: MIT
+author: Synthos
 allowed-tools:
 - terminal
 - read_file
@@ -15,7 +19,11 @@ metadata:
     related_skills:
     - experiment-recipes
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

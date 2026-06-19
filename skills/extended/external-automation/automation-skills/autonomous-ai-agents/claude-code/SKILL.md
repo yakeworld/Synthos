@@ -1,4 +1,5 @@
 ---
+
 name: claude-code
 related_skills: []
 description: Delegate coding to Claude Code CLI — features, PRs, refactoring, review.
@@ -7,13 +8,16 @@ allowed-tools:
 - terminal
 - file
 license: MIT
+author: Synthos
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
     signature: 'task: str -> result: dict'
 
+
 ---
+
 
 ## IO_CONTRACT
 

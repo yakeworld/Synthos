@@ -1,4 +1,5 @@
 ---
+
 name: teams-meeting-pipeline
 description: Operate the Teams meeting summary pipeline via Hermes CLI — summarize
 version: 1.0.0
@@ -9,6 +10,7 @@ allowed-tools:
 - write_file
 - search_files
 license: MIT
+author: Synthos
 prerequisites:
   env_vars:
   - MSGRAPH_TENANT_ID
@@ -39,7 +41,9 @@ metadata:
     - linear
     version: 1.1.0
 
+
 ---
+
 
 ## IO_CONTRACT
 

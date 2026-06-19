@@ -1,8 +1,12 @@
 ---
 
+
 name: gaming
 description: 游戏服务器 — Minecraft模组服务器、宝可梦模拟器。
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 triggers:
   - 需要执行gaming下的子技能
 metadata:
@@ -13,7 +17,9 @@ metadata:
     signature: 'gaming -> sub-skills: [minecraft-modpack-server, pokemon-player]'
     related_skills: ["minecraft-modpack-server", "pokemon-player"]
 
+
 ---
+
 
 ## IO_CONTRACT
 

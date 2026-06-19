@@ -1,7 +1,11 @@
 ---
+
+
 name: research-paper-search
 description: '主skill | 多源论文检索+全文下载编排器。入口：Semantic Scholar (API Key), PubMed, OpenAlex, arXiv (Tor), Crossref。调用子skill: arxiv, pubmed, openalex。'
 version: 2.0.0
+license: MIT
+author: Synthos
 metadata:
   synthos:
     version: 2.0.0
@@ -29,7 +33,11 @@ metadata:
   - references/pubmed-template-query-antipatterns.md — v22: OR-heavy DEFAULT_QUERIES produce massive false positives; all queries must use AND composition
   - references/efetch-response-quirks.md — v27: efetch may return text/plain or HTML instead of JSON/XML; rate-limit behavior; esummary key is PMID
 
+
+
 ---
+
+
 
 
 # Research Paper Search

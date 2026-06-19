@@ -1,15 +1,23 @@
 ---
+
+
 name: adhd-eye-tracking-review
 related_skills: ["knowledge-acquisition"]
 description: >-
 version: 1.0.0
+license: MIT
+author: Synthos
   ADHD眼动追踪生物标志物系统综述。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 

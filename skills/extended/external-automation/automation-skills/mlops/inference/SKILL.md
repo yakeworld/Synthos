@@ -1,13 +1,26 @@
+---
+name: inference
+description: "Directory index for inference — mlops/inference   模型推理服务与优化"
+version: 1.0.0
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    atom_type: directory-index
+    description: "Directory index for inference"
+    signature: "task_desc: str, context: dict -> result: dict"
+    related_skills: []
+    priority: P2
+
+---
 # mlops/inference — 模型推理服务与优化
 
 ## IO_CONTRACT
 
-- **input**:  — 任务类型、参数配置
-- **output**:  — 执行结果
+- **input**: `model_path: str, input_data: dict, parameters: dict` — 任务描述、参数配置
+- **output**: `prediction: dict (output, confidence, metadata)` — 执行结果
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-> mlops 子技能目录，提供模型推理服务、量化、结构化输出和推理优化能力。
 
 ## 子技能
 

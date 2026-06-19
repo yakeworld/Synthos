@@ -1,8 +1,10 @@
 ---
+
 name: figure-generation
 description: 科研图表创建：Figure契约方法论——结论Claim→证据层级→面板映射→出口契约→审核。 支持Nature语义色板（蓝主-绿正-红基+中性色），16种排版模式。兼容所有SCI/会议图表场景。
 version: 1.0.0
 license: MIT
+author: Synthos
 allowed-tools:
 - terminal (Python plotting, shell)
 - file_read (data inspection)
@@ -37,7 +39,9 @@ metadata:
     - nature-style
     - publication-ready
 
+
 ---
+
 
 ## IO_CONTRACT
 

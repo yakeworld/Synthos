@@ -1,26 +1,29 @@
 ---
+
+
 name: biorxiv
 description: >-
 version: 1.0.0
+license: MIT
+author: Synthos
   bioRxiv/medRxiv预印本搜索 — 生物医学预印本首选。
 metadata:
   synthos:
     version: 1.0.0
     author: Synthos
 
+
+
 ---
+
+
 
 ## IO_CONTRACT
 
-- **input**: `search_terms: list` — 用户请求描述、上下文信息
-- **output**: `preprints: list — bioRxiv预印本`
-
+- **input**: `search_terms: list[str], date_range: str` — 任务描述、参数配置
+- **output**: `preprints: list[Preprint] (title, authors, abstract, url, preprint_id)` — 执行结果
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-# Biorxiv
-
-详细内容请加载此skill后按需执行。核心流程和命令已提炼如下：
 
 ## 快速参考
 

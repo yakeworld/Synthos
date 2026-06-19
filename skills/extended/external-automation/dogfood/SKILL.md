@@ -1,13 +1,19 @@
 ---
+
 name: dogfood
 description: "Exploratory QA of web apps: find bugs, evidence, reports."
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 platforms: [linux, macos, windows]
 metadata:
   hermes:
     tags: [qa, testing, browser, web, dogfood]
     related_skills: []
+
 ---
+
 
 ## IO_CONTRACT
 

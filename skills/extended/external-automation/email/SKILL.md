@@ -1,8 +1,12 @@
 ---
 
+
 name: email
 description: 电子邮件管理 — Himalaya CLI邮件收发、搜索。
+author: Synthos
+license: MIT
 version: 1.0.0
+license: MIT
 triggers:
   - 需要执行email下的子技能
 metadata:
@@ -13,7 +17,9 @@ metadata:
     signature: 'email -> sub-skills: [himalaya]'
     related_skills: ["himalaya"]
 
+
 ---
+
 
 ## IO_CONTRACT
 

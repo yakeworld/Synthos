@@ -1,8 +1,12 @@
 ---
+
+
 name: openalex
 related_skills: ["knowledge-acquisition"]
 description: >-
 version: 1.0.0
+license: MIT
+author: Synthos
   OpenAlex学术论文数据库搜索 — 250M+论文, 无需API key, 无速率限制。
 metadata:
   synthos:
@@ -10,7 +14,11 @@ metadata:
     author: Synthos
     signature: 'skill_set: query_params -> paper_results: list'
 
+
+
 ---
+
+
 
 
 # OpenAlex — 学术论文数据库搜索
