@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `topic: str, requirements: dict` — 用户请求描述、上下文信息
-- **output**: `submission: dict — 竞赛方案`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: competition-submission
 related_skills: ["argument-expression"]
 description: End-to-end preparation of AI/tech/innovation competition submissions. Extract requirements, map to scoring criteria, generate documents, produce submission checklist. Covers medical AI, tech innovation, academic conferences, Chinese government grants.
@@ -26,6 +17,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `topic: str, requirements: dict` — 用户请求描述、上下文信息
+- **output**: `submission: dict — 竞赛方案`
+
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 # Competition Submission Pipeline
 

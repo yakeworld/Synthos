@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `field: str, timeframe: str` — 用户请求描述、上下文信息
-- **output**: `landscape_map: dict — 新兴领域图谱`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: emerging-field-landscape-scan
 related_skills: ["knowledge-acquisition", "association-discovery"]
 description: >-
@@ -24,6 +15,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `field: str, timeframe: str` — 用户请求描述、上下文信息
+- **output**: `landscape_map: dict — 新兴领域图谱`
+
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 ## 原理层·文言
 

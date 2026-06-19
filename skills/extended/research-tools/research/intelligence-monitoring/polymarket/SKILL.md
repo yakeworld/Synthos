@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `market_query: str` — 用户请求描述、上下文信息
-- **output**: `prediction_data: dict — Polymarket数据`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: polymarket
 description: 'Query Polymarket: markets, prices, orderbooks, history.'
 version: 1.0.0
@@ -39,6 +30,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `market_query: str` — 用户请求描述、上下文信息
+- **output**: `prediction_data: dict — Polymarket数据`
+
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 
 # Polymarket — Prediction Market Data

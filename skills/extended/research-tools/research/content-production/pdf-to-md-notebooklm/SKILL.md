@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `pdf_file: str` — 用户请求描述、上下文信息
-- **output**: `md_content: str — PDF转Markdown`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: pdf-to-md-notebooklm
 description: PDF→Markdown→NotebookLM 全流程管线。支持批量上传、自动类型检测、大文件处理。
 version: 1.0.0
@@ -36,6 +27,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `pdf_file: str` — 用户请求描述、上下文信息
+- **output**: `md_content: str — PDF转Markdown`
+
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 
 # PDF → Markdown → NotebookLM 全流程管线

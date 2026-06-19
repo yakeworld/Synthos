@@ -1,15 +1,6 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `kb_path: str, audit_type: str` — 用户请求描述、上下文信息
-- **output**: `audit_report: dict — 知识库审计`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: knowledge-base-audit
-io_contract: input: ['knowledge_base: str, audit_type: str -> audit_report: dict', 'output: ['audit_report: dict, recommendations: list[str]]']
+io_contract: "input: kb_path: str, audit_type: str -> audit_report: dict | output: audit_report: dict, recommendations: list[str]"
 
 description: Audit and maintain personal knowledge management systems (AKNE, NotebookLM,
 version: 1.0.0
@@ -31,6 +22,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `kb_path: str, audit_type: str` — 用户请求描述、上下文信息
+- **output**: `audit_report: dict — 知识库审计`
+
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 
 # Knowledge Base Audit & Maintenance

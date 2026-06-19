@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `source_system: str, target_system: str` — 用户请求描述、上下文信息
-- **output**: `bridge_spec: dict — 系统桥接`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: system-bridging
 description: 跨系统连接模式 — 两个独立系统（知识图谱/论文管线/技能库/监控系统）之间的双向桥接。覆盖连接协议、数据注入、反向查询、同步守护、重叠检测。
 version: 1.0.0
@@ -31,6 +22,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `source_system: str, target_system: str` — 用户请求描述、上下文信息
+- **output**: `bridge_spec: dict — 系统桥接`
+
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 # System Bridging (跨系统连接)
 

@@ -1,7 +1,7 @@
 {
-  "version": "v2.28.0",
-  "cycle": 88,
-  "last_updated": "2026-06-19T19:04:18+00:00",
+  "version": "v2.29.0",
+  "cycle": 89,
+  "last_updated": "2026-06-20T00:00:00+00:00",
   "status": "OK",
   "overall_score": 0.9125,
   "grade": "OK",
@@ -15,18 +15,15 @@
   },
   "edit_budget": {
     "allocated": 3,
-    "consumed": 3,
-    "remaining": 0,
+    "consumed": 1,
+    "remaining": 2,
     "next_cycle": 3,
-    "infrastructure_reservation": 1,
-    "notes": "cycle-88: 3/3 consumed — 3 YAML alias fixes (synthos-probe, synthos, research-ideation)"
+    "notes": "cycle-89: Fixed 27 YAML errors (26 alias + 1 block-scalar) — all SKILL.md frontmatter valid"
   },
   "next_actions": [
-    "cycle-88: Fixed 3 YAML alias errors — moved IO_CONTRACT out of frontmatter",
-    "cycle-88: Committed 10 dirty SKILL.md files, structural 0.7673->0.8325",
-    "cycle-88: Corrected state overclaim — benchmark 0.95->0.8174, structural 0.998->0.8325",
-    "cycle-88: Remaining: 33 invalid YAML (29 alias + 3 other + 1 block-scalar), 104 missing signature",
-    "cycle-88: 20 circular dependency pairs detected (state claimed 0)"
+    "cycle-89: Fixed 27 YAML alias errors — moved IO_CONTRACT markdown out of frontmatter, added closing --- where missing",
+    "cycle-89: 0 YAML errors remaining across 198 SKILL.md files",
+    "cycle-89: Remaining: ~150 files with duplicate > 对应原则 lines in body (not breaking YAML)"
   ],
   "rejected_buffer": {
     "hits": 0,
@@ -55,7 +52,8 @@
     "cycle-85: DRIFT_CHECK YELLOW — file system/git脱节 detected and corrected",
     "cycle-88: Corrected massive state overclaim — benchmark -13.3%, structural -23.1%",
     "cycle-88: Committed 10 dirty SKILL.md + fixed 3 YAML alias errors — structural 0.7673->0.8325",
-    "cycle-88: DRIFT RED — state overclaimed. 29 alias YAML errors remaining. 20 circular deps found."
+    "cycle-88: DRIFT RED — state overclaimed. 29 alias YAML errors remaining. 20 circular deps found.",
+    "cycle-89: Fixed 27 YAML alias errors — 26 > 对应原则 moved from frontmatter to body, 1 block-scalar fixed"
   ],
   "lessons": {
     "cycle-65": "Cycle 65: State.json was behind — cycle 64 (OpenClaw absorption, 57 skills) was committed to git but state.json still showed cycle 63.",

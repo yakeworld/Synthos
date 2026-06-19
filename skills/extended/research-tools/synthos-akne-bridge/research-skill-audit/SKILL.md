@@ -9,10 +9,9 @@ metadata:
     priority: P1
     atom_type: pipeline
     description: Audit and enhance research skill coverage. Process for identifying gaps, testing existing skills, and creating/enhancing missing capabilities.
-    signature: |
-      skill_inventory: list[Skill], audit_criteria: dict -> audit_report: dict | audit_report: dict (gaps, weak_skills, improvement_suggestions)
+    signature: "skill_inventory: list[Skill], audit_criteria: dict -> audit_report: dict | audit_report: dict (gaps, weak_skills, improvement_suggestions)"
     related_skills: [research-paper-search, knowledge-acquisition, knowledge-extraction, association-discovery, hypothesis-generation, argument-expression, viewpoint-verification]
-
+---
 
 # Research Skill Audit
 

@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `invention_desc: str, domain: str` — 用户请求描述、上下文信息
-- **output**: `disclosure_doc: dict — 专利披露`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: patent-disclosure
 related_skills: ["knowledge-extraction", "hypothesis-generation"]
 description: "中国专利挖掘发现与交底书生成全流程：扫描项目文档挖掘专利点、讨论融合、基于脱敏模版生成技术交底书、CNIPA查新、生成后自检含逻辑闭环与公式参数一致性 | Patent mining, prior-art search, and disclosure drafting for Chinese patents."
@@ -20,6 +11,14 @@ synthos_absorption_license: "Apache-2.0"
 tags: [patent, disclosure, cnipa, prior-art, chinese-patent]
 ---
 
+## IO_CONTRACT
+
+- **input**: `invention_desc: str, domain: str` — 用户请求描述、上下文信息
+- **output**: `disclosure_doc: dict — 专利披露`
+
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+> 对应原则：P2（机械原子暴露输入输出规范）
 # 专利挖掘与交底书生成
 
 > Synthos原始路径: `/media/yakeworld/sda2/Synthos/skills/patent-disclosure/SKILL.md`

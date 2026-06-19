@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `clinical_data: str` — 用户请求描述、上下文信息
-- **output**: `kinematics_report: dict — 运动学报告`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: scc-bppv-kinematics
 related_skills: ["knowledge-extraction", "hypothesis-generation"]
 description: >-
@@ -20,6 +11,14 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `clinical_data: str` — 用户请求描述、上下文信息
+- **output**: `kinematics_report: dict — 运动学报告`
+
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 # Scc Bppv Kinematics
 

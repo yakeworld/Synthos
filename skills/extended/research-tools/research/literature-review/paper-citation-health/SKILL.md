@@ -1,13 +1,4 @@
 ---
-
-## IO_CONTRACT
-
-- **input**: `paper_dir: str` — 用户请求描述、上下文信息
-- **output**: `citation_report: dict — 引文健康报告`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
 name: paper-citation-health
 related_skills: ["knowledge-extraction"]
 description: Scan paper library for D8 (bib entries) and D10a (cite-to-bib match %) health metrics
@@ -15,6 +6,14 @@ version: 1.0.0
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `paper_dir: str` — 用户请求描述、上下文信息
+- **output**: `citation_report: dict — 引文健康报告`
+
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 # Paper Citation Health Scan (D8/D10a)
 
