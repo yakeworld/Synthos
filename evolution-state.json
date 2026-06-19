@@ -1,6 +1,6 @@
 {
-  "version": "v2.30.0",
-  "cycle": 90,
+  "version": "v2.31.0",
+  "cycle": 91,
   "last_updated": "2026-06-20T00:00:00+00:00",
   "status": "OK",
   "overall_score": 0.9125,
@@ -15,15 +15,15 @@
   },
   "edit_budget": {
     "allocated": 3,
-    "consumed": 2,
-    "remaining": 1,
+    "consumed": 3,
+    "remaining": 0,
     "next_cycle": 3,
-    "notes": "cycle-90: Cleaned 178 duplicate > 对应原则 lines across SKILL.md files — 0 duplicates remaining"
+    "notes": "cycle-91: Added IO_CONTRACT to paper-quality-deep-review — 198/198 SKILL.md complete"
   },
   "next_actions": [
-    "cycle-90: Removed duplicate > 对应原则 lines from 178 SKILL.md files (body cleanup)",
-    "cycle-90: 197/198 SKILL.md have exactly one > 对应原则, 0 YAML errors, 0 duplicates",
-    "cycle-90: Remaining: ~130 SKILL.md files missing IO_CONTRACT (large undertaking, may defer)"
+    "cycle-91: Added IO_CONTRACT to paper-quality-deep-review (last remaining file)",
+    "cycle-91: 198/198 SKILL.md now have IO_CONTRACT",
+    "cycle-91: Zero YAML errors, zero duplicate > 对应原则, zero missing IO_CONTRACT"
   ],
   "rejected_buffer": {
     "hits": 0,
@@ -54,7 +54,8 @@
     "cycle-88: Committed 10 dirty SKILL.md + fixed 3 YAML alias errors — structural 0.7673->0.8325",
     "cycle-88: DRIFT RED — state overclaimed. 29 alias YAML errors remaining. 20 circular deps found.",
     "cycle-89: Fixed 27 YAML alias errors — 26 > 对应原则 moved from frontmatter to body, 1 block-scalar fixed",
-    "cycle-90: Removed 178 duplicate > 对应原则 body lines — zero duplicates across all SKILL.md"
+    "cycle-90: Removed 178 duplicate > 对应原则 body lines — zero duplicates across all SKILL.md",
+    "cycle-91: Added IO_CONTRACT to paper-quality-deep-review — 198/198 SKILL.md complete"
   ],
   "lessons": {
     "cycle-65": "Cycle 65: State.json was behind — cycle 64 (OpenClaw absorption, 57 skills) was committed to git but state.json still showed cycle 63.",

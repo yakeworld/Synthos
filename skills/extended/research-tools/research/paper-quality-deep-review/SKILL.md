@@ -20,6 +20,13 @@ metadata:
       - pdf-download-racing
       - paper-pipeline
 ---
+## IO_CONTRACT
+
+- **input**: `paper_path: str, review_mode: str = "full"` — 论文路径与审查模式
+- **output**: `deep_review_report: dict` — 包含 G1-G7 评分、研究空白、假设、改进建议
+
+> 对应原则：P2（机械原子暴露输入输出规范）
+
 
 # 论文质量深度审查引擎 (Paper Quality Deep Review Engine)
 
