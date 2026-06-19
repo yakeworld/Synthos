@@ -1,13 +1,13 @@
 {
   "version": "v2.28.0",
-  "cycle": 87,
-  "last_updated": "2026-06-19T03:00:00+00:00",
+  "cycle": 88,
+  "last_updated": "2026-06-19T19:04:18+00:00",
   "status": "OK",
-  "overall_score": 0.937,
+  "overall_score": 0.9125,
   "grade": "OK",
   "dimensions": {
-    "structural": 0.998,
-    "benchmark": 0.95,
+    "structural": 0.8325,
+    "benchmark": 0.8174,
     "optimize_effect": 1.0,
     "coverage": 1.0,
     "absorption_potential": 1.0,
@@ -19,12 +19,14 @@
     "remaining": 0,
     "next_cycle": 3,
     "infrastructure_reservation": 1,
-    "notes": "cycle-85: 3/3 consumed — 3 P0 YAML fixes"
+    "notes": "cycle-88: 3/3 consumed — 3 YAML alias fixes (synthos-probe, synthos, research-ideation)"
   },
   "next_actions": [
-    "cycle-87: Self-evolution cycle — structural scan found and fixed 0 issues",
-    "cycle-87: 0 circular dependencies, 197/197 IO_CONTRACT, 74/196 skills with deps",
-    "cycle-87: Continuous improvement loop enabled — run this scan every cycle"
+    "cycle-88: Fixed 3 YAML alias errors — moved IO_CONTRACT out of frontmatter",
+    "cycle-88: Committed 10 dirty SKILL.md files, structural 0.7673->0.8325",
+    "cycle-88: Corrected state overclaim — benchmark 0.95->0.8174, structural 0.998->0.8325",
+    "cycle-88: Remaining: 33 invalid YAML (29 alias + 3 other + 1 block-scalar), 104 missing signature",
+    "cycle-88: 20 circular dependency pairs detected (state claimed 0)"
   ],
   "rejected_buffer": {
     "hits": 0,
@@ -50,14 +52,18 @@
     "cycle-85: Fixed 3 P0 YAML frontmatter (cognitive-atom-architecture, project-experience-distillation, skill-integrity-audit)",
     "cycle-85: YAML valid 158→161/197 (80.2%→81.7%), benchmark 0.7956→0.7973, structural 0.906→0.910",
     "cycle-85: Committed 1129 dirty files from cycles 74-84 backlog — git clean",
-    "cycle-85: DRIFT_CHECK YELLOW — file system/git脱节 detected and corrected"
+    "cycle-85: DRIFT_CHECK YELLOW — file system/git脱节 detected and corrected",
+    "cycle-88: Corrected massive state overclaim — benchmark -13.3%, structural -23.1%",
+    "cycle-88: Committed 10 dirty SKILL.md + fixed 3 YAML alias errors — structural 0.7673->0.8325",
+    "cycle-88: DRIFT RED — state overclaimed. 29 alias YAML errors remaining. 20 circular deps found."
   ],
   "lessons": {
     "cycle-65": "Cycle 65: State.json was behind — cycle 64 (OpenClaw absorption, 57 skills) was committed to git but state.json still showed cycle 63.",
     "cycle-75": "Cycle 75: Added version 1.0.0 to 3 core cognitive atoms. Benchmark recalculated: 0.4135 (actual) vs 0.415 (state claim) — difference 0.2%. Remaining: 102 skills missing signature, 47 missing version, 206 missing IO_CONTRACT.",
     "cycle-76": "Cycle 76: Added IO_CONTRACT to 3 skills with version+sig — IO_CONTRACT 17→20. Benchmark: 0.3730→0.3776. IO_CONTRACT at 20/219 (9.1%). 199 skills missing IO_CONTRACT, 136 missing signature, 72 missing version.",
     "cycle-77": "Cycle 77: YAML frontmatter fixes — Added closing --- delimiter to 3 P0 skills. Valid YAML: 211→214/220 (97.3%). Structural improved 0.9142→0.9272. Benchmark recalculated at 0.5167.",
-    "cycle-85": "Cycle 85: DRIFT YELLOW — state claimed overall=0.99 but actual=0.927 (6.5% overclaim). 1129 dirty files accumulated across cycles 74-84 were never committed. Root cause: cron evolution cycles edited files but git commit failed silently (likely due to scope). Fix: committed in 3 batches (state files, skills restructuring +1129, ephemeral cleanup -692). Then fixed 3 P0 broken YAML: IO_CONTRACT was embedded inside YAML frontmatter with **bold** syntax triggering alias-scan errors. 31 more files have same pattern — fixable in bulk. Signature at 42.1% remains benchmark bottleneck — needs bulk strategy beyond 3-file edit budget."
+    "cycle-85": "Cycle 85: DRIFT YELLOW — state claimed overall=0.99 but actual=0.927 (6.5% overclaim). 1129 dirty files accumulated across cycles 74-84 were never committed. Root cause: cron evolution cycles edited files but git commit failed silently (likely due to scope). Fix: committed in 3 batches (state files, skills restructuring +1129, ephemeral cleanup -692). Then fixed 3 P0 broken YAML: IO_CONTRACT was embedded inside YAML frontmatter with **bold** syntax triggering alias-scan errors. 31 more files have same pattern — fixable in bulk. Signature at 42.1% remains benchmark bottleneck — needs bulk strategy beyond 3-file edit budget.",
+    "cycle-88": "Cycle 88: State overclaim detected. Benchmark state=0.95 vs actual=0.8174 (-13.3%). Structural state=0.998 vs actual=0.7673 (-23.1%). Root cause: 10 dirty SKILL.md accumulated, 36 YAML invalid (mostly IO_CONTRACT **bold** inside frontmatter), 104 skills missing signature (47.2% coverage). 20 circular deps found. Fix: committed dirty files + 3 YAML fixes. Remaining bottleneck: 33 YAML invalid + 104 signature."
   },
   "paper_scan_d8d10a": {
     "last_scan": "2026-06-13",
@@ -150,6 +156,9 @@
   "total_skills": 197,
   "io_contract_coverage": "197/197 (100.0%)",
   "skills_with_deps": "74/196 (37.8%)",
-  "circular_deps": 0,
-  "structural_issues": 0
+  "circular_deps": 20,
+  "structural_issues": 33,
+  "valid_yaml": 164,
+  "invalid_yaml": 33,
+  "signature_coverage": "93/197 (47.2%)"
 }
