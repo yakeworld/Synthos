@@ -1,23 +1,20 @@
 ---
-
-
 name: citation-bib-crossref
+description: 'Scan paper directories for mismatches between `\\cite{key}` calls in `.tex` files and `@type{key}` entries in `.bib` files. Produces D8 (bib count) and D10a (match percentage) metrics, plus orphan/zombie classification.'
 version: 1.0.0
 license: MIT
 author: Synthos
-related_skills: ["knowledge-extraction"]
-description: >-
-  Cross-file citation matching between LaTeX \cite{...} calls and .bib entry keys.
-  Detects orphans (cited but no bib entry), zombies (bib entry but not cited),
-  and computes D10a matching rate and D8 entry count.
-  Class of tasks: cross-referencing between LaTeX citations and bibliographic databases.
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 
 

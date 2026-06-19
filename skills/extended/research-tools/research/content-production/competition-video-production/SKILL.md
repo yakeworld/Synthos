@@ -1,21 +1,20 @@
 ---
 
 
+
 name: competition-video-production
-related_skills: ["manim-video"]
-description: >-
+description: "Directory index for competition-video-production: competition-video-production"
 version: 1.0.0
 license: MIT
 author: Synthos
-  竞赛/基金/路演的专业演示视频制作管线 — PPTX→PNG→MP4, 旁白同步。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "topic: str, duration: int -> video_script: dict (scenes, narration, visuals, timing)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

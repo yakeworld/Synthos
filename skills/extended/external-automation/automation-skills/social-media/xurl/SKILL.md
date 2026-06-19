@@ -1,19 +1,20 @@
 ---
 name: xurl
-related_skills: []
-description: "X/Twitter via xurl CLI: post, search, DM, media, v2 API."
-version: 1.1.1
-author: xdevplatform + openclaw + Hermes Agent
+description: "`xurl` is the X developer platform's official CLI for the X API. It supports shortcut commands for common actions AND raw curl-style access to any v2 endpoint. All commands return JSON to stdout."
+version: 1.0.0
 license: MIT
-platforms: [linux, macos]
-prerequisites:
-  commands: [xurl]
+author: Synthos
 metadata:
-  hermes:
-    tags: [twitter, x, social-media, xurl, official-api]
-    homepage: https://github.com/xdevplatform/xurl
-    upstream_skill: https://github.com/openclaw/openclaw/blob/main/skills/xurl/SKILL.md
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 ## IO_CONTRACT
 

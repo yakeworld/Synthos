@@ -1,17 +1,20 @@
 ---
-
-
 name: paper-cron-scan
-related_skills: ["knowledge-acquisition", "knowledge-extraction"]
-description: '论文管线 Cron 扫描 — 轻量级白空间扫描、旋转方向轮转、日志追加。每次 Cron 运行执行：读取 tracker → 扫描 PubMed/OpenAlex 5个旋转方向 → 验证候选白空间 → 追加 agent-log.md → 更新 last_run。'
-author: Synthos
-license: MIT
+description: "Cron job 不是完整的论文管线执行，而是**轻量级扫描**：验证白空间稳定、发现新竞争、推进管线状态。"
 version: 1.0.0
 license: MIT
-category: writing
-
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 
 ## IO_CONTRACT

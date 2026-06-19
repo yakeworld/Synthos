@@ -1,21 +1,20 @@
 ---
 
 
+
 name: medical-image-centerline
-related_skills: []
-description: >-
+description: "Directory index for medical-image-centerline: medical-image-centerline"
 version: 1.0.0
 license: MIT
 author: Synthos
-  从3D分割标签提取中心线 — 图论环基法/中位切+图直径法。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "image_data: str, vessel_type: str -> centerline: dict (points, confidence, quality_metrics)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

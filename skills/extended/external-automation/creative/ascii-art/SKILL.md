@@ -1,15 +1,20 @@
 ---
 name: ascii-art
-description: "ASCII art: pyfiglet, cowsay, boxes, image-to-ascii."
-version: 4.0.0
-author: 0xbyt4, Hermes Agent
+description: "Multiple tools for different ASCII art needs. All tools are local CLI programs or free REST APIs — no API keys required."
+version: 1.0.0
 license: MIT
-dependencies: []
-platforms: [linux, macos, windows]
+author: Synthos
 metadata:
-  hermes:
-    tags: [ASCII, Art, Banners, Creative, Unicode, Text-Art, pyfiglet, figlet, cowsay, boxes]
-    ---
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
+---
+
+
+
 
 ## IO_CONTRACT
 

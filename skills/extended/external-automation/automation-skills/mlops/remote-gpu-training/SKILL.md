@@ -1,21 +1,20 @@
 ---
 
 
+
 name: remote-gpu-training
-related_skills: []
-description: >-
+description: "Directory index for remote-gpu-training: remote-gpu-training"
 version: 1.0.0
 license: MIT
 author: Synthos
-  远程GPU训练工作流 — SSH连接, env setup, scp脚本, tmux后台训练。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "model_config: dict, dataset: str, budget: float -> training_job: dict (gpu_config, schedule, estimated_cost, checkpoints)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

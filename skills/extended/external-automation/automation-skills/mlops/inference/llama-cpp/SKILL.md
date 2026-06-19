@@ -1,16 +1,20 @@
 ---
 name: llama-cpp
-related_skills: []
-description: llama.cpp local GGUF inference + HF Hub model discovery.
-version: 2.1.2
-author: Orchestra Research
+description: "Use this skill for local GGUF inference, quant selection, or Hugging Face repo discovery for llama.cpp."
+version: 1.0.0
 license: MIT
-dependencies: [llama-cpp-python>=0.2.0]
-platforms: [linux, macos, windows]
+author: Synthos
 metadata:
-  hermes:
-    tags: [llama.cpp, GGUF, Quantization, Hugging Face Hub, CPU Inference, Apple Silicon, Edge Deployment, AMD GPUs, Intel GPUs, NVIDIA, URL-first]
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 ## IO_CONTRACT
 

@@ -1,20 +1,20 @@
 ---
-
-
 name: dataset-discovery
-related_skills: ["healthcare-dataset-discovery"]
-description: Dataset discovery across platforms — OpenML, Kaggle, UCI, Crossref, Semantic Scholar. Platform capabilities, API quirks, and search workflows.
-author: Synthos
-license: MIT
+description: "| Platform | REST API | Scraping | Auth Required | Notes |"
 version: 1.0.0
 license: MIT
-allowed-tools:
-- terminal
-- file
-- web
-
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 
 ## IO_CONTRACT

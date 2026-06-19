@@ -1,18 +1,20 @@
 ---
 name: songsee
-related_skills: []
-description: "Audio spectrograms/features (mel, chroma, MFCC) via CLI."
+description: "Generate spectrograms and multi-panel audio feature visualizations from audio files."
 version: 1.0.0
-author: community
 license: MIT
-platforms: [linux, macos, windows]
+author: Synthos
 metadata:
-  hermes:
-    tags: [Audio, Visualization, Spectrogram, Music, Analysis]
-    homepage: https://github.com/steipete/songsee
-prerequisites:
-  commands: [songsee]
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 ## IO_CONTRACT
 

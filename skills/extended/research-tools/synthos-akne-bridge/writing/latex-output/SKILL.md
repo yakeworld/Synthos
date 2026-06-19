@@ -1,21 +1,20 @@
 ---
 
 
+
 name: latex-output
-related_skills: ["argument-expression"]
-description: >-
+description: "Directory index for latex-output: latex-output"
 version: 1.0.0
 license: MIT
 author: Synthos
-  Synthos assembled_output.json → 会议级LaTeX (.tex/.bib/figures)。
 metadata:
   synthos:
-    version: 1.1.0
-    author: Synthos
-
-
-
+    signature: "paper_content: dict, template: str -> latex_source: str (compiled_pdf, quality_metrics)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

@@ -1,22 +1,19 @@
 ---
 
+
 name: viewpoint-verification
-description: >-
-author: Synthos
-license: MIT
+description: "Directory index for viewpoint-verification: viewpoint-verification"
 version: 1.0.0
 license: MIT
-  多角度验证假说/论证——反证、证伪检验、鲁棒性检查、贝叶斯置信度评分。
+author: Synthos
 metadata:
   synthos:
-    priority: P0
-    atom_type: cognitive-atom
-    description: Multi-angle verification of hypotheses/arguments — counterproof, falsification tests, robustness checks, Bayesian confidence scoring.
-    signature: "hypothesis: str, evidence: list[Evidence] -> verification_result: dict -> verification_result: dict (confidence_score, counterarguments, robustness_checks, falsification_tests)"
-    related_skills: ["knowledge-acquisition", "knowledge-extraction", "association-discovery", "hypothesis-generation", "argument-expression"]
-
-
+    signature: "hypothesis: str, context: dict -> verification_report: dict (score, evidence, counter_evidence, confidence)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

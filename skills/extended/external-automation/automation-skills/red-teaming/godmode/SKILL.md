@@ -1,15 +1,20 @@
 ---
 name: godmode
-related_skills: []
-description: "Jailbreak LLMs: Parseltongue, GODMODE, ULTRAPLINIAN."
+description: "Bypass safety filters on API-served LLMs using techniques from [G0DM0D3](https://github.com/elder-plinius/G0DM0D3) and [L1B3RT4S](https://github.com/elder-plinius/L1B3RT4S). Three attack modes plus Hermes-native configuration for persistent jailbreaking."
 version: 1.0.0
-author: Hermes Agent + Teknium
 license: MIT
-platforms: [linux, macos, windows]
+author: Synthos
 metadata:
-  hermes:
-    tags: [jailbreak, red-teaming, G0DM0D3, Parseltongue, GODMODE, uncensoring, safety-bypass, prompt-engineering, L1B3RT4S]
-    ---
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
+---
+
+
+
 
 ## IO_CONTRACT
 

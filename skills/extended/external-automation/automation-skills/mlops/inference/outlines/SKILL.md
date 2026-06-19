@@ -1,17 +1,20 @@
 ---
 name: outlines
-related_skills: []
-description: "Outlines: structured JSON/regex/Pydantic LLM generation."
+description: "Use Outlines when you need to:"
 version: 1.0.0
-author: Orchestra Research
 license: MIT
-dependencies: [outlines, transformers, vllm, pydantic]
-platforms: [linux, macos, windows]
+author: Synthos
 metadata:
-  hermes:
-    tags: [Prompt Engineering, Outlines, Structured Generation, JSON Schema, Pydantic, Local Models, Grammar-Based Generation, vLLM, Transformers, Type Safety]
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 ## IO_CONTRACT
 

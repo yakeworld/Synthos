@@ -1,15 +1,20 @@
 ---
 name: hermes-scheduler
-related_skills: []
-description: "Hermes Agent cron job lifecycle management — diagnose failures, migrate providers, load-balance across nodes, create workers, clean up orphan tasks."
-version: 1.2.0
-author: Synthos
+description: "本技能适用于以下场景："
+version: 1.0.0
 license: MIT
+author: Synthos
 metadata:
-  hermes:
-    tags: [Scheduler, Cron, DevOps, Infrastructure]
-    depends_on: [skill-authoring, debug-env-variables]
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 ## IO_CONTRACT
 

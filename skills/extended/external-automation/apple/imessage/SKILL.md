@@ -1,17 +1,20 @@
 ---
 name: imessage
-related_skills: []
-description: Send and receive iMessages/SMS via the imsg CLI on macOS.
+description: "Use `imsg` to read and send iMessage/SMS via macOS Messages.app."
 version: 1.0.0
-author: Hermes Agent
 license: MIT
-platforms: [macos]
+author: Synthos
 metadata:
-  hermes:
-    tags: [iMessage, SMS, messaging, macOS, Apple]
-prerequisites:
-  commands: [imsg]
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 ## IO_CONTRACT
 

@@ -1,21 +1,20 @@
 ---
 
 
+
 name: github-code-review
-related_skills: []
-description: >-
+description: "Skill: github-code-review"
 version: 1.0.0
 license: MIT
 author: Synthos
-  PR代码审查 — diff分析, inline comments, gh/REST API。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "pr_url: str -> review_report: dict (issues, suggestions, confidence)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

@@ -1,22 +1,20 @@
 ---
-
-
 name: opencode
-description: "OpenCode CLI — 已降级为轻量替代。Codex CLI 是主力编码代理。保留用于极轻量的临时脚本任务。覆盖诊断、配置、多提供商路由、连通性检查。"
-version: 1.1.0
+description: "1. **非常驻服务** — OpenCode 不是 daemon，按需启动、用完即关。`ps aux | grep opencode` 无进程是正常状态，不是故障。"
+version: 1.0.0
 license: MIT
 author: Synthos
 metadata:
   synthos:
-    version: 1.1.0
-    author: Synthos + 杨晓凯
-    atom_type: pipeline
-    description: "OpenCode CLI 诊断与运维 — 进程状态、配置文件、后端连通性、使用历史。非常驻服务，按需启动。"
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
     priority: P2
-
-
+    related_skills: []
 
 ---
+
+
+
 
 
 

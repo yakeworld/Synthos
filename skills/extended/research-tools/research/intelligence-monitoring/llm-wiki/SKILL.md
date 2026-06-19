@@ -1,21 +1,20 @@
 ---
 
 
+
 name: llm-wiki
-related_skills: []
-description: >-
+description: "Directory index for llm-wiki: llm-wiki"
 version: 1.0.0
 license: MIT
 author: Synthos
-  Karpathy式LLM Wiki — 构建/查询互链Markdown知识库。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "topic: str -> wiki_entry: dict (definition, history, implementations, benchmarks, references)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

@@ -1,21 +1,20 @@
 ---
 
 
+
 name: gradient-alignment-loss
-related_skills: ["knowledge-extraction", "hypothesis-generation"]
-description: >-
+description: "Skill: gradient-alignment-loss"
 version: 1.0.0
 license: MIT
 author: Synthos
-  梯度对齐损失(GAL) — 边界感知辅助损失用于医学图像分割。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "model_arch: str, training_data: dict -> loss_spec: dict (formula, bounds, convergence_criteria)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

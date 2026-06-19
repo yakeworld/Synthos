@@ -1,18 +1,20 @@
 ---
 name: openhue
-related_skills: []
-description: "Control Philips Hue lights, scenes, rooms via OpenHue CLI."
+description: "Control Philips Hue lights and scenes via a Hue Bridge from the terminal."
 version: 1.0.0
-author: community
 license: MIT
-platforms: [linux, macos, windows]
+author: Synthos
 metadata:
-  hermes:
-    tags: [Smart-Home, Hue, Lights, IoT, Automation]
-    homepage: https://www.openhue.io/cli
-prerequisites:
-  commands: [openhue]
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 ## IO_CONTRACT
 

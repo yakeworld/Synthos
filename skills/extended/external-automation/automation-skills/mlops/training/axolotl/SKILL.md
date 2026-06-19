@@ -1,17 +1,20 @@
 ---
 name: axolotl
-related_skills: []
-description: "Axolotl: YAML LLM fine-tuning (LoRA, DPO, GRPO)."
+description: "Expert guidance for fine-tuning LLMs with Axolotl — YAML configs, 100+ models, LoRA/QLoRA, DPO/KTO/ORPO/GRPO, multimodal support."
 version: 1.0.0
-author: Orchestra Research
 license: MIT
-dependencies: [axolotl, torch, transformers, datasets, peft, accelerate, deepspeed]
-platforms: [linux, macos]
+author: Synthos
 metadata:
-  hermes:
-    tags: [Fine-Tuning, Axolotl, LLM, LoRA, QLoRA, DPO, KTO, ORPO, GRPO, YAML, HuggingFace, DeepSpeed, Multimodal]
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 ## IO_CONTRACT
 

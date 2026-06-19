@@ -1,17 +1,20 @@
 ---
 name: weights-and-biases
-related_skills: []
-description: "W&B: log ML experiments, sweeps, model registry, dashboards."
+description: "Use Weights & Biases (W&B) when you need to:"
 version: 1.0.0
-author: Orchestra Research
 license: MIT
-dependencies: [wandb]
-platforms: [linux, macos, windows]
+author: Synthos
 metadata:
-  hermes:
-    tags: [MLOps, Weights And Biases, WandB, Experiment Tracking, Hyperparameter Tuning, Model Registry, Collaboration, Real-Time Visualization, PyTorch, TensorFlow, HuggingFace]
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 ## IO_CONTRACT
 

@@ -1,16 +1,20 @@
 ---
 name: apple-notes
-description: "Manage Apple Notes via memo CLI: create, search, edit."
+description: "Use `memo` to manage Apple Notes directly from the terminal. Notes sync across all Apple devices via iCloud."
 version: 1.0.0
-author: Hermes Agent
 license: MIT
-platforms: [macos]
+author: Synthos
 metadata:
-  hermes:
-    tags: [Notes, Apple, macOS, note-taking]
-    prerequisites:
-  commands: [memo]
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 ## IO_CONTRACT
 

@@ -1,21 +1,20 @@
 ---
 
 
+
 name: airtable
-related_skills: []
-description: >-
+description: "Directory index for airtable: airtable"
 version: 1.0.0
 license: MIT
 author: Synthos
-  Airtable REST API — 记录CRUD, 筛选, upsert。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "query: str, base_id: str -> records: list[Record] (fields, links, attachments, quality_score)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

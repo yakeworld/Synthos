@@ -1,21 +1,20 @@
 ---
 
 
+
 name: sci-paper-quality-review
-related_skills: ["argument-expression"]
-description: >-
+description: "Directory index for sci-paper-quality-review: sci-paper-quality-review"
 version: 1.0.0
 license: MIT
 author: Synthos
-  论文7维SCI质量评审 — 科学贡献/方法学/结果/完整性/清晰性/新颖性/引用。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "paper_path: str -> quality_report: dict (g1_score, g2_score, g3_score, overall_grade, recommendations)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

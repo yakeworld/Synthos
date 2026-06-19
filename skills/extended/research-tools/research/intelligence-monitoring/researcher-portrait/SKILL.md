@@ -1,21 +1,20 @@
 ---
 
 
+
 name: researcher-portrait
-related_skills: []
-description: >-
+description: "Directory index for researcher-portrait: researcher-portrait"
 version: 1.0.0
 license: MIT
 author: Synthos
-  中国研究者学术档案 — 论文/专利/项目结构化画像。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "researcher_name: str -> portrait: dict (publications, citations, networks, h_index, trajectory)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

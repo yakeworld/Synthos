@@ -1,17 +1,20 @@
 ---
 name: spotify
-related_skills: []
-description: "Spotify: play, search, queue, manage playlists and devices."
+description: "Control the user's Spotify account via the Hermes Spotify toolset (7 tools). Setup guide: https://hermes-agent.nousresearch.com/docs/user-guide/features/spotify"
 version: 1.0.0
-author: Hermes Agent
 license: MIT
-platforms: [linux, macos, windows]
-prerequisites:
-  tools: [spotify_playback, spotify_devices, spotify_queue, spotify_search, spotify_playlists, spotify_albums, spotify_library]
+author: Synthos
 metadata:
-  hermes:
-    tags: [spotify, music, playback, playlists, media]
-    ---
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
+---
+
+
+
 
 ## IO_CONTRACT
 

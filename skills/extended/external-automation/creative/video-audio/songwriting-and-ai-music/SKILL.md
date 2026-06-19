@@ -1,25 +1,20 @@
 ---
-
 name: songwriting-and-ai-music
-related_skills: []
-description: "Songwriting craft and Suno AI music prompts."
-author: Synthos
-license: MIT
+description: "Everything here is a GUIDELINE, not a rule. Art breaks rules on purpose."
 version: 1.0.0
 license: MIT
-tags: [songwriting, music, suno, parody, lyrics, creative]
-platforms: [linux, macos, windows]
-triggers:
-  - writing a song
-  - song lyrics
-  - music prompt
-  - suno prompt
-  - parody song
-  - adapting a song
-  - AI music generation
-
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 
 ## IO_CONTRACT

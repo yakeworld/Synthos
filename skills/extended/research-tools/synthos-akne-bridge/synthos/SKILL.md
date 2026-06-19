@@ -1,21 +1,20 @@
 ---
-
 name: synthos
-related_skills: ["task-router"]
-description: 自主进化科研教学认知操作系统 — 6认知原子 × 3元组件完整Research Pipeline
-author: Synthos
-license: MIT
+description: ">"
 version: 1.0.0
 license: MIT
-compatibility: opencode
+author: Synthos
 metadata:
-  audience: researchers
-  workflow: full-research-pipeline
-  version: "2.20"
-  source: /media/yakeworld/sda2/Synthos
-
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 
 ## IO_CONTRACT

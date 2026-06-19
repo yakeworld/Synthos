@@ -1,19 +1,20 @@
 ---
-
 name: synthos-probe
-related_skills: []
-description: 轻量级读取检查：验证 Synthos 认知原子（7核心原子）的结构完整性和全量 SKILL.md 基准。
-author: Synthos
-license: MIT
+description: "Class: maintenance / audit"
 version: 1.0.0
 license: MIT
-references:
-  - references/cycle-68-probe-record.md
-  - references/cron-vs-human-probe-discrepancy-2026-06-09.md
-  - references/systemic-gap-analysis-2026-06-09.md
-
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 
 ## IO_CONTRACT

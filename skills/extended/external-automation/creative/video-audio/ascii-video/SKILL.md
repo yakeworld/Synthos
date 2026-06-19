@@ -1,16 +1,20 @@
 ---
-
 name: ascii-video
-related_skills: []
-description: "ASCII video: convert video/audio to colored ASCII MP4/GIF."
-author: Synthos
-license: MIT
+description: "Use when users request: ASCII video, text art video, terminal-style video, character art animation, retro text visualization, audio visualizer in ASCII, converting video to ASCII art, matrix-style effects, or any animated ASCII output."
 version: 1.0.0
 license: MIT
-platforms: [linux, macos, windows]
-
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 
 ## IO_CONTRACT

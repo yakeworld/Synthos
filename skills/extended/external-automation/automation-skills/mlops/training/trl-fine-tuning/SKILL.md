@@ -1,17 +1,20 @@
 ---
-name: fine-tuning-with-trl
-related_skills: []
-description: "TRL: SFT, DPO, PPO, GRPO, reward modeling for LLM RLHF."
+name: trl-fine-tuning
+description: "TRL provides post-training methods for aligning language models with human preferences."
 version: 1.0.0
-author: Orchestra Research
 license: MIT
-dependencies: [trl, transformers, datasets, peft, accelerate, torch]
-platforms: [linux, macos, windows]
+author: Synthos
 metadata:
-  hermes:
-    tags: [Post-Training, TRL, Reinforcement Learning, Fine-Tuning, SFT, DPO, PPO, GRPO, RLHF, Preference Alignment, HuggingFace]
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 ## IO_CONTRACT
 

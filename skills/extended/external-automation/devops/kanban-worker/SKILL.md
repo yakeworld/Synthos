@@ -1,18 +1,20 @@
 ---
-
 name: kanban-worker
-related_skills: []
-description: Pitfalls, examples, and edge cases for Hermes Kanban workers. The lifecycle itself is auto-injected into every worker's system prompt as KANBAN_GUIDANCE (from agent/prompt_builder.py); this skill is what you load when you want deeper detail on specific scenarios.
+description: "Your workspace kind determines how you should behave inside `$HERMES_KANBAN_WORKSPACE`:"
+version: 1.0.0
+license: MIT
 author: Synthos
-license: MIT
-version: 2.0.0
-license: MIT
-platforms: [linux, macos, windows]
 metadata:
-  hermes:
-    tags: [kanban, multi-agent, collaboration, workflow, pitfalls]
-    
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 
 ## IO_CONTRACT

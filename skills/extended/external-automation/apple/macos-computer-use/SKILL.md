@@ -1,22 +1,20 @@
 ---
-
 name: macos-computer-use
-description: |
-author: Synthos
-license: MIT
-  Drive the macOS desktop in the background — screenshots, mouse, keyboard,
-  scroll, drag — without stealing the user's cursor, keyboard focus, or
-  Space. Works with any tool-capable model. Load this skill whenever the
-  `computer_use` tool is available.
+description: "You have a `computer_use` tool that drives the Mac in the **background**."
 version: 1.0.0
 license: MIT
-platforms: [macos]
+author: Synthos
 metadata:
-  hermes:
-    tags: [computer-use, macos, desktop, automation, gui]
-    category: desktop
-    
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 
 ## IO_CONTRACT

@@ -1,21 +1,19 @@
 ---
 
+
 name: hypothesis-generation
-description: >-
-author: Synthos
-license: MIT
-  科学假设生成原子(HYP) — 研究空白→结构化可检验假说。
+description: "Directory index for hypothesis-generation: hypothesis-generation"
 version: 1.0.0
 license: MIT
+author: Synthos
 metadata:
   synthos:
-    priority: P0
-    atom_type: cognitive-atom
-    description: Generate scientifically falsifiable hypotheses from research gaps.
-    signature: "research_gap: str, domain_knowledge: str, constraints: dict -> hypotheses: list[Hypothesis] -> hypotheses: list[Hypothesis] (statement, falsifiability_test, supporting_evidence, counter_evidence)"
-    related_skills: ["knowledge-acquisition", "knowledge-extraction", "association-discovery"]
-
+    signature: "knowledge_base: dict, gap_analysis: dict -> hypotheses: list[Hypothesis] (statement, rationale, testability, priority)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

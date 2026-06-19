@@ -1,12 +1,20 @@
 ---
 name: quality-score-assignment
-related_skills: ["knowledge-extraction"]
-description: Quick-scorer for assigning quality_score to stuck-at-complete-steps papers. Covers D7 reference audit, D3 data source check, D4 structural completeness, D5 compilation check, and auto threshold assignment.
+description: "Paper satisfies `current_step in steps_completed` AND `len(steps_completed) >= 8`."
 version: 1.0.0
-author: Hermes Agent
 license: MIT
-category: research
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 ## IO_CONTRACT
 

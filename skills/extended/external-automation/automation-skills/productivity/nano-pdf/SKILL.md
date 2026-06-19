@@ -1,16 +1,20 @@
 ---
 name: nano-pdf
-related_skills: []
-description: "Edit PDF text/typos/titles via nano-pdf CLI (NL prompts)."
+description: "Edit PDFs using natural-language instructions. Point it at a page and describe what to change."
 version: 1.0.0
-author: community
 license: MIT
-platforms: [linux, macos, windows]
+author: Synthos
 metadata:
-  hermes:
-    tags: [PDF, Documents, Editing, NLP, Productivity]
-    homepage: https://pypi.org/project/nano-pdf/
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 ---
+
+
+
 
 ## IO_CONTRACT
 

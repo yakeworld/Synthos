@@ -1,21 +1,20 @@
 ---
 
 
+
 name: manim-video
-related_skills: []
-description: >-
+description: "Directory index for manim-video: manim-video"
 version: 1.0.0
 license: MIT
 author: Synthos
-  Manim CE动画 — 3Blue1Brown风格数学/算法视频。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
-
-
+    signature: "mathematical_concept: str, duration: int -> video_script: dict (scenes, code, audio, visual_effects)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 
 

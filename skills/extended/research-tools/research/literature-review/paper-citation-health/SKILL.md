@@ -1,15 +1,20 @@
 ---
-
 name: paper-citation-health
-related_skills: ["knowledge-extraction"]
-description: Scan paper library for D8 (bib entries) and D10a (cite-to-bib match %) health metrics
-author: Synthos
-license: MIT
+description: "Scan all papers in `outputs/papers/` for citation bibliographic health metrics D8 (bib entries) and D10a (cite-to-bib match %)."
 version: 1.0.0
 license: MIT
-
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 
 ## IO_CONTRACT

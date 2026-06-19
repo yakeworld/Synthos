@@ -1,23 +1,20 @@
 ---
-
 name: skill-integrity-audit
-related_skills: []
-description: "技能库断裂诊断与恢复 — 当核心技能缺失、技能库分裂或 cron 引用了不存在的技能时执行。"
-author: "Synthos"
-version: "2.1.0"
+description: "| 概念 | 文言 | 义 |"
+version: 1.0.0
 license: MIT
-tags:
-- integrity
-- audit
-- skill-management
-- system-health
+author: Synthos
 metadata:
   synthos:
-    priority: P0
-    atom_type: "self-healing"
-    category: "infrastructure"
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 
 ## IO_CONTRACT

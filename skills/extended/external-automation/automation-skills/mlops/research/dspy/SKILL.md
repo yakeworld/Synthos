@@ -1,17 +1,20 @@
 ---
 name: dspy
-related_skills: []
-description: "DSPy: declarative LM programs, auto-optimize prompts, RAG."
+description: "Use DSPy when you need to:"
 version: 1.0.0
-author: Orchestra Research
 license: MIT
-dependencies: [dspy, openai, anthropic]
-platforms: [linux, macos, windows]
+author: Synthos
 metadata:
-  hermes:
-    tags: [Prompt Engineering, DSPy, Declarative Programming, RAG, Agents, Prompt Optimization, LM Programming, Stanford NLP, Automatic Optimization, Modular AI]
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 ## IO_CONTRACT
 

@@ -1,20 +1,20 @@
 ---
-
-
 name: python-docx
+description: "创建/读取/编辑.docx — python-docx: 表格/字体/页面设置。"
 version: 1.0.0
 license: MIT
 author: Synthos
-related_skills: []
-description: >-
-  创建/读取/编辑.docx — python-docx: 表格/字体/页面设置。
 metadata:
   synthos:
-    version: 1.0.0
-    author: Synthos
-
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 
 

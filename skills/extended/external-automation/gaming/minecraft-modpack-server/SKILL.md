@@ -1,17 +1,20 @@
 ---
-
 name: minecraft-modpack-server
-related_skills: []
-description: "Host modded Minecraft servers (CurseForge, Modrinth)."
-author: Synthos
-license: MIT
+description: "Before starting setup, ask the user for:"
 version: 1.0.0
 license: MIT
-tags: [minecraft, gaming, server, neoforge, forge, modpack]
-platforms: [linux, macos]
-
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 
 ---
+
+
+
 
 
 ## IO_CONTRACT
