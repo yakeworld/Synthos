@@ -34,11 +34,17 @@ metadata:
 import re
 with open('paper.tex') as f: tex = f.read()
 cites = re.findall(r'\\cite\{([^}]+)\}', tex)
-bib = re.findall(r'\\bibitem\{([^}]+)\}', tex)
-unique_keys = set()
-for c in cites: unique_keys.update(c.split(','))
-d10a = len(unique_keys) / len(bib) if bib else 0
-print(f"Cites: {len(cites)}, Bib: {len(bib)}, D10a: {d10a:.0%}")
+```
+
+**D10a 计算规则**：
+- 对 `.tex` 文件：用 `\\bibitem\{` 提取条目（编译后的 `.bbl` 文件中存在）
+- 对 `.bib` 文件：用 `@(\w+)\{([^,\s]+)` 提取条目 key（`\\bibitem` 在 `.bib` 中不存在）
+
+```python
+# .bib 文件提取
+with open('references.bib') as f: bib_content = f.read()
+bib_entries = re.findall(r'@(\w+)\{([^,\s]+)', bib_content)
+unique_bib = set([entry[1] for entry in bib_entries])
 ```
 
 **Thresholds**:
@@ -47,7 +53,10 @@ print(f"Cites: {len(cites)}, Bib: {len(bib)}, D10a: {d10a:.0%}")
 | 0% | **Critical** — no citations at all | Add \cite{} commands |
 | 0–50% | Poor — mostly uncited | Add \cite{} commands |
 | 50–80% | Partial | Add missing citations |
-| ≥80% | Healthy | No action needed |
+| 80–99% | Healthy | No action needed |
+| 100% | Perfect | All entries cited |
+
+**注意**：D10a=100% 不是必须的。5-10% 的 unused bib entries 是正常的（背景引用、延伸阅读等）。重点确保所有在正文中出现的 cite 都有对应的 bib entry。
 
 ## Fix Protocol
 
@@ -100,3 +109,5 @@ When editing text in the bib section area, `\cite` commands added to the bibliog
 ## Reference
 
 - `paper-pipeline/references/thebibliography-citation-integrity.md` — Full protocol with case study
+- `paper-improvement/references/latex-compilation-workflow.md` — 5-round compilation workflow
+- `citation-integrity-fix/references/d10a-calculation.md` — D10a calculation guide with .bib vs .tex distinction

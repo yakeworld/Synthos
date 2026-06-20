@@ -22,43 +22,39 @@ KNOWN_DOIS = {
     "lu2022neural": "10.1109/ISMAR55827.2022.00053",
     "dierkes2018novel": "10.1145/3281417.3281423",
     "tsukada2011illumination": "10.1109/ICCVW.2011.6139507",
+    "casia-isv2": "10.1109/IPDPS.2009.5269069",
+    "mmu2008": "10.1016/j.imavis.2007.05.009",
+    "openeds": "10.1109/EMBC.2016.7591253",
+    "ubiris2": "10.1145/1871393.1871401",
+    "candela2009": "10.1016/j.neucom.2009.07.007",
 }
 
 # Root-level bib files
-ROOT_BIBS = {
-    "/home/yakeworld/references.bib": "root-references",
-    "/home/yakeworld/inner_ear_development_references.bib": "inner-ear-references",
-}
+ROOT_BIBS = {}
 
-# Paper name mapping: short_name -> list of bib paths
-# Manually maintained from discovered files
-PAPER_BIBS = {
-    "iris-segmentation-3d-eyeball": [
-        "/home/yakeworld/桌面/article_todo/3D Eyeball Model-Constrained Iris Segmentation/reference4.bib",
-        "/home/yakeworld/桌面/article_todo/3D Eyeball Model-Constrained Iris Segmentation/latexnew/reference4.bib",
-    ],
-    "membranous-scc-reconstruction": [
-        "/home/yakeworld/桌面/article_todo/Three-Dimensional Reconstruction and Spatial Orientation Measurement of the Membranous Semicircular Canals/sage_latex_template_4/ref_orig.bib",
-        "/home/yakeworld/桌面/article_todo/Three-Dimensional Reconstruction and Spatial Orientation Measurement of the Membranous Semicircular Canals/sage_latex_template_4/ref.bib",
-        "/home/yakeworld/桌面/article_todo/Three-Dimensional Reconstruction and Spatial Orientation Measurement of the Membranous Semicircular Canals/ref.bib",
-    ],
-    "dual-ellipse-pupil": [
-        "/home/yakeworld/桌面/article_todo/A Dual-Ellipse Fitting Method for High-Accuracy Pupil Boundary Estimation/投稿文件final/referencefinalenhance.bib",
-        "/home/yakeworld/桌面/article_todo/A Dual-Ellipse Fitting Method for High-Accuracy Pupil Boundary Estimation/投稿文件final/referencefinal.bib",
-    ],
-    "dual-ellipse-localization": [
-        "/home/yakeworld/桌面/article_todo/Dual-Ellipse Modeling for Accurate Pupil Localization/reference4.bib",
-    ],
-    "iris-normalization-3d-transform": [
-        "/home/yakeworld/桌面/article_todo/A Precise 3D Geometric Transform Method for Iris Normalization/reference3.bib",
-    ],
-    "daugman-off-axis-correction": [
-        "/home/yakeworld/桌面/article_todo/Correcting the Off-Axis Iris Normalization Formulas in Daugman's Method/references.bib",
-    ],
-    "yolov8-iris-segmentation": [
-        "/home/yakeworld/桌面/article_todo/High-Accuracy Iris Segmentation Using Improved YOLOv8 with Anatomical Priors/reference4.bib",
-    ],
-}
+
+def discover_paper_bibs(paper_todo_dir):
+    """Scan article_todo for all .bib files, group by paper directory."""
+    paper_bibs = {}
+    if not os.path.isdir(paper_todo_dir):
+        return paper_bibs
+    for entry in sorted(os.listdir(paper_todo_dir)):
+        paper_dir = os.path.join(paper_todo_dir, entry)
+        if not os.path.isdir(paper_dir):
+            continue
+        bibs = []
+        for root, dirs2, files in os.walk(paper_dir):
+            for f in sorted(files):
+                if f.endswith('.bib'):
+                    bibs.append(os.path.join(root, f))
+        if bibs:
+            display_name = entry.replace(' ', '-')
+            paper_bibs[display_name] = bibs
+    return paper_bibs
+
+
+PAPER_TODO_DIR = "/home/yakeworld/桌面/article_todo"
+PAPER_BIBS = discover_paper_bibs(PAPER_TODO_DIR)
 
 
 def parse_bib_entries(filepath):
@@ -188,21 +184,20 @@ def openalex_lookup(title):
 
 
 def dedup_cross_files(all_keys, paper_bibs):
-    """Identify cross-file duplicate keys (ignoring known redundant copies)."""
+    """Identify cross-file duplicate keys across DIFFERENT papers."""
     dups = {}
     for key, files in all_keys.items():
         unique_files = list(set(files))
         if len(unique_files) <= 1:
             continue
-        # Check if these are known redundant copies (same paper, same key)
-        # Group by paper
+        # Check if these are redundant copies (same paper, different files)
         paper_groups = defaultdict(list)
         for f in unique_files:
             for pname, ppaths in paper_bibs.items():
                 if f in ppaths:
                     paper_groups[pname].append(f)
                     break
-        # If all files belong to the same paper, likely redundant copies — not a real inconsistency
+        # If all files belong to the same paper, likely redundant copies
         if len(paper_groups) <= 1:
             continue
         dups[key] = unique_files
@@ -221,6 +216,12 @@ def main():
     for rpath, rname in ROOT_BIBS.items():
         if os.path.isfile(rpath):
             all_files.append((rpath, rname))
+
+    if not all_files:
+        print("No .bib files found in article_todo directory.", file=sys.stderr)
+        report = "No .bib files found.\n"
+        print(report)
+        return
 
     results = {}
     global_suspicious = []
@@ -291,7 +292,7 @@ def main():
                 })
 
     # Phase 2: OpenAlex lookup for DOI gaps
-    print("DOI gap lookup via OpenAlex...", file=sys.stderr)
+    print(f"DOI gap lookup via OpenAlex... ({len(global_gaps)} gaps)", file=sys.stderr)
     api_completions = []
     for gap in global_gaps:
         doi = openalex_lookup(gap['title'])
@@ -299,8 +300,9 @@ def main():
             gap['suggested_doi'] = doi
             api_completions.append(gap)
             # Also add to the paper's completions
-            if gap['paper'] in results:
-                results[gap['paper']]['completions'].append({
+            pname = gap['paper']
+            if pname in results:
+                results[pname]['completions'].append({
                     'key': gap['key'],
                     'title': gap['title'],
                     'doi': doi,

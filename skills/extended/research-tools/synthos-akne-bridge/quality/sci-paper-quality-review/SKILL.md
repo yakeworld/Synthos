@@ -37,7 +37,7 @@ metadata:
 This skill has been compressed. Full content is available in references/.
 
 **Key references specific to your role:**
-- `references/g7-deep-quality-review-workflow.md` — **Start here for autonomous G7 reviews.** Covers candidate selection (scan library → pick lowest quality), 7-dimension evaluation criteria with diagnostic questions, post-fix score estimation, and critical pitfalls (score-scale confusion, self-rating bias, stale review detection).
+- `references/g7-deep-quality-review-workflow.md` — **Start here for autonomous G7 reviews.** Covers candidate selection (scan library → pick lowest quality), 7-dimension evaluation criteria with diagnostic questions, post-fix score estimation, pipeline_trace false-positive detection, 07-quality/ cross-reference, and critical pitfalls (score-scale confusion, self-rating bias, stale review detection, auto-gate score inflation).
 - `references/d2-formal-proof-boost.md` — Tighten mathematical arguments and equivalence claims.
 - `references/d7-bibtex-metadata-audit.md` — Fix DOI accuracy, orphan/zombie references.
 - `references/experimental-verification-protocol.md` — Verify numerical claims against code output.
