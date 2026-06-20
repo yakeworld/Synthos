@@ -9,6 +9,7 @@ metadata:
     atom_type: redirect
     priority: P3
     redirect_to: "productivity-suite"
+    signature: "redirect -> productivity-suite"
     related_skills: []
 
 ---
@@ -22,3 +23,10 @@ This skill redirects to the composite skill `productivity-suite`.
 ## Composite Skill
 
 See `productivity-suite.md` for the full implementation.
+## IO_CONTRACT
+
+- **input**: `Skill request matching 'teams-meeting-pipeline'`
+- **output**: `Redirect to productivity-suite skill`
+- **redirect_target**: `productivity-suite`
+
+> This is a redirect stub. For full implementation, see `productivity-suite`.

@@ -125,6 +125,30 @@ Figure契约的结论Claim直接来自ARG论证链。
 
 Python代码示例、配色方案、辅助函数 → 详见 `references/python-recipes.md`
 
+### 执行失败回退（Pitfall）
+
+| 场景 | 症状 | 对策 |
+|:-----|:-----|:-----|
+| matplotlib + NumPy 版本冲突 | `ImportError: numpy.core.multiarray failed to import` 或 `cannot be run in NumPy 2.0` | **立即切换 Pillow 纯代码路径**。pil-image-generation skill 中 `技法#1-7` 可直接绘制雷达图/柱状图/轨迹图。不要死磕 matplotlib。 |
+| 服务器无 GUI / 无 headless chrome | HTML→Chromium 路径报 `Chrome exited early` | 跳过 HTML，直接 Pillow。HTML 渲染是最后手段。 |
+| matplotlib 可用但渲染差 | 图表模糊、CJK 不可读、色盲不可分辨 | 设置 `svg.fonttype='none'` + Arial/Helvetica + Nature 色板。输出 SVG 做 QA。 |
+
+### 环境依赖检查
+
+```python
+# 执行前必须检查
+import importlib
+try:
+    matplotlib = importlib.import_module('matplotlib')
+    import matplotlib.pyplot as plt
+    HAS_MATPLOTLIB = True
+except ImportError:
+    HAS_MATPLOTLIB = False
+
+# 如果 HAS_MATPLOTLIB == False，直接使用 pil-image-generation 的 Pillow 路径
+# 不要 fallback 到 matplotlib — 直接走 Pillow 更稳定
+```
+
 ---
 
 ## 色彩体系（速查）
@@ -221,6 +245,7 @@ fig.savefig(f"{filename}.pdf", bbox_inches="tight")    # PDF
 | references/common-patterns.md | 16种排版模式的完整代码示例 |
 | references/design-theory.md | 字体、色彩理论、排版原理 |
 | references/qa-contract.md | 提交前完整QA审核清单 |
+| references/matplotlib-fallback.md | matplotlib 不可用时的 Pillow 纯代码回退路径（雷达图/进度条/轨迹图原语） |
 
 ---
 

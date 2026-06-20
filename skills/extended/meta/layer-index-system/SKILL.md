@@ -1,3 +1,17 @@
+---
+name: layer-index-system
+description: "Navigation index for system infrastructure — devops, automation, tool integration, and monitoring."
+version: 1.0.0
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    priority: P3
+    atom_type: layer-index
+    signature: "layer: str, query: str, context: dict -> skill_list: list[dict]"
+    related_skills: []
+---
+
 # System Infrastructure — 系统基础设施
 
 ## Purpose
