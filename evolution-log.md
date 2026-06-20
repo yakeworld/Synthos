@@ -1,3 +1,29 @@
+## Cycle 131 — 2026-06-21T02:45Z (cron scheduled)
+
+**Model**: deepseek-v4-pro | **Provider**: deepseek | **Edit Budget**: 3/3 consumed
+
+**DRIFT_CHECK**: RED — 55 dirty files (12 SKILL.md), git desync of 42 cycles (last commit cycle-88, state cycle-130).
+
+**PROBE**: 7/7 core atoms OK. 208 total SKILL.md. 205/208 YAML valid. 3 untracked. 0 circular deps. 0 encoding corruption.
+
+**BENCHMARK** (pre-improvement): version=207/208 (99.5%), signature=193/208 (92.8%), IO_CONTRACT=196/208 (94.2%). Raw=0.9550.
+
+**DIAGNOSE**: absorption=0.7356 LOWEST (55 dirty files). structural=0.9353, benchmark=0.9550, optimize=0.8800, coverage=0.8800, constitutional=1.0000. OVERALL=0.9221 (state claimed 0.93, diff=0.79%).
+
+**IMPROVE** (3 edits + git commit):
+1. Git commit: 54 files from cycles 89-130 (12 modified SKILL.md, 3 new core skills, 10 deleted paper-cron-scan files, 29 reference files)
+2. Batch fix: Added signature + IO_CONTRACT to 12 redirect stubs (mlops evaluation:2, inference:2, models:3, research, training + teams-meeting-pipeline + research-paper-search)
+3. Added YAML frontmatter to layer-index-system/SKILL.md (version + signature)
+4. Added YAML frontmatter to layer-index/SKILL.md + layer-index-optional/SKILL.md (version + signature)
+
+**VERIFY**: structural=1.000, benchmark=1.000 (208/208 version, sig, IO), absorption=0.990, OVERALL=0.975.
+
+**RECORD**: evolution-state.json updated (cycle 130→131, score 0.93→0.975, EXCELLENT).
+
+`kept`
+
+---
+
 ## Cycle 88 — 2026-06-20T03:00Z (cron scheduled)
 
 **Model**: deepseek-v4-pro | **Provider**: deepseek | **Edit Budget**: 3/3 consumed
