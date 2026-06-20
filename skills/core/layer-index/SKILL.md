@@ -1,3 +1,17 @@
+---
+name: layer-index
+description: "Navigation index for the core research stack — 7 cognitive atoms, paper pipeline, research methodology, and AI/ML tools."
+version: 1.0.0
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    priority: P3
+    atom_type: layer-index
+    signature: "layer: str, query: str, context: dict -> skill_list: list[dict]"
+    related_skills: []
+---
+
 # Core Research Stack — 核心科研栈
 
 ## Purpose

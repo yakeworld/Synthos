@@ -1,3 +1,17 @@
+---
+name: layer-index-optional
+description: "Navigation index for optional skills — creative tools, productivity, social monitoring, gaming, and platform-specific integrations."
+version: 1.0.0
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    priority: P3
+    atom_type: layer-index
+    signature: "layer: str, query: str, context: dict -> skill_list: list[dict]"
+    related_skills: []
+---
+
 # Optional Skills — 可选技能
 
 ## Purpose
