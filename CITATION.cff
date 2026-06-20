@@ -6,9 +6,9 @@ authors:
     given-names: Xiaokai
     affiliation: "Department of Neurology, Wenzhou People's Hospital, Wenzhou 325000, China"
     email: yakeworld@outlook.com
-    orcid: ""
-version: "2.36.0"
-date-released: 2026-06-20
+    orcid: "TODO: add author ORCID here"
+version: "v2.43.2"
+date-released: "2026-06-21"
 url: "https://github.com/yakeworld/Synthos"
 license: MIT
 repository-code: "https://github.com/yakeworld/Synthos"
