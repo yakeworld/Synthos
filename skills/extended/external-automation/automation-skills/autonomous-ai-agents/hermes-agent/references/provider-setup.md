@@ -109,3 +109,14 @@ compression:
 3. **`fallback_providers` 仅触发于限流/服务错误。** 不是高可用切换，而是故障应急。
 
 4. **自定义 provider 名不能重复。** `custom_providers` 中的 name 在 providers 命名空间下以 `custom:` 前缀引用。
+
+5. **`.env` 和 shell 环境变量是隔离的。** `~/.hermes/.env` 由 Hermes 的 honcho loader 在启动时 source，shell 的 `env` 看不到它。配置中 `api_key: DEEPSEEK_API_KEY` 是变量引用，Hermes 从 `.env` 解析，不是字面字符串值。shell 里 `echo $DEEPSEEK_API_KEY` 为空不代表 key 没配置。
+
+6. **验证 API key 的方法。** 用 curl 或 python urllib 直接调 endpoint：
+   ```bash
+   curl -s -X POST https://api.deepseek.com/v1/chat/completions \
+     -H "Authorization: Bearer YOUR_KEY" \
+     -H "Content-Type: application/json" \
+     -d '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"OK"}],"max_tokens":5}'
+   ```
+   返回 JSON 且含 `choices` 字段 → key 有效。返回 401 → key 无效或过期。返回 404 → endpoint 不对。超时 → 网络问题。

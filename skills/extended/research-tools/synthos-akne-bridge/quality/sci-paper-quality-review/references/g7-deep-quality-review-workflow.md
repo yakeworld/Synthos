@@ -47,7 +47,7 @@ done
 读取文件按顺序执行：
 
 ```
-1. state.json                          → 全局状态：quality_score, gate_status, gates_result, metrics, 7-dim scores
+1. state.json                          → 全局状态：quality_score, gate_status, gates_result, metrics, 7-dim scores, pipeline_trace
 2. step_quality_check.md               → 原始 G1-G11 门检结果
 3. step_quality_review.md              → 已有的 G7 深度评审（如果存在）
 4. step_remediation.md                 → 已有的修复计划和进度
@@ -55,7 +55,21 @@ done
 6. step_method.md / step_results.md    → 分节生成的工作文件（检查一致性）
 ```
 
-**关键检查点**：step_method.md 和 step_results.md 中的数值和形式化表示是否与 paper.tex 一致。如果不一致，这本身就是 G4/G5 硬失败。
+**关键检查点：step_method.md 和 step_results.md 中的数值和形式化表示是否与 paper.tex 一致。如果不一致，这本身就是 G4/G5 硬失败。**
+
+**⚠️ 关键检查点：pipeline_trace 虚假分数膨胀检测**
+读取 `state.json` 的 `pipeline_trace` 字段。如果存在 `action: 'auto_gate_false_positive_fix'` 或类似的自动闸门提级记录，则该论文的 `quality_score` 可能被人为拔高。具体表现：
+- `quality_score_before` 远低于当前 quality_score（如 20→68）
+- action 描述为 "promoted template soft_fails" 或类似表述 — 这表示自动脚本仅提升了软失败状态，**没有修改任何实际内容**
+- `gate_status` 从 FAIL 变为 PASS，但观测到的硬失败（空目录、不一致的方法描述、占位符）依旧存在
+
+**处理规则**：发现此类人工膨胀时，报告中必须明确指出当前 quality_score 不可信，并在后修复分数估计中以 `quality_score_before` 为基准进行推算。
+
+**⚠️ 关键检查点：07-quality/ 目录交叉验证**
+检查 `07-quality/` 目录中的 `status.json`。此文件可能来自另一个质量追踪系统，且与主 `state.json` 不同步：
+- 对比 `07-quality/status.json` 的 `quality_score` 与主 `state.json` 的 `quality_score`
+- 检查 `07-quality/status.json` 的 `quality_gate` 状态（如 `not_started`）与主文件的 `gate_status`（如 `PASS`）是否矛盾
+- 如果发现不一致，说明存在两个互不通告的质量追踪系统并排运行 — 在报告中标记此问题
 
 ### Step 3: 七维深度评估
 
@@ -148,3 +162,13 @@ done
 4. **陈旧评审不可复用**：如果 quality_review.md 的日期超过 7 天且期间有新的 state.json 更新，需要重新评估而非引用旧结果。
 
 5. **批量扫描时注意排除项**：`_drafts_archive/`, `_knowledge_only/`, 和嵌套的 `09-manuscript/` 中的 state.json 不应作为 G7 评审的候选对象。
+
+6. **⛔ 自动闸门分数膨胀陷阱**：`pipeline_trace` 中的 `auto_gate_false_positive_fix` 条目可以瞬间将 quality_score 从 20 提升到 68，但**不修改任何实际内容**。这种操作仅提升软失败（soft_fails）的闸门状态，不解决硬失败（hard_fails）。遇到这类论文时：
+   - 不要信任当前 quality_score
+   - 以 `pipeline_trace` 中的 `quality_score_before` 或已有质量评审中的评估为准
+   - 在报告中明确指出"当前分数被人为拔高，实际质量评分为 XX"
+   - 后修复估计也应以原始分数为基准
+
+7. **⛔ 07-quality/ 与 state.json 双系统不同步陷阱**：某些论文在 `07-quality/` 目录下有独立的 `status.json` 和 `step_quality_review.md`，与根目录的 `state.json` 来自不同的质量追踪系统。这两个系统可能给出矛盾的评分和状态（如一个说 PASS 一个说 not_started）。遇到时在两个系统中取**较低**的评分作为实际质量水平评估依据，因为哪个系统更新了就不可预测。
+
+8. **⛔ 自动提级掩盖现有评审**：如果 `pipeline_trace` 显示自动提级发生在已有质量评审之后（如评审日期 06-14，自动提级 06-15），则自动提级可能已经掩盖了评审的发现。这种情况下评审建议依然有效，但 `gate_status` 已被提升导致后续流程认为论文已通过。报告中应强调"闸门已被人为跳过，核心问题仍未解决"。

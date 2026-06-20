@@ -1,33 +1,144 @@
 {
-  "cycle": 96,
-  "version": "v2.36.0",
-  "last_updated": "2026-06-20T00:00:00+00:00",
+  "cycle": 130,
+  "version": "v2.43.2",
+  "last_updated": "2026-06-21T02:45:00Z",
   "status": "OK",
-  "overall_score": 0.95,
-  "grade": "OK",
-  "dimensions": {
-    "structural": 0.92,
-    "benchmark": 0.8174,
-    "optimize_effect": 0.98,
-    "coverage": 1.0,
-    "absorption_potential": 1.0,
-    "constitutional": 1.0
+  "overall_score": 0.93,
+  "grade": "EXCELLENT",
+  "paper_submission": {
+    "mode": "journals",
+    "strategy": "journals/journal-strategy.md",
+    "priority": "public_dataset_first",
+    "papers": [
+      {
+        "name": "pima-crispdm",
+        "method": "CRISP-DM Helix + data leakage analysis",
+        "dataset": "PIDD, CDC BRFSS, Early Diabetes (public)",
+        "refs": 33,
+        "refs_with_doi": "most",
+        "quality_score": 85,
+        "quality_status": "PASS",
+        "soft_fails": 0,
+        "hard_fails": 0,
+        "recommended_journals": [
+          "CMPB (IF: 6.1) — Tier 1 target",
+          "JBI (IF: 4.5) — Tier 1 alternative",
+          "IEEE Access (IF: 3.4) — Fast track"
+        ],
+        "submission_package": "outputs/papers/submissions/journals/pima-crispdm/",
+        "status": "ready"
+      },
+      {
+        "name": "tinnitus-pinn-ode",
+        "method": "ODE+PINN",
+        "dataset": "synthetic clinical",
+        "quality_score": 93,
+        "soft_fails": 0,
+        "recommended_journals": [
+          "IEEE TBME (IF: 7.5)"
+        ],
+        "status": "ready"
+      },
+      {
+        "name": "head-impulse-ODE",
+        "method": "ODE",
+        "quality_score": 98,
+        "recommended_journals": [
+          "Journal of Biomechanics (IF: 2.9)"
+        ],
+        "status": "ready"
+      },
+      {
+        "name": "saccade-adaptation-pinn",
+        "method": "PINN",
+        "quality_score": 94,
+        "recommended_journals": [
+          "Neural Computing and Applications (IF: 4.5)"
+        ],
+        "status": "ready"
+      },
+      {
+        "name": "vhit-pinn-ode",
+        "method": "PINN",
+        "quality_score": 94,
+        "recommended_journals": [
+          "CMPB (IF: 6.1)"
+        ],
+        "status": "ready"
+      }
+    ],
+    "total_papers": 5,
+    "journals_ready": 5,
+    "journals_needing_fix": 0,
+    "journals_prepared": 5
   },
   "edit_budget": {
     "allocated": 3,
-    "consumed": 3,
-    "remaining": 0,
+    "consumed": 0,
+    "remaining": 3,
     "next_cycle": 3,
-    "notes": "cycle-96: 全面优化完成 — 合并重叠技能, 创建6个composite, 12个redirects, 净减少~3500行"
+    "notes": "cycle-129: caloric-test-response-ODE literature_scan completed (21/25, CANDIDATE, feasibility 4/5). ABSOLUTE_WHITE (11 queries, 0 PINN/NeuralODE/ODE competitors). Step 2 New Exploration direction #3. Next: gap_analysis."
+  },
+  "knowledge_pipeline": {
+    "total_candidates": 11,
+    "completed": 9,
+    "cancelled": 1,
+    "current": "caloric-test-response-ODE",
+    "current_step": "hypothesis_generation",
+    "last_entry": "caloric-test-response-ODE",
+    "knowledge_score": 0.88,
+    "completed_at": "2026-06-21T02:45:00Z",
+    "next_actions": "caloric-test-response-ODE gap_analysis completed (composite 0.88 HIGH). Step 2 New Exploration direction #3. K-005 unique thermal kernel + K-001 shared VSI kernel. Highest clinical translation score in Track B pipeline (0.90). 6-gap-identified challenges documented. Cross-calibration protocol for g_VS-β identifiability. Next: hypothesis_generation."
   },
   "next_actions": [
-    "cycle-96: 6个composite创建完成 (github-workflow, creative-tools, mlops-toolchain, productivity-suite, social-monitor, paper-pipeline)",
-    "cycle-96: 12个目录索引文件转为redirects",
-    "cycle-96: 净减少~3500行代码, 197个SKILL.md全部通过YAML验证",
-    "cycle-97: 清理冗余文件, 更新README和文档"
+    "cycle-108: PAN-PINN literature_scan completed — ABSOLUTE_WHITE, score 21/25.",
+    "cycle-109: PAN-PINN hypothesis_generation completed (score 0.87).",
+    "cycle-110: PAN-PINN knowledge_entry created (score 0.90).",
+    "cycle-111: PAN-PINN knowledge_entry completed (score 0.90, kscore 0.88, T2 PASS).",
+    "cycle-112: Stale state sync (PAN-PINN). NeutralDeviation-PINN POSTPONE. Rotation Step 3 queued.",
+    "cycle-113: SmoothPursuit-PINN literature_scan completed — ABSOLUTE_WHITE (21/25, CANDIDATE). Next: gap_analysis.",
+    "cycle-114: SmoothPursuit-PINN gap_analysis completed (score 0.86 HIGH). Next: hypothesis_generation.",
+    "cycle-115: SmoothPursuit-PINN hypothesis_generation completed (score 0.87 HIGHEST). Next: knowledge_entry.",
+    "cycle-116: SmoothPursuit-PINN knowledge_entry completed (six-dimension score 0.88, T2 PASS). Queue EMPTY. Next: Track A priority check or new rotation scan.",
+    "cycle-117: VestibularCompensation-ODE literature_scan completed (Rotation Step 4). ABSOLUTE_WHITE (12 queries, 0 PINN/NeuralODE/ODE). Score 21/25 (CANDIDATE). Next: gap_analysis.",
+    "cycle-118: VestibularCompensation-ODE gap_analysis completed (composite 0.83 HIGH). 2-ODE+PINN: VSI (ODE-1) + cerebellar adaptation (ODE-2) — shared VSI kernel with GazeStability-ODE but unique compensation dynamics (two-tier learning rate: fast η₁ retinal slip + slow η₂ structural plasticity). Key parameters τ_VS, g_VS from single HIT; η, τ_comp from longitudinal data. Phase 1 data risk mitigated by synthetic pre-training + transfer learning from GazeStability-ODE. Next: hypothesis_generation.",
+    "cycle-119: VestibularCompensation-ODE hypothesis_generation completed (composite 0.89 HIGHEST). Three falsifiable hypotheses. H1 τ_VS outcome predictor (0.89 HIGHEST) — single vHIT at 72h predicts 3-month DHI with ROC AUC ≥ 0.82. VSI kernel (K-001) shared with GazeStability-ODE and PAN-PINN enables transfer learning. Next: knowledge_entry.",
+    "cycle-120: VestibularCompensation-ODE knowledge_entry completed (six-dimension score 0.87, T2 PASS). Gap Sig=0.90, Meth Sound=0.88, Result Complete=0.85, Clin Transl=0.90, Reproducibility=0.82, Narrative=0.85. Primary H1: τ_VS outcome predictor (composite 0.89). VSI kernel (K-001) transfer learning enabled. Queue EMPTY — 7 completed + 1 cancelled. Next: rotation Step 5 Cupula Deflection PINN or new exploration directions.",
+    "cycle-121: CupulaDeflection-PINN literature_scan completed (Rotation Step 5). ABSOLUTE_WHITE (8 queries, 0 PINN/NeuralODE/ODE). Score 21/25 (CANDIDATE). Classical cupula models (1933-2010) are analytical/FEM only — no patient-specific PINN/ODE. Next: gap_analysis.",
+    "cycle-122: CupulaDeflection-PINN gap_analysis completed (composite 0.85, T2 PASS). K-003 unique kernel — endolymph torsion-pendulum + cupula viscoelastic recovery. Analytical solvability advantage — torsion-pendulum ODE exactly solvable for step inputs, enabling ground-truth synthetic pre-training. Three hypotheses: H1 tau_cupula Meniere's biomarker (AUC≥0.85), H2 zeta SSCD screening (AUC≥0.80), H3 aging trajectory (R²≥0.60). Next: hypothesis_generation.",
+    "cycle-123: CupulaDeflection-PINN hypothesis_generation completed (composite 0.86, T2 PASS). Three falsifiable hypotheses: tau_cupula Meniere's biomarker (0.89 HIGHEST), zeta SSCD screening (0.82 HIGH), aging trajectory (0.75 HIGH). Recommended H1. Next: knowledge_entry.",
+    "cycle-124: CupulaDeflection-PINN knowledge_entry completed (six-dimension score 0.88, T2 PASS). All 8 Track B pipeline entries completed. Queue EMPTY — all 5 rotation directions finished. Next: Track A priority check or new exploration directions.",
+    "cycle-125: VOR-OKR-Coupling-PINN literature_scan completed (ABSOLUTE_WHITE, 21/25, CANDIDATE). New exploration direction — first new candidate after queue exhaustion. Coupled VOR (K-001) + OKR (K-002) subsystems. Next: gap_analysis.",
+    "cycle-126: VOR-OKR-Coupling-PINN gap_analysis completed (composite 0.82, T2 PASS). Dual-kernel coupled system: VOR (K-001) + OKR (K-002) + coupling term (K-004 proposed). ABSOLUTE_WHITE. Next: hypothesis_generation.",
+    "cycle-127: VOR-OKR-Coupling-PINN hypothesis_generation completed (composite 0.88, T2 PASS). Three falsifiable hypotheses: H1 w_V→O concussion coupling biomarker (0.90 HIGHEST), H2 β aging fall risk (0.76 HIGH), H3 σ_w VM attack predictor (0.74 HIGH). Recommended H1. Next: knowledge_entry.",
+    "cycle-128: VOR-OKR-Coupling-PINN knowledge_entry completed (six-dimension score 0.88, T2 PASS). All 4 Track B steps done. Queue EMPTY — 9 completed + 1 cancelled. All 5 rotation + 4 new exploration directions processed. Next cron run: initiate new rotation scan for fresh direction or check Track A papers.",
+    "cycle-129: caloric-test-response-ODE literature_scan completed (Step 2 New Exploration direction #3). ABSOLUTE_WHITE (11 queries, 0 PINN/NeuralODE/ODE competitors). Score 21/25 (CANDIDATE, feasibility 4/5). 120+ year-old clinical gold standard never formulated as 2-ODE+PINN. Shared VSI kernel (K-001) + unique thermal convection kernel (K-005). Next: gap_analysis.",
+    "cycle-130: caloric-test-response-ODE gap_analysis completed (composite 0.88 HIGH). Step 2 New Exploration direction #3. K-005 unique thermal kernel + K-001 shared VSI kernel. Highest clinical translation score in Track B pipeline (0.90). 6 challenges identified: thermal-mechanical coupling uncertainty, g_VS-β identifiability confound, ΔT₀ measurement, noisy data, parameter-to-disease non-uniqueness, clinic heterogeneity. Cross-calibration protocol (vHIT g_VS anchor) resolves identifiability confound. Multi-scale: GREEN (<10× ratio) — no special handling needed. Next: hypothesis_generation."
   ],
   "highlights": [
-    "cycle-96: 全面优化完成 — 合并重叠技能, 创建6个composite, 12个redirects",
-    "cycle-96: 净减少~3500行代码, 197个SKILL.md全部通过YAML验证"
+    "cycle-130: caloric-test-response-ODE — Step 2 New Exploration direction #3 gap_analysis completed (composite 0.88 HIGH). Highest clinical translation score in pipeline (0.90). Caloric test (Bárány 1906, Nobel 1914) — 120+ year gold standard — now has full 2-ODE+PINN architecture specification. Unique K-005 thermal convection kernel + shared K-001 VSI kernel. Cross-calibration protocol resolves g_VS-β identifiability confound using vHIT gain anchor. Three biomarker hypotheses for next step: τ_therm hydrops (AUC≥0.80), β SSCD screening (AUC≥0.75), τ_VS dual-modality cross-validation (r≥0.70). Queue now has 1 pending (caloric-test-response-ODE, next: hypothesis_generation).",
+    "cycle-106: pima-crispdm: 33条引用, 公开数据集, 方法论原创, qs 65→85",
+    "cycle-107: GazeStability-ODE — Track B completed (TRUE WHITE, neural integrator, τ_NI biomarker)",
+    "cycle-108: All 5 Track A papers now PASS/ready — no pending fixes",
+    "cycle-109: PAN-PINN gap_analysis + hypothesis_generation complete (score 0.87)",
+    "cycle-110: PAN-PINN knowledge_entry created (score 0.90, kscore 0.88 T2 PASS)",
+    "cycle-111: All 5 Track B candidates completed (scleral-remodeling, motion-sickness, OKR-adaptation, GazeStability-ODE, PAN-PINN)",
+    "cycle-112: Stale state sync (PAN-PINN). NeutralDeviation-PINN POSTPONE (16/25, overlap with GazeStability-ODE).",
+    "cycle-113: SmoothPursuit-PINN literature_scan — ABSOLUTE_WHITE (21/25). Rotation Step 3 complete. Smooth pursuit is PINN-white with multi-disease clinical biomarker potential.",
+    "cycle-114: SmoothPursuit-PINN gap_analysis completed (composite 0.86 HIGH). 2-ODE+PINN architecture.",
+    "cycle-115: SmoothPursuit-PINN hypothesis_generation completed (composite 0.87 HIGHEST). Three falsifiable hypotheses: H1 K_v pursuit gain ataxia biomarker (0.87), H2 τ_est/α_pred AD vs SCZ differential Dx (0.75), H3 τ_gain longitudinal SCA (0.82).",
+    "cycle-116: SmoothPursuit-PINN knowledge_entry completed (six-dimension score 0.88, T2 PASS). Smooth pursuit is the 5th oculomotor subsystem modeled (VOR + OKR + NI + PAN + pursuit). Queue EMPTY. Synthos now covers all 5 major oculomotor subsystems — no competitor group has all 5.",
+    "cycle-117: VestibularCompensation-ODE literature_scan completed (Rotation Step 4). ABSOLUTE_WHITE (12 queries, 0 PINN/NeuralODE/ODE). Score 21/25 (CANDIDATE). Next: gap_analysis.",
+    "cycle-118: VestibularCompensation-ODE gap_analysis completed (composite 0.83 HIGH). 2-ODE+PINN: VSI + cerebellar adaptation with two-tier learning rate. Transfer learning from GazeStability-ODE shortens timeline. Next: hypothesis_generation.",
+    "cycle-119: VestibularCompensation-ODE hypothesis_generation completed (composite 0.89 HIGHEST). Three falsifiable hypotheses across UVL compensation timeline (72h → 7d → 4wk). H1 τ_VS outcome predictor (0.89 HIGHEST) — single vHIT predicts 3-month DHI. VSI kernel (K-001) transfer learning from GazeStability-ODE. Next: knowledge_entry.",
+    "cycle-120: VestibularCompensation-ODE knowledge_entry completed (six-dimension score 0.87, T2 PASS). All 4 Track B steps done across 4 cron cycles. Vestibular compensation is the 6th oculomotor subsystem modeled (VOR + OKR + NI + PAN + pursuit + compensation). Queue EMPTY — 7 completed + 1 cancelled. Synthos now covers all 5 rotation directions (PAN, NeutralDeviation→POSTPONE, SmoothPursuit, VestibularCompensation, plus 2 v33 directions and 2 v34 directions). Next: rotation Step 5 Cupula Deflection PINN or new exploration.",
+    "cycle-121: CupulaDeflection-PINN — Rotation Step 5 ABSOLUTE_WHITE (8 queries, 0 competitors). Classical cupula models (Steinhausen 1933, poroelastic 1999) never formulated as PINN. Score 21/25 (CANDIDATE). Next: gap_analysis.",
+    "cycle-122: CupulaDeflection-PINN gap_analysis completed (composite 0.85, T2 PASS). Unique K-003 kernel — endolymph torsion-pendulum + cupula viscoelastic recovery. Analytical solvability enables ground-truth synthetic pre-training. Three hypotheses: H1 tau_cupula Meniere's biomarker (AUC≥0.85), H2 zeta SSCD screening (AUC≥0.80), H3 aging trajectory (R²≥0.60). Next: hypothesis_generation.",
+    "cycle-123: CupulaDeflection-PINN hypothesis_generation completed (composite 0.86, T2 PASS). Three falsifiable hypotheses: tau_cupula Meniere's biomarker (0.89 HIGHEST), zeta SSCD screening (0.82 HIGH), aging trajectory (0.75 HIGH). Recommended H1. Next: knowledge_entry.",
+    "cycle-124: CupulaDeflection-PINN knowledge_entry completed (six-dimension score 0.88, T2 PASS). All 8 Track B candidates completed — queue EMPTY. All 5 rotation directions fully processed. Synthos covers 6 vestibular/oculomotor subsystems. Next: Track A priority check or new exploration directions.",
+    "cycle-125: VOR-OKR-Coupling-PINN — New exploration direction literature_scan completed (ABSOLUTE_WHITE, 21/25, CANDIDATE). First Step 2 direction executed. Coupled VOR-VSI (K-001) + OKR (K-002) subsystems for visual-vestibular integration. Queue now has 1 pending (VOR-OKR-Coupling-PINN).",
+    "cycle-126: VOR-OKR-Coupling-PINN gap_analysis completed (composite 0.82, T2 PASS). Dual-kernel coupled VOR (K-001) + OKR (K-002) system with novel coupling term (K-004). ABSOLUTE_WHITE — no PINN/ODE coupling model exists.",
+    "cycle-127: VOR-OKR-Coupling-PINN hypothesis_generation completed (composite 0.88, T2 PASS). Three falsifiable hypotheses across concussion (w_V→O biomarker, AUC≥0.82), aging fall risk (β coupling decay, ΔAUC≥0.08), and vestibular migraine (σ_w stability, AUC≥0.75). Recommended H1: w_V→O as first quantitative concussion visual-vestibular coupling biomarker.",
+    "cycle-128: VOR-OKR-Coupling-PINN knowledge_entry completed (six-dimension score 0.88, T2 PASS). Gap Sig=0.90, Clin Transl=0.92, Meth Sound=0.88. Primary H1: w_V→O concussion coupling biomarker (composite 0.90). K-004 unique coupling kernel. Two shared kernels (K-001, K-002). Queue now EMPTY — all 9 Track B candidates completed + 1 cancelled. Synthos covers VOR, OKR, neural integrator, pursuit, PAN, compensation, cupula, VOR-OKR coupling — 9 full knowledge entries across the oculomotor/vestibular system."
   ]
 }

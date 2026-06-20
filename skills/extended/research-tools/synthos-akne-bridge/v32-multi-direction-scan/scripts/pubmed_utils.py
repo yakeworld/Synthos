@@ -1,12 +1,22 @@
 #!/usr/bin/env python3
 """
-PubMed utility functions with resilience against NCBI API instability.
+PubMed and OpenAlex utility functions with resilience against NCBI API instability.
 Used by v32-multi-direction-scan and paper-pipeline cron jobs.
 
 Usage:
+    # PubMed queries
     from pubmed_utils import pubmed_count, pubmed_titles, pubmed_titles_safe
     count, titles = pubmed_count("intraocular pressure AND ODE AND glaucoma")
     count, titles = pubmed_titles("accommodation reflex AND ODE", retmax=5)
+
+    # Single-title lookup
+    from pubmed_utils import fetch_title_via_esummary
+    title = fetch_title_via_esummary("33105416")
+
+    # OpenAlex queries (already available in this module)
+    from pubmed_utils import openalex_search
+    count, titles = openalex_search("periodic alternating nystagmus PINN")
+    # Returns: (count_int, [title_str, ...])
     
     # For title-only checks, use esummary (more reliable than eFetch):
     from pubmed_utils import fetch_title_via_esummary

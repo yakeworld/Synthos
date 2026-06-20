@@ -1,188 +1,292 @@
 {
-  "architecture": "Synthos DAG (7 nodes, 12 edges)",
-  "total_atoms": 7,
-  "topological_order": [
-    0,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7
-  ],
-  "nodes": {
-    "research-ideation": {
-      "atom": 7,
-      "description": "三层架构：L1(10操作框架: Problem-First/抽象阶梯/张力狩猎/交叉授粉/变化探测/失败分析/简化检验/利益相关者/组合分解/解释检验) + L2(8认知引擎: Bisociation",
-      "upstream": [],
-      "downstream": [
-        "knowledge-acquisition"
-      ],
-      "children": [
-        "knowledge-acquisition"
-      ],
-      "status": "active",
-      "level": 0
+    "architecture": "Synthos DAG (7 nodes, 12 edges)",
+    "total_atoms": 10,
+    "topological_order": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        10,
+        9
+    ],
+    "nodes": {
+        "research-ideation": {
+            "atom": 7,
+            "description": "三层架构：L1(10操作框架: Problem-First/抽象阶梯/张力狩猎/交叉授粉/变化探测/失败分析/简化检验/利益相关者/组合分解/解释检验) + L2(8认知引擎: Bisociation",
+            "upstream": [],
+            "downstream": [
+                "knowledge-acquisition"
+            ],
+            "children": [
+                "knowledge-acquisition"
+            ],
+            "status": "active",
+            "level": 0
+        },
+        "task-router": {
+            "atom": 0,
+            "description": "路由用户请求到最短原子链。判断任务复杂度，跳过不必要的原子。奥卡姆剃刀原则。",
+            "upstream": [],
+            "downstream": [
+                "knowledge-acquisition",
+                "knowledge-extraction",
+                "association-discovery",
+                "hypothesis-generation",
+                "argument-expression",
+                "viewpoint-verification"
+            ],
+            "children": [
+                "knowledge-acquisition",
+                "knowledge-extraction",
+                "association-discovery",
+                "hypothesis-generation",
+                "argument-expression",
+                "viewpoint-verification"
+            ],
+            "status": "active",
+            "level": 0
+        },
+        "knowledge-extraction": {
+            "atom": 2,
+            "description": "从论文元数据/摘要提取结构化知识：method/finding/conclusion/limitation。返回结构化JSON。",
+            "upstream": [
+                "knowledge-acquisition"
+            ],
+            "downstream": [
+                "association-discovery",
+                "hypothesis-generation"
+            ],
+            "children": [
+                "association-discovery",
+                "hypothesis-generation"
+            ],
+            "status": "active",
+            "level": 2
+        },
+        "association-discovery": {
+            "atom": 3,
+            "description": "识别知识项之间的关系：contradiction/supplement/evolution/supports/extends/uses/similar-to (7种边)。含GAP空白分类法。",
+            "upstream": [
+                "knowledge-extraction"
+            ],
+            "downstream": [
+                "hypothesis-generation"
+            ],
+            "children": [
+                "hypothesis-generation"
+            ],
+            "status": "active",
+            "level": 3
+        },
+        "hypothesis-generation": {
+            "atom": 4,
+            "description": "基于关联和空白生成可检验研究假设。每个假说含预测、反证条件、竞争假说和实验设计。",
+            "upstream": [
+                "knowledge-extraction",
+                "association-discovery"
+            ],
+            "downstream": [
+                "argument-expression",
+                "viewpoint-verification"
+            ],
+            "children": [
+                "argument-expression",
+                "viewpoint-verification"
+            ],
+            "status": "active",
+            "level": 4
+        },
+        "argument-expression": {
+            "atom": 5,
+            "description": "将假设转化为结构化学术论证：论文章节、证据链、文献支撑。学术风格写作，含引用。",
+            "upstream": [
+                "hypothesis-generation",
+                "knowledge-acquisition"
+            ],
+            "downstream": [],
+            "children": [],
+            "status": "active",
+            "level": 5
+        },
+        "viewpoint-verification": {
+            "atom": 6,
+            "description": "多角度验证假设和论证：反方观点、证伪条件、鲁棒性检查。计算贝叶斯置信度评分。",
+            "upstream": [
+                "hypothesis-generation",
+                "argument-expression"
+            ],
+            "downstream": [],
+            "children": [],
+            "status": "active",
+            "level": 5
+        },
+        "personal-knowledge": {
+            "atom": 8,
+            "description": "Personal Knowledge Management - Integrates all research outputs into structured searchable knowledge. Converts scattered outputs into a connected knowledge graph.",
+            "upstream": [
+                "knowledge-acquisition",
+                "knowledge-extraction",
+                "association-discovery"
+            ],
+            "downstream": [
+                "evolution"
+            ],
+            "children": [
+                "evolution"
+            ],
+            "status": "active",
+            "level": 6
+        },
+        "daily-routine": {
+            "atom": 9,
+            "description": "Daily Routine Automation - Orchestrates email, code, tasks, research, and skill maintenance into a daily workflow.",
+            "upstream": [
+                "evolution"
+            ],
+            "downstream": [],
+            "children": [],
+            "status": "active",
+            "level": 7
+        },
+        "proactive-discovery": {
+            "atom": 10,
+            "description": "Proactive Discovery Engine - Automatically discovers new research opportunities, tracks trends, monitors competitors, and identifies gaps.",
+            "upstream": [
+                "knowledge-acquisition",
+                "association-discovery",
+                "hypothesis-generation"
+            ],
+            "downstream": [
+                "evolution"
+            ],
+            "children": [
+                "evolution"
+            ],
+            "status": "active",
+            "level": 6
+        }
     },
-    "task-router": {
-      "atom": 0,
-      "description": "路由用户请求到最短原子链。判断任务复杂度，跳过不必要的原子。奥卡姆剃刀原则。",
-      "upstream": [],
-      "downstream": [
-        "knowledge-acquisition",
-        "knowledge-extraction",
-        "association-discovery",
-        "hypothesis-generation",
-        "argument-expression",
-        "viewpoint-verification"
-      ],
-      "children": [
-        "knowledge-acquisition",
-        "knowledge-extraction",
-        "association-discovery",
-        "hypothesis-generation",
-        "argument-expression",
-        "viewpoint-verification"
-      ],
-      "status": "active",
-      "level": 0
-    },
-    "knowledge-extraction": {
-      "atom": 2,
-      "description": "从论文元数据/摘要提取结构化知识：method/finding/conclusion/limitation。返回结构化JSON。",
-      "upstream": [
-        "knowledge-acquisition"
-      ],
-      "downstream": [
-        "association-discovery",
-        "hypothesis-generation"
-      ],
-      "children": [
-        "association-discovery",
-        "hypothesis-generation"
-      ],
-      "status": "active",
-      "level": 2
-    },
-    "association-discovery": {
-      "atom": 3,
-      "description": "识别知识项之间的关系：contradiction/supplement/evolution/supports/extends/uses/similar-to (7种边)。含GAP空白分类法。",
-      "upstream": [
-        "knowledge-extraction"
-      ],
-      "downstream": [
-        "hypothesis-generation"
-      ],
-      "children": [
-        "hypothesis-generation"
-      ],
-      "status": "active",
-      "level": 3
-    },
-    "hypothesis-generation": {
-      "atom": 4,
-      "description": "基于关联和空白生成可检验研究假设。每个假说含预测、反证条件、竞争假说和实验设计。",
-      "upstream": [
-        "knowledge-extraction",
-        "association-discovery"
-      ],
-      "downstream": [
-        "argument-expression",
-        "viewpoint-verification"
-      ],
-      "children": [
-        "argument-expression",
-        "viewpoint-verification"
-      ],
-      "status": "active",
-      "level": 4
-    },
-    "argument-expression": {
-      "atom": 5,
-      "description": "将假设转化为结构化学术论证：论文章节、证据链、文献支撑。学术风格写作，含引用。",
-      "upstream": [
-        "hypothesis-generation",
-        "knowledge-acquisition"
-      ],
-      "downstream": [],
-      "children": [],
-      "status": "active",
-      "level": 5
-    },
-    "viewpoint-verification": {
-      "atom": 6,
-      "description": "多角度验证假设和论证：反方观点、证伪条件、鲁棒性检查。计算贝叶斯置信度评分。",
-      "upstream": [
-        "hypothesis-generation",
-        "argument-expression"
-      ],
-      "downstream": [],
-      "children": [],
-      "status": "active",
-      "level": 5
-    }
-  },
-  "edges": [
-    {
-      "source": "research-ideation",
-      "target": "knowledge-acquisition",
-      "type": "parent_child"
-    },
-    {
-      "source": "task-router",
-      "target": "knowledge-acquisition",
-      "type": "parent_child"
-    },
-    {
-      "source": "task-router",
-      "target": "knowledge-extraction",
-      "type": "parent_child"
-    },
-    {
-      "source": "task-router",
-      "target": "association-discovery",
-      "type": "parent_child"
-    },
-    {
-      "source": "task-router",
-      "target": "hypothesis-generation",
-      "type": "parent_child"
-    },
-    {
-      "source": "task-router",
-      "target": "argument-expression",
-      "type": "parent_child"
-    },
-    {
-      "source": "task-router",
-      "target": "viewpoint-verification",
-      "type": "parent_child"
-    },
-    {
-      "source": "knowledge-extraction",
-      "target": "association-discovery",
-      "type": "parent_child"
-    },
-    {
-      "source": "knowledge-extraction",
-      "target": "hypothesis-generation",
-      "type": "parent_child"
-    },
-    {
-      "source": "association-discovery",
-      "target": "hypothesis-generation",
-      "type": "parent_child"
-    },
-    {
-      "source": "hypothesis-generation",
-      "target": "argument-expression",
-      "type": "parent_child"
-    },
-    {
-      "source": "hypothesis-generation",
-      "target": "viewpoint-verification",
-      "type": "parent_child"
-    }
-  ],
-  "updated": "2026-05-26"
+    "edges": [
+        {
+            "source": "task-router",
+            "target": "knowledge-acquisition",
+            "type": "parent_child"
+        },
+        {
+            "source": "task-router",
+            "target": "knowledge-extraction",
+            "type": "parent_child"
+        },
+        {
+            "source": "task-router",
+            "target": "association-discovery",
+            "type": "parent_child"
+        },
+        {
+            "source": "task-router",
+            "target": "hypothesis-generation",
+            "type": "parent_child"
+        },
+        {
+            "source": "task-router",
+            "target": "argument-expression",
+            "type": "parent_child"
+        },
+        {
+            "source": "task-router",
+            "target": "viewpoint-verification",
+            "type": "parent_child"
+        },
+        {
+            "source": "task-router",
+            "target": "personal-knowledge",
+            "type": "parent_child"
+        },
+        {
+            "source": "task-router",
+            "target": "daily-routine",
+            "type": "parent_child"
+        },
+        {
+            "source": "task-router",
+            "target": "proactive-discovery",
+            "type": "parent_child"
+        },
+        {
+            "source": "knowledge-extraction",
+            "target": "association-discovery",
+            "type": "parent_child"
+        },
+        {
+            "source": "knowledge-extraction",
+            "target": "hypothesis-generation",
+            "type": "parent_child"
+        },
+        {
+            "source": "association-discovery",
+            "target": "hypothesis-generation",
+            "type": "parent_child"
+        },
+        {
+            "source": "hypothesis-generation",
+            "target": "argument-expression",
+            "type": "parent_child"
+        },
+        {
+            "source": "hypothesis-generation",
+            "target": "viewpoint-verification",
+            "type": "parent_child"
+        },
+        {
+            "source": "knowledge-acquisition",
+            "target": "personal-knowledge",
+            "type": "parent_child"
+        },
+        {
+            "source": "knowledge-extraction",
+            "target": "personal-knowledge",
+            "type": "parent_child"
+        },
+        {
+            "source": "association-discovery",
+            "target": "personal-knowledge",
+            "type": "parent_child"
+        },
+        {
+            "source": "personal-knowledge",
+            "target": "evolution",
+            "type": "parent_child"
+        },
+        {
+            "source": "evolution",
+            "target": "daily-routine",
+            "type": "parent_child"
+        },
+        {
+            "source": "knowledge-acquisition",
+            "target": "proactive-discovery",
+            "type": "parent_child"
+        },
+        {
+            "source": "association-discovery",
+            "target": "proactive-discovery",
+            "type": "parent_child"
+        },
+        {
+            "source": "hypothesis-generation",
+            "target": "proactive-discovery",
+            "type": "parent_child"
+        },
+        {
+            "source": "proactive-discovery",
+            "target": "evolution",
+            "type": "parent_child"
+        }
+    ],
+    "updated": "2026-06-20",
+    "total_edges": 23
 }
