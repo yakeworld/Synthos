@@ -128,7 +128,8 @@ The absolute numbers change with each scan run. For historical context, see `ref
 This IS the canonical scan skill. The scan script `scripts/d8d10a-scan.py` handles all resolution: inline theinlinebibliography, external .bib files, single-bib-per-paper priority, comment filtering. Run it directly.
 
 ## Support Files
-- `references/zero-citation-auto-repair.md` — **2026-06-20**: Proven 5-step method to repair papers with complete thebibliography but zero \cite{} commands. Maps bibitem keys to prose mentions systematically. Tested on 182-accommodation-ciliary-muscle-ODE (13/13, 0%→100%).
+- `references/zero-citation-auto-repair.md` — **2026-06-20**: Proven 5-step method to repair papers with complete thebibliography but zero \\cite{} commands. Maps bibitem keys to prose mentions systematically. Tested on 182-accommodation-ciliary-muscle-ODE (13/13, 0%→100%).
 - `references/ocular-blood-flow-paper-116.md` — Paper 116 ocular blood flow 2-ODE reference (R2=0.993, Cc=0.45 bifurcation)
-- `references/scan-script-discrepancy-v3-vs-v7.md` — **CRITICAL**: Two scan scripts produce incompatible D8/D10a metrics. Always state which script is used. G1-G7 uses v3.
+- `references/scan-script-discrepancy-v3-vs-v7.md` — **CRITICAL**: Two scan scripts produce incompatible D8/D10a metrics. Always state which script is used. Includes metric cross-mapping table.
+- `references/scan-results-2026-06-21.md` — Latest cross-validated scan results (v3+v7), updated 2026-06-21
 - `references/scan-results-2026-06-20.md` — Latest scan results (two-script cross-validation)
