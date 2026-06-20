@@ -172,6 +172,7 @@ Falsifiability example:
 1. **增益-频率假说** — OKR/VOR 增益是刺激频率的 S 形函数，PINN 可从稀疏数据学习
 2. **对数缩放假说** — 小脑适应率与误差幅度呈对数关系（Weber-Fechner 定律）
 3. **生物标志物假说** — 某时间常数是某疾病的比金标准更敏感的指标（ROC AUC 对比）
+4. **集成/框架假说** — 将 gap_analysis 提出的多个独立候选假说整合为一个统一的多参数诊断框架。**为什么有效**: 单个生物标志物假说受限于单参数与单疾病的映射；集成假说提升维度的同时不增加检测成本（同一次检测提取全部参数）。**何时添加**: gap_analysis 提出 ≥3 个独立假说时，自动检查它们是否可合成一个统一框架。若各假说对应不同参数且源自同一次检测，则集成假说总是适用的。**验证案例**: caloric-test-response-ODE session (2026-06-21) — H4 multi-parameter framework scored 0.82 (HIGH) vs H1=0.84 (HIGHEST), but H4 novelty=0.95 vs H1=0.90. Integration hypothesis typically has lower feasibility but higher novelty + clinical impact.
 
 ## 已知陷阱
 

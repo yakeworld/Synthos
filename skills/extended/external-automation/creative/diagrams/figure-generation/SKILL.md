@@ -134,19 +134,41 @@ Python代码示例、配色方案、辅助函数 → 详见 `references/python-r
 | matplotlib 可用但渲染差 | 图表模糊、CJK 不可读、色盲不可分辨 | 设置 `svg.fonttype='none'` + Arial/Helvetica + Nature 色板。输出 SVG 做 QA。 |
 
 ### 环境依赖检查
+### 执行失败回退层级（完整）
+
+```
+matplotlib → 版本冲突/缺失 → Pillow 纯代码 → HTML + Firefox → HTML + Chromium → 静态生成
+```
+
+| 层级 | 工具 | 触发条件 |
+|:-----|:-----|:---------|
+| 1 | matplotlib | 服务器环境正常 |
+| 2 | Pillow 纯代码 | NumPy 版本冲突 / matplotlib 缺失 / 无 GUI |
+| 3 | HTML + Firefox | 复杂排版需求，Chromium snap 不可用时首选 |
+| 4 | HTML + Chromium | Firefox 不可用，Chrome snap 可用时 |
+| 5 | Pillow + 结构化 | 最简方案，手动布局 |
+
+**Firefox headless 截图法**（2026-06-21 实测，`firefox --headless --screenshot /tmp/out.png URL`）：
+- 用 `python3 -c "import http.server,socketserver,threading;...TCPServer(('127.0.0.1',8899)..."` 起本地 HTTP 服务
+- Firefox 不依赖 Chrome snap，是 headless Linux 上 HTML→PNG 的最可靠路径
+- Firefox `--width` 只控制渲染宽度，`--window-size` 部分版本不生效；默认 1366px 可完整渲染
+- 如需精确尺寸（如 1080px），用 Pillow `Image.resize()` 缩放到目标宽度
+- 输出为 RGBA，用 `.convert('RGB')` 转 RGB
 
 ```python
-# 执行前必须检查
-import importlib
-try:
-    matplotlib = importlib.import_module('matplotlib')
-    import matplotlib.pyplot as plt
-    HAS_MATPLOTLIB = True
-except ImportError:
-    HAS_MATPLOTLIB = False
-
-# 如果 HAS_MATPLOTLIB == False，直接使用 pil-image-generation 的 Pillow 路径
-# 不要 fallback 到 matplotlib — 直接走 Pillow 更稳定
+# 执行前检查渲染路径（按优先级）
+import importlib, subprocess
+def best_backend():
+    try: import matplotlib; has_mpl=True
+    except: has_mpl=False
+    try: subprocess.run(['firefox','--version'],capture_output=True); has_ff=True
+    except: has_ff=False
+    try: subprocess.run(['chromium-browser','--version'],capture_output=True); has_ch=True
+    except: has_ch=False
+    if has_mpl: return 'matplotlib'
+    if has_ff: return 'firefox'
+    if has_ch: return 'chromium'
+    return 'pillow'
 ```
 
 ---
@@ -246,6 +268,7 @@ fig.savefig(f"{filename}.pdf", bbox_inches="tight")    # PDF
 | references/design-theory.md | 字体、色彩理论、排版原理 |
 | references/qa-contract.md | 提交前完整QA审核清单 |
 | references/matplotlib-fallback.md | matplotlib 不可用时的 Pillow 纯代码回退路径（雷达图/进度条/轨迹图原语） |
+| references/quality-report-render.md | 质检报告→视觉图的三模式（HTML+Firefox/Pillow/Markdown），含深色科技风设计模板 |
 
 ---
 
