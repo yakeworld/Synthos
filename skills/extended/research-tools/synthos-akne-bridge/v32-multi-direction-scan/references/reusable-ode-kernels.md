@@ -1,7 +1,7 @@
 # Reusable ODE Kernel Components — Shared Architecture Catalog
 
 **Maintainer**: autonomous-core-researcher  
-**Last Updated**: 2026-06-21  
+**Last Updated**: 2026-06-21 (added K-006 placeholder)  
 **Purpose**: Track ODE subsystems that are shared across multiple Track B candidates, enabling transfer learning and reducing gap analysis redundancy.
 
 ## Kernel Catalog
@@ -28,7 +28,8 @@ Output:     VOR(t) = x(t) · g_mod(t)   (g_mod from candidate-specific ODE-2)
 | PAN-PINN | Cerebellar adaptation (tau_osc, eta) | Slow oscillation (60-120s period) | 0.88 |
 | VestibularCompensation-ODE | Compensation dynamics (tau_comp, eta, alpha) | Two-tier learning rate | 0.87 |
 | VOR-OKR-Coupling-PINN | Coupled VOR-OKR (VSI + OKR + coupling) | Dual subsystem + K-004 coupling | 0.88 |
-| caloric-test-response-ODE | Canal-ocular response (VSI + thermal) | Thermal convection ODE-1 + VSI ODE-2 | 0.88 (gap_analysis done) |
+| caloric-test-response-ODE | Canal-ocular response (VSI + thermal) | Thermal convection ODE-1 + VSI ODE-2 | 0.86 |
+| VestibularCollicReflex-PINN (confirmed) | K-006 otolith transduction (static) + K-001 variant (torsional VSI) | 0.79 (gap_analysis) |
 
 **Clinical Domains Covered by VSI-Based Candidates**:
 - Gaze stability / gaze holding (cerebellar ataxia, PSP, MS INO)
@@ -36,12 +37,14 @@ Output:     VOR(t) = x(t) · g_mod(t)   (g_mod from candidate-specific ODE-2)
 - Vestibular compensation post-UVL (neuritis, schwannoma, Meniere's)
 - Visual-vestibular coupling dysfunction (concussion/TBI, aging fall risk)
 - Caloric test response (Meniere's endolymphatic hydrops, canal dehiscence)
+- VCR / otolith-ocular reflex (Meniere's saccular hydrops, otolith dysfunction) — pending gap_analysis
 
 **Transfer Learning Notes**:
 - PINN weights for the VSI kernel's 2-parameter output head can be initialized from any prior VSI candidate
 - The VSI dynamics equation is identical across all five candidates — only ODE-1 and clinical context differ
 - For new candidates: if ODE-2 matches VSI, skip re-derivation of state equations in gap analysis; reference this catalog entry
 - Cross-candidate hypothesis testing: a single VSI parameter (tau_VS) can now be tested across 5+ clinical conditions
+- **Torsional VSI variant**: VCR candidates with torsional VOR dynamics (ω_torsion, g_VCR) may use a VSI-like filter operating in the torsional axis. The state equation structure (first-order lag) may be identical to K-001 but with different parameter ranges due to otolith vs canal dynamics. Formal kernel matching is determined during gap_analysis.
 
 ### K-002: Cerebellar Adaptation (ode-2 variant)
 
@@ -179,8 +182,8 @@ ODE-2 (Canal-ocular response — shared VSI K-001 kernel):
 **Why It Is Unique**: Thermodynamically-driven (first-order), not mechanically-driven (second-order like K-003) nor neurally-driven (like K-001). tau_therm determined by bone conductivity & blood perfusion — entirely different from neural time constants.
 
 **Transfer Learning Notes**: ODE-1 is novel (no prior). ODE-2 (VSI) initializable from K-001 candidates. Synthetic data from thermal ODE + VSI ODE is ground-truth quality due to well-characterized physics.
-## Score Impact
 
+**Score Impact**:
 | Shared Component | Feasibility Impact | Novelty Impact |
 |:----------------|:------------------:|:--------------:|
 | VSI (K-001) initializable | +0.05 Model Complexity | No change |
@@ -197,6 +200,75 @@ K-005's β parameter (thermal-to-mechanical conversion, ODE-1) and K-001's g_VS 
 3. Document in the gap analysis's Parameter Identifiability section
 
 See the `### ⚡ Cross-ODE Parameter Identifiability Confound Check` section in `references/gap-analysis-template.md` for the full detection/assessment/mitigation procedure.
+
+### K-006: Otolith Transduction (VestibularCollicReflex-PINN — confirmed)
+
+**Status**: ✅ **CONFIRMED** — gap_analysis (2026-06-21, cycle 134) completed formal kernel matching. Novel kernel: 0 of 5 prior kernels match state variables, equation structure, or parameter ranges. See `outputs/papers/_knowledge_only/VestibularCollicReflex-PINN/step_gap_analysis.md`.
+
+**Definition**: First-order mechanoelectrical transduction of otolith shear force into hair cell depolarization. The first otolith-specific kernel in the catalog. Unlike canal-mediated kernels (K-001 through K-005) which model angular velocity sensing via cupula deflection, K-006 models linear acceleration sensing via otolithic membrane shear.
+
+**Key gap analysis findings (cycle 134)**:
+- ODE-1 (Otolith transduction) simplified to **static gain** — τ_hc [1-10ms] is unidentifiable from standard 60-120Hz clinical VOG (Nyquist-limited). V_hc(t) = K_mac · F_s(t) — instantaneous shear-force transduction.
+- ODE-2 (Torsional VOR) classified as **K-001 variant** with modified parameter ranges: τ_NI_torsion [1-10]s (shorter than horizontal VSI τ_VS [5-25]s), g_VCR [0.1-0.6] (lower than VOR gain g_VS [0.1-1.0]).
+- **G_total = K_mac · ρ_oto · g · g_VCR** — cross-ODE scaling-parameter confound (#2 after K-005 β/g_VS). Only the product is identifiable from VOG. Mitigation: treat G_total as combined "otolith-ocular coupling gain"; clinical biomarker is VCR asymmetry, not absolute values.
+- **Multi-scale**: RED tier (1000× ratio) resolved by static ODE-1 — effectively a 1-ODE+PINN system.
+- True clinical value: **zero new equipment** — torsional VOG analysis is a software upgrade to existing VOG systems.
+
+**Architecture (clinical-realistic, validated in gap_analysis)**:
+```
+ODE-1 (Otolith transduction — STATIC, no dynamics):
+  State:      V_hc(t) [mV] — hair cell depolarization (instantaneous)
+  Parameters: K_mac [1, 10] mV/Pa — macula compliance gain
+              ρ_oto [2.0, 2.5] g/cm³ — otoconia density (fixed)
+  Dynamics:   V_hc(t) = K_mac · ρ_oto · g · sin(θ_tilt(t))
+              Note: τ_hc [1-10ms] is BELOW clinical VOG Nyquist frequency
+              (60-120Hz → 8-17ms sampling interval).
+              → Static approximation is VALID and NECESSARY.
+  
+ODE-2 (Torsional VOR dynamics — K-001 variant):
+  State:      ω_torsion(t) [°/s] — torsional slow-phase velocity
+  Parameters: g_VCR [0.1, 0.6] — VCR gain (lower than horizontal VOR)
+              τ_NI_torsion [1, 10]s — torsional NI time constant (shorter than horizontal VSI)
+  Dynamics:   dω_torsion/dt = (g_VCR · dV_hc/dt − ω_torsion(t)) / τ_NI_torsion
+  Output:     ω_torsion(t) → measured by VOG torsional analysis
+  
+Combined:     G_total = K_mac · ρ_oto · g · g_VCR [°/s per °/s tilt velocity]
+              Only G_total is identifiable from VOG. Individual factors confounded.
+              VCR asymmetry = |G_total_R − G_total_L| / (G_total_R + G_total_L)
+```
+
+**Clinical VOG sampling limitation**: The hair cell time constant τ_hc (1-10ms) operates at a timescale that cannot be resolved by standard clinical VOG (60-120Hz, 8-17ms sampling period). This is a FUNDAMENTAL limitation — even with the fastest clinical VOG, the hair cell transduction is too fast to measure without ultra-high-speed (>1000Hz) systems not available in clinical practice. Therefore, ODE-1 must be simplified to a static gain in any clinical-realistic architecture.
+
+**ODE-2 (Torsional VOR dynamics — K-001 variant confirmed in gap_analysis)**:
+  - Formula confirmed: Identical first-order lag structure to K-001
+  - Parameter ranges: τ_NI_torsion [1, 10]s, g_VCR [0.1, 0.6] — modified from horizontal VSI
+  - Torsional neural integrator is intrinsically leakier than horizontal VSI
+
+**Physiological Basis**: The utricular and saccular maculae contain otoconia (calcium carbonate crystals) embedded in a gelatinous otolithic membrane. Head tilt applies shear force to the otolithic membrane, deflecting hair cell stereocilia and modulating afferent firing rate. The VCR (vestibular collic reflex) generates compensatory torsional eye movements (ocular counter-roll) to stabilize the visual axis during head tilt. Unlike the angular VOR (canal-mediated), the VCR is otolith-mediated and operates with a torsional VSI that has a shorter time constant than the horizontal VSI (τ_NI_torsion [1-10]s vs τ_VS [5-25]s).
+
+**Used By**:
+| Candidate | Application | Clinical Domain |
+|:----------|:-----------|:----------------|
+| VestibularCollicReflex-PINN (gap_analysis complete) | Patient-specific otolith parameter inference from VOG during head tilt | Meniere's saccular hydrops, otolith dysfunction, SSCD, presbyvestibulopathy |
+
+**Why It Would Be Unique**: No existing kernel models otolith transduction. K-001 through K-005 are all canal-mediated (angular velocity) or visual (retinal slip). K-006 fills the otolith/gravity-sensing gap. The hair cell time constant (1-10ms) is 3 orders of magnitude faster than VSI (5-25s) and 2 orders faster than the cupula (0.01-0.3s). This creates a multi-scale challenge comparable to K-003 but in the opposite direction (fast ODE-1 + slow ODE-2, vs K-003's slow ODE-1 + fast ODE-2).
+
+**Transfer Learning Notes**:
+- ODE-1 is novel (K-006) — no prior otolith transduction kernel exists
+- ODE-2 (K-001 variant) can be initialized from GazeStability-ODE — torsional VSI shares first-order lag structure but has different parameter range (τ_NI_torsion [1-10]s vs τ_VS [5-25]s). **Use scaled initialization**: set τ_NI_torsion = 5s (midpoint), g_VCR = 0.3 (midpoint of 0.1-0.6 range).
+- No synthetic data advantage for static ODE-1 (trivial to simulate — just θ_tilt(t) input)
+- PINN architecture: 4-layer [128-128-64-64] tanh — ~180K parameters (smaller than prior 1.2M candidates)
+- **VSI parameter range mismatch**: Transfer learning requires parameter re-scaling because torsional VSI is intrinsically leakier. The HORIZONTAL VSI (τ_VS [5-25]s) is NOT identical to the torsional VSI (τ_NI_torsion [1-10]s). Use transfer learning only for architecture weights, NOT for parameter values.
+
+**Open Questions (RESOLVED in gap_analysis)**:
+
+**Open Questions (RESOLVED in gap_analysis)**:
+
+1. **ODE-2 kernel matching**: ✅ **K-001 variant** — torsional VSI shares identical first-order lag structure. Parameter ranges differ (τ_NI_torsion [1-10]s, g_VCR [0.1-0.6] vs horizontal τ_VS [5-25]s, g_VS [0.1-1.0]).
+2. **ODE-2 distinctiveness**: ✅ VSI variant with modified ranges — not a distinct kernel. The torsional neural integrator is leakier (shorter time constant) due to faster otolith velocity signal decay.
+3. **F_s(t) ODE necessity**: ✅ **No** — shear force is directly proportional to sin(θ_tilt), which is clinically measured. No additional ODE needed; ODE-1 is static.
+4. **Multi-scale handling**: ✅ **RED tier mitigated** by static ODE-1. The ms-level τ_hc is unidentifiable from 60-120Hz VOG. Architecture simplified to 1-ODE+PINN (static gain + torsional VSI dynamics).
+5. **G_total confound**: ✅ **Second documented scaling-parameter confound** (after K-005 β/g_VS in caloric test). Only product K_mac · ρ_oto · g · g_VCR identifiable. **Resolution**: treat G_total as combined parameter; clinical biomarker is VCR asymmetry, not absolute values.
 
 ## Kernel Matching Procedure
 
@@ -217,5 +289,8 @@ The VSI kernel's parameter tau_VS can now be tested across multiple clinical dom
 | UVL compensation | VestibularCompensation-ODE | tau_VS asymmetry (directional preponderance) | Recovery prediction |
 | Concussion visual-vestibular coupling | VOR-OKR-Coupling-PINN | tau_VS elevation + w_V→O elevation | Return-to-play decision |
 | Meniere's vs dehiscence | caloric-test-response-ODE | tau_VS from caloric nystagmus decay + tau_therm from thermal rise time | Differential diagnosis |
+| Otolith dysfunction | VestibularCollicReflex-PINN (confirmed) | g_VCR asymmetry during head tilt (G_total asymmetry >25%) | Saccular hydrops screening (ROC AUC ≥ 0.80) |
 
 The CupulaDeflection-PINN adds an independent axis of inference — not tau_VS (central), but tau_cupula (peripheral) — enabling multi-scale vestibular diagnostics: peripheral sensory transducer vs central neural integrator. The caloric-test-response-ODE further adds a second peripheral (thermophysical) axis — tau_therm (heat transfer dynamics) and beta (thermal-to-mechanical coupling) — enabling tri-level diagnostics: thermophysical (outer) → mechanical (middle) → neural (inner).
+
+The VestibularCollicReflex-PINN adds a FOURTH axis — otolith-mediated transduction — completing canal + otolith + thermal coverage of the peripheral vestibular system. This enables multi-parameter diagnostic frameworks that simultaneously assess canal function (VOR gain, VSI time constant), otolith function (VCR gain asymmetry), and thermal dynamics (caloric rise time).

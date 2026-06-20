@@ -37,3 +37,28 @@
 **Problem:** A clinical paper on Meniere's disease (e.g., "Meniere disease AND machine learning" = 41 hits) may be clinical diagnosis AI, not computational ODE/PINN. The clinical domain is crowded but the computational modeling space remains white.
 
 **Fix:** Check if the ML papers are clinical classification/diagnosis (NOT computational ODE/PINN). If clinical, the computational space is still white for ODE/PINN approaches.
+
+## Pitfall: VCR abbreviation collision & domain name ambiguity (v133, 2026-06-21)
+
+**Problem:** "VCR" is heavily abbreviation-ambiguous. PubMed queries with bare "VCR" match viral clearance rate (CAR T-cell therapy), voluntary control ratio (psychophysics), and vaccine coverage rate (epidemiology). Query "VCR" AND "vestibular" returns animal studies (mouse VOG, chinchilla VCR). The VCR goes by at least 4 names: "vestibular collic reflex", "ocular counter-roll", "torsional VOR", "otolith-ocular reflex".
+
+**Fix:** Never use bare "VCR" — always use full terms. Scan ALL 4 names for completeness. Narrow PINN queries on all 4 return 0 hits consistently. The VCR clinical literature (>500 hits) is all diagnostic/animal — zero PINN/ODE computational models, mirroring the cupula pattern.
+
+**Animal model dominance pattern**: Broad queries on any VCR-related term return mostly animal studies (mouse VOG, chinchilla VCR) or clinical diagnostic studies. This is a genuine avoidance signal — the host species of most VCR literature is non-human. The computational VCR modeling space remains white because no PINN/ODE formulation exists for ANY species.
+
+## Pitfall: Parent research-queue.json "completed marked as in_progress" variant (v133, 2026-06-21)
+
+**Problem:** A new staleness variant was discovered where `outputs/papers/research-queue.json` shows a candidate as `status: in_progress` with fewer `steps_completed` than the candidate's own `_knowledge_only/<id>/state.json`, which shows `status: completed` with all 4 steps listed. This is the INVERSE of the previously documented variant (where the candidate's own state lags behind the parent queue).
+
+**Diagnosis:** The prior cron run completed the pipeline step (wrote output file, updated candidate's own state.json, updated evolution-state.json) but skipped the parent queue sync.
+
+**Detection:** Before trusting `outputs/papers/research-queue.json`'s `next_candidate` and `next_step`:
+1. Read the candidate's own `_knowledge_only/<id>/state.json`
+2. Compare `steps_completed.length` between the two
+3. If the candidate's state has MORE steps_completed entries, the parent queue is stale
+
+**Fix:** Sync the parent queue's `steps_completed`, `current_step`, `status`, and `knowledge_score` from the candidate's own state.json. Also check `completed_candidates` — if the candidate shows `status: completed` but is absent from `completed_candidates`, append it.
+
+**Prevention:** The knowledge_entry post-write checklist must include the parent queue sync:
+- Update `outputs/papers/research-queue.json` entry: status=completed, steps_completed includes all 4, knowledge_score set
+- Update `_knowledge_only/research-queue.json`: same sync (two separate files)
