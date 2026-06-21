@@ -180,3 +180,7 @@ cron-state.json
 /outputs/papers/_drafts_archive/
 /outputs/papers/_archive_root/
 /outputs/papers/pdfs/
+
+# 竞赛项目（含个人信息，不上传）
+outputs/competitions/
+projects/competition-synthos/
