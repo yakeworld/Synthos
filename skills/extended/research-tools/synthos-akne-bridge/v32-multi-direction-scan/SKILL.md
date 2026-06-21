@@ -302,17 +302,12 @@ See `references/reusable-ode-kernels.md` for the full kernel catalog with all ca
 
 ## Key Lessons from v32/v33/v35/v36/v136
 1. PubMed count >1000 → check top 3 titles immediately
-metadata:
-  synthos:
-    priority: P2
-    atom_type: tool
-    description: Standardized v32 multi-direction PubMed+OpenAlex scan protocol for autonomous-core-researcher cron runs.
-    signature: 'scan_directions: list[str] -> scan_results: list[Paper]'
-    related_skills: [knowledge-acquisition, knowledge-extraction, association-discovery, hypothesis-generation, argument-expression, viewpoint-verification]
----
 
+## Reference Files
+- `references/openalex-search-strategy.md` — OpenAlex `title_and_abstract.search` technique
+- `references/chest-wall-query-patterns.md` — Chest wall / diaphragm mechanics query patterns
 
-
+  io_contract: input: ['scan_directions: list[str] -> scan_results: list[Paper]', 'output: ['scan_results: list[Paper] (title, doi, source, relevance, abstract)']
 # v32 Multi-Direction Scan Protocol
 
 ## When to Use
