@@ -111,7 +111,15 @@ outputs/papers/_knowledge_only/<candidate_id>/
 
 **First life (6/13 — 6/18)**: The file was cleaned up on 2026-06-18 (see `references/research-queue-cleanup-2026-06-18.md` in paper-pipeline). Seven stale entries were removed (all duplicates of Track A papers already in paper-queue.json). The remaining singleton (113-scleral-remodeling-ODE) was tracked via `_knowledge_only/` directory. No replacement `research-queue.json` was created at that time.
 
-**Second life (6/20 — present)**: The motion-sickness-PINN cron run on 2026-06-20 recreated `research-queue.json` at `outputs/papers/_knowledge_only/research-queue.json`. This is now the **authoritative queue registry**. Future cron runs should update this file when advancing candidates. The SKILL.md's Step 6 was patched on 2026-06-20 to reflect this state. Do NOT delete this file — the queue lifecycle depends on it.
+**Second life (6/20 — 6/22)**: The motion-sickness-PINN cron run on 2026-06-20 recreated `research-queue.json` at `outputs/papers/_knowledge_only/research-queue.json`. This was the **authoritative queue registry**. Future cron runs should update this file when advancing candidates. The SKILL.md's Step 6 was patched on 2026-06-20 to reflect this state.
+
+**Third life (6/22 — present)**: By 2026-06-22, `research-queue.json` was absent from the entire filesystem (verified by `search_files` across `/media/yakeworld/sda2/Synthos` — zero hits). The cron run on 2026-06-22 (vocal-fold-phonation-PINN hypothesis_generation) used `evolution-state.json` → `knowledge_pipeline` as the fallback state source. The `current` + `current_step` fields in `knowledge_pipeline` serve as the active queue when `research-queue.json` is missing.
+
+**Fallback protocol**: Always try `_knowledge_only/research-queue.json` first. If absent, read `evolution-state.json` → `knowledge_pipeline` for:
+- `current` — active candidate ID
+- `current_step` — next step to execute
+- `knowledge_score` — current composite score
+- `completed` — pipeline progress counter
 
 ## Cron Decision Flow
 
@@ -131,3 +139,4 @@ Start
 - **2026-06-18**: research-queue.json cleaned up. 7 stale entries removed. Tracking migrated to implicit file-based system.
 - **2026-06-20 (cron #1)**: motion-sickness-PINN completed through all 4 pipeline steps. `research-queue.json` recreated at `_knowledge_only/research-queue.json` to track the candidate lifecycle explicitly.
 - **2026-06-20 (cron #2, v247)**: OKR-adaptation-PINN created as second candidate. Queue now has 2 entries (1 completed, 1 in progress). v32 SKILL.md and this reference patched to reflect the new queue reality.
+- **2026-06-22**: research-queue.json absent from filesystem. Cron run (Cycle 162) fell back to `evolution-state.json` → `knowledge_pipeline` for state tracking. Hypothesis generation for vocal-fold-phonation-PINN advanced via evolution-state.json. Reference patched to document the fallback protocol.

@@ -102,11 +102,11 @@ model:
   base_url: http://100.100.252.99:8000/v1
   api_key: EMPTY
 
-# DeepSeek 保留作按需调用
+# DeepSeek 保留作按需调用 — ⚠️ api_key 必须用 ${} 包裹
 providers:
   deepseek:
     base_url: https://api.deepseek.com/v1
-    api_key: DEEPSEEK_API_KEY
+    api_key: ${DEEPSEEK_API_KEY}
 
 # 自定义本地 provider
 custom_providers:
@@ -141,7 +141,8 @@ custom_providers:
 
 ## Reference Files
 
-- `references/provider-setup.md` — 15+ provider configs + custom/local provider patterns
+- `references/provider-setup.md` — 15+ provider configs + custom/local provider patterns + env-var-ref trap
+- `references/env-var-ref-trap.md` — .env 环境变量引用陷阱：config.yaml 中 `api_key` 必须用 `${VAR}` 包裹，裸字符串不被 `_expand_env_vars()` 展开
 - `references/gateway-setup.md` — Gateway configuration
 - `references/tui-commands.md` — TUI slash commands
 - `references/agent-spawning.md` — Multi-agent spawning patterns

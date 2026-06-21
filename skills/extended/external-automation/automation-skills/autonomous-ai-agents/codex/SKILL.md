@@ -69,6 +69,25 @@ OpenCode 仅用于极轻量的一键脚本，复杂任务一律走 Codex。
 - Use `pty=true` in terminal calls for interactive mode
 - Config at `~/.codex/config.toml`
 
+## ⚠️ tmux Interaction — 指令与回车必须分开发送
+
+**CRITICAL**: 通过 tmux 与 Codex 交互时，`send-keys` 的指令和 Enter 必须是**两条独立的调用**。
+
+```bash
+# ✅ 正确：分两次发送
+tmux send-keys -t codex-session "检查代码质量并优化"
+sleep 0.5
+tmux send-keys -t codex-session Enter
+
+# ❌ 错误：合在一起发送
+tmux send-keys -t codex-session "检查代码质量并优化" Enter
+# Codex 不会收到回车触发，指令会卡住不响应
+```
+
+**根因**：Codex CLI 的 TUI 需要 Enter 键作为独立的 keypress 来触发提交。`send-keys` 在同一调用中一起发送时，Enter 被当作普通字符而非 key event，Codex 不会处理。
+
+**调试信号**：如果 `tmux capture-pane` 看到 `›` 提示符后指令显示但无响应，说明 Enter 没发出去。重新发送 Enter 即可恢复。
+
 ## Multi-Node Profile Architecture
 
 Codex CLI 通过 `-p <profile>` 支持多节点并行：
@@ -237,6 +256,14 @@ codex $PROFILE exec "
 ### 输出要求
 - [输出格式]
 - [输出位置]
+
+## 参考文件
+
+- `references/codexec-npm-removal.md` — npm 卸载旧版 Codex CLI
+- `references/opencode-as-codex-fallback.md` — OpenCode 作为 Codex 降级
+- `references/codex-vllm-404-troubleshooting.md` — vLLM 404 排查
+- `references/codex-process-diagnosis-2026-06-21.md` — 进程诊断
+- `references/codex-tmux-troubleshooting.md` — tmux 交互、多节点路由、故障排查
 - 只输出关键结果
 " --yolo 2>&1
 ```

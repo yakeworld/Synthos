@@ -374,6 +374,7 @@ if result['ok'] and result['content'][:4] == b'%PDF':
 
 ## 参考文件
 
+- `references/curl-cffi-and-cloakbrowser.md` — curl_cffi 与 CloakBrowser 对比：curl_cffi 用于 API 级别的 TLS 伪装（快），CloakBrowser 用于浏览器级完整模拟（慢但更隐蔽）。详见 anti-detect-browser 技能。
 - `references/cloudflare-smart-download.md` — 智能Cloudflare绕过
 - `references/meddata-browser-vs-cli.md` — MedData浏览器 vs CLI访问差异诊断（2026-06-18）
 - `references/meddata-coverage-limits-2026-06-18.md` — **MedData 实证覆盖率诊断（8篇测试，仅1篇成功）**

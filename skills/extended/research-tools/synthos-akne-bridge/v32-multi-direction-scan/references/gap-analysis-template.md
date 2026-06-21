@@ -1,6 +1,6 @@
-# Gap Analysis Template — 2-ODE + PINN Oculomotor Domain
+# Gap Analysis Template — 2-ODE + PINN Biomedical Domain
 
-Use this structured template when producing `step_gap_analysis.md` for any oculomotor/vestibular PINN candidate. This template has been validated across 3+ completed gap analyses (GazeStability-ODE, OKR-adaptation-PINN, PAN-PINN).
+Use this structured template when producing `step_gap_analysis.md` for any 2-ODE+PINN biomedical candidate. Validated across 4+ domain expansions: oculomotor/vestibular (GazeStability-ODE, PAN-PINN, 8+ others), cardiac autonomic (K-009), baroreflex cardiovascular (K-010), and cardiopulmonary (K-011, Respiratory Sinus Arrhythmia). Works for any two-compartment physiological system requiring patient-specific parameter inference.
 
 ```
 # Gap Analysis: <Candidate-Name>
@@ -66,6 +66,7 @@ Use this structured template when producing `step_gap_analysis.md` for any oculo
 ### ODE-1 Detail
 - **Purpose**: 1-2 sentence
 - **Reusable Kernel Check**: Does this ODE match a kernel in `references/reusable-ode-kernels.md`? If yes, note the kernel ID and skip re-derivation; reference the catalog entry instead.
+  - **⚠️ Structural Analog vs Direct Kernel Match**: If the ODE uses the same physiological system (e.g., same ANS branch) but different receptor subtype (β₁ vs α₁), target organ (SA node vs iris), or effector type (cardiac vs smooth muscle), classify as **Structural Analog** — NOT a direct kernel match. Document the differences explicitly: (a) what is shared (neurotransmitter, pathway), (b) what differs (receptor, target, timescale), (c) whether transfer learning is still beneficial (architecture weights may transfer even if parameter ranges don't). Structural analogs qualify for +0.05 Feasibility (partial transfer learning) but maintain full novelty.
 - **State Variables Table**: (name, symbol, units, description)
 - **Key Parameters Table**: (name, symbol, range, description)
 - **Dynamics**: equations with comments
@@ -89,37 +90,48 @@ Detect whether ODE-1 and ODE-2 operate at **disparate timescales** (ratio > 10×
 | Element | What to Examine | Example Pattern (CupulaDeflection-PINN) |
 |:--------|:----------------|:----------------------------------------|
 | **Detection** | Compare the intrinsic time constants (τ) of ODE-1 vs ODE-2. If one governs sub-second dynamics and the other governs tens-of-seconds dynamics, a multi-scale gap exists. | ODE-1: endolymph fluid dynamics (ζ, ω₀) → τ ~0.01-0.3s. ODE-2: cupula viscoelastic recovery (τ_cupula) → ~0.01-0.3s. Combined with VSI integration (τ_VS ~5-25s, downstream). Total gap: **100×** |
-| **Assessment** | Quantify the ratio. Assign: Green (< 10×, no special action needed), Yellow (10-100×, staged pre-training recommended), Red (> 100×, multi-resolution architecture required) | Ratio ~100× → **Yellow** |
+| **Assessment** | Quantify the ratio. Assign: Green (< 10×, no special action needed), Yellow (10-100×, staged pre-training recommended), Red (> 100×, multi-resolution architecture required). For acoustic/high-frequency biological systems, the carrier frequency (kHz) vs envelope modulation (Hz) ratio routinely exceeds 1000× — this is a **structural pattern**, not a pathological edge case. | Cupula: **100× → Yellow**. Cochlear mechanics: **2000× → Red** (acoustic carrier at 20 kHz vs OHC adaptation at 100 ms — structural pattern for any auditory domain). |
 | **Mitigation: Staged Pre-training** | Pre-train on **short-window** data (fast dynamics dominant, t < 5τ_fast) and **long-window** data (slow dynamics dominant, t > 10τ_slow) separately. Fine-tune jointly on full-timespan data. | Cupula stage: 0-1s windows. VSI stage: 0-30s windows. Joint: 0-30s |
 | **Mitigation: Loss Balancing** | Use frequency-separated loss terms with adaptive λ weights. Apply higher weight to the slower regime during joint training. | λ_slow = 2.0 · λ_fast during first 50% of joint epochs |
-| **Mitigation: Multi-Resolution Input** | If Red (> 100×), use a dual-encoder PINN: one branch processes high-frequency (short-window) features, another processes low-frequency (long-window) features. Merge before the output layer. | Not needed for Yellow — staged pre-training suffices |
+| **Mitigation: Multi-Resolution Input** | If Red (> 100×), use a dual-encoder PINN: one branch processes high-frequency (short-window) features via 1D-CNN, another processes low-frequency (long-window) features via MLP. Merge via cross-attention before the output layer. | Cochlear mechanics (2000×): 1D-CNN encoder (0-5ms, 50μs resolution) for BM envelope + IHC onset; MLP encoder (0-500ms, 1ms resolution) for adaptation + OHC dynamics. Cross-attention merge. |
+| **Mitigation: Envelope Loss** | For acoustic/high-frequency domains (kHz carrier frequencies), fit the **Hilbert envelope** instead of the raw waveform. This reduces effective temporal resolution requirement by ~10× (envelope at 2 kHz vs carrier at 20 kHz) while preserving the amplitude modulation that carries physiological information. Suitable when the PINN target is amplitude-based parameters (gain, adaptation) rather than phase-based (delay, latency). | Cochlear mechanics: BM displacement envelope from DPOAE amplitude + ABR wave I envelope. Reduces temporal resolution from 50μs to 0.5ms — the difference between "infeasible" and "standard PINN training". |
 | **Identifiability Impact** | Fast parameters are identifiable from early time points; slow parameters require the full time series. Document which parameters are estimable from short vs long windows. | tau_cupula → first 1s. zeta → first 5s. omega_0 → only if underdamped |
 
 **Reference worked example**: See `K-003` in `references/reusable-ode-kernels.md` for the CupulaDeflection-PINN multi-scale analysis, including the staged pre-training strategy with short-window (0-1s) and long-window (0-30s) phases. When a multi-scale gap is detected, reference this worked example in the gap analysis and adapt the staged training protocol rather than re-deriving it.
 
 ### ⚡ Cross-ODE Parameter Identifiability Confound Check
 
-Detect whether two or more ODEs each contribute a **gain/scaling parameter** that multiplies into the same output pathway. When this happens, those parameters are jointly identifiable only as a **product**, not individually — the PINN cannot distinguish them without external information.
+Detect whether two or more ODEs each contribute a parameter that maps into the same observable. Four fundamentally different confound types exist:
 
-| Element | What to Examine | Example Pattern (caloric-test-response-ODE) |
+| Confound Type | Mechanism | Example | Resolution |
+|:-------------|:----------|:--------|:-----------|
+| **🔴 Multiplicative** | Two scaling parameters from different ODEs multiply into the same output → only the product is identifiable | β (ODE-1) · g_VS (ODE-2) in caloric test | External anchor (vHIT) fixes one parameter → other becomes identifiable |
+| **🔴 Additive** | Two ODE outputs sum/subtract to produce the observable → only the net sum/difference is identifiable, not individual contributions | s(t) − p(t) in cardiac autonomic HRV: g_SNS and g_PNS both scale HR amplitude | **Frequency-domain decomposition** — if the two signals operate at different timescales or frequency bands, spectral analysis can separate them from the same recording |
+| **🔴 Coupling Interface** | Parameters from ODE-1 and ODE-2 merge at the inter-ODE coupling equation before reaching the final observable. One ODE's state feeds into the other through an equation with ≥2 multiplicative scaling parameters from different ODEs. | Vocal fold: A_g(t) = A_g0 + α·x(t) — α from ODE-2, x(t) depends on ODE-1 parameters (m,k,b), A_g0 from ODE-2. All three scale A_g jointly. | (a) External measurement of one ODE's internal state (EGG CQ anchors A_g0), (b) Frequency-separated anchor, (c) Accept composite as biomarker |
+| **🔴 Input-Pattern** | The observable amplitude is confounded with the INPUT STIMULUS pattern, not another ODE parameter. A weak input produces low output that could be mistaken for low capacity. | RSA amplitude A_RSA depends on BOTH vagal tone AND respiratory mechanics (rate, depth, I:E ratio). | **Standardized input protocol** — paced breathing. **Input-compensated index**: divide output amplitude by input power. |
+
+**Detection procedure**:
+1. Trace each ODE's output pathway to the final observable
+2. Determine the **combining operation** — multiplication (multiplicative), addition/subtraction (additive), or coupling equation (interface)?
+3. Count how many parameters merge at the combining point
+4. If ≥2: flag as confound, classify by type, and select resolution strategy
+
+| Element | What to Examine | Example Pattern (caloric-test-response-ODE — multiplicative) |
 |:--------|:----------------|:--------------------------------------------|
 | **Detection** | Trace each ODE's output pathway to the final observable (SPV, force, displacement, etc.). If two different ODEs each contribute a multiplicative scaling parameter that reaches the same observable without an intermediate independent measurement, a confound exists. | ODE-1: θ_cupula(t) = β·T(t). ODE-2: SPV(t) = g_VS · ω(t) integrated by VSI. Both β and g_VS scale SPV amplitude → only β·g_VS is identifiable from SPV alone. |
 | **Assessment** | Count the number of scaling parameters that merge into the same observable. If ≥2, flag as 🔴 CONFOUND. If 1, no action (the single scaling parameter absorbs all unknown gain). | β (thermal-to-mechanical, ODE-1) + g_VS (VSI gain, ODE-2) → **🔴 2-way confound** |
 | **Mitigation: External Anchor** | Identify an independent measurement that fixes one parameter, making the other identifiable. Any of: (a) independent gold-standard test that isolates one ODE's parameters, (b) population-mean prior for one parameter with uncertainty propagation, (c) fixed value for the least-prioritized parameter. | vHIT (video head impulse test) measures VOR gain directly: g_VHIT ≈ g_VS. Set g_VS = g_VHIT → β is now identifiable from caloric SPV amplitude alone. |
-| **Mitigation: Bayesian Prior** | If no external anchor exists, use a population-level prior (mean ± SD from literature) for one parameter and infer the other with documented uncertainty. Propagate through the model to produce credible intervals on biomarker hypotheses. | Fix g_VS = 0.50 ± 0.15 (population mean) if vHIT unavailable. Report β as β̂ ± σ̂. |
-| **Mitigation: Experimental Design** | Modify the clinical protocol to create a condition where one parameter dominates and the other is negligible, enabling independent estimation. | Warm vs cold caloric: β scales both symmetrically (independent of temperature). If SPV(warm)/SPV(cold) ≠ ΔT(warm)/ΔT(cold), the asymmetry reveals τ_therm dynamics decoupled from β. |
-| **Identifiability Impact on Scoring** | Document in the Parameter Identifiability criterion of Section 5 score: every confounded parameter pair reduces Parameter Identifiability score by -0.10 to -0.20. The external anchor mitigation restores 50-75% of the loss (depending on measurement quality). | Without vHIT anchor: Parameter Identifiability = 0.70 (2-way confound). With vHIT anchor: Parameter Identifiability = 0.85 (restored). |
+| **Mitigation: Frequency-Separated Anchor** | For 3+ way multiplicative confounds, use a **measurement modality that isolates exactly one parameter** from the chain. Identify a clinical measurement whose amplitude depends preferentially on one parameter and negligibly on the others. | Cochlear 3-way confound (k_gain × g_gain × g_OHC): DPOAE amplitude depends on OHC function (g_OHC) + BM tuning — NOT on IHC transduction (g_gain). |
+| **Mitigation: Bayesian Prior** | If no external anchor exists, use a population-level prior (mean ± SD from literature) for one parameter and infer the other with documented uncertainty. | Fix g_VS = 0.50 ± 0.15 (population mean) if vHIT unavailable. Report β as β̂ ± σ̂. |
+| **Mitigation: Frequency-Domain Decomposition** (additive confounds only) | If the two ODEs operate at **different frequency bands**, decompose the observable by frequency. One ODE's contribution dominates at certain frequencies, the other at other frequencies — enabling separation from the SAME recording. | Cardiac autonomic HRV: PNS dominates HF band (0.15-0.4 Hz), SNS dominates LF band (0.04-0.15 Hz). LF/HF ratio provides built-in anchor. |
+| **Mitigation: Clinical Protocol** | Modify the clinical protocol to create a condition where one parameter dominates and the other is negligible, enabling independent estimation. | Warm vs cold caloric: β scales both symmetrically. If SPV(warm)/SPV(cold) ≠ ΔT(warm)/ΔT(cold), the asymmetry reveals τ_therm dynamics decoupled from β. |
+| **Mitigation: Breath-Hold Calibration** (input-driven modulation) | Instruct breath-hold at end-expiration. During breath-hold, input stimulus r(t) ≈ 0, causing the modulation term to vanish. The observable converges to the baseline parameter V0, providing an independent calibration point. | RSA vagal modulation: A_RSA drives AC component, V0 drives DC component. During breath-hold (r(t)=0), after ~3τ_vagal, p(t) ≈ V0. |
+| **Identifiability Impact on Scoring** | Document in the Parameter Identifiability criterion of Section 5 score: every confounded parameter pair reduces score by -0.10 to -0.20. The external anchor mitigation restores 50-75% of the loss. | Without vHIT: Parameter Identifiability = 0.70. With vHIT: Parameter Identifiability = 0.85. |
 
-**Reference worked example**: See `caloric-test-response-ODE/step_gap_analysis.md` for the full cross-calibration protocol that resolves the β-g_VS confound using vHIT gain as external anchor. The protocol generalizes to any multi-ODE system where scaling parameters from different ODEs merge: identify one parameter that has an independent measurement anchor, fix it, then infer the rest.
-
-**Typical confound patterns across Track B candidates**:
-
-| Pattern | Example | Confound Status | Mitigation |
-|:--------|:--------|:---------------:|:-----------|
-| Single scaling parameter | GazeStability-ODE: τ_NI is dynamics, no scaling output | ✅ No confound — single ODE-2 governs output | N/A |
-| Two scaling parameters from different ODEs | Caloric test: β (ODE-1) + g_VS (ODE-2) → product in SPV | 🔴 2-way | vHIT anchor (external) |
-| One scaling + one dynamics parameter at same observable | Smooth pursuit: K_v (gain, ODE-2) vs τ_est (time constant, ODE-1) affect different output features (amplitude vs latency) | ✅ Not confounded — different temporal features | N/A |
-| Three-way confound (rare) | Future candidate with thermal + mechanical + neural gains all scaling the same output | 🛑 3-way — requires two independent anchors | Dual external measurement + population prior |
+**Reference worked examples**:
+- Multiplicative: `caloric-test-response-ODE/step_gap_analysis.md`
+- Additive: `cardiac-autonomic-regulation-PINN/step_gap_analysis.md`
+- Coupling Interface: `vocal-fold-phonation-PINN/step_gap_analysis.md`
 
 ## 3. Parameter Count Estimation
 
@@ -163,7 +175,7 @@ Detect whether two or more ODEs each contribute a **gain/scaling parameter** tha
 ### Multi-Criterion Scoring
 | Criterion | Score | Justification |
 |:----------|:-----:|:--------------|
-| Model Complexity | 0-1 | Novel architecture needed? Comparable to prior work? ⚡ If any ODE is a shared kernel (see `references/reusable-ode-kernels.md`), reduce complexity score by -0.10 (transfer learning reduces architecture risk) |
+| Model Complexity | 0-1 | Novel architecture needed? Comparable to prior work? |
 | Data Availability | 0-1 | ⚠️ Often the weakest dimension — quantify available data |
 | Parameter Identifiability | 0-1 | Can params be estimated from realistic data? |
 | Clinical Translation | 0-1 | Clinical need + path to deployment |

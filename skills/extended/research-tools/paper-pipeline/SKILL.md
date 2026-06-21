@@ -19,7 +19,7 @@ metadata:
 
 Composite skill that merges 35 paper-related skills into a unified pipeline.
 
-## Members (35)
+## Members (36)
 
 - **adhd-eye-tracking-review**: Directory index for adhd-eye-tracking-review: adhd-eye-tracking-review
 - **arxiv**: arXiv论文搜索 — 按关键词/作者/类别/ID检索。支持Tor SOCKS代理访问。
@@ -40,6 +40,7 @@ Composite skill that merges 35 paper-related skills into a unified pipeline.
 - **paper-pipeline**: 主skill | SCI论文全流程编排器。v3.18.10新增Trap#42跨项目参考文献污染检测（Synthos Paper ID后缀/占位符键名/空条目/Prose提及无cite）。v3.18.9新增Trap#41 paper-queue.json幽灵条目逆方向。v3.18.5-8: D10a批量扫描+natbib盲区+注释过滤+路由修复。v3.18: Track A晋升协议。v3.16: 队列自愈+ABSOLUTE WHITE独立验证。v3.15: 轨道B四步工作流。
 - **paper-quality-deep-review**: 论文质量深度审查引擎 — 从文献下载→内容分析→研究空白验证→科学假设评估→解决方法评估→文献引用质量评分→综合评分。
 - **paper-queue-audit**: Directory index for paper-queue-audit: paper-queue-audit
+- **research-queue-audit**: Research queue audit and management — read/validate research-queue.json, check candidate state consistency, detect stale entries, sync state layers. Implementation lives in `v32-multi-direction-scan` (Steps 5-6 + pitfalls). This is a routing stub — the actual queue lifecycle protocol is in the v32 scan skill.
 - **paper-references-scanning**: Scan paper library for citation health: D8 (bib entry count), D10a (cite-to-bib match rate),   orphans, zombies. Class of tasks: LaTeX reference integrity auditing.
 - **pdf-download-racing**: 并行竞速PDF下载引擎 — curl_cffi TLS指纹绕过 + Sci-Hub域轮换 + LibGen + MedData。依赖 tools/paper-manager/src/。
 - **pdf-to-md-notebooklm**: PDF→Markdown→NotebookLM 全流程管线。支持批量上传、自动类型检测、大文件处理。

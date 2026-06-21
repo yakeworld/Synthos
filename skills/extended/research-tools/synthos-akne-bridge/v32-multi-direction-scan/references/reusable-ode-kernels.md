@@ -1,7 +1,7 @@
 # Reusable ODE Kernel Components — Shared Architecture Catalog
 
 **Maintainer**: autonomous-core-researcher  
-**Last Updated**: 2026-06-21 (added K-006 placeholder)  
+**Last Updated**: 2026-06-21 (K-013 hypothesis_generation 0.91 — first auditory kernel. Complete 13-kernel catalog spanning auditory, cerebrovascular, cardiovascular, autonomic, and oculomotor/vestibular domains.)  
 **Purpose**: Track ODE subsystems that are shared across multiple Track B candidates, enabling transfer learning and reducing gap analysis redundancy.
 
 ## Kernel Catalog
@@ -29,7 +29,7 @@ Output:     VOR(t) = x(t) · g_mod(t)   (g_mod from candidate-specific ODE-2)
 | VestibularCompensation-ODE | Compensation dynamics (tau_comp, eta, alpha) | Two-tier learning rate | 0.87 |
 | VOR-OKR-Coupling-PINN | Coupled VOR-OKR (VSI + OKR + coupling) | Dual subsystem + K-004 coupling | 0.88 |
 | caloric-test-response-ODE | Canal-ocular response (VSI + thermal) | Thermal convection ODE-1 + VSI ODE-2 | 0.86 |
-| VestibularCollicReflex-PINN (confirmed) | K-006 otolith transduction (static) + K-001 variant (torsional VSI) | 0.79 (gap_analysis) |
+| VestibularCollicReflex-PINN (completed) | K-006 otolith transduction (static) + K-001 variant (torsional VSI) | 0.82 (knowledge_entry) |
 
 **Clinical Domains Covered by VSI-Based Candidates**:
 - Gaze stability / gaze holding (cerebellar ataxia, PSP, MS INO)
@@ -37,7 +37,7 @@ Output:     VOR(t) = x(t) · g_mod(t)   (g_mod from candidate-specific ODE-2)
 - Vestibular compensation post-UVL (neuritis, schwannoma, Meniere's)
 - Visual-vestibular coupling dysfunction (concussion/TBI, aging fall risk)
 - Caloric test response (Meniere's endolymphatic hydrops, canal dehiscence)
-- VCR / otolith-ocular reflex (Meniere's saccular hydrops, otolith dysfunction) — pending gap_analysis
+- VCR / otolith-ocular reflex (Meniere's saccular hydrops, otolith dysfunction) — completed (knowledge_entry 0.82)
 
 **Transfer Learning Notes**:
 - PINN weights for the VSI kernel's 2-parameter output head can be initialized from any prior VSI candidate
@@ -203,11 +203,11 @@ See the `### ⚡ Cross-ODE Parameter Identifiability Confound Check` section in 
 
 ### K-006: Otolith Transduction (VestibularCollicReflex-PINN — confirmed)
 
-**Status**: ✅ **CONFIRMED** — gap_analysis (2026-06-21, cycle 134) completed formal kernel matching. Novel kernel: 0 of 5 prior kernels match state variables, equation structure, or parameter ranges. See `outputs/papers/_knowledge_only/VestibularCollicReflex-PINN/step_gap_analysis.md`.
+**Status**: ✅ **COMPLETED** — all 4 pipeline steps done (knowledge_entry 0.82, T2 PASS, cycle 136). First otolith-specific kernel in the catalog. Queue EMPTY after completion — all 12 knowledge candidates done. See `outputs/papers/_knowledge_only/VestibularCollicReflex-PINN/knowledge_entry_VestibularCollicReflex-PINN.md`.
 
 **Definition**: First-order mechanoelectrical transduction of otolith shear force into hair cell depolarization. The first otolith-specific kernel in the catalog. Unlike canal-mediated kernels (K-001 through K-005) which model angular velocity sensing via cupula deflection, K-006 models linear acceleration sensing via otolithic membrane shear.
 
-**Key gap analysis findings (cycle 134)**:
+**Key findings (cycle 134-136)**:
 - ODE-1 (Otolith transduction) simplified to **static gain** — τ_hc [1-10ms] is unidentifiable from standard 60-120Hz clinical VOG (Nyquist-limited). V_hc(t) = K_mac · F_s(t) — instantaneous shear-force transduction.
 - ODE-2 (Torsional VOR) classified as **K-001 variant** with modified parameter ranges: τ_NI_torsion [1-10]s (shorter than horizontal VSI τ_VS [5-25]s), g_VCR [0.1-0.6] (lower than VOR gain g_VS [0.1-1.0]).
 - **G_total = K_mac · ρ_oto · g · g_VCR** — cross-ODE scaling-parameter confound (#2 after K-005 β/g_VS). Only the product is identifiable from VOG. Mitigation: treat G_total as combined "otolith-ocular coupling gain"; clinical biomarker is VCR asymmetry, not absolute values.
@@ -249,7 +249,7 @@ Combined:     G_total = K_mac · ρ_oto · g · g_VCR [°/s per °/s tilt veloci
 **Used By**:
 | Candidate | Application | Clinical Domain |
 |:----------|:-----------|:----------------|
-| VestibularCollicReflex-PINN (gap_analysis complete) | Patient-specific otolith parameter inference from VOG during head tilt | Meniere's saccular hydrops, otolith dysfunction, SSCD, presbyvestibulopathy |
+| VestibularCollicReflex-PINN (completed — knowledge_entry 0.82) | Patient-specific otolith parameter inference from VOG during head tilt | Meniere's saccular hydrops, otolith dysfunction, SSCD, presbyvestibulopathy |
 
 **Why It Would Be Unique**: No existing kernel models otolith transduction. K-001 through K-005 are all canal-mediated (angular velocity) or visual (retinal slip). K-006 fills the otolith/gravity-sensing gap. The hair cell time constant (1-10ms) is 3 orders of magnitude faster than VSI (5-25s) and 2 orders faster than the cupula (0.01-0.3s). This creates a multi-scale challenge comparable to K-003 but in the opposite direction (fast ODE-1 + slow ODE-2, vs K-003's slow ODE-1 + fast ODE-2).
 
@@ -272,6 +272,294 @@ Combined:     G_total = K_mac · ρ_oto · g · g_VCR [°/s per °/s tilt veloci
 
 ## Kernel Matching Procedure
 
+### K-007: Iris Sphincter Mechanics (PupillaryLightReflex-PINN — Completed)
+
+**Status**: ✅ **COMPLETED** — knowledge_entry completed (six-dimension score 0.87, T2 PASS, cycle 140). First autonomic/smooth-muscle kernel in the Synthos catalog. All 6 prior kernels (K-001 through K-006) are striated muscle / neural systems — this is a fundamental paradigm shift.
+
+**Definition**: First-order parasympathetic-mediated pupil constriction dynamics in response to light onset. Governed by pretectal olivary nucleus → Edinger-Westphal nucleus → ciliary ganglion → iris sphincter muscle (M3 muscarinic).
+
+**Mathematical Formulation**:
+```
+ODE-1 (Iris sphincter constriction):
+  State:      d(t) [mm] — pupil diameter
+  Parameters: v_max [2, 8] mm/s — max constriction velocity
+              tau_c [0.15, 0.5]s — constriction time constant
+              d_min [2, 4] mm — light-adapted minimum diameter
+              t_delay [0.18, 0.35]s — afferent+efferent conduction latency
+  Dynamics:   dd/dt = -v_max · exp(-t/tau_c) · H(I(t) - theta)
+  Output:     d_constriction = d_rest - (d_rest - d_min) · S(t)
+              where S(t) = 1 - exp(-(t - t_delay)/tau_c) for t >= t_delay
+
+Kernel class: First-order relaxation from resting diameter to light-adapted minimum
+Physiological basis: Parasympathetic cholinergic M3 activation of iris sphincter
+```
+
+**Physiological Basis**: Light stimulation activates intrinsically photosensitive retinal ganglion cells (ipRGCs) → pretectal olivary nucleus → bilateral Edinger-Westphal nuclei → ciliary ganglia → iris sphincter muscles. The constriction reflects parasympathetic efferent integrity. This is the FIRST smooth-muscle kernel — all prior kernels describe striated extraocular muscles (VOR, OKR, pursuit) or neural integration (VSI). Smooth muscle has fundamentally different pharmacomechanical coupling (muscarinic → IP3 → Ca²⁺ release → contraction) with slower dynamics (τ ~0.15-0.5s vs extraocular ~0.005-0.01s).
+
+**Used By**:
+| Candidate | Application | Clinical Domain |
+|:----------|:-----------|:----------------|
+| PupillaryLightReflex-PINN (completed — knowledge_entry 0.87) | Patient-specific PLR parameter inference | Alzheimer's, diabetic neuropathy, TBI, Parkinson's, MS, post-COVID |
+
+**Why It Is Unique**: First autonomic/smooth-muscle kernel. Different effector type (smooth vs striated), different signaling pathway (muscarinic vs nicotinic/cholinergic), different temporal scale (hundreds of ms vs ms), and different clinical paradigm (pupillometry vs VOG). No overlap with any prior kernel's state variables, equations, or parameter ranges.
+
+**Transfer Learning Notes**:
+- No transfer from prior candidates (fundamentally different physiology — smooth muscle vs striated muscle)
+- PINN architecture: FC 2→64→128→128→64→1 (~45K params) — smaller than vestibular candidates (~120K-1.2M)
+- Synthetic data: ODE-1 + ODE-2 are analytically tractable — synthetic ground-truth is high quality
+- Unique advantage: pupillometry data is ABUNDANT (standard ICU procedure), enabling richer PINN training than any prior candidate
+
+### K-008: Autonomic Adaptation / Pupil Recovery (PupillaryLightReflex-PINN — Completed)
+
+**Status**: ✅ **COMPLETED** — knowledge_entry completed (six-dimension score 0.87, T2 PASS, cycle 140). First multi-system (parasympathetic + sympathetic + melanopsin) autonomic kernel.
+
+**Definition**: Multi-component recovery dynamics governing pupil redilation after light offset, incorporating sympathetic input, post-illumination pupil response (PIPR), and melanopsin-driven sustained constriction.
+
+**Mathematical Formulation**:
+```
+ODE-2 (Autonomic adaptation / recovery):
+  State:      a(t) [mm] — recovery offset from baseline
+  Parameters: tau_r [1, 30]s — recovery time constant
+              K_gain [0.5, 2.0] — recovery gain factor
+              tau_mel [10, 60]s — melanopsin time constant
+              A_mel [0.5, 2.0] mm — PIPR amplitude
+  Dynamics:   da/dt = -(a - a_0)/tau_r - c(t)·K_gain·(d - d_rest)/tau_r
+  Melanopsin: d_mel(t) = A_mel·[1 - exp(-t/tau_mel)] for t > t_off
+  Combined:   d_total(t) = d_rest + a(t) + d_mel(t) for recovery phase
+
+Kernel class: Slow recovery from light-adapted minimum to dark-adapted baseline
+              with melanopsin-mediated sustained constriction
+Physiological basis: Sympathetic α1-adrenergic → iris dilator (recovery)
+                     + melanopsin ipRGC → sustained ON signal (PIPR)
+```
+
+**Physiological Basis**: Three separate mechanisms govern pupil recovery: (a) Sympathetic input (superior cervical ganglion → iris dilator, α1-adrenergic) — actively redilates the pupil after light offset, (b) Intrinsic melanopsin phototransduction in ipRGCs — maintains a sustained constriction for 30-60s after bright light offset, (c) Parasympathetic withdrawal — constrictor input ceases. The recovery time constant τ_r is dominated by sympathetic tone, while the melanopsin parameters (τ_mel, A_mel) reflect inner retinal ipRGC function. This is the ONLY kernel in the catalog with THREE distinct physiological control systems contributing to a single observable.
+
+**Used By**:
+| Candidate | Application | Clinical Domain |
+|:----------|:-----------|:----------------|
+| PupillaryLightReflex-PINN (completed — knowledge_entry 0.87) | Patient-specific recovery parameter inference | Diabetic neuropathy (τ_r↑), Parkinson's (A_mel↓), TBI (τ_r↑↑) |
+
+**Why It Is Unique**: Three-system (parasympathetic + sympathetic + melanopsin) integrative ODE — no prior kernel has more than two. The multi-timescale range (τ_r [1-30]s + τ_mel [10-60]s creates a 10-60× ratio vs ODE-1's τ_c [0.15-0.5]s). The melanopsin component introduces a novel physiological mechanism (intrinsically photosensitive retinal ganglion cells) absent from all 7 prior kernels.
+
+**Transfer Learning Notes**:
+- No transfer from prior candidates — novel ODE structure
+- ODE-1 (K-007) and ODE-2 (K-008) are temporally separated (constriction 0-2s vs recovery 2-60s), enabling staged pre-training
+- Clinical data is abundant (NPi-200, 30Hz, standard ICU protocol) — synthetic pre-training not critical
+
+**Score Impact**:
+| Shared Component | Feasibility Impact | Novelty Impact |
+|:----------------|:------------------:|:--------------:|
+| No shared kernels (K-007+K-008 unique) | No change (base) | Full novelty preserved |
+| Abundant clinical data | +0.10 Feasibility | No change |
+| Zero new equipment | +0.10 Clinical Translation | No change |
+
+### K-009: Cardiac Autonomic SNS/PNS Regulation (cardiac-autonomic-regulation-PINN — proposed)
+
+**Status**: 🔶 **HYPOTHESIS_GENERATION** — proposed in cycle-142 (2026-06-21). Completed literature_scan (ABSOLUTE_WHITE, 21/25, feasibility 4/5) + gap_analysis (composite 0.88, T2 PASS). 4 falsifiable hypotheses formulated. Next step: knowledge_entry.
+
+**Definition**: A 2-ODE+PINN system modeling heart rate variability (HRV) as the dynamic interaction of sympathetic (SNS, ODE-1) and parasympathetic (PNS, ODE-2) drive to the sinoatrial node, enabling patient-specific autonomic parameter inference from a single 5-min resting ECG.
+
+**Mathematical Formulation**:
+```
+ODE-1 (Sympathetic β-adrenergic drive):
+  State:      s(t) [bpm] — SNS contribution to heart rate
+  Parameters: tau_SNS [2, 10]s — SNS time constant
+              g_SNS [0.5, 2.0] — SNS max gain (β-adrenergic)
+              SR_baseline [0.3, 1.0] — resting SNS tone
+  Dynamics:   ds/dt = (g_SNS · u_SNS(t) − s(t)) / tau_SNS
+              where u_SNS(t) ∈ [0, 1] is normalized sympathetic drive
+
+ODE-2 (Parasympathetic vagal modulation):
+  State:      p(t) [bpm] — PNS contribution to heart rate
+  Parameters: tau_PNS [0.5, 3]s — PNS time constant (faster than SNS)
+              g_PNS [1.0, 3.0] — PNS max gain (vagal tone)
+              PR_baseline [0.5, 1.0] — resting PNS tone
+  Dynamics:   dp/dt = (g_PNS · u_PNS(t) − p(t)) / tau_PNS
+
+Heart Rate Output:
+  HR(t) = HR_baseline + s(t) − p(t) + ε(t)
+  where ε(t) ~ OU(σ_HR) captures residual RR variability
+
+Kernel class: First-order opposing drive system (SNS ↑HR, PNS ↓HR)
+Physiological basis: SNS → β₁-adrenergic → SA node (↑HR)
+                     PNS → M₂ muscarinic → SA node (↓HR)
+```
+
+**Physiological Basis**: Heart rate is continuously modulated by the autonomic nervous system. Sympathetic activation (stellate ganglia → β₁-adrenergic receptors → SA node) increases HR with a time constant of 2-10s. Parasympathetic/vagal activation (vagus nerve → M₂ muscarinic receptors → SA node) decreases HR with a faster time constant of 0.5-3s. The balance between SNS and PNS tone is captured by the LF/HF ratio from spectral analysis, which provides a built-in anchor resolving the additive gain confound (g_SNS and g_PNS both scale the same output, but LF = SNS-dominated, HF = PNS-only). This is the FIRST non-oculomotor/vestibular kernel — branching from somatic motor to cardiac autonomic regulation.
+
+**Built-in Confound Resolution** (unique advantage over all prior kernels):
+Unlike K-005's β·g_VS product confound (which requires an external vHIT measurement), the SNS/PNS additive gain confound is partially resolved by **frequency-domain HRV analysis from the exact same 5-min ECG recording**. LF power (0.04-0.15 Hz) correlates with SNS activity, HF power (0.15-0.4 Hz) correlates with PNS activity. The LF/HF ratio provides an independent estimate of g_SNS/g_PNS. This means:
+- Parameter Identifiability: 0.80 with standard LF/HF anchor (vs 0.55 without)
+- No external measurement, no extra equipment, no additional clinical time
+- With Ewing battery protocol (Valsalva + deep breathing): Parameter Identifiability → 0.90
+
+**Structural Analog to K-008**: K-008 (Autonomic Adaptation from PLR) uses a similar first-order recovery dynamics structure (da/dt = −(a−a₀)/τ_r) for iris dilator α₁-adrenergic sympathetic recovery. The cardiac ODE-1 SNS drive uses the same mathematical form (first-order approach to steady state) and the same neurotransmitter (norepinephrine) but different effector (SA node vs iris dilator) and different receptor (β₁ vs α₁). Classify as **Structural Analog**, NOT a direct kernel match — the input modalities (baroreflex/respiratory vs light-induced pupil response) and timescales (τ_SNS [2-10]s vs τ_r [1-30]s) differ enough to warrant a distinct kernel entry.
+
+**Used By**:
+| Candidate | Application | Clinical Domain |
+|:----------|:-----------|:----------------|
+| cardiac-autonomic-regulation-PINN (proposed — hypothesis_generation 0.87) | Patient-specific SNS/PNS parameter inference from 5-min resting ECG | DAN (diabetic autonomic neuropathy), PD (autonomic dysfunction), HF (heart failure), post-COVID dysautonomia |
+
+**Why It Is Unique**: 
+- First cardiac autonomic kernel — no prior kernel models sinoatrial pacemaker dynamics
+- First non-motor, non-striated-muscle, non-oculomotor/vestibular kernel
+- First kernel with OPPOSING drive architecture (SNS ↑ vs PNS ↓) rather than additive/sequential
+- Largest addressable population — 38M US diabetics, 6M HF, 1M PD, 20-60M post-COVID survivors
+- Zero new equipment — ECG is the most ubiquitous clinical signal worldwide
+
+**Transfer Learning Notes**:
+- K-008 (Autonomic Adaptation) provides a structural analog but not direct weight transfer — same mathematical family (first-order recovery) but different receptor (β₁ vs α₁), different effector (SA node vs iris dilator), and different input modality (baroreflex vs light)
+- PINN weights for the first-order dynamics head can be initialized from K-008's architecture, but parameter ranges must be re-scaled
+- Clinical data is ABUNDANT — PhysioNet has 100+ public HRV datasets (MIT-BIH, Fantasia, PTB-XL, MIMIC-III)
+- Synthetic data from first-order ODEs is high-quality (analytically tractable)
+
+**Score Impact**:
+| Shared Component | Feasibility Impact | Novelty Impact |
+|:----------------|:------------------:|:--------------:|
+| K-008 structural analog (architecture, not weights) | +0.05 Architecture Design | No change — distinct receptor/dynamics/domain |
+| Unique cardiac ODE-1 + ODE-2 (K-009) | No change | Full novelty preserved |
+| Abundant clinical data (PhysioNet, 100+ datasets) | +0.10 Feasibility | No change |
+| Zero new equipment (ECG is standard of care) | +0.10 Clinical Translation | No change |
+| Built-in LF/HF confound anchor | +0.10 Parameter Identifiability | No change |
+
+## Recommended Primary Hypothesis (from gap_analysis)
+
+**H1: τ_PNS as Early DAN Biomarker** (composite 0.87, HIGHEST)
+- τ_PNS from single 5-min ECG predicts subclinical DAN with ROC AUC ≥ 0.85
+- Most identifiable parameter (5/5 stars) — directly measurable from HF band
+- Largest addressable population (38M US T2DM, ~50% with undiagnosed DAN)
+- Zero new equipment — software-only upgrade to existing ECG analysis
+
+### K-010: Windkessel BP Dynamics (baroreflex-regulation-PINN — proposed)
+
+**Status**: ✅ **KNOWLEDGE_ENTRY** — completed cycle-147 (2026-06-21). Full pipeline done: literature_scan (22/25, feasibility 4/5, ABSOLUTE_WHITE) → gap_analysis (0.81) → hypothesis_generation (0.87) → knowledge_entry (0.88, T2 PASS). K-010 now a registered kernel. Queue EMPTY — all 15 candidates processed.
+
+**Definition**: First-order Windkessel model of arterial pressure dynamics driven by cardiac output (from heart rate) and modulated by arterial compliance and peripheral resistance. First cardiovascular hemodynamics kernel — branching from autonomic regulation (K-009) to the closed-loop BP-HR system.
+
+**Mathematical Formulation**:
+```
+ODE-1 (Windkessel BP dynamics):
+  State:      P(t) [mmHg] — arterial pressure
+  Parameters: C [0.5, 2.0] mL/mmHg — arterial compliance
+              R [10, 30] mmHg*s/mL — peripheral resistance
+              SV [50, 100] mL — stroke volume (fixed per-patient)
+  Derived:    tau = R*C [5, 60]s — Windkessel time constant
+  Dynamics:   dP/dt = (H(t)*SV/(1000*C) - P(t)/(R*C))
+              where H(t) from ODE-2 (baroreflex-modulated HR)
+
+ODE-2 (Baroreflex HR modulation — structural analog to K-009):
+  State:      H(t) [bpm] — heart rate
+  Parameters: G_BRS [5, 30] ms/mmHg — baroreflex gain
+              P0 [80, 120] mmHg — set point
+              tau_BR [0.5, 3]s — response time constant
+              delta [0.2, 0.5]s — conduction delay
+              H_base [50, 90] bpm — baseline HR
+  Dynamics:   dH/dt = (H_base + G_BRS*(P(t-delta)-P0) - H(t))/tau_BR
+              Saturation: Delta_H in [-30, +30] bpm
+
+PINN target: infer C, R, G_BRS, P0, tau_BR, delta from spontaneous or induced BP/HR oscillations
+(Finapres + ECG, dual-observable)
+```
+
+**Physiological Basis**: Frank's Windkessel model (1899) — arterial pressure determined by cardiac output (inflow) and peripheral runoff (outflow). First CLOSED-LOOP kernel in the catalog — ODE-1 (BP) drives ODE-2 (HR) via baroreflex, and ODE-2 feeds back via cardiac output. Dual-observable (both state variables independently measurable) provides strongest identifiability of any candidate.
+
+**Used By**:
+| Candidate | Application | Clinical Domain |
+|:----------|:-----------|:----------------|
+| baroreflex-regulation-PINN (proposed — gap_analysis 0.81) | Patient-specific BRS + vascular params from BP+ECG | DAN, post-COVID dysautonomia, HF prognosis, syncope risk |
+
+**Why It Is Unique**: First hemodynamic kernel (fluid dynamics of blood in elastic vessels vs neural/mechanical dynamics of all prior kernels). First closed-loop kernel (BP-to-HR-to-BP feedback). First kernel with explicit time-delay parameter (delta, 0.2-0.5s conduction delay).
+
+**Cross-ODE Confound**: STRUCTURAL confound (closed-loop coupling), not multiplicative/additive like prior kernels. Mitigated by Valsalva maneuver perturbation. Parameter Identifiability: 0.75 spontaneous, 0.90 with Valsalva.
+
+**Transfer Learning Notes**:
+- ODE-2: Structural analog to K-009 (same vagal pathways, different drive)
+- K-009 provides weak architecture initialization for ODE-2 only
+- No prior kernel for ODE-1 (Windkessel is new)
+
+### K-011: Respiratory Drive Oscillator (respiratory-sinus-arrhythmia-PINN — Completed)
+
+**Status**: ✅ **KNOWLEDGE_ENTRY** — completed cycle-151 (2026-06-21). Full pipeline done: literature_scan (22/25, ABSOLUTE_WHITE) → gap_analysis (0.92) → hypothesis_generation (0.89) → knowledge_entry (0.88, T2 PASS). K-011 now a registered kernel. Queue EMPTY — all 16 candidates processed. Autonomic triad complete.
+
+**Hypothesis Portfolio** (from cycle-150 hypothesis_generation):
+
+| ID | Hypothesis | Target | Composite | Priority |
+|:---|:----------|:-------|:---------:|:-------:|
+| **H1** | **A_RSA as Subclinical DAN Screening Biomarker** | **ROC AUC ≥ 0.85 from 5-min spontaneous ECG** | **0.891** | **HIGHEST** |
+| H3 | CVHI Multi-Parameter Composite Index | Multi-class F1 ≥ 0.80 (DAN vs post-COVID vs healthy) | 0.836 | HIGH |
+| H2 | τ_vagal as Post-COVID Recovery Predictor | ROC AUC ≥ 0.80 for 6-month COMPASS-31 improvement | 0.814 | HIGH |
+
+**Recommended Primary**: H1 (A_RSA DAN biomarker) — highest composite (0.891), largest addressable population (38M US T2DM, 8-19M undiagnosed DAN), zero-equipment (EDR from single-lead ECG), clearest falsifiability test (n=100 case-control cross-sectional).
+
+**Discriminative Experiment (Pattern #5)**: Single 5-min protocol × 4 time phases tests all 3 hypotheses: Phase I spontaneous (H1), Phase II paced deep breathing (H1+H2), Phase III breath-hold (H3 V0 calibration), Phase IV recovery (H3 α dynamics).
+
+**Six-Dimension Scoring**: Gap Sig=0.88, Meth Sound=0.88, Result Complete=0.89, Clin Transl=0.92, Reproducibility=0.83, Narrative=0.88 → **Weighted 0.88 (T2 PASS)**.
+
+**Cross-ODE Scaling Confound**: Partial additive confound — A_RSA (modulation amplitude) and V0 (baseline tone) both scale p(t). Resolved by **built-in frequency-domain decomposition** — V0 governs DC (zero-frequency mean vagal tone), A_RSA governs AC (at respiratory frequency). No external measurement needed. This is the most clinically practical confound resolution of any cardiovascular candidate — the frequency anchor comes from the SAME ECG recording, not an additional test.
+
+**K-011 closes the autonomic triad**: With all three cardiovascular kernels complete, Synthos now covers the complete autonomic PINN stack — spontaneous HRV (K-009), baroreflex BP-HR closed-loop (K-010), and respiratory-gated vagal modulation (K-011). This is the first fully-consolidated multi-kernel domain in the catalog.
+
+**Definition**: Sinusoidal/physiologically-realistic oscillator model of respiratory drive, generating the respiratory phase-gated vagal modulation that produces Respiratory Sinus Arrhythmia (RSA) — the periodic variation in heart rate synchronized with breathing.
+
+**Mathematical Formulation**:
+```
+ODE-1 (Respiratory drive oscillator):
+  State:      φ(t) [rad] — respiratory phase (0→2π, 0 = start inspiration)
+  Parameters: RR [12, 20] bpm — respiratory rate at rest
+              VT [0.3, 1.0] L — tidal volume
+              IE [1:1, 1:3] — inspiratory-to-expiratory ratio
+              τ_exp [0.5, 2.0] s — expiratory time constant
+  Dynamics:   ω_0 = 2π · RR/60 [rad/s]
+              φ(t) = ω_0 · t mod 2π
+              V_insp(t) = VT · sin²(φ/2) · H(sin φ > 0)
+              V_exp(t) = VT · [1 − exp(−t_phase/τ_exp)] · H(sin φ < 0)
+              r(t) = V(t)/max(V)
+  
+ODE-2 (Vagal HR modulation — structural analog to K-009):
+  State:      p(t) [bpm] — PNS contribution to HR
+  Parameters: A_RSA [10, 30] ms — RSA amplitude (max modulation depth)
+              τ_vagal [0.5, 2.0] s — vagal activation time constant
+              V0 [10, 30] bpm — baseline vagal tone
+              α [0.5, 2.0] — respiratory coupling exponent
+  Dynamics:   dp/dt = −(p − V0)/τ_vagal + A_RSA · r(t)^α
+  Output:     HR(t) = HR_basal − p(t)
+
+Kernel class: Phase-gated oscillatory drive + first-order vagal modulation
+Physiological basis: Respiratory brainstem (preBötzinger → NTS → nucleus ambiguus)
+                      → vagus → SA node M₂ muscarinic ↓HR
+```
+
+**Physiological Basis**: Respiration gates vagal efferent outflow at the brainstem level. During inspiration, the preBötzinger complex and NTS suppress cardiac vagal preganglionic neuron activity → vagal withdrawal → HR accelerates. During expiration, vagal outflow resumes → HR decelerates. This respiratory-gated vagal modulation produces RSA — a 5-15 bpm oscillation in HR locked to breathing frequency. RSA amplitude (A_RSA) is the gold-standard measure of cardiac vagal tone.
+
+**Used By**:
+| Candidate | Application | Clinical Domain |
+|:----------|:-----------|:----------------|
+| respiratory-sinus-arrhythmia-PINN (proposed — gap_analysis 0.92) | Patient-specific vagal parameter inference from 5-min ECG + respiratory/EDR | DAN, post-COVID dysautonomia, HF, COPD, OSA, panic disorder |
+
+**Why It Is Unique**: First respiratory/cardiopulmonary kernel — no prior kernel models respiratory mechanics or respiratory-gated cardiac modulation. All 10 prior kernels (K-001 through K-010) model either vestibular/somatic motor or cardiovascular hemodynamics — this is the FIRST kernel connecting the respiratory and cardiac systems. Also the first oscillator-with-threshold kernel (sin² inspiratory waveform, expiratory decay), distinct from all existing first-order-relaxation kernels.
+
+**Structural Analog Check — ODE-2 vs K-009**: ODE-2 (Vagal HR modulation) is a structural analog to K-009's PNS kernel — same vagal efferent pathway (PNS → M₂ muscarinic → SA node), same first-order relaxation dynamics (`dp/dt = −(p − V₀)/τ`). The differences: (a) K-009 PNS is driven by spontaneous baroreflex fluctuations, (b) K-011 ODE-2 is driven by respiratory phase-gated vagal withdrawal — fundamentally different input modality (phase-gated vs amplitude-modulated). Classification: **Structural Analog**, NOT direct kernel match.
+
+**Transfer Learning Notes**:
+- ODE-1: Novel oscillator — no prior architecture to transfer from
+- ODE-2: Structural analog to K-009 — K-009 provides weak architecture initialization for the first-order dynamics head, but parameter ranges differ (τ_vagal [0.5-2]s vs τ_PNS [0.5-3]s)
+- Clinical data is ABUNDANT — PhysioNet 50+ datasets with simultaneous ECG+respiratory
+- EDR (ECG-derived respiration) from single-lead ECG is validated — zero additional hardware
+
+**Score Impact**:
+| Shared Component | Feasibility Impact | Novelty Impact |
+|:----------------|:------------------:|:--------------:|
+| K-009 structural analog (architecture, not weights) | +0.05 Architecture Design | No change — distinct oscillator+phase-gated modulation |
+| Unique ODE-1 (K-011 respiratory oscillator) | No change | Full novelty preserved |
+| Abundant clinical data (PhysioNet 50+ datasets) | +0.10 Feasibility | No change |
+| Zero new equipment (EDR from single-lead ECG) | +0.10 Clinical Translation | No change |
+| Built-in frequency-domain DC/AC anchor | +0.10 Parameter Identifiability | No change |
+
+**Cross-ODE Scaling Confound**: Partial additive confound — A_RSA (modulation amplitude) and V0 (baseline tone) both scale p(t). Resolved by **built-in frequency-domain decomposition** — V0 governs DC (zero-frequency mean vagal tone), A_RSA governs AC (at respiratory frequency). No external measurement needed. This is the most clinically practical confound resolution of any cardiovascular candidate — the frequency anchor comes from the SAME ECG recording, not an additional test.
+
+## Kernel Matching Procedure
+
 When designing a new candidate's architecture:
 1. Compare ODE-1 state variables, parameters, and equations against K-001 through K-00N
 2. Match is confirmed when: (a) at least 2 state variables match, (b) equation structure is identical up to parameter names, (c) parameter ranges overlap
@@ -289,8 +577,138 @@ The VSI kernel's parameter tau_VS can now be tested across multiple clinical dom
 | UVL compensation | VestibularCompensation-ODE | tau_VS asymmetry (directional preponderance) | Recovery prediction |
 | Concussion visual-vestibular coupling | VOR-OKR-Coupling-PINN | tau_VS elevation + w_V→O elevation | Return-to-play decision |
 | Meniere's vs dehiscence | caloric-test-response-ODE | tau_VS from caloric nystagmus decay + tau_therm from thermal rise time | Differential diagnosis |
-| Otolith dysfunction | VestibularCollicReflex-PINN (confirmed) | g_VCR asymmetry during head tilt (G_total asymmetry >25%) | Saccular hydrops screening (ROC AUC ≥ 0.80) |
+| Otolith dysfunction | VestibularCollicReflex-PINN (completed — knowledge_entry 0.82) | g_VCR asymmetry during head tilt (G_total asymmetry >25%) | Saccular hydrops screening (ROC AUC ≥ 0.80) |
 
 The CupulaDeflection-PINN adds an independent axis of inference — not tau_VS (central), but tau_cupula (peripheral) — enabling multi-scale vestibular diagnostics: peripheral sensory transducer vs central neural integrator. The caloric-test-response-ODE further adds a second peripheral (thermophysical) axis — tau_therm (heat transfer dynamics) and beta (thermal-to-mechanical coupling) — enabling tri-level diagnostics: thermophysical (outer) → mechanical (middle) → neural (inner).
 
 The VestibularCollicReflex-PINN adds a FOURTH axis — otolith-mediated transduction — completing canal + otolith + thermal coverage of the peripheral vestibular system. This enables multi-parameter diagnostic frameworks that simultaneously assess canal function (VOR gain, VSI time constant), otolith function (VCR gain asymmetry), and thermal dynamics (caloric rise time).
+
+### K-012: Cerebrovascular Resistance Dynamics (cerebral-autoregulation-PINN — Completed)
+
+**Status**: ✅ **KNOWLEDGE_ENTRY** — completed cycle-155 (2026-06-21). Full pipeline done: literature_scan (22/25, feasibility 4/5, ABSOLUTE_WHITE) → gap_analysis (0.84) → hypothesis_generation (0.88) → knowledge_entry (0.88, T2 PASS). K-012 now a registered kernel. Queue EMPTY — all 17 candidates processed (16 full + 1 cancelled). Entire pipeline complete across 6 physiological domains.
+
+**Definition**: First-order myogenic resistance regulation model of cerebral arterioles, driven by cerebral perfusion pressure (CPP) through a Lassen-curve sigmoid, coupled with a dual-input metabolic/neurogenic modulation ODE. First cerebrovascular kernel — branching from cardiovascular hemodynamics (K-010) to the BP→CBF closed-loop.
+
+**Mathematical Formulation**:
+```
+ODE-1 (Cerebrovascular resistance dynamics):
+  State:      R(t) [mmHg·s/mL] — cerebrovascular resistance
+  Parameters: τ_R [3, 30]s — myogenic time constant
+              R₀ [0.5, 2.0] mmHg·s/mL — baseline resistance
+              α [0.1, 0.5] — autoregulatory gain (sigmoid slope)
+  Dynamics:   dR/dt = (R₀ · f(CPP(t)) − R(t)) / τ_R
+              where CPP(t) = MAP(t) − ICP(t) (ICP ≈ 10 mmHg assumed)
+              f(CPP) = 1 / (1 + exp(−α · (CPP − CPP₅₀)))  (Lassen sigmoid)
+              CPP₅₀ ≈ 75 mmHg
+
+ODE-2 (Metabolic/neurogenic modulation):
+  State:      M(t) [unitless] — active modulation factor
+  Parameters: τ_M [5, 60]s — metabolic time constant
+              β [0.2, 0.8] — CO₂ reactivity gain
+              γ [0.1, 0.5] — neurovascular coupling gain
+  Dynamics:   dM/dt = (β · CO₂(t) + γ · CMRO₂(t) − M(t)) / τ_M
+
+CBF Output:
+  CBF(t) = (MAP(t) − ICP(t)) / (R(t) · M(t)) [mL/100g/min]
+  Measured by TCD (MCA CBFV [cm/s], transtemporal 2MHz)
+
+PINN target: infer τ_R, R₀, α, τ_M, β, γ from spontaneous or induced BP+TCD oscillations
+(BP from arterial line/Finapres + TCD CBFV, dual-observable)
+```
+
+**Physiological Basis**: Lassen curve (1959) — cerebral autoregulation maintains constant CBF across CPP 50-150 mmHg via pial arteriolar myogenic constriction/dilation. CO₂ reactivity (β) reflects vasodilatory capacity of cerebral resistance vessels. Neurovascular coupling (γ) links neural activity to CBF increase. The system is a BP→CBF closed-loop that closes the cardiovascular feedback hierarchy: sinoatrial node (K-009) → baroreflex BP→HR (K-010) → RSA cardiopulmonary (K-011) → CA BP→CBF (K-012).
+
+**Structural Analog Check — ODE-1 vs K-010**: Both are first-order relaxation toward a BP-dependent target. K-010 (Windkessel): dP/dt = (CO/C − P/(R·C)) — linear pressure dynamics. K-012 (CA): dR/dt = (R₀·f(CPP) − R)/τ_R — sigmoid-modulated resistance dynamics. **Classification**: Structural Analog — same mathematical family (first-order relaxation), different state variable (R vs P), different input function (sigmoid vs linear). Transfer learning: architecture weights for first-order dynamics head may transfer weakly, but the sigmoid input creates a different gradient landscape requiring rescaling.
+
+**Used By**:
+| Candidate | Application | Clinical Domain |
+|:----------|:-----------|:----------------|
+| cerebral-autoregulation-PINN (proposed — gap_analysis 0.84) | Patient-specific CA parameter inference from TCD+BP | TBI (2.5M/yr US), stroke, SVD, dementia, post-COVID, hypertension |
+
+**Why It Is Unique**: First cerebrovascular kernel — all 11 prior kernels (K-001 through K-011) model oculomotor/vestibular, autonomic, or cardiovascular systems. CA is a fundamentally different physiological compartment (cerebral vs systemic circulation). The Lassen curve sigmoid is a unique non-linear input function not present in any prior kernel (all prior kernels use linear, exponential, or threshold inputs). Also: **best multi-scale profile of any candidate (GREEN 2-20×)** and **strongest data position in the 17-candidate pipeline (MIMIC-III 40K+ ICU patients)**.
+
+**Cross-ODE Confound**: 🔴 Multiplicative R×M confound — both ODEs output into CBF = CPP / (R·M). Only the product R·M is identifiable from CBF alone. **Mitigation**: frequency-domain decomposition (myogenic >0.1 Hz vs metabolic <0.05 Hz) provides a built-in anchor — same paradigm as K-009's LF/HF and K-011's DC/AC decomposition, NO external measurement needed. Parameter Identifiability: 0.75 spontaneous, 0.90 with CO₂ challenge.
+
+**Transfer Learning Notes**:
+- ODE-1: Structural analog to K-010 (first-order relaxation) — weak architecture initialization possible
+- ODE-2: Dual-input metabolic modulator — NO prior kernel with this structure
+- Clinical data is the MOST ABUNDANT of any candidate — MIMIC-III (40K+ ICU patients with continuous ABP, often TCD) provides 10-100× more training data than any prior cardiovascular candidate
+- TCD is non-invasive, FDA-cleared, standard in neuro-ICU (50K+ US units)
+- PINN architecture: ~195K params (4× FC [128-256-256-128] + 3× ResBlock)
+
+**Score Impact**:
+| Shared Component | Feasibility Impact | Novelty Impact |
+|:----------------|:------------------:|:--------------:|
+| K-010 structural analog (ODE-1, first-order) | +0.05 Architecture Design | No change — distinct cerebrovascular domain |
+| Unique ODE-2 dual-input metabolic modulator | No change | Full novelty preserved |
+| MIMIC-III 40K+ ICU patients (strongest data position) | +0.10 Feasibility | No change |
+| Zero new equipment (TCD standard in neuro-ICU) | +0.10 Clinical Translation | No change |
+| Built-in frequency-domain R×M confound anchor | +0.10 Parameter Identifiability | No change |
+| GREEN multi-scale (2-20× — best profile) | +0.05 Model Complexity | No change |
+
+**Clinical Impact**: TBI (2.5M/yr US — NO quantitative CA biomarker for bedside outcome prediction). Current standard (PRx) is a moving correlation, not a model-based parameter. CA PINN fills this gap with τ_R (myogenic speed), R₀ (baseline resistance), and α (autoregulatory integrity) — all from standard NICU TCD+BP monitoring. Stroke, SVD, dementia, post-COVID, and hypertension add 150M+ US addressable patients.
+
+**Recommended Primary Hypothesis (from gap_analysis)**:
+
+**H1: τ_R as TBI Outcome Prediction Biomarker** (composite 0.87, HIGHEST)
+- τ_R from single 5-min TCD+BP recording within 24h of NICU admission predicts 6-month GOS-E outcome (ROC AUC ≥ 0.82)
+- Most identifiable parameter (5/5 stars) — directly measurable from myogenic band (>0.1 Hz)
+- Addresses highest clinical urgency: 2.5M/yr US TBI with NO quantitative CA biomarker
+
+### K-013: Cochlear Traveling Wave + Hair Cell Transduction (cochlear-mechanics-PINN — in progress)
+
+**Status**: 🔶 **HYPOTHESIS_GENERATION** — completed cycle-158 (2026-06-21). 3/4 pipeline steps done: literature_scan (22/25, CANDIDATE, feasibility 4/5, ABSOLUTE_WHITE) → gap_analysis (0.87, T2 PASS) → hypothesis_generation (0.91, T2 PASS). Next step: knowledge_entry. K-013 now a registered kernel — first auditory kernel in the Synthos catalog.
+
+**Definition**: 2-ODE+PINN system modeling basilar membrane traveling wave mechanics (second-order acousto-mechanical oscillator, structural analog to K-003 cupula) coupled with hair cell transduction and adaptation dynamics (unique ODE-2), enabling patient-specific cochlear mechanical parameter inference from non-invasive clinical measurements (audiogram + DPOAE + ABR wave I).
+
+**Mathematical Formulation**:
+```
+ODE-1 (Basilar Membrane Traveling Wave):
+  State:      x(f,t) [nm] — BM displacement at characteristic frequency f at time t
+  Parameters: ω_res [100, 20000] Hz × 2π — resonance frequency (tonotopic mapping)
+              Q [5, 20] — mechanical quality factor
+              k_gain [0.1, 1.0] — stapes-to-BM pressure transfer efficiency
+              α_comp [0.2, 0.6] — OHC compressive nonlinearity exponent
+  Dynamics:   d²x/dt² + (ω_res/Q)·dx/dt + ω_res²·x =
+              k_gain·P(t)·(1 + α_comp·|x|^(α_comp-1))⁻¹
+  Note:       Second-order damped oscillator with compressive nonlinearity,
+              structurally analogous to K-003 but distributed across ~30K
+              spatial elements (tonotopic frequency-position mapping)
+
+ODE-2 (Hair Cell Transduction + Adaptation):
+  State:      y(t) [mV] — IHC receptor potential
+              g_OHC(t) [—] — OHC slow electromotile gain
+              a(t) [—] — neurotransmitter adaptation
+  Parameters: g_gain [0.1, 1.0] — BM displacement → IHC potential transduction
+              τ_a [1, 50] ms — IHC/ANF adaptation time constant
+              τ_OHC [10, 100] ms — OHC electromotility response time
+              H_sat [0.5, 1.0] — OHC saturation fraction
+              y_sat [10, 40] mV — IHC saturation threshold
+  Dynamics:   dy/dt = (g_gain·H(x/f_sat) − y) / τ_a
+              dg_OHC/dt = (G₀·|x|·s(x) − g_OHC) / τ_OHC
+              da/dt = (α·y/(y+y₅₀) − a) / τ_adapt
+
+PINN target: infer ω_res(f), Q(f), k_gain(f), g_gain, τ_a, g_OHC(f)
+             from audiogram + DPOAE + ABR wave I
+```
+
+**Physiological Basis**: The basilar membrane (BM) is a frequency-tuned mechanical waveguide — high frequencies at the base, low frequencies at the apex (tonotopy, Greenwood 1961). Sound enters via stapes footplate, creating a traveling wave that peaks where BM resonant frequency = stimulus frequency. Outer hair cells (OHCs) provide active amplification (cochlear amplifier, ~40 dB gain) via electromotility — the OHC lateral wall contracts/depolarizes at acoustic frequencies, pumping energy into the BM. Inner hair cells (IHCs) transduce BM displacement into receptor potentials that trigger auditory nerve fiber (ANF) firing. OHC degeneration is the primary pathomechanism of presbycusis (30M US 65+). Cochlear synaptopathy (hidden hearing loss, ~15% young adults) involves ANF synapse loss with preserved OHC function — detectable only via ABR wave I amplitude reduction.
+
+**Used By**:
+| Candidate | Application | Clinical Domain |
+|:----------|:-----------|:----------------|
+| cochlear-mechanics-PINN (in progress — hypothesis_generation 0.91) | Patient-specific cochlear parameter inference from audiogram+DPOAE+ABR | Presbycusis (30M US), hidden hearing loss (15%), NIHL (24M exposed), Meniere's, CI optimization (150K) |
+
+**Why It Is Unique**: First auditory kernel — all 12 prior kernels (K-001 through K-012) model oculomotor/vestibular or cardiovascular/autonomic/cerebrovascular systems. Cochlear mechanics operates at acoustic frequencies (100-20,000 Hz) — 3-6 orders of magnitude faster than any prior kernel. Two unique challenges:
+1. **RED multi-scale (2000×)**: BM oscillation at 20 kHz (50 μs) vs OHC adaptation (100 ms) — worst in 18-candidate pipeline. Resolution: dual-encoder PINN + envelope loss.
+2. **3-way multiplicative confound**: k_gain × g_gain × g_OHC → ABR amplitude. Resolution: DPOAE isolates g_OHC, audiogram isolates k_gain, ABR isolates g_gain.
+
+**Structural Analog — K-003 vs K-013**: Both are second-order underdamped oscillators. K-003: single lumped canal pendulum. K-013: distributed acoustic waveguide. Architecture-level transfer possible (+0.05 Feasibility). K-013 ODE-2 is entirely novel (no prior kernel matches hair cell transduction).
+
+**Recommended Primary Hypothesis**: H1: τ_OHC as Presbycusis Progression Biomarker (0.89) — DPOAE-only 5-min test for 30M US age-related HL, zero existing progression biomarker.
+
+**Transfer Learning Notes**:
+- ODE-1 structural analog to K-003: architecture-level weight transfer possible (second-order ODE encoder), requires τ-normalization layer (3-6 orders faster)
+- ODE-2: NO prior kernel matches — entirely new structure
+- Synthetic data: classical BM models (Zweig 1991, Neely 1987) provide analytical ground truth for PINN pre-training
+- Clinical data: NHANES (10K+), UK Biobank hearing (250K+), DPOAE subset (~2K), ABR limited to clinical studies`
