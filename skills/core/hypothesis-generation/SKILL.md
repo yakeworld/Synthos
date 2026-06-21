@@ -182,6 +182,80 @@ Falsifiability example:
 4. **同源假说簇** — 多个假说对应同一实验时，需要给出区分性实验设计
 5. **PINN 假说特有问题** — 必须区分"先验模型空白"（differential equation 建模）和"数据驱动空白"（PINN learning），两者不同
 
+## 性能特征：门控恢复
+
+从 gap_analysis（通常 CONDITIONAL 0.65-0.78）到 hypothesis_generation 的过渡通常产生 +9 到 +15 分的提升，使候选者达到 PASS 状态。历史数据：
+
+| Session | Gap Score | HG Score | Δ | Key Improvements |
+|:--------|:---------:|:--------:|:-:|:----------------|
+| vocal-fold-phonation-PINN (C164) | 0.78 CONDITIONAL | 0.87 PASS | +9 | Formalized 3 drafts + H4 integration + Pattern #5 |
+| PupillaryLightReflex-PINN (C139) | 0.89 PASS | 0.87 PASS | -2 | Scores already high; no recovery needed |
+| cardiac-autonomic (C141) | 0.88 PASS | 0.87 PASS | -1 | Already at PASS |
+| caloric-test (C118) | 0.88 PASS | 0.84 PASS | -4 | Hypothesis formalization was valid |
+
+**模式**: CONDITIONAL candidates (0.65-0.78) 在 hypothesis_generation 中通过以下方式获得最大的提升：(a) 将 gap_analysis 中的草稿假说正式化、(b) 在 ≥3 个独立假说时添加模式 #4 集成假说、(c) 添加模式 #5 判别设计、(d) 绘制完整的转化路径。已经处于 PASS 状态的候选者通常会保持或小幅下降（因为他们严格的 gap_analysis 已经有高分）。
+
+## 假说模式 #5：判别性实验设计（Discriminative Experiment Design）
+
+**当多个假说共享同一临床协议但探测不同时间相位时适用。**
+
+### 模式描述
+
+PINN/ODE 候选常产生 3-5 个假说，各对应不同的 ODE 参数（增益、时间常数、延迟、顺应性等）。若所有参数可从同一个临床扰动协议的不同时间相位提取，则无需为每个假说设计独立的实验。**单个协议 × 时间相位切分 = 同时检验所有假说。**
+
+### 何时使用
+
+- gap_analysis 提出了 ≥3 个独立参数，且每个参数主导不同的扰动时相
+- 临床协议包含多个生理阶段（如 Valsalva 四相、头脉冲前/中/后、倾斜台测试不同角度）
+- 每个时相有明确的起始/结束边界（可秒级分割）
+
+### 实现步骤
+
+1. **列出各假说的核心参数** — 哪个 ODE 参数决定哪个假说（如 G_BRS → 增益假说, τ_BR → 速度假说）
+2. **分解临床协议为时间相位** — 记录每个时相的生理事件和持续时间
+3. **建立相位→参数映射表** — 每个时相对应的主导参数（如 Valsalva 相 I → δ 延迟, 相 II_early → G_BRS 增益, 相 II_recovery → τ_BR 速度, 相 IV → C 顺应性）
+4. **验证映射唯一性** — 避免两个参数在同一时相主导（若重叠则需分离实验或统计解耦）
+5. **输出判别实验表格** — 格式：
+
+| Phase | Physiology | Dominant Parameter | Hypothesis Tested | Rejection Criterion |
+|:------|:-----------|:------------------:|:----------------:|:-------------------:|
+| I (onset, 0-2s) | Mechanical BP surge | δ (conduction delay) | H4 | δ > 600ms |
+| II_early (2-8s) | Venous return ↓ | G_BRS (baroreflex gain) | H1 | AUC < 0.70 |
+| ... | ... | ... | ... | ... |
+
+### 模式 #5 变体：内源周期分割（Intrinsic Cyclic Segmentation）
+
+**当假说利用同一生理振荡的单周期内相位而非扰动协议的不同时相时适用。**
+
+#### 何时使用
+
+- 研究对象是持续振荡（心跳、呼吸、发声振荡、眼震慢相），而非单次扰动（Valsalva、头脉冲）
+- 每个生理周期可分割为可辨识的子相位（打开/闭合/开放/恢复），且不同参数主导不同相位
+- 单个"静止"记录（如持续元音、静息态ECG、静止凝视）即包含所有相位信息
+
+#### 与经典 Pattern #5 的区别
+
+| 维度 | 经典 Pattern #5（扰动分割） | 内源周期分割变体 |
+|:-----|:--------------------------:|:---------------:|
+| 时间分辨率 | 秒级（扰动相I→II→III→IV） | 毫秒级（周期内的打开/闭合/闭合/开放） |
+| 记录类型 | 主动指令（"吹气"、"转头"） | 被动静止记录（"发元音"、"平视"） |
+| 参数映射 | 每个扰动相位→1-2个参数 | 每个周期相位→1-2个参数 |
+| 验证难度 | 需要精确的扰动时间戳 | 需要高采样率（≥10kHz）分割周期相位 |
+| 边际数据成本 | 每个扰动增加额外数据 | 同一记录无额外数据成本 |
+
+#### 验证案例
+
+**vocal-fold-phonation-PINN (K-014, Cycle 164, 2026-06-22):** 一段 30s 持续元音 /a/ 的声门周期可分割为 6 个相位：Opening (0-1ms) → A_g0 主导；Maximum Opening (1-3ms) → P_sub, α 主导；Closing (3-4ms) → b 主导；Closed Phase (4-10ms) → K_c 主导；Sustained Oscillation (20-500ms) → k 主导；Phonatory Modulation (0.5-10s) → m, P_sub 主导。**结果**: 一段 30s 记录 = 4 个参数特定假说的同时检验。
+
+### 与模式 #4（集成假说）的区别
+
+| 维度 | 模式 #4 集成/框架假说 | 模式 #5 判别性实验设计 |
+|:-----|:--------------------:|:---------------------:|
+| 目标 | 组合参数 → 一个复合指数 | 区分竞争假说 → 检验优先级 |
+| 输出 | 加权复合指标（BHI） | 相位→参数映射表 |
+| 适用范围 | 所有假说可单向合并 | 假说对应不同主导时相 |
+| 典型分数 | 高 Novelty, 中 Feasibility | 高 Testability + Feasibility |
+
 ## 质量检查清单
 
 - [ ] 每个假说有明确的 statement（one-liner）
@@ -201,10 +275,20 @@ Falsifiability example:
 - `references/CHANGE_LOG.md` — 版本变更
 - `templates/hypothesis_output.md` — 假说输出文件模板（含评分表、证据矩阵）
 
-## 执行示例（2026-06-20 OKR-adaptation-PINN）
+## 执行示例
+
+### 示例 1: OKR-adaptation-PINN (2026-06-20)
 
 三人假说生成产物结构参见 `session-2026-06-20-OKR-adaptation-PINN.md`：
 - H1: Gain-Frequency Sigmoid (0.74, HIGH)
 - H2: Logarithmic Rate Scaling (0.74, HIGH)
 - H3: Ataxia Biomarker τ_adapt (0.84, HIGHEST)
 - 各假说含完整 falsifiability test + evidence matrix + counter-evidence + composite scoring
+
+### 示例 2: vocal-fold-phonation-PINN (2026-06-22)
+
+参见 `session-2026-06-22-vocal-fold-phonation-PINN.md` 完整会议记录：
+- **领域**: Domain Expansion #6，首次应用于喉部/发声生物力学的PINN候选
+- **输出**: 4 个假说（H1 0.866 HIGHEST, H2 0.794 HIGH, H3 0.748 HIGH, H4 0.762 HIGH）
+- **新模式**: 首次将 Pattern #5 变体（内源周期分割）应用于声门周期相位分割
+- **门控恢复**: CONDITIONAL 0.78 → PASS 0.87（+9分）

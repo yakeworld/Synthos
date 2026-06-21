@@ -84,6 +84,10 @@ metadata:
 - ⚠️ **PDF源静默失败**: `notebooklm source add file.pdf` 可能返回 `status: error` 且无stderr提示。检测方式: 立即 `notebooklm source list`，若状态为error则回退到 `pdftotext file.pdf -` 提取文本后以 `--type text` 上传
 - ⚠️ **Security Scan拦截混合语言Prompt**: `notebooklm ask` 在Prompt含中文字符时可能触发confusable Unicode安全扫描（HIGH级别，`tirith:confusable_text`）。解决方式: 使用纯英文ASCII Prompt发送
 - ⚠️ **Source状态不一致**: 刚上传的source可能 `list` 返回空列表（API缓存未刷新），重试2-3次后通常会恢复
+- ⚠️ **Google服务网络不可达**: 在受限网络环境下（如无外网代理的服务器），`notebooklm list` 等命令会在 CSRF token 获取阶段抛出 `httpx.ConnectTimeout`。诊断方法：
+  1. `curl --connect-timeout 10 -s -o /dev/null -w "%{http_code}" https://notebooklm.google.com` — 返回 000 说明不可达
+  2. `curl --connect-timeout 10 -s -o /dev/null -w "%{http_code}" https://httpbin.org/ip` — 返回 200 说明其他互联网可达但 Google 被阻断
+  3. 此时使用 Manual Fallback 方案代替 NotebookLM 执行 Layer B
 
 完整陷阱列表见 `references/notebooklm-cli-pitfalls.md`。
 
@@ -94,3 +98,21 @@ metadata:
 ## Layer B 质检流程
 
 Layer B 论文质量审计的完整工作流见 `references/layer-b-audit-workflow.md`。涵盖：项目创建→源上传（PDF/引用/质量报告）→纯英文ASCII Prompt发送→评分阈值判定→**pipeline state cross-validation（检测false positive）**→报告归档。
+
+### Fallback: Manual Layer B (当 NotebookLM 不可达时)
+
+当 `notebooklm list` 或 `notebooklm doctor` 显示网络连通性故障（如 `httpx.ConnectTimeout`，`curl` 返回 000），且无法通过代理恢复对 `notebooklm.google.com` 的访问时：
+
+1. **不要放弃 Layer B** — 使用 paper 的全文进行人工质量评估
+2. **获取文本**：`pdftotext <paper-dir>/paper.pdf - | head -c 50000` — 提取全部可读文本
+3. **评估五个维度**：
+   - 原创性/重要性 — 检查 gap claim（ABSOLUTE WHITE 是否可信）、临床相关性
+   - 方法学严谨性 — 检查 ODE/PINN 公式完整性、指标适当性、消融实验设计
+   - 结果可信性/可复现性 — 检查是否提供完整参数、有无代码链接、有无置信区间
+   - 文献引用质量 — 依赖 D8/D10a 扫描数据（非 NotebookLM 评估）
+   - 写作/结构 — IMRaD 完整性、清晰度
+4. **按 `references/layer-b-audit-template.md` 编写报告**
+5. **保存到 `<paper-dir>/07-quality/layer-b-report.md`**
+6. **阈值不变**：≥0.85=T1, 0.75-0.84=T2, <0.75=不通过
+
+详见 `references/layer-b-manual-fallback.md`。
