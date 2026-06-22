@@ -1,0 +1,338 @@
+{
+  "version": "1.0.0",
+  "generated": "2026-06-23",
+  "total_projects": 17,
+  "categories": {
+    "absorbed": "方法论已注入技能体系",
+    "methodology_only": "仅吸收方法论/思想，无代码注入",
+    "analyzed_pending": "已深度分析，待执行吸收"
+  },
+  "projects": [
+    {
+      "name": "AutoResearchClaw",
+      "source": "aiming-lab/AutoResearchClaw",
+      "url": "https://github.com/aiming-lab/AutoResearchClaw",
+      "stars": 12038,
+      "license": "MIT",
+      "absorbed_at": "2026-05-10",
+      "category": "absorbed",
+      "capabilities_absorbed": [
+        "引用验证四层架构 → knowledge-acquisition 增强",
+        "LaTeX 输出模板 → 创建 latex-output 技能"
+      ],
+      "targets": ["knowledge-acquisition", "latex-output"],
+      "record_location": "skill-absorption/references/absorption-analysis-autoresearchclaw.md",
+      "p0_absorbed": true,
+      "pending": ["结构化知识库(6类KB)", "Lesson进化增强", "新颖性检查"]
+    },
+    {
+      "name": "ARS / Academic-Research-Skills",
+      "source": "Imbad0202/academic-research-skills",
+      "url": "https://github.com/Imbad0202/academic-research-skills",
+      "stars": 6358,
+      "license": "CC BY-NC 4.0",
+      "absorbed_at": "2026-05-13",
+      "category": "absorbed",
+      "capabilities_absorbed": [
+        "反谄媚门控 → viewpoint-verification",
+        "5类幻觉分类法 → knowledge-acquisition CITATION_VERIFICATION.md",
+        "数据访问分级 P6 → CONSTITUTION.md",
+        "进化引擎 PROBE 检查项 → evolution"
+      ],
+      "targets": ["viewpoint-verification", "knowledge-acquisition", "CONSTITUTION.md", "evolution"],
+      "record_location": "skill-absorption/references/ars-case-study-deep-structural-absorption.md",
+      "p0_absorbed": true,
+      "pending": ["Material Passport Schema", "Sprint Contract", "跨模型验证"]
+    },
+    {
+      "name": "Claude Code",
+      "source": "anthropics/claude-code",
+      "url": "https://github.com/anthropics/claude-code",
+      "stars": 123000,
+      "license": "Proprietary",
+      "absorbed_at": "2026-05-16 / 2026-06-03",
+      "category": "methodology_only",
+      "capabilities_absorbed": [
+        "Hook 事件规范 → evolution 引擎 v2.3→v2.4",
+        "触发条件+验证清单规范 → project-experience-distillation L1",
+        "哲学免疫系统 → CONSTITUTION.md",
+        "Karma moderation → quality-gate (待注入)",
+        "Assertion-based reliability → falsification-validation (待注入)"
+      ],
+      "targets": ["evolution", "project-experience-distillation", "CONSTITUTION.md"],
+      "record_location": "evolution/absorption-claude-code-phase2.md",
+      "p0_absorbed": true,
+      "pending": ["Karma 门注入", "Assertion 门注入"]
+    },
+    {
+      "name": "ARIS",
+      "source": "wanshuiyin/Auto-claude-code-research-in-sleep",
+      "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep",
+      "stars": 9300,
+      "license": "未标注（方法论可吸）",
+      "absorbed_at": "2026-06-03",
+      "category": "methodology_only",
+      "capabilities_absorbed": [
+        "Cross-model adversarial review → quality-gate 对抗评审子门",
+        "Research Wiki 持久知识库概念 → knowledge-extraction",
+        "13 named workflows(W1-W6) → paper-pipeline 备用分类"
+      ],
+      "targets": ["quality-gate", "knowledge-extraction"],
+      "record_location": "evolution/absorption-aris.md",
+      "p0_absorbed": true,
+      "pending": ["Meta-optimize self-evolution", "Skill helper resolver", "ARIS-Monitor"]
+    },
+    {
+      "name": "OpenClaw",
+      "source": "openclaw/openclaw",
+      "url": "https://github.com/openclaw/openclaw",
+      "stars": 376897,
+      "license": "MIT",
+      "absorbed_at": "2026-06-05",
+      "category": "absorbed",
+      "capabilities_absorbed": [
+        "57 个技能合并入库",
+        "51 个新技能归一化导入 Synthos 格式",
+        "5 个技能合并且保留更完整者"
+      ],
+      "targets": ["Synthos 技能目录"],
+      "record_location": "evolution/absorption-merge-strategy-2026-06-05.md",
+      "p0_absorbed": true,
+      "pending": []
+    },
+    {
+      "name": "STORM",
+      "source": "stanford-oval/STORM",
+      "url": "https://github.com/stanford-oval/STORM",
+      "stars": 28000,
+      "license": "MIT",
+      "absorbed_at": "2026-05-15",
+      "category": "absorbed",
+      "capabilities_absorbed": [
+        "多视角角色生成 → ACQ 增强",
+        "知识策展协议 → ACQ→EXT→ASC 原子链"
+      ],
+      "targets": ["ACQ", "EXT", "ASC"],
+      "record_location": "skill-absorption/references/p0-deep-analysis-storm-sci-skills-ars.md",
+      "p0_absorbed": true,
+      "pending": ["Co-STORM 人机协作协议", "Knowledge Tree mind map"]
+    },
+    {
+      "name": "scientific-agent-skills",
+      "source": "K-Dense-AI/scientific-agent-skills",
+      "url": "https://github.com/K-Dense-AI/scientific-agent-skills",
+      "stars": 21000,
+      "license": "MIT",
+      "absorbed_at": "2026-05-15",
+      "category": "absorbed",
+      "capabilities_absorbed": [
+        "78 个数据库查找模式(纯API) → EXT 数据访问"
+      ],
+      "targets": ["EXT"],
+      "record_location": "skill-absorption/references/p0-deep-analysis-storm-sci-skills-ars.md",
+      "p0_absorbed": true,
+      "pending": []
+    },
+    {
+      "name": "AI-Research-SKILLs",
+      "source": "Orchestra-Research/AI-research-SKILLs",
+      "url": "https://github.com/Orchestra-Research/AI-research-SKILLs",
+      "stars": 8400,
+      "license": "MIT",
+      "absorbed_at": "2026-05-15",
+      "category": "absorbed",
+      "capabilities_absorbed": [
+        "双循环编排协议 → ROUTE+HYP+VER",
+        "ARA Compiler 协议 → ASC→VER"
+      ],
+      "targets": ["ROUTE", "HYP", "VER"],
+      "record_location": "skill-absorption/references/p0-deep-analysis-storm-sci-skills-ars.md",
+      "p0_absorbed": true,
+      "pending": ["ARA Research Manager", "ARA Rigor Reviewer"]
+    },
+    {
+      "name": "PaperSpine V2",
+      "source": "WUBING2023/PaperSpine",
+      "url": "https://github.com/WUBING2023/PaperSpine",
+      "stars": "unknown",
+      "license": "MIT",
+      "absorbed_at": "2026-06-05",
+      "category": "methodology_only",
+      "capabilities_absorbed": [
+        "Writing Rationale Matrix → paper-workflow 增加预写阶段",
+        "Motivation-First Gate → 写作前必须确认核心论点"
+      ],
+      "targets": ["paper-workflow"],
+      "record_location": "evolution/absorption-paperspine-v2.md",
+      "p0_absorbed": true,
+      "pending": ["Scene-Specific Profiles", "Artifact Checklist", "Dual Rewrite/Build Mode"]
+    },
+    {
+      "name": "patent-disclosure-skill",
+      "source": "handsomestWei/patent-disclosure-skill",
+      "url": "https://github.com/handsomestWei/patent-disclosure-skill",
+      "stars": "unknown",
+      "license": "Apache-2.0",
+      "absorbed_at": "2026-06-05",
+      "category": "absorbed",
+      "capabilities_absorbed": [
+        "专利点挖掘 → 创建 patent-disclosure 技能",
+        "技术揭示书模板生成",
+        "CNIPA 查新检索",
+        "自查清单验证门"
+      ],
+      "targets": ["patent-disclosure"],
+      "record_location": "evolution/absorption-patent-disclosure.md",
+      "p0_absorbed": true,
+      "pending": []
+    },
+    {
+      "name": "nature-paper2ppt",
+      "source": "GARCH-QUANT/garch-nature-paper2ppt",
+      "url": "https://github.com/GARCH-QUANT/garch-nature-paper2ppt",
+      "stars": 1,
+      "license": "MIT",
+      "absorbed_at": "2026-06-05",
+      "category": "absorbed",
+      "capabilities_absorbed": [
+        "Figure-first 布局规则 → nature-paper2ppt 技能",
+        "论文类型分类→演示逻辑"
+      ],
+      "targets": ["nature-paper2ppt"],
+      "record_location": "evolution/absorption-nature-paper2ppt.md",
+      "p0_absorbed": true,
+      "pending": []
+    },
+    {
+      "name": "autocontext",
+      "source": "greyhaven-ai/autocontext",
+      "url": "https://github.com/greyhaven-ai/autocontext",
+      "stars": 1144,
+      "license": "Apache-2.0",
+      "absorbed_at": "2026-06-05",
+      "category": "methodology_only",
+      "capabilities_absorbed": [
+        "improvement_loop_policy → CRYSTALLIZE 3次成功自动触发",
+        "knowledge_inheritance_contract → evolution-state inherited_knowledge 字段",
+        "trace_continuity → evolution-log kept/discarded 标记"
+      ],
+      "targets": ["evolution"],
+      "record_location": "evolution/absorption-autocontext-2026-06-05.md",
+      "p0_absorbed": true,
+      "pending": []
+    },
+    {
+      "name": "PaperDebugger",
+      "source": "PaperDebugger/paperdebugger",
+      "url": "https://github.com/PaperDebugger/paperdebugger",
+      "stars": 1479,
+      "license": "AGPL-3.0（仅方法论）",
+      "absorbed_at": "2026-06-05",
+      "category": "methodology_only",
+      "capabilities_absorbed": [
+        "Conference-style structured review → quality-gate Reviewer 子门",
+        "Section-level review → quality-gate 分段审核",
+        "verify_citations → P0 可验证引用链机制"
+      ],
+      "targets": ["quality-gate"],
+      "record_location": "evolution/absorption-paperdebugger-2026-06-05.md",
+      "p0_absorbed": true,
+      "pending": ["引用自动生成工具"]
+    },
+    {
+      "name": "Agent4S",
+      "source": "arXiv:2506.23692 (Zheng et al.)",
+      "url": "https://arxiv.org/abs/2506.23692",
+      "stars": 0,
+      "license": "arXiv preprint",
+      "absorbed_at": "2026-06-05",
+      "category": "methodology_only",
+      "capabilities_absorbed": [
+        "5级层级理论框架 → Synthos/SKILL.md 理论定位",
+        "Context Engineering 概念 → 作为 skill 设计的复用模式"
+      ],
+      "targets": ["Synthos SKILL.md"],
+      "record_location": "evolution/absorption-agent4s.md",
+      "p0_absorbed": true,
+      "pending": ["MCP 协议对齐", "A2A 协作扩展"]
+    },
+    {
+      "name": "GenericAgent",
+      "source": "lsdefine/GenericAgent",
+      "url": "https://github.com/lsdefine/GenericAgent",
+      "stars": 12156,
+      "license": "MIT",
+      "absorbed_at": "2026-05-27",
+      "category": "methodology_only",
+      "capabilities_absorbed": [
+        "事后技能结晶 → evolution engine RECORD 增强",
+        "种子→树增长模式 → evolution 起始设计原则"
+      ],
+      "targets": ["evolution"],
+      "record_location": "evolution/absorption-genericagent.md",
+      "p0_absorbed": true,
+      "pending": ["信息密度最大化 → quality-gate 评估标准"]
+    },
+    {
+      "name": "hermes-agent-self-evolution",
+      "source": "NousResearch/hermes-agent-self-evolution",
+      "url": "https://github.com/NousResearch/hermes-agent-self-evolution",
+      "stars": 3446,
+      "license": "MIT",
+      "absorbed_at": "2026-05-22",
+      "category": "methodology_only",
+      "capabilities_absorbed": [
+        "GEPA (Genetic-Pareto Prompt Evolution)",
+        "轨迹分析→失败归因方法论"
+      ],
+      "targets": ["evolution"],
+      "record_location": "evolution/absorption-hermes-self-evolution.md",
+      "p0_absorbed": true,
+      "pending": []
+    },
+    {
+      "name": "karpathy/autoresearch",
+      "source": "karpathy/autoresearch",
+      "url": "https://github.com/karpathy/autoresearch",
+      "stars": 18000,
+      "license": "MIT",
+      "absorbed_at": "2026-05",
+      "category": "absorbed",
+      "capabilities_absorbed": [
+        "自动研究循环概念 → research-ideation 技能"
+      ],
+      "targets": ["research-ideation"],
+      "record_location": "skill-absorption/references/awesome-auto-research-ecosystem-2026-05.md",
+      "p0_absorbed": true,
+      "pending": []
+    }
+  ],
+  "self_reflection": [
+    {
+      "name": "reflexive-abstraction",
+      "source": "竞赛项目工作区搭建经验",
+      "absorbed_at": "2026-05",
+      "category": "自我反射",
+      "description": "从搭建竞赛项目工作区的操作中提炼出'从经验中学习'的元能力",
+      "record_location": "skill-absorption/references/reflexive-abstraction-case-study.md"
+    },
+    {
+      "name": "project-experience-distillation",
+      "source": "多次项目经验",
+      "absorbed_at": "2026-05",
+      "category": "自我反射",
+      "description": "项目经验→技能提炼的通用方法",
+      "record_location": "skills/extended/meta/project-experience-distillation/SKILL.md"
+    }
+  ],
+  "tracked_but_not_absorbed": [
+    "microsoft/RD-Agent (13k⭐, quant/Kaggle, 不兼容范型)",
+    "SakanaAI/AI-Scientist (13.5k⭐, gap-fit 弱)",
+    "SakanaAI/AI-Scientist-v2 (8k⭐, BFTS 树搜索 P1 待评)",
+    "ResearAI/DeepScientist (800⭐, Findings Memory P1 待评)",
+    "Future-House/paper-qa / PaperQA2 (10k⭐, 科学RAG 追踪中)",
+    "assafelovic/gpt-researcher (27k⭐, 追踪中)",
+    "kaixindelele/ChatPaper (13k⭐, 追踪中)",
+    "dwzhu-pku/PaperBanana (200⭐, 多Agent图表生成 P2 待评)"
+  ]
+}
