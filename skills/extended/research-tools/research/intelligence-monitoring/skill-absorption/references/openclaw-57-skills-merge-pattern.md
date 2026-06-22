@@ -39,4 +39,4 @@
 - [ ] 新技能已导入
 - [ ] 格式已归一化
 - [ ] 吸收报告已写入
-- [ ] absorption-tracked.json 已更新
+- [ ] absorption-ledger.json 已更新 (统一台账: /media/yakeworld/sda2/Synthos/absorption-ledger.json)

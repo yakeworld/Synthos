@@ -5,8 +5,11 @@ Safe for Hermes cron environment — avoids tirith:curl_pipe_shell blocking.
 
 Usage:
   python3 pubmed-urllib.py "term"  → prints count + PMID list
-  python3 pubmed-urllib.py "term" "2024/01/01..2026/06/08" → date-filtered
+  python3 pubmed-urllib.py "term" "2024/01/01:2026/06/08" → date-filtered (use colon, not ..)
   python3 pubmed-urllib.py --abstract "PMID1,PMID2" → prints abstracts
+
+Note on date range: PubMed API uses colon (:) separator, not double-dot (..).
+The script auto-converts .. to : for backward compatibility.
 """
 import json
 import sys
@@ -19,7 +22,10 @@ def search(term, date_range=None, retmax=10):
     """Search PubMed and return count + PMID list."""
     query = term
     if date_range:
-        query += f' AND "{date_range}"[Date - Publication]'
+        # PubMed API requires colon separator (not ..) for date ranges
+        # Auto-convert ".." to ":" for backward compatibility
+        fixed_range = date_range.replace('..', ':')
+        query += f' AND {fixed_range}[Date - Publication]'
     safe_term = quote_plus(query, safe='')
     url = f"{BASE}esearch.fcgi?db=pubmed&term={safe_term}&retmax={retmax}&retmode=json"
     with urllib.request.urlopen(url, timeout=15) as r:

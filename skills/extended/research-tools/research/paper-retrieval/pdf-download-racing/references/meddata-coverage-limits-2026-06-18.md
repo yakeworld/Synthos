@@ -1,6 +1,12 @@
 # MedData Coverage Limits & 2026-06-18 Download Failures
 
-## Empirical Results (8 papers tested)
+## ⚠️ 该文件结论已过时（2026-06-23 校正）
+
+此文件生成时出口 IP (64.23.234.118) 被学术平台封锁，所有 CLI 测试均返回占位 PDF。
+**MedData 是外文医学论文平台**，CLI 路径通过 `download_one.py` 可正常下载外文全文。
+具体下载方法见 SKILL.md 的「实测流程 (2026-06-23 校正)」章节。保留此文件仅作历史记录。
+
+## Empirical Results (8 papers tested) — 旧数据
 
 ### Successful (1/8)
 

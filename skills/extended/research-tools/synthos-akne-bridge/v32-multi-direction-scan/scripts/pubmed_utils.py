@@ -1,26 +1,28 @@
 #!/usr/bin/env python3
-"""
+""""
 PubMed and OpenAlex utility functions with resilience against NCBI API instability.
 Used by v32-multi-direction-scan and paper-pipeline cron jobs.
 
+Available functions:
+    pubmed_count(query, retmax=50, retries=5)     -> (int count, [str titles])
+    fetch_title_via_esummary(pm_id)                -> str title
+    openalex_search(query, retmax=5)               -> (int count, [str titles])
+
 Usage:
-    # PubMed queries
-    from pubmed_utils import pubmed_count, pubmed_titles, pubmed_titles_safe
+    from pubmed_utils import pubmed_count, fetch_title_via_esummary, openalex_search
+
+    # PubMed search — returns (hit_count, [top_titles])
     count, titles = pubmed_count("intraocular pressure AND ODE AND glaucoma")
-    count, titles = pubmed_titles("accommodation reflex AND ODE", retmax=5)
+    print(f"Found {count} results")
+    for t in titles:
+        print(f"  - {t}")
 
-    # Single-title lookup
-    from pubmed_utils import fetch_title_via_esummary
+    # Single-title lookup via esummary
     title = fetch_title_via_esummary("33105416")
 
-    # OpenAlex queries (already available in this module)
-    from pubmed_utils import openalex_search
+    # OpenAlex search
     count, titles = openalex_search("periodic alternating nystagmus PINN")
-    # Returns: (count_int, [title_str, ...])
-    
-    # For title-only checks, use esummary (more reliable than eFetch):
-    from pubmed_utils import fetch_title_via_esummary
-    title = fetch_title_via_esummary("33105416")
+    # Returns: (count_int, [title_str, ...]) where count_int is results returned (≤retmax)
 """
 import urllib.request
 import urllib.error
@@ -67,7 +69,7 @@ def pubmed_count(query, retmax=50, retries=MAX_RETRIES):
         'retmode': 'json'
     })
     
-    err = None
+    err = "all_retries_exhausted"
     for attempt in range(retries):
         try:
             url = f"{base}?{params}"
@@ -108,7 +110,7 @@ def _fetch_titles_via_esummary(pm_ids, retries=MAX_RETRIES):
         'retmode': 'json'
     })
     
-    err = None
+    err = "all_retries_exhausted"
     for attempt in range(retries):
         try:
             url = f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?{params}"
@@ -140,7 +142,7 @@ def fetch_title_via_esummary(pm_id):
         'version': '2.0',
         'retmode': 'json'
     })
-    err = None
+    err = "all_retries_exhausted"
     for attempt in range(MAX_RETRIES):
         try:
             url = f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?{params}"
@@ -165,7 +167,7 @@ def openalex_search(query, retmax=5):
     encoded = urllib.parse.quote(query)
     url = f"https://api.openalex.org/works?search={encoded}&per_page={retmax}&select=id,title,abstract_inverted_index"
     
-    err = None
+    err = "all_retries_exhausted"
     for attempt in range(MAX_RETRIES):
         try:
             req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})

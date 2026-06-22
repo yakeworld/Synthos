@@ -4,9 +4,11 @@
 
 User confirmed "浏览器可以下载" MedData 论文（Barany Society 等），但 CLI curl 无法获取真实 PDF——全部返回占位文件（MD5=`fd469bd7cd29446f2800f099e3b71457`）或空响应。
 
-## Diagnosis
+## ❌ 已过时 — 参见 SKILL.md「实测流程 (2026-06-23 校正)」
 
-MedData web 界面使用 JavaScript 动态构建下载链接和会话管理，CLI curl 只能调用 REST API 端点（`full_look` → `viewtext`），无法模拟完整浏览器行为。
+CLI 路径通过 `download_one.py` 已可正常下载外文论文全文。
+旧结论"MedData不收录Western期刊"是出口IP被封锁导致的误判。
+此文件保留仅作历史记录。
 
 ### CLI 路径（已验证）
 

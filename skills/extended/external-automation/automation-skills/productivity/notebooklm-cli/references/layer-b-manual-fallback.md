@@ -105,6 +105,75 @@ These patterns emerged from manual Layer B reviews and should be checked in ever
 
 5. **Code availability claims** — Verify that any Code/Data Availability statement actually exists and points to a real repository.
 
+## Cron-Specific Workflow Considerations
+
+When running Layer B as a **headless cron job** (no user present), three additional constraints apply:
+
+### A. Auth Expiry Detection
+NotebookLM browser profiles expire after ~7-14 days. In a cron job:
+```bash
+notebooklm list 2>&1 | grep -q "Not authenticated"
+# → auth is dead, fall back to manual
+```
+The curl check (`302 from notebooklm.google.com`) confirms Google is reachable but does NOT confirm NotebookLM auth is valid. These are independent. **Detection matrix for cron:**
+
+| `notebooklm list` | `curl` to Google | Diagnosis | Action |
+|:-----------------|:-----------------|:----------|:-------|
+| Success | 302 | ✅ Full access | Use normal flow |
+| "Not authenticated" | 302 | ⚠️ Auth expired, service reachable | Cannot login in cron → **Manual Fallback** |
+| Timeout/error | 000 | ❌ Network blocked | **Manual Fallback** |
+
+**Key lesson (2026-06-22)**: Browser profile `storage_state.json` exists but cookies expire. Do NOT assume a saved profile is still valid — verify with a real API call first. When auth is dead in cron, skip the login attempt (it requires interactive browser) and go straight to manual fallback.
+
+### B. Agent-Log Append Protocol (Critical Pitfall)
+`agent-log.md` is an **append-only** file maintained by multiple cron jobs (autonomous-core-researcher, paper-repair, paper-layer-b-review, etc.). **NEVER overwrite it with `write_file`** — use `patch` to append content.
+
+**Wrong** (found this session — 2026-06-22):
+```
+write_file("agent-log.md", new_content)  # OVERWRITES all previous cycle entries
+```
+
+**Correct**:
+```
+# Read the last few lines first
+read_file("agent-log.md", offset=-10)
+# Then append. Use patch to find the last line and add after it:
+patch(path="agent-log.md", old_string="# Last existing line", new_string="# Last existing line\n\n## New Cycle Entry\n...")
+```
+
+If you accidentally overwrite, reconstruct from session_search (pipeline sessions are stored) and re-write the full file with both old and new content.
+
+### C. Delegation Pattern for Batch Layer B
+When processing multiple papers in a single cron run (e.g., 4 ICLR submissions), use `delegate_task` for parallel processing:
+
+```
+delegate_task(tasks=[
+  {"goal": "Manual Layer B for paper-X", "toolsets": ["terminal", "file"], ...},
+  {"goal": "Manual Layer B for paper-Y", "toolsets": ["terminal", "file"], ...},
+  ...
+])
+```
+
+Each subagent gets an isolated context with `pdftotext` + `read_file`/`write_file`. Results return as an array. Max 3 concurrent tasks for batch mode (per config). This pattern was validated 2026-06-22 for 3 parallel ICLR Layer B audits.
+
+### D. G7 Cross-Check as Mandatory Layer B Step
+After scoring, **always cross-check against existing quality reviews**:
+1. Read `07-quality/step_quality_review.md` (if exists) — compare G7 score vs your Layer B score
+2. Read `paper-queue.json` entry — check if "auto-gate fix" or "auto_gate_fix" appears in notes
+3. If G7 review found SOFT_FAILs but queue says "auto-gate ... → PASS", AND the underlying issues aren't resolved in the paper directory → flag as **auto-gate false positive**
+4. Document the discrepancy in the Layer B report
+
+**Real case (2026-06-22)**: head-impulse-ODE had G7 review score ~54/100 with 4 SOFT_FAILs. Queue showed "auto-gate fix: G2+G4+G6+G7 → PASS, qs 65→85." Layer B manual review found zero of the identified issues were actually fixed — the code/data/repo were all still absent. **Layer B caught what the auto-gate missed.** This cross-check should be standard for every Layer B audit.
+
+## Example: head-impulse-ODE Findings (2026-06-22)
+- Score: 0.57 (NOT PASS) — state.json reported qs=85
+- Root cause: auto-gate fix was a false positive. G7 deep review (2026-06-14) found 4 SOFT_FAILs + 9 critical issues; none were resolved when Layer B reviewed
+- P0: Zero code/data artifacts in paper directory. GitHub URL claimed but no repo exists
+- P1: ODE formulation physiologically questionable (gain increases with head velocity)
+- P2: "Hopf bifurcation" unsubstantiated (no eigenvalue analysis)
+- P3: Abstract/Results numeric mismatch (7.2% vs 6.7% bifurcation error)
+- **Lesson**: Layer B serves as a critical quality guard against auto-gate false positives
+
 ## Example: 182-accommodation-ciliary-muscle-ODE Findings
 
 For reference, the first manual Layer B review (2026-06-21) found:

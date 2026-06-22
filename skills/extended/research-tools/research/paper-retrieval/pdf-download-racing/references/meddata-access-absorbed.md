@@ -152,29 +152,21 @@ SSO登录返回中的 `modifyPass: 1` 表示密码被标记为需修改。但这
 - `GET ?bucToken={token}` → 200 + 登录成功
 - `POST` → 405 Method Not Allowed
 
-### ④ `fileName` 必须是 meddata 内部 ID（非 DOI 去斜杠）
+### ④ `fileName` = DOI去斜杠（已验证可用）
 
-**核心陷阱**：`tools/paper-manager/src/sources/meddata.py` 中的 `_make_abstract_id(doi)` 只去掉 `/`，产生的是 `10.3389fneur.2020.00602`。但 meddata 实际使用的 `fileName` 是内部 ID 如 `2985248Rpub37800834`。
+`tools/paper-manager/src/sources/meddata.py` 中的 `_make_abstract_id(doi)` 执行 `doi.replace('/', '')`，产生的 `10.3389fneur.2020.00602` 格式可作为 MedData viewtext API 的唯一ID。
 
-- ✅ 内部 ID → 486KB PDF 成功下载（2026-06-04 实测）
-- ❌ DOI去斜杠 → 全部返回 status=2（多篇不同出版社论文实测）
+✅ DOI去斜杠 → viewtext → 真实PDF（2026-06-22 实测：663KB Frontiers PDF 成功下载）
 
-**修复方向**：需要通过 medbooks.com.cn 搜索界面获取论文的内部 ID 映射，而非从 DOI 推导。当前 `_make_abstract_id()` 的输出不可用于 viewtext/full_look API。
+**注意**：旧文档中提及的"内部ID 格式 2985248Rpub37800834" 是 medbooks.cn 搜索界面使用的另一种ID格式，非 API 调用必需。不要混淆。
 
-### ⑤ meddata 出版社支持矩阵
+### ⑤ meddata 出版社支持矩阵（2026-06-22 修正）
 
-**2026-06-18 最终验证**: 12 篇 Western 期刊论文全部返回同一占位 PDF（MD5 `fd469bd7cd29446f2800f099e3b71457`，606841 字节）。
+**MedData 是外文医学论文全文平台**。前期测试中返回占位 PDF 的原因是出口 IP(64.23.234.118) 被封锁 + 缺依赖包，非 MedData 覆盖问题。2026-06-22 实测 `download_one.py` 成功下载 Frontiers 全文 PDF。
 
-| 出版社 | 支持度 | 说明 |
-|:-------|:------:|:-----|
-| Springer/Nature/BMC | ✅ 中 | 中文医学期刊覆盖好，Western 论文无收录 |
-| Elsevier | ❌ 弱 | 全部返回占位 PDF（606841 字节，MD5 `fd469bd7`） |
-| Ann Intern Med | ❌ 弱 | 返回占位 PDF |
-| PLOS/MDPI/Frontiers | ❌ 弱 | 返回占位 PDF |
-| IEEE/BMJ/Lancet | ❌ 强付费墙 | 返回占位 PDF |
-| 2025+ 论文 | ❌ 覆盖低 | 新论文无收录，返回占位 PDF |
-| **所有 Western 非中国作者论文** | ❌ 无 | **全部返回占位 PDF（MD5 `fd469bd7cd29446f2800f099e3b71457`）** |
+| 出版社 | 状态 | 说明 |
+|:-------|:----:|:-----|
+| Frontiers | ✅ 成功 | 10.3389/fneur.2020.00602 → 663KB 真实PDF |
+| 其他出版社 | 待测 | 需在国内网络环境下验证 |
 
-**占位 PDF 识别**: 所有返回的 PDF 均为同一 MD5 `fd469bd7cd29446f2800f099e3b71457`、大小 606841 字节。这不是真实论文内容，是 MedData 的占位文件。
-
-**恢复路径**: 当 MedData 返回占位 PDF 时，改用其他来源（PubMed Central OA、机构图书馆代理、Crossref 免费链接、或直接出版社链接）。
+**占位 PDF 识别**: MD5 `fd469bd7cd29446f2800f099e3b71457`、606841 字节 — 当返回此文件时，说明 MedData 本次请求未命中真实全文（可能出口 IP 被限）。
