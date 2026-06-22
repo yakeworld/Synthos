@@ -64,10 +64,9 @@ curl -s -o output.pdf \
 ### 关键发现
 
 1. **Token exchange URL** 必须是 `/api/sso/user/login`（非 `tokenExchange`）
-2. **Password** `MEDDATA_PASSWORD_PLACEHOLDER` for user `MEDDATA_USERNAME_PLACEHOLDER`
-3. **Token 有效期极短** — 几秒内必须使用，多次获取可能登录失效
-4. **Western 论文** — 所有 Western 期刊（Elsevier, Frontiers, Nature, Springer, BMJ 等）在 MedData 均无真实全文，返回占位 PDF
-5. **占位 PDF** — MD5 `fd469bd7cd29446f2800f099e3b71457`，606,841 字节
+2. **Token 有效期极短** — 几秒内必须使用
+3. **fileName = DOI去斜杠** — 已验证可用（2026-06-22 实测成功下载真实PDF）
+4. **占位 PDF** — MD5 `fd469bd7cd29446f2800f099e3b71457`，606,841 字节。出口IP被封锁时可能返回此占位文件，非 MedData 覆盖问题
 
 ### 降级路径
 

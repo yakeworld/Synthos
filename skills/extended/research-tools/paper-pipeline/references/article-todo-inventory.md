@@ -7,7 +7,7 @@
 
 | # | 论文标题 | 目录名 | 成熟度 | 关键文件 |
 |:-:|:---------|:-------|:-------|:---------|
-| ① | 3D Eyeball Model-Constrained Iris Segmentation | `3D Eyeball Model-Constrained Iris Segmentation/` | ⭐ 很成熟 | 完整LaTeX + bib + 多轮revision (v1-v4) + 投稿文件包 + 20+篇参考PDF |
+| ① | 3D Eyeball Model-Constrained Iris Segmentation | `3D Eyeball Model-Constrained Iris Segmentation/` | ⭐ 很成熟 | 完整LaTeX + bib + 多轮revision (v1-v4) + 投稿文件包 + 20+篇参考PDF<br>**投稿状态**：Pattern Recognition, 2025-03-25提交, v4 revision 2025-08-30 (article20250830.tex)。截至2026-06-22 (21个月) **无接受/拒绝信号**。未在PubMed索引。 |
 | ② | A Dual-Ellipse Fitting Method for High-Accuracy Pupil Boundary Estimation | `A Dual-Ellipse Fitting Method for High-Accuracy.../` | ⭐ 成熟 | 完整投稿文件（Cover Letter、声明、Highlights、审稿人建议） |
 | ③ | A Precise 3D Geometric Transform Method for Iris Normalization | `A Precise 3D Geometric Transform Method.../` | 📝 有基础 | 投稿文件包 |
 | ④ | Correcting the Off-Axis Iris Normalization Formulas in Daugman's Method | `Correcting the Off-Axis Iris Normalization.../` | 📝 有基础 | paper.md + references.bib + 配图 |

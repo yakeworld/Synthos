@@ -61,7 +61,7 @@
 
 ---
 
-## Already Tracked (cross-reference with absorption-tracked.json)
+## Already Tracked (cross-reference with absorption-ledger.json at /media/yakeworld/sda2/Synthos/absorption-ledger.json)
 
 Known from prior scanning:
 - karpathy/autoresearch — already in tracking (absorbed into research-ideation)
