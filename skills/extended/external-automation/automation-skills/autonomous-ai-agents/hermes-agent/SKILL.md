@@ -45,11 +45,12 @@ hermes config set model openrouter/anthropic/claude-sonnet-4
 hermes config set api_key "sk-..."
 ```
 
-## Key Commands
+## Key Commands (v0.15.2)
 
 | 功能 | 命令 |
 |:-----|:------|
-| 运行 | `hermes` (交互式) / `hermes run "prompt"` |
+| 交互式运行 | `hermes` |
+| 单次运行 | `echo "prompt" \| hermes chat`（管道模式） |
 | 技能列表 | `hermes skills list` |
 | 技能加载 | `hermes skills load <name>` |
 | 技能创建 | `hermes skills create <name>` |
@@ -57,16 +58,25 @@ hermes config set api_key "sk-..."
 | Agent spawn | `hermes agent spawn <name> --provider ... --model ...` |
 | Cron job | `hermes cron create --name "job" --prompt "..." --schedule "..."` |
 
+**注意**: `hermes run` 在 v0.15.2 已移除。用 `echo "prompt" | hermes chat` 或 interactive 模式替代。
+
 ## Provider Config
 
 ```yaml
 # ~/.hermes/config.yaml
-provider: openrouter        # anthropic, openai, deepseek, custom
-model: anthropic/claude-sonnet-4
-api_key: "${HERMES_API_KEY}"  # 环境变量引用
+# 本地 vLLM 配置（最常用）
+model:
+  default: qwen3.6-35b-nvfp4
+  provider: custom:local
+
+custom_providers:
+- name: local
+  base_url: http://localhost:8000/v1
+  api_key: EMPTY
+  model: qwen3.6-35b-nvfp4
 ```
 
-See `references/provider-setup.md` for full 15+ provider configs.
+远程 provider 见 `references/provider-setup.md`。
 
 ## Skills Directory
 
@@ -83,9 +93,6 @@ skills:
 # 子Agent
 hermes agent spawn researcher --provider anthropic --model claude-sonnet-4
 hermes agent spawn coder --provider openai --model gpt-4o
-
-# 后台任务
-hermes run "analyze this" --background --notify-on-complete
 ```
 
 ## Cost Optimization (本地优先)

@@ -97,7 +97,7 @@ L+3 独立验证门 → AAA论文评审+五维度评分
 
 ### 记录要求
 
-所有吸收必须在 `absorption-tracked.json` 记录 `license_note`，标记"仅方法论，无代码"。
+所有吸收必须在 `absorption-ledger.json`（仓库根目录）记录 `license_note`，标记"仅方法论，无代码"。
 
 ### 不可吸收的项目类型
 
@@ -129,9 +129,25 @@ L+3 独立验证门 → AAA论文评审+五维度评分
 
 ## 项目追踪
 
-所有发现的项目存储在 `outputs/evolution/absorption-tracked.json`。
+所有发现的项目存储在仓库根目录的 `absorption-ledger.json`。当前台账包含 **17 个吸收项目 + 2 个自我反射**，含来源、stars、吸收能力、目标技能、待完成项。
 
-状态生命周期：tracking → evaluating → absorbed | deferred → archived
+**记录分布**（三层结构）:
+- `absorption-ledger.json`（根目录）— **统一台账**，每次吸收后追加
+- `skills/.../evolution/absorption-*.md` — 各项目的详细五层吸收记录（13份）
+- `references/*.md`（本技能下）— 分析级案例研究
+
+新增吸收后的操作流程:
+1. 详细记录 → 写入 `evolution/absorption-{project}.md`
+2. 汇总 → 追加到 `absorption-ledger.json`
+3. 格式归一化 → 按 OpenClaw merge pattern 处理
+
+状态生命周期：
+```
+tracking（已扫描/候选）
+  → evaluating（五维评分中）
+    → absorbed（已吸收，有记录文件）
+    → deferred（延后，有原因）
+  → archived（关闭，有原因）
 
 ## 吸收报告模板
 
@@ -139,6 +155,7 @@ L+3 独立验证门 → AAA论文评审+五维度评分
 
 ## 参考文件
 
+- `../../../../../../absorption-ledger.json` — **统一台账**（17个吸收项目+2个自我反射）
 - `references/absorption-gates-protocol.md` — L+0到L+3详细协议
 - `references/keyword-rotation.md` — 关键词轮转策略和分类
 - `references/absorption-report-template.md` — 吸收报告模板
