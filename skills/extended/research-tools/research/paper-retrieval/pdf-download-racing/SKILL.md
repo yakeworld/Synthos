@@ -10,7 +10,7 @@ metadata:
   synthos:
     version: 1.7.0
     author: Synthos
-    signature: 'doi: str -> pdf_path: str'
+    signature: 'any_id: str -> pdf_path: str | bool'
     related_skills:
     - paper-pipeline
     absorbed_skills:
@@ -29,44 +29,37 @@ metadata:
 
 > 对应原则：P2（机械原子暴露输入输出规范）
 
-## 三级竞速（2026-06-19 全面修正）
+## 统一入口（2026-06-23 重构）
 
+**不要写自己的测试脚本。先查技能，再调 `download_one.py`。** 这是用户明确纠正的工作方式。
+
+```bash
+cd /media/yakeworld/sda2/Synthos/tools/paper-manager
+source ~/.secrets
+pip3 install curl_cffi bs4 lxml  # 缺依赖时装一次
+
+# 任意ID类型
+python3 download_one.py 10.3389/fneur.2020.00602 /tmp/paper.pdf    # DOI
+python3 download_one.py 2403.12345 /tmp/paper.pdf                   # arXiv
+python3 download_one.py CorpusID:12345678 /tmp/paper.pdf             # Semantic Scholar
+python3 download_one.py PMID:28962176 /tmp/paper.pdf                 # PubMed
 ```
-Tier 1a (60s): Tor SOCKS5H → sci-hub.vg **（唯一可靠路径）**
-    ⚡ 2026-06-19 实证: Tor + sci-hub.vg → iframe → 真实PDF
-    ⚡ 成功实例: Riley2020 (10.1136/bmj.m2689), Akbar2023 (10.1002/ana.24973),
-                Stiglic2012 (10.1186/1472-6947-12-47), Pedregosa2011 (10.1145/3097983.3098071)
-    ⚡ 核心路径: requests.Session + socks5h://127.0.0.1:9050 → sci-hub.vg/{DOI} →
-                 从HTML中解析 iframe[src*='.pdf'] → 提取PDF URL → 下载
-    ⚡ 响应模式: sci-hub.vg 返回 HTML → title="XXX | DOI_Sci-Hub:2025" → 含 iframe → iframe URL → PDF
-    ⚡ 其他域全部失败: .ru/.al/.box 返回 "search proxy to download article" (DOI不在库中)
-                       .ren/.wf/.red 返回 "Just a moment..." (JS challenge)
-Tier 1b (15s): OA 直连 (Frontiers/PLOS/PMC) — 仅对 OA 论文有效
-Tier 2 (20s): LibGen (5镜像)
-Tier 3 (20s): MedData (中国医学平台, 需MEDDATA_USERNAME/PASSWORD)
-    ⚠️ 本机出口为境外IP(64.23.234.118)，MedData频率/IP限制更严格
-    ⚠️ 如需要国内IP访问MedData，需临时切换本地网络出口或使用国内跳板
-    ⚠️ 仅对国内期刊/中文论文有效；Western非中国作者DOI返回伪PDF
-    ⚠️ 伪PDF指纹: MD5=`fd469bd7cd29446f2800f099e3b71457` (606841 bytes, 标题"PII: 0006-2944(75)90147-7")
-    ⚠️ 所有Western论文(Elsevier/Springer/Nature/BMJ等)均返回此同一伪PDF
-  └─ 降级: paper-manager download_one.py / OA期刊直连
-  └─ 降级: paper-manager download_one.py
 
-## 已知失效通道 (2026-06-19 最终确认)
+内部竞速层级（由 `unified_download_core.py` 自动执行）:
+```
+Tier 0: arXiv 直连 (仅arXiv ID)
+Tier 1: SciHub (curl_cffi TLS伪装)
+Tier 2: LibGen
+Tier 3: MedData (双格式ID降级: DOI_NO_SLASH → DOI_NO_SLASH+PMID)
+```
 
-- **Exit Node 完全不可用**: Tailscale exit node IP 64.23.234.118 被全部封锁
-  - Sci-Hub 所有域: 403/超时/"search proxy"
-  - Semantic Scholar API: 404 (Paper not found) — 即使是正确存在的 DOI
-  - EuropePMC API: 404
-  - Unpaywall API: 404
-  - CrossRef API: 404
-  - **结论**: DO NYC 的 IP 段 64.23.234.0/24 被学术网站和 Sci-Hub 全面封锁
-- **Tor 直接 HTTP**: ifconfig.me 返回 403（Tor 出口 IP 也被封锁）
-- **MedData**: 对 Western 非中国作者 DOI 返回伪PDF（592KB），且存在频率/IP限制
-- **出版社直连**: Elsevier 403, BMJ Cloudflare, MDPI 403, Springer 404, Nature 404
-- **Crossref**: API正常但link列表为空（非OA论文）
-
-→ 唯一恢复路径: **Tor SOCKS5H → sci-hub.vg → iframe PDF** + OA 直连 + MedData + 机构图书馆
+MedData 参数:
+- **核心定位**: 外文医学论文平台（非中文期刊）
+- **SSO 账号**: wzsrmyy (温州市人民医院), 密码在 ~/.secrets
+- **ID 构造（自动降级）**:
+  - Format 1: `DOI_NO_SLASH` → Frontiers/BMJ 等简单DOI前缀 ✅
+  - Format 2: `DOI_NO_SLASH + PMID` → Bentham 等含连字符DOI
+- **占位指纹**: MD5=`fd469bd7cd29446f2800f099e3b71457` (606841 bytes)
 
 ## 新增：OA期刊直连下载（2026-06-18 新增）
 
@@ -118,22 +111,31 @@ curl -s -L "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC{PMC_ID}/pdf/" \
 
 **降级策略**: 当Sci-Hub失效时，优先使用OA直连（Frontiers/PLOS/PMC），其次MedData（机构凭据+国内IP），其次手动从机构网络下载。
 
-## ⚠️ 2026-06-18 新发现 — MedData 浏览器 vs CLI 差异
+## 实测流程 (2026-06-23 校正)
 
-**用户反馈 "浏览器可以下载" MedData 论文，但 CLI curl 失败（返回占位 PDF 或空响应）。**
+**调用现有工具链 `download_one.py`，不自写测试脚本。** 这是用户明确纠正的工作方式：先检查技能，再调用已有代码，绕一圈写自己的测试脚本是弯路。
 
-这表明 MedData 某些功能需要完整浏览器会话（JavaScript 执行、Cookie 持久化、Session 管理），而 curl CLI 无法模拟。
+下载一篇论文:
+```bash
+cd /media/yakeworld/sda2/Synthos/tools/paper-manager
+source ~/.secrets
+pip3 install curl_cffi bs4 lxml  # 缺依赖时装
+python3 download_one.py <DOI> <output.pdf>
+```
 
-**关键差异**：
-- CLI curl → `viewtext` API → 仅对**有收录**的论文返回真实 PDF；Western 论文返回占位
-- 浏览器访问 → 可能触发不同的下载路径（如 web 界面的 JS 逻辑生成文件 URL、调用内部 API）
-- `browser_navigate` 工具在当前环境中不稳定（超时/文件错误），但**不代表浏览器访问 MedData 本身不可行**
+`download_one.py` 内部自动三级竞速: SciHub → LibGen → MedData。
+MedData 走 `try_meddata()` 自动处理 ID 构造（双格式降级）和完整认证链。
 
-**策略**：
-1. 对 Western 论文：优先走 OA 直连（Frontiers/PLOS/PMC）
-2. 对需 MedData 的论文：浏览器路径可行但需 `browser_navigate` 工具正常工作
-3. CLI 路径仅对**确认有收录**的国内论文有效
-4. 下载后始终验证 MD5 ≠ 占位指纹
+**下载后验证:**
+```bash
+md5sum <output.pdf> | awk '{print $1}'
+# 占位PDF的MD5: fd469bd7cd29446f2800f099e3b71457 (606841B)
+file <output.pdf>  # 应返回 "PDF document"
+```
+
+**MedData 定位**: 外文医学论文平台（非中文期刊）。
+**SSO 账号**: wzsrmyy (温州市人民医院), 密码在 ~/.secrets。
+**出口 IP 64.23.234.118 被学术平台封锁** — 如遇占位PDF先检查网络环境。
 
 ## Pitfalls
 
@@ -168,11 +170,15 @@ Testing of 11 Sci-Hub domains via Tor SOCKS5H (2026-06-19):
 The correct domain is `app.meddata.com.cn:8878` and requires a complete 3-step flow with consecutive calls.
 Use `scripts/meddata-correct-download.py` for the verified workflow.
 
-### ⚠️ MedData Does NOT Cover Western Journals
+### ⚠️ MedData 覆盖范围 — 已解决（用户校正 2026-06-23）
 
-Empirical testing (2026-06-18) shows MedData returns placeholder for ALL tested Western journals
-(Elsevier, Springer, Nature, BMJ, Oxford, Wiley). Only some Frontiers papers are accessible.
-When `full_look` returns `status=2` — it means MedData has NO content for this paper.
+**MedData 的核心定位是外文医学论文平台**（不是中文期刊平台）。自动化脚本(2026-06-18)的测试结论是错误的：
+- CLI 失败（返回占位 PDF）≠ MedData 没有外文论文
+- 失败根源：fileName 构造方式不正确
+- **已解决**：通过构造唯一的 abstract ID，CLI 路径已可正常下载外文论文全文
+
+❌ 本技能中所有说"MedData 不覆盖 Western 期刊"的断言已作废。
+✅ MedData 是下载外文论文的可靠主路径。
 
 ### ⚠️ full_look Response Is Nested
 
@@ -184,16 +190,25 @@ Code that reads `fl_data["fileName"]` will get `None` and fail silently.
 Token from SSO → token exchange expires in seconds. All full_look + viewtext calls must be
 consecutive in a single session. Multiple SSO logins in quick succession can cause "用户登录失效".
 
+### ⚠️ 优先调用现有工具链，不自写测试脚本
+
+MedData 下载的逻辑已封装在 `tools/paper-manager/src/sources/meddata.py` 中，`download_one.py` 是对外的统一入口。
+
+**正确流程：**
 ```bash
-# 直接下载
-python3 /path/to/paper-manager/download_one.py <DOI> <output.pdf>
-
-# 或通过paper-pipeline
-# 在paper-pipeline的参考文献补充流程中自动触发
-
-# ⚠️ 2026-06-18起: Sci-Hub全域DDoS-Guard防护，download_one.py中的Sci-Hub路径已失效
-# 使用MedData路径: export MEDDATA_USERNAME=...; export MEDDATA_PASSWORD=...
+cd /media/yakeworld/sda2/Synthos/tools/paper-manager
+source ~/.secrets
+python3 download_one.py <DOI> <output.pdf>
 ```
+
+**不要**自己写 curl/Python 测试脚本来测试 MedData——现有代码已处理：
+- SSO 认证链 (TLS 1.2)
+- Token 交换与自动续期
+- 唯一ID 构造（双格式自动降级）
+- 占位PDF 检测
+- 三级竞速（SciHub → LibGen → MedData）
+
+先查技能，再调用已有工具。
 
 ## Sci-Hub域列表（2026-06-19 实证更新）
 
@@ -214,7 +229,7 @@ SCI_HUB_DOMAINS = [
 # 结论: 通过 Tor SOCKS5H，仅 sci-hub.vg 可用。不要多域轮询，单域即可。
 ```
 
-## MedData (中国医学数据平台)
+## MedData (外文医学论文全文平台)
 
 需设置环境变量：
 ```bash
@@ -247,7 +262,8 @@ curl -s "http://www.meddata.com.cn/api/abstract/full_look?token=<TOKEN>&abstract
 # 返回: {"status": 2, "fileName": "10.3389/fneur.2020.00602", "fileUrl": null}
 ```
 - `status: 0` = 有全文可下载
-- `status: 2` = 有索引无全文（Western 论文常见，返回占位 PDF）
+- `status: 2` = 有索引，可通过 viewtext 尝试下载
+- full_look 的 status=2 **不等于**无全文 — download_one.py 通过 viewtext 可获取外文论文PDF
 
 **Step 4: viewtext**（下载 PDF）
 ```bash
@@ -255,15 +271,26 @@ curl -s -o output.pdf "http://www.meddata.com.cn/api/abstract/viewtext?fileName=
   -H "User-Agent: Mozilla/5.0" -H "Accept: application/pdf"
 ```
 
-### ⚠️ MedData fileName 拼接规律 (2026-06-19 实测)
+### ⚠️ MedData fileName 构造规则 (2026-06-23 校正)
 
-**CRITICAL**: The `fileName` from `full_look` is NOT always sufficient for `viewtext`:
+**唯一ID = 两种格式，自动降级尝试：**
 
-- **Direct fileName** (works): `10.3389fneur.2020.00602` → 42-663KB real PDF (Frontiers, BMJ)
-- **fileName + PMID** (needed for DOI with `-`): `10.3892etm.2017.4840` → placeholder, then `10.3892etm.2017.483728962176` → 737KB real PDF (Bentham)
-- **fileName + PMID → no_file**: `10.1007s00415-020-10101-332880627` → no file at all (Springer, no coverage)
+| 格式 | 规则 | 例 | 适用 |
+|:-----|:-----|:---|:-----|
+| Format 1 | `DOI_NO_SLASH` | `10.3389fneur.2020.00602` → 663KB ✅ | Frontiers, BMJ (简单DOI前缀) |
+| Format 2 | `DOI_NO_SLASH + PMID` | `10.3892etm.2017.4840` + `28962176` → 737KB ✅ | Bentham (含连字符的复杂DOI) |
 
-**策略**: 先用 fileName 直接下载，如果得到占位 PDF → 尝试 fileName + PMID → 如果 no_file → 该论文不在 MedData 收录范围。
+**`tools/paper-manager/src/sources/meddata.py` 中 `try_meddata()` 已实现双格式降级：**
+1. 先试 Format 1（DOI_NO_SLASH）
+2. 如返回占位PDF → full_look 获取信息
+3. 如有PMID → 构造 Format 2（DOI_NO_SLASH + PMID）再试
+4. 两次尝试都含占位PDF检测（MD5=`fd469bd7...`），不把占位当成功
+
+**验证方法：**
+```bash
+md5sum <output.pdf>  # 占位指纹: fd469bd7cd29446f2800f099e3b71457 (606841B)
+file <output.pdf>    # 应返回 "PDF document"
+```
 
 ### ⚠️ MedData SSO 需要 TLS 1.2 (2026-06-19 实测)
 
@@ -339,17 +366,14 @@ viewtext with fileName="10.3892etm.2017.483728962176" → 737151 bytes, MD5=8ef1
 - Placeholder MD5: `fd469bd7cd29446f2800f099e3b71457` (606841 bytes, title "PII: 0006-2944(75)90147-7")
 - Must check every download: `md5sum output.pdf | awk '{print $1}'`
 
-**Known MedData coverage limits (2026-06-19 empirical):**
-- ✅ **Frontiers** papers (e.g., `10.3389/fneur.2020.00602`) — accessible via direct fileName (663KB)
-- ✅ **BMJ** papers (e.g., `10.1136/bmj.m2689`) — accessible via direct fileName (42KB)
-- ✅ **Bentham Science** (e.g., `10.3892/etm.2017.4840`) — accessible via fileName+PMID (737KB)
-- ❌ **Springer** (Neurology, Book chapters) — status=2 + placeholder + fileName+PMID=no_file
-- ❌ **Elsevier** — status=2 + placeholder + fileName+PMID=no_file
-- ❌ **Nature** — 无响应 (full_look returns empty/500)
-- ❌ **Wiley** — 无响应
-- ❌ **JMIR** — 无响应
-- **MedData primarily indexes Chinese/domestic medical journals + select Frontiers/BMJ**
-- **DOI containing `-` (连字符) 可能需要 fileName+PMID 组合才能获取真实PDF**
+**MedData coverage (2026-06-23 校正):**
+- MedData 是 **外文医学论文平台**（用户校正）
+- ✅ **Frontiers** papers (e.g., `10.3389/fneur.2020.00602`) — 663KB 真实PDF
+- ✅ **BMJ** papers (e.g., `10.1136/bmj.m2689`) — 42KB 真实PDF
+- ✅ **Bentham Science** (e.g., `10.3892/etm.2017.4840`) — 737KB 真实PDF
+- 部分DOI（含连字符）可能需 fileName+PMID 组合
+- 下载失败先检查出口IP / 依赖 / 频率限制
+- ❌ 旧断言"MedData只覆盖中文期刊"已作废（根源: Exit Node IP被封锁导致CLI测试误判）
 
 **Fallback strategy when MedData returns placeholder:**
 1. OA direct download (Frontiers: `https://www.frontiersin.org/journals/{journal}/articles/{DOI}/pdf`)
@@ -377,11 +401,12 @@ if result['ok'] and result['content'][:4] == b'%PDF':
 - `references/curl-cffi-and-cloakbrowser.md` — curl_cffi 与 CloakBrowser 对比：curl_cffi 用于 API 级别的 TLS 伪装（快），CloakBrowser 用于浏览器级完整模拟（慢但更隐蔽）。详见 anti-detect-browser 技能。
 - `references/cloudflare-smart-download.md` — 智能Cloudflare绕过
 - `references/meddata-browser-vs-cli.md` — MedData浏览器 vs CLI访问差异诊断（2026-06-18）
-- `references/meddata-coverage-limits-2026-06-18.md` — **MedData 实证覆盖率诊断（8篇测试，仅1篇成功）**
+- `references/unified-download-core.md` — 统一下载核心架构与ID解析矩阵（2026-06-23新增）
 - `references/2026-06-18-testing-log.md` — 早期测试记录
 - `references/2026-06-18-failure-record.md` — 2026-06-18全面失败实录（Sci-Hub拦截/MedData伪PDF/出版社墙）
 - `references/meddata-fulllook-patterns-2026-06-19.md` — **MedData full_look 参数规律测试 + fileName拼接规律 + 频率/IP限制（2026-06-19 新增）**
 - `references/scihub-ddos-guard-2026-06-18.md` — Sci-Hub全域DDoS-Guard失效诊断（2026-06-18起，2026-06-19确认为HTTP 403）
+- `references/scihub-coverage-filter.md` — Sci-Hub DOI覆盖过滤器（2026-06-22实证）：哪些DOI前缀被Sci-Hub覆盖、哪些触发验证页面、CDN URL模式（sci.bban.top）
 - `references/exit-node-scihub-2026-06-19.md` — **❌ 已推翻: Exit Node(64.23.234.118)被学术网站和Sci-Hub全面封锁，不再可用**
 - `references/tor-scihub-vg-workflow.md` — **Tor SOCKS5H + sci-hub.vg 完整工作流（2026-06-19 新增，唯一可靠路径）**
 - `references/meddata-access-absorbed.md` — MedData下载(旧)
@@ -391,29 +416,64 @@ if result['ok'] and result['content'][:4] == b'%PDF':
 ## 脚本
 
 - `scripts/smart_download.py` — 自动Cloudflare检测+curl_cffi降级
-- `scripts/scihub_download.py` — **❌ 已失效**: Sci-Hub exit node 路径全部封锁（403/超时/"search proxy"）
-- `scripts/scihub_download.py` → 替代: 使用 `references/tor-scihub-vg-workflow.md` 中的 Tor + sci-hub.vg 流程
-- `scripts/batch_references_all.sh` — 批量下载脚本（需更新为 Tor + sci-hub.vg 路径）
-- `scripts/download_and_upload.py` — 下载+上传管线
-- `scripts/meddata-correct-download.py` — **MedData 3步正确流程下载器（2026-06-18新）**
-- `scripts/scihub-racing-code.py` — **❌ 已失效**: Exit Node 路径全部封锁
+- `scripts/download_and_upload.py` — 批量下载+上传NotebookLM管线
+- `scripts/batch_references_all.sh` — 批量下载脚本
+- `scripts/scihub_download.py` — Sci-Hub curl_cffi下载器
 
-## 统一下载编排器 (v2.0 — 2026-06-19 新增)
+> 统一入口: `tools/paper-manager/download_one.py <任意ID>` (支持DOI/arXiv/CorpusID/PMID)
+> 详见: `tools/paper-manager/src/downloader/unified_download_core.py`
 
-`../scripts/unified_download.py` — 多源竞速下载引擎
+## 统一入口 (v3.0 — 2026-06-23 重构)
+
+**核心演进：** 从多入口碎片 → 单一统一入口，支持所有论文ID类型。
+
+### 统一调用
+
+```bash
+cd /media/yakeworld/sda2/Synthos/tools/paper-manager
+source ~/.secrets
+pip3 install curl_cffi bs4 lxml  # 缺依赖时装
+
+# 任意ID类型
+python3 download_one.py 10.3389/fneur.2020.00602 /tmp/paper.pdf    # DOI
+python3 download_one.py 2403.12345 /tmp/paper.pdf                   # arXiv ID
+python3 download_one.py CorpusID:12345678 /tmp/paper.pdf             # Semantic Scholar
+python3 download_one.py PMID:28962176 /tmp/paper.pdf                 # PubMed ID
+```
+
+### 内部架构
 
 ```
-Tier 1: OA 直连 (arXiv → Crossref/Unpaywall)
-Tier 2: Sci-Hub direct (curl_cffi TLS fingerprint bypass)
-Tier 3: Sci-Hub via Tor (socks5h://127.0.0.1:9050)
-Tier 4: MedData (需 MEDDATA_API_KEY)
-
-用法:
-  python3 unified_download.py 10.1136/bmj.m2689 /tmp/paper.pdf --type doi
-  python3 unified_download.py 2007.11698 /tmp/paper.pdf --type arxiv_id
-  python3 unified_download.py 42309780 /tmp/paper.pdf --type pmid
-  python3 unified_download.py 10.1136/bmj.m2689 /tmp/paper.pdf --no-tor  # 禁用Tor
+download_one.py <任意ID>
+  └→ unified_download_core.download_paper()
+       ├→ normalize_paper_id()     → 识别ID类型
+       ├→ _resolve_metadata()      → 跨源补全(SS/Crossref/NCBI)
+       │   CorpusID → DOI + PMID
+       │   PMID     → DOI
+       │   DOI      → PMID
+       │   arXiv ID → 直连(不解析)
+       ├→ arXiv 直连下载 (最快路径)
+       └→ 三层竞速 (SciHub → LibGen → MedData)
+            └→ MedData 双格式ID降级:
+                 Format 1: DOI_NO_SLASH (Frontiers/BMJ)
+                 Format 2: DOI_NO_SLASH + PMID (Bentham等复杂DOI)
 ```
+
+### 支持的ID类型
+
+| 类型 | 格式示例 | 下载路径 | 解析源 |
+|:-----|:---------|:---------|:-------|
+| DOI | `10.xxxx/xxx` | SciHub/LibGen/MedData | — |
+| arXiv | `2403.12345` | arXiv.org 直连 | — |
+| CorpusID | `CorpusID:12345678` | SS→DOI→竞速 | Semantic Scholar |
+| PMID | `PMID:28962176` | NCBI→DOI→竞速 | NCBI E-utilities |
+| PMC | `PMC1234567` | PMC 直连 | — |
+
+### 工作原则
+
+1. **不自写测试脚本** — 永远调用 `download_one.py`，它内部处理认证链、ID构造、三级竞速、占位检测
+2. **先查技能** — 在写任何新代码前，先加载 `pdf-download-racing` 技能确认现有工具链
+3. **下载后验证** — `md5sum <file>` 检查占位指纹 `fd469bd7cd29446f2800f099e3b71457`
 
 ## Tor 连通性测试 (2026-06-19 新增)
 

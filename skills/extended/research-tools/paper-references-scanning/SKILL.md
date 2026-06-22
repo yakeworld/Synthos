@@ -103,8 +103,78 @@ Use `[^\s,;]+?` instead of `\w+` for bib key capture (`Norgeot2020MI-CLAIM` has 
 ### Bib key prefix stripping
 `bib_key_re` captures `@EntryType{key,` including the prefix. The script strips it by finding `{`, taking after it, then finding `,` and taking before it. Without this, `@Article{Ahmad2020,` won't match cite key `Ahmad2020`, causing false orphans and zombies.
 
-### Commented `\\bibitem{}` must be excluded from D8
-Only count uncommented `\bibitem{}` for D8.
+### Commented `\\\\bibitem{}` must be excluded from D8
+Only count uncommented `\\bibitem{}` for D8.
+
+### External .bib papers: bibitems live in .bbl, NOT in .tex (2026-06-23)
+
+Papers using `\bibliography{references.bib}` compile via bibtex, which generates a `.bbl` file containing the real `\bibitem{}` entries. The `.tex` file may contain only **template placeholder bibitems** like `\bibitem{label}` and `\bibitem{lamport94}` — these are NOT the actual references.
+
+**Trap**: Grepping the `.tex` file for `\bibitem{}` on an external-bib paper finds only 2 template entries while the paper has 30+ real references. D10a appears to be 0% when it's actually 100%.
+
+**Fix**: Always check for `.bbl` file first. If `.bbl` exists, extract bibitems from it. Only fall back to inline thebibliography in `.tex` when no `.bbl` is found. The `scripts/d8d10a-scan.py` handles this automatically — do NOT use ad-hoc shell grep.
+
+**Detection heuristic**: If `grep -c '\\bibitem' paper.tex` returns ≤3 but `grep -c '\\cite' paper.tex` returns >10, the paper almost certainly uses external .bib → look for .bbl.
+
+### Stale .bbl from older tex revision (2026-06-22)
+
+When a paper undergoes multiple revisions, the .bbl filename may not match the .tex filename (e.g., `revision20241117.bbl` but tex is `revision20241118v3.tex`). The scan script finds the stale .bbl (alphabetically first or same basename guess) and reports D10a < 100% even though all orphan keys exist in the .bib file.
+
+**Symptom**: D10a 65-85% with 5-20 orphans, all of which ARE found in the .bib file. The .bbl filename differs from the .tex filename.
+
+**Fix**: Delete the stale .bbl. Recompile. The new .bbl will have the correct basename and all entries.
+
+### Empty .bbl (0 bytes) from tex without \bibliography command (2026-06-22)
+
+A degenerate sub-case of stale .bbl: papers using inline `\begin{thebibliography}` + `\bibitem{}` (no external `.bib`) can still have a `.bbl` file if someone ran bibtex on them. Since the `.tex` has no `\bibliography{}` command, bibtex produces an **empty .bbl** (0 bytes, "I found no \bibdata command" in `.blg`). The scan script prioritizes `.bbl` over tex thebibliography → finds 0 bibitems → D10a=0% despite perfectly matched thebibliography entries.
+
+**Symptom**: D10a=0.0%, source=bbl, `.blg` says "I found no \bibdata command" + "I found no \bibstyle command", `.bbl` is 0 bytes. All orphan keys ARE found as `\bibitem{}` entries in the tex's thebibliography.
+
+**Fix**: Delete the empty `.bbl`. The scan script falls back to extracting bibitems from the `thebibliography` in the tex. No recompilation needed (thebibliography papers don't use bibtex).
+
+**Detection**: `ls -la paper.bbl` → 0 bytes. `grep 'bibdata' paper.blg` → "I found no \bibdata command". Cites extracted from tex all match thebibliography bibitems when checked with manual Python regex.
+
+**Real case**: `093-saccade-target-shift-PINN` (14 cites, 14 bibitems, 0% D10a → 100% after deleting 0-byte .bbl). `endolymph-hydropressure-ode` (15/15, same pattern).
+
+### Wrong .tex file selected in multi-tex directories (2026-06-22)
+
+When a paper directory contains multiple `.tex` files (e.g., a LaTeX template + the real manuscript), `get_main_tex()` may pick the wrong one. Templates like `Sage_LaTeX_Guidelines.tex` or `elsarticle-template-num.tex` may have placeholder cites (`R1`, `R2`, `R3` or `lamport94`) and no substantive content, causing D10a=0% (3 cites R1/R2/R3 vs 30 bibitems).
+
+**Detection**: D10a=0% or nonsensical results (tiny cite count with huge bibitem count). Cite keys are template placeholders.
+
+**Fix**: Prefer the .tex with the most `\cite{}` calls AND `\begin{document}`. If multiple candidates exist, check for realistic citation keys (author-year format, not R1/R2/R3). The `scripts/d8d10a-scan.py` uses a scoring heuristic — if it consistently picks the wrong tex, force the correct one by naming it `paper.tex` or moving templates to a subdirectory.
+
+### ⚠️ Multi-tex version scoring bias: older heavy tex beats newer lean tex (2026-06-23)
+
+A sub-trap of multi-tex selection: when a paper has versioned tex files (e.g., `articlev1.tex` and `articlev2.tex`), the `cite-count + has-document` heuristic can pick the **older, template-heavier version**. The older draft may have more `\cite{}` calls (33 vs 18) simply because it bundles more background citations or legacy content — not because it's the canonical version.
+
+**Symptom**: Scan picks `articlev1.tex` (33 cites, older) over `articlev2.tex` (18 cites, newer by 2 months). D10a reports 93.8% because bbl is `articlev2.bbl` (24 zombie bibitems from v2's bib, but v1's cites don't all match). However `articlev2.tex` + `articlev2.bbl` = 100% D10a.
+
+**Detection**: When multiple tex files have valid `\begin{document}`, check file modification times. If a newer file exists whose basename matches the `.bbl` filename, prefer it regardless of cite count.
+
+**Fix**: Add a **version bonus** to the scoring: `+500` for any tex whose basename contains a higher version number suffix (`v2`, `v3`, etc. over `v1`). Or simply prefer the tex with the **matching bbl basename** (if `articlev2.bbl` exists, prefer `articlev2.tex` over `articlev1.tex`). The `scripts/article-todo-d10a-scan.py` implements both heuristics.
+
+**Real case**: `~/桌面/article_todo/SCC 3D Reconstruction` — `articlev1.tex` (33 cites, Mar 2025) outscored `articlev2.tex` (18 cites, May 2025). Fix: deleted stale `articlev1.bbl`, scan picked `articlev2.tex` (100%).
+
+### ⚠️ Queue-vs-scan D10a divergence: paper-queue.json claims 100% but scan finds 0% (2026-06-23)
+
+A subtle trap: the paper-queue.json notes may claim D10a was fixed to 100% on a prior date, but a fresh scan finds D10a=0% with `bib_source=none`. This is NOT a scan script bug — it means the filesystem state has diverged from the metadata.
+
+**Root causes** (in order of likelihood):
+1. **Bib source moved/deleted after fix**: The .bib file that was present during the fix was later removed or renamed. The scan script can't find any bib source → `bib_source=none` → D10a=0%.
+2. **Fix applied to wrong tex**: The prior repair edited a tex file that the scan script doesn't select (e.g., a versioned copy), leaving the canonical tex with its original 0% state.
+3. **state.json manually set without verification**: state.json was updated to claim D10a=100% but the actual bib/tex were never fixed.
+4. **Queue notes describe an intent, not an outcome**: The note "D10a 0%→100%" records what was attempted, not what was verified post-repair.
+
+**Detection**: Queue notes say D10a fixed, but scan shows `bib_source=none` or D10a=0%. Check: does the paper directory contain ANY .bib file? Does the tex have `\bibliography{...}` or `\begin{thebibliography}`?
+
+**Fix workflow**:
+1. Search for .bib files: `find <paper_dir> -name '*.bib'`
+2. Check the tex for bibliography command: `grep 'bibliography\|thebibliography' <paper>.tex`
+3. If `bib_source=none` but queue claims fix → the fix was ephemeral (bib file lost). Treat as fresh repair.
+4. After any fix, run the scan AGAIN to verify — don't trust queue metadata alone.
+
+**Real case**: `orthokeratology-corneal-remodeling-ODE-paper-117` — queue note dated 2026-06-15 says "D10a 0%→100%. qs → 60. gate FAIL→CONDITIONAL", but 2026-06-23 scan shows D10a=0%, bib_source=none. The fix evaporated — likely the bib file was deleted or the fix targeted a non-canonical tex.
 
 ### Directory count ≠ Paper count (ephemeral snapshot)
 The `/media/yakeworld/sda2/Synthos/outputs/papers/` directory accumulates non-paper subdirectories over time (ML projects, old papers, scripts, templates, `_archive_*`, `_docs`, etc.). The `get_main_tex()` function silently filters these out by looking for a valid `.tex` file. **Never assume total_directories == papers_scanned** — always use the `__metadata__` entry from the scan JSON:
@@ -128,8 +198,12 @@ The absolute numbers change with each scan run. For historical context, see `ref
 This IS the canonical scan skill. The scan script `scripts/d8d10a-scan.py` handles all resolution: inline theinlinebibliography, external .bib files, single-bib-per-paper priority, comment filtering. Run it directly.
 
 ## Support Files
+- `scripts/d8d10a-scan.py` — Canonical pipeline D8/D10a scan (132 papers, `/media/yakeworld/sda2/Synthos/outputs/papers/`).
+- `scripts/article-todo-d10a-scan.py` — **2026-06-23**: Targeted D10a scan for `~/桌面/article_todo/` writing workspace. Handles multi-tex version scoring bias (v2 bonus), template filtering, stale .bbl detection. Proven on 11 papers (2 fixes: 64.7%→100%, 93.8%→100%).
 - `references/zero-citation-auto-repair.md` — **2026-06-20**: Proven 5-step method to repair papers with complete thebibliography but zero \\cite{} commands. Maps bibitem keys to prose mentions systematically. Tested on 182-accommodation-ciliary-muscle-ODE (13/13, 0%→100%).
+- `references/article-todo-d10a-check.md` — **2026-06-22**: Targeted D10a check methodology for `~/桌面/article_todo/` workspace papers. Covers multi-tex selection, template artifact filtering (`<label>`, `lamport94`), stale .bbl detection, and wrong-tex-selection pitfalls specific to the writing workspace.
 - `references/ocular-blood-flow-paper-116.md` — Paper 116 ocular blood flow 2-ODE reference (R2=0.993, Cc=0.45 bifurcation)
 - `references/scan-script-discrepancy-v3-vs-v7.md` — **CRITICAL**: Two scan scripts produce incompatible D8/D10a metrics. Always state which script is used. Includes metric cross-mapping table.
 - `references/scan-results-2026-06-21.md` — Latest cross-validated scan results (v3+v7), updated 2026-06-21
 - `references/scan-results-2026-06-20.md` — Latest scan results (two-script cross-validation)
+- `references/paper-repair-cron-workflow.md` — **2026-06-23**: Standard paper-repair cron workflow: two-scan approach (pipeline + article_todo), direction constraint filtering, common fix patterns, cron-specific pitfalls.

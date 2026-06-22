@@ -38,6 +38,8 @@ metadata:
 
 > ⚠️ **Python 3.12 urllib 裸空格拒绝（v106 — 2026-06-08）**：`urllib.request.urlopen()` 拒绝 URL 路径中包含裸空格的请求，报 `InvalidURL: URL can't contain control characters`。**所有 PubMed 查询必须使用 `quote_plus(term, safe='')` 编码**。已在 `scripts/pubmed-urllib.py` 中修复，参见 `references/python312-url-quirk.md`。
 
+> ⚠️ **E-utilities 日期范围格式陷阱（v187 — 2026-06-22）**：使用 `..` 分隔符（如 `2024/01/01..2026/06/08`）进行日期过滤会**静默返回0结果**——PubMed API 不接受 `..` 格式，必须使用 `:` 分隔符（如 `2025/01/01:2026/06/22`）。已在 `scripts/pubmed-urllib.py` 中自动转换，参见 `references/pubmed-date-format-quirk.md`。
+
 ## 搜索语法
 
 | 字段 | 示例 |
@@ -71,12 +73,13 @@ metadata:
 - `references/batch-retrieval.md` — 批量检索和XML解析
 - `references/efetch-response-quirks.md` — efetch 可能返回 text/plain 或 HTML（非JSON/XML）；esummary key 是 PMID 不在 pubmed 下；idlist 键名小写
 - `references/python312-url-quirk.md` — Python 3.12 urllib.request 拒绝裸空格URL路径的修复（quote_plus编码，v106）
+- `references/pubmed-date-format-quirk.md` — E-utilities 日期范围格式陷阱：`..` 分隔符静默返回0结果，必须使用 `:` 分隔符
 
 ## 脚本
 
 |- `scripts/pubmed-urllib.py` — 可复用PubMed查询脚本（urllib stdlib，无curl，安全Hermes cron环境，已修复Python 3.12 quote_plus编码）
   - 用法：`python3 pubmed-urllib.py "term"` → count+PMIDs
-  - `python3 pubmed-urllib.py "term" "2024/01/01..2026/06/08"` → 日期过滤
+  - `python3 pubmed-urllib.py "term" "2024/01/01:2026/06/08"` → 日期过滤（使用 : 分隔符，勿用 ..）
   - `python3 pubmed-urllib.py --abstract "PMID1,PMID2"` → 摘要提取
 
 ## IO_CONTRACT
