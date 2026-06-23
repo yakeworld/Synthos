@@ -135,6 +135,22 @@ When verifying D10a (cite-to-bibitem match rate), four traps cause false positiv
 4. **Post-fix**: run bibtex separately to catch entries missing from the `.bib` that were previously in the `.bbl` (old bbl may have had bibitems not in current bib file). BibTeX warnings reveal these silently-matched-before entries.
 5. **article_todo check**: After pipeline scan, run a targeted D10a scan on `~/桌面/article_todo/`. The most common issue in article_todo is stale .bbl from older revision. Fix: delete old .bbl, recompile. See `paper-references-scanning/references/article-todo-d10a-check.md` for the full targeted scan methodology (created 2026-06-22).
 
+## Manual Layer B (NotebookLM Cron Fallback)
+
+When NotebookLM auth has expired in a headless cron, use `references/cron-layer-b-workflow.md` for the complete manual Layer B workflow:
+
+1. Check NotebookLM auth status (expired? -> manual fallback)
+2. Priority-select papers (ICLR deadline first, then highest qs)
+3. Read paper.tex / paper.pdf for content
+4. Score 5 dimensions (D1-D5) with weighted formula
+5. Compute verdict (T1/T2/FAIL thresholds)
+6. G7 cross-check for auto-gate false positives
+7. Create `07-quality/layer-b-report.md`
+8. Update `state.json` publication_notes (use write_file, NOT patch — see pitfall)
+9. Append to agent-log.md (use patch, NOT write_file — append-only protocol)
+
+**Known pitfalls**: D10a false negative when paper uses inline thebibliography (scan is .bib-only); state.json patching corrupts nested JSON with escaped newlines; all 5 ICLR papers showed 13-15pt discrepancies between pipeline qs and Layer B scores, indicating auto-gate inflation.
+
 ## IO_CONTRACT
 
 - **input**: `paper_path: str, analysis_type: str` — Paper path and analysis type

@@ -1,7 +1,7 @@
 ---
 name: paper-quality-deep-review
 description: 论文质量深度审查引擎 — 从文献下载→内容分析→研究空白验证→科学假设评估→解决方法评估→文献引用质量评分→综合评分。
-version: 1.2.0
+version: 1.3.0
 author: Synthos
 license: MIT
 metadata:
@@ -562,6 +562,14 @@ The Introduction's gap analysis (literature review) references specific authors 
 **Severity:** Moderate-High — reduces scholarly credibility.
 **Fix:** Add bibliography entries for all prior works referenced in prose, or remove prose references to uncited works.
 
+### 🔴 Pattern A2: Zero Figures (Computational Modeling Papers)
+
+A computational modeling paper (ODE/PINN/simulation) with **zero rendered figures** — only tables. This is especially problematic for dynamical systems papers where phase portraits, bifurcation diagrams, and trajectory plots are the primary communication medium.
+
+**Detection:** Count `\\begin{figure}` vs `\\begin{table}` in paper.tex. If figure count is 0 and table count ≥ 4, flag this.
+**Severity:** High — a paper with 0 figures and only tables is not submission-ready for most venues.
+**Fix:** Generate at minimum: (a) trajectory time-series plot, (b) bifurcation diagram, (c) parameter recovery parity plot.
+
 ### 🟡 Pattern E: Placeholder or Missing Code URLs
 
 The Data/Code Availability section states code is available at a repository but the URL is vague ("Synthos research repository") or the DOI is a placeholder ("10.5281/zenodo.XXXXX").
@@ -598,11 +606,28 @@ The paper uses only synthetic data (RK4-generated ground truth) and acknowledges
 
 **Fix:** 删除矛盾声明，或将已有跨数据集结果整合到论文中。
 
+### 🔴 Pattern J: Missing Training Hyperparameters
+
 PINN architecture details (layer sizes, activation) are provided, but training hyperparameters (optimizer, learning rate, epochs/schedule, batch size, hardware) are absent.
 
 **Detection:** Search for "optimizer", "learning rate", "epoch", "batch size", "Adam", "hardware" in methods section.
 **Severity:** Minor-Moderate — reduces reproducibility.
 **Fix:** Add a complete hyperparameter table.
+
+### 🟡 Pattern K: Bib Entry Count Mismatch (Uncited Orphans in references.bib)
+
+The `references.bib` file contains more entries than the number of `\cite{}` calls in `paper.tex`. The uncited entries become orphans that may not be caught by D10a scans.
+
+**Detection:** Count bib entries (`grep -c '@[a-z]*{' references.bib`) vs cite calls (extract unique keys from `\cite{key}` patterns in paper.tex). If bib > cited, list uncited entries.
+**Severity:** Low-Moderate — bib hygiene issue.
+**Fix:** Either add `\cite{}` call for the uncited entry, or remove it from references.bib.
+
+### ⚠️ Pitfall: Editing .bib Files — Use write_file, Not patch
+
+The patch tool's fuzzy matching can **duplicate bib entries** or produce malformed BibTeX when targeting content in `references.bib`. BibTeX is strict about entry boundaries and the fuzzy matcher does not understand BibTeX syntax.
+
+**Instead:** Use `read_file` to get the full bib content → edit in memory → `write_file` to overwrite. This guarantees no duplicate entries or corrupted structure.
+**If patch is necessary:** Ensure old_string includes EXACTLY the complete entry text including the closing `}` on its own line. Verify the result with `read_file` after applying.
 
 ---
 
@@ -642,7 +667,9 @@ When G7 deep review is triggered by a cron job (no user present, ~15-30 minute w
 1. Read paper.tex — focus on Abstract, hypotheses/contributions, Results tables, Limitations
 2. Run `grep` compile log audit (see Pre-Review section above)
 3. Count references (D8) and verify D10a=100%
-4. Detect all common failure patterns (A-G above)
+4. **Cross-check bib entry count vs cited count:** count bib entries in references.bib vs unique cite keys in paper.tex. Flag uncited entries as Pattern K.
+5. Count `\begin{figure}` vs `\begin{table}` — flag zero figures as Pattern A2
+6. Detect all common failure patterns (A-K above)
 
 ### Phase 2: Dimension Scoring (10 min)
 Score each of D1-D7 with a rationale paragraph, not a checklist:
@@ -663,7 +690,10 @@ Score each of D1-D7 with a rationale paragraph, not a checklist:
 
 ### Phase 4: State Update (optional, 2 min)
 - Update state.json `gates.G7` from "N/A" or auto-PASS to verified "PASS"
+  - If state.json has a `gates_result` dict (with G1-G7 keys), add `"G7_deep_review": "PASS_T2"` alongside the existing G7 entry
+  - If state.json has `gates` as a list of objects, update the G7 object's `evidence` field to include the Layer A avg and key findings
 - Add note: `"g7_deep_review_<date>": "G7 deep quality review completed. See 07-quality/step_quality_review.md. Layer A avg=X.X/10 (T2 PASS). N issues identified."`
+- **Append to `pipeline_trace` array** in state.json: a timestamped entry recording the review date, Layer A avg, and the number/severity of issues found
 
 ## 参考文件
 

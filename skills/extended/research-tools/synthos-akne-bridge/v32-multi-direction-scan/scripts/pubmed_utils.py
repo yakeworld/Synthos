@@ -163,6 +163,8 @@ def openalex_search(query, retmax=5):
     Search OpenAlex works.
     
     Returns: (count, [titles])
+    NOTE: Uses the lenient CTX (ssl.CERT_NONE) because OpenAlex's SSL cert
+    can cause verification failures in certain Python/build environments.
     """
     encoded = urllib.parse.quote(query)
     url = f"https://api.openalex.org/works?search={encoded}&per_page={retmax}&select=id,title,abstract_inverted_index"
@@ -171,7 +173,7 @@ def openalex_search(query, retmax=5):
     for attempt in range(MAX_RETRIES):
         try:
             req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-            with urllib.request.urlopen(req, timeout=20) as r:
+            with urllib.request.urlopen(req, timeout=20, context=CTX) as r:
                 data = json.loads(r.read())
                 results = data.get("results", [])
                 titles = [r.get("title", "") for r in results[:retmax]]
