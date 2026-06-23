@@ -110,7 +110,39 @@ python3 -c "import json; data=json.load(open('/tmp/result.json'))..."
 - **修复**：两步模式 — `curl -s ... > /tmp/file.json` 然后 `python3 -c "...open('/tmp/file.json')..."`
 - **注意**：`curl -v` 也消耗 stdout，始终用 `-s`
 
-### 7. 关键词假阳性模式（v86 — 2026-06-08）
+### 8. Author 字段解析陷阱
+
+OpenAlex `authorships[].author` 中的 `family`/`given` 字段可能为空（尤其对书籍章节、非英语作者、或 Springer 系列章节）。CrossRef 的 `author[].family` 通常更完整。当 OpenAlex 作者字段为空时，**必须交叉引用 CrossRef**。
+
+详见 `references/uci-dataset-paper-discovery.md`。
+
+### 9. UCI 数据集论文发现
+
+当需要查找 UCI 数据集的原始论文时，直接爬取 UCI 页面 HTML，从内部 JSON 的 `edits[].data.paper` 提取 DOI、作者、会议信息。详见 `references/uci-dataset-paper-discovery.md`。
+
+### 7. CDC/NIH 公共卫生调查数据库检索质量极差
+
+OpenAlex 对 CDC BRFSS、NHANES、MMWR 报告类文献的检索结果质量极低：
+- 搜索 "BRFSS diabetes" 返回的多是低引用论文、经济类论文、完全不相关的论文
+- 搜索 "Behavioral Risk Factor Surveillance System methodology" 完全找不到方法论论文
+- 搜索 "CDC diabetes prevalence" 结果多为 obesity/economic 类论文，非目标医学论文
+- 搜索 "diabetes health indicators" 可能返回 0 结果或错误结果
+
+**根因**：OpenAlex 数据库的医学分类标记（categories）对公共卫生调查类文献标注不完整，且 PubMed 论文在 OpenAlex 中的引用数通常偏低。
+
+**正确做法**：对 CDC/NIH 公共卫生调查数据库相关文献：
+1. **优先用 PubMed eutils esearch**（而非 OpenAlex）— 用 Mesh 术语 + Title/Abstract 组合搜索
+2. **用 PubMed eutils esummary** 获取 PMID 列表的标题、作者、期刊信息
+3. 找到 PMID 后，用 OpenAlex 交叉引用：`https://api.openalex.org/works?filter=external_ids.pmid:{pmid}`
+4. 对于方法论论文（如 BRFSS 可靠性/有效性验证），OpenAlex 可能仍然找不到 — 直接用 Google 搜索论文标题 + 作者，再用 OpenAlex DOI 反查
+
+**已知高引用 BRFSS 参考文献**（2026-06-23 确认）：
+- Pierannunzi et al. 2013 — BMC Med Res Methodol — 545 citations — DOI: 10.1186/1471-2288-13-49
+- Zhang et al. 2015 — Am J Epidemiol — 191 citations — DOI: 10.1093/aje/kwv002
+
+详见 `references/public-health-database-search-fallback.md`。
+
+### 8. 关键词假阳性模式（v86 — 2026-06-08）
 
 OpenAlex 中常见关键词（"neural network", "differential equation", "model"）产生大量假阳性。
 
@@ -128,7 +160,9 @@ OpenAlex 中常见关键词（"neural network", "differential equation", "model"
 - `references/openalex-complete-guide.md` — 完整使用指南（白空间验证协议、过滤参数、解析示例）
 - `references/openalex-competitive-papers.md` — 关键竞争性论文及其分析方法（PMID 39810187 PD 眼动诊断, BPPV-ML 论文）
 - `references/openalex-cloudflare-block.md` — Cloudflare JS challenge 检测和回退处理（2026-06-05 新增）
-- `references/false-positive-keyword-pattern.md` — 常见关键词假阳性模式：neural network→materials/electronics, differential equation→thermodynamics/traffic, fixation→molecular transport/botany. PubMed=0 + OA高计数 = 几乎确定假阳性
+- `references/false-positive-keyword-pattern.md` — 常见关键词假阳性模式
+- `references/uci-dataset-paper-discovery.md` — UCI 数据集原始论文查找全流程（HTML 解析 → CrossRef → OpenAlex）
+- `references/public-health-database-search-fallback.md` — CDC BRFSS/NHANES/MMWR 公共卫生调查数据库搜索回退方案：OpenAlex 检索质量极差 → PubMed eutils 优先 → 交叉引用
 
 ## 陷阱: PubMed 论文可能改变竞争空间状态
 

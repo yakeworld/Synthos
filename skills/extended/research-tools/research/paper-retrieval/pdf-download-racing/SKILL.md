@@ -29,7 +29,23 @@ metadata:
 
 > 对应原则：P2（机械原子暴露输入输出规范）
 
-## 统一入口（2026-06-23 重构）
+## Golden Rule（2026-06-23 追加 — v3）
+
+铁律：DOI验证先于下载。
+
+1. 先加载本技能，再碰任何代码。
+2. 不自写测试 — 直接调 download_one.py。
+3. 先验DOI再下载 — 调 download_one.py 前先用 citation-verification 技能验证DOI。
+   假DOI (doi.org 404 + Crossref Resource not found + SS无记录) 跑竞速是白费时间。
+4. SS API key必须带 — _resolve_metadata() 中SS调用需读取 $SEMANTIC_SCHOLAR_API_KEY
+   并设置 x-api-key header，否则429限速导致元数据静默失败。
+5. MedData下载先加载 meddata-download 技能。
+
+验证流水线：bib文件 → Phase 1 (citation-verification) 验DOI标假修复 → Phase 2 (本技能) 只对可信DOI下载
+
+详见 `references/doi-validation-before-download-2026-06-23.md` — 10篇假/错DOI的完整案例库（Kapoor/Norgeot/Haixiang等真实修复记录）。
+
+## 统一入口（2026-06-21 更新 — v4架构）
 
 **不要写自己的测试脚本。先查技能，再调 `download_one.py`。** 这是用户明确纠正的工作方式。
 
@@ -45,13 +61,47 @@ python3 download_one.py CorpusID:12345678 /tmp/paper.pdf             # Semantic 
 python3 download_one.py PMID:28962176 /tmp/paper.pdf                 # PubMed
 ```
 
-内部竞速层级（由 `unified_download_core.py` 自动执行）:
+### v4 内部竞速架构（2026-06-21 实测确认）
+
 ```
-Tier 0: arXiv 直连 (仅arXiv ID)
-Tier 1: SciHub (curl_cffi TLS伪装)
-Tier 2: LibGen
-Tier 3: MedData (双格式ID降级: DOI_NO_SLASH → DOI_NO_SLASH+PMID)
+download_one.py <任意ID>
+ │
+ ├→ _resolve_metadata()
+ │    ├→ Semantic Scholar查：externalIds → PMID, arXiv ID
+ │    │                    openAccessPdf → OA全文直链 🆕
+ │    └→ Crossref/NCBI降级补全
+ │
+ ├─ Step 1: arXiv 直连 (仅arXiv ID, 最快)
+ │
+ ├─ Step 2: Semantic Scholar openAccessPdf 直链 🆕
+ │    （OA论文最快路径，不用SciHub/MedData）
+ │
+ └─ Step 3: 三层竞速 (SciHub → LibGen → MedData)
+      ├─ SciHub: 直连
+      ├─ LibGen: 直连
+      └─ MedData: 最后降级通道（受频率保护）
+           ├─ PMID直试
+           ├─ DOI_NO_SLASH → full_look(随机11位号, 真实PMID, DOI) → wait→viewtext
+           └─ 滥用防护: 15s间隔, 200次/天上限, 不自动重试失败full_look
 ```
+
+### 下载失败后重试策略
+
+对批量下载中失败的DOI，可单独跑SS OA重试脚本：
+
+```bash
+python3 retry_failed_ss_oa.py  # 只查SS openAccessPdf，不跑全链路竞速
+```
+
+适用于SciHub/LibGen/MedData都拿不到的付费论文。SS OA链接有时效性（403/502），非100%可靠。
+
+### 批量失败DOI重要性分级
+
+参见 `references/batch-download-triage-2026-06-21.md` — 标准：核心引用必追，重要引用尽量追，低影响期刊/数据集/评论文章可弃。
+
+### 批量下载速度 → 多线程
+
+当前 `batch_download_pima.py` 为单线程。用户要求改为多线程以提高速度 — 当下载目标数 > 10 时优先考虑。
 
 MedData 参数:
 - **核心定位**: 外文医学论文平台（非中文期刊）
@@ -102,12 +152,12 @@ curl -s -L "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC{PMC_ID}/pdf/" \
 **注意**：并非所有 PubMed 论文都有 PMC 全文。需先查询 elink 确认。
 ```
 
-**⚠️ 2026-06-19 最终确认 — Sci-Hub 全面失效**
-- 所有11个Sci-Hub域（ru/ee/wf/shop/ren/red/al/vg/es/box/yt）均返回 HTTP 403/0/ERROR
-- curl_cffi impersonate="chrome120" 无法绕过 — 403 是服务端拒绝，非JS挑战
-- `sci-hub.shop` 返回二进制攻击页（`a bytes-like object required`）
-- **结论**: Sci-Hub在当前网络环境下完全不可用，不应再尝试
-- 2026-06-18 记录的是 DDoS-Guard JS 挑战，2026-06-19 确认为 HTTP 403 拒绝
+**⚠️ 2026-06-23 更新 — Sci-Hub 域连通性波动，非全面失效**
+- 2026-06-19 曾记录所有域返回403/0/ERROR，但2026-06-23实测 `sci-hub.al` 对 Nature 论文返回 ✅ 320KB PDF
+- Sci-Hub 域连通性存在波动，某些域可能在特定时间段可用/不可用
+- 旧断言"全面失效"已过时 — 让竞速逻辑自然工作，设置足够长超时(120s+)即可
+- 不要一失败就直接放弃 —— 竞速会按 SciHub → LibGen → MedData 顺序自动降级
+- **不要手动禁用 SciHub tier** — 竞速设计自动处理域波动，写代码跳过它等于放弃已经恢复的通道
 
 **降级策略**: 当Sci-Hub失效时，优先使用OA直连（Frontiers/PLOS/PMC），其次MedData（机构凭据+国内IP），其次手动从机构网络下载。
 
@@ -131,6 +181,12 @@ MedData 走 `try_meddata()` 自动处理 ID 构造（双格式降级）和完整
 md5sum <output.pdf> | awk '{print $1}'
 # 占位PDF的MD5: fd469bd7cd29446f2800f099e3b71457 (606841B)
 file <output.pdf>  # 应返回 "PDF document"
+
+# ⚡ 内容正确性验证（2026-06-23 新增）
+# Sci-Hub和MedData都可能串流到相邻文章（Nature/Springer系列尤其严重）
+pdfinfo <output.pdf> | grep -E "Title:|Author:"
+# 对比bib中的标题/作者——不匹配必须重新下载
+strings <output.pdf> | head -100 | grep -i "论文核心关键词"
 ```
 
 **MedData 定位**: 外文医学论文平台（非中文期刊）。
@@ -139,17 +195,15 @@ file <output.pdf>  # 应返回 "PDF document"
 
 ## Pitfalls
 
-### ⚠️ EXIT NODE IP 64.23.234.118 IS FULLY BLOCKED
+### ⚠️ 出口节点 64.23.234.118 — SciHub部分可用；MedData占位 = ID格式问题（非IP封锁）
 
-**CRITICAL**: Tailscale exit node (Digital Ocean NYC, 64.23.234.118) is blocked by:
-- All Sci-Hub domains → 403/timeout/"search proxy"
-- Semantic Scholar API → 404 for ANY DOI
-- EuropePMC API → 404
-- Unpaywall API → 404
-- CrossRef API → 404
-- Academic websites and Sci-Hub consider DO 64.23.234.0/24 as known proxy/scanner
+Tailscale exit node (Digital Ocean NYC, 64.23.234.118):
+- **SciHub**: 部分域可用（2026-06-23 `sci-hub.al` 返回 Nature 论文 ✅）
+- **Semantic Scholar API** → 404
+- **CrossRef API** → 404
+- **MedData**: SSO通过，API正常工作——**占位PDF原因见下方「MedData 占位PDF根因诊断」**
 
-**Solution**: Use Tor SOCKS5H (socks5h://127.0.0.1:9050). Exit Node MUST NOT be used for PDF downloads.
+不要将 MedData 返回占位归咎于IP封锁。2026-06-23用户明确纠正：**占位来自ID格式不匹配，与IP无关**。用正确的内部ID/PMID作为fileName可获取真实PDF。
 
 ### ⚠️ sci-hub.vg IS THE ONLY WORKING DOMAIN via Tor
 
@@ -164,11 +218,37 @@ Testing of 11 Sci-Hub domains via Tor SOCKS5H (2026-06-19):
 
 **Never try multiple domains in parallel** — use `sci-hub.vg` exclusively via Tor.
 
-### ⚠️ CORRECT Workflow Is Different From Old Documentation
+### ⚠️ MedData 占位PDF根因诊断（2026-06-23用户校正）
 
-**The old `viewtext` example in this skill still references `www.meddata.com.cn`** — that domain returns placeholders.
-The correct domain is `app.meddata.com.cn:8878` and requires a complete 3-step flow with consecutive calls.
-Use `scripts/meddata-correct-download.py` for the verified workflow.
+**❌ 错误认知**: 占位PDF(MD5=fd469bd7...) = IP被封锁
+**✅ 正确认知**: 占位PDF = 用了**错误的ID格式**（Format 1/2 对多数论文不兼容）
+
+核心证据（2026-06-23实测）：
+- 同一IP下：PMID=27219127 用PMID作为fileName → 320KB真实PDF ✅
+- 同一论文用DOI_NO_SLASH → 606KB占位PDF ❌
+- 结论：API正常工作，占位来自ID格式不匹配
+
+**ID格式优先级（越上方越可靠）**：
+| 优先级 | 格式 | 规则 | 例 | 说明 |
+|:------:|:-----|:------|:---|:-----|
+| ⭐1 | **Format A — 内部ID** | `{自增ID}Rpub{后缀}` | `2985248Rpub37800834` | MedData原生主键，最可靠 |
+| ⭐2 | **PMID 直用** | 直接用PMID数字 | `27219127` | 部分论文有效 |
+| ⭐3 | Format 1 — DOI_NO_SLASH | `doi.replace('/', '')` | `10.3389fneur.2020.00602` | 仅Frontiers/BMJ等 |
+| ⭐4 | Format 2 — DOI+PMID | `DOI_NO_SLASH + PMID` | `10.3892etm.2017.483728962176` | 仅Bentham等 |
+
+**诊断流程**：
+```
+viewtext返回606KB占位PDF
+  └─ modifyPass: 1 ?
+      ├─ ✅ → 先改密码（medbooks.com.cn 修改密码）
+      ├─ 有PMID ?
+      │   ├─ ✅ → 试「PMID」作为fileName
+      │   └─ 可访问medbooks搜索?
+      │       ├─ ✅ → 搜论文→取内部ID→调用viewtext
+      │       └─ 都不行 → 论文不在库中，走OA直连
+```
+
+**不要**在诊断到占位PDF时说"IP被封锁"——这是2026-06-23用户明确纠正的错误认知。
 
 ### ⚠️ MedData 覆盖范围 — 已解决（用户校正 2026-06-23）
 
@@ -210,26 +290,35 @@ python3 download_one.py <DOI> <output.pdf>
 
 先查技能，再调用已有工具。
 
-## Sci-Hub域列表（2026-06-19 实证更新）
+## Sci-Hub域列表（2026-06-23 更新 — 连通性有波动）
 
 ```python
 SCI_HUB_DOMAINS = [
-    "https://sci-hub.ru",     # ❌ 返回 "search proxy" (DOI不在库)
+    "https://sci-hub.ru",     # 🟡 波动 — 有时返回 "search proxy"
     "https://sci-hub.ee",     # ❌ 不可达/JS挑战
-    "https://sci-hub.shop",   # ❌ 返回 "search proxy"
+    "https://sci-hub.shop",   # 🟡 波动
     "https://sci-hub.ren",    # ❌ JS challenge ("Just a moment...")
-    "https://sci-hub.red",    # ❌ 返回 "search proxy"
-    "https://sci-hub.al",     # ❌ 返回 "search proxy"
-    "https://sci-hub.vg",     # ✅ 唯一成功: HTML → iframe → PDF
+    "https://sci-hub.red",    # 🟡 波动
+    "https://sci-hub.al",     # ✅ 2026-06-23 实测返回 Nature论文 320KB 真实PDF
+    "https://sci-hub.vg",     # ✅ 唯一稳定: HTML → iframe → PDF (via Tor)
     "https://sci-hub.wf",     # ❌ 返回空HTML
     "https://sci-hub.es",     # ❌ 不可达
-    "https://sci-hub.box",    # ❌ 返回 "search proxy"
+    "https://sci-hub.box",    # ❌ 不可达
     "https://sci-hub.yt",     # ❌ 不可达
 ]
-# 结论: 通过 Tor SOCKS5H，仅 sci-hub.vg 可用。不要多域轮询，单域即可。
+# 结论: SciHub 域连通性有波动。不要基于单次实验断言"全面失效"或"全部可用"。
+# 让竞速逻辑自动处理。—— 11域全部尝试需足够超时 (120s+)。
 ```
 
 ## MedData (外文医学论文全文平台)
+
+> ⚠️ **2026-06-23 废弃声明**: 以下 MedData 章节内容已部分过时。**最终权威版本在 `meddata-download` 技能**。核心规律：
+> ```
+> ① full_look(abstractId=随机11位号, pmid=真实PMID, doi=DOI)
+> ② 等待 10 秒 → viewtext(fileName=abstractId) → PDF
+> ```
+> abstractId 必须唯一不固定，pmid 必须传真实PMID 不可用固定 `'1'`。占位PDF 来自ID格式不匹配，**不是IP封锁**。
+> 详见 `meddata-download` 技能和 `references/meddata-download-core-rules.md`。
 
 需设置环境变量：
 ```bash
@@ -239,7 +328,12 @@ export MEDDATA_PASSWORD="MEDDATA_PASSWORD_PLACEHOLDER"
 
 ### 完整认证链（2026-06-18 实测确认）
 
-**Step 1: SSO 登录**（⚠️ 必须使用 --tls-max 1.2）
+**⚠️ modifyPass 信号（2026-06-23 新增）**：
+SSO 响应中的 `\"modifyPass\": 1` 表示密码被标记为需修改。这会影响部分论文下载，但不阻断全部。处理方式：
+- 即使 modifyPass=1，用**内部ID（Format A）** 仍可下载
+- 用 Format 1/2 时，modifyPass=1 可能加重返回占位的概率
+- 长远修复：登录 medbooks.com.cn 修改密码后恢复
+- 诊断时先检查 SSO 响应是否有 `modifyPass: 1`
 ```bash
 curl -s --tls-max 1.2 -X POST "https://uuct.medbooks.com.cn:9443/sso/login" \
   -H "Content-Type: application/json" \
@@ -267,7 +361,7 @@ curl -s "http://www.meddata.com.cn/api/abstract/full_look?token=<TOKEN>&abstract
 
 **Step 4: viewtext**（下载 PDF）
 ```bash
-curl -s -o output.pdf "http://www.meddata.com.cn/api/abstract/viewtext?fileName=<DOI_NO_SLASH>&token=<TOKEN>" \
+curl -s -o output.pdf "http://app.meddata.com.cn:8878/api/abstract/viewtext?fileName=<DOI_NO_SLASH>&token=<TOKEN>" \
   -H "User-Agent: Mozilla/5.0" -H "Accept: application/pdf"
 ```
 
@@ -292,6 +386,33 @@ md5sum <output.pdf>  # 占位指纹: fd469bd7cd29446f2800f099e3b71457 (606841B)
 file <output.pdf>    # 应返回 "PDF document"
 ```
 
+### ⚠️ MedData 内部ID格式（Format A）— 最可靠但需浏览器获取
+
+参考 `references/meddata-access-absorbed.md` 中记录的 MedData 数据库内部编号格式：
+
+| 格式 | 规则 | 例 | 获取方式 |
+|:-----|:------|:---|:---------|
+| **Format A** — 内部ID | `{自增ID}Rpub{后缀}` | `2985248Rpub37800834` | medbooks.com.cn 搜索界面 |
+| Format 1 — DOI_NO_SLASH | `doi.replace('/', '')` | `10.3389fneur.2020.00602` | 从DOI直接派生 |
+| Format 2 — DOI+PMID | `DOI_NO_SLASH + PMID` | `10.3892etm.2017.483728962176` | 需查询PMID |
+
+**关键点**：
+- Format A (内部ID) 是 MedData 数据库的原生主键，**同一个ID号比DOI衍生格式更可靠**
+- 当前 `meddata.py` 只实现了 Format 1 和 Format 2，未支持 Format A
+- 获取内部ID需通过 medbooks.com.cn 搜索界面（浏览器操作为主，无公开CLI API）
+- 未来改进方向：增加 medbooks 搜索集成
+
+### ⚠️ viewtext 域名争议 — www vs app（2026-06-23 实测澄清）
+
+技能内多处声称 `www.meddata.com.cn` 返回占位、`app.meddata.com.cn:8878` 返回真实PDF。**2026-06-23 从出口节点 64.23.234.118 实测发现两个域名对同一论文返回相同结果**（占位PDF的MD5相同）。说明域名差异对结果无实质影响。
+
+**根因真实排序（2026-06-23 用户校正）**：
+1. **ID格式不匹配**（首要原因）— Viewtext的fileName参数使用了错误的ID格式，见上方「MedData 占位PDF根因诊断」
+2. **论文是否被 MedData 收录**（次要原因）— 某些出版社论文不在库中
+3. **域名差异**（无关因素）— 国内网络下两域等效，国外IP下两域也等效
+
+**国内网络下**优先尝试 `app.meddata.com.cn:8878`。但不要将占位PDF归咎于域名选择。
+
 ### ⚠️ MedData SSO 需要 TLS 1.2 (2026-06-19 实测)
 
 `curl` 默认使用 TLS 1.3 会被 `uuct.medbooks.com.cn:9443` 拒绝（返回空响应）。
@@ -308,79 +429,82 @@ curl -s --tls-max 1.2 -X POST "https://uuct.medbooks.com.cn:9443/sso/login" \
 - curl 超时或返回空响应
 - `json.loads` 失败（`JSONDecodeError: Expecting value`）
 
-### ⚠️ MedData 频率限制 + IP 限制 (2026-06-19 实测)
+### ⚠️ 书章/书籍需要ISBN搜索，非DOI（2026-06-23 新增）
+
+`download_one.py` 的DOI搜索不适用于Springer/Elsevier书章（book chapter）。
+
+**区别**:
+| 类型 | 可发现方式 | 示例 |
+|:-----|:-----------|:-----|
+| 期刊论文 | DOI → SciHub/LibGen/MedData ✅ | `10.1007/s11227-024-06211-9` |
+| 书章 | DOI → SciHub/LibGen/MedData ❌ | `10.1007/978-981-13-8798-2_12` |
+| 书籍 | ISBN → LibGen ✅ | `978-981-13-8798-2` |
+
+**诊断书章特征**:
+- DOI以 `10.1007/978-`、`10.1007/` 开头的Springer书章通常无法通过DOI下载
+- PDF XML显示「Book Chapter」「Advances in Intelligent Systems and Computing」等
+
+**处理策略**:
+1. 先识别是否为书章（DOI模式 + 非期刊期刊卷号）
+2. 尝试LibGen搜索ISBN或书名（非DOI）
+3. 如果均无法下载，intro paper保留在bib中（正确引用比PDF更重要），在报告标注「书章无免费PDF」
+
+**2026-06-23实战**: Islam 2019 (Springer书章, DOI 10.1007/978-981-13-8798-2_12) 尝试过Tor+SciHub所有域、Tor+LibGen所有域、MedData — 全部无结果。最终判定为合理缺失。
+
+### ⚠️ MedData 滥用防护策略（2026-06-21 新增）
+
+MedData 是机构资源（温州人民医院），不可滥用。批量下载时强制执行：
+
+| 防护 | 值 |
+|:-----|:----|
+| 连续调用间隔 | ≥ **15秒**（自动sleep等待） |
+| 24小时上限 | ≤ **200次**（超限跳过，返回None） |
+| 重试 | **绝不自动重试**失败的full_look |
+| 定位 | **仅作为最后降级通道**（SciHub→LibGen→MedData） |
+
+此策略编码在 `scihub_racing.py` 中，加载时会检查计数器文件。
+
+### ⚠️ MedData 频率限制 + modifyPass 状态（2026-06-23 更新）
 
 **频率限制**：频繁调用 `full_look` 会触发 `responseCode=500` + "查看全文次数超过限制，请稍后再试！"
 - 单次会话内 3-5 篇正常
 - 批量扫描多篇文章后触发（约 10 次请求）
 - 需要等待数分钟到数十分钟冷却
 
-**IP 限制**：境外 IP（如本机出口 64.23.234.11，美国）被进一步限制：
-- 频率限制后可能完全封禁（token exchange 也失败，返回空）
-- 首次调用成功，批量调用后触发限制，持续调用后 IP 被封
-- **解决**：需国内网络环境或控制调用频率（每篇间隔 >10 秒，每小时不超一定次数）
+**modifyPass 限制**：SSO 响应中 `\"modifyPass\": 1` 标记密码需修改。
+- 不影响 SSO 登录和 token 获取（API调用正常）
+- 不影响 Format A（内部ID）下载
+- 对 Format 1/2 可能降低成功率
 
-**诊断顺序**：
-1. 如果 SSO 返回空响应 → 可能是 IP 被封或 TLS 问题
-2. 如果 token exchange 返回空 → 确认 IP 被封或频率限制
-3. 如果 full_look 返回 500 → 频率限制，等待冷却
-4. 如果 full_look 正常但 viewtext 返回占位 → 该论文不在 MedData 收录范围
+**诊断顺序（按实际频率）**：
+1. SSO返回空响应 → TLS 1.2 问题或临时网络异常
+2. token exchange 返回空 → 频率限制
+3. full_look 返回 500 → 频率限制，等待冷却
+4. full_look 正常但 viewtext 返回占位PDF → **ID格式不匹配**（优先排查！不要先疑心IP封锁）
+   - 先查 modifyPass 状态
+   - 再试 PMID 直用或内部ID
+   - 最终走 OA 直连降级
 
-### ⚠️ MedData CORRECT Workflow (2026-06-18 15:30 Final)
+### ⚠️ MedData CORRECT Workflow (2026-06-23 最终确认)
 
-**CRITICAL**: The correct MedData workflow uses `app.meddata.com.cn:8878` with a complete 3-step flow executed in a SINGLE session (token expires in seconds):
+> ⚠️ **此节已完全被 `meddata-download` 技能取代**。以下为快速参考，不完整。
 
-1. **SSO login** (one-time): `POST https://uuct.medbooks.com.cn:9443/sso/login` with `{"username":"MEDDATA_USERNAME_PLACEHOLDER","password":"MEDDATA_PASSWORD_PLACEHOLDER","type":"0"}`
-   - Returns `bucToken` from `data.url` (split on `bucToken=`)
+**核心两步流程（不可省略、不可篡改参数）**：
 
-2. **Token exchange** (one-time): `GET http://www.meddata.com.cn/api/sso/user/login?bucToken=<TOKEN>`
-   - Returns `responseData` field = `<uuid>:<timestamp>` (this is the working token)
-
-3. **For each paper, consecutive calls with the SAME token:**
-   - **full_look**: `GET http://www.meddata.com.cn/api/abstract/full_look?token=<TOKEN>&abstractId=<DOI_NO_SLASH>&pmid=1&doi=<DOI>`
-     - Response structure: `{"responseData":{"status":2,"fileName":"<FILENAME>","fileUrl":null,"doiUrl":null}}`
-     - **NEVER access `fileName` directly** — it's nested under `responseData.fileName`
-     - `status: 0` = has full text, `status: 2` = indexed without full text (Western papers commonly)
-   - **viewtext**: `GET http://app.meddata.com.cn:8878/api/abstract/viewtext?fileName=<FILENAME>&token=<TOKEN>`
-     - **URL must be `app.meddata.com.cn:8878`** (NOT `www.meddata.com.cn` — the old domain returns placeholder)
-     - **⚠️ fileName 关键规则（2026-06-18 实测修正）**:
-       - `full_look` 返回的 `responseData.fileName` 可能只是 `DOI_NO_SLASH`（如 `10.3389fneur.2020.00602`）
-       - 但某些论文需要 **`DOI_NO_SLASH + PMID`** 组合格式才能获取真实 PDF
-       - 例如: `10.3892etm.2017.483728962176`（DOI_NO_SLASH=10.3892etm.2017.4840 + PMID=28962176）
-       - **如果 full_look 返回的 fileName 下载得到占位 PDF，尝试拼接 PMID 再下载**
-     - **Add 1-second delay between full_look and viewtext** (server needs time to generate file)
-     - **Timeout: 30 seconds** (server can be slow)
-
-**Example successful calls (2026-06-18):**
 ```
-# Barany 2020 — 标准路径
-full_look → responseData.fileName = "10.3389fneur.2020.00602"
-viewtext (app) → 663417 bytes, MD5=c42bfb3cdb3a9751f99dd7d8dea5bb50 ✅ REAL PDF
-
-# Tang 2017 — DOI_NO_SLASH 返回占位，DOI_NO_SLASH+PMID 成功
-full_look → responseData.fileName = "10.3892etm.2017.4840" (下载占位)
-viewtext with fileName="10.3892etm.2017.483728962176" → 737151 bytes, MD5=8ef1b8b2 ✅ REAL PDF
+1. full_look(token=TOKEN, abstractId=11位随机数, pmid=真实PMID, doi=真实DOI)
+   → 系统将全文复制到 abstractId 名下，返回 status=2
+2. 等待 10 秒（让系统准备全文）
+3. viewtext(token=TOKEN, fileName=abstractId)
+   → 返回真实PDF bytes
 ```
 
-**Verification (post-download):**
-- Placeholder MD5: `fd469bd7cd29446f2800f099e3b71457` (606841 bytes, title "PII: 0006-2944(75)90147-7")
-- Must check every download: `md5sum output.pdf | awk '{print $1}'`
-
-**MedData coverage (2026-06-23 校正):**
-- MedData 是 **外文医学论文平台**（用户校正）
-- ✅ **Frontiers** papers (e.g., `10.3389/fneur.2020.00602`) — 663KB 真实PDF
-- ✅ **BMJ** papers (e.g., `10.1136/bmj.m2689`) — 42KB 真实PDF
-- ✅ **Bentham Science** (e.g., `10.3892/etm.2017.4840`) — 737KB 真实PDF
-- 部分DOI（含连字符）可能需 fileName+PMID 组合
-- 下载失败先检查出口IP / 依赖 / 频率限制
-- ❌ 旧断言"MedData只覆盖中文期刊"已作废（根源: Exit Node IP被封锁导致CLI测试误判）
-
-**Fallback strategy when MedData returns placeholder:**
-1. OA direct download (Frontiers: `https://www.frontiersin.org/journals/{journal}/articles/{DOI}/pdf`)
-2. PLOS ONE: `https://journals.plos.org/plosone/article/file?id={DOI_NO_SLASH}&type=pdf`
-3. PubMed Central (PMC) — but blocked by reCAPTCHA in automated context
-4. Manual download via browser (user-reported as possible)
-5. Consider removing invalid reference if unobtainable after all attempts
+**铁律**：
+- `abstractId` = 每次生成**11位随机整数**，不可重复，不可用DOI_NO_SLASH，不可固定值
+- `pmid` = 论文的**真实PMID**，不可用固定 `'1'`
+- `doi` = 论文的真实DOI
+- 三步用**同一个 token**，token 过期后可重新获取
+- 必须等待 10 秒给系统处理时间
 
 ## 智能 Cloudflare 绕过
 

@@ -13,6 +13,12 @@ metadata:
 
 ---
 
+## IO_CONTRACT
+
+- **input**: `task_desc: str, params: dict` — 图像生成任务描述及参数（尺寸、配色、文字内容等）
+- **output**: `result: dict` — 生成结果（包含 image_path, dimensions, format 等）
+
+> 对应原则：P2（机械原子暴露输入输出规范）
 
 # PIL Image Generation
 

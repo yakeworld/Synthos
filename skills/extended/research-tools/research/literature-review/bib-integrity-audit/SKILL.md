@@ -202,6 +202,14 @@ For entries with complete metadata but missing DOI, use a tiered approach:
   - Correctly captures full body: multi-line author fields, DOIs, bare-value fields.
 - **Field parsing caveat**: The field regex `r'(\w+)\s*=\s*(?:\{([^}]*)\}|"[^"]*")'` without `re.DOTALL` misses multi-line `author={Name and Name}`. Use line-by-line parsing with `re.DOTALL`, or add bare-value third alternative `(.+)`.
 
+### Empty bib file detection
+- A bib file that parses to 0 entries indicates either: (a) the file is truly empty/contains only comments, (b) the parser regex didn't match (e.g., non-standard format), or (c) Unicode corruption in the file. Always surface 0-entry files in the report as a P0 issue — they represent papers with no references at all, which is a complete D8 failure.
+
+### Codex timeout trap in shell scripts
+- **Never** call `codex -p hermes exec` from within a `.sh` script that has `set -euo pipefail`. Codex is non-blocking (background process), but the shell script waits for it to exit, causing silent 120s+ timeouts on cron jobs.
+- **Fix**: Write standalone Python scripts (see `scripts/scan_bib_integrity.py`) for all long-running work. Shell scripts should only `python3 <script.py>`.
+- **Symptom**: Cron job reports "Script timed out after 120s" with no other output. See `references/session-report-2026-06-23.md` for the full case study.
+
 ## Output Format
 
 ```
@@ -236,6 +244,7 @@ For entries with complete metadata but missing DOI, use a tiered approach:
 - `scripts/bib-audit-v2.py` — Automated audit script: scans .bib files, computes DOI coverage, detects suspicious entries, cross-file deduplicates, OpenAlex DOI lookup, markdown report output
 - `scripts/bib-audit.py` — Original audit script (legacy)
 - `scripts/bib-verify.py` — DOI verification script: verifies existing DOIs via Crossref, classifies entries by type (journal/conference/dataset/preprint), generates verification report
+- `scripts/scan_bib_integrity.py` — Standalone runner with no Codex dependency; directly scans a paper root and outputs JSON. Replaced broken `codex`-based unified scan. See references/session-report-2026-06-23.md for the case study.
 
 ## When to Use
 
