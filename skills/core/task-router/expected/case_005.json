@@ -1,5 +1,0 @@
-{
-  "complexity": "medium",
-  "chain": ["1", "2", "3"],
-  "explanation": "The query 'ADHD eye-tracking' contains no explicit action keywords (no 'find', 'write', 'analyze', 'evaluate'), so the default routing applies. The domain topic (ADHD eye-tracking) suggests a medium complexity task: knowledge acquisition (1), argument expression (2), and viewpoint verification (3) to provide a balanced summary of the topic."
-}
