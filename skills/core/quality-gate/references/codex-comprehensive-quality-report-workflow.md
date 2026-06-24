@@ -58,11 +58,24 @@ ls outputs/papers/<paper-name>/06-references/ | head -20
 # <论文名称> 全面质量检查任务
 
 ## 技能加载（必做——自己读 Synthos）
+
+Codex 能从文件系统直接访问**两个**技能仓库：
+
+```
+公开库: cat /media/yakeworld/sda2/Synthos/skills/<name>/SKILL.md
+私有库: cat /media/yakeworld/sda2/Synthos-private/skills/<name>/SKILL.md
+```
+
+任务中按需加载。例如：
+
 1. `cat /media/yakeworld/sda2/Synthos/skills/core/quality-gate/SKILL.md`
-   — 读取质量闸门技能全文，按其中指示执行质量检查
-2. `cat /media/yakeworld/sda2/Synthos/skills/core/quality-gate/references/comprehensive-quality-report-template.md`
-   — 读取四报告模板，按模板格式输出
-3. 在 SKILL.md 中找到「检查员报告」章节，按凡数必源+凡引必查方法执行
+   — 公开库：质量闸门方法论
+2. `cat /media/yakeworld/sda2/Synthos-private/skills/paperjury/SKILL.md`
+   — 私有库：论文陪审团（含论文数据）
+3. `cat /media/yakeworld/sda2/Synthos/skills/core/quality-gate/references/comprehensive-quality-report-template.md`
+   — 报告模板
+
+**注意**：技能方法在公开库，审计数据和论文实例在私有库。按需加载。
 
 ## 工作目录
 cd /media/yakeworld/sda2/Synthos/outputs/papers/<paper-name>/
