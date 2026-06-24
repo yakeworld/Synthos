@@ -95,6 +95,8 @@ These patterns emerged from manual Layer B reviews and should be checked in ever
 
 1. **Classification metrics on regression tasks** — Papers reporting "Accuracy" or "AUC" for PINN/ODE predictions (continuous C(t), Z(t) values). These metrics are undefined for continuous regression. Always flag as P0. Correct metrics: R², RMSE, MAE, MAPE.
 
+   > ⚠️ **Systematic finding (2026-06-24):** ALL 3 papers reviewed in a single batch had this issue. Average pipeline QS inflation vs Layer B score was 26.0 points. This is the single largest source of auto-gate false positives in the pipeline — the gate checks metric consistency (abstract vs results) but NOT metric appropriateness (classification vs regression). When Pattern L is present and pipeline QS ≥ 80, expect the true Layer B score to be 15-37 points lower.
+
 2. **Uniform metrics across diverse conditions** — If R² values vary by <0.01 across conditions with drastically different parameters (α ranging 0.085-1.020, γ ranging 0.248-0.42), either:
    - The model is mathematically insensitive (needs explanation), or
    - There is a train/test leakage issue
@@ -182,3 +184,17 @@ For reference, the first manual Layer B review (2026-06-21) found:
 - P1 issues: R² varies only 0.004 across 4 clinical conditions (unexplained), no confidence intervals
 - D10a=100% (13/13, 0 orphans/zombies) — excellent reference health after repair
 - True ABSOLUTE WHITE gap — core contribution is genuine
+
+## Example: 3-Paper Batch Layer B (2026-06-24)
+
+This session validated the parallel delegation pattern (3 papers in parallel via delegate_task) and revealed **systematic auto-gate inflation**:
+
+| Paper | Pipeline QS | Layer B Score | Delta | Verdict | Key Issue |
+|:------|:-----------:|:-------------:|:-----:|:-------:|:----------|
+| ocular-torsion-ODE | 95 | 0.585 | 36.5 | FAIL ❌ | AUC/Accuracy on ODE regression, no classifier described |
+| tonic-VOR-PINN | 93 | 0.664 | 26.6 | FAIL ❌ | AUC/Accuracy under "Clinical Classification" — method undefined |
+| cerebellar-VOR-adaptation-PINN | 90 | 0.75 | 15.0 | T2 🟡 | AUC from SVM on PINN features — classifier not described |
+
+**Cross-paper pattern**: All 3 papers had Pattern L (classification metrics on regression tasks). Average Delta = 26.0 points. This confirms that the auto-gate pipeline has a **blind spot for metric appropriateness** — it validates consistency but not correctness.
+
+**What worked**: The delegate_task parallelism was highly effective. Each subagent ran independently on its own paper with isolated terminal/file context. Results returned in ~65 seconds for all 3 combined. This pattern is recommended for any Layer B batch with 3+ papers.

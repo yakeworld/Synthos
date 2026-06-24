@@ -76,7 +76,13 @@ download_one.py <任意ID>
  ├─ Step 2: Semantic Scholar openAccessPdf 直链 🆕
  │    （OA论文最快路径，不用SciHub/MedData）
  │
- └─ Step 3: 三层竞速 (SciHub → LibGen → MedData)
+ ├─ Step 3: PubMed Central / EuropePMC 🆕（2026-06-24 新增）
+ │    ├─ SS返回 PMC ID → EuropePMC OA下载
+ │    │   curl -L "https://europepmc.org/articles/PMC{PMC_ID}?pdf=render"
+ │    ├─ 绕过 Cell.com/Cloudflare 等出版商防护墙
+ │    └─ 已验证: Kapoor2023Leakage (PMC10499856) → 2.9MB PDF ✅
+ │
+ └─ Step 4: 四层竞速 (SciHub → LibGen → EuropePMC → MedData)
       ├─ SciHub: 直连
       ├─ LibGen: 直连
       └─ MedData: 最后降级通道（受频率保护）
@@ -142,14 +148,23 @@ curl -s -L "https://journals.plos.org/plosone/article/file?id=10.1371/journal.po
 
 ```bash
 # 先查 PMID 是否有 PMC 全文
-# https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&id=PMID&db=pmc
+curl -s "https://api.semanticscholar.org/graph/v1/paper/DOI:{DOI}?fields=externalIds"
+# Response externalIds.PubMedCentral → PMC ID
 
-# 有PMC全文时直接下载
-curl -s -L "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC{PMC_ID}/pdf/" \
+# 路径A: NCBI/PMC（可能被出口节点拦截）
+curl -sL "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC{PMC_ID}/pdf/" \
     -o output.pdf
+
+# 路径B: EuropePMC（2026-06-24 实测：当 NCBI 返回 HTML 时此路径仍可工作）
+# 适用于有 PMC ID 的论文
+curl -sL -o output.pdf \
+  "https://europepmc.org/articles/PMC${PMC_ID}?pdf=render"
+# → 返回真实PDF文档（Kapoor2023: 2.9MB, 38 pages ✅）
 ```
 
-**注意**：并非所有 PubMed 论文都有 PMC 全文。需先查询 elink 确认。
+**注意**：并非所有 PubMed 论文都有 PMC 全文。需通过 Semantic Scholar 先查询 externalIds.PubMedCentral。
+
+**当 NCBI/PMC 被拦截时，优先尝试 EuropePMC 路径。** 详见 `references/europepmc-fallback.md`。
 ```
 
 **⚠️ 2026-06-23 更新 — Sci-Hub 域连通性波动，非全面失效**
@@ -453,6 +468,29 @@ curl -s --tls-max 1.2 -X POST "https://uuct.medbooks.com.cn:9443/sso/login" \
 
 ### ⚠️ MedData 滥用防护策略（2026-06-21 新增）
 
+## 已验证的备用下载通道（当 SciHub/MedData/LibGen 都被封锁时）
+
+### EuropePMC（2026-06-24 新增）
+
+当论文有 PubMedCentral ID 时，EuropePMC 是绕过 Cloudflare 的最可靠路径：
+
+```bash
+# 格式
+curl -sL -o output.pdf "https://europepmc.org/articles/PMC{PMC_ID}?pdf=render"
+
+# 验证：从 SS 获取 PMC ID
+curl -s "https://api.semanticscholar.org/graph/v1/paper/DOI:10.xxxx?fields=externalIds"
+# 返回 externalIds.PubMedCentral → 取整数值使用
+
+# 实例：Kapoor2023 (Patterns, PMC10499856) → 2.9MB, 38页, PDF文档 ✅
+# 验证方式：
+strings output.pdf | grep -i "论文标题关键词"   # 确认内容匹配
+md5sum output.pdf                               # 确认非占位PDF
+```
+
+**适用条件**：Semantic Scholar API 返回了 `externalIds.PubMedCentral`
+**不适用**：论文无 PMC 全文（仅部分 OA 论文有）
+
 MedData 是机构资源（温州人民医院），不可滥用。批量下载时强制执行：
 
 | 防护 | 值 |
@@ -577,7 +615,7 @@ download_one.py <任意ID>
        │   DOI      → PMID
        │   arXiv ID → 直连(不解析)
        ├→ arXiv 直连下载 (最快路径)
-       └→ 三层竞速 (SciHub → LibGen → MedData)
+       └→ 四层竞速 (SciHub → LibGen → EuropePMC → MedData)
             └→ MedData 双格式ID降级:
                  Format 1: DOI_NO_SLASH (Frontiers/BMJ)
                  Format 2: DOI_NO_SLASH + PMID (Bentham等复杂DOI)

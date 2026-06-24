@@ -2,7 +2,7 @@
 
 name: figure-generation
 description: 科研图表创建：Figure契约方法论——结论Claim→证据层级→面板映射→出口契约→审核。 支持Nature语义色板（蓝主-绿正-红基+中性色），16种排版模式。兼容所有SCI/会议图表场景。
-version: 1.0.0
+version: 1.5.0
 license: MIT
 author: Synthos
 allowed-tools:
@@ -231,9 +231,160 @@ fig.savefig(f"{filename}.pdf", bbox_inches="tight")    # PDF
 
 ## 触发条件
 
-加载本技能当：用户要求创建/修改论文图表、"Nature风格"、"SCI图表"、"发表级图表"。
+加载本技能当：用户要求创建/修改论文图表、"Nature风格"、"SCI图表"、"发表级图表"、"架构图"、"流程图"、"flow diagram"。
 
 **不加载**：EDA探索性图表、交互式图表（Plotly/Altair）、3D/GIS/非科学插图。
+
+---
+
+## 模式三：架构/流程图（schematic-led-composite 的纯图版）
+
+**不包含数据面板，纯框+箭头说明系统结构/流程关系。** 使用 matplotlib patches 绘制。
+
+### 为什么不用 TikZ
+
+| 方案 | 问题 | 结论 |
+|:-----|:-----|:------|
+| TikZ `node distance` + `below of` | 多层堆叠时间距计算混乱，混合绝对坐标与相对定位导致上下重叠 | ❌ PIMA Figure 1 两次失败 |
+| TikZ 缩放 `scale=0.95, transform shape` | 缩放同时压缩文字，反而加剧重叠 | ❌ 不治本 |
+| **matplotlib patches**（`FancyBboxPatch` + `FancyArrowPatch`） | 像素级精确控制，坐标全由变量计算 | ✅ 一次成功 |
+
+### 程序化布局方法论
+
+**不要手写坐标**。定义间距变量，从底部向上计算每个箱体的 y 位置：
+
+```python
+# 统一设计系统变量
+SINGLE_H = 0.50    # 单行文字框高 (fontsize 7 → 0.20" text + 0.15" pad×2)
+DOUBLE_H = 0.70    # 双行文字框高 (核心/输出/消融/注册箱)
+BOX_W    = 3.0     # 侧栏框宽 (≥3.0, 否则"Engineering Execution Strand"碰边)
+CORE_W   = 4.8     # 核心框宽
+BOT_W    = 5.2     # 底部链框宽
+PAD_BOX  = 0.12    # FancyBbox 内边距 (所有框统一)
+
+GAP_S    = 0.20    # 同区内框间距 (子箱之间/底部链箱之间)
+GAP_M    = 0.55    # 区间隔 (侧栏↔核心↔输出)
+GAP_T    = 0.35    # 标题→内容间距
+PAD_BOT  = 0.50    # 底部留白
+
+# 从底部向上计算
+reg_y = PAD_BOT
+ab_y  = reg_y + DOUBLE_H + GAP_S
+out_y = ab_y  + DOUBLE_H + GAP_S
+core_y = out_y + DOUBLE_H + GAP_M
+c4_y  = core_y + DOUBLE_H + GAP_M
+c3_y  = c4_y   + SINGLE_H + GAP_S
+c2_y  = c3_y   + SINGLE_H + GAP_S
+c1_y  = c2_y   + SINGLE_H + GAP_S
+strand_title_y = c1_y + SINGLE_H + GAP_S
+title_y = strand_title_y + SINGLE_H + GAP_T
+```
+
+这样做的好处：
+- 改一个间距变量，**全部重算**，不需要逐行调坐标
+- 底部永远对齐，顶部自动确定画布尺寸
+- 可预先检查 `fig_needed > fig_actual` 防溢出
+
+### 箭头设计规范 (架构图专用)
+
+箭头必须**汇聚到目标框的顶边内侧**，不能悬在框外：
+
+```python
+# ❌ 错误 — 箭头终点在框外
+arrow(lx, c4_y, lx, core_top)  # lx=1.8, 核心框左缘=2.6 → 箭头在框外
+
+# ✅ 正确 — 汇聚到顶边内侧
+cx0 = xc - CORE_W/2          # 核心框左缘 (必须定义于箭头之前)
+core_top_l = cx0 + CORE_W*0.25   # 顶左1/4
+core_top_r = cx0 + CORE_W*0.75   # 顶右3/4
+arrow(lx, c4_y + SINGLE_H/2, core_top_l, core_y + DOUBLE_H, rad=-0.20)
+arrow(rx, c4_y + SINGLE_H/2, core_top_r, core_y + DOUBLE_H, rad=0.20)
+```
+
+**代码顺序陷阱**: `cx0` 必须在箭头代码之前定义，否则变量未定义错误。
+
+### 实现模板
+
+详见 `references/architecture-flow-diagrams.md`——包含完整可运行的 Figure 1 代码模板。
+
+### 色板扩展（架构图专用）
+
+| 元素 | 颜色 | 语义 |
+|:-----|:-----|:------|
+| Clinical/方法论 | `#8BCF8B`（绿） 或 `#D0E8D0` 浅底 | 正确/正向 |
+| Engineering/工程 | `#E8954A`（橙） 或 `#F5E0C0` 浅底 | 执行/操作 |
+| 核心/协议 | `#7B5EA7`（紫） | 创新/核心贡献 |
+| 输出/结果 | `#8BCF8B` 深边框 | 验证过的输出 |
+| 对照/基线 | `#B64342`（红） 或 `#F0C8C8` 浅底 | 风险/基线 |
+| 中性/参考 | `#999999`（灰） | 参考/随机基线 |
+
+### 输出规范
+
+```python
+# 必须使用此保存方式——SVG可编辑+PDF出版级
+fig.savefig(f"{name}.svg", bbox_inches='tight', pad_inches=0.1)  # 矢量可编辑
+fig.savefig(f"{name}.pdf", bbox_inches='tight', pad_inches=0.1)  # 出版
+```
+
+### 用户偏好: 长文本框内居中
+
+当架构图/流程图的 TikZ 版本出现重叠问题时：
+1. **不要继续调试TikZ**（`node distance` 越调越乱）
+2. 直接切换到 `matplotlib patches` 程序化布局
+3. 使用统一设计系统（SINGLE_H/DOUBLE_H + GAP_S/GAP_M/GAP_T）
+4. 所有 FancyBboxPatch 用同一 `pad` 值（推荐 0.12），确保框形态一致
+5. 长标题（如 "Engineering Execution Strand"）用字≤7 + 加宽边框（BOX_W ≥ 3.0）避免文字碰边缘
+6. 把生成脚本保存到 `03-code/` 目录作为可重复 artifact
+7. 用 `\includegraphics{path}` 替换 LaTeX 中的内联 TikZ
+
+### 🔴 强制措施: 生成前 QA 验证 (2026-06-24 新增)
+
+**背景**: 本技能前几次渲染的架构图存在箭头终点在目标框外、文字超框等问题，用户发现后要求"既然能计算出问题，为什么写代码的过程没有监督"。
+
+**规则**: 每次 matplotlib patches 绘图脚本必须在 `plt.subplots()` 之前嵌入 QA 验证。
+
+**QAReport 模板** (放入脚本顶部，渲染逻辑之前):
+
+```python
+def text_width_inches(text, fontsize_pt):
+    """估计文字渲染宽度 (保守: avg_char = fontsize * 0.60 pt)"""
+    return len(text) * fontsize_pt * 0.60 / 72.0
+
+class QAReport:
+    def __init__(self):
+        self.issues = []
+    def check_text_fits(self, label, text, fontsize, box_w, box_h, pad):
+        tw = text_width_inches(text, fontsize)
+        if tw > box_w - 2*pad:
+            self.issues.append(f"[{label}] 文字超宽: '{text[:30]}' ({tw:.2f}in) > {box_w-2*pad:.2f}in")
+        if fontsize/72.0 > box_h - 2*pad:
+            self.issues.append(f"[{label}] 文字超高: {fontsize}pt > {box_h-2*pad:.2f}in")
+    def check_arrow_inside(self, label, x2, y2, target_name, tx, ty, tw, th):
+        if not (tx <= x2 <= tx+tw and ty <= y2 <= ty+th):
+            self.issues.append(f"[{label}] 箭头终点({x2:.1f},{y2:.1f}) 在 '{target_name}' 框外")
+    def assert_clean(self):
+        if self.issues:
+            for i in self.issues: print(f"  ❌ {i}")
+            sys.exit(1)
+        print("  [QA] All checks passed ✓")
+```
+
+**必须检查的项**:
+- 每个 `draw_box` 调用配一个 `check_text_fits` (含长标题如"Engineering Execution Strand")
+- 每个 `draw_arrow` 调用配一个 `check_arrow_inside` (终点必须在目标框**内部**，不能只接近边框)
+- 侧栏→核心箭头必须汇聚到核心顶边**内侧** (x = cx0 + CORE_W*0.25/0.75)，不能悬在外围
+- 底部链箭头终点必须在目标箱体范围内 (bx0 ≤ x ≤ bx0+BOT_W)
+- QA 不通过 → `sys.exit(1)` → 无输出 → 修复后重新生成
+
+### 实战教训
+
+| 问题 | 检查方式 | 本会话实例 |
+|:-----|:---------|:----------|
+| 箭头终点落在目标框外 | `check_arrow_inside()` | 左栏箭头终点 x=1.8，核心框左缘 x=2.6 |
+| 长标题文字碰框边 | `check_text_fits()` | "Engineering Execution Strand" 30字符在 fs=7.5, 2.8in框内溢出 |
+| 底部链文字超出框高度 | `check_text_fits()` 检查行高 | 双行框第二行过长 |
+| 画布高度不足 | 布局计算后 `fig_needed > fig_actual` | 需从底部向上计算并比较 |
+| 侧栏→核心箭头汇聚到框外 | `check_arrow_inside()` 终点坐标 | 垂直向下到 lx=1.8, rx=8.2，核心框始于2.6止于7.4 |
 
 ---
 
@@ -268,7 +419,15 @@ fig.savefig(f"{filename}.pdf", bbox_inches="tight")    # PDF
 | references/design-theory.md | 字体、色彩理论、排版原理 |
 | references/qa-contract.md | 提交前完整QA审核清单 |
 | references/matplotlib-fallback.md | matplotlib 不可用时的 Pillow 纯代码回退路径（雷达图/进度条/轨迹图原语） |
+| references/sci-figure-recipes.md | 实战代码示例：ROC曲线、SHAP重要性柱状图、消融对比图（PIMA案例，2026-06-24） |
+| references/architecture-flow-diagrams.md | 架构/流程图程序化布局模板（matplotlib patches，2026-06-24新增） |
 | references/quality-report-render.md | 质检报告→视觉图的三模式（HTML+Firefox/Pillow/Markdown），含深色科技风设计模板 |
+
+## 脚本
+
+| 文件 | 内容 |
+|------|------|
+| scripts/architecture_fig_template.py | 可直接运行的架构/流程图模板（2026-06-24新增） |
 
 ---
 

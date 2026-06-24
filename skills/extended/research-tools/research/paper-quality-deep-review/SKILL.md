@@ -224,6 +224,40 @@ Step 7: 综合评分与报告
 | 多样性 | 15% | 是否涵盖多个学派/方法/观点 |
 | 完整性 | 10% | 是否有重要文献未引用 |
 
+### Step 0: 参考文献存在性验证（前置必做）
+
+**背景**: LLM 生成的论文初稿常包含虚构参考文献。在检查引用内容恰当性之前，必须先确认引用真实存在。
+
+#### 三级过滤器
+
+| 级别 | 操作 | 耗时 | 结论 |
+|:-----|:-----|:---:|:-----|
+| Level 1 | 查本地 PDF 目录（`enhanced_bibtex/pdfs/`） | 2秒/篇 | 有PDF=高可信，无PDF=高危 ⚠️ |
+| Level 2 | SS/Crossref API 搜索 | 10秒/篇 | 有记录=待复核，无记录=虚构 ❌ |
+| Level 3 | `pdftotext` 读 PDF 首页期刊+DOI+指标 | 2分/篇 | 确认指标与论文声称一致 |
+
+#### LLM虚构论文信号
+
+| 信号 | 危险 | 说明 |
+|:-----|:---:|:------|
+| Acc > 98% (PIDD) | 🔴 | PIDD 物理上限约 80%，95%+ 几乎必然含泄露 |
+| Acc=100% | 🔴 | 物理不可能，明显虚构 |
+| 所有指标同时最优 (Acc>95,F1>0.95,AUC>0.99) | 🔴 | 真实数据不可能 |
+| 作者 SS/Google Scholar 无记录 | 🟡 | 真实已发表论文作者通常可查 |
+| 多篇同主题无 PDF 论文由不同作者同期发布 | 🟡 | LLM 批量生成特征 |
+
+#### 保留策略（文献综述表）
+
+1. **只保留有 PDF + SS/Crossref 可验证的论文**
+2. **优先高影响力期刊**（CIBM > PLOS ONE > 会议）
+3. **每篇必须从 PDF 提取实际 Acc/F1**，拒绝 LLM 声称值
+4. 被 PLOS ONE 发 Expression of Concern 的论文应删除或标注
+5. 3-4 篇高质量期刊论文足以为综述表提供代表性
+
+#### 实战案例（2026-06-24）
+
+PIDD 文献综述表 10 篇 → Level1 发现 6/10 无 PDF → Level2 SS 全无记录 → Level3 验证剩余 4 篇真实（CIBM×3, PLOS ONE×1）→ 删除 6 篇虚构，保留 4 篇。
+
 ### 引用内容验证标准
 
 | 级别 | 分数 | 标准 |
@@ -616,11 +650,27 @@ PINN architecture details (layer sizes, activation) are provided, but training h
 
 ### 🟡 Pattern K: Bib Entry Count Mismatch (Uncited Orphans in references.bib)
 
-The `references.bib` file contains more entries than the number of `\cite{}` calls in `paper.tex`. The uncited entries become orphans that may not be caught by D10a scans.
+The `references.bib` file contains more entries than the number of `\\cite{}` calls in `paper.tex`. The uncited entries become orphans that may not be caught by D10a scans.
 
-**Detection:** Count bib entries (`grep -c '@[a-z]*{' references.bib`) vs cite calls (extract unique keys from `\cite{key}` patterns in paper.tex). If bib > cited, list uncited entries.
+**Detection:** Count bib entries (`grep -c '@[a-z]*{' references.bib`) vs cite calls (extract unique keys from `\\cite{key}` patterns in paper.tex). If bib > cited, list uncited entries.
 **Severity:** Low-Moderate — bib hygiene issue.
-**Fix:** Either add `\cite{}` call for the uncited entry, or remove it from references.bib.
+**Fix:** Either add `\\cite{}` call for the uncited entry, or remove it from references.bib.
+
+### 🔴 Pattern L: Classification Metrics on ODE/PINN Regression Outputs
+
+The paper reports **classification metrics (AUC, Accuracy, Sensitivity, Specificity)** for a model whose primary output is **continuous regression values** (ODE state variables C(t), Z(t), displacement, velocity). These metrics are undefined for raw regression outputs — they require a binary threshold (which is never specified or justified).
+
+**Real case (2026-06-24):** All 3 papers reviewed in a single Layer B session (ocular-torsion-ODE, cerebellar-VOR-adaptation-PINN, tonic-VOR-PINN) reported AUC/Accuracy on ODE outputs. None provided a classification method description. Average QS inflation vs Layer B score was 26.0 points — this is the single largest source of auto-gate false positives.
+
+**Detection:** Search paper.tex for `AUC`, `Accuracy`, `Sensitivity`, `Specificity`, `ROC`, `confusion matrix` in Results/Abstract sections. For each hit, determine whether the metric applies to:
+- (a) A genuine downstream classifier (SVM, RF, etc.) on inferred parameters — VALID, but must describe the classifier architecture, train/test split, and labels
+- (b) Raw ODE/PINN continuous outputs — INVALID, flag as P0
+
+**Exception:** AUC is valid when computed on a separately described downstream classifier (e.g., "SVM on inferred PINN parameters classifies normal vs pathological"). Even then, the classifier must be fully specified (algorithm, features, labels, split, seeds).
+
+**Severity:** Critical (P0) — fundamentally invalid metric choice that inflates reported quality. The auto-gate pipeline systematically misses this because it checks metric consistency (abstract vs results) but not metric appropriateness (classification vs regression).
+
+**Fix:** Either (a) replace with correct regression metrics (R², RMSE, MAE, MAPE), or (b) fully specify the downstream classifier and justify why classification is the appropriate evaluation lens. If (b): include algorithm name, hyperparameters, train/validation/test split sizes, random seed, and feature definition.
 
 ### ⚠️ Pitfall: Editing .bib Files — Use write_file, Not patch
 
@@ -669,7 +719,7 @@ When G7 deep review is triggered by a cron job (no user present, ~15-30 minute w
 3. Count references (D8) and verify D10a=100%
 4. **Cross-check bib entry count vs cited count:** count bib entries in references.bib vs unique cite keys in paper.tex. Flag uncited entries as Pattern K.
 5. Count `\begin{figure}` vs `\begin{table}` — flag zero figures as Pattern A2
-6. Detect all common failure patterns (A-K above)
+6. Detect all common failure patterns (A-L above) — especially Pattern L on classification metrics, which is the #1 source of auto-gate false positives
 
 ### Phase 2: Dimension Scoring (10 min)
 Score each of D1-D7 with a rationale paragraph, not a checklist:
@@ -684,9 +734,10 @@ Score each of D1-D7 with a rationale paragraph, not a checklist:
 ### Phase 3: Report Generation (5 min)
 1. Write Layer A avg = mean(D1..D7)
 2. Classify: T1 PASS (≥8.0), T2 PASS (≥5.0), T3 FAIL (<5.0)
-3. List critical (🔴), moderate (🟡), minor (🔵) issues
-4. Save as `07-quality/step_quality_review.md`
-5. Update state.json: set G7=PASS, add `g7_deep_review_<date>` note
+3. **G7 Cross-Check for Inflation**: Read pipeline paper-queue.json QS for this paper. Compute Delta = (Pipeline_QS / 10) - Layer_A_avg. If Delta ≥ 1.0 (i.e., 10+ points on a 0-100 scale), flag as **suspected auto-gate inflation** in the report. This is especially common when Pattern L (classification metrics on regression) is present — the auto-gate checks metric consistency but not metric appropriateness.
+4. List critical (🔴), moderate (🟡), minor (🔵) issues
+5. Save as `07-quality/step_quality_review.md`
+6. Update state.json: set G7=PASS, add `g7_deep_review_<date>` note
 
 ### Phase 4: State Update (optional, 2 min)
 - Update state.json `gates.G7` from "N/A" or auto-PASS to verified "PASS"
@@ -694,6 +745,9 @@ Score each of D1-D7 with a rationale paragraph, not a checklist:
   - If state.json has `gates` as a list of objects, update the G7 object's `evidence` field to include the Layer A avg and key findings
 - Add note: `"g7_deep_review_<date>": "G7 deep quality review completed. See 07-quality/step_quality_review.md. Layer A avg=X.X/10 (T2 PASS). N issues identified."`
 - **Append to `pipeline_trace` array** in state.json: a timestamped entry recording the review date, Layer A avg, and the number/severity of issues found
+- **Append to `agent-log.md`** using `patch` (NOT `write_file` — see append-only protocol in paper-pipeline): a summary table of reviewed papers with scores and key findings
+
+> **完整 cron 执行工作流参考**: `references/cron-g7-quick-review-workflow.md` — 涵盖候选检测、方向过滤、并行委托评审、结果验证、状态更新和日志追加的端到端协议。
 
 ## 参考文件
 
@@ -703,6 +757,8 @@ Score each of D1-D7 with a rationale paragraph, not a checklist:
 - `references/hypothesis-assessment-guide.md` — 假设评估操作指南
 - `references/method-assessment-guide.md` — 方法评估操作指南
 - `references/citation-quality-guide.md` — 引用质量评分操作指南
+- `references/cron-g7-quick-review-workflow.md` — Cron G7 快速评审端到端工作流（候选检测→并行委托→状态更新→日志追加）
+- `references/auto-gate-inflation-patterns.md` — 自动门禁分数膨胀实证分析：Pattern L盲区、Delta计算公式、跨论文的26点平均偏差（2026-06-24发现）
 
 ## 脚本
 
