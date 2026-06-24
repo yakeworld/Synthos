@@ -22,7 +22,22 @@ print(f"R1b DL Seg 2025-2026: {c}")
 
 # ... repeat for each direction in Step 1 + Step 2
 
-# OPENALEX cross-validation for key directions
+### === ICLR Competition Check (if deadline <= 14 days) ===
+# WARNING: Do NOT hardcode ICLR query strings here.
+# Use the EXACT queries from `references/iclr-competition-queries.md` (canonical source).
+# That file defines all 5 standardized queries with documented pitfall notes.
+# Copy-paste them verbatim into your script — do not reconstruct from memory.
+#
+# Query drift between this file and iclr-competition-queries.md has been
+# a source of false negatives in the past. The batch-scan-pattern template
+# previously contained narrower/incorrect query strings that missed 2 of
+# 5 competition directions. Always defer to the canonical file.
+# Load the canonical queries and copy them into your probe below:
+import json
+with open("/media/yakeworld/sda2/Synthos/skills/extended/research-tools/synthos-akne-bridge/v32-multi-direction-scan/references/iclr-competition-queries.md") as f:
+    content = f.read()
+# Copy all 5 queries (head-impulse-ODE, tinnitus-pinn-ode, saccade-adaptation-pinn,
+# vhit-pinn-ode, endolymph-hydropressure-ode) into the loop below.
 for label, q in [
     ("OA_R4_BPPV_DT", '"BPPV" "digital twin"'),
     ("OA_R3_SCC_PINN", '"semicircular canal" PINN'),
@@ -95,7 +110,22 @@ results["PLR_PINN"] = {"count": c}
 print(f"PLR PINN: {c}")
 
 # === Core ABSOLUTE_WHITE quick pulse (one query each) ===
-time.sleep(1)
+### === ICLR Competition Check (if deadline <= 14 days) ===
+# WARNING: Do NOT hardcode ICLR query strings here.
+# Use the EXACT queries from `references/iclr-competition-queries.md` (canonical source).
+# That file defines all 5 standardized queries with documented pitfall notes.
+# Copy-paste them verbatim into your script — do not reconstruct from memory.
+#
+# Query drift between this file and iclr-competition-queries.md has been
+# a source of false negatives in the past. The batch-scan-pattern template
+# previously contained narrower/incorrect query strings that missed 2 of
+# 5 competition directions. Always defer to the canonical file.
+# Load the canonical queries and copy them into your probe below:
+import json
+with open("/media/yakeworld/sda2/Synthos/skills/extended/research-tools/synthos-akne-bridge/v32-multi-direction-scan/references/iclr-competition-queries.md") as f:
+    content = f.read()
+# Copy all 5 queries (head-impulse-ODE, tinnitus-pinn-ode, saccade-adaptation-pinn,
+# vhit-pinn-ode, endolymph-hydropressure-ode) into the loop below.
 for label, q in [
     ("R1_pupil_iris_PINN", '("pupil segmentation" OR "iris segmentation") AND ("PINN" OR "NeuralODE" OR "physics-informed") AND 2025:2026[dp]'),
     ("R3_SCC_PINN", '("semicircular canal" OR "cupula") AND ("PINN" OR "NeuralODE" OR "physics-informed") AND 2025:2026[dp]'),
@@ -107,8 +137,38 @@ for label, q in [
     results[label] = {"count": c}
     print(f"{label}: {c}")
 
-# === ICLR Competition Check (if deadline <= 14 days) ===
-time.sleep(1)
+### === ICLR Competition Check (if deadline <= 14 days) ===
+# WARNING: Do NOT hardcode ICLR query strings here.
+# Use the EXACT queries from `references/iclr-competition-queries.md` (canonical source).
+# That file defines all 5 standardized queries with documented pitfall notes.
+# Copy-paste them verbatim into your script — do not reconstruct from memory.
+#
+# Query drift between this file and iclr-competition-queries.md has been
+# a source of false negatives in the past. The batch-scan-pattern template
+# previously contained narrower/incorrect query strings that missed 2 of
+# 5 competition directions. Always defer to the canonical file.
+# Load the canonical queries and copy them into your probe below:
+import json
+with open("/media/yakeworld/sda2/Synthos/skills/extended/research-tools/synthos-akne-bridge/v32-multi-direction-scan/references/iclr-competition-queries.md") as f:
+    content = f.read()
+# Copy all 5 queries (head-impulse-ODE, tinnitus-pinn-ode, saccade-adaptation-pinn,
+# vhit-pinn-ode, endolymph-hydropressure-ode) into the loop below.
+for label, q in [Competition Check (if deadline <= 14 days) ===
+# WARNING: Do NOT hardcode ICLR query strings here.
+# Use the EXACT queries from `references/iclr-competition-queries.md` (canonical source).
+# That file defines all 5 standardized queries with documented pitfall notes.
+# Copy-paste them verbatim into your script — do not reconstruct from memory.
+#
+# Query drift between this file and iclr-competition-queries.md has been
+# a source of false negatives in the past. The batch-scan-pattern template
+# previously contained narrower/incorrect query strings that missed 2 of
+# 5 competition directions. Always defer to the canonical file.
+# Load the canonical queries and copy them into your probe below:
+import json
+with open("/media/yakeworld/sda2/Synthos/skills/extended/research-tools/synthos-akne-bridge/v32-multi-direction-scan/references/iclr-competition-queries.md") as f:
+    content = f.read()
+# Copy all 5 queries (head-impulse-ODE, tinnitus-pinn-ode, saccade-adaptation-pinn,
+# vhit-pinn-ode, endolymph-hydropressure-ode) into the loop below.
 for label, q in [
     ("ICLR_head_impulse", '"head impulse" AND ("ODE" OR "PINN" OR "NeuralODE" OR "physics-informed") AND 2025:2026[dp]'),
     ("ICLR_saccade_pinn", '"saccade adaptation" AND ("PINN" OR "NeuralODE" OR "physics-informed") AND 2025:2026[dp]'),

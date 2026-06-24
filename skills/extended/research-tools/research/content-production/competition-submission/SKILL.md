@@ -63,7 +63,8 @@ Step 5: 质量审核 → 完整性/一致性检查
 - 将已有硬件/算法/论文打包为"技术壁垒"，而非单一论文
 - 人才需求与政策中的"引育"章节挂钩
 
-详见 `references/policy-alignment-workflow.md`
+- `references/policy-alignment-workflow.md` — 政府座谈会准备模式
+- `references/data-elements-competition-cn.md` — 数据要素×大赛 申报指南（赛道选择+DOCX操作+Synthos定位）
 
 ## Step 1: 需求提取
 

@@ -350,5 +350,26 @@
             "evolution"
         ],
         "trust_score": 0.78
+    },
+    "quality-gate": {
+        "name": "quality-gate",
+        "version": "2.22.0",
+        "status": "active",
+        "license": "MIT",
+        "created": "2026-06-18",
+        "updated": "2026-06-25",
+        "description": "P0质量闸门。四层质量架构：响应级漂移检查、项目级L1-L4交付闸门、论文管线G1-G7原子闸门、SCI内容评审。四份报告并行：通用六域+类型专项+参考文献审查+检查员。凡数必源、凡引必查铁律。",
+        "directory": "core/quality-gate",
+        "file_path": "/media/yakeworld/sda2/Synthos/skills/core/quality-gate/SKILL.md",
+        "implementation": "agent_native_skill",
+        "type": "quality_assurance",
+        "pipeline_integrated": true,
+        "depends_on": [
+            "paper-pipeline",
+            "paperjury",
+            "citation-appropriateness-verification",
+            "reference-verification"
+        ],
+        "trust_score": 0.92
     }
 }
