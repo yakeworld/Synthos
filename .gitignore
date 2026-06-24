@@ -184,3 +184,9 @@ cron-state.json
 # 竞赛项目（含个人信息，不上传）
 outputs/competitions/
 projects/competition-synthos/
+
+# ============================================
+# 18. 私有技能（凭证/论文审计/系统运维，不入库）
+# ============================================
+/skills/private/
+
