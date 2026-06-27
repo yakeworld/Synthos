@@ -12,6 +12,7 @@ metadata:
     related_skills: []
 
 ---
+version: 1.0.0
 
 
 
