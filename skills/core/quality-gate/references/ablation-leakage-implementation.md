@@ -84,7 +84,34 @@ for sc, (smote_g, impute_g, scale_g) in config.items():
 | `medium` = impute+scale both leak | Paper convention; they rarely occur separately | Can add `impute_only` if needed |
 | Global SMOTE: fit on ALL data, take training portion | SMOTE generation uses val distribution → true leakage | After resampling, training data includes synthetic samples influenced by val |
 
-### Common Pitfalls
+### ⚠️ Leaky SMOTE 索引对齐陷阱（2026-06-25 新增）
+
+**问题**：当实现"Leaky SMOTE"（全局SMOTE后再拆分CV）时，直接使用原始数据的训练/测试索引索引SMOTEd数据会导致**索引不对齐**。
+
+**错误实现**：
+```python
+# BUG: SMOTE增加行数后，原始索引指向错误行
+X_sm, y_sm = SMOTE().fit_resample(X_preprocessed, y)  # 768 → ~1000行
+skf = StratifiedKFold(n_splits=10)  # 原始数据的分割索引
+for train_idx, test_idx in skf.split(X, y):  # train_idx ∈ [0, 767]
+    clf.fit(X_sm[train_idx], y_sm[train_idx])  # ❌ 只访问前768行，漏掉合成样本
+```
+
+**正确实现**：
+```python
+# CORRECT: 对SMOTEd数据重新做StratifiedKFold
+X_sm, y_sm = SMOTE().fit_resample(X_preprocessed, y)
+skf = StratifiedKFold(n_splits=10)
+for train_idx, test_idx in skf.split(X_sm, y_sm):  # ✅ 在SMOTEd数据上分割
+    clf.fit(X_sm[train_idx], y_sm[train_idx])
+    y_pred = clf.predict(X_sm[test_idx])  # 测试集也包含合成样本
+```
+
+**为什么重要**：Leaky SMOTE的精髓是**合成样本也污染了测试集**。如果只用原始索引做分割，测试集只包含真实样本→低估了SMOTE泄漏的程度。正确实现后的F1膨胀值差异显著（PIMA案例：错误实现→-7.1%看似反直觉，正确实现→+16.4%才是真实泄漏程度）。
+
+**验证方法**：对比Helix（fold内SMOTE）和Leaky（全局SMOTE）的F1差值，Leaky应**增加**F1（+10-20%典型范围），如果是负数或接近零→索引对齐有问题。
+
+See also: PIMA CatBoost 10-fold CV实验（run_catboost_10fold_cv.py），交叉验证`cross_dataset_catboost_10fold.json`。
 
 1. **ALL booleans set to the same value** → original PIMA code had `global_preproc=True` for all 3 leakage levels, making them identical. ALWAYS verify that each level produces distinct metrics.
 2. **Deprecated/removed estimators** — PassiveAggressiveClassifier deprecated in sklearn 1.8, removed in 1.10. Use `try/except` when dynamically building model pools.

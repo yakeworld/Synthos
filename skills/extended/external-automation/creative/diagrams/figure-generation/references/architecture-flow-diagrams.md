@@ -79,3 +79,59 @@ class QAReport:
 ```
 
 **必须为每个 box 配一个 check_text_fits，每个 arrow 配一个 check_arrow_inside。**
+
+### ⚠️ 新增: 框间重叠检测 (Box-to-Box Overlap)
+
+**根因教训**: 2026-06-26 HCS-3WT Figure 1 中，Key Principles header (y=560-585) 与 Expert B header (y=565-590) 完全重叠。QA 只检查了"文字是否超框"和"箭头是否悬空"，**漏掉了框与框之间的重叠检测**。
+
+**所有 matplotlib patches 图必须额外执行以下检测**:
+
+```python
+def boxes_overlap(b1, b2, margin=5):
+    """Check if two boxes overlap. b = (x_min, y_min, width, height)"""
+    x1, y1, w1, h1 = b1
+    x2, y2, w2, h2 = b2
+    # Overlap if any intersection (with margin for safety)
+    return not (x1+w1+margin < x2 or x2+w2+margin < x1 or
+                y1+h1+margin < y2 or y2+h2+margin < y1)
+
+# Collect all boxes before plt.subplots():
+all_boxes = {
+    "key_principles": (60, 545, 180, 135),
+    "expert_b_header": (55, 540, 200, 25),
+    "expert_b_body": (55, 515, 200, 160),
+    "clear_negative": (380, 500, 240, 40),
+    # ... every box and header
+}
+
+# Check ALL pairs:
+for name1, b1 in all_boxes.items():
+    for name2, b2 in all_boxes.items():
+        if name1 < name2 and boxes_overlap(b1, b2):
+            print(f"OVERLAP: {name1}({b1}) overlaps {name2}({b2})")
+```
+
+### 边界检查 (Boundary Validation)
+
+**所有元素的 y 坐标必须在 [0, FIG_H] 范围内**:
+
+```python
+# Every box: y + height <= FIG_H
+# Every text: y <= FIG_H - 2 (safety margin)
+for name, (x, y, w, h) in all_boxes.items():
+    if y + h > FIG_H:
+        print(f"OUT OF BOUNDS: {name} at y={y}+{h}={y+h} > FIG_H={FIG_H}")
+```
+
+**常见错误**: 输入框 Sample (400, 680, 200, 30) → y=710 超出 FIG_H=690。修复：降低 y 坐标或增加 FIG_H。
+
+### 手动坐标调试流程 (当用户反馈"框重叠"时)
+
+用户反馈如"第一行左中两个框文字有重叠"时，按以下流程定位：
+
+1. **列出所有 box 的 y 范围** — 从代码中提取每个 box 的 `(x, y, w, h)`，计算 `y_min` 和 `y_max = y + h`
+2. **排序按 y_max 降序** — 看哪些 box 在顶部区域
+3. **检查同水平区域的 box** — 如果两个 box 的 y_max/y_min 在 10pt 以内且有 x 重叠，则必然视觉重叠
+4. **逐个增加 5-10pt 缓冲** — 优先移动"左侧"box（Key Principles），因为它是固定位置的参考
+5. **增加 FIG_H 比缩小内容更安全** — 如果顶部元素无法再上移，增加画布高度比挤压内容更不易引入新重叠
+6. **重跑 QA** — 框间重叠检测 + 边界检查必须全部通过

@@ -122,4 +122,88 @@ ax_e = fig.add_subplot(gs[:, 3])      # 英雄面板跨所有行
 ax_f = fig.add_subplot(gs[2, :2])
 ```
 
-更多模式详见原nature-figure common-patterns.md（模式9-11已内置SKILL.md，模式16直接标签在原skill文档中）。
+## 模式9: 填充区域直接标签（面积图，灰度安全）
+
+```python
+fig, ax = plt.subplots(figsize=(6, 4))
+
+months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+val1 = [10, 12, 15, 14, 18, 20]
+val2 = [8, 9, 11, 10, 13, 15]
+
+ax.fill_between(months, val1, color='#0F4D92', alpha=0.6, label='Method A')
+ax.fill_between(months, val2, color='#8BCF8B', alpha=0.6, label='Method B')
+
+# Direct labels on filled areas (no legend needed)
+ax.text('Mar', 15.5, 'A: 15', ha='center', fontsize=7, fontweight='bold',
+        color='white', alpha=0.8)
+ax.text('Mar', 11.5, 'B: 11', ha='center', fontsize=7, fontweight='bold',
+        color='#222222', alpha=0.8)
+
+ax.set_ylabel('Value', fontsize=7)
+```
+
+## 模式10: 趋势事件标注（时间线 + 事件标记）
+
+```python
+fig, ax = plt.subplots(figsize=(8, 4))
+
+time = np.arange(1, 37)  # 36 months
+accuracy = np.random.uniform(0.85, 0.95, 36)
+
+ax.plot(time, accuracy, color='#0F4D92', linewidth=1.5, marker='o', markersize=3)
+
+# Add event annotations
+events = [
+    (6, 'Data Collection Started'),
+    (12, 'Model v1.0 Deployed'),
+    (18, 'Algorithm Upgrade'),
+    (24, 'Clinical Trial Phase II'),
+]
+
+for month, label in events:
+    if month <= len(time):
+        ax.axvline(x=month, color='#999999', linestyle='--', linewidth=0.5, alpha=0.5)
+        ax.text(month, accuracy[month-1] + 0.02, label,
+                ha='center', fontsize=5.5, color='#555555', rotation=0,
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='#F0F0F0', edgecolor='#CCCCCC'))
+
+ax.set_xlabel('Month', fontsize=7)
+ax.set_ylabel('Accuracy', fontsize=7)
+ax.set_ylim(0.80, 0.98)
+```
+
+## 模式11: 数据集内分组柱（多数据集 × 多方法）
+
+```python
+fig, ax = plt.subplots(figsize=(8, 5))
+
+datasets = ['WBC', 'WDBC', 'PIMA', 'MNIST']
+methods = ['HCS-3WT', 'SVC', 'RF', 'LogReg']
+# data[dataset_idx][method_idx] = accuracy
+data = [
+    [0.98, 0.96, 0.97, 0.96],  # WBC
+    [0.97, 0.96, 0.96, 0.95],  # WDBC
+    [0.88, 0.85, 0.86, 0.84],  # PIMA
+    [0.95, 0.94, 0.94, 0.93],  # MNIST
+]
+
+n_datasets = len(datasets)
+n_methods = len(methods)
+width = 0.15
+colors = ['#0F4D92', '#8BCF8B', '#E8954A', '#B64342']
+
+for i, (method, color) in enumerate(zip(methods, colors)):
+    x_offset = i * width - width/2 * (n_methods - 1)
+    x_pos = [d + x_offset for d in range(n_datasets)]
+    bars = ax.bar(x_pos, [row[i] for row in data], width=width,
+                  color=color, edgecolor='#555555', linewidth=0.3, label=method)
+
+ax.set_xticks(range(n_datasets))
+ax.set_xticklabels(datasets, fontsize=7)
+ax.set_ylabel('Accuracy', fontsize=7)
+ax.legend(fontsize=6, loc='upper right')
+ax.set_ylim(0.80, 1.00)
+```
+
+更多模式详见原nature-figure common-patterns.md（模式16直接标签在原skill文档中）。

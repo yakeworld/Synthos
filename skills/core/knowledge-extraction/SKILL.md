@@ -11,7 +11,7 @@ metadata:
     signature: "paper_content: str, schema: dict -> structured_knowledge: dict (entities, relations, claims, evidence)"
     atom_type: skill
     priority: P1
-    related_skills: []
+    related_skills: [knowledge-acquisition, paper-knowledge-extraction]
 ---
 
 

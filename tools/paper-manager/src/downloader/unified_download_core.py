@@ -16,6 +16,7 @@ from src.utils.paper_id import normalize_paper_id
 from src.sources.meddata import try_meddata
 from src.sources.scihub_racing import try_scihub_curl
 from src.sources.libgen import try_libgen
+from src.sources.pubscholar import try_pubscholar
 
 logger = logging.getLogger(__name__)
 
@@ -141,9 +142,11 @@ def _download_open_access(url: str, output_path: str) -> bool:
 
 
 def _download_via_racing(doi: str, pmid: Optional[str], output_path: str) -> bool:
-    """Tiered racing download: SciHub → LibGen → MedData.
+    """Tiered racing download: SciHub → LibGen → MedData → PubScholar.
     
     MedData gets PMID if available for complex DOI prefixes (Bentham, etc.).
+    PubScholar (Tier 4) covers Chinese academic papers via CDN/Preview/OA links.
+    Uses RSSHub-discovered API signing (salt + nonce + timestamp + signature).
     """
     tiers = [
         # Tier 1: SciHub (curl_cffi TLS bypass)
@@ -153,6 +156,8 @@ def _download_via_racing(doi: str, pmid: Optional[str], output_path: str) -> boo
         # Tier 3: MedData (with PMID if available)
         [("MedData", lambda: try_meddata(doi, output_path,
                                          extra={"pmid": pmid} if pmid else {}))],
+        # Tier 4: PubScholar (Chinese academic paper search + CDN)
+        [("PubScholar", lambda: try_pubscholar(doi, output_path))],
     ]
     
     for tier in tiers:

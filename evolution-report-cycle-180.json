@@ -1,0 +1,108 @@
+{
+  "cycle": 180,
+  "timestamp": "2026-06-27T07:37:50.200448+00:00",
+  "mode": "SCAN/CORE",
+  "total": 7,
+  "healthy": 1,
+  "avg_score": 69.1,
+  "min_score": 51,
+  "max_score": 100,
+  "total_issues": 26,
+  "fixed": 0,
+  "score_changes": {},
+  "top_issues": [
+    {
+      "name": "版本一致",
+      "count": 6
+    },
+    {
+      "name": "模式定义完整（0个模式）",
+      "count": 5
+    },
+    {
+      "name": "边界定义清晰",
+      "count": 4
+    },
+    {
+      "name": "有实战案例",
+      "count": 4
+    },
+    {
+      "name": "触发条件明确",
+      "count": 3
+    },
+    {
+      "name": "引用文件存在（2个唯一引用，2个Broken）",
+      "count": 1
+    },
+    {
+      "name": "无硬编码凭证",
+      "count": 1
+    },
+    {
+      "name": "引用文件存在（5个唯一引用，4个Broken）",
+      "count": 1
+    },
+    {
+      "name": "Markdown引用完整（6个）",
+      "count": 1
+    }
+  ],
+  "lowest_skills": [
+    {
+      "name": "knowledge-extraction",
+      "score": 51,
+      "status": "unhealthy",
+      "type": "core",
+      "issues": 6
+    },
+    {
+      "name": "knowledge-acquisition",
+      "score": 55,
+      "status": "unhealthy",
+      "type": "core",
+      "issues": 4
+    },
+    {
+      "name": "argument-expression",
+      "score": 66,
+      "status": "acceptable",
+      "type": "core",
+      "issues": 5
+    },
+    {
+      "name": "association-discovery",
+      "score": 66,
+      "status": "acceptable",
+      "type": "core",
+      "issues": 5
+    },
+    {
+      "name": "viewpoint-verification",
+      "score": 66,
+      "status": "acceptable",
+      "type": "core",
+      "issues": 5
+    },
+    {
+      "name": "hypothesis-generation",
+      "score": 80,
+      "status": "good",
+      "type": "core",
+      "issues": 1
+    },
+    {
+      "name": "quality-gate",
+      "score": 100,
+      "status": "healthy",
+      "type": "core",
+      "issues": 0
+    }
+  ],
+  "next_actions": [
+    "🔴 P0 紧急修复: 4 个问题影响 4 个技能",
+    "🟠 不合格技能: 2 个需要优化",
+    "📊 健康率 14%，目标 ≥90%"
+  ],
+  "scan_time_ms": 739
+}
