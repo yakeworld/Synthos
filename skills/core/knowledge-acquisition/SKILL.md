@@ -99,9 +99,10 @@ Agent-native认知原子。使用技能库+终端curl检索学术文献，零Pyt
 | 2 | PubMed | 无响应→Crossref |
 | 3 | arXiv (Tor SOCKS5) → HTTPS + curl -L --socks5-hostname 127.0.0.1:9050|
 | 4 | OpenAlex → {word: [positions]} 反转重建摘要|
-| 5 | bioRxiv/medRxiv | 无结果→直接API |
-| 6 | Web scrape | 深度抓取 |
-| 7 | 本地缓存 | 离线兜底 |
+| 5 | **PubScholar 🆕** → curl直调API（中文/中科院论文）|
+| 6 | bioRxiv/medRxiv | 无结果→直接API |
+| 7 | Web scrape | 深度抓取 |
+| 8 | 本地缓存 | 离线兜底 |
 
 API具体命令 → 参考 `scientific-database-lookup` 和 `research-paper-search` 技能
 
@@ -161,6 +162,7 @@ notebooklm source add "$(cat pdfs/{bibkey}.md)" --type text --title "{bibkey}" -
 7. 缓存过期 — 24h后自动重新检索
 8. arXiv 标题含换行符 — XML 解析后需 `.strip()`
 9. arXiv PDF URL 在 `<link rel="related">`，非 `rel="alternate"`
+10. **CNKI (kns.cnki.net) 海外 IP 返回 HTTP 418** — 知网有严格 IP 地理围栏，海外直接拒绝。RSSHub 的 cnki 路由代码已分析但无法从海外节点部署。中文文献替代方案：PubScholar（中科院公益平台，纯 curl ✅）。
 
 ## 验证清单
 

@@ -1,392 +1,331 @@
 ---
-
 name: figure-generation
-description: 科研图表创建：Figure契约方法论——结论Claim→证据层级→面板映射→出口契约→审核。 支持Nature语义色板（蓝主-绿正-红基+中性色），16种排版模式。兼容所有SCI/会议图表场景。
-version: 1.5.0
+description: 作图技能体系 — 科学数据图、架构图、流程图、宣传封面、论文转PPT、PDF逆向工程、QA自动化。所有作图请求的统一入口。
+version: 2.2.0
 license: MIT
 author: Synthos
 allowed-tools:
-- terminal (Python plotting, shell)
-- file_read (data inspection)
-- file_search (data location)
-- execute (data preprocessing, code execution)
-- file_write (figure scripts)
+- terminal (Python, shell, PDF tools)
+- file_read
+- file_search
+- file_write
 metadata:
-  synthos_atom_type: extended
-  synthos_version: 1.1.0
-  synthos_skill_md_hash: figure-generation-v1.1.0
-  synthos_model_tested_on: '2026-05-15T00:00:00Z'
-  synthos_data_access_level: verified_only
-  synthos_priority: P2
-  synthos_author: Synthos
-  synthos_absorbed_from: Synthos internal (originally from research-paper-search skill)
-  synthos_absorbed_date: '2026-05-15'
-  synthos_depends_on: knowledge-acquisition
   synthos:
-    author: Synthos
-    signature: 'input: claim, evidence_levels -> output: figure_contract, publication_ready_figure'
+    signature: "user_request: str -> skill_mode: str -> output: image/pdf/pptx/code"
+    atom_type: extended
+    priority: P0
     related_skills:
-    - academic-diagram
-    - architecture-diagram
-    - comfyui
-    - excalidraw
-    - ffmpeg-video-audio-sync
-    version: 1.1.0
-    tags:
-    - figure-generation
-    - data-visualization
-    - scientific-figures
-    - nature-style
-    - publication-ready
-
-
+    - image_generate
+    - manim-video
+    - sketch
 ---
 
+## 技能体系架构（v2.0 — 单一入口）
 
-## IO_CONTRACT
+```
+用户请求"画图"
+  ↓
+按需求类型选择模式：
+├── 模式A: 科学数据图（柱状图、散点图、ROC、曲线、热图、混淆矩阵）
+├── 模式B: 架构/流程图（框+箭头，系统结构/工作流程）
+├── 模式C: 手绘风格流程图（excalidraw JSON）
+├── 模式D: 宣传封面/海报/社交卡片（Pillow深色科技风）
+├── 模式E: 论文转PPT（PyMuPDF+Pillow+python-pptx）
+├── 模式F: PDF逆向工程（无源代码→可复现Python）
+├── 模式G: 自动QA验证（从脚本源码提取几何→检查重叠/超框/箭头）
+├── 模式H: 混合工作流（人工控制结构，程序注入数据）
+├── 模式I: 3D医学影像（椭圆→3D圆，瞳孔追踪）
+└── 模式J: 质量报告可视化（HTML+Firefox/Pillow）
+```
 
-- **input**: `request: str, context: dict` — 用户请求描述、上下文信息
-- **output**: `result: dict — 技能执行结果（结构因技能而异）`
+**原则：作图技能不是越多越好。所有模式的核心思想在SKILL.md中，代码在references/中，可执行脚本在scripts/中。**
 
-> 对应原则：P2（机械原子暴露输入输出规范）
+## 核心思想：一图胜千言
 
-
-
-
-## 原理层·文言
-
-### 图表之道
-
-> 一图胜千言，一计定乾坤。
 > 画图先立约：结论→证据→面板→出口→审核，五步不可移。
-> Nature规范为本，色盲友好为德，TikZ矢量为体，高清输出为用。
-> 统计标注不可省，审稿质疑不可躲。
-> 科学之图，诚实为先。不误导、不夸大、不隐瞒。
-> **域有其模，模载其法。无证不立，无约不画。**
+> 图非装饰，乃论证之骨。不画无主之图，不展无据之像。
 
-**核心理念**：图表生成是视觉论证设计。每张图从可证伪的结论Claim开始。不画无主之图，不展无据之像。
+### 1. 证据层级原则
 
-## 方法层·白话
+每张论文图表承载**单一可证伪主张**。面板层次：
+- **英雄面板**：最核心证据，视觉最强，占最大面积
+- **验证证据**：支撑主主张，视觉次强
+- **对照/稳健性**：排除替代解释，视觉最弱
 
-**Figure Generation Skill** — 不是画图工具，是**视觉论证设计器**。
+**冗余检查**：遮住任一面板 → 如果削弱论证则保留；如果未削弱则删除。
 
-## 核心方法论：Figure契约
+### 2. 原型选择
 
-画任何图之前，先建立契约。Agent原生推理完成，不需要Python脚本。
+| 原型 | 场景 | 英雄面板 |
+|------|------|---------|
+| `quantitative-grid` | 数值比较为主 | 汇总指标图 |
+| `schematic-led-composite` | 需理解流程/机制 | 左/上方的示意图 |
+| `image-plate+quant` | 成像/显微/组织学 | 图像板+定量 |
+| `asymmetric-mixed-modality` | 混合示意图/光栅/热图 | 跨行/列面板 |
 
-### 契约模板
+### 3. 布局自适应原则
+
+**不要套模板。图决定布局。**
+
+| 图特征 | 布局 | 图占比 |
+|--------|------|:------:|
+| 宽幅/复杂 | 全宽或上下堆叠 | 70-100% |
+| 高窄 | 左图右文轨 | 65-75% |
+| 密集多面板 | 裁剪关键面板 | 80-100% |
+| 单面板+标注 | 非对称 70/30 | 70% |
+| 表格/数据 | 全宽表格 | 100% |
+
+**核心：50/50等分是例外，非默认。结果帧必须有一方明显主导。**
+
+## 设计规则（速查）
+
+### 色彩语义
+
+| 语义 | 色值 | 用途 |
+|------|------|------|
+| 正确/正向 | `#8BCF8B` | 成功、阳性、临床有效 |
+| 风险/基线 | `#B64342` | 对照、阴性、风险 |
+| 核心/创新 | `#7B5EA7` | 核心贡献、协议 |
+| 执行/操作 | `#E8954A` | 工程、操作步骤 |
+| 中性参考 | `#999999` | 随机、参考 |
+| 失败/阴性 | `#D0C0C0` | 清除阴性 |
+
+**色盲安全**：≥3色时必须同时使用颜色+形状/线型双编码。红绿不能是唯一区分。
+
+### 排版规则
+
+| 要素 | 规则 |
+|------|------|
+| 字体 | Arial/sans-serif，`svg.fonttype='none'` |
+| 标题字号 | 论文7pt / 大图24pt / 封面48-60px |
+| 正文字号 | 论文7pt / 大图10pt / 封面20-24px |
+| 留白 | 卡片内边距≥20px，元素间距≥16px |
+| CJK双描 | 深色底上：`draw.text(x,y)`两次（偏移1px） |
+
+### 架构图箭头规则
+
+- 箭头终点必须在目标框AABB内，不是"接近"
+- 从上方进入 → 终点 y = 框顶 y
+- 从下方进入 → 终点 y = 框底 y
+- 从左/右进入 → 终点 x = 框左/右 x
+- 多箭头同框 → 终点x错开 ≥20px
+- 长文本框：字数≤7或加宽边框（BOX_W≥3.0）
+
+### 数据图规则
+
+- ≥3条曲线 → 必须line_style + marker双编码
+- 表格 → 永远在axes外部（y < -0.1），不在plot area内
+- 水平条形图 → 颜色编码必须有legend；x-limit = max * 1.28
+- 网格图低值 → 标签额外offset（低值<0.7: 0.008, 高值: 0.003）
+- ≥3条曲线 → 必须line_style + marker双编码
+
+### Pillow封面规则
+
+- 背景：#0F172A（深蓝黑）
+- 主蓝：#3B82F6，强调金：#F59E0B
+- 成功：(0,221,170)，警告：(255,169,77)，错误：(255,107,107)
+- 字体分级：标题36-44pt，核心指标32-40pt，正文20-24pt，小字14-18px
+- 尺寸：正方形1080×1080（单图），竖版1080×1920（轮播）
+
+## 方法层：16种排版模式
+
+| # | 模式 | 场景 | 代码位置 |
+|---|------|------|---------|
+| 1 | 超宽多指标 | 3-4指标×多方法 | `references/common-patterns.md` |
+| 2 | 专用图例面板 | 图例过大/多面板共享 | `references/common-patterns.md` |
+| 3 | 隐藏X轴 | 方法名已在图例中 | `references/common-patterns.md` |
+| 4 | 动态Y轴紧缩 | 数据集中在狭窄区间 | `references/common-patterns.md` |
+| 5 | Alpha消融 | 同方法消融变体 | `references/common-patterns.md` |
+| 6 | Hatch灰度 | 印刷黑白区分 | `references/common-patterns.md` |
+| 7 | 语义色映射 | 跨面板颜色一致 | `references/common-patterns.md` |
+| 8 | 柱内亮度感知文本 | 深色柱白字/浅色柱黑字 | `references/common-patterns.md` |
+| 9 | Fill-between hatch | 面积图灰度安全 | `references/common-patterns.md` |
+| 10 | 趋势事件标注 | 时间线上标注事件 | `references/common-patterns.md` |
+| 11 | 数据集内分组柱 | 多数据集×多方法 | `references/common-patterns.md` |
+| 12 | 示意图主+定量辅 | 机制/流程图带头 | `references/common-patterns.md` |
+| 13 | 暗底图像板 | 显微/渲染 | `references/common-patterns.md` |
+| 14 | 临床三联画 | 纵向+森林图+汇总 | `references/common-patterns.md` |
+| 15 | 非对称英雄面板 | 某面板概念核心 | `references/common-patterns.md` |
+| 16 | 填充区域直接标签 | 类别多图例大 | `references/common-patterns.md` |
+
+## 核心工作流
 
 ```
-结论Claim: [一句话可证伪的核心主张，带动词]
-图表原型: [quantitative-grid | schematic-led-composite | image-plate+quant | asymmetric-mixed-modality]
-目标出口: [Nature | Science | SCI 2-3区 | PPT报告 | 竞赛视频]
-最终尺寸: [单栏89mm | 双栏183mm | 自定义]
-面板映射:
-  a: [面板a解决的问题]
-  b: [面板b解决的问题]
-  c: [面板c解决的问题]
-证据层级:
-  主证据: [英雄面板，视觉最强]
-  验证证据: [支撑面板，视觉次强]
-  对照/稳健性: [辅助面板，视觉最弱]
-所需统计: [样本量、误差棒类型、检验方法]
-源数据: [CSV路径、列名、行数]
-审稿风险: [审稿人可能质疑的三件事]
+用户请求 → 选择模式 → 建立契约 → 验证数据 → 生成代码 → QA验证 → 执行 → 输出
+                              ↑                          ↑
+                         数据错误→sys.exit(1)      检查不通过→sys.exit(1)
 ```
 
-### 原型选择
+1. **契约确认**：结论Claim、图表原型、目标出口、面板映射、证据层级
+2. **数据验证**：完整、正确、样本一致
+3. **生成脚本**：Python代码（matplotlib/Pillow/SVG/excalidraw/Python-pptx）
+4. **QA验证**：重叠检测、超框检测、箭头终点、色盲安全、色彩对比
+5. **执行输出**：PNG (300DPI) + PDF/SVG + figure legend
+6. **发送确认**：向用户发送输出，附带简要说明
 
-| 原型 | 使用场景 | 英雄面板 | 支撑面板 |
-|------|---------|---------|---------|
-| `quantitative-grid` | 数值比较为主 | 可选，一般是主导汇总指标 | 共享轴、对齐刻度、紧凑图例 |
-| `schematic-led-composite` | 需先理解流程/机制/装置 | 左或上方的示意图，占40-60%面积 | 2-4个定量验证面板 |
-| `image-plate+quant` | 成像/显微/组织学/电泳 | 图像板或代表性图像 | 比例尺、叠加、裁剪、定量 |
-| `asymmetric-mixed-modality` | 混合示意图/光栅/热图/定量 | 一个面板跨行/列 | 按证据值排序的小面板 |
+## 各模式详细说明
 
-### 冗余检查
+### 模式A: 科学数据图（matplotlib）
 
-- [ ] 面板b不是面板a的数据以不同形式重新显示
-- [ ] 面板c增加了a和b中没有的维度
-- [ ] 每个面板有自己的轴标签词汇（不同的x/y量纲）
-- [ ] 遮住任一面板不会削弱论证 → 删除或合并
+标准科研图表：柱状图、散点图、ROC、AUC、SHAP、消融图、混淆矩阵、生存曲线。
 
-### 与ARG协同
+- 见 `references/python-recipes.md` — Python代码模板
+- 见 `references/quantitative-data-qa-traps.md` — 定量数据QA规则
+- 见 `references/sci-figure-recipes.md` — 实战代码示例
+- 见 `references/global-palette.md` — 色板常量
+- 见 `references/pillow-primitives.md` — Pillow回退原语
 
-Figure契约的结论Claim直接来自ARG论证链。
-输出接口：接收ARG的 `claim` + `evidence`，输出 `SVG asset` + `figure legend text`。
+### 模式B: 架构/流程图（matplotlib patches）
 
----
+框+箭头：系统结构、工作流程、技术路线、实验设计。
 
-## 执行流程
+- 程序化布局：SINGLE_H/DOUBLE_H + GAP_S/GAP_M/GAP_T，底部对齐向上计算
+- 箭头汇聚到目标框顶边内侧（x = cx0 + CORE_W*0.25/0.75）
+- 所有箭头必须严格水平或垂直，不可有斜线
+- 箭头起点在源框边缘，终点在目标框边缘（不穿入）
+- 框间重叠检测 margin=5pt，所有框两两检查
+- 见 `references/architecture-flow-diagrams.md` — 完整架构图库
+- 见 `references/arrow-endpoint-qa.md` — 箭头QA规则
+- 见 `references/hcs3wt-figure1-case-study.md` — 实战案例
+- 见 `03-code/generate_fig1_system_architecture_v2.py` — HCS-3WT Figure 1 完整重写示例（从零开始，QA前置，所有坐标从常量计算）
+
+### 模式C: 手绘风格流程图（excalidraw）
+
+快速原型、白板风格、中文医疗提案路线图。
+
+- 输出：.excalidraw JSON文件，直接拖到 excalidraw.com 打开
+- 元素：rectangle/ellipse/diamond + text + arrow
+- 容器绑定：shape的`boundElements`指向text，text的`containerId`指回shape
+- 字号：最小16（正文）、20（标题）、14（次要）
+- 见 `references/excalidraw/` — 完整格式参考和示例
+- 脚本：`references/excalidraw/scripts/upload.py` — 上传获取分享链接
+
+### 模式D: 宣传封面/海报/社交卡片（Pillow）
+
+深色科技风封面、数据卡片、小红书推广图、竞赛海报。
+
+- 背景#0F172A，白字，蓝金点缀
+- 双描CJK：`draw.text(x,y)`两次（偏移1px）
+- 避免emoji，用文字替代
+- 渐变背景：`ImageDraw.rectangle + for y in range(h): fill(y)`
+- 见 `references/pil-image/scripts/` — 可执行封面生成脚本
+- 见 `references/pil-image/references/` — 设计规范和案例
+
+### 模式E: 论文转PPT（PyMuPDF+Pillow+python-pptx）
+
+从PDF提取元数据→分类定势→构建计划→选图为证→生成PPTX。
+
+- 流程：PDF提取 → 论文分类 → 选图 → 裁剪 → 生成16:9 PPTX
+- 论文类型→呈现逻辑：
+  - 发现/机制 → Question-to-Evidence
+  - 方法/AI → Problem-to-Solution
+  - 临床/人群 → Design-to-Inference
+- 12-16帧，每帧一义，结论式标题
+- 见 `references/paper2ppt/` — 测试用例和流程参考
+- 输出：`final_presentation_cn.pptx` + `qa_report.md` + `assets/figures/`
+
+### 模式F: PDF逆向工程
+
+PDF中无源代码的图 → pdftotext提取坐标 → 重建Python脚本。
+
+- `pdftotext -bbox-layout PDF` 提取每个字的精确坐标（PDF点，1/72英寸）
+- HTML结构：`<doc>→<page>→<flow>→<block>→<line>→<word>`
+- 用坐标作为ground truth重建布局
+- **陷阱**：先检查PDF元数据（Producer=GIMP说明不是matplotlib）
+- **铁律**：先检查 `/media/yakeworld/sda2/academic_writer/` 是否有原始脚本
+- 见 `references/pdf-to-reproducible-code.md` — 完整方法论
+
+### 模式G: 自动QA验证
+
+从绘图脚本源码提取几何元素 → 运行检查 → 输出PASS/FAIL。
+
+**6项检查**：
+1. 文字不超框 — `get_text_extent()` 精确测量
+2. 箭头终点在目标框AABB内
+3. 箭头起点在源框AABB内
+4. 箭头互不交叉
+5. 所有框无重叠（margin=5pt）
+6. 元素不越画布边界
+
+**铁律**: QA不通过 → sys.exit(1) → 无输出 → 修复后重新生成。不通过不能发图给用户。
+
+### QA 陷阱
+
+#### bbox_inches='tight' 导致逻辑坐标与渲染边界不匹配
+
+`qa-architecture-diagram.py` 检查的是**逻辑坐标**（fig.transFigure），但 matplotlib 的 `bbox_inches='tight'` 会重新裁剪画布边界。QA 代码可能在逻辑坐标系中标记"超框"，实际渲染的 PNG/PDF 中文字/框是可见的。
+
+**处理方式**：QA 检查框重叠、箭头终点、文字内容——这些是绝对正确的。边界检查（元素是否超出画布）——QA 标记失败时，用 `bbox_inches='tight'` 重新保存，如果导出后文字/框可见，则忽略该 QA 警告。
+
+#### 自动提取工具的局限性
+
+`figure-qa-check.py`（自动提取）仅支持 `FancyBboxPatch`、`ax.text()`、`FancyArrowPatch`。不支持 `Rectangle`/`Circle`/`plt.gca().add_patch()`/`annotate()` 等。如果脚本使用这些方式，QA 需要手动用 `qa-architecture-diagram.py` 的 `figure_qa_check()` API 自行提供几何参数。
+
+- 见 `scripts/qa-architecture-diagram.py` — QA核心（`figure_qa_check()`）
+| references/test-results-2026-06-27.md | QA与完整功能测试结果记录 |
+| references/breast-cancer-figure-audit-case.md | 乳腺癌论文作图审计实战案例（6张图、7步审计管线、3个bug修复） |
+| references/qa-contract.md | 提交前完整QA审核清单 |
+- 见 `references/static-vs-runtime-qa-validation.md` — 静态vs运行时验证等价性
+- 见 `references/qa-automation/references/` — 历史调试记录
+
+**铁律**：QA不通过 → sys.exit(1) → 无输出 → 修复后重新生成。不通过不能发图给用户。
+
+### 模式H: 混合工作流
+
+结构由人工控制（draw.io），数据由程序注入（Python）。
+
+- 适用于：架构/流程图/系统结构图（框+箭头，数值文本随数据变化）
+- 不适用：定量数据图（柱状图、散点图等）
+- 数据注入脚本必须保证布局不变
+- 见 `references/hybrid-figure-workflow.md` — 完整示例
+- 见 `references/hcs3wt-figure1-case-study.md` — 实战案例
+
+### 模式I: 3D医学影像
+
+椭圆逆投影为3D空间圆 — 瞳孔追踪中椭圆→3D圆通过解剖约束。
+
+- R=2r, d=√3r
+- 法向量参数化、光轴平面
+- 见 `3d-curve-fitting-figures/` — 完整3D医学影像子模块
+
+### 模式J: 质量报告可视化
+
+质检报告→视觉图 — HTML+Firefox/Pillow三模式。
+
+- 见 `feishu-file-send/references/pdf-chinese-rendering.md` — PDF 中文渲染修复（pandoc + xelatex + ctex header）
+- 见 `feishu-image-send/references/pdf-image-extraction.md` — PDF 图片提取与发送（无脚本场景）
+
+### 执行失败回退层级
 
 ```
-契约确认 → 加载风格模板 → 生成Python脚本 → terminal执行 → QA审核
-```
-
-Python代码示例、配色方案、辅助函数 → 详见 `references/python-recipes.md`
-
-### 执行失败回退（Pitfall）
-
-| 场景 | 症状 | 对策 |
-|:-----|:-----|:-----|
-| matplotlib + NumPy 版本冲突 | `ImportError: numpy.core.multiarray failed to import` 或 `cannot be run in NumPy 2.0` | **立即切换 Pillow 纯代码路径**。pil-image-generation skill 中 `技法#1-7` 可直接绘制雷达图/柱状图/轨迹图。不要死磕 matplotlib。 |
-| 服务器无 GUI / 无 headless chrome | HTML→Chromium 路径报 `Chrome exited early` | 跳过 HTML，直接 Pillow。HTML 渲染是最后手段。 |
-| matplotlib 可用但渲染差 | 图表模糊、CJK 不可读、色盲不可分辨 | 设置 `svg.fonttype='none'` + Arial/Helvetica + Nature 色板。输出 SVG 做 QA。 |
-
-### 环境依赖检查
-### 执行失败回退层级（完整）
-
-```
-matplotlib → 版本冲突/缺失 → Pillow 纯代码 → HTML + Firefox → HTML + Chromium → 静态生成
+matplotlib → Pillow纯代码 → HTML+Firefox → Pillow+结构化
 ```
 
 | 层级 | 工具 | 触发条件 |
-|:-----|:-----|:---------|
+|------|------|---------|
 | 1 | matplotlib | 服务器环境正常 |
-| 2 | Pillow 纯代码 | NumPy 版本冲突 / matplotlib 缺失 / 无 GUI |
-| 3 | HTML + Firefox | 复杂排版需求，Chromium snap 不可用时首选 |
-| 4 | HTML + Chromium | Firefox 不可用，Chrome snap 可用时 |
-| 5 | Pillow + 结构化 | 最简方案，手动布局 |
-
-**Firefox headless 截图法**（2026-06-21 实测，`firefox --headless --screenshot /tmp/out.png URL`）：
-- 用 `python3 -c "import http.server,socketserver,threading;...TCPServer(('127.0.0.1',8899)..."` 起本地 HTTP 服务
-- Firefox 不依赖 Chrome snap，是 headless Linux 上 HTML→PNG 的最可靠路径
-- Firefox `--width` 只控制渲染宽度，`--window-size` 部分版本不生效；默认 1366px 可完整渲染
-- 如需精确尺寸（如 1080px），用 Pillow `Image.resize()` 缩放到目标宽度
-- 输出为 RGBA，用 `.convert('RGB')` 转 RGB
-
-```python
-# 执行前检查渲染路径（按优先级）
-import importlib, subprocess
-def best_backend():
-    try: import matplotlib; has_mpl=True
-    except: has_mpl=False
-    try: subprocess.run(['firefox','--version'],capture_output=True); has_ff=True
-    except: has_ff=False
-    try: subprocess.run(['chromium-browser','--version'],capture_output=True); has_ch=True
-    except: has_ch=False
-    if has_mpl: return 'matplotlib'
-    if has_ff: return 'firefox'
-    if has_ch: return 'chromium'
-    return 'pillow'
-```
-
----
-
-## 色彩体系（速查）
-
-### 语义色板（Nature标准）
-
-```
-蓝主 #0F4D92  | 绿正 #8BCF8B  | 红基 #B64342
-中性 #767676  | 强调金 #FFD700 | 青 #42949E
-```
-
-### 分领域色板
-
-| 领域 | 特征色 |
-|------|--------|
-| 成像/显微 | 黑底+灰+青+品红 |
-| 临床/纵向 | 基线灰→周6橙→周13红→年1蓝 |
-| 消融实验 | 同色alpha渐变（1.0→0.2） |
-
----
-
-## 16种排版模式速查
-
-| # | 模式 | 一句话场景 |
-|:-:|:-----|:----------|
-| 1 | 超宽多指标 | 3-4指标×多方法 |
-| 2 | 专用图例面板 | 图例过大/多面板共享 |
-| 3 | 隐藏X轴 | 方法名已在图例中 |
-| 4 | 动态Y轴紧缩 | 数据集中在狭窄区间 |
-| 5 | Alpha消融 | 同方法消融变体 |
-| 6 | Hatch灰度 | 印刷黑白区分 |
-| 7 | 语义色映射 | 跨面板颜色一致 |
-| 8 | 柱内亮度感知文本 | 深色柱白字/浅色柱黑字 |
-| 9 | Fill-between hatch | 面积图灰度安全 |
-| 10 | 趋势事件标注 | 时间线上标注事件 |
-| 11 | 数据集内分组柱 | 多数据集×多方法 |
-| 12 | 示意图主+定量辅 | 机制/流程图带头 |
-| 13 | 暗底图像板 | 显微/渲染 |
-| 14 | 临床三联画 | 纵向+森林图+汇总 |
-| 15 | 非对称英雄面板 | 某面板概念核心 |
-| 16 | 填充区域直接标签 | 类别多图例大 |
-
-详情 + 代码 → `references/common-patterns.md`
-
----
+| 2 | Pillow纯代码 | NumPy版本冲突 / matplotlib缺失 / 无GUI |
+| 3 | HTML+Firefox | 复杂排版需求 |
+| 4 | Pillow结构化 | 最简方案 |
 
 ## 出口契约
 
 ```python
-fig.savefig(f"{filename}.svg", bbox_inches="tight")   # 可编辑矢量（必需）
-fig.savefig(f"{filename}.png", dpi=300, ...)           # 位图
-fig.savefig(f"{filename}.pdf", bbox_inches="tight")    # PDF
-```
-
-字体：font.size=7（期刊密度）/ 24（大面板）, Arial/sans-serif, `svg.fonttype='none'`
-
----
-
-## 触发条件
-
-加载本技能当：用户要求创建/修改论文图表、"Nature风格"、"SCI图表"、"发表级图表"、"架构图"、"流程图"、"flow diagram"。
-
-**不加载**：EDA探索性图表、交互式图表（Plotly/Altair）、3D/GIS/非科学插图。
-
----
-
-## 模式三：架构/流程图（schematic-led-composite 的纯图版）
-
-**不包含数据面板，纯框+箭头说明系统结构/流程关系。** 使用 matplotlib patches 绘制。
-
-### 为什么不用 TikZ
-
-| 方案 | 问题 | 结论 |
-|:-----|:-----|:------|
-| TikZ `node distance` + `below of` | 多层堆叠时间距计算混乱，混合绝对坐标与相对定位导致上下重叠 | ❌ PIMA Figure 1 两次失败 |
-| TikZ 缩放 `scale=0.95, transform shape` | 缩放同时压缩文字，反而加剧重叠 | ❌ 不治本 |
-| **matplotlib patches**（`FancyBboxPatch` + `FancyArrowPatch`） | 像素级精确控制，坐标全由变量计算 | ✅ 一次成功 |
-
-### 程序化布局方法论
-
-**不要手写坐标**。定义间距变量，从底部向上计算每个箱体的 y 位置：
-
-```python
-# 统一设计系统变量
-SINGLE_H = 0.50    # 单行文字框高 (fontsize 7 → 0.20" text + 0.15" pad×2)
-DOUBLE_H = 0.70    # 双行文字框高 (核心/输出/消融/注册箱)
-BOX_W    = 3.0     # 侧栏框宽 (≥3.0, 否则"Engineering Execution Strand"碰边)
-CORE_W   = 4.8     # 核心框宽
-BOT_W    = 5.2     # 底部链框宽
-PAD_BOX  = 0.12    # FancyBbox 内边距 (所有框统一)
-
-GAP_S    = 0.20    # 同区内框间距 (子箱之间/底部链箱之间)
-GAP_M    = 0.55    # 区间隔 (侧栏↔核心↔输出)
-GAP_T    = 0.35    # 标题→内容间距
-PAD_BOT  = 0.50    # 底部留白
-
-# 从底部向上计算
-reg_y = PAD_BOT
-ab_y  = reg_y + DOUBLE_H + GAP_S
-out_y = ab_y  + DOUBLE_H + GAP_S
-core_y = out_y + DOUBLE_H + GAP_M
-c4_y  = core_y + DOUBLE_H + GAP_M
-c3_y  = c4_y   + SINGLE_H + GAP_S
-c2_y  = c3_y   + SINGLE_H + GAP_S
-c1_y  = c2_y   + SINGLE_H + GAP_S
-strand_title_y = c1_y + SINGLE_H + GAP_S
-title_y = strand_title_y + SINGLE_H + GAP_T
-```
-
-这样做的好处：
-- 改一个间距变量，**全部重算**，不需要逐行调坐标
-- 底部永远对齐，顶部自动确定画布尺寸
-- 可预先检查 `fig_needed > fig_actual` 防溢出
-
-### 箭头设计规范 (架构图专用)
-
-箭头必须**汇聚到目标框的顶边内侧**，不能悬在框外：
-
-```python
-# ❌ 错误 — 箭头终点在框外
-arrow(lx, c4_y, lx, core_top)  # lx=1.8, 核心框左缘=2.6 → 箭头在框外
-
-# ✅ 正确 — 汇聚到顶边内侧
-cx0 = xc - CORE_W/2          # 核心框左缘 (必须定义于箭头之前)
-core_top_l = cx0 + CORE_W*0.25   # 顶左1/4
-core_top_r = cx0 + CORE_W*0.75   # 顶右3/4
-arrow(lx, c4_y + SINGLE_H/2, core_top_l, core_y + DOUBLE_H, rad=-0.20)
-arrow(rx, c4_y + SINGLE_H/2, core_top_r, core_y + DOUBLE_H, rad=0.20)
-```
-
-**代码顺序陷阱**: `cx0` 必须在箭头代码之前定义，否则变量未定义错误。
-
-### 实现模板
-
-详见 `references/architecture-flow-diagrams.md`——包含完整可运行的 Figure 1 代码模板。
-
-### 色板扩展（架构图专用）
-
-| 元素 | 颜色 | 语义 |
-|:-----|:-----|:------|
-| Clinical/方法论 | `#8BCF8B`（绿） 或 `#D0E8D0` 浅底 | 正确/正向 |
-| Engineering/工程 | `#E8954A`（橙） 或 `#F5E0C0` 浅底 | 执行/操作 |
-| 核心/协议 | `#7B5EA7`（紫） | 创新/核心贡献 |
-| 输出/结果 | `#8BCF8B` 深边框 | 验证过的输出 |
-| 对照/基线 | `#B64342`（红） 或 `#F0C8C8` 浅底 | 风险/基线 |
-| 中性/参考 | `#999999`（灰） | 参考/随机基线 |
-
-### 输出规范
-
-```python
-# 必须使用此保存方式——SVG可编辑+PDF出版级
+# 必须保存为：
 fig.savefig(f"{name}.svg", bbox_inches='tight', pad_inches=0.1)  # 矢量可编辑
-fig.savefig(f"{name}.pdf", bbox_inches='tight', pad_inches=0.1)  # 出版
+fig.savefig(f"{name}.png", dpi=300, ...)                          # 位图 300 DPI
+fig.savefig(f"{name}.pdf", bbox_inches='tight', pad_inches=0.1)  # 出版级PDF
 ```
 
-### 用户偏好: 长文本框内居中
+## 论文作图铁律
 
-当架构图/流程图的 TikZ 版本出现重叠问题时：
-1. **不要继续调试TikZ**（`node distance` 越调越乱）
-2. 直接切换到 `matplotlib patches` 程序化布局
-3. 使用统一设计系统（SINGLE_H/DOUBLE_H + GAP_S/GAP_M/GAP_T）
-4. 所有 FancyBboxPatch 用同一 `pad` 值（推荐 0.12），确保框形态一致
-5. 长标题（如 "Engineering Execution Strand"）用字≤7 + 加宽边框（BOX_W ≥ 3.0）避免文字碰边缘
-6. 把生成脚本保存到 `03-code/` 目录作为可重复 artifact
-7. 用 `\includegraphics{path}` 替换 LaTeX 中的内联 TikZ
-
-### 🔴 强制措施: 生成前 QA 验证 (2026-06-24 新增)
-
-**背景**: 本技能前几次渲染的架构图存在箭头终点在目标框外、文字超框等问题，用户发现后要求"既然能计算出问题，为什么写代码的过程没有监督"。
-
-**规则**: 每次 matplotlib patches 绘图脚本必须在 `plt.subplots()` 之前嵌入 QA 验证。
-
-**QAReport 模板** (放入脚本顶部，渲染逻辑之前):
-
-```python
-def text_width_inches(text, fontsize_pt):
-    """估计文字渲染宽度 (保守: avg_char = fontsize * 0.60 pt)"""
-    return len(text) * fontsize_pt * 0.60 / 72.0
-
-class QAReport:
-    def __init__(self):
-        self.issues = []
-    def check_text_fits(self, label, text, fontsize, box_w, box_h, pad):
-        tw = text_width_inches(text, fontsize)
-        if tw > box_w - 2*pad:
-            self.issues.append(f"[{label}] 文字超宽: '{text[:30]}' ({tw:.2f}in) > {box_w-2*pad:.2f}in")
-        if fontsize/72.0 > box_h - 2*pad:
-            self.issues.append(f"[{label}] 文字超高: {fontsize}pt > {box_h-2*pad:.2f}in")
-    def check_arrow_inside(self, label, x2, y2, target_name, tx, ty, tw, th):
-        if not (tx <= x2 <= tx+tw and ty <= y2 <= ty+th):
-            self.issues.append(f"[{label}] 箭头终点({x2:.1f},{y2:.1f}) 在 '{target_name}' 框外")
-    def assert_clean(self):
-        if self.issues:
-            for i in self.issues: print(f"  ❌ {i}")
-            sys.exit(1)
-        print("  [QA] All checks passed ✓")
-```
-
-**必须检查的项**:
-- 每个 `draw_box` 调用配一个 `check_text_fits` (含长标题如"Engineering Execution Strand")
-- 每个 `draw_arrow` 调用配一个 `check_arrow_inside` (终点必须在目标框**内部**，不能只接近边框)
-- 侧栏→核心箭头必须汇聚到核心顶边**内侧** (x = cx0 + CORE_W*0.25/0.75)，不能悬在外围
-- 底部链箭头终点必须在目标箱体范围内 (bx0 ≤ x ≤ bx0+BOT_W)
-- QA 不通过 → `sys.exit(1)` → 无输出 → 修复后重新生成
-
-### 实战教训
-
-| 问题 | 检查方式 | 本会话实例 |
-|:-----|:---------|:----------|
-| 箭头终点落在目标框外 | `check_arrow_inside()` | 左栏箭头终点 x=1.8，核心框左缘 x=2.6 |
-| 长标题文字碰框边 | `check_text_fits()` | "Engineering Execution Strand" 30字符在 fs=7.5, 2.8in框内溢出 |
-| 底部链文字超出框高度 | `check_text_fits()` 检查行高 | 双行框第二行过长 |
-| 画布高度不足 | 布局计算后 `fig_needed > fig_actual` | 需从底部向上计算并比较 |
-| 侧栏→核心箭头汇聚到框外 | `check_arrow_inside()` 终点坐标 | 垂直向下到 lx=1.8, rx=8.2，核心框始于2.6止于7.4 |
-
----
+1. **05-figures下每张图必须有对应生成脚本**（03-code/下的.py）
+2. **脚本必须可独立运行**：`python script.py` → 输出PNG + PDF
+3. **没有脚本的PDF** → P0严重问题 → 逆向工程或从notebook提取
+4. **QA必须运行** — 写了但不执行 = 白写
+5. **修改重叠 ≤ 5行** — 超过说明在重构，破坏原始图
+6. **修改前先还原原始图** — 不可信"记忆中的代码"
+7. **用户反馈当金律** — 不争论、不解释、直接修
 
 ## 验证清单
 
@@ -395,8 +334,8 @@ class QAReport:
 - [ ] 原型已声明
 - [ ] 面板层级已确定（英雄/验证/对照）
 - [ ] 最终尺寸符合目标出口
-- [ ] 源数据已确认
-- [ ] 色盲可分辨性已检查
+- [ ] 源数据已确认完整性和正确性
+- [ ] 色盲可分辨性已检查（≥3色时）
 - [ ] 灰度打印可读性已确认
 
 ### 执行后
@@ -404,37 +343,118 @@ class QAReport:
 - [ ] 无彩虹色板；红绿不是唯一编码
 - [ ] 误差棒和统计检验已正确显示
 - [ ] 可比较面板间的轴范围可比
-- [ ] 已保存至 `./figures/` 目录
+- [ ] 已保存至目标目录（PNG+PDF/SVG）
+- [ ] QA检查已通过（架构图/数据图）
 
----
+## 铁律：脚本原理绑定
 
-## 参考文献
+所有 scripts/ 和 references/ 中的 Python 脚本必须在头部注释包含 `SKILL.md 原理绑定` 块，声明它遵循哪些模式/规则/铁律。
 
+双向验证（合并后必须检查）：
+- SKILL.md 引用的脚本必须存在
+- 脚本声明的原理必须在 SKILL.md 中找到
+- 缺失原理绑定的脚本视为不完整
+
+详见 `skill-consolidation` 技能的"SKILL.md ↔ 脚本 思想一致性"章节。
+
+## 铁律：数据诚信
+
+凡数必源——每个数值必须可追溯至单一数据源文件（JSON/CSV/实验结果）。
+
+**硬编码检测规则**（由 `scripts/figure-audit.py` 自动执行）:
+- ❌ 数值硬编码在 Python 代码中 → 错误（P0）
+  - 特征重要性直接写入代码 `FEATURE_IMPORTANCE = [('worst_radius', 0.285), ...]`
+  - 模型性能字典直接写入代码 `models_data = {'LR': {'auc': 0.9897, ...}}`
+  - 混淆矩阵数值直接计算而非从实验结果读取
+- ✅ 从 JSON/CSV/实验结果文件读取 → 正确
+  - `json.load('experiment_results.json')`
+  - `pd.read_csv('results.csv')`
+  - 任何 `json.load`/`json.loads`/`pd.read_*`/`csv.*`/`np.load`
+- ⚠️ 无明确数据源但含 `import` 和 `data` 关键词 → 需人工审查
+
+**修复路径**：
+1. 定位硬编码数据在脚本中的位置
+2. 找到对应的实验输出文件（通常为 `experiment_results.json` 或 `fold_data.json`）
+3. 修改脚本，将硬编码改为从文件读取
+4. 运行脚本验证输出与之前一致
+
+## 铁律：脚本可运行
+
+每个生成脚本 `python script.py` 必须无错误地执行并输出图片。
+脚本失败（KeyError, FileNotFoundError, AttributeError 等）属于 P0 缺陷。
+
+常见失败原因：
+- 数据键名不匹配（`results['n_folds']` vs `results['n_splits']`）
+- 相对路径错误（`.json` 文件找不到，应使用 `os.path.dirname(os.path.abspath(__file__))`）
+- matplotlib API 版本差异（`fig.inset_axes()` 在旧版 matplotlib 不存在，改用 `fig.add_axes()`）
+
+## 参考文件索引
 | 文件 | 内容 |
 |------|------|
-| references/figure-contract.md | 详细Figure契约模板和证据层级检查 |
-| references/python-recipes.md | Python初始化、保存函数、多面板布局、配色代码（原嵌入代码已迁移至此） |
-| references/style-library.md | Visual Style Library A-D + 完整色板（原嵌入代码已迁移至此） |
-| references/common-patterns.md | 16种排版模式的完整代码示例 |
+| **原理/方法** | |
+| references/global-palette.md | 全局色板常量 — 5个色板+语义规则+字体常量 |
+| references/pillow-primitives.md | 统一 Pillow 原语（7个原语：雷达图/进度条/轨迹图/箭头/文本/面板标签/热图） |
+| references/python-recipes.md | Python代码模板：初始化、保存、多面板布局、配色 |
+| references/style-library.md | Visual Style Library A-D |
 | references/design-theory.md | 字体、色彩理论、排版原理 |
+| references/common-patterns.md | 16种排版模式完整代码 |
+| references/test-results-2026-06-27.md | QA与完整功能测试结果记录 |
+| references/breast-cancer-figure-audit-case.md | 乳腺癌论文作图审计实战案例（6张图、7步审计管线、3个bug修复） |
 | references/qa-contract.md | 提交前完整QA审核清单 |
-| references/matplotlib-fallback.md | matplotlib 不可用时的 Pillow 纯代码回退路径（雷达图/进度条/轨迹图原语） |
-| references/sci-figure-recipes.md | 实战代码示例：ROC曲线、SHAP重要性柱状图、消融对比图（PIMA案例，2026-06-24） |
-| references/architecture-flow-diagrams.md | 架构/流程图程序化布局模板（matplotlib patches，2026-06-24新增） |
-| references/quality-report-render.md | 质检报告→视觉图的三模式（HTML+Firefox/Pillow/Markdown），含深色科技风设计模板 |
-
-## 脚本
-
-| 文件 | 内容 |
-|------|------|
-| scripts/architecture_fig_template.py | 可直接运行的架构/流程图模板（2026-06-24新增） |
-
----
-
-## IO契约
-
-**输入**：`claim` + `data`(CSV路径) + `target`(出口) + `panel_count`
-
-**输出**：`SVG asset`路径 + `figure_legend`文本 + `pipeline_meta`
-
-**副作用**：在 `./figures/` 下创建SVG/PDF/TIFF文件
+| **PDF中文渲染** | |
+| references/pdf-chinese-encoding.md | pandoc + xelatex + ctex header 生成中文PDF（CJK字体、编码、错误处理） |
+- 见 `references/figure-audit-runbook.md` — 论文作图完整性审计管线（6步）
+- 见 `references/pupil-shape-literature-search.md` — 文献检索方法（PubMed API，本地 session 无 API 密钥）
+- 见 `feishu-file-send/references/pdf-chinese-rendering.md` — PDF 中文渲染修复（pandoc + xelatex + ctex header）
+| **模式代码** | |
+| references/architecture-flow-diagrams.md | 架构/流程图程序化布局模板 |
+| references/hybrid-figure-workflow.md | 混合工作流模式（架构→数据分离） |
+| references/hcs3wt-figure1-case-study.md | 文字/箭头重叠检测实战 |
+| references/quantitative-data-qa-traps.md | 定量数据图视觉QA规则（ROC/混淆矩阵/条形图/消融/趋势图） |
+| references/sci-figure-recipes.md | 实战代码：ROC曲线、SHAP、消融对比图 |
+| references/arrow-endpoint-qa.md | 箭头终点QA模式 |
+| references/matplotlib-fallback.md | matplotlib不可用时的Pillow回退 |
+| references/quality-report-render.md | 质检报告→视觉图三模式 |
+| references/figure-audit-checklist.md | 论文作图完整性检查清单 |
+| references/visual-qa-large-image-trap.md | 大图片视觉检查陷阱（>2000px） |
+| references/output-path-trap.md | 图生成输出路径陷阱（03-code vs 05-figures） |
+| references/nature-2026-observations.md | Nature 2026观察记录 |
+| **Excalidraw** | |
+| references/excalidraw/references/colors.md | 颜色对照表 |
+| references/excalidraw/references/dark-mode.md | 深色模式指南 |
+| references/excalidraw/references/examples.md | 完整Excalidraw元素示例 |
+| references/excalidraw/references/pd_risk_roadmap.excalidraw | 示例文件（风险路线图） |
+| references/excalidraw/scripts/upload.py | 上传Excalidraw获取分享链接 |
+| **Pillow封面** | |
+| references/pil-image/scripts/generate_cover.py | 标准封面图生成 |
+| references/pil-image/scripts/generate_competition_cover.py | 竞赛封面生成 |
+| references/pil-image/scripts/generate_xiaohongshu_cards.py | 小红书推广卡片 |
+| references/pil-image/scripts/radar-chart.py | 雷达图生成（CLI） |
+| references/pil-image/references/xiaohongshu-card-patterns.md | 小红书卡片设计模式 |
+| references/pil-image/references/competition-cover-workflow.md | 竞赛封面工作流 |
+| references/pil-image/references/competition-ppt-design-language.md | 竞赛PPT设计语言 |
+| references/pil-image/references/github-banner-style.md | GitHub Banner样式 |
+| references/pil-image/references/cjk-font-paths.md | CJK字体路径 |
+| references/pil-image/references/pil-color-format.md | Pillow颜色格式 |
+| references/pil-image/references/svg-png-conversion.md | SVG→PNG转换 |
+| references/pil-image/references/user-ppt-cover-references.md | PPT封面参考 |
+| **PDF逆向** | |
+| references/pdf-to-reproducible-code.md | PDF逆向工程方法论 |
+| **论文转PPT** | |
+| references/paper2ppt/golden/cases/ | 论文转PPT测试用例（3个） |
+| references/paper2ppt/golden/expected/ | 论文转PPT预期输出 |
+| **QA自动化** | |
+| scripts/qa-architecture-diagram.py | QA核心：figure_qa_check() — 6项检查 |
+| scripts/figure-qa-check.py | 从脚本源代码自动提取几何元素并运行QA |
+| scripts/fig-generation-qa.py | 静态QA审计管线（正则解析，无需运行时） |
+| references/test-results-2026-06-27.md | QA与完整功能测试结果记录 |
+| references/breast-cancer-figure-audit-case.md | 乳腺癌论文作图审计实战案例（6张图、7步审计管线、3个bug修复） |
+| references/qa-contract.md | 提交前完整QA审核清单 |
+| references/static-vs-runtime-qa-validation.md | 静态vs运行时QA验证等价性 |
+| references/test-results-2026-06-27.md | QA与完整功能测试结果记录 |
+| references/breast-cancer-figure-audit-case.md | 乳腺癌论文作图审计实战案例（6张图、7步审计管线、3个bug修复） |
+| references/qa-contract.md | 提交前完整QA审核清单 |
+| 3d-curve-fitting-figures/SKILL.md | 3D医学影像：椭圆→3D圆逆投影 |
+| references/cross-repo-code-recovery.md | Cross-repo代码恢复：academic_writer→Synthos |
+| references/v1.6-changelog.md | v1.6变更日志 |
+| references/fig1-qa-report.md | Figure 1 QA报告 |

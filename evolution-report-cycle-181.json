@@ -1,0 +1,133 @@
+{
+  "cycle": 181,
+  "timestamp": "2026-06-27T07:37:59.860669+00:00",
+  "mode": "SCAN/EXTENDED",
+  "total": 98,
+  "healthy": 0,
+  "avg_score": 62.2,
+  "min_score": 36,
+  "max_score": 78,
+  "total_issues": 465,
+  "fixed": 0,
+  "score_changes": {},
+  "top_issues": [
+    {
+      "name": "模式定义完整（0个模式）",
+      "count": 96
+    },
+    {
+      "name": "有实战案例",
+      "count": 85
+    },
+    {
+      "name": "边界定义清晰",
+      "count": 67
+    },
+    {
+      "name": "CHANGE_LOG.md存在",
+      "count": 63
+    },
+    {
+      "name": "触发条件明确",
+      "count": 44
+    },
+    {
+      "name": "无硬编码凭证",
+      "count": 24
+    },
+    {
+      "name": "脚本有SKILL.md原理绑定",
+      "count": 20
+    },
+    {
+      "name": "版本一致",
+      "count": 12
+    },
+    {
+      "name": "脚本有可执行入口",
+      "count": 9
+    },
+    {
+      "name": "引用文件存在（1个唯一引用，1个Broken）",
+      "count": 5
+    }
+  ],
+  "lowest_skills": [
+    {
+      "name": "ai-outreach",
+      "score": 36,
+      "status": "unhealthy",
+      "type": "extended",
+      "issues": 8
+    },
+    {
+      "name": "citation-verification",
+      "score": 38,
+      "status": "unhealthy",
+      "type": "extended",
+      "issues": 8
+    },
+    {
+      "name": "design-md",
+      "score": 41,
+      "status": "unhealthy",
+      "type": "extended",
+      "issues": 7
+    },
+    {
+      "name": "baoyu-infographic",
+      "score": 41,
+      "status": "unhealthy",
+      "type": "extended",
+      "issues": 7
+    },
+    {
+      "name": "baoyu-comic",
+      "score": 43,
+      "status": "unhealthy",
+      "type": "extended",
+      "issues": 6
+    },
+    {
+      "name": "synthos-probe",
+      "score": 46,
+      "status": "unhealthy",
+      "type": "extended",
+      "issues": 7
+    },
+    {
+      "name": "codex",
+      "score": 51,
+      "status": "unhealthy",
+      "type": "extended",
+      "issues": 6
+    },
+    {
+      "name": "creative-tools",
+      "score": 51,
+      "status": "unhealthy",
+      "type": "extended",
+      "issues": 6
+    },
+    {
+      "name": "sketch",
+      "score": 53,
+      "status": "unhealthy",
+      "type": "extended",
+      "issues": 5
+    },
+    {
+      "name": "popular-web-designs",
+      "score": 53,
+      "status": "unhealthy",
+      "type": "extended",
+      "issues": 5
+    }
+  ],
+  "next_actions": [
+    "🔴 P0 紧急修复: 87 个问题影响 28 个技能",
+    "🟠 不合格技能: 54 个需要优化",
+    "📊 健康率 0%，目标 ≥90%"
+  ],
+  "scan_time_ms": 8261
+}

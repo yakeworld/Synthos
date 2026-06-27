@@ -1,8 +1,8 @@
 {
-  "cycle": 176,
+  "cycle": 181,
   "version": "v2.43.2",
   "status": "EXCELLENT",
-  "overall_score": 0.96,
+  "overall_score": 0.622,
   "grade": "EXCELLENT",
   "paper_submission": {
     "mode": "journals",
@@ -126,7 +126,7 @@
       "cycle-158: cochlear-mechanics-PINN hypothesis_generation completed — composite score 0.91 (T2 PASS). 3 falsifiable hypotheses: H1 tau_OHC presbycusis progression biomarker (0.89, RECOMMENDED PRIMARY) — DPOAE-only, 5-min, 30M US population; H2 g_gain hidden hearing loss diagnostic (0.84) — zero existing test for HHL; H3 Cochlear Health Index CHI (0.86) — Pattern #4 integration hypothesis naturally subsumes H1+H2. Pattern #5 discriminative experiment: single 45-min protocol (DPOAE + audiogram + ABR) tests all hypotheses. Next: knowledge_entry."
     ]
   },
-  "last_updated": "2026-06-25T04:00:00Z",
+  "last_updated": "2026-06-27T07:37:59.860669+00:00",
   "next_actions": [
     "cycle-176: RECORD — overall 0.9600 (EXCELLENT). Benchmark restored to 1.000 (signature 210/210, IO_CONTRACT 210/210, all tracked). absorption 1.000 (0 dirty). Pareto lowest: optimize 0.800 (knowledge_pipeline.knowledge_score, queue exhausted — 21/21 candidates complete). 1/3 edit budget consumed. Next cycle: if no new knowledge queue entries, explore new domain expansion or Track A submission work. Git clean (0 dirty).",
     "cycle-175: RECORD — overall 0.9647 (EXCELLENT). Benchmark restored to 1.000 (YAML 209/209, version 209/209, signature 209/209, IO_CONTRACT 209/209). absorption 1.000 (0 dirty). Pareto lowest: optimize 0.800 (knowledge_pipeline.knowledge_score). Next cycle focus: improve knowledge_score from 0.80 or new domain expansion. Edit budget exhausted this cycle (3/3).",
@@ -197,11 +197,45 @@
     "cycle-162: vocal-fold-phonation-PINN -- hypothesis_generation completed (composite 0.87, T2 PASS). 4 falsifiable hypotheses generated. Recommended H1: k stiffness as MTD diagnostic biomarker (ROC AUC >= 0.82 vs GRBAS) -- first PINN-based objective MTD diagnostic from 30s acoustic + EGG (zero new equipment, software-only upgrade). Pattern #4 integration hypothesis (VHI-PINN composite) + Pattern #5 intrinsic-cyclic discriminative design (glottal-cycle phase segmentation) applied for first time to vocal fold dynamics. Gate recovery: CONDITIONAL -> PASS (+9 pts). Queue has 1 pending (vocal-fold-phonation-PINN, next: knowledge_entry)."
   ],
   "dimensions": {
-    "structural": 1.0,
+    "structural": 0.622,
     "benchmark": 1.0,
     "optimize": 0.8,
-    "coverage": 0.8,
+    "coverage": 0.0,
     "absorption": 1.0,
     "constitutional": 1.0
-  }
+  },
+  "cycles": [
+    {
+      "cycle": 178,
+      "timestamp": "2026-06-27T07:37:20.176083+00:00",
+      "avg_score": 69.1,
+      "healthy": 1,
+      "total": 7,
+      "p0": 0
+    },
+    {
+      "cycle": 179,
+      "timestamp": "2026-06-27T07:37:29.786775+00:00",
+      "avg_score": 62.2,
+      "healthy": 0,
+      "total": 98,
+      "p0": 0
+    },
+    {
+      "cycle": 180,
+      "timestamp": "2026-06-27T07:37:50.200448+00:00",
+      "avg_score": 69.1,
+      "healthy": 1,
+      "total": 7,
+      "p0": 0
+    },
+    {
+      "cycle": 181,
+      "timestamp": "2026-06-27T07:37:59.860669+00:00",
+      "avg_score": 62.2,
+      "healthy": 0,
+      "total": 98,
+      "p0": 0
+    }
+  ]
 }

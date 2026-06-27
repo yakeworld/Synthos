@@ -1434,3 +1434,31 @@ Public datasets (PIDD, CDC BRFSS, Early Diabetes) have:
 ---
 
 *Cycle 106 complete. Journal strategy: public data first = fastest path to publication.*
+
+## Cycle 178 — SCAN/CORE — 2026-06-27T07:37:20.176083+00:00
+
+- 模式: SCAN/CORE
+- 总技能: 7, 优秀: 1, 不合格: 6
+- 平均分: 69.1, 最低: 51
+- 总问题: 26, 已修复: 0
+
+## Cycle 179 — SCAN/EXTENDED — 2026-06-27T07:37:29.786775+00:00
+
+- 模式: SCAN/EXTENDED
+- 总技能: 98, 优秀: 0, 不合格: 98
+- 平均分: 62.2, 最低: 36
+- 总问题: 465, 已修复: 0
+
+## Cycle 180 — SCAN/CORE — 2026-06-27T07:37:50.200448+00:00
+
+- 模式: SCAN/CORE
+- 总技能: 7, 优秀: 1, 不合格: 6
+- 平均分: 69.1, 最低: 51
+- 总问题: 26, 已修复: 0
+
+## Cycle 181 — SCAN/EXTENDED — 2026-06-27T07:37:59.860669+00:00
+
+- 模式: SCAN/EXTENDED
+- 总技能: 98, 优秀: 0, 不合格: 98
+- 平均分: 62.2, 最低: 36
+- 总问题: 465, 已修复: 0

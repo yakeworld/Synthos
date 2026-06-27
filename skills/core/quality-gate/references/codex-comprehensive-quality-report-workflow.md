@@ -26,6 +26,64 @@ Hermes 与 Codex **共享 Synthos/skills/ 目录作为共同事实层**：
 - 论文目录包含 `01-manuscript/paper.tex` + `03-code/` 实验代码 + `06-references/` PDF 文件
 - 工作目录：`/media/yakeworld/sda2/Synthos/outputs/papers/<paper-name>/`
 
+## 变体 A：已有报告的重检工作流（2026-06-25 新增）
+
+当论文已有 07-quality/ 下的初步报告和 fix-log，需要做**深度重检**而非首次检查时：
+
+### 与标准流程的差异
+
+| 步骤 | 标准流程 | 重检流程 |
+|:-----|:---------|:---------|
+| 数据收集 | 扫描所有目录 | **先读已有报告**，了解已知问题、已修内容、当前阻塞 |
+| 任务文件 | 写全面检查 | **写针对性检查**——指向已有报告的遗留问题 |
+| Codex 分配 | 直接派新任务 | 先**杀 stale 会话**（旧 Codex 可能卡在PDF下载），再新建 |
+
+### 前置检查（Hermes 侧）
+
+```bash
+# 1. 读已有报告
+cat 07-quality/comprehensive-report-*.md | head -50
+cat 07-quality/issue-summary-*.md
+cat 07-quality/fix-log-*.md  # 若有
+
+# 2. 了解当前阻塞点
+cat state.json | python3 -c "
+import json, sys
+d = json.load(sys.stdin)
+print(f'gate: {d.get(\"gate_status\")}, score: {d.get(\"quality_score\")}')
+gr = d.get('gates_result', {})
+if isinstance(gr, dict):
+    bi = gr.get('blocking_issues', {})
+    print('Blocking issues:')
+    for k, v in bi.items(): print(f'  {k}: {v}')
+    pi = gr.get('passing_items', {})
+    print('Passing items:')
+    for k, v in pi.items(): print(f'  ✅ {k}: {v}')
+"
+
+# 3. 检查 PDF 收集状态
+ls 06-references/pdfs/ | wc -l
+grep '@article\|@inproceedings' references.bib | wc -l
+# 计算覆盖率
+
+# 4. 检查是否有 stale Codex 会话
+tmux list-sessions 2>/dev/null | grep codex
+# 若有，先 capture 其当前进度再决定是否 kill
+```
+
+### 重检任务文件要点
+
+- 在任务文件开头指明"这是重检——已有报告在 07-quality/ 下"
+- 以已有的issue-summary为输入，逐条验证是否有修复进展
+- 检查新引入的数据/修改是否引入了新问题
+
+### 典型场景：PDF收集阻塞
+
+如果重检发现 PDF 收集仍是阻塞（如 31% 覆盖率），**不要重复派 Codex 做 PDF 下载**——已在上一轮失败的任务不会在下一轮自动成功。而是：
+1. 记录不可获取的引用为"需书面说明"（经典/书/仓库页面）
+2. 在任务文件中明确指示 Codex 跳过 PDF 下载，专注数据检查
+3. PDF 覆盖率不足标记为已知限制，不阻塞其他维度的检查
+
 ## 完整工作流（5步闭环）
 
 ### Step 1: 数据收集（Hermes 侧预处理）
@@ -44,15 +102,51 @@ find outputs/papers/<paper-name>/ -name '*.json' -type f | sort
 cat outputs/papers/<paper-name>/state.json
 
 # 4. 检查编译日志
-grep -c 'Error\|Warning' outputs/papers/<paper-name>/01-manuscript/paper.log
+grep -c 'Error\\|Warning' outputs/papers/<paper-name>/01-manuscript/paper.log
 
 # 5. 检查参考文献目录
 ls outputs/papers/<paper-name>/06-references/ | head -20
 ```
 
+### ⚠️ 多目录数据源陷阱（2026-06-25 新增）
+
+**问题**：论文的 03-code/ 目录可能只包含一个空目录或软链，实际实验数据在 `experiment/`、`experiments/`、`catboost_info/` 等根目录下。同一论文可能有多个目录包含结果 JSON，且可能数值不同。
+
+**HCS-3WT 案例**（2026-06-25）：
+- `03-code/` → 空目录（0KB）
+- `experiment/wbc_original_results.json` → `hcs_fn: 0.8, fn_red: -5.0`
+- `03-code/experiments/wbc_original_results.json` → `hcs_fn: 1.2, fn_reduction_pct: -28.0`
+
+两份 JSON 的同一个指标相差 12%（0.8 vs 1.2），因不同版本的实验脚本产出。
+
+**检测方法**：
+```bash
+# 找到所有结果 JSON
+find . -name '*result*.json' -type f | sort
+
+# 对关键字段做跨目录交叉比对
+python3 -c "
+import json, glob, os
+key_fields = ['auto_rate', 'auto_acc', 'fn_red', 'hcs_fn', 'hcs_acc', 'dataset']
+for f in sorted(glob.glob('**/*result*.json', recursive=True)):
+    if os.path.getsize(f) < 100: continue
+    try:
+        d = json.load(open(f))
+        vals = {k: d.get(k) for k in key_fields if k in d}
+        if vals:
+            print(f'{f}: {vals}')
+    except: pass
+"
+```
+
+**规则**：
+- 两个目录的 JSON 完全相同（diff=空）→ ✅ 只是副本，任取一个
+- 两个目录的 JSON 有差异（diff≠空）→ ⚠️ DATA_DIVERGENCE，需标记哪个是权威源
+- 通常以 03-code/ 下的版本为权威；若 03-code/ 为空，以 experiment/ 下最新修改的为准
+
 ### Step 2: 编写任务文件（认知同步协议）
 
-**原则**：任务文件不嵌入技能内容。只给路径，让 Codex 自己从 Synthos 加载。
+**原则**：Hermes 决策，Codex 执行。任务文件只写「做什么」，不写「怎么做」。
 
 ```markdown
 # <论文名称> 全面质量检查任务
@@ -75,7 +169,7 @@ Codex 能从文件系统直接访问**两个**技能仓库：
 3. `cat /media/yakeworld/sda2/Synthos/skills/core/quality-gate/references/comprehensive-quality-report-template.md`
    — 报告模板
 
-**注意**：技能方法在公开库，审计数据和论文实例在私有库。按需加载。
+**注意**：技能方法在公开库，审计数据和论文实例在私有库。按需加载。私库技能路径为 `skills/private/<name>/SKILL.md`（相对路径，Codex 工作目录在 Synthos 根下）。
 
 ## 工作目录
 cd /media/yakeworld/sda2/Synthos/outputs/papers/<paper-name>/
