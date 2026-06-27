@@ -1,18 +1,18 @@
 {
   "version": "2.20",
   "cycle": 182,
-  "score": 0.9126,
+  "score": 0.9371,
   "state": "healthy",
   "status": "healthy",
   "diagnostics": {
-    "benchmark": 0.8648,
-    "optimize": 0.88,
-    "coverage": 0.88,
-    "structural": 0.8838,
-    "absorption": 0.9948,
+    "structural": 0.8874,
+    "benchmark": 0.9568,
+    "optimize": 0.9,
+    "coverage": 0.9,
+    "absorption": 1.0,
     "constitutional": 1.0
   },
-  "last_run": "2026-06-27T00:00:00Z",
+  "last_run": "2026-06-27T00:05:00Z",
   "consecutive_healthy": 1,
   "stalled_cycle": null,
   "phase": "evolution",
@@ -48,5 +48,16 @@
       "timestamp": "2026-06-27T00:01:00Z"
     }
   ],
-  "git_commit": "93fe038"
+  "git_commit": "c9a14c6",
+  "knowledge_pipeline": {
+    "knowledge_score": 0.9,
+    "research_pipeline_quality": 0.92,
+    "experiment_pipeline_quality": 0.87,
+    "total_skills": 191,
+    "deep_skills": 158,
+    "deep_ratio": 0.8272251308900523,
+    "version_coverage": 1.0,
+    "io_contract_coverage": 1.0,
+    "last_improved": "2026-06-27"
+  }
 }
