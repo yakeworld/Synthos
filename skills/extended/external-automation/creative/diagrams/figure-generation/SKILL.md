@@ -458,3 +458,12 @@ fig.savefig(f"{name}.pdf", bbox_inches='tight', pad_inches=0.1)  # 出版级PDF
 | references/cross-repo-code-recovery.md | Cross-repo代码恢复：academic_writer→Synthos |
 | references/v1.6-changelog.md | v1.6变更日志 |
 | references/fig1-qa-report.md | Figure 1 QA报告 |
+
+## 契约层 · BOUNDARY
+
+**边界**：技能功能边界。
+
+## 契约层 · IO_CONTRACT
+
+**输入**：请求描述、上下文信息。
+**输出**：执行结果、状态反馈。
