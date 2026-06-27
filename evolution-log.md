@@ -1462,3 +1462,32 @@ Public datasets (PIDD, CDC BRFSS, Early Diabetes) have:
 - 总技能: 98, 优秀: 0, 不合格: 98
 - 平均分: 62.2, 最低: 36
 - 总问题: 465, 已修复: 0
+
+## Cycle 182 — 2026-06-27T00:00:00Z
+
+### Problem: Structural debt from merged/renamed skills
+- 567 files deleted on disk but staged in git index (D)
+- 594 files modified but not committed
+- Root cause: skills were merged/redirected (e.g. research-paper-search → paper-pipeline, pdf-download-racing → meddata-download) but git index was never updated
+
+### Fix: Commit all modifications, reset git index
+- Added 101 new untracked files (references, scripts, evolution artifacts)
+- Committed 681 files with 13,212 insertions, 96,034 deletions (massive cleanup)
+- Cleaned up debug/broken files
+
+### Result: Clean repo, full diagnostics pass
+- Git status: CLEAN (0 dirty files)
+- OVERALL: 0.8971 (≥0.85 threshold ✅)
+- Structural: 0.8838 (↑ from failing)
+- Benchmark: 0.8648 (≥0.80)
+- Absorption: 1.0000 (from 0 dirty files)
+- Constitutional: 1.0000
+
+### Status: HEALTHY
+- Score 0.8971 ≥ 0.85 ✅
+- Status healthy ✅
+- Auto-trigger continues next cycle
+
+### Root cause insight
+The 100+ merge operations in recent weeks cleaned up skills on disk but didn't properly update git. The git index became a fossil record of old paths. This caused the DIAGNOSE to see 567 "deleted" files and 667 dirty files, driving structural score to near zero and making absorption impossible. Future merges MUST update git index immediately (git rm old paths, git add new paths, git commit).
+
