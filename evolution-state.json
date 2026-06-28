@@ -1,19 +1,19 @@
 {
   "version": "2.20",
-  "cycle": 192,
-  "score": 0.9912,
+  "cycle": 193,
+  "score": 0.9897,
   "state": "healthy",
   "status": "healthy",
   "diagnostics": {
-    "structural": 1.0,
+    "optimize": 0.9204,
+    "absorption": 0.9895,
+    "structural": 0.9948,
     "benchmark": 1.0,
-    "optimize": 0.9123,
     "coverage": 1.0,
-    "absorption": 1.0,
     "constitutional": 1.0
   },
-  "last_run": "2026-06-28T20:04:14Z",
-  "consecutive_healthy": 12,
+  "last_run": "2026-06-28T20:13:49Z",
+  "consecutive_healthy": 13,
   "stalled_cycle": null,
   "phase": "evolution",
   "next_action": "continue",
@@ -92,19 +92,21 @@
       ]
     }
   ],
-  "git_commit": "d69d222ab210eb0d4c829255ac956d1fb1c3b022",
+  "git_commit": "06f74e1c563af22addf5b484d8cf2f791e5e687c",
   "knowledge_pipeline": {
     "knowledge_score": 0.99,
     "total_skills": 191,
     "deep_skills": 191,
     "verification_count": 191,
-    "example_count": 190,
+    "example_count": 189,
     "principles_count": 187,
-    "rules_count": 89,
+    "rules_count": 72,
     "golden_count": 9,
-    "last_improved": "2026-06-28"
+    "last_improved": "2026-06-28",
+    "last_strategy": "rules"
   },
   "verification_complete": true,
   "total_skills_verified": 191,
-  "auto_max_cycles": 999
+  "auto_max_cycles": 999,
+  "last_strategy": "rules"
 }
