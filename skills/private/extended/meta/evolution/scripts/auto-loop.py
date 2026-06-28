@@ -180,32 +180,27 @@ def auto_loop(current_cycle, max_cycles=MAX_CYCLES):
     print(f"  golden: {len(needs_golden)}/191")
     
     # Strategy selection based on optimize bottleneck
-    if len(needs_principle) > 0 and state.get('knowledge_pipeline', {}).get('principles_count', 0) / 191 < 0.90:
-        # Principles: 20% weight, high ROI while < 90%
+    if len(needs_principle) > 0 and state.get('knowledge_pipeline', {}).get('principles_count', 0) / 191 < 1.0:
         strategy = "principles"
         targets = needs_principle[:min(35, len(needs_principle))]
         template = PRINCIPLE_TEMPLATE
         template_name = "principles"
-    elif len(needs_example) > 0 and state.get('knowledge_pipeline', {}).get('example_count', 0) / 191 < 0.95:
-        # Examples: 15% weight, high ROI while < 95%
+    elif len(needs_example) > 0 and state.get('knowledge_pipeline', {}).get('example_count', 0) / 191 < 1.0:
         strategy = "examples"
         targets = needs_example[:min(35, len(needs_example))]
         template = EXAMPLE_TEMPLATE
         template_name = "examples"
-    elif len(needs_rule) > 0 and state.get('knowledge_pipeline', {}).get('rules_count', 0) / 191 < 0.70:
-        # Rules: 5% weight, add while < 70%
+    elif len(needs_rule) > 0 and state.get('knowledge_pipeline', {}).get('rules_count', 0) / 191 < 1.0:
         strategy = "rules"
         targets = needs_rule[:min(35, len(needs_rule))]
         template = RULE_TEMPLATE
         template_name = "rules"
-    elif len(needs_golden) > 0 and state.get('knowledge_pipeline', {}).get('golden_count', 0) / 191 < 0.50:
-        # Golden: 5% weight, add while < 50%
+    elif len(needs_golden) > 0 and state.get('knowledge_pipeline', {}).get('golden_count', 0) / 191 < 1.0:
         strategy = "golden"
-        targets = needs_golden[:min(20, len(needs_golden))]
+        targets = needs_golden[:min(35, len(needs_golden))]
         template = GOLDEN_TEMPLATE
         template_name = "golden"
     elif len(needs_verification) > 0:
-        # Fallback: add verification
         strategy = "verification"
         targets = needs_verification[:min(35, len(needs_verification))]
         template = VERIFICATION_TEMPLATE
