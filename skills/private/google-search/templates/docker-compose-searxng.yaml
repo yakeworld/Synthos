@@ -1,0 +1,21 @@
+services:
+  searxng:
+    image: searxng/searxng:latest
+    container_name: searxng
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - ./settings.yml:/etc/searxng/settings.yml:ro
+    command: /bin/sh -c "pip install msgspec && /usr/local/searxng/entrypoint.sh"
+    environment:
+      - SEARXNG_BASE_URL=http://localhost:8080/
+      - SEARXNG_SECRET=change_me_to_something_random
+    cap_drop:
+      - NET_RAW
+    networks:
+      - searxng
+
+networks:
+  searxng:
+    driver: bridge
