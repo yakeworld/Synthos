@@ -1,19 +1,19 @@
 {
   "version": "2.20",
-  "cycle": 194,
-  "score": 0.9905,
+  "cycle": 195,
+  "score": 0.9894,
   "state": "healthy",
   "status": "healthy",
   "diagnostics": {
-    "optimize": 0.928,
-    "absorption": 0.9895,
-    "structural": 0.9948,
+    "optimize": 0.9361,
+    "absorption": 0.9843,
+    "structural": 0.9895,
     "benchmark": 1.0,
     "coverage": 1.0,
     "constitutional": 1.0
   },
-  "last_run": "2026-06-28T20:13:54Z",
-  "consecutive_healthy": 14,
+  "last_run": "2026-06-28T20:14:00Z",
+  "consecutive_healthy": 15,
   "stalled_cycle": null,
   "phase": "evolution",
   "next_action": "continue",
@@ -92,7 +92,7 @@
       ]
     }
   ],
-  "git_commit": "d5b6d6a44082a00026548d4853ed572957e0be34",
+  "git_commit": "621a801172c921b091efc688c394a1bdb657dea4",
   "knowledge_pipeline": {
     "knowledge_score": 0.99,
     "total_skills": 191,
@@ -100,7 +100,7 @@
     "verification_count": 191,
     "example_count": 189,
     "principles_count": 187,
-    "rules_count": 107,
+    "rules_count": 142,
     "golden_count": 9,
     "last_improved": "2026-06-28",
     "last_strategy": "rules"
