@@ -83,6 +83,7 @@ related_skills: [project-experience-distillation, evolution, sci-paper-quality-r
 | 2026-06-27 | 2.42.0 | 新增 `paper_count_discrepancy` 陷阱：state.json 统计数（93篇）与 agent-tracker.json completed_papers 数（63篇）不一致，扫描脚本未排除 kaggle-leakage-audit、submissions 等非管线论文目录。修复：扫描必须限定在直接子目录中的 state.json，排除有 state.json 但非管线论文的目录（kaggle-leakage-audit、submissions、papers 索引等）。新增 references/paper-count-discrepancy-trap.md |
 | 2026-06-27 | 2.43.0 | 新增 `state.json_audit_flag_freshness` 陷阱（crispdm-wdbc 实战）：state.json audit_history 中的 P2 标记不自动可信，必须独立数值计算验证。cross_dataset_consistency 检测新增重验证规则。crispdm-wdbc 案例：state.json 标记"交叉数据集delta convention不一致"但实际计算确认三数据集使用相同约定（绝对值×100），标记为假阳性并清除。 |
 | 2026-06-27 | 2.44.0 | 新增早期DOI 404判定规则（references/pdf-alternative-search-protocol.md）：SAGE/Springer/AJP等出版社的2010年前DOI在DOI解析器+Crossref均返回404/403，但论文真实存在，判定为[WARN]非[FAIL]。bppv-canalith-relocation-ode实战：12个引用中5/12失败(42%)但全部真实。新增DOI前缀→Crossref状态对照表。 |
+| 2026-06-29 | 2.45.0 | 新增 paper_json_numerical_consistency 检查（G7子项）：论文数值必须与 experiment_results.json 一致。k=N 参数不一致、样本量/特征数不一致、图脚本硬编码检测。HCS-3WT 实战：代码 k=15 vs 论文 k=6，15 处数值更新，fig3/fig4 改为 JSON 读取，PDF 编译通过，state.json 0.73→0.88。 |
 
 **统计声明验证（statistical-claim-verification）**：详见 `references/statistical-claim-verification.md`。
 检查点：p-value 和 Cohen's d 必须有可执行代码支持，per-fold 数据需保存到 07-quality/ 目录。
@@ -163,11 +164,29 @@ related_skills: [project-experience-distillation, evolution, sci-paper-quality-r
 1. 读取 fix-log.md 和 07-quality/report-*.md
 2. 对每个已修复项执行 grep 全文残留检测
 3. 重新运行 D8/D10a 扫描
-4. 重新核对所有数值与 JSON 的一致性
-5. 如果旧修复仍然有效 → 标记 VERIFIED；如果有残留 → 执行修复
-6. 更新 fix-log.md 添加重验证记录
+4. 重新核对所有数值与 JSON 的一致性（含 k=N 参数、样本量、CV 策略）
+5. 重新运行所有图生成脚本，确认从 JSON 读取数据
+6. 如果旧修复仍然有效 → 标记 VERIFIED；如果有残留 → 执行修复
+7. 更新 fix-log.md 添加重验证记录
 
 **参考**：`references/re-verification-audit-pattern.md`
+
+### paper_json_numerical_consistency — 论文-JSON 数值一致性检查（新增 2026-06-29）
+
+**问题**：论文文本中的数值声明（Abstract/Intro/Table/Results/Discussion/Conclusion）必须与 experiment_results.json 完全一致。HCS-3WT 审计发现：代码参数 k=15 与论文声称 k=6 不一致，导致所有单分类器精度差异 2-5%，自动化率差异 8pp。
+
+**检测方法**（G7 数值验证阶段执行）：
+1. grep 论文所有数值行（Table + Abstract + 正文 + 结论）
+2. 从 experiment_results.json 独立计算所有数值
+3. 逐一对比：单分类器 ACC/REC/PREC/F1/AUC → 误差>2% 为 P0
+4. HCS-3WT 关键指标 → 误差>3% 为 P0
+5. 检查参数一致性：k 值、CV 策略、数据集描述、预处理步骤
+6. 检查图生成脚本是否从 JSON 读取数据（非硬编码）
+7. 更新论文以匹配 JSON（JSON 为真理源）
+8. 重新编译 LaTeX（检查 Table 最后一行是否缺 `\\`）
+9. 更新 state.json
+
+**参考**：`paper-experiment-audit/references/paper-json-numerical-consistency-check.md`
 
 ### block_vs_in_progress_decision — 队列状态精确判定
 

@@ -159,7 +159,14 @@ grep -c 'undefined' paper.log
 **D10a 验证 — .bbl 权威来源**：\n- 对于使用外部 `.bib` + `\\bibliography{}` 的论文，D10a **必须**从 `.bbl` 文件验证，而非从 `.bib` 扫描\n- `.bbl` 包含 bibtex 实际解析出的 bibitem keys，是最权威来源\n- 验证方法：`re.findall(r'\\bibitem\{([^}]*)\}', bbl_content)` → 得到确定的 bibitem 集合\n- 然后用 `grep -oP '\\\\cite{[^}]+}' paper.tex | sort -u` 对比 cite keys\n- 常见陷阱：`\\cite{daugman2001statistical, bowyer2008image}` 在注释行（`%%` 开头）中，bibtex 忽略注释 → D10a 不增加 → 必须将引用移至正文
 - **equation* in enumerate**: LaTeX 不允许浮动环境（equation*, figure, table）嵌套在 enumerate/itemize 的 item 中。修复方法：将 equation 移到 enumerate 外面，或使用 `minipage` 包裹。
 
-**enumerate[nosep] error**: `\begin{enumerate}[nosep]` 中的 `nosep` 选项来自 `enumitem` 宏包。elsarticle 等标准文档类不自动加载 `enumitem`。修复：去掉 `[nosep]` 使用默认间距，或在导言区添加 `\usepackage{enumitem}`。
+**enumerate[nosep] error**: `\\begin{enumerate}[nosep]` 中的 `nosep` 选项来自 `enumitem` 宏包。elsarticle 等标准文档类不自动加载 `enumitem`。修复：去掉 `[nosep]` 使用默认间距，或在导言区添加 `\\usepackage{enumitem}`。
+
+**Table 最后一行缺 `\\` 导致 `\bottomrule` 级联错误** 🔴 NEW 2026-06-29 — HCS-3WT
+- **根因**：tabular 中最后一行数据（在 `\bottomrule` 之前）缺少行尾 `\\`。LaTeX 将 `\bottomrule` 视为新的行内容但当前行未正确结束 → `! Misplaced \noalign` + `! Missing } inserted` + 级联 `! Missing \cr inserted`（100+ 错误）。
+- **症状**：错误集中在 `l.203 }` 附近，大量 `! Misplaced \cr` 和 `! Missing \cr inserted`。
+- **Detection**：grep 表中最后一行数据（在 `\bottomrule` 前一行）是否以 `\\` 结尾：`grep -B1 '\\\\bottomrule' paper.tex`。最后一行应以 `\\` 结尾。
+- **Fix**：在最后一行数据末尾添加 `\\`。例如：`FN reduction vs. best single  & $-38.7\\%$ & -- \\\\`。
+- **铁律**：每次 patch 修改表格后，必须检查 `\bottomrule` 前一行的 `\\` 存在性。
 
 **verbatim inside \fbox{}**: LaTeX 的 `verbatim` 环境不能放在 `\fbox{...}` 的参数内部。`\fbox` 在读取参数时已经改变了 catcode，导致 `\begin{verbatim}` 无法正确激活逐字模式。修复：移除 `\fbox{}` 包裹，仅保留 `minipage` 环境。例如将 `\fbox{\begin{minipage}...\begin{verbatim}...\end{verbatim}\end{minipage}}` 改为 `\begin{minipage}...\begin{verbatim}...\end{verbatim}\end{minipage}`。
 - **Unicode in LaTeX**: 即使添加了 `inputenc`，某些 Unicode 字符（如 ≈ →）仍需手动替换为 LaTeX 命令。
