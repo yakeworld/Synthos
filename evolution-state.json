@@ -5,18 +5,18 @@
   "state": "healthy",
   "status": "healthy",
   "diagnostics": {
-    "optimize": 0.9623,
-    "absorption": 0.9843,
     "structural": 0.9895,
     "benchmark": 1.0,
+    "optimize": 0.9623,
     "coverage": 1.0,
+    "absorption": 0.9843,
     "constitutional": 1.0
   },
   "last_run": "2026-06-28T20:14:26Z",
   "consecutive_healthy": 20,
   "stalled_cycle": null,
   "phase": "evolution",
-  "next_action": "continue",
+  "next_action": "pause",
   "trigger": "auto",
   "cycle_duration_s": null,
   "stall_duration_s": null,
@@ -26,7 +26,7 @@
   "hard_convergence_count": 0,
   "hard_convergence_max": 3,
   "hard_convergence_threshold": 0.01,
-  "auto_trigger_active": true,
+  "auto_trigger_active": false,
   "auto_trigger_last": null,
   "events": [
     {
@@ -92,7 +92,7 @@
       ]
     }
   ],
-  "git_commit": "46962373b67a6536c79f237031a15905a3939b13",
+  "git_commit": "538eae8394aaaaf9f50355f8d47e77a259344582",
   "knowledge_pipeline": {
     "knowledge_score": 0.99,
     "total_skills": 191,
@@ -108,5 +108,6 @@
   "verification_complete": true,
   "total_skills_verified": 191,
   "auto_max_cycles": 999,
-  "last_strategy": "golden"
+  "last_strategy": "golden",
+  "burnout_reason": "consecutive_healthy reached 20"
 }
