@@ -335,6 +335,17 @@ graph.json 中所有 edge 的 `relation` 字段为空字符串，实际关系值
 
 AKNE 桥接遵循 `kg-bridge`（Knowledge Graph — Agent Bridge）方法论：
 
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: 输入参数/文件/路径是否完整且有效
+2. **过程验证**: 中间步骤/转换/计算是否正确
+3. **输出验证**: 输出格式/内容是否符合预期
+4. **边界验证**: 空输入、极大值、异常场景是否处理
+5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+
+> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
 1. **查询分层**：simple（<1s）→ graph（<2s）→ full（~30s）→ bridge（<1s）
 2. **环境隔离**：execute_code → venv Python 3.11（逻辑处理）；terminal → 系统 Python 3.12（AKNE）
 3. **语义增强**：jieba 分词 + 5 级评分 + TF-IDF 全文检索 + 融合评分
