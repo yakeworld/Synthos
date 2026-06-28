@@ -1,0 +1,5 @@
+{
+  "complexity": "medium",
+  "chain": ["1", "2", "3"],
+  "explanation": "The query '帮我分析ADHD眼动追踪领域的研究现状' is in Chinese and requests analysis ('分析') of a research domain ('研究现状'), implying knowledge acquisition (1), argument expression (2), and viewpoint verification (3) are needed to synthesize and evaluate the current state of research."
+}

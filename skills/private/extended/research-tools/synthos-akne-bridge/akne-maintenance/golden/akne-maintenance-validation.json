@@ -1,0 +1,23 @@
+{
+  "name": "akne-health-validation",
+  "description": "验证AKNE知识库的健康度",
+  "input": {
+    "akne_path": "str"
+  },
+  "expected": {
+    "health_score": "float",
+    "issues": "list",
+    "node_count": "int"
+  },
+  "test_cases": [
+    {
+      "name": "full-diagnose",
+      "input": {
+        "akne_path": "/akne"
+      },
+      "expected": {
+        "health_score": 0.9
+      }
+    }
+  ]
+}

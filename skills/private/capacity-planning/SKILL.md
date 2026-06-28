@@ -1,0 +1,106 @@
+---
+name: capacity-planning
+description: "容量规划 — 资源预测、性能基准、扩展策略、成本优化。基于历史数据和趋势预测，为Synthos系统提供容量规划能力。"
+version: 1.0.0
+allowed-tools:
+- terminal
+- execute_code
+- browser
+- cronjob
+- skill_manage
+- read_file
+- write_file
+metadata:
+  synthos:
+    version: 1.0.0
+    priority: P1
+    atom_type: skill
+    author: Synthos
+    description: "容量规划 — 资源预测、性能基准、扩展策略、成本优化"
+    signature: 'capacity -> predict + benchmark + scale + optimize'
+    related_skills: ["system-reliability-engineering", "devops", "cron-system-maintenance"]
+triggers:
+  - 系统资源使用率超过80%
+  - 需要预测未来容量需求
+  - 需要性能基准测试
+  - Cron任务响应时间持续增加
+  - 用户要求容量规划或成本优化
+
+---
+
+# capacity-planning
+
+> 容量规划方法论，基于历史数据和趋势预测，为Synthos系统提供资源规划和优化能力。
+
+## 触发条件
+
+- 系统资源使用率超过80%(CPU/内存/磁盘)
+- Cron任务平均响应时间连续3轮增加>20%
+- 需要预测未来1-3个月容量需求
+- 论文管线积压>10篇未处理
+- 知识图谱更新延迟>24小时
+- 用户要求容量规划或成本优化
+
+## 执行步骤
+
+1. **建立容量模型** — 定义三个维度:
+   - **计算容量**: vLLM推理能力(tokens/sec)、Cron处理能力(jobs/hour)、技能验证能力(skills/hour)
+   - **存储容量**: 知识图谱存储(GB)、论文文档(GB)、技能库(GB)、日志文件(GB)
+   - **网络容量**: API调用限制(requests/hour)、数据传输带宽(MB/sec)、并发连接数
+
+2. **执行基准测试** — 量化当前能力:
+   - vLLM推理: 测量P50/P95/P99延迟和吞吐量(tokens/sec)
+   - Cron任务: 测量每次job的执行时间和成功率
+   - 技能加载: 测量加载时间和成功率
+   - 知识图谱查询: 测量节点查询/边查询/连通性检查耗时
+
+3. **趋势预测** — 基于历史数据:
+   - 论文产出: 当前2篇/月 → 增长10%/月 → 下月2.2篇
+   - 知识增长: 当前50节点/月 → 下月55节点
+   - Cron任务: 当前15个 → 每月+2个 → 3个月后21个
+   - 公式: 预测值 = 当前值 × (1 + 增长率)^月数 × 安全系数(1.5)
+
+4. **识别瓶颈** — 分析容量缺口:
+   - 计算每个维度的: 容量 / 需求 = 余量比
+   - 余量比<1.5 → 红色(立即行动)
+   - 余量比<2.0 → 黄色(计划行动)
+   - 余量比≥2.0 → 绿色(正常)
+
+5. **制定扩展策略**:
+   - **水平扩展**: 多vLLM节点负载均衡、Cron多实例并行、技能并行加载
+   - **垂直扩展**: CPU升级(计算密集型)、内存升级(大数据集)、存储升级(容量增长)
+   - **优先级调度**: P0任务优先、P1任务次之、P2任务排队
+
+6. **成本优化**:
+   - 资源复用 → 共享GPU资源
+   - 批处理优化 → 合并小任务
+   - 缓存利用 → 减少重复计算
+   - 成本目标: 单位论文<$10、单位知识<$1、单位技能<$0.5
+
+7. **建立容量报告**:
+   - 日报: 资源使用趋势、性能指标、告警事件
+   - 周报: 增长趋势、瓶颈分析、容量余量
+   - 月报: 容量规划、资源采购建议、成本优化建议
+
+## Pitfalls
+
+- **增长率外推陷阱**: 增长率不是线性的。论文产出初期快、中期慢、长期可能饱和。不要简单用线性增长外推6个月以上。每季度重新评估增长率。
+- **容量规划滞后**: 容量规划是预测性的，但实际使用可能突变。不要等到余量比<1.5才行动。余量比<2.0就应启动规划。
+- **过度容量**: 安全系数1.5是指导值，不是固定值。对于关键基础设施(如进化循环)，可用2.0。对于边缘功能(如知识库)，1.2就够了。按功能重要性差异化。
+- **基准测试环境差异**: 基准测试结果只在相同环境下有效。生产环境有网络延迟、并发压力、数据量差异。基准测试应在隔离环境中进行，并在报告中注明环境条件。
+- **忽略峰值**: 平均使用率<60%不代表安全。要看峰值使用率。Cron任务集中执行时可能出现瞬时高峰。监控P95/P99指标而非仅P50。
+
+## 参考
+
+- Google SRE Capacity Planning: https://sre.google/sre-book/capacity-planning/
+- AWS Capacity Planning: https://aws.amazon.com/premiumsupport/knowledge-center/capacity-planning/
+- Kubernetes Resource Management: https://kubernetes.io/docs/concepts/configuration/manage-resources/
+
+## 契约层 · BOUNDARY
+
+**边界**：技能功能边界。
+
+## 契约层 · IO_CONTRACT
+
+**输入**：请求描述、上下文信息。
+**输出**：执行结果、状态反馈。

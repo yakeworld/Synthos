@@ -1,0 +1,102 @@
+---
+name: infrastructure-as-code
+description: "基础设施即代码 — 配置管理、环境一致性、版本控制、自动化部署。为Synthos系统实现IaC实践。"
+version: 1.0.0
+allowed-tools:
+- terminal
+- execute_code
+- browser
+- skill_manage
+- read_file
+- write_file
+- send_message
+metadata:
+  synthos:
+    version: 1.0.0
+    priority: P1
+    atom_type: skill
+    author: Synthos
+    description: "基础设施即代码 — 配置管理、环境一致性、版本控制、自动化部署"
+    signature: 'iac -> config + consistency + version + deploy'
+    related_skills: ["continuous-delivery-pipeline", "system-reliability-engineering", "cron-system-maintenance"]
+triggers:
+  - 需要配置管理或环境一致性
+  - 需要版本控制或自动化部署
+  - 系统配置变更需要验证
+  - 需要环境重建或故障恢复
+  - 用户要求IaC实践
+
+---
+
+# infrastructure-as-code
+
+> 基础设施即代码方法论，为Synthos系统实现配置管理、环境一致性、版本控制和自动化部署。
+
+## 触发条件
+
+- 需要配置管理或环境一致性
+- 需要版本控制或自动化部署
+- 系统配置变更需要验证
+- 需要环境重建或故障恢复
+- 用户要求IaC实践
+
+## 执行步骤
+
+1. **配置管理** — 所有配置纳入版本控制:
+   - Hermes配置: `~/.hermes/config.yaml` (agent/models/tools/skills/cron)
+   - 技能配置: `~/.hermes/skills/*/SKILL.md` (metadata/triggers/steps)
+   - Cron配置: `~/.hermes/cron/jobs.json` (schedule/prompt/dependencies)
+   - 论文配置: `outputs/papers/*/paper.tex` (模板/引用/质量门)
+
+2. **配置验证** — 变更前验证:
+   - YAML语法: `python3 -c "import yaml; yaml.safe_load(open(f))"`
+   - SKILL.md结构: name/description/version/metadata.synthos/triggers/steps
+   - Cron job: prompt语法正确、依赖存在、schedule有效
+   - 任何配置变更必须通过验证才能部署
+
+3. **环境一致性** — 开发/测试/生产环境统一:
+   - 环境配置文件: `environments/{dev,staging,prod}.yaml`
+   - 环境差异通过配置管理，不是硬编码
+   - 环境重建通过代码实现: `git checkout env-config && apply`
+   - 每次环境变更后运行健康检查验证一致性
+
+4. **版本控制** — Git工作流:
+   - 配置分支: `git checkout -b feature/config-update`
+   - 变更PR: 代码审查→自动验证→合并
+   - 版本标签: `git tag -a config/v1.0.0 -m "Config v1.0.0"`
+   - 回滚: `git checkout config/v0.9.0 -- configs/ && git commit`
+
+5. **自动化部署** — 安全部署流程:
+   - 备份当前配置: `cp config.yaml config.yaml.backup`
+   - 验证新配置: 语法+结构+依赖检查
+   - 部署: 复制新配置到目标位置
+   - 重启服务: `systemctl restart hermes-agent` (或等价操作)
+   - 健康检查: 验证服务恢复正常
+   - 失败回滚: 如果健康检查失败，恢复备份
+
+6. **故障恢复** — 自动/手动恢复:
+   - 配置恢复: `cp config.yaml.backup config.yaml && restart`
+   - 技能恢复: 从Git回滚到上一个稳定版本
+   - 数据恢复: 从备份恢复知识图谱/论文/技能
+
+## Pitfalls
+
+- **配置漂移**: 生产环境手动修改配置是最常见的IaC破坏者。所有配置变更必须通过代码(配置文件+Git)进行，禁止手动编辑生产配置。
+- **备份不测试**: 备份必须经过恢复测试。备份文件存在不代表可恢复。每次重大变更后验证备份可恢复。
+- **环境差异累积**: 开发/测试/生产环境的差异会随时间累积，导致"在我机器上是好的"问题。所有环境差异必须在配置文件中明确管理，不是通过环境特有的补丁。
+- **过度抽象**: IaC不是越抽象越好。对于简单的配置管理，YAML文件足够。不要为简单场景引入Terraform/Helm等重型工具。工具复杂度应与问题规模匹配。
+
+## 参考
+
+- Terraform: https://www.terraform.io/docs/
+- Ansible: https://docs.ansible.com/
+- Git Best Practices: https://git-scm.com/book/en/v2
+
+## 契约层 · BOUNDARY
+
+**边界**：技能功能边界。
+
+## 契约层 · IO_CONTRACT
+
+**输入**：请求描述、上下文信息。
+**输出**：执行结果、状态反馈。
