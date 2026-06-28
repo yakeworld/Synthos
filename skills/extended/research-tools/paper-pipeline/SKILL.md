@@ -131,7 +131,21 @@ When verifying D10a (cite-to-bibitem match rate), these traps cause false positi
 | **natbib `\citep`/`\citet` blind spot** (RP-6, 2026-06-24) | `d10a-batch-scan.py` D10a=0% with 58 orphans. Paper uses `\citep{}` (natbib) instead of `\cite{}`. Script regex `\cite{` misses natbib variants entirely — finds 0 cites, but the .bbl has 28 matching bibitems. | **Run targeted Python scan** that matches `\\(?:cite|citep|citet)\{` pattern. See `scripts/d10a-targeted-scan.py`. This is common in Elsevier `elsarticle-num` papers which load `natbib`. |
 | **.bbl patch double-escaping** (RP-6, 2026-06-24) | Using `patch` tool to add `\bibitem{...}` to a .bbl file produces `\\bibitem{...}` (double backslash). LaTeX interprets `\\` as line break, breaking the bibliography. | After patching .bbl, run `python3 -c "content = open('file.bbl').read(); content = content.replace('\\\\\\\\bibitem', '\\\\bibitem').replace('\\\\\\\\newblock', '\\\\newblock').replace('\\\\\\\\href', '\\\\href').replace('{\\\\\\\\path', '{\\\\path'); open('file.bbl','w').write(content)"`. Always verify with grep `'\\bibitem'` that single backslashes are present. |\n| **Missing .bbl file entirely** (RP-7, 2026-06-24) | D10a=0% with batch scan reporting `source=inline`. Paper uses `\bibliography{references}` (external bib) but the .bbl file is absent — aux files were cleaned (`rm -f *.aux *.bbl *.blg`) without recompiling. Scanner falls back to grepping .tex for `\bibitem{}`, finds nothing (or only template placeholders `{label}`, `{lamport94}`), and misreports "source=inline". | Recompile: `pdflatex → bibtex → pdflatex×2`. **Diagnostic**: when `source=inline` + `orphan count > 10` + paper has `\bibliography{}` command → .bbl is missing, not an actual inline bibliography. Confirm by checking if `paper.bbl` exists. After recompile, verify D10a with independent Python script (not just batch scan). |\n| **"source=inline" misdiagnosis when .bbl missing** (RP-7, 2026-06-24) | d10a-batch-scan.py reports `source=inline` for a paper that uses external `\bibliography{references}`. The scanner falls through: no .bbl → tries .tex `\bibitem{}` regex → finds zero real bibitems → reports 0 matches. This is NOT an inline-thebibliography paper. | The `source=inline` label from the batch scan is unreliable when D10a=0% and orphan count > 10. Always check: does `paper.bbl` exist? If not, the paper was never properly compiled. Recompile first, then re-scan. |
 
-| **Multi-tex version drift** (HCS-3WT, 2026-06-26) | A paper directory contains **two or more .tex versions** with different cite keys. The queue record (e.g., D10a=100%) was computed on one version, but a quality review scans a different version. New cite keys in the scanned version have no bib entries → D10a drops (e.g., 79.3%) despite queue saying 100%. | **Step 1**: List all .tex files in the paper's 01-manuscript/ directory. **Step 2**: Extract cite keys from each .tex version. **Step 3**: Compare key sets across versions — any key in one version but not the other reveals a citation swap. **Step 4**: For the version being reviewed, check if new keys (not in bib) were swapped in from an older version. **Step 5**: Cross-check the queue record's D10a note — does it mention a specific tex filename or compile timestamp? If the note says "D10a=100% (30/30)" but current tex has 29 keys, the queue record is based on a different version. **Rule**: Always verify which .tex version produced the recorded D10a before trusting the queue. The `paper.tex` (canonical) may be a different file from the one actually compiled. |
+- **Multi-tex version drift** (HCS-3WT, 2026-06-26) | A paper directory contains **two or more .tex versions** with different cite keys. The queue record (e.g., D10a=100%) was computed on one version, but a quality review scans a different version. New cite keys in the scanned version have no bib entries → D10a drops (e.g., 79.3%) despite queue saying 100%. | **Step 1**: List all .tex files in the paper's 01-manuscript/ directory. **Step 2**: Extract cite keys from each .tex version. **Step 3**: Compare key sets across versions — any key in one version but not the other reveals a citation swap. **Step 4**: For the version being reviewed, check if new keys (not in bib) were swapped in from an older version. **Step 5**: Cross-check the queue record's D10a note — does it mention a specific tex filename or compile timestamp? If the note says "D10a=100% (30/30)" but current tex has 29 keys, the queue record is based on a different version. **Rule**: Always verify which .tex version produced the recorded D10a before trusting the queue. The `paper.tex` (canonical) may be a different file from the one actually compiled. |
+
+## ⚠️ Unified Scan Pitfalls
+
+When running `scripts/unified-scan-audit.py` for a comprehensive pipeline health check:
+
+| Pitfall | Symptom | Fix |
+|:---|:---|:---|
+| **Bib not in 01-manuscript/** | Papers score low because `unified-scan-audit.py` only checks `01-manuscript/references.bib` for entry counts | Bib files in other subdirectories (08-references/, etc.) still get scanned and counted in the overall totals. Low entry count in 01-manuscript/ is expected if bib is elsewhere. Check `papers[].file` in the output for actual locations. |
+| **09-manuscript subdirectories** | Script picks up `outputs/papers/XXX/09-manuscript/` as a "paper" directory | These are output subdirectories, not papers. They won't have state.json and won't appear in `state_data`. If they appear in paper results, it's because they contain a .bib file — filter by checking for state.json presence. |
+| **Stale 09-manuscript** | An `09-manuscript` directory at top-level has no state.json (e.g., `09-manuscript` at `outputs/papers/02-corneal-tension-ODE/09-manuscript/`) | This is a leftover directory. Can be safely removed if the parent paper's publication directory is clean. |
+| **state.json steps=0 with high score** | A paper has `quality_score=96` but `steps_completed=[]` (empty) | The state.json was likely cleared/overwritten. Check if paper artifacts still exist. If so, the score may be accurate but the state is inconsistent — update steps_completed to reflect actual state. |
+| **BLOCKED gate with decent score** | `crispdm-heart` has score=80 (PASS range) but gate=BLOCKED | Check `gate_status.details` in state.json to see which specific gate blocked it. A BLOCKED gate means the paper failed a quality gate (D1-D7) regardless of the overall quality score. Don't assume score=80 means the paper is publishable. |
+
+**Trusted methodology**: Use `scripts/unified-scan-audit.py` as the **first-line health check** before running D10a batch scans. The unified scan reveals zero-DOI papers, cross-file duplicate chaos, and stale papers in one pass — these are systemic issues that D10a-only scans miss. After unified scan, filter for papers needing D10a repair, then run `scripts/d10a-batch-scan.py`.
 
 **Trusted methodology**: Use `scripts/d10a-batch-scan.py` for all D10a verification on the main pipeline. For papers using natbib (`\\citep`/`\\citet`), the batch scan produces false D10a=0% — cross-check with `scripts/d10a-targeted-scan.py` which handles all citation command variants. For article_todo workspace papers, use `scripts/d10a-targeted-scan.py --dir ~/桌面/article_todo/`.
 
@@ -182,6 +196,15 @@ When NotebookLM auth has expired in a headless cron, use `references/cron-layer-
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
+
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: 标准输入样本（覆盖正常路径）
+- **Golden Output**: 预期输出（精确匹配或格式校验）
+- **Golden Error**: 预期错误信息（覆盖失败路径）
+
+> Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
