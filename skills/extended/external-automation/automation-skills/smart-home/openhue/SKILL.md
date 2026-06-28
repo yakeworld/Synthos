@@ -118,3 +118,13 @@ openhue set room "Living Room" --off
 - Colors only work on color-capable bulbs (not white-only models)
 - Light and room names are case-sensitive — use `openhue get light` to check exact names
 - Works great with cron jobs for scheduled lighting (e.g. dim at bedtime, bright at wake)
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: 输入参数/文件/路径是否完整且有效
+2. **过程验证**: 中间步骤/转换/计算是否正确
+3. **输出验证**: 输出格式/内容是否符合预期
+4. **边界验证**: 空输入、极大值、异常场景是否处理
+5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+
+> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
