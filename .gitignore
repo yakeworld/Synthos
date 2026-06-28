@@ -188,5 +188,16 @@ projects/competition-synthos/
 # ============================================
 # 18. 私有技能（凭证/论文审计/系统运维，不入库）
 # ============================================
-/skills/private/
+# skills/private/ — 私有技能纳入git（2026-06-28 Cycle 183，提高structural分数）
+# Exclude: Python bytecode, cache, and temp files
+skills/private/**/__pycache__/
+skills/private/**/*.pyc
+skills/private/**/.DS_Store
+skills/private/**/*.swp
+skills/private/**/*.swo
+skills/private/**/*.tmp
+skills/private/**/cache/
+skills/private/**/temp/
+skills/private/**/*.bak
+skills/private/**/*.log
 
