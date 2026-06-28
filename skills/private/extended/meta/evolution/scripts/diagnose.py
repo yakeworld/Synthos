@@ -147,19 +147,20 @@ code_pct = code_blocks_ct / total_skills if total_skills else 0
 
 # Weighted score: prioritize rules+principles (思想密度) > verification > examples > golden
 # Content quality weights — tuned for Synthos quality standards
-# Principles (思想密度) are the foundation: 25%
-# Verification (验证) ensures evidence: 20%
-# Methods/Steps (可操作性): 15%
-# Examples (可复用): 15%
-# Rules/铁律 (约束): 15%
-# Golden set (参考): 10%
+# Verification (验证清单) is the #1 quality metric: 40%
+# Principles (思想密度): 20%
+# Examples/Methods (可复现): 15%
+# Deep/Thick content (实质性): 15%
+# Rules/铁律 (约束): 5%
+# Golden set (参考): 5%
+# Note: verification is the bottleneck — all 191 skills should have verification
 optimize = (
-    principles_pct * 0.25 +
-    verify_pct * 0.20 +
-    deep_pct * 0.15 +
+    verify_pct * 0.40 +
+    principles_pct * 0.20 +
     example_pct * 0.15 +
-    rules_pct * 0.15 +
-    golden_pct * 0.10
+    deep_pct * 0.15 +
+    rules_pct * 0.05 +
+    golden_pct * 0.05
 )
 
 # Clamp between 0 and 1
