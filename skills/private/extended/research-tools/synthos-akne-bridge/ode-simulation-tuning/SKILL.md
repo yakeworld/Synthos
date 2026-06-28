@@ -284,6 +284,17 @@ metadata:
 ### Problem
 When building 2-ODE computational models for SCI papers, the simulation rarely passes all quality gates on first run. Metrics that commonly fail: R² (needs smooth fit), AUC (needs proper distribution comparison), ablation (needs dominant coupling), accuracy (needs clean transitions). This skill captures the systematic tuning methodology used across papers 90–140+.
 
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: 输入参数/文件/路径是否完整且有效
+2. **过程验证**: 中间步骤/转换/计算是否正确
+3. **输出验证**: 输出格式/内容是否符合预期
+4. **边界验证**: 空输入、极大值、异常场景是否处理
+5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+
+> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
 ### Prerequisites
 - 2-ODE system with 8 biophysical parameters
 - Goal: R²>0.90, accuracy>0.85, AUC>0.85, MAPE<10%, ablation≥2.0x
