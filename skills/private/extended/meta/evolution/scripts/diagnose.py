@@ -92,15 +92,112 @@ sp = sig_count / total_skills
 ip = io_count / total_skills
 benchmark = vp * 0.33 + sp * 0.33 + ip * 0.34
 
-# Load state for optimize/coverage
-try:
-    with open('evolution-state.json') as f:
-        state = json.load(f)
-    optimize = state.get('knowledge_pipeline', {}).get('knowledge_score', 0.88)
-    coverage = state.get('knowledge_pipeline', {}).get('knowledge_score', 0.88)
-except:
-    optimize = 0.88
-    coverage = 0.88
+# Load state for # ── OPTIMIZE (content quality score) ─────────────────
+# Calculate actual content quality from all SKILL.md files
+optimize = 0
+
+verify_ct = 0
+example_ct = 0
+golden_ct = 0
+rules_ct = 0
+principles_ct = 0
+code_blocks_ct = 0
+empty_skills = 0
+deep_skills = 0
+
+for root, dirs, files in os.walk('skills'):
+    for fn in files:
+        if fn == 'SKILL.md':
+            path = os.path.join(root, fn)
+            try:
+                with open(path) as fh:
+                    content = fh.read()
+            except:
+                continue
+            
+            # Check verification content
+            body = content[content.index('---', content.index('---')+1)+1:] if content.count('---') >= 2 else content
+            
+            has_verify = any(term in body for term in ['验证', 'Verify', 'verification', 'checklist', '质量', 'Quality', '验证清单'])
+            has_example = any(term in body for term in ['示例', 'example', 'Example', 'case', 'Case', '场景'])
+            has_golden = 'golden' in content.lower()
+            has_rules = '规则' in body or '铁律' in body or 'Rule' in body
+            has_principles = '原则' in body or 'Principle' in body
+            
+            if has_rules: rules_ct += 1
+            if has_principles: principles_ct += 1
+            if has_verify: verify_ct += 1
+            if has_example: example_ct += 1
+            if has_golden: golden_ct += 1
+            if len(body.strip()) > 100: deep_skills += 1
+            
+            # Code blocks (python/bash/curl/docker)
+            code_indicators = ['```python', '```bash', '```sh', '```shell', 'python3', 'curl ', 'docker ', 'git ']
+            if any(ind in body for ind in code_indicators):
+                code_blocks_ct += 1
+
+# Optimize = weighted combination of content quality metrics
+verify_pct = verify_ct / total_skills if total_skills else 0
+example_pct = example_ct / total_skills if total_skills else 0
+golden_pct = golden_ct / total_skills if total_skills else 0
+rules_pct = rules_ct / total_skills if total_skills else 0
+principles_pct = principles_ct / total_skills if total_skills else 0
+deep_pct = deep_skills / total_skills if total_skills else 0
+code_pct = code_blocks_ct / total_skills if total_skills else 0
+
+# Weighted score: prioritize rules+principles (思想密度) > verification > examples > golden
+# Content quality weights — tuned for Synthos quality standards
+# Principles (思想密度) are the foundation: 25%
+# Verification (验证) ensures evidence: 20%
+# Methods/Steps (可操作性): 15%
+# Examples (可复用): 15%
+# Rules/铁律 (约束): 15%
+# Golden set (参考): 10%
+optimize = (
+    principles_pct * 0.25 +
+    verify_pct * 0.20 +
+    deep_pct * 0.15 +
+    example_pct * 0.15 +
+    rules_pct * 0.15 +
+    golden_pct * 0.10
+)
+
+# Clamp between 0 and 1
+optimize = min(1.0, max(0.0, optimize))
+
+# ── COVERAGE (reference integrity score) ─────────────
+# Check that all referenced files in SKILL.md actually exist on disk
+coverage_errors = 0
+total_refs = 0
+for root, dirs, files in os.walk('skills'):
+    for fn in files:
+        if fn == 'SKILL.md':
+            path = os.path.join(root, fn)
+            try:
+                with open(path) as fh:
+                    content = fh.read()
+            except:
+                continue
+            
+            # Find reference links like [file](path/to/file.md)
+            # Strip inline code (backtick) to avoid matching markdown syntax examples like ![alt](url)
+            import re
+            # Remove code blocks and inline code
+            clean = re.sub(r'```[^`]*```', '', content)
+            clean = re.sub(r'`[^`]+`', '', clean)
+            ref_links = re.findall(r'\[.*?\]\(([^)]+)\)', clean)
+            for ref in ref_links:
+                total_refs += 1
+                # Skip external URLs and anchors
+                if ref.startswith('http') or ref.startswith('#') or ref.startswith('mailto'):
+                    continue
+                # Check if relative path exists
+                ref_path = os.path.join(os.path.dirname(path), ref)
+                if not os.path.exists(ref_path):
+                    coverage_errors += 1
+
+coverage = 1.0 - (coverage_errors / total_refs) if total_refs else 1.0
+coverage = min(1.0, max(0.0, coverage))
 
 absorption = 1.0 - (total_dirty / total_skills) if total_skills else 0
 constitutional = 1.0
