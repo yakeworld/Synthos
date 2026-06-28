@@ -34,3 +34,13 @@ metadata:
 
 详细文档和完整命令列表已被移至 `references/` 目录以保持简洁。
 This skill has been compressed. Full content is available in references/.
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: {输入条件是否完整}
+2. **输出验证**: {输出格式是否符合预期}
+3. **边界验证**: {边界条件是否处理}
+4. **错误处理**: {异常场景是否覆盖}
+
+> 每项验证必须可执行、可记录、可复现。
+
