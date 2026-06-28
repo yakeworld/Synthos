@@ -1,0 +1,68 @@
+---
+name: embedded
+category: embedded
+description: 嵌入式硬件选型、OS 兼容性分析、边缘推理平台评估。覆盖 K230/Sipeed Maix 系列、鸿蒙开发板、RISC-V/ARM SoC 对比。
+tags: [embedded, hardware, harmonyos, k230, risc-v]
+signature: "embedded -> processed_result"
+---
+version: 1.0.0
+
+# embedded — 嵌入式开发
+
+> 嵌入式硬件选型、OS 兼容性分析、边缘推理平台评估。覆盖 K230/Sipeed Maix 系列、鸿蒙开发板、RISC-V/ARM SoC 对比。
+
+## 子技能
+
+| 技能 | 描述 | 调用类别 |
+|------|------|----------|
+| k230-development-lessons | K230 嵌入式开发：部署、调试、拍照/录像、串口通信 | 主力 |
+
+## 参考文件
+
+| 文件 | 内容 |
+|------|------|
+| references/harmonyos-devboards.md | 鸿蒙开发板全景：芯片选型、规格对比、K230 对标、推荐路径 |
+| references/embedded-os-comparison.md | 嵌入式 OS 选型指南：MicroPython/LiteOS/Linux/鸿蒙/RTOS 对比矩阵 |
+
+## 核心原则
+
+1. **硬件选型先问场景**：功耗、算力、摄像头、网络、OS 支持五维缺一不可。
+2. **OS 兼容性是硬门槛**：架构（RISC-V 32/64-bit vs ARM）、内存、外设驱动、工具链，任一不匹配即不可运行。
+3. **不要为功能替换功能**：已有稳定管线的设备不替换，新能力用新板补充。
+4. **边缘设备 ≠ 服务器**：边缘设备的核心价值是低延迟采集和轻量预处理，不是跑大模型。
+
+## K230 快速参考
+
+- **芯片**: Sipeed K230, 双核 RISC-V 64-bit @ 1.2 GHz, 2 TOPS VPU
+- **内存**: 512 MB LPDDR4
+- **摄像头**: 双 MIPI CSI
+- **视频编码**: H.264 硬件编码器
+- **当前 OS**: MicroPython (CanMV 固件)
+- **串口**: `/dev/openmvcam` @ 115200, VID/PID 1209:abd1
+- **关键陷阱**: ampy run (raw REPL) 始终失败；右摄 CSI1 易挂死；串口洪水需 quiet mode 部署；**GPIO 引脚必须 FPIOA.set_function(pin, FPIOA.GPIO0 + pin) 映射后 Pin() 才生效，否则读默认电平（按键无效根因）**
+
+## 鸿蒙开发板选型速查
+
+| 档位 | 开发板 | 芯片 | CPU | NPU | RAM | 功耗 | 鸿蒙支持 | 价格 |
+|------|--------|------|-----|-----|-----|------|---------|------|
+| IoT 轻量 | Hi3861 | 海思 WiFi | MIPS 32M | 无 | 128 KB | <0.5W | ✅ | <50 元 |
+| IoT 轻量 | RV1103 T3 | 瑞芯微 RV1103 | M33 200M | 2 TOPS | 128 MB | ~2W | ✅ | ~200 元 |
+| 标准 | PV890 | 全志 PV890 | A7 1.5G | 2 TOPS | 512 MB | ~3W | ✅ | ~300 元 |
+| 标准 | RK3568 | 瑞芯微 RK3568 | A55×4 2.0G | 6 TOPS | 4 GB | ~5W | ✅ | ~400 元 |
+| 高性能 | RK3588 | 瑞芯微 RK3588 | A76×4+A55×4 | 6 TOPS | 8 GB | ~10W | ✅ | ~1200 元 |
+
+## 与 K230 对标结论
+
+- **完美对标**: RV1103 T3（AI 算力对等，双摄对等，但功耗更差、内存更小）
+- **超越对标**: PV890（全维度对等或更强，鸿蒙完整版）
+- **碾压**: RK3568（算力 10×，内存 8×，未来 2-3 年不过时）
+- **不可运行**: K230 跑不了鸿蒙（架构 64-bit RISC-V 不兼容、外设驱动缺失、工具链不通）
+
+## 契约层 · BOUNDARY
+
+**边界**：技能功能边界。
+
+## 契约层 · IO_CONTRACT
+
+**输入**：请求描述、上下文信息。
+**输出**：执行结果、状态反馈。

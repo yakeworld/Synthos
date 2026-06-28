@@ -1,0 +1,5 @@
+{
+  "complexity": "complex",
+  "chain": ["1", "2", "3", "4", "5"],
+  "explanation": "The query 'write a survey on ADHD biomarkers' is in English and requests writing a survey ('write a survey'), which requires knowledge acquisition (1), argument expression (2), viewpoint verification (3), debate simulation (4), and editing/writing (5) atoms to produce a comprehensive survey document."
+}

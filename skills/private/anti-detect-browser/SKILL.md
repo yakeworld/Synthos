@@ -1,0 +1,94 @@
+---
+name: anti-detect-browser
+description: "反检测浏览器生态评估与集成 — 覆盖 CloakBrowser 等 stealth Chromium 工具的发现、安装、配置、与 Playwright 集成。用于需要绕过 bot 检测的爬取场景。"
+version: 1.0.0
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    version: 1.0.0
+    author: Synthos
+    signature: 'tool_name: str -> integration_guide: dict'
+    atom_type: skill
+    priority: P2
+---
+
+## IO_CONTRACT
+
+- **input**: `tool_name: str, use_case: str` — 工具名、使用场景
+- **output**: `result: dict (install_cmd, config, integration_notes)` — 安装命令、配置、集成说明
+
+## CloakBrowser 2026-06-21
+
+### 基本信息
+
+- **项目**: [CloakHQ/CloakBrowser](https://github.com/CloakHQ/CloakBrowser)
+- **Stars**: ⭐ 26,707
+- **PyPI**: `cloakbrowser` 0.3.32
+- **许可证**: MIT
+- **描述**: Stealth Chromium — 通过所有 bot 检测的隐身 Chromium，Playwright 的即插即用替代品，源码级指纹修补
+- **语言**: Python
+- **兼容**: Python 3.9/3.10/3.11/3.12/3.13
+
+### 核心特性
+
+1. **源码级指纹修补** — 不是简单的 UA 欺骗，而是底层 Chromium 源码修改
+2. **30/30 检测测试全通过**
+3. **Playwright 兼容 API** — 可作为 Playwright 的 drop-in replacement
+4. **多 profile 管理** — 每个 profile 有唯一指纹
+5. **HTTP/SOCKS5 代理支持**
+6. **Cookie 隔离**
+7. **User-Agent 切换**
+8. **Canvas/WebGL 修改**
+
+### 安装
+
+```bash
+pip install cloakbrowser
+# 或指定版本
+pip install cloakbrowser==0.3.32
+```
+
+### 与 Playwright 对比
+
+| 特性 | Playwright | CloakBrowser |
+|------|-----------|-------------|
+| 指纹修改 | 有限（UA 等） | 源码级完整修补 |
+| bot 检测通过率 | 中等 | 高（30/30 通过） |
+| 安装复杂度 | 简单 | 中等 |
+| 性能开销 | 低 | 中（指纹修补增加内存） |
+| 适用场景 | 一般自动化 | 反检测爬取、多账号管理 |
+| API 兼容 | 原生 Playwright | Playwright 兼容 API |
+
+### 典型用法
+
+```python
+# 安装后作为 Playwright 替代
+from cloakbrowser import sync_playwright
+
+with sync_playwright() as p:
+    browser = p.chromium.launch(
+        headless=False,
+        args=['--disable-blink-features=AutomationControlled']
+    )
+    context = browser.new_context(
+        user_agent='Mozilla/5.0 ...',
+        viewport={'width': 1920, 'height': 1080}
+    )
+    page = context.new_page()
+    page.goto('https://example.com')
+```
+
+### 集成建议
+
+1. **与 pdf-download-racing 技能配合**：当前下载引擎主要依赖 Tor + curl_cffi，CloakBrowser 可作为一个补充路径，用于需要完整浏览器渲染的页面
+2. **不替代 curl_cffi**：curl_cffi 用于 API 级别的 TLS 伪装，CloakBrowser 用于浏览器级完整模拟
+3. **多路径策略**：
+   - Tier 1: curl_cffi（最快，API 级别）
+   - Tier 2: CloakBrowser（中等，浏览器级别，需要渲染）
+   - Tier 3: Playwright stealth（备用）
+
+### 参考文件
+
+- `references/cloakbrowser-install.md` — 安装与配置指南
+- `references/cloakbrowser-vs-curl-cffi.md` — 与 curl_cffi 的对比和集成策略
