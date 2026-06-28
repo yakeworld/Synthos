@@ -162,3 +162,13 @@ AKNE 源文件路径中可能包含特殊字符（空格、中文、连字符）
 - `scripts/akne-enhanced-search.py` — 三层搜索策略（实体解析→图遍历→TF-IDF）
 - `references/environment-isolation-pattern.md` — execute_code vs terminal 环境差异对照
 - `references/query-enhancement-recipes.md` — TF-IDF 配置、jieba 调优、多词匹配策略
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: 输入参数/文件/路径是否完整且有效
+2. **过程验证**: 中间步骤/转换/计算是否正确
+3. **输出验证**: 输出格式/内容是否符合预期
+4. **边界验证**: 空输入、极大值、异常场景是否处理
+5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+
+> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。

@@ -160,6 +160,17 @@ Script timed out after 300s and was killed
 2. **404 多数来自 vLLM 而非飞书**：用户报告的 "404" 多数是模型节点返回的，不是飞书 API。需先检查 `base_url` 指向哪个服务。
 3. **CLI 和飞书 session 隔离**：CLI 的 `execute_code` 超时不会阻塞飞书会话。两个平台各自维护独立 session。
 
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: 输入参数/文件/路径是否完整且有效
+2. **过程验证**: 中间步骤/转换/计算是否正确
+3. **输出验证**: 输出格式/内容是否符合预期
+4. **边界验证**: 空输入、极大值、异常场景是否处理
+5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+
+> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
 ### MEDIA 文件附件发送（Feishu 交付模式）
 
 完整的 MD→PDF→Feishu 管线见 `references/pdf-delivery-pipeline.md`。

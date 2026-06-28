@@ -122,3 +122,13 @@ def set_cell(table, row_idx, col_idx, text):
 
 - `references/data-elements-competition-2026.md` — 2026数据要素大赛浙江分赛完整案例
 - `scripts/fill_application_template.py` — DOCX模板填充脚本模板
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: 输入参数/文件/路径是否完整且有效
+2. **过程验证**: 中间步骤/转换/计算是否正确
+3. **输出验证**: 输出格式/内容是否符合预期
+4. **边界验证**: 空输入、极大值、异常场景是否处理
+5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+
+> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
