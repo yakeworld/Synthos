@@ -13,10 +13,10 @@
     "constitutional": 1.0
   },
   "last_run": "2026-06-28T20:14:26Z",
-  "consecutive_healthy": 20,
+  "consecutive_healthy": 0,
   "stalled_cycle": null,
   "phase": "evolution",
-  "next_action": "paused_burnout",
+  "next_action": "continue",
   "trigger": "auto",
   "cycle_duration_s": null,
   "stall_duration_s": null,
@@ -26,7 +26,7 @@
   "hard_convergence_count": 0,
   "hard_convergence_max": 3,
   "hard_convergence_threshold": 0.01,
-  "auto_trigger_active": false,
+  "auto_trigger_active": true,
   "auto_trigger_last": null,
   "events": [
     {
@@ -109,5 +109,5 @@
   "total_skills_verified": 191,
   "auto_max_cycles": 999,
   "last_strategy": "golden",
-  "burnout_reason": "consecutive_healthy=20 reached, paused until user resumes"
+  "burnout_reason": null
 }
