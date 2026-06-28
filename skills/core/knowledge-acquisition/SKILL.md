@@ -149,20 +149,23 @@ notebooklm source add "$(cat pdfs/{bibkey}.md)" --type text --title "{bibkey}" -
 - topic 过于模糊（如"脑科学"）→ 追问具体维度
 - 结果为空 → 明确报告"search_exhausted"，非虚构填充
 - S2 429 → 自动切换到 OpenAlex（已验证有效）
-- 所有源失败 → 返回空结果 + 错误报告
+## 陷阱
 
-## 已知陷阱
-
-1. S2 API 429 — 使用环境变量 SEMANTIC_SCHOLAR_API_KEY；无 key 则回退 OpenAlex
-2. PubMed rate limit — 串行请求+3s延迟
-3. arXiv API 必须 HTTPS — 通过 Tor SOCKS5（`--socks5-hostname 127.0.0.1:9050`）+ `curl -L`
-4. Crossref `select` 参数 — 逗号分隔字段名
-5. OpenAlex abstract_inverted_index 格式为 `{word: [positions]}`，需反转重建摘要
-6. PDF 下载失败 — 跳过，不阻塞流程
-7. 缓存过期 — 24h后自动重新检索
-8. arXiv 标题含换行符 — XML 解析后需 `.strip()`
-9. arXiv PDF URL 在 `<link rel="related">`，非 `rel="alternate"`
-10. **CNKI (kns.cnki.net) 海外 IP 返回 HTTP 418** — 知网有严格 IP 地理围栏，海外直接拒绝。RSSHub 的 cnki 路由代码已分析但无法从海外节点部署。中文文献替代方案：PubScholar（中科院公益平台，纯 curl ✅）。
+| # | 陷阱 | 正确做法 |
+|:-:|:-----|:---------|
+| 1 | S2 API 429 — 使用环境变量 SEMANTIC_SCHOLAR_API_KEY；无 key 则回退 OpenAlex
+| 2 | PubMed rate limit — 串行请求+3s延迟
+| 3 | arXiv API 必须 HTTPS — 通过 Tor SOCKS5（`--socks5-hostname 127.0.0.1:9050`）+ `curl -L`
+| 4 | Crossref `select` 参数 — 逗号分隔字段名
+| 5 | OpenAlex abstract_inverted_index 格式为 `{word: [positions]}`，需反转重建摘要
+| 6 | PDF 下载失败 — 跳过，不阻塞流程
+| 7 | 缓存过期 — 24h后自动重新检索
+| 8 | arXiv 标题含换行符 — XML 解析后需 `.strip()`
+| 9 | arXiv PDF URL 在 `<link rel="related">`，非 `rel="alternate"`
+| 10 | **CNKI (kns.cnki.net) 海外 IP 返回 HTTP 418** — 知网有严格 IP 地理围栏，海外直接拒绝。RSSHub 的 cnki 路由代码已分析但无法从海外节点部署。中文文献替代方案：PubScholar（中科院公益平台，纯 curl ✅）。
+| 11 | **HuggingFace SSL 证书过期/无效** — `ERR_CERT_COMMON_NAME_INVALID` 或 `SSL certificate problem: certificate has expired`。HuggingFace API (HTTPS) 和页面可能完全不可用，curl 和浏览器都会失败。 | 如果目标是 Ollama 模型追踪，直接从 Ollama 页面提取数据即可，不需要 HuggingFace。如果确实需要 HF 数据，用 `curl --insecure` 跳过证书验证。这是一个已知的环境状态问题，HF 的证书可能临时失效 |
+| 12 | **browser_snapshot 截断** — 页面内容超过 8000 字符时会被截断，丢失模型/论文列表。 | 必须用 `browser_console` + JavaScript 直接提取 DOM 数据，这是最可靠的方式 |
+| 13 | **下载量/统计数字格式多样** — 有的是 `15.9M` (百万)，有的是 `108.8K` (千)，有的是 `8,901` (纯数字)。 | 用正则 `([\d,\.]+)K?` 提取，然后判断后缀 K/M 进行数量级转换 |
 
 ## 验证清单
 
