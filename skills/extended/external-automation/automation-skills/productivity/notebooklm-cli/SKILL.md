@@ -99,6 +99,16 @@ metadata:
 
 Layer B 论文质量审计的完整工作流见 `references/layer-b-audit-workflow.md`。涵盖：项目创建→源上传（PDF/引用/质量报告）→纯英文ASCII Prompt发送→评分阈值判定→**pipeline state cross-validation（检测false positive）**→报告归档。
 
+
+## 约束规则 · RULES
+
+1. **输入约束**: 参数类型、范围、格式必须校验
+2. **输出约束**: 返回值结构、编码、命名必须一致
+3. **异常约束**: 错误信息必须包含上下文和恢复建议
+4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
+
+> 违反规则的操作视为不安全，必须拒绝或隔离。
+
 ### Fallback: Manual Layer B (当 NotebookLM 不可达时)
 
 当 `notebooklm list` 或 `notebooklm doctor` 显示网络连通性故障（如 `httpx.ConnectTimeout`，`curl` 返回 000），且无法通过代理恢复对 `notebooklm.google.com` 的访问时：
