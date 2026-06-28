@@ -171,3 +171,12 @@ dAdt = lam*max(0, S_high-S) - mu*A + growth  # Has negative term proportional to
 - Paper 113 (scleral remodeling) 用了 15+ 轮调试才稳定。教训：**先 cubic 再复杂化**。
 - 每次 `ode(0, [S_eq, 0], p)` 不接近零 → 必须改参数，不能改算法。
 - 用 `solve_ivp` 的 `rtol=1e-10, atol=1e-12` 保证数值精度，否则 bifurcation 点漂移。
+
+
+## 示例 · EXAMPLES
+
+1. **基本用法**: 标准输入 → 标准输出
+2. **边界用例**: 空输入、特殊字符、异常路径
+3. **错误场景**: 缺失依赖、权限不足、网络异常
+
+> 每个示例必须可独立运行、有明确输入输出、包含错误处理。
