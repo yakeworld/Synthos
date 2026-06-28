@@ -168,9 +168,21 @@ metadata:
 6. 修复图脚本：fig3/fig4 从硬编码改为从 `experiment_results.json` 读取
 7. 编译验证 + 更新 state.json：score 更新，last_modification 记录变更
 **关键规则**：
-- 每次 patch 后检查 Table 最后一行是否缺 `\\`（导致 `\bottomrule` 错误）
+- 每次 patch 后检查 Table 最后一行是否缺 `\\\\`（导致 `\\bottomrule` 错误）
 - 更新后必须 `grep` 全文检查旧数值残留
 - 数据集描述（样本量、特征数）也必须同步更新
+
+### 2026-06-29 实战：论文图片完整性审计（HCS-3WT）
+**症状**：`05-figures` 目录有 6 张图（fig1-fig6），但论文正文只引用了 1 张（fig1），5 张缺失。
+**检测方法**：
+1. 从 LaTeX 提取所有 `\\includegraphics{...}` 路径 → 得到论文引用的图
+2. 从 `05-figures/` 目录获取所有 `.pdf` 文件列表
+3. 对比两者：目录中存在但论文未引用的 = 缺失
+**修复**：在 LaTeX 正文中为每张缺失图添加 `\begin{figure}...\includegraphics...\end{figure}` 块。
+**关键规则**：
+- 每次审计论文必须同时检查：数值一致性 + 图片完整性（论文引用 vs 目录存在）
+- 图片缺失不仅是"少了张图"，更是"数据支持不够"——每张数据图都应有对应的生成脚本
+- 检查 `03-code/experiments/` 目录中生成脚本数量是否 >= `05-figures/` 中 PDF 数量
 
 ## 参考文件
 
@@ -178,6 +190,8 @@ metadata:
 - `references/multi-script-cross-verify.md` — 多实验脚本输出交叉验证方法
 - `references/notebook-vs-script-pattern.md` — Notebook vs Python 脚本对应关系模式
 - `references/paper-json-numerical-consistency-check.md` — 论文数值与experiment_results.json一致性审计方法
+- `references/hcs3wt-p0-numerical-remediation-2026-06-29.md` — HCS-3WT实战：P0数值修复完整案例（k=6统一、数值替换、编译验证）
+- `references/hcs3wt-figure-audit-2026-06-29.md` — HCS-3WT实战：论文图片完整性审计（fig2-fig6缺失检测与修复方法）
 
 ## 版本历史
 
@@ -211,6 +225,15 @@ metadata:
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
+
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: 标准输入样本（覆盖正常路径）
+- **Golden Output**: 预期输出（精确匹配或格式校验）
+- **Golden Error**: 预期错误信息（覆盖失败路径）
+
+> Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 
 > 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。
 
