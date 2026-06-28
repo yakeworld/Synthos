@@ -1,19 +1,19 @@
 {
   "version": "2.20",
-  "cycle": 200,
-  "score": 0.9962,
+  "cycle": 201,
+  "score": 0.987,
   "state": "healthy",
   "status": "healthy",
   "diagnostics": {
-    "structural": 1.0,
+    "optimize": 0.9665,
+    "absorption": 0.9686,
+    "structural": 0.9738,
     "benchmark": 1.0,
-    "optimize": 0.9623,
     "coverage": 1.0,
-    "absorption": 1.0,
     "constitutional": 1.0
   },
-  "last_run": "2026-06-28T20:14:26Z",
-  "consecutive_healthy": 0,
+  "last_run": "2026-06-28T20:40:11Z",
+  "consecutive_healthy": 1,
   "stalled_cycle": null,
   "phase": "evolution",
   "next_action": "continue",
@@ -92,22 +92,22 @@
       ]
     }
   ],
-  "git_commit": "3e74ce2c59078fdfd935a8c015dacb9c4f796dd4",
+  "git_commit": "4aa0f6def93348ec972b1adb0847274d86825023",
   "knowledge_pipeline": {
     "knowledge_score": 0.99,
     "total_skills": 191,
     "deep_skills": 191,
     "verification_count": 191,
     "example_count": 189,
-    "principles_count": 187,
+    "principles_count": 191,
     "rules_count": 142,
     "golden_count": 109,
     "last_improved": "2026-06-28",
-    "last_strategy": "golden"
+    "last_strategy": "principles"
   },
   "verification_complete": true,
   "total_skills_verified": 191,
   "auto_max_cycles": 999,
-  "last_strategy": "golden",
+  "last_strategy": "principles",
   "burnout_reason": null
 }
