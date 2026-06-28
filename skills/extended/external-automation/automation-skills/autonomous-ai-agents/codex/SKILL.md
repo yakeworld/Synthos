@@ -285,3 +285,13 @@ codex $PROFILE exec "
 7. **Multiple profiles = multiple processes** — 不同 profile 是独立进程，不共享 session/memory
 9. **Shell quoting in cron scripts** — Cron 脚本中 prompt 用双引号包裹，内部换行直接写。过长 prompt 注意 shell 命令长度限制（建议 < 4096 字符）
 10. **DeepSeek 不兼容 Codex** — Codex `wire_api` 只接受 `responses`（OpenAI Responses API 格式），DeepSeek 仅提供 OpenAI 兼容的 `chat/completions` 端点。尝试将 DeepSeek 接入 Codex 会失败（401 + `/v1/responses` 端点不存在）。解决方案：DeepSeek 通过 cron agent provider 配置或 OpenCode 使用，不要尝试通过 Codex CLI 调用。
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: 输入参数/文件/路径是否完整且有效
+2. **过程验证**: 中间步骤/转换/计算是否正确
+3. **输出验证**: 输出格式/内容是否符合预期
+4. **边界验证**: 空输入、极大值、异常场景是否处理
+5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+
+> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
