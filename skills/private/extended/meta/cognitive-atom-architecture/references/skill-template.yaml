@@ -1,0 +1,61 @@
+# Skill Template — 6 Cognitive Atom Architecture
+# Use this as the template for every skill.yaml in the 6-atom structure.
+
+name: <snake_case_english_name>
+atom: <1-6>
+chinese_name: <Chinese name>
+english_name: <CamelCase English name>
+description: <One sentence: what cognitive act does this represent>
+version: 1.0.0
+status: active
+created: 2026-05-09
+synthos_dimensions:
+  - <dimension1>
+  - <dimension2>
+
+input_contract:
+  inputs:
+    - <param_name>: <type_description>
+  outputs:
+    - <result_name>: <type_description>
+
+quality_criteria:
+  - <measurable_criterion_1>
+  - <measurable_criterion_2>
+  - <measurable_criterion_3>
+  - <measurable_criterion_4>
+
+constraints:
+  - must: <positive_constraint>
+  - must_not: <negative_constraint>
+  - must_always: <always_true_constraint>
+
+fallback_chain:
+  - "<level_1_attempt> → <level_2_attempt> → <level_3_attempt>"
+
+execution:
+  method: subagent
+  max_retries: 3
+  timeout_minutes: 10
+  resource_requirements: low
+  batch_support: true
+  incremental: false
+  human_in_loop: false
+
+dependencies:
+  depends_on:
+    - <dependency_atom_name>
+  used_by:
+    - <consumer_atom_name>
+
+failure_modes:
+  - mode: "<failure_scenario>"
+    mitigation: "<how_to_handle>"
+  - mode: "<another_failure_scenario>"
+    mitigation: "<how_to_handle>"
+
+output_format: "<JSON schema or format description>"
+
+trust_score: 0.0
+usage_count: 0
+notes: "<additional context or caveats>"
