@@ -1,19 +1,20 @@
 {
   "version": "2.20",
-  "cycle": 182,
-  "score": 0.9411,
+  "cycle": 183,
+  "score": 0.9518,
   "state": "healthy",
   "status": "healthy",
   "diagnostics": {
     "structural": 0.8874,
-    "benchmark": 0.9568,
+    "benchmark": 1.0,
     "optimize": 0.9,
     "coverage": 0.9,
     "absorption": 1.0,
-    "constitutional": 1.0
+    "constitutional": 1.0,
+    "overall": 0.9518
   },
-  "last_run": "2026-06-27T00:06:00Z",
-  "consecutive_healthy": 1,
+  "last_run": "2026-06-28T08:16:23Z",
+  "consecutive_healthy": 2,
   "stalled_cycle": null,
   "phase": "evolution",
   "next_action": "continue",
