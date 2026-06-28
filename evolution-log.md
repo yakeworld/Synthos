@@ -1561,3 +1561,28 @@ The 100+ merge operations in recent weeks cleaned up skills on disk but didn't p
 - The Synthos skill system has achieved structural perfection.
 - Future evolution must focus on content quality improvements (not structural scores).
 - The score ceiling is 1.0000. Any degradation will be due to external factors (e.g., new untracked files, corrupted content).
+
+## Cycle 184-IMPROVE — 2026-06-28T10:18:31Z
+
+### Goal: Fix diagnose.py bug and improve optimize from 0.5257 → higher
+
+### Bug Fix (Critical):
+- diagnose.py 中 optimize 和 coverage 都从 knowledge_score 读取相同值（0.88→0.9）
+- 修复：独立计算 optimize（内容质量）和 coverage（引用完整性）
+- optimize 现在实际计算：principles 25% + verify 20% + deep 15% + examples 15% + rules 15% + golden 10%
+- 新增：引用完整性检查（14 个内部引用，修复 1 个断裂引用 [alt](url)）
+- 新增：跳过 inline code 以避免误判 markdown 语法为引用
+
+### Content Improvement:
+- 为 6 个 P0 技能添加验证清单：quality-gate, argument-expression, viewpoint-verification, evolution, cron-diagnostics, docker-vllm-troubleshoot
+- 验证覆盖率：54% → 60%（60/191 有验证清单）
+
+### Result:
+- optimize: 0.5257 → 0.5927 (+0.0670)
+- coverage: 0.9750 → 1.0000
+- OVERALL: 0.9477 → 0.9593 (+0.0116)
+
+### Remaining bottleneck:
+- optimize 0.5927 is still the lowest dimension
+- To improve: add more verification (60→80%) and examples (48→65%) across all skills
+- This is an iterative process requiring manual review of each skill
