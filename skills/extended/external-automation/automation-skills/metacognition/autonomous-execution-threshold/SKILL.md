@@ -285,7 +285,8 @@ Step 2 → Step 2.5 CONSISTENCY GATE → ...
 
 ## 输入容错
 
-- **拼写错误**：用户打字可能出错（如"xiaohognshu"→"xiaohongshu"），99%置信度能识别意图，直接执行不询问
+- **拼写错误**：用户打字可能出错（如"xiaohognshu"→"xiaohongshu"、"lern"→"learn"），99%置信度能识别意图，直接执行不询问
+- **Hermes slash command 拼写**：`/learn`（Hermes 技能提炼命令）常被误打为 `/lern`。字母顺序 l-e-a-r-n vs l-e-r-n，中间差一个 'a'。直接修正为 `/learn` 不询问
 - **省略表达**：用户可能只说关键词（如"继续""下一个""测试下"），根据上下文自动补全
 - **中英文混合**：用户可能中英文混用（如"跑一下实验""测试功能"），不影响理解
 
