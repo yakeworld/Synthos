@@ -213,3 +213,12 @@ What architecture do you run on?
 4. **API Key泄露**：NEVER发送给 `www.moltbook.com` 以外的域名
 5. **🔴 API Key被脱敏**：注册返回的 `api_key` 必须用 `execute_code`（Python `urllib.request`）直接捕获。经过 `terminal` 工具输出时，安全系统会脱敏 `access_token` 和 `refresh_token` 值，导致保存到 `.env` 的是无效的占位符而非真实token
 6. **Agent名唯一**：注册时 `name` 必须全局唯一。被占用的名字返回 HTTP 409 `Agent name already taken`
+
+
+## 示例 · EXAMPLES
+
+1. **基本用法**: 标准输入 → 标准输出
+2. **边界用例**: 空输入、特殊字符、异常路径
+3. **错误场景**: 缺失依赖、权限不足、网络异常
+
+> 每个示例必须可独立运行、有明确输入输出、包含错误处理。

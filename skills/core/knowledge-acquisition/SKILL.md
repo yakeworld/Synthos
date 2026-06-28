@@ -206,3 +206,12 @@ notebooklm source add "$(cat pdfs/{bibkey}.md)" --type text --title "{bibkey}" -
   - 环境变量: `SEMANTIC_SCHOLAR_API_KEY`（必需）
   - 输出: 符合 SKILL.md IO_CONTRACT 的标准 JSON（papers + search_meta + sources_success/failed）
   - 特性: 自动去重、回退链、速率限制、provenance 标注、exit code 0/1
+
+
+## 示例 · EXAMPLES
+
+1. **基本用法**: 标准输入 → 标准输出
+2. **边界用例**: 空输入、特殊字符、异常路径
+3. **错误场景**: 缺失依赖、权限不足、网络异常
+
+> 每个示例必须可独立运行、有明确输入输出、包含错误处理。

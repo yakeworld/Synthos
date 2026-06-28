@@ -157,5 +157,14 @@ Absorbed from AKNE knowledge graph (yakeworld/.knowledge/) — 2026-05-12
 - **Checklist**: Run all 6 verification items after activation.
 - **Output**: Structured answer with confidence score and source references.
 
+
+## 示例 · EXAMPLES
+
+1. **基本用法**: 标准输入 → 标准输出
+2. **边界用例**: 空输入、特殊字符、异常路径
+3. **错误场景**: 缺失依赖、权限不足、网络异常
+
+> 每个示例必须可独立运行、有明确输入输出、包含错误处理。
+
 ### Related Skills
 - `research/scc-bppv-kinematics` — Computational SCC morphometry + kinematic simulation from centerline data (complementary: this skill provides clinical knowledge, scc-bppv-kinematics provides the computational pipeline)
