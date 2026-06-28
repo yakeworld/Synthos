@@ -253,13 +253,15 @@ ACQ（文献检索）→ EXT（知识提取）→ HYP（科学假设）
 | 5 | **建完 skill 不跑质量门** — 创建了不检查属于 L1/L2/L3/L4 | 新建 skill 至少通过 L1 格式门 |
 | 6 | **文档退化** — 累积 patch 操作导致同一节重复出现 | 大重构时重写整个文件，不累积 patch |
 | 7 | **抽象级别不够深** — 只去掉了实体名（PIDD→dataset），没上升到约束类型级别（"同实体跨位约束"、"声明-证据对齐约束"）。抽象不够深时，提取的check只对当前论文有效，换篇论文就用不上 | 真正的抽象是识别出**约束类型**（constraint type），不是去掉名字保留模板。PIMA 实战教训：发现"Early Diabetes F1 在两个表中不一致"→ 错误抽象是"加一个跨表F1检查"→ 正确抽象是"任何实体在论文中≥2位置出现时，必须一致或有解释"。后者换任何论文都能复用 |
+| 8 | **批量循环后不总结** — 连续多轮自动化（如 5 个进化周期）完成后不记录模式 | 批量循环结束后，用本技能提取通用流程。例如：批量自动循环 = diagnose→commit→diagnose→next 循环，这个三步骤应保存到 evolution 技能 |
 
 ---
 
 ## 参考文件
 
 - `references/private-skill-classification-pattern.md` — 公共/私有技能分离模式。三层次分类法（公开/私有/代理）+ 隐私检测检查清单 + gitignore 配置方案。2026-06-25 实战验证。
-- `references/learn-vs-synthos-comparison.md` — `/learn` 输出（操作手册）vs Synthos 标准（契约语言）的调用方式差异。Cycle 183 提炼的桥接方法论。
+- `references/learn-vs-synthos-comparison.md` — /learn 输出（操作手册）vs Synthos 标准（契约语言）的调用方式差异。Cycle 183 提炼的桥接方法论。
+- `references/batch-loop-pattern.md` — **NEW** 2026-06-28: 批量循环执行模式（连续N轮自动化，每轮 commit+diagnose→next，循环结束后提取通用流程到相关技能）。适用于进化循环、批量验证注入等场景。
 
 ## 变更日志
 
