@@ -5,14 +5,14 @@
   "state": "healthy",
   "status": "healthy",
   "diagnostics": {
-    "optimize": 0.8694,
     "structural": 0.9948,
-    "absorption": 0.9948,
     "benchmark": 1.0,
+    "optimize": 0.8694,
     "coverage": 1.0,
+    "absorption": 0.9948,
     "constitutional": 1.0
   },
-  "last_run": "2026-06-28T19:43:56Z",
+  "last_run": "2026-06-28T16:38:00Z",
   "consecutive_healthy": 10,
   "stalled_cycle": null,
   "phase": "evolution",
@@ -92,14 +92,17 @@
       ]
     }
   ],
-  "git_commit": "5d5a29d5d3501c2c5e41afe176dadb07fa793475",
+  "git_commit": "7cdc677a4af58ab1273933d2fe63f79350a82dbd",
   "knowledge_pipeline": {
     "knowledge_score": 0.99,
     "total_skills": 191,
     "deep_skills": 191,
     "verification_count": 191,
+    "verification_ratio": 1.0,
     "example_count": 92,
     "golden_count": 8,
     "last_improved": "2026-06-28"
-  }
+  },
+  "verification_complete": true,
+  "total_skills_verified": 191
 }
