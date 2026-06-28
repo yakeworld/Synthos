@@ -110,11 +110,74 @@ metadata:
 7. **OpenML 引用验证** — 论文引用 OpenML 时代码必须有对应 fetch 操作
 8. **后台执行长时任务** — >30 秒的实验脚本 delegate 给后台，不阻塞对话
 
+## 数值一致性审计（Numerical Consistency Audit）— 铁律级检查
+
+**触发条件**：任何论文有 experiment_results.json 输出 + .tex 正文时执行。这是所有审计步骤中最重要的前置检查。
+
+**核心原则**：论文声称的数值必须在 experiment_results.json 中找到精确对应。任一 >5% 偏差 → P0 级别不一致。
+
+**审计步骤**：
+
+1. 提取论文所有数值声明（Table、Abstract、正文、Conclusion）
+2. 从 experiment_results.json 独立计算所有数值
+3. 逐一对比：单分类器 ACC/REC/PREC/F1/AUC → 误差>2% 为 P0；HCS-3WT 关键指标 → 误差>3% 为 P0
+4. 检查参数一致性：k 值、CV 策略、数据集描述、预处理步骤
+5. 更新论文以匹配 JSON（JSON 为真理源）
+6. LaTeX 编译验证（检查 Table 最后一行是否缺 `\\`）
+7. 更新 state.json（score 更新，last_modification 记录）
+
+**关键检查点**：
+- k=N 特征数：论文 k=6 vs 代码 k=15 → 精度差异 2-5% → 必须统一
+- 样本量：论文 699 vs UCI WDBC 569 → 必须修正
+- 所有关键数值在全文所有位置（Abstract/Intro/Table/Results/Discussion/Conclusion）必须一致
+- 更新后必须 grep 全文检查旧数值残留
+
+**参考**：`references/paper-json-numerical-consistency-check.md`
+
+## 常见参数不一致陷阱
+
+### k=N 特征数不匹配
+**症状**：论文称 k=6，代码 k=15。不同 k 值导致精度差异 2-5%。
+**检测**：grep 论文中所有 k= 出现位置，grep 代码中 SelectKBest 或 k= 参数。
+**修复**：统一代码与论文的参数值。通常以论文声称为准（临床可解释性需要更少的特征），然后重新运行实验。
+
+### 交叉验证策略不一致
+**症状**：论文称 10×5 CV，代码用 5×2 CV 或 3×5 CV。
+**检测**：对比论文 Methods 节与代码中的 n_splits、n_repeats 参数。
+**修复**：统一后重新运行实验。
+
+### 样本量/特征数不一致
+**症状**：论文称 699 样本，UCI WDBC 实际 569。
+**检测**：对比论文描述与 experiment_results.json 中 n_samples。
+**修复**：以数据集实际为准，更新论文所有引用位置。
+
+### 特征工程步骤不一致
+**症状**：论文称使用 Yeo-Johnson 变换+3个工程特征，代码实现不同。
+**检测**：对比论文 Methods 节与代码预处理部分。
+**修复**：统一后重新运行实验。
+
+### 2026-06-29 实战：P0 数值修复完整流程（HCS-3WT）
+**症状**：论文 Table 2 中5个单分类器精度与 JSON 偏差>2%；HCS-3WT 自动化率 79.07% vs JSON 70.93%；论文称 n=699 样本但 UCI WDBC 实际 569。
+**根因**：代码用 k=15 特征但论文声称 k=6；代码用 k=15 精度降低，论文数值来自更早的 k=6 版本或不同预处理。
+**修复流程**（7步铁律）：
+1. 统一代码参数：`SelectKBest(k=15)` → `SelectKBest(k=6)`（以论文声称为准，临床可解释性需要更少特征）
+2. 重新运行实验：`python3 run_hcs3wt.py`，输出更新 `experiment_results.json`
+3. 更新论文 Table 2：所有单分类器 ACC/REC/PREC/FN/AUC 替换为 k=6 实验值
+4. 更新论文 Table 3：HCS-3WT 自动化率、准确率、灰区大小等替换为 k=6 实验值
+5. 更新所有正文引用：Abstract/Intro/Table/Results/Discussion/Conclusion 中所有旧数值（grep 全文检查）
+6. 修复图脚本：fig3/fig4 从硬编码改为从 `experiment_results.json` 读取
+7. 编译验证 + 更新 state.json：score 更新，last_modification 记录变更
+**关键规则**：
+- 每次 patch 后检查 Table 最后一行是否缺 `\\`（导致 `\bottomrule` 错误）
+- 更新后必须 `grep` 全文检查旧数值残留
+- 数据集描述（样本量、特征数）也必须同步更新
+
 ## 参考文件
 
 - `references/diabetes-datasets-reference.md` — 糖尿病相关公开数据集参考
 - `references/multi-script-cross-verify.md` — 多实验脚本输出交叉验证方法
 - `references/notebook-vs-script-pattern.md` — Notebook vs Python 脚本对应关系模式
+- `references/paper-json-numerical-consistency-check.md` — 论文数值与experiment_results.json一致性审计方法
 
 ## 版本历史
 
