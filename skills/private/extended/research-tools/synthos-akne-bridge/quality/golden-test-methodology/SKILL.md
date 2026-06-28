@@ -121,3 +121,12 @@ skills/{name}/golden/
 - **Priority for new golden**: newly absorbed skills first, high-usage skills second, then by DIAGNOSE score
 - **Minimum pass threshold**: weighted score ≥ 0.80, all critical checks must pass
 - **Integration**: evolution's DIAGNOSE step must report golden coverage as a standard dimension
+
+## 约束规则 · RULES
+
+1. **输入约束**: 参数类型、范围、格式必须校验
+2. **输出约束**: 返回值结构、编码、命名必须一致
+3. **异常约束**: 错误信息必须包含上下文和恢复建议
+4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
+
+> 违反规则的操作视为不安全，必须拒绝或隔离。
