@@ -143,7 +143,7 @@ SELF_REFLECT → 漂移检测 + 宪法集成
 - golden: 引用 golden 集合的 SKILL.md 占比（4%）
 
 **coverage** = 引用完整性指数（Cycle 184 起实际计算，不再硬编码）
-- 检查所有 SKILL.md 中的 [label](path) 内部引用是否实际存在
+- 检查所有 SKILL.md 中的 `[label](path)` 内部引用是否实际存在
 - 自动跳过 inline code（反引号内）避免误判 markdown 语法为引用
 - 覆盖率 100%（14 个内部引用，0 断裂）
 
