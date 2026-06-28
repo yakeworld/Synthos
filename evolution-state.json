@@ -105,5 +105,6 @@
     "last_improved": "2026-06-28"
   },
   "verification_complete": true,
-  "total_skills_verified": 191
+  "total_skills_verified": 191,
+  "auto_max_cycles": 999
 }
