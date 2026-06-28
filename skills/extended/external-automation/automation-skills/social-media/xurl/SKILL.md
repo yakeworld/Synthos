@@ -422,3 +422,13 @@ xurl --app staging /2/users/me             # one-off against staging
 - Upstream CLI: https://github.com/xdevplatform/xurl (X developer platform team, Chris Park et al.)
 - Upstream agent skill: https://github.com/openclaw/openclaw/blob/main/skills/xurl/SKILL.md
 - Hermes adaptation: reformatted for Hermes skill conventions; safety guardrails preserved verbatim.
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: 输入参数/文件/路径是否完整且有效
+2. **过程验证**: 中间步骤/转换/计算是否正确
+3. **输出验证**: 输出格式/内容是否符合预期
+4. **边界验证**: 空输入、极大值、异常场景是否处理
+5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+
+> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
