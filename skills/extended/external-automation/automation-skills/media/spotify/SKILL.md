@@ -144,3 +144,13 @@ Entity types: `track`, `album`, `artist`, `playlist`, `show`, `episode`. Use the
 - **Don't retry on `403 Premium required` or `403 No active device`.** Those are permanent until user action.
 - **Don't use `spotify_search` to find a playlist by name** — that searches the public Spotify catalog. User playlists come from `spotify_playlists list`.
 - **Don't mix `kind: "tracks"` with album URIs** in `spotify_library` (or vice versa). The tool normalizes IDs but the API endpoint differs.
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: 输入参数/文件/路径是否完整且有效
+2. **过程验证**: 中间步骤/转换/计算是否正确
+3. **输出验证**: 输出格式/内容是否符合预期
+4. **边界验证**: 空输入、极大值、异常场景是否处理
+5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+
+> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。

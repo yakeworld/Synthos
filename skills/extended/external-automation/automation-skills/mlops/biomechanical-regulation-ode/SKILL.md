@@ -93,3 +93,13 @@ Follow the paper-pipeline single-session assembly pattern.
 3. **Steady-state convergence time**: τ determines the time constant. Ensure simulation runs for at least 5τ to reach steady state (50 min for τ=10).
 4. **Ablation too weak**: If removing the feedback term doesn't increase error 2×+, increase the feedback coefficient or reduce the baseline production to make the feedback more impactful.
 5. **R² for individual regimes**: Individual regime R² can be low if the system converges to flat steady state. Report combined R² (healthy + pathological) as the primary metric, since the interesting dynamics are the REGIME TRANSITION.
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: 输入参数/文件/路径是否完整且有效
+2. **过程验证**: 中间步骤/转换/计算是否正确
+3. **输出验证**: 输出格式/内容是否符合预期
+4. **边界验证**: 空输入、极大值、异常场景是否处理
+5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+
+> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。

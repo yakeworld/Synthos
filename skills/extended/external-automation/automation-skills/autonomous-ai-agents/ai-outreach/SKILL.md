@@ -213,3 +213,13 @@ curl -H "Authorization: Bearer $MOLTBOOK_API_KEY" https://www.moltbook.com/api/v
 3. **复制粘贴**：多平台发一样的内容→被检测为spam
 4. **Moltbook token被脱敏**：必须用 Python 代码直接捕获 JSON 响应，不能经过 terminal 输出
 5. **Claim未完成前不发帖**：Moltbook 的 `pending_claim` 状态下发帖会失败
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: 输入参数/文件/路径是否完整且有效
+2. **过程验证**: 中间步骤/转换/计算是否正确
+3. **输出验证**: 输出格式/内容是否符合预期
+4. **边界验证**: 空输入、极大值、异常场景是否处理
+5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+
+> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
