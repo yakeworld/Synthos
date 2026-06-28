@@ -84,8 +84,49 @@ related_skills: [project-experience-distillation, evolution, sci-paper-quality-r
 | 2026-06-27 | 2.43.0 | 新增 `state.json_audit_flag_freshness` 陷阱（crispdm-wdbc 实战）：state.json audit_history 中的 P2 标记不自动可信，必须独立数值计算验证。cross_dataset_consistency 检测新增重验证规则。crispdm-wdbc 案例：state.json 标记"交叉数据集delta convention不一致"但实际计算确认三数据集使用相同约定（绝对值×100），标记为假阳性并清除。 |
 | 2026-06-27 | 2.44.0 | 新增早期DOI 404判定规则（references/pdf-alternative-search-protocol.md）：SAGE/Springer/AJP等出版社的2010年前DOI在DOI解析器+Crossref均返回404/403，但论文真实存在，判定为[WARN]非[FAIL]。bppv-canalith-relocation-ode实战：12个引用中5/12失败(42%)但全部真实。新增DOI前缀→Crossref状态对照表。 |
 | 2026-06-29 | 2.45.0 | 新增 paper_json_numerical_consistency 检查（G7子项）：论文数值必须与 experiment_results.json 一致。k=N 参数不一致、样本量/特征数不一致、图脚本硬编码检测。HCS-3WT 实战：代码 k=15 vs 论文 k=6，15 处数值更新，fig3/fig4 改为 JSON 读取，PDF 编译通过，state.json 0.73→0.88。 |
+| 2026-06-29 | 2.46.0 | 新增 state.json CLAIMED vs 07-quality/ VERIFIED 审计陷阱（用户纠正：state.json PASS 不等于质量报告完整）。审计队列（AUDIT_QUEUE.md）中论文的状态判定必须独立于 state.json 声明：state.json 的 gate_status=PASS 是\"声称已修复\"，07-quality/ 目录的4份报告是\"已验证修复\"。审计时必须读取 07-quality/ 的实际文件清单，确认 report-1~4 全部存在且内容完整。缺失报告 → 无论 state.json 显示什么，都视为未验证。新增 NEEDS_REPAIR 状态（quality_score<0.85 或关键指标失败时标记）。新增 AUDIT_QUEUE.md 审计协议：读队列→取首篇QS≠0→检查07-quality/ 4份报告→若全部PASS→移除；若P0_WAITING_USER→BLOCKED；否则NEEDS_REPAIR。新增 references/audit-queue-protocol.md 完整协议文档。 |
 
-**统计声明验证（statistical-claim-verification）**：详见 `references/statistical-claim-verification.md`。
+### state.json CLAIMED vs 07-quality/ VERIFIED — 审计队列状态验证陷阱（新增 2026-06-29）
+
+**问题**：state.json 的 `gate_status=PASS` 和 `quality_score=88` 是**声称状态**，不是**验证状态**。当审计队列（AUDIT_QUEUE.md）中一篇论文被标记为"待审计"时，审计员如果直接读取 state.json 就认为"已通过"，会跳过对 07-quality/ 目录中4份标准报告的完整性检查。bppv-pinn-canalolithiasis 案例：state.json 显示 PASS, D8=15/15, D10a=100%, G1-G7全部PASS, quality_score=88，但 07-quality/ 目录仅含1份 quality-report.md，缺失3份标准报告（report-1~4）。这意味着修复已完成但报告文件丢失/未生成，论文实际上**未通过完整审计**。
+
+**正确审计协议**（AUDIT_QUEUE.md 每日三次 cron 作业执行流程）：
+
+1. 读取 `AUDIT_QUEUE.md` 前5行获取队列头部
+2. 按优先级取队列中第一篇 `QS≠0` 且状态为"待审计"的论文
+3. 检查 `07-quality/` 目录文件清单：
+   - **必须存在**：`report-1-universal-six-domains.md`, `report-2-*specialty*.md`, `report-3-references-audit.md`, `report-4-inspector-report.md`
+   - 缺失任何一份 → 无论 state.json 显示什么，视为未验证
+4. 如果4份报告全部存在且内容完整：
+   - 检查 `quality_score ≥ 0.85`（通过阈值）
+   - 检查 `gate_status` 为 PASS/VERIFIED
+   - 检查 `quality_gates` 中所有 G1-G7 为 PASS
+   - 如果全部通过 → 从队列移除，`gate_status=VERIFIED`
+5. 如果存在 `P0_WAITING_USER` → 标记为 `BLOCKED`
+6. 如果 `quality_score < 0.85` 或关键指标失败（D8=0, D10a=0%等）→ 标记为 `NEEDS_REPAIR`
+
+**判定规则**：
+
+| 条件 | 队列状态 | 后续操作 |
+|------|---------|---------|
+| 4份报告全部存在且完整 + qs≥0.85 + G1-G7全PASS | 从队列移除 → VERIFIED | 完成 |
+| P0_WAITING_USER 或 BLOCKED 标记 | BLOCKED | 等待人工处理 |
+| 07-quality/ 报告缺失/不完整 | IN_PROGRESS 或 NEEDS_REPAIR | 重新生成报告或标记修复 |
+| quality_score < 0.85 | NEEDS_REPAIR | 需要完整修复后重新审计 |
+| D8=0 或 D10a=0% | NEEDS_REPAIR | 需要补充引用体系 |
+
+**bppv-pinn-canalolithiasis 实战修复**：
+- 问题：state.json PASS 但 07-quality/ 缺3份报告
+- 修复：从 paper.tex 内容提取引用/指标/模型信息，重新生成4份标准报告
+- 结果：D8=15/15, D10a=100%, G1-G7全部PASS, quality_score=88 ≥ 0.85 → VERIFIED
+- 更新：07-quality/ 补全4份报告，state.json gate_status PASS→VERIFIED，AUDIT_QUEUE.md 标记移除
+
+**关联陷阱**：
+- `stale_quality_report_trap`：旧报告可能过期
+- `re-verification_trap`：已修复项必须重新验证
+- 此陷阱是上述两个的组合扩展：**声称的修复 + 缺失的验证文件 = 假阳性通过**
+
+**注意**：07-quality/ 目录中的 `status.json` 和 `quality-report.md` 可能来自旧的扫描工具（如 PARTIAL-PAPERS D8/D10a/DOI Batch Scan），不是标准四报告格式。审计时必须检查标准报告文件是否存在，不能仅依赖 status.json 中的分数。
 检查点：p-value 和 Cohen's d 必须有可执行代码支持，per-fold 数据需保存到 07-quality/ 目录。
 
 ### baseline_inconsistency_detection — 基线不一致陷阱
