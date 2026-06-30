@@ -37,7 +37,8 @@ Composite skill that merges 35 paper-related skills into a unified pipeline.
 - **openalex**: Directory index for openalex: openalex
 - **paper-citation-health**: Scan all papers in `outputs/papers/` for citation bibliographic health metrics D8 (bib entries) and D10a (cite-to-bib match %).
 - **paper-cron-scan**: 路由到 `v32-multi-direction-scan` — 所有旋转扫描和白空间验证由此技能执行。独立 paper-cron-scan 技能已合并入 v32。
-- **paper-pipeline**: 主skill | SCI论文全流程编排器。v3.18.10新增Trap#42跨项目参考文献污染检测（Synthos Paper ID后缀/占位符键名/空条目/Prose提及无cite）。v3.18.9新增Trap#41 paper-queue.json幽灵条目逆方向。v3.18.5-8: D10a批量扫描+natbib盲区+注释过滤+路由修复。v3.18: Track A晋升协议。v3.16: 队列自愈+ABSOLUTE WHITE独立验证。v3.15: 轨道B四步工作流。
+- **paper-repair**: Directory index for paper-repair: paper-repair
+- **paper-directory-organization**: Directory index for paper-directory-organization: paper-directory-organization — audit, categorize, and reorganize paper project directories. Covers empty-dir cleanup, legacy-format migration, archive management, structural normalization, and directory classification taxonomy (ACTIVE/LEGACY/EMPTY/SYSTEM/NONSTANDARD/OLD/BACKUP). See `paper-directory-organization/references/paper-directory-cleanup-2026-06-29.md` for a completed 89-paper cleanup example.
 - **paper-quality-deep-review**: 论文质量深度审查引擎 — 从文献下载→内容分析→研究空白验证→科学假设评估→解决方法评估→文献引用质量评分→综合评分。
 - **paper-queue-audit**: Directory index for paper-queue-audit: paper-queue-audit
 - **research-queue-audit**: Research queue audit and management — read/validate research-queue.json, check candidate state consistency, detect stale entries, sync state layers. Implementation lives in `v32-multi-direction-scan` (Steps 5-6 + pitfalls). This is a routing stub — the actual queue lifecycle protocol is in the v32 scan skill.
@@ -51,7 +52,8 @@ Composite skill that merges 35 paper-related skills into a unified pipeline.
 - **research-ideation**: 研究创意发散与认知引擎（RIF+CCF）。三层架构：Layer 1（10操作框架）→ 产出研究方向候选； Layer 2（8认知引擎）→
 - **research-paper-search**: 主skill | 多源论文检索+全文下载编排器。入口：Semantic Scholar (API Key), PubMed, OpenAlex, arXiv (Tor), Crossref。调用子skill: arxiv, pubmed, openalex。
 - **research-skill-audit**: Audit and enhance research skill coverage. Process for identifying gaps, testing existing skills, and creating/enhancing missing capabilities.
-- **literature-analysis-table-workflow**: 文献对比表（Table 1）构建工作流 — 从原始PDF读取→提取指标→分析预处理泄露→建表。用于方法论审计/系统性综述论文。参见 `references/literature-analysis-table-workflow.md`。
+| `references/paper-bib-recovery-workflow.md` | 论文 .bib 文件恢复工作流 — 事故复盘、.bib 与 PDF 丢失区分、恢复流程（_archive 翻找 → Crossref 批量 → 验证审计） |
+| `references/literature-analysis-table-workflow.md` | 文献对比表（Table 1）构建工作流 |
 - **researcher-portrait**: Directory index for researcher-portrait: researcher-portrait
 - **sci-paper-quality-review**: Directory index for sci-paper-quality-review: sci-paper-quality-review
 - **sci-paper-standard-structure**: Directory index for sci-paper-standard-structure: sci-paper-standard-structure
@@ -89,7 +91,7 @@ Composite skill that merges 35 paper-related skills into a unified pipeline.
 | quality-review 遇到外围论文 | ⛔ 跳过 |
 | literature-monitor 发现外围文献 | ✅ 可记录至附录，不进主报告 |
 
-## ⚡ Filesystem Layout (Dual-Filesystem Awareness)
+## ⚠️ Filesystem Layout (Dual-Filesystem Awareness)
 
 Papers and pipeline state are spread across **three locations**. All cron agents MUST know all three:
 
@@ -99,7 +101,7 @@ Papers and pipeline state are spread across **three locations**. All cron agents
 | `~/桌面/article_todo/` | Actively developed papers (7 core direction papers — iris, pupil, SCC, BPPV — with submission materials) | Writing workspace. See `references/article-todo-inventory.md` |
 | `/media/yakeworld/sda2/Synthos/outputs/papers/` | **Main pipeline** — 132 paper directories, `paper-queue.json`, `research-queue.json`, `_knowledge_only/` (21 research candidates), `state.json`, `submissions/` | Full paper pipeline + knowledge pipeline + evolution tracking |
 
-**Critical distinction**: Two separate queue files with different semantics:
+> ⚠️ **Critical distinction**: Two separate queue files with different semantics:
 - `paper-queue.json` (132 papers) — full paper pipeline with quality scores, gate status, notes
 - `_knowledge_only/research-queue.json` (21 research candidates) — Track B knowledge pipeline (literature_scan → gap_analysis → hypothesis_generation → knowledge_entry)
 
@@ -131,7 +133,8 @@ When verifying D10a (cite-to-bibitem match rate), these traps cause false positi
 | **natbib `\citep`/`\citet` blind spot** (RP-6, 2026-06-24) | `d10a-batch-scan.py` D10a=0% with 58 orphans. Paper uses `\citep{}` (natbib) instead of `\cite{}`. Script regex `\cite{` misses natbib variants entirely — finds 0 cites, but the .bbl has 28 matching bibitems. | **Run targeted Python scan** that matches `\\(?:cite|citep|citet)\{` pattern. See `scripts/d10a-targeted-scan.py`. This is common in Elsevier `elsarticle-num` papers which load `natbib`. |
 | **.bbl patch double-escaping** (RP-6, 2026-06-24) | Using `patch` tool to add `\bibitem{...}` to a .bbl file produces `\\bibitem{...}` (double backslash). LaTeX interprets `\\` as line break, breaking the bibliography. | After patching .bbl, run `python3 -c "content = open('file.bbl').read(); content = content.replace('\\\\\\\\bibitem', '\\\\bibitem').replace('\\\\\\\\newblock', '\\\\newblock').replace('\\\\\\\\href', '\\\\href').replace('{\\\\\\\\path', '{\\\\path'); open('file.bbl','w').write(content)"`. Always verify with grep `'\\bibitem'` that single backslashes are present. |\n| **Missing .bbl file entirely** (RP-7, 2026-06-24) | D10a=0% with batch scan reporting `source=inline`. Paper uses `\bibliography{references}` (external bib) but the .bbl file is absent — aux files were cleaned (`rm -f *.aux *.bbl *.blg`) without recompiling. Scanner falls back to grepping .tex for `\bibitem{}`, finds nothing (or only template placeholders `{label}`, `{lamport94}`), and misreports "source=inline". | Recompile: `pdflatex → bibtex → pdflatex×2`. **Diagnostic**: when `source=inline` + `orphan count > 10` + paper has `\bibliography{}` command → .bbl is missing, not an actual inline bibliography. Confirm by checking if `paper.bbl` exists. After recompile, verify D10a with independent Python script (not just batch scan). |\n| **"source=inline" misdiagnosis when .bbl missing** (RP-7, 2026-06-24) | d10a-batch-scan.py reports `source=inline` for a paper that uses external `\bibliography{references}`. The scanner falls through: no .bbl → tries .tex `\bibitem{}` regex → finds zero real bibitems → reports 0 matches. This is NOT an inline-thebibliography paper. | The `source=inline` label from the batch scan is unreliable when D10a=0% and orphan count > 10. Always check: does `paper.bbl` exist? If not, the paper was never properly compiled. Recompile first, then re-scan. |
 
-- **Multi-tex version drift** (HCS-3WT, 2026-06-26) | A paper directory contains **two or more .tex versions** with different cite keys. The queue record (e.g., D10a=100%) was computed on one version, but a quality review scans a different version. New cite keys in the scanned version have no bib entries → D10a drops (e.g., 79.3%) despite queue saying 100%. | **Step 1**: List all .tex files in the paper's 01-manuscript/ directory. **Step 2**: Extract cite keys from each .tex version. **Step 3**: Compare key sets across versions — any key in one version but not the other reveals a citation swap. **Step 4**: For the version being reviewed, check if new keys (not in bib) were swapped in from an older version. **Step 5**: Cross-check the queue record's D10a note — does it mention a specific tex filename or compile timestamp? If the note says "D10a=100% (30/30)" but current tex has 29 keys, the queue record is based on a different version. **Rule**: Always verify which .tex version produced the recorded D10a before trusting the queue. The `paper.tex` (canonical) may be a different file from the one actually compiled. |
+- **Multi-tex version drift** (HCS-3WT, 2026-06-26) — A paper directory contains **two or more .tex versions** with different cite keys. The queue record (e.g., D10a=100%) was computed on one version, but a quality review scans a different version. New cite keys in the scanned version have no bib entries → D10a drops (e.g., 79.3%) despite queue saying 100%. | **Step 1**: List all .tex files in the paper's 01-manuscript/ directory. **Step 2**: Extract cite keys from each .tex version. **Step 3**: Compare key sets across versions — any key in one version but not the other reveals a citation swap. **Step 4**: For the version being reviewed, check if new keys (not in bib) were swapped in from an older version. **Step 5**: Cross-check the queue record's D10a note — does it mention a specific tex filename or compile timestamp? If the note says "D10a=100% (30/30)" but current tex has 29 keys, the queue record is based on a different version. **Rule**: Always verify which .tex version produced the recorded D10a before trusting the queue. The `paper.tex` (canonical) may be a different file from the one actually compiled. |
+| **Figures after thebibliography** (HCS-3WT, 2026-06-29) | All 7 figure environments placed AFTER `\end{thebibliography}` — LaTeX error: `\caption outside float` + `\begin{document} ended by \end{figure}`. Figures must be BEFORE the bibliography. Detection: `grep -n '\\end{thebibliography}' paper.tex` line number should be greater than ALL `\begin{figure}` line numbers. See `references/hcs3wt-figures-after-thebibliography.md`. |
 
 ## ⚠️ Unified Scan Pitfalls
 
@@ -143,7 +146,8 @@ When running `scripts/unified-scan-audit.py` for a comprehensive pipeline health
 | **09-manuscript subdirectories** | Script picks up `outputs/papers/XXX/09-manuscript/` as a "paper" directory | These are output subdirectories, not papers. They won't have state.json and won't appear in `state_data`. If they appear in paper results, it's because they contain a .bib file — filter by checking for state.json presence. |
 | **Stale 09-manuscript** | An `09-manuscript` directory at top-level has no state.json (e.g., `09-manuscript` at `outputs/papers/02-corneal-tension-ODE/09-manuscript/`) | This is a leftover directory. Can be safely removed if the parent paper's publication directory is clean. |
 | **state.json steps=0 with high score** | A paper has `quality_score=96` but `steps_completed=[]` (empty) | The state.json was likely cleared/overwritten. Check if paper artifacts still exist. If so, the score may be accurate but the state is inconsistent — update steps_completed to reflect actual state. |
-| **BLOCKED gate with decent score** | `crispdm-heart` has score=80 (PASS range) but gate=BLOCKED | Check `gate_status.details` in state.json to see which specific gate blocked it. A BLOCKED gate means the paper failed a quality gate (D1-D7) regardless of the overall quality score. Don't assume score=80 means the paper is publishable. |
+| **BLOCKED** gate with decent score | `crispdm-heart` has score=80 (PASS range) but gate=BLOCKED | Check `gate_status.details` in state.json to see which specific gate blocked it. A BLOCKED gate means the paper failed a quality gate (D1-D7) regardless of the overall quality score. Don't assume score=80 means the paper is publishable. |
+| **Automated PASS ≠ Audit VERIFIED** (2026-06-29) | Papers like `dual-ellipse-pupil-localization` (QS=95) and `3d-iris-normalization` (QS=94) have `state.json` showing `gate_status=PASS` with all G1-G7 PASS, but `07-quality/` contains zero standard audit reports (report-1~report-4). The automated pipeline based on `step_*.md` files passed, but the audit queue requires 4 independent audit reports. | **Always check 07-quality/ for 4 standard reports before marking a paper as VERIFIED:** report-1-universal-six-domains, report-2-specialty, report-3-references-audit, report-4-inspector. Legacy D8/D10a scan files in 07-quality/ do NOT count as audit reports. If state.json shows PASS but reports are missing, mark BLOCKED — the paper needs independent audit reports generated. |
 
 **Trusted methodology**: Use `scripts/unified-scan-audit.py` as the **first-line health check** before running D10a batch scans. The unified scan reveals zero-DOI papers, cross-file duplicate chaos, and stale papers in one pass — these are systemic issues that D10a-only scans miss. After unified scan, filter for papers needing D10a repair, then run `scripts/d10a-batch-scan.py`.
 
@@ -174,6 +178,54 @@ When NotebookLM auth has expired in a headless cron, use `references/cron-layer-
 9. Append to agent-log.md (use patch, NOT write_file — append-only protocol)
 
 **Known pitfalls**: D10a false negative when paper uses inline thebibliography (scan is .bib-only); state.json patching corrupts nested JSON with escaped newlines; all 5 ICLR papers showed 13-15pt discrepancies between pipeline qs and Layer B scores, indicating auto-gate inflation.
+
+## 论文创建强制入口（新增 2026-06-30）
+
+**所有论文创建路径必须经过标准目录结构验证。** 这是防止历史混乱重演的唯一防线。
+
+### 创建论文的标准流程
+
+```
+任何来源（cron 自动创建、人工创建、paper-repair、paper-quality-review）
+  → 1. 确定论文目录路径
+  → 2. 调用 paper-directory-structure 的 create-paper-dir.sh
+  → 3. 运行 paper_dir_validator.py 校验
+  → 4. 校验 FAIL → 中止，修复后重跑
+  → 5. 校验 PASS → 继续后续操作（写入内容、审计、编译等）
+```
+
+### 强制规则
+
+1. **不跳过结构创建**：任何论文目录在首次使用前，必须先执行 create-paper-dir.sh
+2. **不跳过校验**：校验脚本的返回值决定是否继续
+3. **旧论文自动升级**：已有论文如果结构不符合 v2.0 标准，先执行 upgrade-paper-dir.sh 再操作
+4. **校验失败 = 中止**：不是警告，不是跳过，是中止后续所有操作
+
+### 在 cron 任务中的集成
+
+所有涉及论文操作的 cron 任务在开头必须添加：
+
+```bash
+# Paper pipeline cron 入口前置检查
+for paper_dir in /media/yakeworld/sda2/Synthos/outputs/papers/*/; do
+  if [ -f "$paper_dir/state.json" ]; then
+    # 跳过归档目录
+    [[ "$(basename "$paper_dir")" == _archive* ]] && continue
+    # 运行校验
+    python3 /path/to/paper_dir_validator.py "$paper_dir"
+    if [ $? -ne 0 ]; then
+      # 检查是否是旧格式需要升级
+      if ls "$paper_dir"/02-abstract 2>/dev/null || ls "$paper_dir"/03-introduction 2>/dev/null; then
+        # 旧格式 — 执行升级
+        source upgrade-paper-dir.sh "$paper_dir"
+      else
+        echo "❌ Paper directory $paper_dir failed validation — skipping"
+        continue
+      fi
+    fi
+  fi
+done
+```
 
 ## IO_CONTRACT
 
@@ -211,3 +263,7 @@ When NotebookLM auth has expired in a headless cron, use `references/cron-layer-
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 > 对应原则：P3（人机分层 — 路由器负责路由，原子负责执行）
+
+
+# Paper Pipeline
+

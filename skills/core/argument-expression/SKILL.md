@@ -1,65 +1,80 @@
 ---
 
-
 name: argument-expression
-description: "Directory index for argument-expression: argument-expression"
-version: 1.0.0
-license: MIT
+description: "将假设转化为结构化学术论证（论文章节+论据链），支持 Toulmin 模型、Hyland 修辞框架、IMRAD 验证。"
 author: Synthos
+license: MIT
+version: 1.0.0
+allowed-tools: shell (bash), Read (view), Write (write), task_delegation (agent, inline)
 metadata:
   synthos:
-    signature: "claims: list[Claim], evidence: list[Evidence] -> argument_chain: ArgumentChain (structure, strengths, gaps, counterarguments)"
-    atom_type: skill
     priority: P1
-    related_skills: []
+    atom_type: cognitive-atom
+    description: "Academic argument construction from hypotheses"
+    signature: "claims: list[Claim], evidence: list[Evidence] -> argument_chain: ArgumentChain (structure, strengths, gaps, counterarguments)"
+    related_skills: [hypothesis-generation, viewpoint-verification, quality-gate]
+
 ---
+
+# Argument Expression — 论证表达
+
+> 将假设转化为结构化学术论证（论文章节 + 论据链），确保每个论断有证据支撑。
+
+## 原理层·文言
+
+> 「立言必立据，立据必立源。」言之无文，行而不远。
+> 引经据典，层层递进。不破不立，不破不证。
+
+## 方法层·白话
+
+论证表达是认知管道第5步。输入假设+证据，输出结构化论文章节/论据链。
+
+## 触发条件
+
+- 假设生成 (HYP) 产出可验证假设，需论证后供论文撰写使用
+- 观点验证 (VER) 反馈了论证弱点，需补充论据
+- 用户要求"写论文/写论证"
+
+## 输入契约
+
+| 字段 | 类型 | 必需 | 说明 |
+|------|------|:----:|------|
+| `claims` | list[Claim] | ✅ | 待论证的主张列表 |
+| `evidence` | list[Evidence] | ✅ | 支持证据 |
+| `context` | dict | ❌ | 上下文（论文类型、目标期刊等） |
+
+## 输出契约
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `argument_chain` | list[dict] | 论据链（claim→evidence→inference→conclusion） |
+| `strengths` | list[str] | 论证优势 |
+| `gaps` | list[str] | 论证缺口 |
+| `counterarguments` | list[dict] | 反方观点 |
+
+## 快速参考
+
+详细内容在 `references/` 目录（Toulmin 模型、Hyland 修辞框架、IMRAD 验证、CARS 模型等）。
+
+1. 加载假设+证据
+2. 按 Toulmin 模型构建论据链
+3. 识别缺口和反方观点
+4. 输出结构化论文章节
+5. 保存至 `outputs/{session}/arguments.json`
+
+## 验证清单
+
+- [ ] 每个主张有至少1个直接证据
+- [ ] 论据链完整：claim→evidence→inference→conclusion
+- [ ] 包含反方观点
+- [ ] 引用可追溯至原文
+
+## 边界声明
+
+见 `BOUNDARY.md` — 本原子只做论证构建，不做假设生成、不做观点验证。
 
 
 
 
 # Argument Expression
-
-## IO_CONTRACT
-
-- **input**: `hypothesis: str, evidence: list[Evidence]` — 待论证的假设及支持证据
-- **output**: `argument: str` — 结构化论证（thesis, claims, evidence_chains, literature_support, counterarguments）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2 机械原子暴露输入输出规范
-
-详细内容请加载此skill后按需执行。核心流程和命令已提炼如下：
-
-## 快速参考
-
-详细文档和完整命令列表已被移至 `references/` 目录以保持简洁。
-This skill has been compressed. Full content is available in references/.
-
-## 验证清单 · VERIFICATION
-
-1. **输入验证**: {输入条件是否完整}
-2. **输出验证**: {输出格式是否符合预期}
-3. **边界验证**: {边界条件是否处理}
-4. **错误处理**: {异常场景是否覆盖}
-
-
-## 约束规则 · RULES
-
-1. **输入约束**: 参数类型、范围、格式必须校验
-2. **输出约束**: 返回值结构、编码、命名必须一致
-3. **异常约束**: 错误信息必须包含上下文和恢复建议
-4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
-
-## Golden 集合 · GOLDEN SET
-
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
-
-> Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
-
-> 违反规则的操作视为不安全，必须拒绝或隔离。
-
-> 每项验证必须可执行、可记录、可复现。
 

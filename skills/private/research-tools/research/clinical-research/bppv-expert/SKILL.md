@@ -122,6 +122,20 @@ Absorbed from AKNE knowledge graph (yakeworld → .knowledge/wiki/):
 ### 4. Knowledge Asset Management
 - Structured extraction of BPPV papers into knowledge items (知识点/创新点/核心技术)
 - Paper-to-practice gap analysis
+- Scientific hypothesis generation from publication portfolio
+
+### 5. Domain Portfolio Analysis
+- Audit all BPPV papers across `outputs/papers/` (25+) and `_archive/` (36+) directories
+- Identify mature papers (≥80 quality score, VERIFIED/PASS gate)
+- Map research gaps via PubMed/OpenAlex white space verification
+- Propose 3-5 testable scientific hypotheses based on publication portfolio
+
+### 5. Domain Portfolio Analysis
+- Audit all BPPV papers across `outputs/papers/` (25+) and `_archive/` (36+) directories
+- Identify mature papers (≥80 quality score, VERIFIED/PASS gate)
+- Map research gaps via PubMed/OpenAlex white space verification
+- Propose 3-5 testable scientific hypotheses based on publication portfolio
+- Prioritized paper action list: P0 (move archive papers), P1 (fix broken refs), P2 (long-term direction)
 
 ## Input/Output Contract
 ```yaml
@@ -164,6 +178,15 @@ Absorbed from AKNE knowledge graph (yakeworld/.knowledge/) — 2026-05-12
 2. **边界用例**: 空输入、特殊字符、异常路径
 3. **错误场景**: 缺失依赖、权限不足、网络异常
 
+### Domain Analysis Example
+When asked "BPPV有哪几篇比较成熟的？" or "our BPPV papers review":
+1. Scan all state.json files in `outputs/papers/` and `_archive/`
+2. Classify by quality score and gate status
+3. Extract technical strengths from gap_type, method, clinical results
+4. Map research gaps (white_space → PubMed/OpenAlex verification)
+5. Propose testable hypotheses (最小刺激阈值假说, BPPV慢动力学探针假说, etc.)
+6. Produce prioritized action list (P0/P1/P2)
+
 
 ## 约束规则 · RULES
 
@@ -187,3 +210,8 @@ Absorbed from AKNE knowledge graph (yakeworld/.knowledge/) — 2026-05-12
 
 ### Related Skills
 - `research/scc-bppv-kinematics` — Computational SCC morphometry + kinematic simulation from centerline data (complementary: this skill provides clinical knowledge, scc-bppv-kinematics provides the computational pipeline)
+
+
+
+# Bppv Expert
+

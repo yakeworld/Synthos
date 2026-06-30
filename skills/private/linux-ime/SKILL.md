@@ -215,7 +215,25 @@ cat /etc/X11/xinit/xinput.d/fcitx 2>/dev/null && echo "警告：仍有 fcitx 残
 - **fcitx5 ↔ ibus 切换时 `/etc/X11/xinit/xinput.d/` 残留配置**：当用户从 fcitx5 切换回 ibus（或反之）时，必须删除旧版本的 xinput 配置文件。例如 fcitx5 的 `/etc/X11/xinit/xinput.d/fcitx` 中包含 `GTK_IM_MODULE=fcitx5`，会覆盖 ibus 的配置。诊断：执行 `cat /etc/X11/xinit/xinput.d/fcitx` 检查是否有 fcitx4/5 残留，如有应删除或覆盖为对应版本的配置。切换输入法框架后必须注销再登录（或重启 GDM）才能生效。
 - **GNOME 46+ native IM 支持变化**：GNOME 46 移除了独立的 ibus GNOME shell applet，改用原生 IM 支持。检查 `ibus-dconf` 和 `ibus-ui-gtk3` 子进程是否都在运行。
 
-## 参见
+## 远程节点批量安装
+
+### 远程工作节点（work1/work2/work3）输入法安装
+- 节点位于远程服务器（SSH 访问），无图形桌面
+- 仅安装 CLI 所需输入法后端，不装 GUI 管理工具
+- 安装命令：`apt-get install fcitx5 fcitx5-chinese-addons fcitx5-frontend-gtk3 fcitx5-frontend-qt5 fcitx5-module-cloudpinyin dbus`
+- **环境变量必须在 `~/.bashrc` 中设置**（非 GUI session）：
+  ```
+  export GTK_IM_MODULE=fcitx5
+  export QT_IM_MODULE=fcitx5
+  export XMODIFIERS=@im=fcitx5
+  ```
+- **重要**：远程服务器上的 fcitx5 daemon 在 CLI session 中不会自动启动（无 X11/Wayland display）。对于 CLI 中文输入，只需环境变量+fcitx5 包，实际输入由终端或应用自身处理。
+
+### 远程安装陷阱
+- 远程 SSH `ssh host "sudo apt-get install ..."` 需要 sudo 密码，但终端工具不支持交互式输入
+- `sshpass` 可用于 SSH 认证但不处理 sudo
+- `sudo -S` 被安全策略完全禁止（密码猜测攻击向量）
+- **解决方案**：在远程节点配置 NOPASSWD 或使用 `ssh -t` 分配 tty
 
 - `references/gnome-desktop-ime-setup.md` — GNOME 桌面环境 IME 配置要点
 - `references/fcitx5-ibus-coexistence-guide.md` — fcitx5 与 ibus 共存/切换指南，包含 xinput.d 残留处理流程
@@ -265,3 +283,8 @@ cat /etc/X11/xinit/xinput.d/fcitx 2>/dev/null && echo "警告：仍有 fcitx 残
 > 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。
 
 > 每个示例必须可独立运行、有明确输入输出、包含错误处理。
+
+
+
+# Linux Ime
+

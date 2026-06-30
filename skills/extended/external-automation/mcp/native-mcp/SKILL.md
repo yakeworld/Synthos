@@ -3,7 +3,7 @@
 
 
 name: native-mcp
-description: "Directory index for native-mcp: native-mcp"
+description: "原生 MCP 实现：Python 原生 MCP 客户端/服务端实现，零外部依赖"
 version: 1.0.0
 license: MIT
 author: Synthos
@@ -62,3 +62,8 @@ metadata:
 MCP客户端 — 连接服务器, 注册工具(stdio/HTTP)。
 
 详细内容请加载对应 references/ 目录下的参考文件。
+
+
+
+# Native Mcp
+

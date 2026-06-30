@@ -179,6 +179,24 @@ Compare notebooks against each other:
 - **Add sources**: `notebooklm source add <file_path>`
 - **Rename sources** (using 12-char UUID prefix for reliability): `echo "y" | notebooklm source rename "uuid_prefix_12chars" "NewTitle"`
 - **Delete duplicate sources**: `echo "y" | notebooklm source delete "uuid_prefix_12chars"`
+### NotebookLM Auth Troubleshooting (2026-06-30)
+
+**Problem**: `notebooklm list` returns "Not authenticated. Run notebooklm login first." despite having `~/.notebooklm/profiles/<name>/storage_state.json` with 148 cookies.
+
+**Diagnosis flow**:
+1. Check `cat ~/.notebooklm/profiles/<name>/context.json` — should have `notebook_id`, `is_owner: true`
+2. Check storage state: `cat ~/.notebooklm/profiles/<name>/storage_state.json | python3 -c "import json,sys; d=json.load(sys.stdin); print('Keys:', list(d.keys()), 'Cookies:', len(d.get('cookies',[])))"`
+3. If cookies > 0 and has Google domains → auth data exists but CLI isn't reading it
+
+**Key findings**:
+- The CLI looks for `NOTEBOOKLM_STORAGE_STATE` env variable or `~/.notebooklm/storage-state.json` (not the per-profile path)
+- `--storage-state` and `-s` are NOT valid CLI options
+- `export PLAYWRIGHT_STORAGE_STATE=~/.notebooklm/profiles/<name>/storage_state.json` did NOT fix it
+- Direct node invocation: `node /path/to/notebooklm/dist/cli/index.js list` also reads from default path
+- The auth system is built into the CLI and requires the default storage path, not custom paths
+
+**Resolution**: The only reliable path is to `notebooklm login` via browser (or `--headless` which may fail with Google OAuth). Profile switching is not natively supported.
+
 ### Cannot merge notebooks or move sources between them
 
 There is no `notebooklm source move` command. Sources are per-notebook. To "split" a notebook:
@@ -304,3 +322,8 @@ research node). The fix is to prioritize `sources/` and `concepts/` nodes over
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+
+
+# Knowledge Base Audit
+

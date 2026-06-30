@@ -264,3 +264,8 @@ if abs(abs(correct_b) - abs(figure_b)) > 0.001:
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+
+
+# 3D Curve Fitting Figures
+

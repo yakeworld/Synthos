@@ -3,7 +3,7 @@
 
 
 name: linear
-description: "Directory index for linear: linear"
+description: Linear 任务管理：通过终端管理 Linear 项目、任务和里程碑
 version: 1.0.0
 license: MIT
 author: Synthos
@@ -62,3 +62,8 @@ metadata:
 Linear项目管理 — issues/projects/teams via GraphQL。
 
 详细内容请加载对应 references/ 目录下的参考文件。
+
+
+
+# Linear
+

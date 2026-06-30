@@ -130,3 +130,8 @@ skills/{name}/golden/
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
 
 > 违反规则的操作视为不安全，必须拒绝或隔离。
+
+
+
+# Golden Test Methodology
+

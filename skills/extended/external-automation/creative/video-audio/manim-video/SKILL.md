@@ -3,7 +3,7 @@
 
 
 name: manim-video
-description: "Directory index for manim-video: manim-video"
+description: "Manim 动画视频生成：用 Python 代码生成可复现的动画视频，适用于教学演示和技术展示"
 version: 1.0.0
 license: MIT
 author: Synthos
@@ -60,3 +60,8 @@ metadata:
 # Manim Video
 
 Manim CE动画 — 3Blue1Brown风格数学/算法视频。
+
+
+
+# Manim Video
+

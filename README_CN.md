@@ -179,7 +179,7 @@ cat skills/task-router/SKILL.md  # 路由器入口
 | 文档 | 说明 |
 |:----|:------|
 | [AGENTS_CONTRIBUTING.md](AGENTS_CONTRIBUTING.md) | 智能体贡献指南（含 AGENT_MANIFEST.yaml） |
-| [VERIFICATION_GATES.md](VERIFICATION_GATES.md) | 6 道验证门流程 |
+| [docs/verification-gates.md](docs/verification-gates.md) | 6 道验证门流程 |
 | [CI Workflow](.github/workflows/agent-pr-verify.yml) | 自动 CI 验证 |
 
 **流程**：`Fork → 添加 AGENT_MANIFEST.yaml → PR 标题加 [agent] → 6道CI验证 → 人类审核 → Merge`

@@ -467,3 +467,7 @@ fig.savefig(f"{name}.pdf", bbox_inches='tight', pad_inches=0.1)  # 出版级PDF
 
 **输入**：请求描述、上下文信息。
 **输出**：执行结果、状态反馈。
+
+
+# Figure Generation
+

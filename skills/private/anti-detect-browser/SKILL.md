@@ -131,3 +131,7 @@ with sync_playwright() as p:
 
 - `references/cloakbrowser-install.md` — 安装与配置指南
 - `references/cloakbrowser-vs-curl-cffi.md` — 与 curl_cffi 的对比和集成策略
+
+
+# Anti Detect Browser
+

@@ -3,7 +3,7 @@
 
 
 name: google-workspace
-description: "Directory index for google-workspace: google-workspace"
+description: Google Workspace 集成：通过终端管理 Gmail、Drive、Calendar 等 Google 服务
 version: 1.0.0
 license: MIT
 author: Synthos
@@ -62,3 +62,8 @@ metadata:
 Gmail/Calendar/Drive/Docs/Sheets via gws CLI。
 
 详细内容请加载对应 references/ 目录下的参考文件。
+
+
+
+# Google Workspace
+

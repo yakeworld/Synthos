@@ -3,7 +3,7 @@
 
 
 name: adhd-eye-tracking-review
-description: "Directory index for adhd-eye-tracking-review: adhd-eye-tracking-review"
+description: "ADHD 眼动追踪综述：系统综述 ADHD 诊断中的眼动追踪技术与方法"
 version: 1.0.0
 license: MIT
 author: Synthos
@@ -59,3 +59,8 @@ metadata:
 # Adhd Eye Tracking Review
 
 ADHD眼动追踪生物标志物系统综述。
+
+
+
+# Adhd Eye Tracking Review
+

@@ -82,3 +82,8 @@ skill_view(name='apple-notes')  # 加载第一个子技能
 ```
 
 父级SKILL.md仅作为目录索引，实际执行由子技能完成。
+
+
+
+# Apple
+

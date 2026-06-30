@@ -1,7 +1,7 @@
 ---
 name: citation-appropriateness-verification
 description: 逐篇阅读参考文献全文，对比论文引用语境，验证引用是否恰当、充分、准确。引文功能分类 + 引文网络分析 + 引文性能基准提取。独立于G5形式检查（DOI/D10a），专注于引用实质质量。
-version: 2.1.0
+version: 3.1.0
 priority: P0
 related_skills: [quality-gate, paper-references-scanning, reference-verification, pdf-download-racing]
 signature: "citation-appropriateness-verification -> processed_result"
@@ -197,10 +197,59 @@ G5 引用质量门:
 
 ---
 
+## 执行工具链 · API 故障恢复
+
+**优先级顺序**：
+1. Semantic Scholar API（SS）→ 最快，返回结构化数据（标题、作者、引用数、PDF链接、开放获取）
+2. **Crossref API** → 备用，需手动构建 BibTeX。注意：**Crossref 不再支持 `format=bibtex` 参数**，必须用 JSON 响应手动构造 BibTeX
+3. **PubMed/NCBI E-utilities** → 医学/生物医学领域首选。使用 `esearch.fcgi` + `esummary.fcgi` 两步法
+4. **Crossref 失败时** → PubMed，再失败则标记为 `MISSING`
+
+**关键限制**：
+- **Crossref 查询长度 ≤ 160 字符**：超过 160 字符返回 HTTP 400 Bad Request。必须截断
+- **Semantic Scholar API Key 可能失效/限流**：SS Key 过期后返回 429，必须自动回退到 Crossref/PubMed
+- **SS 无 API Key 时**：返回空结果（0 篇），必须检测并切换策略
+
+**BibTeX 生成陷阱**（2026-07-01 修复）：
+- 条目键名（cite key）**不应包含 `{` 或特殊字符**：错误格式 `@article{spalton2014computational{` → 正确格式 `@article{spalton2014computational`
+- **标题截断**：某些 API 返回的 title 字段被截断（只有一半），需验证标题长度 ≥ 20 字符
+- **abstract 字段不应出现在 BibTeX 中**：BibTeX 标准不包含 abstract 字段
+- **journal 字段错误**：某些自动恢复脚本将 year 写入 journal 字段
+- **自引用检测**：新引用标题与论文自身标题高度相似 → 可能是自引用，需人工确认
+
+## API Key 管理
+
+- **Semantic Scholar API Key**: `iYTNXXDH278PVXl2FJ2YU1TyZ5joLAZr3WA9IVzt`（40字符，无前缀）
+- **存储位置**: `~/.secrets`（mode 600）
+- **`.bashrc`**: `s2k-HT...TmBD` 是**占位符**，非真实 key
+- **`s2k-` 前缀**: 全部已过期，返回 403 Forbidden。SS 接受两种格式（无前缀 / `s2k-` 前缀），但 `s2k-` 已全部废弃
+- **无 `.env` 文件包含 SS Key**: 所有 `.env` 文件中的值为 `***` 或模板占位符
+- **环境变量隔离**: 子 shell 不自动 source `~/.secrets`，脚本中必须显式 source 或 export。错误表现：API 返回空结果/429
+- **PubScholar 正确地址**: `pubscholar.cn`（非 `nfschina.com`）
+
+## API 故障恢复增强
+
+- **Semantic Scholar**: 1 request/second max. 绝不并行调用 SS
+- **Crossref**: 查询长度 ≤ 160 字符，需截断
+- **PubMed/NCBI**: 推荐每10秒调用1次（NCBI 建议）
+
+## 参考文献重建流程（2026-07-01 新增）
+
+当论文原始参考文献全部丢失时，按以下流程重建：
+
+1. **读取完整 paper.tex** — 提取所有研究主题、方法、问题
+2. **提取研究空白和科学假设** — 从引言/讨论/结论中定位
+3. **按领域批量检索** — 6+个领域，每个领域用 PubMed+Crossref 搜索
+4. **生成 DOI 映射** — 为原始 `\cite{}` 键生成匹配的 DOI 条目
+5. **保留原始引用键** — BibTeX 条目使用原始引用键名（如 `\cite{Raissi2019}` → `@article{Raissi2019}`）
+6. **处理失败** — issue-level DOI、服务器500错误需特殊处理
+
 ## Change Log
 
 | 日期 | 版本 | 变更 |
 |------|------|------|
+| 2026-07-01 | 3.1.1 | 修正 Crossref 查询长度限制（100→160字符，实际 API 限制为 160）。 |（SS key 存储位置、占位符识别、子 shell 隔离问题）。新增参考文献重建流程。PubScholar 正确地址修正。 |
+| 2026-07-01 | 3.0.0 | API 故障恢复策略：SS→Crossref→PubMed 三级回退。新增 Crossref 查询长度限制（100字符）和 BibTeX 生成陷阱。Crossref 不再支持 format=bibtex。 |
 | 2026-06-24 | 2.0.0 | 从 quality-gate 拆分为独立技能。新增引用功能分类树（6类）、引文性能基准提取、引文网络分析、引用缺失分析。 |
 | 2026-06-24 | 2.1.0 | 重构输出格式为独立专项报告，与通用六域报告并行。新增 G5 集成点。 |
 
@@ -231,3 +280,8 @@ G5 引用质量门:
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+
+
+# Citation Appropriateness Verification
+

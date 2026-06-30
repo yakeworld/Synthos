@@ -223,3 +223,8 @@ Every tool has a CLI equivalent for human operators and scripts:
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 Use the tools from inside an agent; the CLI exists for the human at the terminal.
+
+
+
+# Kanban Worker
+

@@ -206,3 +206,8 @@ shutil.rmtree(SYNTHOS) → shutil.copytree(HERMES, SYNTHOS)
 | 2026-06-25 | 1.5.0 | 新增双仓库架构、隐私技能迁移、隐私扫描分级 |
 | 2026-06-21 | 1.4.0 | 新增路径陷阱检测、权限修复 |
 | 2026-06-18 | 1.3.0 | 合并 project-health-audit，新增项目健康检查流程 |
+
+
+
+# Synthos Skill Audit
+

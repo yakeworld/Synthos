@@ -372,3 +372,7 @@ AKNE 桥接遵循 `kg-bridge`（Knowledge Graph — Agent Bridge）方法论：
 5. **完整性保证**：source→content_summary→向量 三线并行，缺一不可
 
 详见 `kg-bridge/SKILL.md` 获取完整方法论。
+
+
+# Synthos Akne Bridge
+

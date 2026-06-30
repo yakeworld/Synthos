@@ -3,7 +3,7 @@
 
 
 name: remote-gpu-training
-description: "Directory index for remote-gpu-training: remote-gpu-training"
+description: 远程 GPU 训练：通过 SSH/SCP 远程训练深度学习模型，支持多节点分布式训练
 version: 1.0.0
 license: MIT
 author: Synthos
@@ -62,3 +62,8 @@ metadata:
 远程GPU训练工作流 — SSH连接, env setup, scp脚本, tmux后台训练。
 
 详细内容请加载对应 references/ 目录下的参考文件。
+
+
+
+# Remote Gpu Training
+

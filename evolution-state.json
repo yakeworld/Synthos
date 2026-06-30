@@ -90,23 +90,85 @@
         "Score: 0.9995 → 1.0 (6/6维度满分)",
         "ATTENTION: Score=1.0 is theoretical maximum — next cycles will show minor variance due to timing/one-shot changes"
       ]
+    },
+    {
+      "type": "skill_monitoring_init",
+      "cycle": 207,
+      "score": 1.0,
+      "status": "healthy",
+      "trigger": "skill-enhanced-llm",
+      "timestamp": "2026-06-29T12:10:46.014804",
+      "changes": [
+        "skill_efficiency: 新维度添加，初始评分 0.65",
+        "skill_usage_data: 从cron日志提取，1352次运行",
+        "skill_hierarchy: 27个技能，0个L1原子技能",
+        "SkillWeaver: 任务分解+技能组合框架已设计",
+        "orphaned_dirs: 6个未映射任务需清理"
+      ]
+    },
+    {
+      "type": "cron_cleanup",
+      "cycle": 207,
+      "score": 1.0,
+      "status": "healthy",
+      "trigger": "skill-monitor",
+      "timestamp": "2026-06-29T12:15:00.999654",
+      "changes": [
+        "archived: 0f0240a5b432 (synthos-discussions-check, 24KB)",
+        "archived: 1ce1379174ea (paper-quality-orchestrator, 912KB)",
+        "archived: 42b92230282f (paper-repair, 52KB)",
+        "archived: 4b66607290e6 (autonomous-core-researcher, 8KB)",
+        "archived: 6f9658a85fd5 (synthos-discussion-watch, 24KB)",
+        "archived: 7c3528aee3d4 (cross-project-evolution, 12KB)",
+        "freed: 1032KB total",
+        "orphaned_output_dirs: 6 -> 0"
+      ]
     }
   ],
   "git_commit": "57eea0e9c6addbc134eb32f0a5f75f8baf37e894",
   "knowledge_pipeline": {
     "knowledge_score": 1.0,
-    "total_skills": 191,
-    "deep_skills": 191,
-    "verification_count": 191,
-    "example_count": 191,
-    "principles_count": 191,
-    "rules_count": 191,
-    "golden_count": 191,
+    "total_skills": 193,
+    "deep_skills": 193,
+    "verification_count": 193,
+    "example_count": 193,
+    "principles_count": 193,
+    "rules_count": 193,
+    "golden_count": 193,
     "last_improved": "2026-06-28"
   },
   "verification_complete": true,
-  "total_skills_verified": 191,
+  "total_skills_verified": 193,
   "auto_max_cycles": 999,
   "last_strategy": "golden",
-  "burnout_reason": "All dimensions 1.0000 - perfect state reached"
+  "burnout_reason": "All dimensions 1.0000 - perfect state reached",
+  "skill_efficiency": {
+    "total_skills_in_repo": 191,
+    "total_skills_in_hermes": 27,
+    "active_cron_tasks": 15,
+    "high_frequency_tasks": 3,
+    "low_frequency_tasks": 8,
+    "orphaned_output_dirs": 0,
+    "skill_utilization_rate": 0.27,
+    "cron_activity_rate": 0.93,
+    "skill_hierarchy_ready": false,
+    "skill_chain_ready": false,
+    "skill_monitoring_active": true,
+    "skill_efficiency_score": 0.65,
+    "cron_cleanup_completed": true,
+    "archive_dir": "/home/yakeworld/.hermes/cron/output/.archive",
+    "freed_kb": 1032
+  },
+  "last_skill_update": "2026-06-29T12:10:46.014789",
+  "recoveries": {
+    "2026-06-30": {
+      "type": "bib-recovery",
+      "papers_processed": 71,
+      "pass": 56,
+      "partial": 2,
+      "fail": 0,
+      "doi_found": 56,
+      "method": "crossref_semantic_scholar_api"
+    }
+  }
 }

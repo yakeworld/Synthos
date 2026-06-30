@@ -6,8 +6,8 @@ license: MIT
 author: Synthos
 metadata:
   synthos:
-    atom_type: directory-index
-    description: "Directory index for memory-optimization-system"
+    atom_type: skill
+    description: "记忆系统全面优化：上下文卸载、FSRS巩固、记忆清理、去重处理"
     signature: "task_desc: str, context: dict -> result: dict"
     related_skills:
     - conversation-to-memory
@@ -185,3 +185,8 @@ memory 和 fact_store 中内容相似度 > 80% 的条目：
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+
+
+# Memory Optimization System
+

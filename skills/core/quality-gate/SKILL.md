@@ -407,3 +407,8 @@ grep -i 'undefined' paper.log | grep -i 'cite\\|label'
 
 > 每项验证必须可执行、可记录、可复现。
 
+
+
+
+# Quality Gate
+

@@ -3,7 +3,7 @@
 
 
 name: mcp-ecosystem-guide
-description: "Directory index for mcp-ecosystem-guide: mcp-ecosystem-guide"
+description: "MCP (Model Context Protocol) 生态指南：MCP 协议规范、服务器实现和集成参考"
 version: 1.0.0
 license: MIT
 author: Synthos
@@ -60,3 +60,8 @@ metadata:
 # Mcp Ecosystem Guide
 
 MCP生态知识 — 架构/常用服务器/开发模式/安全/Agent集成。
+
+
+
+# Mcp Ecosystem Guide
+

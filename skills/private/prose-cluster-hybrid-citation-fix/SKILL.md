@@ -217,3 +217,8 @@ This pattern is most common in papers where:
 > 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+
+
+# Prose Cluster Hybrid Citation Fix
+

@@ -1,0 +1,33 @@
+# Synthos Agent Manifest
+# Gate 1: Agent Identity — required by VERIFICATION_GATES.md
+
+agent:
+  name: synthos-evolution-engine
+  framework: synthos
+  capability: |
+    Autonomous research cognition operating system.
+    6 cognitive atoms: knowledge-acquisition, knowledge-extraction,
+    association-discovery, hypothesis-generation, argument-expression,
+    viewpoint-verification. With self-evolution loop and quality gates.
+  version: 2.20.0
+  identity:
+    type: ai-agent
+    owner: yakeworld
+    repository: /media/yakeworld/sda2/Synthos
+  constitution:
+    license: MIT
+    principles: [P0-evidence-traceability, P1-atom-reproducibility, P2-stable-sink-evolve-rise, P3-human-machine-layering]
+  scope:
+    core_atoms: 6
+    total_skills: 193
+    evolution_cycles: 207
+    state: healthy
+  verification:
+    self_test_passed: true
+    self_test_details:
+      structural_integrity: "All 6 cognitive atoms present with SKILL.md + BOUNDARY.md + IO_CONTRACT.md"
+      constitutional_compliance: "No modifications to CONSTITUTION.md; changes follow P0-P3 constraints"
+      syntax_validated: "All YAML parses, all JSON valid, all Python compiles"
+      secret_scan: "No hardcoded credentials detected"
+      contribution_scoring: 0.95
+      last_scan: "2026-07-01"

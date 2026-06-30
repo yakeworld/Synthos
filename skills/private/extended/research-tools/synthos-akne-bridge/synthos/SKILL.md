@@ -474,7 +474,7 @@ export OPENAI_API_KEY="your_key"
 | evolution-state.json | 根目录 | 进化状态 (v2.20, cycle 72) |
 | SKILL-evolution-engine.md | 根目录 | 进化引擎 |
 | SKILL-autonomy.md | 根目录 | 自主性 |
-| VERIFICATION_GATES.md | 根目录 | 验证门 |
+| docs/verification-gates.md | 根目录 | 验证门 |
 | evolution-log.md | 根目录 | 进化日志 |
 | skills/knowledge-acquisition/SKILL.md | skills/ | Atom 1 — 知识获取 |
 | skills/knowledge-extraction/SKILL.md | skills/ | Atom 2 — 知识提取 |
@@ -527,3 +527,8 @@ export OPENAI_API_KEY="your_key"
 
 > **动灵在内，不假外求 — 主动发现，不等人说**
 > **主动探索，主动发现，主动执行 — 禁止等待用户指示**
+
+
+
+# Synthos
+

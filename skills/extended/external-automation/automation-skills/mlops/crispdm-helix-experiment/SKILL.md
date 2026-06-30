@@ -261,3 +261,7 @@ X, y = make_classification(
 - `references/notebook-to-script-alignment.md` — Notebook→Script对齐方法论
 - `references/model-list-reconciliation.md` — Notebook模型清单与script硬编码清单的对齐方法论（含PIMA 33模型案例、已验证陷阱列表）
 - `references/notebook-models-33-models-alignment.md` — PIMA 33模型对齐案例：notebook all_estimators()动态生成 vs helix硬编码清单的差异发现与修复过程
+
+
+# Crispdm Helix Experiment
+
