@@ -13,10 +13,19 @@
        │               │               │
   100.100.252.99  100.125.10.93  100.82.27.51
        │               │               │
-   amax (最新)    amax-1 (备用)   amax-fallback
+   amax       amax-backup    amax-fallback
    qwen3.6-35b     qwen3.6-35b     qwen3.6-35b
-   max_ctx=262K    max_ctx=262K    max_ctx=262K
+   2×3090        8×4090 (TP2)   2×3090
+   max_ctx=262K  max_ctx=262K   max_ctx=262K
 ```
+
+## 节点详情
+
+| Provider | IP | GPU | 运行时间 | 角色 |
+|----------|-----|-----|---------|------|
+| amax | 100.100.252.99 | 2× RTX 3090 | 27h | 主节点（交互/委托/压缩） |
+| amax-backup | 100.125.10.93 | 8× RTX 4090 (TP2) | 22h | 备用节点（主节点故障时） |
+| amax-fallback | 100.82.27.51 | 2× RTX 3090 | 4天 | session_search / 最终回退 |
 
 ## 路由决策树
 
@@ -25,13 +34,13 @@
   │
   ├─ 交互请求 → amax (100.100.252.99)
   │   ├─ 成功 → 返回
-  │   └─ 失败 → 回退到 amax-1
+  │   └─ 失败 → amax-backup
   │
   ├─ 子Agent委托 → amax (同主节点保持一致性)
-  │   └─ 失败 → amax-1 → amax-fallback
+  │   └─ 失败 → amax-backup → amax-fallback
   │
   ├─ 压缩/审批 → amax (同主节点)
-  │   └─ 失败 → amax-1
+  │   └─ 失败 → amax-backup
   │
   ├─ session_search → amax-fallback (隔离)
   │   └─ 失败 → amax

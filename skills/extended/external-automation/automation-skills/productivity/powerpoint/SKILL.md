@@ -321,3 +321,7 @@ with zipfile.ZipFile("/tmp/temp.pptx", 'r') as zin:
 参考 `references/python-pptx-direct-edit.md` 获取完整技术细节。
 
 参考 `references/competition-material-preparation.md` 获取完整竞争类材料模板。
+
+
+# Powerpoint
+

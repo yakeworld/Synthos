@@ -3,7 +3,7 @@
 
 
 name: researcher-portrait
-description: "Directory index for researcher-portrait: researcher-portrait"
+description: "研究者画像：基于文献和分析构建研究者学术画像与影响力评估"
 version: 1.0.0
 license: MIT
 author: Synthos
@@ -59,3 +59,8 @@ metadata:
 # Researcher Portrait
 
 中国研究者学术档案 — 论文/专利/项目结构化画像。
+
+
+
+# Researcher Portrait
+

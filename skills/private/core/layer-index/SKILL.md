@@ -136,3 +136,7 @@ Navigation index for the core research stack: 7 cognitive atoms, paper pipeline,
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 > 对应原则：P3（人机分层 — 路由器负责路由，原子负责执行）
+
+
+# Layer Index
+

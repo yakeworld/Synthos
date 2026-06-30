@@ -179,3 +179,8 @@ cronjob action=update job_id="<id>" model="..." provider="..."
 
 > 每项验证必须可执行、可记录、可复现。
 
+
+
+
+# Cron Diagnostics
+

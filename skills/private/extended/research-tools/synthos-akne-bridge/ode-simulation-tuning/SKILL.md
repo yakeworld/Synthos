@@ -432,3 +432,7 @@ For tension/curvature systems, the variable roles differ from biochemical system
 
 ### Success Criteria
 All 9 metrics pass simultaneously. If any fail, go back to the step where it first started failing and adjust from there.
+
+
+# Ode Simulation Tuning
+

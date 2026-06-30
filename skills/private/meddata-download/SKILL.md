@@ -174,3 +174,8 @@ python3 download_one.py <DOI> <output.pdf>
 > 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+
+
+# Meddata Download
+

@@ -60,7 +60,7 @@ readlink ~/Synthos
 # Identify ~/Synthos files NOT in sda2 (excluding .git, node_modules, outputs/papers internals)
 # Copy only valuable files:
 # - SKILL-*.md (root-level skill entries)
-# - VERIFICATION_GATES.md
+# - docs/verification-gates.md
 # - docs/ (article drafts, technical docs)
 # - experiments/ (experiment records)
 # - papers/ (draft manuscripts)
@@ -146,3 +146,8 @@ anatomy.
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+
+
+# Repo Path Sanity
+

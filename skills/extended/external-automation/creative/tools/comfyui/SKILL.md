@@ -3,7 +3,7 @@
 
 
 name: comfyui
-description: "Directory index for comfyui: comfyui"
+description: "ComfyUI 节点式图像生成：通过 API 管理 ComfyUI 工作流，生成图像和视觉内容"
 version: 1.0.0
 license: MIT
 author: Synthos
@@ -64,3 +64,8 @@ This skill has been compressed. Full content is available in references/.
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+
+
+# Comfyui
+

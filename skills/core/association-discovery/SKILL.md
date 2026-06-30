@@ -1,65 +1,79 @@
 ---
 
-
 name: association-discovery
-description: "Directory index for association-discovery: association-discovery"
-version: 1.0.0
-license: MIT
+description: "跨论文识别知识关联（矛盾、补充、演进、空白），构建知识图谱。基于 Boden 创造力理论分类关联类型。"
 author: Synthos
+license: MIT
+version: 1.0.0
+allowed-tools: shell (bash), Read (view), Write (write), task_delegation (agent, inline)
 metadata:
   synthos:
-    signature: "knowledge_base: dict, query: str -> associations: list[Association] (type, strength, confidence, source)"
-    atom_type: skill
     priority: P1
-    related_skills: []
+    atom_type: cognitive-atom
+    description: "Cross-paper association discovery — identify contradictions, complements, evolution, gaps"
+    signature: "knowledge_base: dict, query: str -> associations: list[Association] (type, strength, confidence, source)"
+    related_skills: [knowledge-extraction, hypothesis-generation, viewpoint-verification]
+
 ---
+
+# Association Discovery — 关联发现
+
+> 跨论文识别知识项之间的关联（矛盾、补充、演进、空白），并报告研究空白。
+
+## 原理层·文言
+
+> 「观其会通，明其异同。」万物互联，非孤立存在。
+> 知同知异，知缺知全。不执一端，不蔽于片。
+
+## 方法层·白话
+
+关联发现是认知管道第3步。输入多篇论文的结构化知识，识别跨论文的知识关联类型。
+
+## 触发条件
+
+- 知识提取 (EXT) 产出多篇结构化知识，需关联后供假设生成 (HYP) 使用
+- 用户要求"找论文间矛盾/补充关系/研究空白"
+- 上游 `knowledge-extraction` 产出待关联知识项
+
+## 输入契约
+
+| 字段 | 类型 | 必需 | 说明 |
+|------|------|:----:|------|
+| `knowledge_base` | list[KnowledgeItem] | ✅ | 多篇论文的结构化知识 |
+| `query` | str | ❌ | 分析焦点（默认: 全量关联） |
+
+## 输出契约
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `associations` | list[dict] | 关联列表（type: contradiction/complement/evolution/gap） |
+| `strength` | float | 关联强度 0-1 |
+| `confidence` | float | 置信度 0-1 |
+| `gaps` | list[str] | 识别的研究空白 |
+
+## 快速参考
+
+详细内容在 `references/boden-creativity/` 和 `references/` 目录。
+
+1. 加载知识库
+2. 逐对比较知识项
+3. 分类关联类型（矛盾/补充/演进/空白）
+4. 输出关联列表和研究空白
+5. 保存至 `outputs/{session}/associations.json`
+
+## 验证清单
+
+- [ ] 所有知识项均已比较
+- [ ] 关联类型覆盖4类（矛盾、补充、演进、空白）
+- [ ] 每条关联有双向引用（A→B, B→A）
+- [ ] 研究空白有具体定位
+
+## 边界声明
+
+见 `BOUNDARY.md` — 本原子只做跨论文关联发现，不做单论文提取、不做假设生成、不做观点验证。
 
 
 
 
 # Association Discovery
 
-## IO_CONTRACT
-
-- **input**: `knowledge_items: list[KnowledgeItem]` — 待分析的知识项集合
-- **output**: `relationships: list[Relationship]` — 知识关系列表（source, target, type, strength, evidence）
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-> 对应原则：P2 机械原子暴露输入输出规范
-
-详细内容请加载此skill后按需执行。核心流程和命令已提炼如下：
-
-## 快速参考
-
-详细文档和完整命令列表已被移至 `references/` 目录以保持简洁。
-This skill has been compressed. Full content is available in references/.
-
-## 验证清单 · VERIFICATION
-
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
-
-
-## 约束规则 · RULES
-
-1. **输入约束**: 参数类型、范围、格式必须校验
-2. **输出约束**: 返回值结构、编码、命名必须一致
-3. **异常约束**: 错误信息必须包含上下文和恢复建议
-4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
-
-## Golden 集合 · GOLDEN SET
-
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
-
-> Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
-
-> 违反规则的操作视为不安全，必须拒绝或隔离。
-
-> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。

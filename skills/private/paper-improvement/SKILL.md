@@ -25,6 +25,7 @@ metadata:
 | 日期 | 版本 | 变更 |
 |------|------|------|
 | 2026-06-27 | 1.2.0 | 重构：提取思想/原则/方法/规则结构，具体代码与案例移至 references/ |
+| 2026-06-30 | 1.3.0 | 新增方法12：四份标准审计报告生成（报告模板+判定规则+state.json更新规范） |
 
 ---
 
@@ -63,15 +64,21 @@ metadata:
 **流程**：
 1. 生成伪造检测对比报告
 2. 读取 paper.tex，定位所有伪造/不一致数值
-3. 按顺序打补丁：Abstract → Figure 1 → Introduction → Algorithm 1 → Results表格 → Discussion → Conclusion
+3. 选择修复策略（见下方模式选择）
 4. 同步更新叙事逻辑（替换数字同时更新故事）
 5. 清理伪造引用条目（.bib文件中不完整条目）
 6. 更新 state.json 并重新编译验证
+
+**修复模式选择规则**：
+- **PATCH 模式**：少数数值变更（≤5 处，如仅 Table 中某几个值）。使用 `patch()` 逐处替换，保证 diff 可控。
+- **重写模式**：大量数值变更（>10 处，如 Abstract + Table1 + Table2 + Table3 + Discussion + Conclusion 全部需要改）。直接 `write_file` 重写整个文件，避免 `patch` 累积错误和反斜杠污染。
+- **判断标准**：数值变更跨越 ≥3 个 section → 重写；全在同一 section 内 → patch。
 
 **关键规则**：
 - 修正数值必须来自实际实验输出（ablation_v3.json等）
 - 多实验JSON混淆陷阱：每个JSON有不同数值集，区分 `paper_claims`（旧错误值）、`actual_values`（修正值）、`levels`（原始输出）
 - 以 `levels` 或 `actual_values` 为准，**不参考 `paper_claims`**
+- **质量检查是起点，不是终点**：发现问题必须触发修复流程。质量检查 → 定位问题 → 选择修复模式 → 执行修复 → 编译验证 → 更新 state.json。不能只输出报告不执行修复。
 
 ### 方法 2：实验模型清单一致性校验
 
@@ -224,15 +231,72 @@ content.replace('\\\\cite', '\\cite').replace('\\\\textbf', '\\textbf')
 | 未定义引用逐轮增加 | bibtex 未运行或 .aux 过期 | 完整清理后重跑 5 轮 |
 | 编译无限循环 Rerun | 引用/页码变化未收敛 | 5 轮后检查 |
 
-## 五、参考
+### 方法 12：四份标准审计报告生成
+
+**触发条件**：论文已通过所有 G1-G7 闸门（state.json gate_status=PASS, quality_score ≥ 85），但 07-quality/ 目录中缺少完整的 4 份标准审计报告（report-1 到 report-4）。常见于已走完管线但报告文件被删除或未生成的论文。
+
+**核心流程**：
+
+```
+读取论文全文 → 分析 state.json + references.bib + 各 step_*.md → 生成 4 份标准报告 → 更新 state.json audit_status → 标记队列 VERIFIED
+```
+
+**步骤**：
+
+1. **读取论文全文**：`01-manuscript/paper.tex` — 提取所有数值、方法、结论、引用
+2. **读取 state.json**：提取 quality_score、gate_status、gates_result、reference_health、d8_d10a_scan
+3. **读取 step_*.md**：从 07-quality/ 中提取已有质量检查信息
+4. **读取 references.bib**：验证 D8/D10a
+5. **生成 4 份报告**（见下方模板规范）
+
+**报告模板规范**：
+
+| 报告 | 文件名 | 核心内容 |
+|:----:|:------|:--------|
+| 报告一 | `report-1-universal-six-domains.md` | 通用六域评分（Q1假说→Q6价值），六域总分/60，问题清单（P0/P1/P2） |
+| 报告二 | `report-2-*(specialty).md` | 方法论专项（ODE/PINN/Sklearn等），检查项逐项判定，消融实验验证，指标检查 |
+| 报告三 | `report-3-references-audit.md` | 每个引用键的恰当性判定，D8/D10a审计，引文网络分析，缺失引用检测 |
+| 报告四 | `report-4-inspector-report.md` | 凡数必源矩阵（所有数值→原文溯源），凡引必查清单，代码诚实验证，虚构检测扫描 |
+
+**报告四·凡数必源矩阵规范**：
+- 扫描 paper.tex 中所有数值声明（百分比、R²、MAPE、Accuracy、阈值、Sobol指数等）
+- 每个数值必须标注源位置（论文段落/Table编号/行号）
+- 检查跨位置一致性（Abstract vs Results vs Table vs Conclusion）
+- 可追溯率 = 可溯源数值 / 总数值声明
+
+**报告四·凡引必查清单规范**：
+- 每个引用键检查：是否有PDF/DOI、体裁是否匹配、DOI是否有效
+- 通过率 ≥ 90% 为 PASS
+
+**判定规则**：
+- 四份报告全部 [OK] PASS → gate_status 更新为 VERIFIED，audit_status = "VERIFIED"
+- 任何报告有 P0 → 标记 BLOCKED，标注具体问题
+- 报告有 P1/P2 但无 P0 → 仍可 VERIFIED，P1/P2 作为已知弱项记录
+
+**更新 state.json**：
+- 添加 `audit_status: "VERIFIED"` 或 `"BLOCKED"`
+- 添加 `audit_date`
+- 添加 `audit_reports` 文件列表
+- 添加 `audit_summary`（关键指标汇总）
+- 添加 `pipeline_trace` 条目记录审计步骤
+
+**常见陷阱**：
+- 论文类型决定报告二标题：ODE 用 `report-2-ode-pinn-specialty.md`，Sklearn 用 `report-2-sklearn-specialty.md` 等
+- references.bib 可能格式损坏（如 113-nystagmus 的 author/title/year 字段混乱）→ D8/D10a 功能完整但格式需修复标记为 WARN
+- 纯合成数据论文（如 113-nystagmus）无临床验证 → 已在 Limitations 中说明的可接受，标记为已知限制而非缺陷
+- "Accuracy" 指标定义不清晰 → 在报告中要求澄清，但不阻断审计
+
+## 四、参考
 
 | 文件 | 内容 |
 |------|------|
 | `references/benchmark-alignment-checklist.md` | 实验模型清单一致性校验清单 |
 | `references/hcs3wt-fake-doi-replacement-2026-06-25.md` | HCS-3WT实战：假DOI替换记录 |
+| `references/hcs3wt-p0-remediation-full-cycle-2026-06-29.md` | HCS-3WT实战：质量检查→P0修复完整闭环（数值伪造修复模式选择、引用批量修复、数据集统一） |
 | `references/pima-catboost-claim-verification-2026-06-25.md` | PIMA实战：CatBoost声称验证 |
 | `references/latex-citation-replacement-fallback.md` | LaTeX引用替换回退方案（sed）|
 | `references/latex-compilation-workflow.md` | LaTeX编译工作流详细说明 |
+| `references/standard-audit-report-templates.md` | 四份标准审计报告模板和生成规范 |
 | `BOUNDARY.md` | 技能边界声明 |
 | `EVIDENCE_SCHEMA.md` | 技术证据架构 |
 | `IO_CONTRACT.md` | 输入输出规范 |
@@ -261,3 +325,8 @@ content.replace('\\\\cite', '\\cite').replace('\\\\textbf', '\\textbf')
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+
+
+# Paper Improvement
+

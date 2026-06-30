@@ -3,7 +3,7 @@
 
 
 name: medical-image-centerline
-description: "Directory index for medical-image-centerline: medical-image-centerline"
+description: 医学图像中心线提取：从 CT/MRI 等医学图像中自动提取解剖结构中心线
 version: 1.0.0
 license: MIT
 author: Synthos
@@ -62,3 +62,8 @@ metadata:
 从3D分割标签提取中心线 — 图论环基法/中位切+图直径法。
 
 详细内容请加载对应 references/ 目录下的参考文件。
+
+
+
+# Medical Image Centerline
+

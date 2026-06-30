@@ -212,6 +212,7 @@ Even when `.bashrc` exports are placed **before** the `case $- in ... esac` guar
 ## Session Details
 - [Ubuntu .bashrc non-interactive trap](references/ubuntu-bashrc-trap.md) — full case study from 2026-05-08 session with Semantic Scholar API key (Hermes Agent subprocess isolation discovered)
 - [API Key Fallback Pattern](references/api-key-fallback-pattern.md) — file-based fallback for API keys in subprocess contexts (most reliable for automated systems)
+- [SS Dual-Key Failover](references/ss-dual-key-failover.md) — dual-key ring + automatic failover for Semantic Scholar API (iYTNXX legacy + s2k- prefix, key rotation on failure)
 
 ## 验证清单 · VERIFICATION
 
@@ -241,3 +242,8 @@ Even when `.bashrc` exports are placed **before** the `case $- in ... esac` guar
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+
+
+# Debug Env Variables
+

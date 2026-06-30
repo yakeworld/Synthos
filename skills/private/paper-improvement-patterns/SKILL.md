@@ -292,3 +292,8 @@ echo "total: $(wc -l < /tmp/bibitems.txt)"
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
 > 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。
+
+
+
+# Paper Improvement Patterns
+

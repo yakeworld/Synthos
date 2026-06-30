@@ -217,3 +217,8 @@ read_file(path='/home/yakeworld/桌面/social-media/xhs/codex-vllm-原生直连/
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+
+
+# Xhs Content
+

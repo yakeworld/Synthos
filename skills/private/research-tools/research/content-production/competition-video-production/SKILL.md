@@ -3,7 +3,7 @@
 
 
 name: competition-video-production
-description: "Directory index for competition-video-production: competition-video-production"
+description: "竞赛视频制作：学术研究竞赛的视频材料制作指南与模板"
 version: 1.0.0
 license: MIT
 author: Synthos
@@ -63,3 +63,8 @@ This skill has been compressed. Full content is available in references/.
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+
+
+# Competition Video Production
+

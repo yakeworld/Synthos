@@ -147,3 +147,8 @@ Scan Sources -> Extract -> Score -> Flag -> Queue
 ---
 
 *善战者，求之于势，不责于人。发现趋势，创造机会。*
+
+
+
+# Proactive Discovery
+

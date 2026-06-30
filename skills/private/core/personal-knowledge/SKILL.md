@@ -149,3 +149,8 @@ Support these query patterns:
 ---
 
 *格物致知，知止而后有定. Scattered knowledge, once organized, becomes wisdom.*
+
+
+
+# Personal Knowledge
+

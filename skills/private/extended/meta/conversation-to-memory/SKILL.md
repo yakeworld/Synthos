@@ -228,3 +228,8 @@ Step 5: 更新 USER.md（声明式事实）+ MEMORY.md（注意事项）
 - **Golden Error**: 预期错误信息（覆盖失败路径）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
+
+
+
+# Conversation To Memory
+

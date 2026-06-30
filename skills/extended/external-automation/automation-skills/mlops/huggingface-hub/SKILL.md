@@ -147,3 +147,8 @@ The `hf` command is the modern command-line interface for interacting with the H
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+
+
+# Huggingface Hub
+

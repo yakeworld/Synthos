@@ -89,6 +89,27 @@ npm rm -g @codexapi/codexclaude
 codex --version
 ```
 
+## ⚡ Detach 模式：并行执行任务
+
+**当方案已明确时，用 `codex exec` 分发执行任务，不阻塞主对话。** 适用于已知步骤的批量执行（修复 10 篇论文的 .bib、编译所有论文等）。
+
+```bash
+# 写任务文件
+write_file: /tmp/task.md
+# ... 任务内容 ...
+
+# Detach 执行（一次性任务，发完不可修改）
+cat << 'PROMPT' | codex --yolo exec --skip-git-repo-check
+请读取 /tmp/task.md 并执行。完成后在 stdout 输出结果汇总。
+PROMPT
+```
+
+**关键区别**：
+- **tmux 交互** = 讨论、协商、多轮对话（可中途修改任务）
+- **detach exec** = 明确任务的批量执行（不可中途修改，不阻塞）
+
+详见 `codex-tmux-control` 技能中的 references/detach-mode.md。
+
 ## 配置文件 ~/.codex/config.toml
 
 核心配置项：
@@ -286,3 +307,8 @@ opencode 使用独立的配置体系（`~/.local/share/opencode/auth.json`），
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+
+
+# Codex Cli
+

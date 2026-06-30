@@ -132,6 +132,10 @@ def detect_direction_reversal(actual_before, actual_after, paper_before, paper_a
 6. **Kaggle 环境差异** — Python 3.11, sklearn 1.3.x, imblearn 0.12.x 是常见基线
 7. **Track A 论文位置** — 可能不在 Synthos/outputs/ 下，在 /media/yakeworld/sda2/投稿文件汇总/
 8. **发现即修复** — 不在同一轮中修复的问题清单不是有效审计
+9. **数据集版本陷阱** — 常见数据集（如 UCI WDBC）有多个版本（699 样本 vs 569 样本，10 特征 vs 30 特征）。论文可能声称一个版本，代码使用另一个。**每次审计必须对比 experiment_results.json 的 n_samples/n_features 与论文描述**。详情见 `references/wdbc-dataset-version-trap-2026-06-29.md`。
+10. **clinical_missing_values** — UCI WBC Original 的 16/699 (2.3%) 缺失集中在单列（Bare Nuclei, col 6）。在临床数据论文中，dropna 是标准做法（缺失 = "不可评估" = 真实医学数据缺失机制）。Mode/KNN imputation 仅在缺失 >5% 时考虑。**每次处理 UCI WBC 原始数据必须记录缺失位置和处理方法**。详情见 `references/uci-wbc-missing-value-pattern.md`。
+11. **thebibliography 与 references.bib 独立** — 两者必须一致。thebibliography 中有但 bib 中无 → 孤儿引用；bib 中有但 thebibliography 中无 → 未使用条目。必须同步。
+12. **跨数据集验证** — 论文用多个数据集验证时，每个数据集的 n_samples、n_features、患病率、缺失值处理方法必须一致。自动化率、准确率、FN reduction 是关键跨数据集指标。两个独立数据集（如 WDBC + WBC Original）比同数据集不同预处理更能证明方法鲁棒性。
 
 ## 参考文件
 
@@ -139,12 +143,14 @@ def detect_direction_reversal(actual_before, actual_after, paper_before, paper_a
 - `references/pima-crispdm-audit-2026-06-20.md` — PIMA-CRISPDM 完整审计报告，含双结构检测、声-实对比表、方向性反转
 - `references/notebook-code-paper-audit.md` — Notebook ↔ Code ↔ Paper 对齐审计
 - `references/protocol-gap-analysis-pima.md` — Protocol Gap Analysis 方法论，数据一致性验证
+- `references/wdbc-dataset-version-trap-2026-06-29.md` — WDBC 多版本陷阱：699 样本 vs 569 样本，10 特征 vs 30 特征的检测与修复
+- `references/uci-wbc-missing-value-pattern.md` — UCI WBC 数据集缺失值处理模式：WBC Original 16/699 (2.3%) 缺失集中在 Bare Nuclei 列，所有缺失集中单列，临床论文标准 dropna
 
 ## 版本历史
 
 | 日期 | 版本 | 变更 |
 |------|------|------|
-| 2026-06-27 | 2.0.0 | 重构：提炼思想/原理/IO Contract/流程/方法/规则。代码示例、案例移至 references/ |
+| 2026-06-29 | 2.1.0 | 新增：数据集版本陷阱规则、thebibliography与bib同步规则 |
 
 ## 契约层 · BOUNDARY
 
@@ -173,3 +179,8 @@ def detect_direction_reversal(actual_before, actual_after, paper_before, paper_a
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+
+
+# Reproducibility Audit
+

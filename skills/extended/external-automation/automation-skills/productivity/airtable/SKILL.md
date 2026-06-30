@@ -3,7 +3,7 @@
 
 
 name: airtable
-description: "Directory index for airtable: airtable"
+description: Airtable 集成：通过终端管理 Airtable 表格数据，支持 CRUD 操作和自动化
 version: 1.0.0
 license: MIT
 author: Synthos
@@ -60,3 +60,8 @@ metadata:
 # Airtable
 
 Airtable REST API — 记录CRUD, 筛选, upsert。
+
+
+
+# Airtable
+

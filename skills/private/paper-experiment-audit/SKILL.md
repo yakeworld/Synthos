@@ -168,21 +168,35 @@ metadata:
 6. 修复图脚本：fig3/fig4 从硬编码改为从 `experiment_results.json` 读取
 7. 编译验证 + 更新 state.json：score 更新，last_modification 记录变更
 **关键规则**：
-- 每次 patch 后检查 Table 最后一行是否缺 `\\\\`（导致 `\\bottomrule` 错误）
+- 每次 patch 后检查 Table 最后一行是否缺 `\\\\`（导致 `\\\\bottomrule` 错误）
 - 更新后必须 `grep` 全文检查旧数值残留
 - 数据集描述（样本量、特征数）也必须同步更新
 
-### 2026-06-29 实战：论文图片完整性审计（HCS-3WT）
-**症状**：`05-figures` 目录有 6 张图（fig1-fig6），但论文正文只引用了 1 张（fig1），5 张缺失。
+### 2026-06-29 实战 v2：数据集版本混淆 + 消融实验缺失 + 图片重复引用
+**症状**：论文称 699 样本/9 特征，代码实际 569 样本/30 特征；消融实验 5 个变体无代码实现；fig6 被 2 个不同 `\ref` 共用同一 PDF。
+**根因**：WDBC 有两个主要版本（1995 年 699 样本 10 特征 vs UCI 569 样本 30 特征），论文引用了其中一个但代码使用另一个。消融实验可能从未运行。
+**修复**：
+1. 确认论文意图使用哪个版本 → 改代码或改论文
+2. 在代码中实现所有消融变体 → 运行实验 → 生成结果
+3. 为重复引用的图生成独立可视化（多子图或拆分）
+4. 检查 thebibliography 与 references.bib 是否一致（孤儿 + 未使用条目）
+
+### 2026-06-29 实战：论文图片完整性审计（HCS-3WT v2）
+**症状**：fig6 被用于 2 个不同 `\ref` 标签（fig:threshold 和 fig:sensitivity），实际只包含一种可视化。消融实验声称有 5 个变体结果，代码中无对应实现。
 **检测方法**：
-1. 从 LaTeX 提取所有 `\\includegraphics{...}` 路径 → 得到论文引用的图
+1. 从 LaTeX 提取所有 `\includegraphics{...}` 路径 → 得到论文引用的图
 2. 从 `05-figures/` 目录获取所有 `.pdf` 文件列表
 3. 对比两者：目录中存在但论文未引用的 = 缺失
-**修复**：在 LaTeX 正文中为每张缺失图添加 `\begin{figure}...\includegraphics...\end{figure}` 块。
+4. **检查重复引用**：同一 PDF 被多次 `\includegraphics` → 检查是否对应不同内容
+5. **检查消融实验**：论文声称的消融配置必须有对应代码实现或实验数据
+**修复**：
+- 重复引用需生成独立图片或改用多子图布局
+- 消融实验需在代码中实现并运行
 **关键规则**：
-- 每次审计论文必须同时检查：数值一致性 + 图片完整性（论文引用 vs 目录存在）
-- 图片缺失不仅是"少了张图"，更是"数据支持不够"——每张数据图都应有对应的生成脚本
+- 每次审计论文必须同时检查：数值一致性 + 图片完整性 + 消融实验可复现性
+- 图片缺失/重复不仅是"少了张图"，更是"数据支持不够"——每张数据图都应有对应的生成脚本
 - 检查 `03-code/experiments/` 目录中生成脚本数量是否 >= `05-figures/` 中 PDF 数量
+- **thebibliography 与 references.bib 必须同步**：前者是论文中的参考文献列表，后者是 BibTeX 数据库。两者不一致说明引用管理混乱。检查 both 是否有孤儿条目（thebibliography 有但 bib 无 / bib 有但 thebibliography 无）
 
 ## 参考文件
 
@@ -191,13 +205,14 @@ metadata:
 - `references/notebook-vs-script-pattern.md` — Notebook vs Python 脚本对应关系模式
 - `references/paper-json-numerical-consistency-check.md` — 论文数值与experiment_results.json一致性审计方法
 - `references/hcs3wt-p0-numerical-remediation-2026-06-29.md` — HCS-3WT实战：P0数值修复完整案例（k=6统一、数值替换、编译验证）
-- `references/hcs3wt-figure-audit-2026-06-29.md` — HCS-3WT实战：论文图片完整性审计（fig2-fig6缺失检测与修复方法）
+- `references/hcs3wt-figure-audit-2026-06-29.md` — HCS-3WT实战：论文图片完整性审计（fig6重复引用检测、消融实验验证方法）
+- `references/hcs3wt-complete-audit-2026-06-29.md` — HCS-3WT完整质量检查：P0数值、数据集版本、引用完整性、消融实验
 
 ## 版本历史
 
 | 日期 | 版本 | 变更 |
 |------|------|------|
-| 2026-06-27 | 2.0.0 | 重构：提炼思想/原理/IO Contract/流程/方法/规则。具体命令、案例移至 references/ |
+| 2026-06-29 | 2.1.0 | 新增：数据集版本陷阱（WDBC 699 vs 569）、消融实验可复现性检查、thebibliography与bib同步检查、fig6重复引用检测 |
 | 2026-06-24 | 1.4.0 | 新增 OpenML 外部数据库实验真实性验证、多 JSON 源 Ensemble 交叉验证 |
 | 2026-06-23 | 1.3.0 | 新增多脚本-多输出交叉验证 |
 | 2026-06-21 | 1.2.0 | 新增 SHAP 模型源验证、声称-实验交叉验证、后台自动执行模式 |
@@ -238,3 +253,8 @@ metadata:
 > 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+
+
+# Paper Experiment Audit
+

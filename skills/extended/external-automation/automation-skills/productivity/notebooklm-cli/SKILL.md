@@ -82,6 +82,7 @@ metadata:
 - ⚠️ `source delete`在Shared项目伪成功(仅Owner有效)
 - ⚠️ PDF索引超时: 无可提取文本层, 预先`pdftotext`检查
 - ⚠️ **PDF源静默失败**: `notebooklm source add file.pdf` 可能返回 `status: error` 且无stderr提示。检测方式: 立即 `notebooklm source list`，若状态为error则回退到 `pdftotext file.pdf -` 提取文本后以 `--type text` 上传
+- ⚠️ **Storage state path limitation**: The CLI reads from `~/.notebooklm/storage-state.json` by default. Environment variables `NOTEBOOKLM_STORAGE_STATE` and `PLAYWRIGHT_STORAGE_STATE` do NOT work for custom paths. `--storage-state` and `-s` flags are not supported. Profile path `~/.notebooklm/profiles/<name>/storage_state.json` is NOT read. Use `notebooklm login` to re-authenticate.
 - ⚠️ **Security Scan拦截混合语言Prompt**: `notebooklm ask` 在Prompt含中文字符时可能触发confusable Unicode安全扫描（HIGH级别，`tirith:confusable_text`）。解决方式: 使用纯英文ASCII Prompt发送
 - ⚠️ **Source状态不一致**: 刚上传的source可能 `list` 返回空列表（API缓存未刷新），重试2-3次后通常会恢复
 - ⚠️ **Google服务网络不可达**: 在受限网络环境下（如无外网代理的服务器），`notebooklm list` 等命令会在 CSRF token 获取阶段抛出 `httpx.ConnectTimeout`。诊断方法：
@@ -144,3 +145,7 @@ Layer B 论文质量审计的完整工作流见 `references/layer-b-audit-workfl
 6. **阈值不变**：≥0.85=T1, 0.75-0.84=T2, <0.75=不通过
 
 详见 `references/layer-b-manual-fallback.md`。
+
+
+# Notebooklm Cli
+

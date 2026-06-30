@@ -3,7 +3,7 @@
 
 
 name: computational-ode-modeling
-description: "Directory index for computational-ode-modeling: computational-ode-modeling"
+description: 计算 ODE 建模：用神经网络求解/反求 ODE 参数，支持 PINN/DeepONet 等方法
 version: 1.0.0
 license: MIT
 author: Synthos
@@ -199,3 +199,8 @@ dAdt = lam*max(0, S_high-S) - mu*A + growth  # Has negative term proportional to
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
 > 每个示例必须可独立运行、有明确输入输出、包含错误处理。
+
+
+
+# Computational Ode Modeling
+
