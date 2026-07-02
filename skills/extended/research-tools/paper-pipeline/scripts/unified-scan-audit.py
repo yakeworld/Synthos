@@ -31,7 +31,7 @@ def parse_bib_entries(bib_path):
     entries = []
     
     # Match @type{key, ...} blocks
-    pattern = r'@(article|book|inbook|incollection|inproceedings|misc|phdthesis|proceedings|techreport|unpublished)\s*\{([^,]+),'\n\s*\{(?:.*?)\n.*?^\}'
+    pattern = r'@(article|book|inbook|incollection|inproceedings|misc|phdthesis|proceedings|techreport|unpublished)\s*\{([^,]+),'
     
     # Simple entry splitter
     in_entry = False
@@ -105,7 +105,7 @@ def classify_suspicious(entries):
         
         # Check for non-standard publisher names in author
         for keyword in ['CASIA', 'MMU', 'UCI', 'arXiv', 'Google Scholar', 'Wiley', 'Springer', 'IEEE']:
-            if re.search(rf'author\s*=\s*\{(?:\s*{keyword}\s*,\s*)*{keyword}\s*\}}', e['content'], re.IGNORECASE):
+            if re.search(rf'author\s*=\s*\{{{keyword}\s*,\s*{keyword}\s*}}', e['content'], re.IGNORECASE):
                 if 'missing author field' not in issues:
                     issues.append(f'institution listed as author: {keyword}')
         

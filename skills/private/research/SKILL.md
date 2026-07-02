@@ -1,5 +1,6 @@
 ---
 name: research
+description: Skill file
 license: MIT
 
 ## Operational Steps

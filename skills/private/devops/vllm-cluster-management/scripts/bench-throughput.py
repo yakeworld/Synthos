@@ -4,7 +4,7 @@ import json, time
 from urllib.request import Request, urlopen
 
 BASE = "http://100.125.10.93:8000/v1/chat/completions"
-AUTH=*** ***"
+AUTH = "your-token-here"
 MODEL = "qwen3.6-35b-nvfp4"
 
 def chat(messages, max_tokens=64, temp=0.1):
