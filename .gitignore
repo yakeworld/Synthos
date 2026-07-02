@@ -225,4 +225,5 @@ tools/research/
 # ============================================
 evolution-loop.py
 pinn_gen_main.py
-pinn_gen_worker.pypaper-queue.json
+pinn_gen_worker.py
+paper-queue.json
