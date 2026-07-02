@@ -1,6 +1,26 @@
 ---
 
 name: notebooklm-cli
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: productivity
+signature: "notebooklm-cli -> productivity: 子skill | NotebookLM CLI全功能指南 — Q&A知识提取、内容生成(报告/视频/音频/信息图/幻灯片)、文献检索。响应paper-pipel"
 related_skills: ["knowledge-extraction"]
 description: 子skill | NotebookLM CLI全功能指南 — Q&A知识提取、内容生成(报告/视频/音频/信息图/幻灯片)、文献检索。响应paper-pipeline的P1阶段调用。
 version: 1.0.0
@@ -16,9 +36,7 @@ metadata:
     author: Synthos
     signature: 'action: str, params: dict -> result: dict'
 
-
 ---
-
 
 ## IO_CONTRACT
 
@@ -26,8 +44,6 @@ metadata:
 - **output**: `result: dict — 技能执行结果（结构因技能而异）`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-
 
 # NotebookLM CLI — 知识大脑
 
@@ -100,7 +116,6 @@ metadata:
 
 Layer B 论文质量审计的完整工作流见 `references/layer-b-audit-workflow.md`。涵盖：项目创建→源上传（PDF/引用/质量报告）→纯英文ASCII Prompt发送→评分阈值判定→**pipeline state cross-validation（检测false positive）**→报告归档。
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
@@ -108,13 +123,11 @@ Layer B 论文质量审计的完整工作流见 `references/layer-b-audit-workfl
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
 
-
 ## Golden 集合 · GOLDEN SET
 
 - **Golden Input**: 标准输入样本（覆盖正常路径）
 - **Golden Output**: 预期输出（精确匹配或格式校验）
 - **Golden Error**: 预期错误信息（覆盖失败路径）
-
 
 ## 示例 · EXAMPLES
 
@@ -146,6 +159,4 @@ Layer B 论文质量审计的完整工作流见 `references/layer-b-audit-workfl
 
 详见 `references/layer-b-manual-fallback.md`。
 
-
 # Notebooklm Cli
-

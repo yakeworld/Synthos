@@ -1,5 +1,25 @@
 ---
 name: dataset-discovery
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: research-tools
+signature: "dataset-discovery -> research-tools: | Platform | REST API | Scraping | Auth Required | Notes |"
 description: "| Platform | REST API | Scraping | Auth Required | Notes |"
 version: 1.0.0
 license: MIT
@@ -13,18 +33,12 @@ metadata:
 
 ---
 
-
-
-
-
 ## IO_CONTRACT
 
 - **input**: `domain: str, data_type: str` — 用户请求描述、上下文信息
 - **output**: `datasets: list — 数据集发现`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-
 
 # Dataset Discovery
 
@@ -41,7 +55,6 @@ metadata:
 2. **Value types**: All quality metric values are **strings** (e.g., `
 
   io_contract: input: ['search_query: str, platforms: list[str] -> dataset_results: list[Dataset]', 'output: ['dataset_results: list[Dataset] (name, platform, url, description, size, access_type, relevance)']
-
 
 # Dataset Discovery
 
@@ -64,8 +77,6 @@ metadata:
     signature: 'search_query: str, platforms: list[str] -> dataset_results: list[Dataset]'
     related_skills: ["healthcare-dataset-discovery"]
 ---
-
-
 
 # Dataset Discovery
 
@@ -128,14 +139,12 @@ The UCI repository moved to SPA at `archive.ics.uci.edu`. Direct file links (e.g
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -149,7 +158,4 @@ The UCI repository moved to SPA at `archive.ics.uci.edu`. Direct file links (e.g
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Dataset Discovery
-

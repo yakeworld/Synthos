@@ -1,5 +1,12 @@
 ---
 name: ode-simulation-tuning
+
+## Operational Steps
+1. 
+2. 
+3. 
+category: research-tools
+signature: "ode-simulation-tuning -> research-tools: When building 2-ODE computational models for SCI papers, the simulation rarely p"
 description: "When building 2-ODE computational models for SCI papers, the simulation rarely passes all quality gates on first run. Metrics that commonly fail: R² (needs smooth fit), AUC (needs proper distribution comparison), ablation (needs dominant coupling), accuracy (needs clean transitions). This skill captures the systematic tuning methodology used across papers 90–140+."
 version: 1.0.0
 license: MIT
@@ -14,18 +21,12 @@ metadata:
 ---
 version: 1.0.0
 
-
-
-
-
 ## IO_CONTRACT
 
 - **input**: `ode_model: str, params: dict` — 用户请求描述、上下文信息
 - **output**: `tuned_model: dict — ODE模拟调优结果`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-
 
 # ode-simulation-tuning
 ## ⚡ P0 Simulation tuning for ODE/2-ODE papers — systematic metric optimization
@@ -121,6 +122,12 @@ This pattern occurs in **degenerative systems with compensatory mechanisms** (e.
 | Macular Deg (P144) | 0.50 | 0.10 | 0.20 | 0.15 | 0.12 | — | 0.35/0.45 | Biphasic R(t): R_peak=0.782, R_treatment=0.612. Degenerative with compensation-then-failure. R↔D feedback ranks #2 in Sobol (26.5%). |
 
 ### Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
 1. **S_pre too high** (e.g., 0.70+ when baseline should be ~0.45): Homeostasis setpoint too high or direct stimulus too strong.
 2. **R² < 0.90 with smooth data**: Use exponential rise fit, not spline.
 3. **AUC ~0.65**: Using time-based ROC. Switch to pre/post distribution comparison.
@@ -148,7 +155,6 @@ For tension/curvature systems, the variable roles differ from biochemical system
 
   io_contract: input: ['ode_model: str, simulation_config: str, target_metrics: dict -> tuned_metrics: dict', 'output: ['tuned_metrics: dict (r2: float, auc: float, accuracy: float, mape: float, ablation_results: dict, bifurcation_analysis: dict, improvement_plan: list[str])']
 
-
 # ode-simulation-tuning
 ## ⚡ P0 Simulation tuning for ODE/2-ODE papers — systematic metric optimization
 
@@ -242,7 +248,6 @@ This pattern occurs in **degenerative systems with compensatory mechanisms** (e.
 | Retinal Shear (P140 v2) | 0.65 | 0.12 | 0.04 | 0.35 | 0.14 | 0.06 | 0.42 | Strong flow coupling, additive eps*(E-E_hp), no-coupling removes ALL mechanisms. R²=0.997, ablation=5.81x |
 | Macular Deg (P144) | 0.50 | 0.10 | 0.20 | 0.15 | 0.12 | — | 0.35/0.45 | Biphasic R(t): R_peak=0.782, R_treatment=0.612. Degenerative with compensation-then-failure. R↔D feedback ranks #2 in Sobol (26.5%). |
 
-### Pitfalls
 1. **S_pre too high** (e.g., 0.70+ when baseline should be ~0.45): Homeostasis setpoint too high or direct stimulus too strong.
 2. **R² < 0.90 with smooth data**: Use exponential rise fit, not spline.
 3. **AUC ~0.65**: Using time-based ROC. Switch to pre/post distribution comparison.
@@ -276,14 +281,11 @@ metadata:
     related_skills: [knowledge-extraction, knowledge-acquisition, paper-pipeline, quality-gate, research-paper-search, paper-cron-scan, paper-references-scanning]
 ---
 
-
-
 # ode-simulation-tuning
 ## ⚡ P0 Simulation tuning for ODE/2-ODE papers — systematic metric optimization
 
 ### Problem
 When building 2-ODE computational models for SCI papers, the simulation rarely passes all quality gates on first run. Metrics that commonly fail: R² (needs smooth fit), AUC (needs proper distribution comparison), ablation (needs dominant coupling), accuracy (needs clean transitions). This skill captures the systematic tuning methodology used across papers 90–140+.
-
 
 ## 验证清单 · VERIFICATION
 
@@ -293,14 +295,12 @@ When building 2-ODE computational models for SCI papers, the simulation rarely p
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -401,7 +401,6 @@ This pattern occurs in **degenerative systems with compensatory mechanisms** (e.
 | Retinal Shear (P140 v2) | 0.65 | 0.12 | 0.04 | 0.35 | 0.14 | 0.06 | 0.42 | Strong flow coupling, additive eps*(E-E_hp), no-coupling removes ALL mechanisms. R²=0.997, ablation=5.81x |
 | Macular Deg (P144) | 0.50 | 0.10 | 0.20 | 0.15 | 0.12 | — | 0.35/0.45 | Biphasic R(t): R_peak=0.782, R_treatment=0.612. Degenerative with compensation-then-failure. R↔D feedback ranks #2 in Sobol (26.5%). |
 
-### Pitfalls
 1. **S_pre too high** (e.g., 0.70+ when baseline should be ~0.45): Homeostasis setpoint too high or direct stimulus too strong.
 2. **R² < 0.90 with smooth data**: Use exponential rise fit, not spline.
 3. **AUC ~0.65**: Using time-based ROC. Switch to pre/post distribution comparison.
@@ -433,6 +432,4 @@ For tension/curvature systems, the variable roles differ from biochemical system
 ### Success Criteria
 All 9 metrics pass simultaneously. If any fail, go back to the step where it first started failing and adjust from there.
 
-
 # Ode Simulation Tuning
-

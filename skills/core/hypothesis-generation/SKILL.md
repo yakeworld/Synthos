@@ -1,5 +1,25 @@
 ---
 name: hypothesis-generation
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: core
+signature: "hypothesis-generation -> core: Generate falsifiable, prioritised research hypotheses from gap analysis — with f"
 description: "Generate falsifiable, prioritised research hypotheses from gap analysis — with falsifiability tests, evidence matrices, clinical translation assessment, and composite scoring."
 version: 1.1.0
 license: MIT
@@ -332,13 +352,11 @@ PINN/ODE 候选常产生 3-5 个假说，各对应不同的 ODE 参数（增益�
 
 ### 示例 1: OKR-adaptation-PINN (2026-06-20)
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## 约束规则 · RULES
 
@@ -346,7 +364,6 @@ PINN/ODE 候选常产生 3-5 个假说，各对应不同的 ODE 参数（增益�
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -383,7 +400,4 @@ PINN/ODE 候选常产生 3-5 个假说，各对应不同的 ODE 参数（增益�
 - **门控恢复**: CONDITIONAL 0.73 → PASS 0.85（+12分）
 - **核**: K-016 主动肌疲劳核 — 首个主动肌疲劳核（未来心脏/骨骼肌/膀胱模板）
 
-
-
 # Hypothesis Generation
-

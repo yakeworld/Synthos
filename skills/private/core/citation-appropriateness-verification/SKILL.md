@@ -1,9 +1,29 @@
 ---
 name: citation-appropriateness-verification
+license: MIT
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: core
 description: 逐篇阅读参考文献全文，对比论文引用语境，验证引用是否恰当、充分、准确。引文功能分类 + 引文网络分析 + 引文性能基准提取。独立于G5形式检查（DOI/D10a），专注于引用实质质量。
 version: 3.1.0
 priority: P0
-related_skills: [quality-gate, paper-references-scanning, reference-verification, pdf-download-racing]
+related_skills: ["quality-gate"]
 signature: "citation-appropriateness-verification -> processed_result"
 ---
 
@@ -117,7 +137,7 @@ tmux send-keys -t codex-quality '请读取 /tmp/citation_task.md 并执行' Ente
 ### 输入
 
 ```
-paper_dir: str  # 论文目录路径（含01-manuscript/paper.tex, 06-references/, references.bib）
+paper_dir: str  # 论文目录路径（含01-manuscript/paper.tex, 06-ref/, ref/bib）
 ```
 
 ### 输出
@@ -270,7 +290,6 @@ G5 引用质量门:
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## Golden 集合 · GOLDEN SET
 
 - **Golden Input**: 标准输入样本（覆盖正常路径）
@@ -281,7 +300,4 @@ G5 引用质量门:
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Citation Appropriateness Verification
-

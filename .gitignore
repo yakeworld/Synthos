@@ -201,3 +201,28 @@ skills/private/**/temp/
 skills/private/**/*.bak
 skills/private/**/*.log
 
+
+# ============================================
+# 19. OpenCode 运行时依赖
+# ============================================
+.opencode/node_modules/
+.opencode/package-lock.json
+.opencode/bun.lock
+
+# ============================================
+# 20. 新的工具目录和文档（归档/不入库）
+# ============================================
+docs/cases/
+docs/reports/
+references/
+tools/_archive/
+tools/monitoring/
+tools/pptx/
+tools/research/
+
+# ============================================
+# 21. 根目录 Python 脚本（已存档，不入库）
+# ============================================
+evolution-loop.py
+pinn_gen_main.py
+pinn_gen_worker.py

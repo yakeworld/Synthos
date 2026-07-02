@@ -1,7 +1,26 @@
 ---
 
-
 name: 3d-curve-fitting-figures
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: creative
+signature: "3d-curve-fitting-figures -> creative: 3D曲线拟合图的生成规范：从点云到拟合曲线到出版级Figure。 覆盖拟合重建陷阱、多标本复合布局、分段数据合并、argsort路径错乱。"
 description: 3D曲线拟合图的生成规范：从点云到拟合曲线到出版级Figure。 覆盖拟合重建陷阱、多标本复合布局、分段数据合并、argsort路径错乱。
 version: 1.0.0
 license: MIT
@@ -25,11 +44,7 @@ metadata:
     - curve-fitting
     - scientific-figures
 
-
-
 ---
-
-
 
 ## IO_CONTRACT
 
@@ -37,9 +52,6 @@ metadata:
 - **output**: `result: dict — 技能执行结果（结构因技能而异）`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-
-
 
 # 3D曲线拟合图
 
@@ -254,7 +266,6 @@ if abs(abs(correct_b) - abs(figure_b)) > 0.001:
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## Golden 集合 · GOLDEN SET
 
 - **Golden Input**: 标准输入样本（覆盖正常路径）
@@ -265,7 +276,4 @@ if abs(abs(correct_b) - abs(figure_b)) > 0.001:
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # 3D Curve Fitting Figures
-

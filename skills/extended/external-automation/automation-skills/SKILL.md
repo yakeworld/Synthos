@@ -1,5 +1,25 @@
 ---
 name: automation-skills
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: automation
+signature: "automation-skills -> automation: **触发条件**: 对一批论文（10-34 篇）批量处理 `step_quality_check.md` 中的 quality_score 并写入 `state"
 description: "**触发条件**: 对一批论文（10-34 篇）批量处理 `step_quality_check.md` 中的 quality_score 并写入 `state.json`。"
 version: 1.0.0
 license: MIT
@@ -13,18 +33,12 @@ metadata:
 
 ---
 
-
-
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
 - **output**: `result: dict — 技能执行结果（结构因技能而异）`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-
 
 # Batch Quality Score Extraction
 
@@ -54,7 +68,6 @@ Synthos 管线中，每篇论文的 `01-manuscript/step_quality_check.md` 包含
 | 纯文本（如
 
   io_contract: input: ['paper_dirs: list[str] -> scores: dict', 'output: ['scores: dict (paper_name: quality_score, extraction_errors: list[str])]']
-
 
 # Batch Quality Score Extraction
 
@@ -90,8 +103,6 @@ metadata:
     signature: 'paper_dirs: list[str] -> scores: dict'
     related_skills: [quality-gate, paper-pipeline, paper-references-scanning, research-paper-search]
 ---
-
-
 
 # Batch Quality Score Extraction
 
@@ -169,8 +180,8 @@ def clean_json_for_latex(content):
 
 ## 相关
 
-- `references/latex-escape-json-parsing-fix.md` (research-paper-search) — 完整的 LaTeX 清理代码和已知影响论文清单
-- `references/gate-batch-processing-pattern.md` (quality-gate) — G1-G7 批处理模式
+- `ref/latex-escape-json-parsing-fix.md` (research-paper-search) — 完整的 LaTeX 清理代码和已知影响论文清单
+- `ref/gate-batch-processing-pattern.md` (quality-gate) — G1-G7 批处理模式
 - paper-pipeline — 管线整体编排
 - quality-gate — G1-G7 闸门定义
 
@@ -182,14 +193,12 @@ def clean_json_for_latex(content):
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -203,7 +212,4 @@ def clean_json_for_latex(content):
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Automation Skills
-

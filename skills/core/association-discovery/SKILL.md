@@ -1,6 +1,26 @@
 ---
 
 name: association-discovery
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: core
+signature: "association-discovery -> core: 跨论文识别知识关联（矛盾、补充、演进、空白），构建知识图谱。基于 Boden 创造力理论分类关联类型。"
 description: "跨论文识别知识关联（矛盾、补充、演进、空白），构建知识图谱。基于 Boden 创造力理论分类关联类型。"
 author: Synthos
 license: MIT
@@ -12,7 +32,7 @@ metadata:
     atom_type: cognitive-atom
     description: "Cross-paper association discovery — identify contradictions, complements, evolution, gaps"
     signature: "knowledge_base: dict, query: str -> associations: list[Association] (type, strength, confidence, source)"
-    related_skills: [knowledge-extraction, hypothesis-generation, viewpoint-verification]
+    related_skills: ['knowledge-extraction', 'hypothesis-generation']
 
 ---
 
@@ -72,8 +92,4 @@ metadata:
 
 见 `BOUNDARY.md` — 本原子只做跨论文关联发现，不做单论文提取、不做假设生成、不做观点验证。
 
-
-
-
 # Association Discovery
-

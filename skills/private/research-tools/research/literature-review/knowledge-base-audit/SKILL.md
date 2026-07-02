@@ -1,13 +1,33 @@
 ---
 
 name: knowledge-base-audit
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: research-tools
+signature: "knowledge-base-audit -> research-tools: Audit and maintain personal knowledge management systems (AKNE, NotebookLM,"
+related_skills: ['akne-maintenance', 'akne-knowledge-manager']
 io_contract: "input: kb_path: str, audit_type: str -> audit_report: dict | output: audit_report: dict, recommendations: list[str]"
 
 description: Audit and maintain personal knowledge management systems (AKNE, NotebookLM,
 author: Synthos
 license: MIT
 version: 1.0.0
-license: MIT
   Obsidian vaults, etc.) to keep them healthy and evolving.
 allowed-tools:
 - terminal
@@ -24,18 +44,14 @@ metadata:
     - biorxiv
     - blogwatcher
 
-
 ---
-
 
 ## IO_CONTRACT
 
 - **input**: `kb_path: str, audit_type: str` — 用户请求描述、上下文信息
 - **output**: `audit_report: dict — 知识库审计`
 
-
 > 对应原则：P2（机械原子暴露输入输出规范）
-
 
 # Knowledge Base Audit & Maintenance
 
@@ -302,14 +318,12 @@ research node). The fix is to prioritize `sources/` and `concepts/` nodes over
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -323,7 +337,4 @@ research node). The fix is to prioritize `sources/` and `concepts/` nodes over
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Knowledge Base Audit
-

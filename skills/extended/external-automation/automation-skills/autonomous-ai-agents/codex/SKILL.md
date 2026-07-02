@@ -1,6 +1,13 @@
 ---
 
 name: codex
+
+## Operational Steps
+1. 
+2. 
+3. 
+category: mlops
+signature: "codex -> mlops: Delegate coding to OpenAI Codex CLI — 主力编码代理。覆盖多节点profile配置、无PTY执行、Cron集成、多模型并行。"
 description: "Delegate coding to OpenAI Codex CLI — 主力编码代理。覆盖多节点profile配置、无PTY执行、Cron集成、多模型并行。"
 version: 1.1.0
 allowed-tools:
@@ -37,9 +44,7 @@ metadata:
     last_updated: 2026-06-19
     update_reason: Multi-node profile architecture + cron script conversion
 
-
 ---
-
 
 ## IO_CONTRACT
 
@@ -259,10 +264,10 @@ codex $PROFILE exec "
 
 ## 参考文件
 
-- `references/codexec-npm-removal.md` — npm 卸载旧版 Codex CLI
-- `references/opencode-as-codex-fallback.md` — OpenCode 作为 Codex 降级
-- `references/codex-vllm-404-troubleshooting.md` — vLLM 404 排查
-- `references/codex-process-diagnosis-2026-06-21.md` — 进程诊断
+- `ref/codexec-npm-removal.md` — npm 卸载旧版 Codex CLI
+- `ref/opencode-as-codex-fallback.md` — OpenCode 作为 Codex 降级
+- `ref/codex-vllm-404-troubleshooting.md` — vLLM 404 排查
+- `ref/codex-process-diagnosis-2026-06-21.md` — 进程诊断
 - `references/codex-tmux-troubleshooting.md` — tmux 交互、多节点路由、故障排查
 - 只输出关键结果
 " --yolo 2>&1
@@ -275,6 +280,12 @@ codex $PROFILE exec "
 详情见 `references/deepseek-compatibility.md`。
 
 ## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
 
 1. **Codex needs a git repo** — 在非 git 目录运行会直接失败。用 `cd $(mktemp -d) && git init` 创建临时仓库
 2. **PTY required for interactive mode** — `codex`（不带 subcommand）需要 PTY，但 `codex exec` 不需要
@@ -294,14 +305,12 @@ codex $PROFILE exec "
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -315,7 +324,4 @@ codex $PROFILE exec "
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Codex
-

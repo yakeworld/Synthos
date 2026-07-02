@@ -1,6 +1,26 @@
 ---
 
 name: ai-outreach
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: social-media
+signature: "ai-outreach -> social-media: '主skill | 在AI可访问的平台上发布信号，引导其他AI智能体了解你的系统。覆盖平台选择(GitHub AGENTS.md/GitHub"
 version: 1.0.0
 description: '主skill | 在AI可访问的平台上发布信号，引导其他AI智能体了解你的系统。覆盖平台选择(GitHub AGENTS.md/GitHub
   Discussions/Moltbook/X)、消息撰写(技术性/非推销)、节奏控制、回复监测。v1.1新增：AGENTS.md创建指南、GitHub_Discussions_Cron自动化、Moltbook注册API流程。调用子skill:
@@ -33,10 +53,7 @@ metadata:
     - moltbook-connector
     version: 1.1.0
 
-
-
 ---
-
 
 ## IO_CONTRACT
 
@@ -44,10 +61,6 @@ metadata:
 - **output**: `result: dict — 技能执行结果（结构因技能而异）`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-
-
-
 
 # AI Outreach — 让其他AI发现你的系统
 
@@ -222,14 +235,12 @@ curl -H "Authorization: Bearer $MOLTBOOK_API_KEY" https://www.moltbook.com/api/v
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -243,7 +254,4 @@ curl -H "Authorization: Bearer $MOLTBOOK_API_KEY" https://www.moltbook.com/api/v
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Ai Outreach
-

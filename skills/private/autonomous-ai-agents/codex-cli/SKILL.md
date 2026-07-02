@@ -1,6 +1,26 @@
 ---
 name: codex-cli
-related_skills: [claude-code, opencode, serving-llms-vllm, codex-tmux-control]
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: automation
+signature: "codex-cli -> automation: Codex CLI — 安装、配置、远程部署、vLLM 对接。主力编码代理，覆盖多节点 profile、config.toml、.env 环境变量、doctor"
+related_skills: ["claude-code", "opencode", "codex-tmux-control"]
 description: "Codex CLI — 安装、配置、远程部署、vLLM 对接。主力编码代理，覆盖多节点 profile、config.toml、.env 环境变量、doctor 诊断、exec 执行模式。"
 version: 1.0.0
 allowed-tools:
@@ -108,7 +128,7 @@ PROMPT
 - **tmux 交互** = 讨论、协商、多轮对话（可中途修改任务）
 - **detach exec** = 明确任务的批量执行（不可中途修改，不阻塞）
 
-详见 `codex-tmux-control` 技能中的 references/detach-mode.md。
+详见 `codex-tmux-control` 技能中的 ref/detach-mode.md。
 
 ## 配置文件 ~/.codex/config.toml
 
@@ -287,14 +307,12 @@ opencode 使用独立的配置体系（`~/.local/share/opencode/auth.json`），
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -308,7 +326,4 @@ opencode 使用独立的配置体系（`~/.local/share/opencode/auth.json`），
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Codex Cli
-

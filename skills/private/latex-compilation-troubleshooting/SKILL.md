@@ -1,5 +1,25 @@
 ---
 name: latex-compilation-troubleshooting
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: devops
+signature: "latex-compilation-troubleshooting -> devops: LaTeX编译问题排查与修复全流程 — 从错误诊断到干净编译。覆盖Unicode、包兼容性、路径、环境嵌套、bib等。"
 description: "LaTeX编译问题排查与修复全流程 — 从错误诊断到干净编译。覆盖Unicode、包兼容性、路径、环境嵌套、bib等。"
 version: 1.1.0
 author: "Synthos + 杨晓凯"
@@ -10,7 +30,7 @@ metadata:
     atom_type: troubleshooting
     description: "LaTeX编译问题排查与修复全流程"
     signature: "error_message: str -> root_cause: str; root_cause -> fix_plan: list"
-    related_skills: [paper-pipeline, paper-repair, sci-paper-quality-review]
+    related_skills: ["paper-pipeline"]
 ---
 
 # LaTeX Compilation Troubleshooting
@@ -175,10 +195,30 @@ grep -c 'undefined' paper.log
 - **Backup-before-destructive**: 任何涉及 `rm`、`cp`、或批量 `replace` 的操作前，必须备份原始文件。`paper.*` 通配符会匹配 `paper.tex`。
 - **State-score staleness**: paper-repair cron 生成的 state.json 可能包含过期的 quality_score。修复流程：先检查 quality-report.md 提取 Layer B 分数，用该分数更新 state.json。如果 quality_score >= 80，gate_status 改为 PASS，stage 改为 quality_check_complete。
 
+**External .bib with \bibliography{} — required workflow** 🔴 2026-07-01 — HCS-3WT
+- **根因**：删除内嵌 `thebibliography` 后改用外部 `.bib`，缺少 `\bibliographystyle{plain}` 导致 bibtex 执行失败（"I found no \bibstyle command"）。
+- **Fix**：在 `\bibliography{references}` 之前必须加 `\bibliographystyle{plain}`。完整流程：`pdflatex → bibtex paper → pdflatex → pdflatex`。
+- **路径陷阱**：`.bib` 文件必须与 `.tex` 在**同一目录**（BibTeX 使用相对路径）。如果 bib 在 `06-references/` 而 tex 在 `01-manuscript/`，bibtex 会找不到文件。将 `.bib` 复制到当前目录。
+- **验证**：编译后检查 `paper.bbl` 中的 `\bibitem` 计数是否等于论文中 `\cite{}` 的唯一 key 数。
+
++BibTeX "didn't find database entry" for specific entries — **don't blame the entries, blame the file** 🔴 2026-07-01
+- **根因**：当 BibTeX 报告特定条目"找不到"（"I didn't find a database entry for X"），但条目在 `.bib` 文件中存在且语法正确时，问题通常不在这些条目本身，而是文件中**某个更早位置的格式错误**（花括号不匹配、未闭合、特殊字符等）导致 BibTeX 解析提前失败，跳过了后续条目。
+- **Debug 流程**：
+  1. 用 `hexdump -C` 检查条目字节，确认无不可见字符
+  2. 用 `grep -cP '{'` / `grep -cP '}'` 检查花括号平衡
+  3. 将嫌疑条目**提取到独立文件**，用最小化 tex 编译测试：如果独立文件成功 → 原文件中有其他条目导致解析失败；如果独立文件也失败 → 条目本身有问题
+  4. 如果独立测试成功但原文件失败 → 逐个注释掉原文件中其他条目，逐步缩小问题范围
+- **铁律**：BibTeX 对错误条目报 "didn't find" 而非 "illegal character"，容易误导。当多个条目同时"找不到"时，优先怀疑文件结构而非条目内容。
+
++**Crossref 作者格式差异** 🔴 2026-07-01 — BPPV
+- **根因**：Crossref API 返回作者有两种格式：格式1 `given`/`family`（个人作者），格式2 `name`（机构作者）。解析时必须同时处理两种格式，否则机构作者的姓名会丢失。
+- **示例**：机构作者返回 `{"name": "Education Directorate Of Thi-Qar, Ministry Of Education, Iraq"}`，`given`/`family` 均为空。
+- **Fix**：解析时优先取 `given`+`family`，若无则取 `name`，再无则跳过。
+
 ## 参考文件
 
-- references/latex-error-checklist.md — 完整错误分类速查表
-- references/paper-compile-checklist.md — 每次编译前检查清单
+- ref/latex-error-checklist.md — 完整错误分类速查表
+- ref/paper-compile-checklist.md — 每次编译前检查清单
 - references/symlink-path-trap-01-manuscript.md — 01-manuscript/ 符号链接路径陷阱（2026-06-18 实战）
 - scripts/latex-auto-fix.py — 自动检测和修复常见LaTeX错误的脚本
 
@@ -199,13 +239,11 @@ grep -c 'undefined' paper.log
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -219,7 +257,4 @@ grep -c 'undefined' paper.log
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Latex Compilation Troubleshooting
-

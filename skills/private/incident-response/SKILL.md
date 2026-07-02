@@ -1,5 +1,14 @@
 ---
 name: incident-response
+license: MIT
+
+## Operational Steps
+1. 
+2. 
+3. 
+category: devops
+signature: "incident-response -> devops: 事故响应 — 故障检测、应急响应、根因分析、事后复盘。为Synthos系统建立完善的事故处理流程。"
+related_skills: ['system-reliability-engineering', 'observability-system']
 description: "事故响应 — 故障检测、应急响应、根因分析、事后复盘。为Synthos系统建立完善的事故处理流程。"
 version: 1.0.0
 allowed-tools:
@@ -86,6 +95,12 @@ triggers:
    - 改进验证: 跟踪改进措施实施效果
 
 ## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
 
 - **无责备文化陷阱**: 复盘时不要追究"谁犯的错"，而要问"什么流程让错误发生了"。追责文化会导致隐瞒和重复犯错。
 - **时间线不精确**: 事故时间线必须精确到分钟。从日志中实际提取，不要凭记忆估算。不精确的时间线会导致根因分析错误。
@@ -117,13 +132,11 @@ triggers:
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## 约束规则 · RULES
 
@@ -131,7 +144,6 @@ triggers:
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -147,7 +159,4 @@ triggers:
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Incident Response
-

@@ -1,6 +1,26 @@
 ---
 
 name: falsification-validation
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: quality
+signature: "falsification-validation -> quality: Systematic approach to validating AI agent skills through falsification"
 description: Systematic approach to validating AI agent skills through falsification
 author: Synthos
 license: MIT
@@ -14,7 +34,6 @@ allowed-tools:
 - read_file
 - write_file
 - search_files
-license: MIT
 metadata:
   synthos:
     version: 1.0.0
@@ -26,9 +45,7 @@ metadata:
     - post-compile-dual-quality-check
     - quality-gate
 
-
 ---
-
 
 ## IO_CONTRACT
 
@@ -36,9 +53,6 @@ metadata:
 - **output**: `validation_result: dict — 证伪验证结果`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-
-
 
 ## 原理层·文言
 
@@ -202,7 +216,6 @@ Every test must produce:
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
@@ -214,7 +227,4 @@ Every test must produce:
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Falsification Validation
-

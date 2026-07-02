@@ -1,6 +1,26 @@
 ---
 name: akne-knowledge-manager
-description: AKNE知识管理系统方法论 — 图谱-记忆-技能三层架构、双向整合、内容质量审计。具体操作细节见 references/。
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: research-tools
+signature: "akne-knowledge-manager -> research-tools: AKNE知识管理系统方法论 — 图谱-记忆-技能三层架构、双向整合、内容质量审计。具体操作细节见 ref/。"
+description: AKNE知识管理系统方法论 — 图谱-记忆-技能三层架构、双向整合、内容质量审计。具体操作细节见 ref/。
 version: 2.0.0
 author: Synthos
 license: MIT
@@ -10,7 +30,7 @@ metadata:
     atom_type: domain-skill
     description: "AKNE knowledge management — graph-memory-skill 3-layer architecture, bidirectional integration, content audit methodology."
     signature: 'akne_graph: str, synthos_graph: str -> integration_report: dict + content_audit: dict'
-    related_skills: [akne-maintenance, synthos-akne-bridge, skill-integrity-audit]
+    related_skills: ["akne-maintenance", "synthos-akne-bridge"]
 io_contract:
   input:
     - 'knowledge_type: str, action: str'
@@ -226,13 +246,11 @@ io_contract:
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -246,7 +264,4 @@ io_contract:
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Akne Knowledge Manager
-

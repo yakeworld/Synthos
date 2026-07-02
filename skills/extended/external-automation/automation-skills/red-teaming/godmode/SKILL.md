@@ -1,5 +1,25 @@
 ---
 name: godmode
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: mlops
+signature: "godmode -> mlops: LLM安全边界测试方法论 — 通过系统提示注入、输入混淆与多模型竞跑，测试/评估LLM安全过滤机制的有效性与脆弱性。"
 description: "LLM安全边界测试方法论 — 通过系统提示注入、输入混淆与多模型竞跑，测试/评估LLM安全过滤机制的有效性与脆弱性。"
 version: 1.2.0
 license: MIT
@@ -213,7 +233,6 @@ Plain → Leetspeak → Bubble → Braille → Morse
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## Golden 集合 · GOLDEN SET
 
 - **Golden Input**: 标准输入样本（覆盖正常路径）
@@ -224,7 +243,4 @@ Plain → Leetspeak → Bubble → Braille → Morse
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Godmode
-

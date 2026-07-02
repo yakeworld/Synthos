@@ -1,5 +1,12 @@
 ---
 name: baoyu-infographic
+
+## Operational Steps
+1. 
+2. 
+3. 
+category: creative
+signature: "baoyu-infographic -> creative: Adapted from [baoyu-infographic](https://github.com/JimLiu/baoyu-skills) for Her"
 description: "Adapted from [baoyu-infographic](https://github.com/JimLiu/baoyu-skills) for Hermes Agent's tool ecosystem."
 version: 1.0.0
 license: MIT
@@ -13,16 +20,12 @@ metadata:
 
 ---
 
-
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
 - **output**: `result: dict — 技能执行结果（结构因技能而异）`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
 
 # Infographic Generator
 
@@ -242,6 +245,12 @@ Report: topic, layout, style, aspect, language, output path, files created.
 - `references/styles/<style>.md` — 21 style definitions
 
 ## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
 
 1. **Data integrity is paramount** — never summarize, paraphrase, or alter source statistics. "73% increase" must stay "73% increase", not "significant increase".
 2. **Strip secrets** — always scan source content for API keys, tokens, or credentials before including in any output file.
@@ -257,14 +266,12 @@ Report: topic, layout, style, aspect, language, output path, files created.
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -278,7 +285,4 @@ Report: topic, layout, style, aspect, language, output path, files created.
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Baoyu Infographic
-

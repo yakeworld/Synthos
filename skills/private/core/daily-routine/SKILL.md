@@ -1,5 +1,12 @@
 ---
 name: daily-routine
+
+## Operational Steps
+1. 
+2. 
+3. 
+category: core
+signature: "daily-routine -> core: Daily Routine Automation - Automates the super-individual daily workflow: email "
 description: "Daily Routine Automation - Automates the super-individual daily workflow: email check, code review, task management, research tracking, skill maintenance. All automated, all traceable."
 version: 1.0.0
 author: Synthos
@@ -111,7 +118,6 @@ Goal: Create an automated daily workflow that handles email, code review, task m
 
 A four-dimensional curated briefing: 研究前沿 / AI 技术突破 / AI 与社会 / 哲学与思考.
 
-
 ## 验证清单 · VERIFICATION
 
 1. **输入验证**: 输入参数/文件/路径是否完整且有效
@@ -120,13 +126,11 @@ A four-dimensional curated briefing: 研究前沿 / AI 技术突破 / AI 与社�
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## 约束规则 · RULES
 
@@ -134,7 +138,6 @@ A four-dimensional curated briefing: 研究前沿 / AI 技术突破 / AI 与社�
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -173,6 +176,12 @@ A four-dimensional curated briefing: 研究前沿 / AI 技术突破 / AI 与社�
 - HN Algolia search API (`hn.algolia.com/api/v1/search`): free, supports `tags=front_page`, `numericFilters=points>30`
 
 ### Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
 - **cron 模式下 execute_code 完全不可用**，必须用独立脚本运行（保存为 /tmp 后执行）
 - **terminal 安全扫描拦截 curl|python3 管道**（tirith:curl_pipe_shell），必须保存为文件再执行
 - **重 JS 页面（The Verge、MIT TR、OpenAI blog）通过 browser_navigate 几乎都超时**，避免
@@ -191,7 +200,4 @@ A four-dimensional curated briefing: 研究前沿 / AI 技术突破 / AI 与社�
 
 *一日三省吾身。自动化不是替代，是增强。*
 
-
-
 # Daily Routine
-

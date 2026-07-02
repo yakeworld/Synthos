@@ -1,7 +1,26 @@
 ---
 
-
 name: sklearn-benchmark
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: mlops
+signature: "sklearn-benchmark -> mlops: 设计、运行和优化scikit-learn多模型基准测试。覆盖预赛时序检测、失败模型预判、大数据集模型过滤、OOM防护、并行策略、结果整合。"
 description: 设计、运行和优化scikit-learn多模型基准测试。覆盖预赛时序检测、失败模型预判、大数据集模型过滤、OOM防护、并行策略、结果整合。
 version: 1.0.0
 license: MIT
@@ -28,11 +47,7 @@ metadata:
     - model-evaluation
     - mlops
 
-
-
 ---
-
-
 
 ## IO_CONTRACT
 
@@ -40,9 +55,6 @@ metadata:
 - **output**: `result: dict — 技能执行结果（结构因技能而异）`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-
-
 
 # sklearn-benchmark — 多模型基准测试方法论
 
@@ -56,13 +68,11 @@ metadata:
 
 ### 预赛时序检测（Pre-benchmark Timing Test）
 
-
 ## 示例 · EXAMPLES
 
 1. **基本用法**: 标准输入 → 标准输出
 2. **边界用例**: 空输入、特殊字符、异常路径
 3. **错误场景**: 缺失依赖、权限不足、网络异常
-
 
 ## 约束规则 · RULES
 
@@ -70,7 +80,6 @@ metadata:
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -245,7 +254,4 @@ for dname, X, y in datasets:
 - [ ] 结果已合并、排序、保存为JSON
 - [ ] 论文中数值已通过L0.5数据门验证（见 dual-quality-check-v2）
 
-
-
 # Sklearn Benchmark
-

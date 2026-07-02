@@ -1,12 +1,30 @@
 ---
 
-
 name: quality
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: research-tools
+signature: "quality -> research-tools: 质量保障 — 伪证验证、黄金测试、SCI论文质量评审。"
 description: 质量保障 — 伪证验证、黄金测试、SCI论文质量评审。
 author: Synthos
 license: MIT
 version: 1.0.0
-license: MIT
 triggers:
   - 需要执行quality下的子技能
 metadata:
@@ -15,11 +33,9 @@ metadata:
     atom_type: parent-skill
     description: "父级技能 — 质量保障 — 伪证验证、黄金测试、SCI论文质量评审。"
     signature: 'quality -> sub-skills: [falsification-validation, golden-test-methodology, sci-paper-quality-review]'
-    related_skills: ["falsification-validation", "golden-test-methodology", "sci-paper-quality-review"]
-
+    related_skills: ["falsification-validation", "golden-test-methodology"]
 
 ---
-
 
 ## IO_CONTRACT
 
@@ -27,8 +43,6 @@ metadata:
 - **output**: `quality_report: dict — 质量报告`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-
 
 # quality
 
@@ -45,7 +59,6 @@ metadata:
 
 直接调用子技能名称即可：
 
-
 ## 验证清单 · VERIFICATION
 
 1. **输入验证**: 输入参数/文件/路径是否完整且有效
@@ -53,7 +66,6 @@ metadata:
 3. **输出验证**: 输出格式/内容是否符合预期
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
-
 
 ## 约束规则 · RULES
 
@@ -72,7 +84,4 @@ skill_view(name='falsification-validation')  # 加载第一个子技能
 
 父级SKILL.md仅作为目录索引，实际执行由子技能完成。
 
-
-
 # Quality
-

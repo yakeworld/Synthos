@@ -1,6 +1,26 @@
 ---
 
 name: golden-test-methodology
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: research-tools
+signature: "golden-test-methodology -> research-tools: 'Methodology for creating, maintaining, and evaluating golden test suites"
 version: 1.0.0
 description: 'Methodology for creating, maintaining, and evaluating golden test suites
 version: 1.0.0
@@ -22,9 +42,7 @@ metadata:
     - project-experience-distillation
     version: 1.0.0
 
-
 ---
-
 
 ## IO_CONTRACT
 
@@ -32,9 +50,6 @@ metadata:
 - **output**: `golden_tests: list — 金标准测试`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-
-
 
 # Golden Test Methodology
 
@@ -131,7 +146,4 @@ skills/{name}/golden/
 
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
-
-
 # Golden Test Methodology
-

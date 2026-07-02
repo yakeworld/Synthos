@@ -1,5 +1,26 @@
 ---
 name: cron-diagnostics
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: devops
+signature: "cron-diagnostics -> devops: Cron 任务健康诊断与优化 — 分析 15 个 cron 任务的健康度、频率、调度冲突、deliver 配置、付费任务成本，输出优化方案。"
+related_skills: ['cron-system-maintenance', 'vllm-cluster-management']
 description: "Cron 任务健康诊断与优化 — 分析 15 个 cron 任务的健康度、频率、调度冲突、deliver 配置、付费任务成本，输出优化方案。"
 version: 1.0.0
 allowed-tools:
@@ -48,6 +69,7 @@ cronjob action=list
 | **付费任务** | `provider` 包含 "deepseek" | INFO（需人工确认） |
 | **频率过高** | `schedule` 包含 `every` 且间隔 < 1h | INFO |
 | **功能重叠** | 多个任务做同一件事（如 D8 扫描 + bib 标准化） | MEDIUM |
+| **批量超时** | 多个 no_agent 或脚本任务同时 timeout → 检查 codex profile 完整性 (`ls ~/.codex/profiles/`) | HIGH |
 
 ### Step 3: 功能重叠检测
 
@@ -151,6 +173,7 @@ cronjob action=update job_id="<id>" model="..." provider="..."
 ## 参考
 
 - `references/cron-diagnostics-pattern.md` — 诊断模式详细步骤
+- `references/cron-batch-timeout-diagnosis.md` — Codex profile 不匹配导致批量超时诊断（在 cron-system-maintenance 中引用）
 ## 验证清单 · VERIFICATION
 
 1. **输入验证**: {输入条件是否完整}
@@ -158,14 +181,12 @@ cronjob action=update job_id="<id>" model="..." provider="..."
 3. **边界验证**: {边界条件是否处理}
 4. **错误处理**: {异常场景是否覆盖}
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -179,8 +200,4 @@ cronjob action=update job_id="<id>" model="..." provider="..."
 
 > 每项验证必须可执行、可记录、可复现。
 
-
-
-
 # Cron Diagnostics
-

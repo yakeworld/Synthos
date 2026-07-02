@@ -1,5 +1,12 @@
 ---
 name: graduate-student-onboarding
+license: MIT
+
+## Operational Steps
+1. 
+2. 
+3. 
+category: mentoring
 description: Onboard new graduate students under 杨晓凯 — define research direction, set up workstation, create compressed training plan, establish weekly cadence.
 version: 1.0.0
 signature: "graduate-student-onboarding -> processed_result"
@@ -222,6 +229,12 @@ Provide a concrete Day 1-7 schedule:
 | Emergency | Anytime (WeChat/Feishu) | Blocked >2 hours |
 
 ## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
 
 - **Don't over-plan the tool phase**: user explicitly corrected "months of tool learning" → compress to 1-2 weeks.
 - **Don't assume student can code**: medical background students may have zero programming. Rely on OpenCode/Codex for code generation, focus student on clinical understanding.
@@ -276,13 +289,11 @@ Scope tiers:
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## 约束规则 · RULES
 
@@ -290,7 +301,6 @@ Scope tiers:
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -306,7 +316,4 @@ Scope tiers:
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Graduate Student Onboarding
-

@@ -1,7 +1,26 @@
 ---
 
-
 name: crispdm-helix-experiment
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: mlops
+signature: "crispdm-helix-experiment -> mlops: CRISP-DM Helix methodology — strict CV-fold-isolated preprocessing for clinical "
 description: CRISP-DM Helix methodology — strict CV-fold-isolated preprocessing for clinical ML experiments on public datasets. Generates real, traceable L0.5-compliant data.
 version: 1.0.0
 license: MIT
@@ -19,11 +38,7 @@ metadata:
     related_skills:
     - experiment-recipes
 
-
-
 ---
-
-
 
 ## IO_CONTRACT
 
@@ -31,8 +46,6 @@ metadata:
 - **output**: `result: dict — 技能执行结果（结构因技能而异）`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-
 
 # CRISP-DM Helix Experiment Pipeline
 
@@ -147,7 +160,6 @@ for fold, (train_idx, test_idx) in enumerate(skf.split(X, y)):
 
 > 2026-06-22 新增方向。对 Kaggle/Tianchi 上用于初学者教学的经典数据集进行系统性泄漏检查，形成教学规范。
 
-
 ## 验证清单 · VERIFICATION
 
 1. **输入验证**: 输入参数/文件/路径是否完整且有效
@@ -156,14 +168,12 @@ for fold, (train_idx, test_idx) in enumerate(skf.split(X, y)):
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -254,14 +264,13 @@ X, y = make_classification(
 
 - `references/educational-dataset-audit-protocol.md` — 审计协议详解（项目路径、脚本、数据源）
 
-- `references/helix-pipeline-template.py` — 完整Helix实验代码
+- `ref/helix-pipeline-template.py` — 完整Helix实验代码
 - `references/cross-dataset-protocol.md` — 跨数据集验证协议
 - `references/leakage-patterns.md` — 四种泄漏模式详解
 - `references/cleveland-heart-leakage-experiment.md` — Cleveland Heart 泄漏消融实验（Negligible/反向模式）
-- `references/notebook-to-script-alignment.md` — Notebook→Script对齐方法论
+- `ref/notebook-to-script-alignment.md` — Notebook→Script对齐方法论
 - `references/model-list-reconciliation.md` — Notebook模型清单与script硬编码清单的对齐方法论（含PIMA 33模型案例、已验证陷阱列表）
 - `references/notebook-models-33-models-alignment.md` — PIMA 33模型对齐案例：notebook all_estimators()动态生成 vs helix硬编码清单的差异发现与修复过程
-
+- `references/pima-notebook-lookup.md` — 原始PIMA实验notebook位置：academic_writer/article9_pima/crisp-dm-pima.ipynb (2.7MB, 34 cells, 2281 lines)。用于追溯原始实验流程和确认筛选方法。
 
 # Crispdm Helix Experiment
-

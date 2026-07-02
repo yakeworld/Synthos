@@ -1,5 +1,13 @@
 ---
 name: vllm-cluster-management
+license: MIT
+
+## Operational Steps
+1. 
+2. 
+3. 
+category: mlops
+signature: "vllm-cluster-management -> mlops: vLLM多节点集群部署与配置 — 在多个服务器节点上部署vLLM服务，统一配置Hermes/Codex的provider路由，实现负载均衡和故障转移。覆盖多节点"
 description: "vLLM多节点集群部署与配置 — 在多个服务器节点上部署vLLM服务，统一配置Hermes/Codex的provider路由，实现负载均衡和故障转移。覆盖多节点vLLM实例的配置、验证、路由策略和故障切换。"
 version: 1.0.0
 triggers:
@@ -130,6 +138,12 @@ for p in c['custom_providers']: print(f\"{p['name']}: {p['base_url']}\")"
 ```
 
 ## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
 
 ### 共享内存残留导致容器无限重启（关键）
 
@@ -306,7 +320,7 @@ docker run --rm <image> pip list 2>/dev/null | grep vllm
 
 - `references/node-topology.md` — 标准三节点拓扑结构和路由策略
 - `references/current-cluster-status.md` — 当前三节点集群实际状态快照（2026-06-30 更新）
-- `references/verification-checklist.sh` — 节点验证脚本模板
+- `ref/verification-checklist.sh` — 节点验证脚本模板
 - `references/tensor-parallel-sizing.md` — MoE模型多GPU TP sizing分析与实证数据（35B MoE TP=4优于TP=2）
 - `references/shared-memory-cleanup.md` — vLLM容器共享内存泄漏诊断与清理指南（psm_*/sem.mp-*残留清理）
 - `scripts/test-vision-capability.py` — 检测各节点是否支持 image_input（vision）
@@ -333,13 +347,11 @@ docker run --rm <image> pip list 2>/dev/null | grep vllm
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -353,7 +365,4 @@ docker run --rm <image> pip list 2>/dev/null | grep vllm
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Vllm Cluster Management
-

@@ -1,7 +1,13 @@
 ---
 
-
 name: cron-system-maintenance
+
+## Operational Steps
+1. 
+2. 
+3. 
+category: mlops
+signature: "cron-system-maintenance -> mlops: 'Cron任务运维：诊断error状态、修复脚本缺陷、验证连接性。覆盖cron job list分析、错误分类、脚本语法验证、prompt更新、vLLM多节点负"
 related_skills: []
 description: 'Cron任务运维：诊断error状态、修复脚本缺陷、验证连接性。覆盖cron job list分析、错误分类、脚本语法验证、prompt更新、vLLM多节点负载均衡。'
 version: 1.0.0
@@ -21,11 +27,7 @@ metadata:
     author: Synthos
     signature: 'job_list -> diagnose -> fix -> verify'
 
-
-
 ---
-
-
 
 ## IO_CONTRACT
 
@@ -33,8 +35,6 @@ metadata:
 - **output**: `result: dict — cron任务执行结果`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-
 
 # cron-system-maintenance
 
@@ -82,6 +82,13 @@ Cron任务运维：诊断error状态、修复脚本缺陷、验证连接性。�
 4. **负载均衡目标**：主节点日调用~50次，备节点~7次；比例约7:1合理
 
 ## Pitfalls
+- **Cron provider names are immutable after creation**: `cronjob(action='update')` does NOT modify the provider field — provider is baked in at creation time. When you rename a custom provider (e.g., in config.yaml), ALL existing cron jobs still reference the old name. Fix: `action='remove'` then `action='create'` with correct provider. Every rename requires a full sweep of `cronjob(action='list')` to verify.
+- **Config-level provider rename is multi-touch**: Renaming a provider in `custom_providers` only changes 3 lines. But 8+ config locations also reference the provider: `model.provider`, `auxiliary.*` (vision, web_extract, compression, approval), `delegation`, `session_search`. Plus 10+ cron jobs. A rename without fixing these causes silent failures across all of them. Procedure: (1) rename in custom_providers; (2) sweep config.yaml for all references; (3) remove+recreate every cron job with old provider; (4) `cronjob(action='list')` to verify zero old-name references remain.
+- **旧 provider name still valid in config.yaml**: After renaming providers in custom_providers, the old name may still appear in config.yaml lines that were NOT updated (e.g., `custom:amax` vs `custom:amax-backup` — partial match danger). Use regex-based search (`grep -n 'custom:amax\n'` not just `'amax'`) to distinguish `custom:amax` from `custom:amax-backup`. 
+
+## Verification
+- 
+- 
 
 - **误报率高**：约75%的"错误"文件是成功输出，skill内容含"Error"关键词被匹配。需用`grep "FAILED\|timed out"`精确匹配，而非`grep "Error"`
 - **cron输出目录**：`~/.hermes/cron/output/<job_id>/<date>_time.md`，job_id是UUID
@@ -104,7 +111,7 @@ Cron任务运维：诊断error状态、修复脚本缺陷、验证连接性。�
 - **Cron → Codex 脚本迁移**：cron agent 任务（model 指向本地 vLLM）可迁移为 `no_agent=true` + `script` 模式，脚本内调用 `codex exec`。优势：获得 Codex 的自主规划能力。迁移步骤：1) 提取原 prompt 为 shell 脚本中的 `codex exec` 参数；2) 设置 `script` 字段；3) 选择合适 profile（hermes 用于代码任务，amax 用于进化相关）；4) 验证无 PTY 环境可运行。
 - **Cron job 状态持久化缺失**：`synthos-daily-promo` 类的 cron 任务（每日轮转发帖）没有持久化状态机制来跟踪上次发布的序号。当任务失败时（如 timeout），下一次运行必须从 cron output 文件和 session DB 重建状态。修复方法：在 cron job 的 output 目录中写一个 `state.json` 或 `next_number.txt`，每次成功完成后递增；或者在 prompt 中增加状态自检步骤。详见 `references/cron-state-persistence-pattern.md`。
 
-- **quality-gate cron 执行模式**：每4小时运行一次，核心流程为：
+- **Cron provider timeout (fallback chain with dead nodes)**: When ALL cron jobs using a provider with a fallback chain (e.g., `custom:amax-fallback`) simultaneously timeout with `provider timeout. Fallback chain was exhausted`, the root cause is a dead node in the fallback chain — NOT a general vLLM outage. Node 1 in the chain may be healthy but Hermes tries dead nodes first, cumulative timeout expires. **Fix**: Replace all affected jobs to use single-node providers (`custom:amax` instead of `custom:amax-fallback`). See `references/cron-fallback-chain-timeout.md` for full diagnosis and repair procedure.
   1. 扫描 outputs/papers/ 下所有含 state.json 的论文目录（约100-150个）
   2. 用 python 脚本批量读取 quality_score 和 gate_status（而非逐个打开JSON）
   3. 筛选 FAIL/HARD_FAIL 论文和 gate_status != PASS 的论文
@@ -116,6 +123,10 @@ Cron任务运维：诊断error状态、修复脚本缺陷、验证连接性。�
 
 - **Cron provider drift**: 当服务器节点被移除或替换后，cronjobs 引用旧 provider 名称时会静默失败（`Unknown provider 'custom:amax-1'`）。`cronjob(action='update')` 实际上不会修改 provider 字段 — provider 在 job 创建时固化。修复方法：必须 `action='remove'` 旧 job，然后用正确的 `model.provider` 重新 `action='create'`。任何服务器节点变更后，必须通过 `cronjob(action='list')` 验证所有 cronjob 的 provider 名称。
 
+- **Codex profile mismatch → 批量 cron 超时**: 多个 cron 脚本调用 `codex -p <profile> exec`，但 `~/.codex/profiles/` 中缺少对应的 profile 配置文件（如只有 `deepseek.config.toml` 但脚本引用 `amax`/`hermes`）。症状：所有依赖 codex 的 cron 任务同时报 `RuntimeError: Request timed out`，错误日志中**没有具体错误信息**（只有通用 timeout 错误）。诊断方法：1) `grep -rn "codex -p" ~/.hermes/scripts/` 找出所有 codex 调用；2) `ls ~/.codex/profiles/` 对比 profile 是否存在；3) 检查对应 vLLM 节点是否可达。修复：创建缺失的 profile 配置文件，或将 cron 脚本改为直接 Python/bash 执行（不依赖 codex）。参考案例：2026-07-01 发现 8 个 cron 任务全部超时，根因是 amax/hermes profile 缺失，同时 3 个 vLLM 节点端口映射不匹配（脚本引用 20001/20002/20003 但 Docker 实际映射 8000）。
+
+- **vLLM 端口引用过时**: Docker 容器端口映射变更后，cron 脚本/代码中残留旧端口引用。症状：curl 连接被拒（connection refused），但 vLLM 容器实际正常运行。诊断方法：1) `ssh <host> "docker ps --format '{{.Names}}\t{{.Ports}}'"` 获取实际端口映射；2) `grep -rn "2000[1-3]\|8000" ~/.hermes/scripts/ scripts/` 查找旧端口引用；3) 更新为实际端口（通常为 8000）。注意：端口 8000 是 vLLM 默认 HTTP API 端口，20001/20002/20003 可能是宿主机端口映射，但如果 Docker 配置为 `0.0.0.0:8000->8000/tcp`，则直接访问 8000 即可。
+
 ## 参考
 
 - `references/cron-error-diagnosis-pattern.md` — 错误分类与诊断模式
@@ -126,6 +137,8 @@ Cron任务运维：诊断error状态、修复脚本缺陷、验证连接性。�
 - `references/cron-state-persistence-pattern.md` — Cron job 状态持久化
 - `references/cron-timeout-fix-pattern.md` — Cron provider 超时修复模式（批量10个job一次性修复）
 - `references/cron-provider-drift.md` — 服务器节点变更后 cronjob provider 名称漂移的诊断与修复
+- `references/cron-batch-timeout-diagnosis.md` — Codex profile 不匹配导致批量 cron 超时诊断与恢复
+- `references/cron-provider-rename-procedure.md` — 完整的 config provider 重命名 + cron job 批量迁移流程（remove+recreate, 8处config引用, 10个job迁移, 验证命令）
 
 ## 验证清单 · VERIFICATION
 
@@ -134,7 +147,6 @@ Cron任务运维：诊断error状态、修复脚本缺陷、验证连接性。�
 3. **输出验证**: 输出格式/内容是否符合预期
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -146,7 +158,4 @@ Cron任务运维：诊断error状态、修复脚本缺陷、验证连接性。�
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Cron System Maintenance
-

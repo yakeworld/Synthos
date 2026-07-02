@@ -1,5 +1,13 @@
 ---
 name: linux-ime
+license: MIT
+
+## Operational Steps
+1. 
+2. 
+3. 
+category: devops
+related_skills: ['linux-environment-troubleshoot', 'safe-file-operations']
 description: Linux 输入法（IME）诊断与修复 — fcitx/fcitx5 配置不匹配、GTK_IM_MODULE/QT_IM_MODULE/XMODIFIERS 三环境变量修复、X11/Wayland 差异、pty 环境 IME 不可用的根因分析与修复。
 metadata:
   synthos:
@@ -205,6 +213,12 @@ cat /etc/X11/xinit/xinput.d/fcitx 2>/dev/null && echo "警告：仍有 fcitx 残
 ```
 
 ## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
 
 - **环境变量注入后应用不生效**：GTK/Qt 应用在启动时读取 IM 模块，已在运行中的进程需要完全关闭再重启
 - **fcitx4 残留配置干扰**：检查 `/etc/X11/xinit/xinput.d/fcitx`（fcitx4 文件）是否仍然存在，如有应创建对应的 fcitx5 版本并确认应用读取的是 fcitx5 版本
@@ -254,13 +268,11 @@ cat /etc/X11/xinit/xinput.d/fcitx 2>/dev/null && echo "警告：仍有 fcitx 残
 2. **边界用例**: 空输入、特殊字符、异常路径
 3. **错误场景**: 缺失依赖、权限不足、网络异常
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## 约束规则 · RULES
 
@@ -268,7 +280,6 @@ cat /etc/X11/xinit/xinput.d/fcitx 2>/dev/null && echo "警告：仍有 fcitx 残
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -284,7 +295,4 @@ cat /etc/X11/xinit/xinput.d/fcitx 2>/dev/null && echo "警告：仍有 fcitx 残
 
 > 每个示例必须可独立运行、有明确输入输出、包含错误处理。
 
-
-
 # Linux Ime
-

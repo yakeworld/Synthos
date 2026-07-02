@@ -1,8 +1,28 @@
 ---
 name: paperjury
+license: MIT
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
 description: "投稿前 AI 陪审团审稿 — 审稿 → 裁定 → 修改 → 复查 闭环。把论文提交前自查做成一套闭环流程，确保 claim 够稳、实验支撑结论、格式不被 desk-reject。"
 version: 1.0.0
 category: writing
+related_skills: ['paper-directory-structure', 'paper-completeness-audit']
 tags: [paper-review, quality, submission-readiness]
 signature: "paperjury -> processed_result"
 ---
@@ -15,7 +35,7 @@ signature: "paperjury -> processed_result"
 
 > **用户纠正**: "我们是消化和吸收，不是拷贝和抄袭技能，要按照synthos思想和规范，进行技能消化吸收。"
 >
-> 此教训已写入 `references/absorption-plan.md`。核心要点：
+> 此教训已写入 `ref/absorption-plan.md`。核心要点：
 > - **不拷贝代码**：任何实现细节（Node.js scripts、文件结构）都不应复制到 Synthos
 > - **提取方法论**：只提取跨平台可复用的设计原则和问题分类逻辑
 > - **按 Synthos 规范重构**：所有吸收的内容必须通过 quality-gate L4 语义审查
@@ -114,7 +134,7 @@ signature: "paperjury -> processed_result"
 
 - references/paperjury-analysis.md — 引擎原理 v3 消化吸收笔记
 - references/doi-pdf-validation-lessons.md — DOI + PDF 验证经验教训
-- references/absorption-plan.md — Synthos 吸收方案（方法论转化指南）
+- ref/absorption-plan.md — Synthos 吸收方案（方法论转化指南）
 - references/experimental-data-integrity-audit.md — 论文数值 claim 代码回查协议（pima-crispdm 实战提炼：逐条验证 F1/AUC/Recall 等指标是否有代码输出支撑）
 
 ## 相关技能
@@ -141,7 +161,6 @@ signature: "paperjury -> processed_result"
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## Golden 集合 · GOLDEN SET
 
 - **Golden Input**: 标准输入样本（覆盖正常路径）
@@ -152,7 +171,4 @@ signature: "paperjury -> processed_result"
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Paperjury
-

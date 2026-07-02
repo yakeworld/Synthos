@@ -1,5 +1,26 @@
 ---
 name: v32-multi-direction-scan
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: research
+signature: "v32-multi-direction-scan -> research: Five rotation + five exploration directions. Mode-determined scan: KNOWLEDGE_PIP"
+related_skills: ['hypothesis-generation', 'paper-pipeline']
 description: "Five rotation + five exploration directions. Mode-determined scan: KNOWLEDGE_PIPELINE → SCAN_AND_CREATE → SCAN_AND_REPORT. ABSOLUTE_WHITE detection with cross-source validation."
 version: 3.0.0
 license: MIT
@@ -209,7 +230,7 @@ PLR、ODE、SCC 等三字母缩写是系统性误差的最大来源。任何意�
 
 | 版本 | 日期 | 变更 |
 |:-----|:-----|:-----|
-| 3.0.0 | 2026-06-27 | 重构为"思想-原则-方法-规则"结构。从60KB压缩至~10KB。具体实现细节移至references/目录。 |
+| 3.0.0 | 2026-06-27 | 重构为"思想-原则-方法-规则"结构。从60KB压缩至~10KB。具体实现细节移至ref/目录。 |
 | 2.0.21 | 2026-06-24 | 添加Cycle 245 vhit漂移案例 |
 | 2.0.20 | 2026-06-24 | PubMed ODE/视盘水肿碰撞 |
 | 2.0.0 | 2026-06-23 | 对齐paper-pipeline 9核心约束；添加Step 0模式决策；添加后耗尽协议 |
@@ -231,7 +252,6 @@ PLR、ODE、SCC 等三字母缩写是系统性误差的最大来源。任何意�
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## Golden 集合 · GOLDEN SET
 
 - **Golden Input**: 标准输入样本（覆盖正常路径）
@@ -242,7 +262,4 @@ PLR、ODE、SCC 等三字母缩写是系统性误差的最大来源。任何意�
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # V32 Multi Direction Scan
-

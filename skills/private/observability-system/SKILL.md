@@ -1,5 +1,14 @@
 ---
 name: observability-system
+license: MIT
+
+## Operational Steps
+1. 
+2. 
+3. 
+category: devops
+signature: "observability-system -> devops: 系统可观测性 — 指标收集、日志分析、链路追踪、仪表盘。为Synthos系统建立完整的可观测性体系。"
+related_skills: ['system-reliability-engineering', 'capacity-planning']
 description: "系统可观测性 — 指标收集、日志分析、链路追踪、仪表盘。为Synthos系统建立完整的可观测性体系。"
 version: 1.0.0
 allowed-tools:
@@ -79,6 +88,12 @@ triggers:
    - 月报: 容量规划、成本分析、改进建议
 
 ## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
 
 - **指标噪音**: 不是所有指标都有价值。遵循"每个指标必须关联决策"原则——如果一个指标不能触发任何行动，它就是噪音。初始只收集3-5个核心指标，逐步增加。
 - **告警疲劳**: 收到太多告警会导致忽略所有告警。告警阈值要合理，不要过敏感。一个告警收到后必须有人响应或自动处理，否则这个告警就是噪音。
@@ -108,7 +123,6 @@ triggers:
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## Golden 集合 · GOLDEN SET
 
 - **Golden Input**: 标准输入样本（覆盖正常路径）
@@ -119,7 +133,4 @@ triggers:
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Observability System
-

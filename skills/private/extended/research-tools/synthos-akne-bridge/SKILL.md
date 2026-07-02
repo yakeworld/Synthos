@@ -1,12 +1,30 @@
 ---
 
-
 name: synthos-akne-bridge
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: devops
+signature: "synthos-akne-bridge -> devops: Synthos 与 AKNE 之间双向桥接 — 论文目录规范化、技能连接、逆向边创建、Wiki 清理、自动守护重启、内容摘要注入、向量化补全。与 akne-ma"
 description: Synthos 与 AKNE 之间双向桥接 — 论文目录规范化、技能连接、逆向边创建、Wiki 清理、自动守护重启、内容摘要注入、向量化补全。与 akne-maintenance（内部运维）和 akne-knowledge-manager（审计诊断）不同，本技能管具体的桥接操作。
 author: Synthos
 license: MIT
 version: 1.0.0
-license: MIT
 metadata:
   synthos:
     priority: P1
@@ -15,9 +33,7 @@ metadata:
     signature: 'synthos_state: str, akne_state: str -> bridge_report: dict'
     related_skills: ["akne-maintenance", "akne-knowledge-manager"]
 
-
 ---
-
 
 ## IO_CONTRACT
 
@@ -26,15 +42,12 @@ metadata:
 
 > 对应原则：P2（机械原子暴露输入输出规范）
 
-
 io_contract:
   input:
     - 'synthos_state: str, akne_state: str -> bridge_report: dict'
   output:
     - 'bridge_report: dict (bridge_points: list[str], knowledge_flow: dict, sync_status: str)'
 ---
-
-
 
 # Synthos-AKNE Bridge — 双向桥接
 
@@ -324,7 +337,7 @@ graph.json 中所有 edge 的 `relation` 字段为空字符串，实际关系值
 
 ## 参考文件
 
-`references/synthos-akne-integration-audit.md` — 修复后完整审计数据。
+`ref/synthos-akne-integration-audit.md` — 修复后完整审计数据。
 `references/query-engine-architecture.md` — QueryEngine 架构说明、API 参考、陷阱记录。
 `references/bridge-script-reference.md` — akne-query.sh 各模式详解与输出格式。
 `references/enhanced-search.md` — akne-enhanced-search.py 语义搜索增强（TF-IDF+jieba+融合评分）。
@@ -335,7 +348,6 @@ graph.json 中所有 edge 的 `relation` 字段为空字符串，实际关系值
 
 AKNE 桥接遵循 `kg-bridge`（Knowledge Graph — Agent Bridge）方法论：
 
-
 ## 验证清单 · VERIFICATION
 
 1. **输入验证**: 输入参数/文件/路径是否完整且有效
@@ -344,14 +356,12 @@ AKNE 桥接遵循 `kg-bridge`（Knowledge Graph — Agent Bridge）方法论：
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -373,6 +383,4 @@ AKNE 桥接遵循 `kg-bridge`（Knowledge Graph — Agent Bridge）方法论：
 
 详见 `kg-bridge/SKILL.md` 获取完整方法论。
 
-
 # Synthos Akne Bridge
-

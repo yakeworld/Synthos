@@ -1,5 +1,24 @@
 ---
 name: openml-benchmark
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: research-tools
 description: >-
   OpenML 基准数据库对比 — 查询公开数据集的基准实验记录，提取性能指标，
   将论文实验结果与 OpenML 社区基准进行排名、百分位、统计对比。
@@ -310,13 +329,11 @@ X, y, _, _ = d.get_data(target=d.default_target_attribute)
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -330,7 +347,4 @@ X, y, _, _ = d.get_data(target=d.default_target_attribute)
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Openml Benchmark
-

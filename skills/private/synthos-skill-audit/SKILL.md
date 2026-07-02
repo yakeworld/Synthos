@@ -1,5 +1,25 @@
 ---
 name: synthos-skill-audit
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: quality
+signature: "synthos-skill-audit -> quality: Synthos技能质量审计 — 思想密度、代码占比、入口单一性评估方法论。具体审计命令和修复细节见 references/。"
 description: Synthos技能质量审计 — 思想密度、代码占比、入口单一性评估方法论。具体审计命令和修复细节见 references/。
 version: 2.0.0
 author: Synthos
@@ -10,7 +30,7 @@ metadata:
     atom_type: audit-skill
     description: "Synthos skill quality audit — thought density, code ratio, single entry point evaluation methodology."
     signature: 'directory_a: str, directory_b: str -> audit_report: dict, sync_plan: list'
-    related_skills: [akne-maintenance, maintenance, skill-integrity-audit]
+    related_skills: ["akne-maintenance", "maintenance"]
 ---
 
 # Synthos Skill Audit
@@ -176,18 +196,17 @@ shutil.rmtree(SYNTHOS) → shutil.copytree(HERMES, SYNTHOS)
 
 ## 参考文件
 
-- `references/dedup-sync-pattern.md` — 重复技能同步详细步骤：发现→检查→统一→双向同步→验证
-- `references/ambiguous-name-recovery.md` — 运行时别名冲突恢复：skill_view AMBIGUOUS 故障处理
-- `references/path-redundancy-2026-06-18.md` — 路径冗余诊断
-- `references/path-trap-2026-06-21.md` — 路径陷阱诊断方法
-- `references/learn-vs-synthos-comparison.md` — `/learn` 生成技能 vs Synthos 标准技能对比（调用方式差异、四块→五节法映射、桥接方案）— 用于评估 AI 自动生成的技能质量
+- `ref/dedup-sync-pattern.md` — 重复技能同步详细步骤：发现→检查→统一→双向同步→验证
+- `ref/ambiguous-name-recovery.md` — 运行时别名冲突恢复：skill_view AMBIGUOUS 故障处理
+- `ref/path-redundancy-2026-06-18.md` — 路径冗余诊断
+- `ref/path-trap-2026-06-21.md` — 路径陷阱诊断方法
+- `ref/learn-vs-synthos-comparison.md` — `/learn` 生成技能 vs Synthos 标准技能对比（调用方式差异、四块→五节法映射、桥接方案）— 用于评估 AI 自动生成的技能质量
 
 ## 陷阱 · AI 生成技能与人工精修
 
 > **陷阱**：`/learn` 等 AI 工具生成的技能是"说明书"（操作手册），不是"宪法"（契约语言）。直接落地为 Synthos 标准会缺失 BOUNDARY、IO_CONTRACT、EVIDENCE_SCHEMA 等核心契约层。
 >
-> **修复**：AI 生成的四块结构（When/Procedure/Pitfalls/Verification）必须经过 post-processor 补全，或人工补充五节法结构。见 `references/learn-vs-synthos-comparison.md` 完整映射表。
-
+> **修复**：AI 生成的四块结构（When/Procedure/Pitfalls/Verification）必须经过 post-processor 补全，或人工补充五节法结构。见 `ref/learn-vs-synthos-comparison.md` 完整映射表。
 
 ## 验证清单 · VERIFICATION
 
@@ -201,13 +220,10 @@ shutil.rmtree(SYNTHOS) → shutil.copytree(HERMES, SYNTHOS)
 
 | 日期 | 版本 | 变更 |
 |------|------|------|
-| 2026-06-28 | 2.1.0 | 新增 `references/learn-vs-synthos-comparison.md` — `/learn` 生成技能 vs Synthos 标准完整对比，四块→五节法映射，调用层级差异分析 |
-| 2026-06-27 | 2.0.0 | 重构：提炼思想/原理/IO Contract/流程/方法/规则。具体命令、案例移至 references/ |
+| 2026-06-28 | 2.1.0 | 新增 `ref/learn-vs-synthos-comparison.md` — `/learn` 生成技能 vs Synthos 标准完整对比，四块→五节法映射，调用层级差异分析 |
+| 2026-06-27 | 2.0.0 | 重构：提炼思想/原理/IO Contract/流程/方法/规则。具体命令、案例移至 ref/ |
 | 2026-06-25 | 1.5.0 | 新增双仓库架构、隐私技能迁移、隐私扫描分级 |
 | 2026-06-21 | 1.4.0 | 新增路径陷阱检测、权限修复 |
 | 2026-06-18 | 1.3.0 | 合并 project-health-audit，新增项目健康检查流程 |
 
-
-
 # Synthos Skill Audit
-

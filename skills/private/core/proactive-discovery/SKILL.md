@@ -1,5 +1,26 @@
 ---
 name: proactive-discovery
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: research
+signature: "proactive-discovery -> research: Proactive Discovery Engine - Automatically discovers new research opportunities,"
+related_skills: ['academic-literature-search', 'social-monitor']
 description: "Proactive Discovery Engine - Automatically discovers new research opportunities, tracks trends, monitors competitors, and identifies gaps. Transforms the system from reactive to proactive."
 version: 1.0.0
 author: Synthos
@@ -105,7 +126,6 @@ Scan Sources -> Extract -> Score -> Flag -> Queue
 - P2 Stability sinking: Validated discovery patterns become standard
 - P3 Human-machine layering: Human approves which discoveries to pursue
 
-
 ## 验证清单 · VERIFICATION
 
 1. **输入验证**: 输入参数/文件/路径是否完整且有效
@@ -114,13 +134,11 @@ Scan Sources -> Extract -> Score -> Flag -> Queue
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## 约束规则 · RULES
 
@@ -128,7 +146,6 @@ Scan Sources -> Extract -> Score -> Flag -> Queue
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -148,7 +165,4 @@ Scan Sources -> Extract -> Score -> Flag -> Queue
 
 *善战者，求之于势，不责于人。发现趋势，创造机会。*
 
-
-
 # Proactive Discovery
-

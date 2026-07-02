@@ -1,5 +1,12 @@
 ---
 name: kanban-orchestrator
+
+## Operational Steps
+1. 
+2. 
+3. 
+category: devops
+signature: "kanban-orchestrator -> devops: Create Kanban tasks when any of these are true:"
 description: "Create Kanban tasks when any of these are true:"
 version: 1.0.0
 license: MIT
@@ -13,17 +20,12 @@ metadata:
 
 ---
 
-
-
-
-
 ## IO_CONTRACT
 
 - **input**: `task_batch: list[str], priorities: dict` — 用户请求描述、上下文信息
 - **output**: `work_items: list — 待办任务列表`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
 
 # Kanban Orchestrator — Decomposition Playbook
 
@@ -191,6 +193,12 @@ After all content is created and validated, update:
 DON'T wait for each subtask to complete before starting the next if they're independent. This wastes time. The orchestration overhead is small compared to the subtask time.
 
 ## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
 
 **Reassignment vs. new task.** If a reviewer blocks with "needs changes," create a NEW task linked from the reviewer's task — don't re-run the same task with a stern look. The new task is assigned to the original implementer profile.
 
@@ -208,7 +216,6 @@ DON'T wait for each subtask to complete before starting the next if they're inde
 
 When a worker profile keeps crashing, hallucinating, or getting blocked by its own mistakes (usually: wrong model, missing skill, broken credential), the kanban dashboard flags the task with a ⚠ badge and opens a **Recovery** section in the drawer. Three primary actions:
 
-
 ## 验证清单 · VERIFICATION
 
 1. **输入验证**: 输入参数/文件/路径是否完整且有效
@@ -217,14 +224,12 @@ When a worker profile keeps crashing, hallucinating, or getting blocked by its o
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -244,7 +249,4 @@ When a worker profile keeps crashing, hallucinating, or getting blocked by its o
 
 Hallucination warnings appear on tasks where a worker's `kanban_complete(created_cards=[...])` claim included card ids that don't exist or weren't created by the worker's profile (the gate blocks the completion), or where the free-form summary references `t_<hex>` ids that don't resolve (advisory prose scan, non-blocking). Both produce audit events that persist even after recovery actions — the trail stays for debugging.
 
-
-
 # Kanban Orchestrator
-

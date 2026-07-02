@@ -1,5 +1,25 @@
 ---
 name: memory-optimization-system
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: meta
+signature: "memory-optimization-system -> meta: 记忆系统全面优化：上下文卸载(Mermaid压缩)、FSRS巩固cron(凌晨3点)、memory↔fact_store桥接、去重与清理、hidden Unic"
 description: 记忆系统全面优化：上下文卸载(Mermaid压缩)、FSRS巩固cron(凌晨3点)、memory↔fact_store桥接、去重与清理、hidden Unicode字符处理。覆盖TencentDB
 version: 1.1.0
 license: MIT
@@ -175,7 +195,6 @@ memory 和 fact_store 中内容相似度 > 80% 的条目：
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## Golden 集合 · GOLDEN SET
 
 - **Golden Input**: 标准输入样本（覆盖正常路径）
@@ -186,7 +205,4 @@ memory 和 fact_store 中内容相似度 > 80% 的条目：
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Memory Optimization System
-

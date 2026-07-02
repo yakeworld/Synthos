@@ -1,5 +1,12 @@
 ---
 name: citation-bib-crossref
+
+## Operational Steps
+1. 
+2. 
+3. 
+category: research-tools
+signature: "citation-bib-crossref -> research-tools: 'Scan paper directories for mismatches between `\\cite{key}` calls in `.tex` fil"
 description: 'Scan paper directories for mismatches between `\\cite{key}` calls in `.tex` files and `@type{key}` entries in `.bib` files. Produces D8 (bib count) and D10a (match percentage) metrics, plus orphan/zombie classification.'
 version: 1.0.0
 license: MIT
@@ -12,11 +19,6 @@ metadata:
     related_skills: []
 
 ---
-
-
-
-
-
 
 ## IO_CONTRACT
 
@@ -58,7 +60,7 @@ Each directory represents one paper project. Skip non-paper directories:
 3. Prefer `paper.tex` files over other `.tex` names
 
 **Bib source** (priority order):
-1. `06-references/references.bib` — canonical location
+1. `06-ref/references.bib` — canonical location
 2. `references.bib` at the paper directory root (common: often a symlink)
 3. Any `*.bib` file in subdirectories (last resort — warn if found far from root)
 
@@ -147,10 +149,16 @@ bppv-pc-repositioning  44   75.0%   3    35    ❌
 | **混合** | Significant orphans AND zombies (>5 each) |
 
 ## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
 
 ### Non-standard directory layouts
 
-Not all papers follow the `01-manuscript/paper.tex` + `06-references/references.bib` pattern:
+Not all papers follow the `01-manuscript/paper.tex` + `06-ref/references.bib` pattern:
 - Some have `paper.tex` directly in the root directory
 - Some have named manuscript files: `hcs3wt-breast-cancer.tex` instead of `paper.tex`
 - Some have different reference directory names: `06-lit-review/`, `05-refs/`
@@ -166,7 +174,7 @@ Some papers use `\begin{enumerate}` for references instead of `\bibliography{}`:
 
 ### Symlinked bib files
 
-Common pattern: `references.bib -> 06-references/references.bib`
+Common pattern: `references.bib -> 06-ref/references.bib`
 - Python's `os.path.isfile()` follows symlinks by default
 - But relative paths in the `.bib` file (e.g., `\bibliography{refs}`) won't resolve through the symlink
 - Handle carefully: read from the actual file location
@@ -265,14 +273,12 @@ pima-crispdm           33   100%    0     0    ✅
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -286,7 +292,4 @@ pima-crispdm           33   100%    0     0    ✅
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Citation Bib Crossref
-

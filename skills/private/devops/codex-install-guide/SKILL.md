@@ -1,5 +1,25 @@
 ---
 name: codex-install-guide
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: devops
+related_skills: ['codex', 'opencode']
 description: Codex CLI 安装与环境验证 — npm包名、二进制验证、与opencode共存、vLLM配置。
 version: 1.0.0
 author: Synthos
@@ -65,6 +85,33 @@ cat ~/.local/share/opencode/auth.json  # OpenCode 配置（独立）
 - [ ] 确认 `codex --version` 不报错
 - [ ] 不要安装 `@codexapi/codexclaude`（它会修改 `~/.codex/config.toml` 指向付费端点）
 - [ ] 使用 `@openai/codex`，不用旧包名 `@openai/codexec`
+- [ ] 安装后检查 `ls ~/.codex/profiles/` — 如果 cron 脚本引用了 profile 但不存在，会批量超时。确保所有 cron 脚本调用的 profile（如 `amax`、`hermes`）对应文件存在
+
+## 多 Profile 管理
+
+Codex CLI 通过 `~/.codex/profiles/<name>.config.toml` 管理多节点 profile：
+
+```toml
+# amax.config.toml
+model = "qwen3.6-35b-nvfp4"
+model_provider = "amax"
+
+[model_providers.amax]
+name = "Amax vLLM"
+env_key = "AMAX_API_KEY"
+base_url = "http://100.100.252.99:8000/v1"
+wire_api = "chat_completions"
+```
+
+```bash
+# 使用特定 profile
+codex -p amax exec "command"
+
+# 验证 profile 是否存在
+codex -p amax exec "echo test"
+```
+
+**关键**：所有 cron 脚本引用的 profile 必须存在，否则 `codex exec` 会超时且无具体错误信息。
 
 ## 契约层 · BOUNDARY
 
@@ -83,13 +130,11 @@ cat ~/.local/share/opencode/auth.json  # OpenCode 配置（独立）
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## 约束规则 · RULES
 
@@ -97,7 +142,6 @@ cat ~/.local/share/opencode/auth.json  # OpenCode 配置（独立）
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -113,7 +157,4 @@ cat ~/.local/share/opencode/auth.json  # OpenCode 配置（独立）
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Codex Install Guide
-

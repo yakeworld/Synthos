@@ -1,5 +1,26 @@
 ---
 name: graduate-student-mentoring
+license: MIT
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: mentoring
+related_skills: ['graduate-student-onboarding']
 description: "研究生培养方案 — 科研型硕士/博士的AI辅助科研训练体系。覆盖工具链上手(Synthos+Codex+Hermes)、研究方向对齐、论文写作加速、时间线管理。特别适配医学背景学生的三维眼动分析方向培养。"
 version: 1.0.0
 metadata:
@@ -106,7 +127,7 @@ Phase 3: 论文写作（第5-8周）
 
 ## 相关参考
 
-- `references/graduate-training-plan-3d-eye-tracking.md` — 三维眼动分析训练方案全文
+- `ref/graduate-training-plan-3d-eye-tracking.md` — 三维眼动分析训练方案全文
 
 ## 契约层 · BOUNDARY
 
@@ -125,14 +146,12 @@ Phase 3: 论文写作（第5-8周）
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -146,7 +165,4 @@ Phase 3: 论文写作（第5-8周）
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Graduate Student Mentoring
-

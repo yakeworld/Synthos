@@ -1,5 +1,12 @@
 ---
 name: xhs-content
+
+## Operational Steps
+1. 
+2. 
+3. 
+category: social-media
+signature: "xhs-content -> social-media: 小红书 (XHS) 内容生成与管理 — 生成发帖正文、标签、封面文案、排版建议。覆盖内容模板、素材管理、发布通道评估。"
 description: 小红书 (XHS) 内容生成与管理 — 生成发帖正文、标签、封面文案、排版建议。覆盖内容模板、素材管理、发布通道评估。
 author: Synthos
 license: MIT
@@ -174,6 +181,12 @@ read_file(path='/home/yakeworld/桌面/social-media/xhs/codex-vllm-原生直连/
 正确做法：先读 `pdf-download-racing/SKILL.md` + `scripts/` 下的全部脚本，统计实际功能
 
 ## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
 
 1. **标题风格偏好** — 技术分享类帖子标题用**陈述句/断言式**而非问句。用户明确纠正：`"质检是AI辅助科研最重要技能"` ✅，`"你的论文，经得起质检吗？"` ❌。用"是什么/怎么做"替代"你知道吗/你做过吗"。封面标题同理。
 2. **不要直接用 xhs 发帖技能发 X/Twitter** — 这是两个平台的独立内容
@@ -207,7 +220,6 @@ read_file(path='/home/yakeworld/桌面/social-media/xhs/codex-vllm-原生直连/
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## Golden 集合 · GOLDEN SET
 
 - **Golden Input**: 标准输入样本（覆盖正常路径）
@@ -218,7 +230,4 @@ read_file(path='/home/yakeworld/桌面/social-media/xhs/codex-vllm-原生直连/
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Xhs Content
-

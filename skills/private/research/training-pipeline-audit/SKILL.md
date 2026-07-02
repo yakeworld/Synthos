@@ -1,5 +1,26 @@
 ---
 name: training-pipeline-audit
+license: MIT
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: research
+signature: "training-pipeline-audit -> research: 训练管线全面审计 — 从代码+数据+文档出发，提取研究空白、科学假设、论文撰写计划。"
 description: "训练管线全面审计 — 从代码+数据+文档出发，提取研究空白、科学假设、论文撰写计划。"
 version: 1.0.0
 author: "Synthos + 用户杨晓凯"
@@ -9,7 +30,7 @@ metadata:
     atom_type: research
     description: "从训练管线/实验代码/数据文件出发，系统性地提取研究空白、生成可检验假设、产出SCI论文撰写计划。"
     signature: "pipeline_dir: str -> audit_report: dict (project_summary, research_gaps, hypotheses, paper_plan)"
-    related_skills: [hypothesis-generation, data-driven-hypothesis, paper-pipeline, sci-paper-standard-structure, research-skill-audit]
+    related_skills: ["hypothesis-generation", "paper-pipeline"]
 ---
 
 # Training Pipeline Audit
@@ -144,10 +165,10 @@ metadata:
 
 ## 参考文件
 
-- references/legacy-paper-rescue-workflow.md — 管线/训练分析经验
-- references/legacy-paper-rescue-workflow.md — 管线/训练分析经验
-- references/hypothesis-generation-references/io-contract.md — 假设生成IO合同
-- references/hypothesis-generation-references/boundary.md — 假设生成边界
+- ref/legacy-paper-rescue-workflow.md — 管线/训练分析经验
+- ref/legacy-paper-rescue-workflow.md — 管线/训练分析经验
+- ref/hypothesis-generation-ref/io-contract.md — 假设生成IO合同
+- ref/hypothesis-generation-ref/boundary.md — 假设生成边界
 - references/k230-pipeline-audit-2026-06-13.md — K230训练管线审计报告(实战案例)
 - references/k230-code-patterns.md — K230训练管线核心代码模式(数据加载/训练/参数)
 - references/skill-library-audit-2026-06-13.md — 技能库审计与更新报告
@@ -165,13 +186,11 @@ metadata:
 - [ ] 已输出论文撰写计划(IMRaD结构+文献列表)
 - [ ] 假设格式符合hypothesis-generation的IO_CONTRACT
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## 约束规则 · RULES
 
@@ -179,7 +198,6 @@ metadata:
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -193,7 +211,4 @@ metadata:
 
 > 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。
 
-
-
 # Training Pipeline Audit
-

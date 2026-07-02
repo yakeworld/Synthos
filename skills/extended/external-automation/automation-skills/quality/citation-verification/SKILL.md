@@ -1,5 +1,25 @@
 ---
 name: citation-verification
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: quality
+signature: "citation-verification -> quality: 引用三验 — 参考文献是否存在(L1) + 引用是否得当(L2) + 引用是否全面(L3)。三位一体验证管线。"
 description: "引用三验 — 参考文献是否存在(L1) + 引用是否得当(L2) + 引用是否全面(L3)。三位一体验证管线。"
 version: 3.0.0
 author: Synthos
@@ -9,7 +29,7 @@ metadata:
     priority: P0
     atom_type: quality
     signature: "paper_dir: str -> citation_report: dict (phase1, phase2, phase3, overall)"
-    related_skills: [paper-citation-health, paper-pipeline, quality-gate]
+    related_skills: ["paper-pipeline", "quality-gate"]
 ---
 
 # 引用三验 — 参考文献验证
@@ -175,7 +195,7 @@ pdfinfo ref.pdf | grep "Title:"
 5. 修改后必须逐一验证`paper.tex`中的`\bibliography{}`引用路径存在且可读取
 6. 验证`state.json`中的`checksum.compile_status`和`checksum.bibitems`一致性
 
-参考：`references/pdf-reference-extraction.md` — 2026-06-30论文目录标准化导致29篇论文references.bib完全丢失的事故记录。
+参考：`ref/pdf-reference-extraction.md` — 2026-06-30论文目录标准化导致29篇论文references.bib完全丢失的事故记录。
 
 ## Phase 3: 是否全面
 
@@ -228,13 +248,13 @@ CRISP-DM方法论论文常只引用原始文献(Shearer 2000, Wirth 2000)，忽�
 ## 参考文件
 
 - `references/pima-crispdm-phase2-review-2026-06-23.md` — Phase 2完整审计实例（PIMA bib实战）
-- `references/pima-bib-fabrication-analysis.md` — 假DOI模式统计与检测规则
+- `ref/pima-bib-fabrication-analysis.md` — 假DOI模式统计与检测规则
 
 ## 版本历史
 
 | 版本 | 日期 | 变更 |
 |:-----|:-----|:-----|
-| 3.0.0 | 2026-06-27 | 重构为"原理-流程-三阶段"结构，从29KB压缩至~15KB。真实案例和详细陷阱移至references/目录。 |
+| 3.0.0 | 2026-06-27 | 重构为"原理-流程-三阶段"结构，从29KB压缩至~15KB。真实案例和详细陷阱移至ref/目录。 |
 | 2.4.0 | 2026-06-23 | 新增Phase 2完整审计参考文件 |
 | 2.2.0 | 2026-06-23 | 新增WITHDRAWN检测/arXiv不防伪/DOI跨域/作者编造 |
 | 2.0.0 | 2026-06-23 | 合并三技能：reference-verification + citation-appropriateness + 全面性评估 |
@@ -256,7 +276,6 @@ CRISP-DM方法论论文常只引用原始文献(Shearer 2000, Wirth 2000)，忽�
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## Golden 集合 · GOLDEN SET
 
 - **Golden Input**: 标准输入样本（覆盖正常路径）
@@ -267,7 +286,4 @@ CRISP-DM方法论论文常只引用原始文献(Shearer 2000, Wirth 2000)，忽�
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Citation Verification
-

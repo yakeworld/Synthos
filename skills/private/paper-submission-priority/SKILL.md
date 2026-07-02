@@ -1,6 +1,13 @@
 ---
 name: paper-submission-priority
-related_skills: [paper-pipeline, sci-paper-quality-review, quality-gate, paper-improvement]
+license: MIT
+
+## Operational Steps
+1. 
+2. 
+3. 
+category: paper-tools
+related_skills: ["paper-pipeline", "quality-gate", "paper-improvement"]
 description: "论文投稿优先级评估 — 从管线中筛选最高质量论文，按临床价值、创新性、G1-G7闸门、D10a完整性、代码可用性排序，推荐最优投稿候选。"
 version: 1.0.0
 allowed-tools: [terminal, file, execute_code]
@@ -101,6 +108,12 @@ python3 scripts/scan_submission_candidates.py
 | corneal-biomechanics-ODE | 96 | 13 | 角膜生物力学 | N/A | 无PDF |
 
 ## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
 
 - **state.json quality_score 在顶层，不在嵌套字段中** — 之前误查嵌套字段导致所有论文 score=-1
 - **D10a 可能是数字 100.0 或字符串 "100%"** — 解析时需处理两种格式
@@ -128,13 +141,11 @@ python3 scripts/scan_submission_candidates.py
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## 约束规则 · RULES
 
@@ -142,7 +153,6 @@ python3 scripts/scan_submission_candidates.py
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -158,7 +168,4 @@ python3 scripts/scan_submission_candidates.py
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Paper Submission Priority
-

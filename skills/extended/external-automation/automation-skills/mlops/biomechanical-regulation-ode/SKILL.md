@@ -1,5 +1,13 @@
 ---
 name: biomechanical-regulation-ode
+
+## Operational Steps
+1. 
+2. 
+3. 
+category: mlops
+signature: "biomechanical-regulation-ode -> mlops: Class-level skill for building computational dynamical models of physiological r"
+related_skills: ['computational-ode-modeling', 'experiment-recipes']
 description: "Class-level skill for building computational dynamical models of physiological regulation systems using 2-ODE systems with PINN training. Covers model formulation, bifurcation analysis, Sobol sensitivity, and ablation studies."
 version: 1.0.0
 license: MIT
@@ -13,18 +21,12 @@ metadata:
 
 ---
 
-
-
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
 - **output**: `result: dict — 技能执行结果（结构因技能而异）`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-
 
 # Biomechanical Regulation ODE Modeling
 
@@ -84,10 +86,16 @@ Follow the paper-pipeline single-session assembly pattern.
 
 ## References
 - `references/iop-model-design-notes.md` — IOP-specific modeling decisions and parameter justification
-- `references/simulation-code-pattern.md` — Standard simulation code template for 2-ODE biomechanical models
-- `references/paper-assembly-checklist.md` — Paper 115 paper.tex structure reference
+- `ref/simulation-code-pattern.md` — Standard simulation code template for 2-ODE biomechanical models
+- `ref/paper-assembly-checklist.md` — Paper 115 paper.tex structure reference
 
 ## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
 1. **Goldmann equation mismatch**: The production rate and outflow resistance must produce clinically correct steady-state IOP. If IOP_ss = P₀ * τ + Pv doesn't match 15-17 mmHg for healthy, adjust parameters before adding dynamics.
 2. **Over-suppression**: If the IOP-dependent suppression term is too strong, production drops too fast and the system cannot maintain physiological range. Test k2 values: 0.01-0.05 is typically safe.
 3. **Steady-state convergence time**: τ determines the time constant. Ensure simulation runs for at least 5τ to reach steady state (50 min for τ=10).
@@ -102,14 +110,12 @@ Follow the paper-pipeline single-session assembly pattern.
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -123,7 +129,4 @@ Follow the paper-pipeline single-session assembly pattern.
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Biomechanical Regulation Ode
-

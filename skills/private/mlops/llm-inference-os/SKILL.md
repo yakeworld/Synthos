@@ -1,5 +1,26 @@
 ---
 name: llm-inference-os
+license: MIT
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: mlops
+related_skills: ['llm-model-selection', 'vllm-cluster-management']
 description: LLM 推理服务的操作系统选择与调优 — 覆盖 Linux/WSL2/macOS 对比、vLLM 部署优化、NUMA 绑定、NCCL 调优。
 metadata:
   synthos:
@@ -113,7 +134,7 @@ net.ipv4.tcp_tw_reuse = 1
 > 1. 收到多模态需求时，首先确认模型名称是否含 "VL" 后缀
 > 2. 如果用户说 Qwen3/3.5/3.6 而没有 VL/Coder 后缀 → 纯文本
 > 3. 需要图片能力 → 推荐 Qwen2.5-VL 或 Qwen3-VL 系列
-> 4. 参考完整型号辨析：`llm-model-selection` → `references/qwen-model-variants.md`
+> 4. 参考完整型号辨析：`llm-model-selection` → `ref/qwen-model-variants.md`
 >
 > 文言：一字之差，天壤之别。先辨型号，再论部署。
 
@@ -139,13 +160,11 @@ net.ipv4.tcp_tw_reuse = 1
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -159,7 +178,4 @@ net.ipv4.tcp_tw_reuse = 1
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Llm Inference Os
-

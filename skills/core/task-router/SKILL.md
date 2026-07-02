@@ -1,11 +1,30 @@
 ---
 
 name: task-router
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: core
+signature: "task-router -> core: Synthos系统入口。路由用户查询到正确的认知原子链或执行模式。 四模式：标准链 / 探索循环 / 研究双循环 / 并行执行。 Agent-native执行，"
 description: Synthos系统入口。路由用户查询到正确的认知原子链或执行模式。 四模式：标准链 / 探索循环 / 研究双循环 / 并行执行。 Agent-native执行，纯skill驱动零Python。
 author: Synthos
 license: MIT
 version: 1.0.0
-license: MIT
 allowed-tools: shell (bash), Read (view), Write (write), task_delegation (agent, inline),
   skill_loader (view with file path)
 metadata:
@@ -15,11 +34,9 @@ metadata:
     description: Synthos系统入口。路由用户查询到正确的认知原子链或执行模式。 四模式：标准链 / 探索循环 / 研究双循环 / 并行执行。
     signature: |
       query: str, context: dict -> route: str, atom_chain: list[str], execution_mode: str | route: str, atom_chain: list[str], execution_mode: str, pipeline_trace: pipeline_trace.json
-    related_skills: [knowledge-acquisition, knowledge-extraction, association-discovery, hypothesis-generation, argument-expression, viewpoint-verification, evolution]
-
+    related_skills: ['knowledge-acquisition', 'hypothesis-generation', 'argument-expression']
 
 ---
-
 
 # Task Router — Synthos 系统入口
 
@@ -219,7 +236,4 @@ chain_example:
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 
-
-
 # Task Router
-

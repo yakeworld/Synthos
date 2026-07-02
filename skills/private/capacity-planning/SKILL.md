@@ -1,5 +1,14 @@
 ---
 name: capacity-planning
+license: MIT
+
+## Operational Steps
+1. 
+2. 
+3. 
+category: devops
+signature: "capacity-planning -> devops: 容量规划 — 资源预测、性能基准、扩展策略、成本优化。基于历史数据和趋势预测，为Synthos系统提供容量规划能力。"
+related_skills: ['system-reliability-engineering', 'observability-system']
 description: "容量规划 — 资源预测、性能基准、扩展策略、成本优化。基于历史数据和趋势预测，为Synthos系统提供容量规划能力。"
 version: 1.0.0
 allowed-tools:
@@ -83,6 +92,12 @@ triggers:
    - 月报: 容量规划、资源采购建议、成本优化建议
 
 ## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
 
 - **增长率外推陷阱**: 增长率不是线性的。论文产出初期快、中期慢、长期可能饱和。不要简单用线性增长外推6个月以上。每季度重新评估增长率。
 - **容量规划滞后**: 容量规划是预测性的，但实际使用可能突变。不要等到余量比<1.5才行动。余量比<2.0就应启动规划。
@@ -113,13 +128,11 @@ triggers:
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## 约束规则 · RULES
 
@@ -127,7 +140,6 @@ triggers:
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -143,7 +155,4 @@ triggers:
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Capacity Planning
-

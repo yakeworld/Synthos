@@ -1,6 +1,27 @@
 ---
 
 name: feishu-gateway-debug
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: devops
+signature: "feishu-gateway-debug -> devops: 飞书 Gateway 消息流诊断与排障 — 从用户消息到 agent 响应的全链路追踪。覆盖 404 根因、消息流路径、agent session 分离、日志定"
+related_skills: ['safe-file-operations', 'privacy-scan']
 related_skills:
 - hermes-agent
 - github
@@ -17,7 +38,6 @@ metadata:
     version: 2.1.0
     author: Synthos
     signature: 'query: str -> debug_trace: dict'
-
 
 ---
 
@@ -160,7 +180,6 @@ Script timed out after 300s and was killed
 2. **404 多数来自 vLLM 而非飞书**：用户报告的 "404" 多数是模型节点返回的，不是飞书 API。需先检查 `base_url` 指向哪个服务。
 3. **CLI 和飞书 session 隔离**：CLI 的 `execute_code` 超时不会阻塞飞书会话。两个平台各自维护独立 session。
 
-
 ## 验证清单 · VERIFICATION
 
 1. **输入验证**: 输入参数/文件/路径是否完整且有效
@@ -169,13 +188,11 @@ Script timed out after 300s and was killed
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -225,7 +242,4 @@ gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -d
 5. 若不存在 → `search_files(pattern='*文件名*', target='files')` 找正确路径
 6. 修正路径后重发
 
-
-
 # Feishu Gateway Debug
-

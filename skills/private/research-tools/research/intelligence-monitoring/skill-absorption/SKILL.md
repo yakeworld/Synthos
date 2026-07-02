@@ -1,12 +1,32 @@
 ---
 
 name: skill-absorption
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: meta
+signature: "skill-absorption -> meta: 双循环进化：内部反思(P0) + 外部吸收(P1)。Cross-project absorption methodology — multi-round cro"
+related_skills: ['project-absorption', 'skill-consolidation']
 related_skills: ["project-experience-distillation"]
 description: 双循环进化：内部反思(P0) + 外部吸收(P1)。Cross-project absorption methodology — multi-round cross-project comparison, active project tracking, self-expanding keyword discovery. 动灵驱动吸收(Entelechy-Driven Absorption v4.3).
 author: Synthos
 license: MIT
 version: 4.3
-license: MIT
 allowed-tools:
 - terminal
 - file
@@ -19,11 +39,8 @@ metadata:
     priority: P1
     signature: 'target: str -> absorption_report: dict'
 
-
 ---
 version: 2.0.0
-
-
 
 ## IO_CONTRACT
 
@@ -170,14 +187,12 @@ tracking（已扫描/候选）
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -191,7 +206,4 @@ tracking（已扫描/候选）
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Skill Absorption
-

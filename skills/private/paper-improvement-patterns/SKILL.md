@@ -1,5 +1,24 @@
 ---
 name: paper-improvement-patterns
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: paper-tools
 description: "论文质量改进的标准化模式库 — 消融实验、统计显著性、前沿文献补充、Data/Code声明的添加模式"
 version: 1.2.0
 author: "Synthos"
@@ -9,7 +28,7 @@ metadata:
     priority: P2
     atom_type: skill
     description: "论文质量改进模式库 — 前沿文献、消融实验、统计显著性、数据声明、数值伪造修复等标准化改进模式"
-    related_skills: [paper-improvement, reproducibility-audit, paper-d8-d10a-scan, prose-cluster-hybrid-citation-fix]
+    related_skills: ["paper-improvement", "reproducibility-audit", "prose-cluster-hybrid-citation-fix"]
     change_log:
       "1.1.0": "2026-06-24 新增外部引用到quality-gate的消融布尔开关实现和Notebook-Script统一工作流"
 signature: "paper-improvement-patterns -> processed_result"
@@ -272,14 +291,12 @@ echo "total: $(wc -l < /tmp/bibitems.txt)"
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -293,7 +310,4 @@ echo "total: $(wc -l < /tmp/bibitems.txt)"
 
 > 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。
 
-
-
 # Paper Improvement Patterns
-

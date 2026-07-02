@@ -1,6 +1,26 @@
 ---
 
 name: argument-expression
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: core
+signature: "argument-expression -> core: 将假设转化为结构化学术论证（论文章节+论据链），支持 Toulmin 模型、Hyland 修辞框架、IMRAD 验证。"
 description: "将假设转化为结构化学术论证（论文章节+论据链），支持 Toulmin 模型、Hyland 修辞框架、IMRAD 验证。"
 author: Synthos
 license: MIT
@@ -12,7 +32,7 @@ metadata:
     atom_type: cognitive-atom
     description: "Academic argument construction from hypotheses"
     signature: "claims: list[Claim], evidence: list[Evidence] -> argument_chain: ArgumentChain (structure, strengths, gaps, counterarguments)"
-    related_skills: [hypothesis-generation, viewpoint-verification, quality-gate]
+    related_skills: ['hypothesis-generation', 'viewpoint-verification']
 
 ---
 
@@ -73,8 +93,4 @@ metadata:
 
 见 `BOUNDARY.md` — 本原子只做论证构建，不做假设生成、不做观点验证。
 
-
-
-
 # Argument Expression
-

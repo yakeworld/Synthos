@@ -1,5 +1,14 @@
 ---
 name: docker-vllm-troubleshoot
+license: MIT
+
+## Operational Steps
+1. 
+2. 
+3. 
+category: devops
+signature: "docker-vllm-troubleshoot -> devops: Docker vLLM多节点故障排查 — 容器内可访问但外部404、端口映射异常、MTU异常、端口冲突、Triton编译延迟。覆盖work1/work3多节点v"
+related_skills: ['vllm-cluster-management', 'node-failover-protocol']
 description: "Docker vLLM多节点故障排查 — 容器内可访问但外部404、端口映射异常、MTU异常、端口冲突、Triton编译延迟。覆盖work1/work3多节点vLLM实例的稳定性诊断与修复。"
 version: 1.0.0
 triggers:
@@ -116,6 +125,12 @@ docker exec <container> ps aux | grep vllm
 **处理：** 等待编译完成。如果超过5分钟无进展，检查是否有编译错误。
 
 ## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
 
 - **vLLM /ping 返回空body而非"pong"**：vLLM 0.23.0的ping是200空响应，不是传统"pong"字符串
 - **curl exit code 0但HTTP 404**：`curl -s -o /dev/null -w '%{http_code}'` 即使404也返回exit code 0，不要误判
@@ -124,6 +139,7 @@ docker exec <container> ps aux | grep vllm
 - **MTU 1300不是bug**：某些网络环境（如跨云平台）需要低MTU，但单机环境1300通常是错误的
 - **端口映射的[::] IPv6绑定可能与IPv4冲突**：检查docker port输出是否同时有0.0.0.0和::
 - **Tailscale 路由分层**：SSH 连接可能因 Tailscale 路由问题失败但 curl 到 vLLM 端口（8000）正常。这是 Tailscale 的 MagicDNS 和 direct TCP 路由分层导致的——SSH 走不同路径。排查 vLLM 问题时，如果 SSH timeout 但 curl 正常，容器可能仍在线，不要直接判断节点故障。
+- **旧端口引用过时**：脚本/代码中残留旧端口（如 20001/20002/20003），但 Docker 实际映射为 8000。症状：connection refused 但容器正常运行。修复：`ssh <host> "docker ps --format '{{.Names}}\t{{.Ports}}'"` 获取真实映射，grep 搜索旧端口引用并更新。注意：Tailscale 内部 IP（100.x.x.x）+ 容器端口（8000）是正确组合。
 - **Docker NAT规则可能被其他Docker容器破坏**：Portainer等容器内部端口占用可能干扰NAT表
 
 vLLM 服务器在长时间运行后可能出现吞吐量下降（从 170+ tok/s 降到 30 tok/s 甚至超时），**不是端口问题而是 GPU 调度/OOM 问题**。
@@ -180,13 +196,11 @@ print(f'tokens={u[\"completion_tokens\"]} time={u.get(\"total_tokens\",0)}')"
 3. **边界验证**: {边界条件是否处理}
 4. **错误处理**: {异常场景是否覆盖}
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -200,8 +214,4 @@ print(f'tokens={u[\"completion_tokens\"]} time={u.get(\"total_tokens\",0)}')"
 
 > 每项验证必须可执行、可记录、可复现。
 
-
-
-
 # Docker Vllm Troubleshoot
-

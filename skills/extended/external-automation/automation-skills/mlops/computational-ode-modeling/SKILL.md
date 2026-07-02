@@ -1,8 +1,26 @@
 ---
 
-
-
 name: computational-ode-modeling
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: mlops
+signature: "computational-ode-modeling -> mlops: 计算 ODE 建模：用神经网络求解/反求 ODE 参数，支持 PINN/DeepONet 等方法"
 description: 计算 ODE 建模：用神经网络求解/反求 ODE 参数，支持 PINN/DeepONet 等方法
 version: 1.0.0
 license: MIT
@@ -15,17 +33,12 @@ metadata:
     related_skills: []
 ---
 
-
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
 - **output**: `result: dict — 技能执行结果（结构因技能而异）`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-
 
 # Computational ODE Modeling for SCI Papers
 
@@ -172,13 +185,11 @@ dAdt = lam*max(0, S_high-S) - mu*A + growth  # Has negative term proportional to
 - 每次 `ode(0, [S_eq, 0], p)` 不接近零 → 必须改参数，不能改算法。
 - 用 `solve_ivp` 的 `rtol=1e-10, atol=1e-12` 保证数值精度，否则 bifurcation 点漂移。
 
-
 ## 示例 · EXAMPLES
 
 1. **基本用法**: 标准输入 → 标准输出
 2. **边界用例**: 空输入、特殊字符、异常路径
 3. **错误场景**: 缺失依赖、权限不足、网络异常
-
 
 ## 约束规则 · RULES
 
@@ -186,7 +197,6 @@ dAdt = lam*max(0, S_high-S) - mu*A + growth  # Has negative term proportional to
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -200,7 +210,4 @@ dAdt = lam*max(0, S_high-S) - mu*A + growth  # Has negative term proportional to
 
 > 每个示例必须可独立运行、有明确输入输出、包含错误处理。
 
-
-
 # Computational Ode Modeling
-

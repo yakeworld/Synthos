@@ -1,11 +1,30 @@
 ---
 
 name: ffmpeg-video-audio-sync
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: creative
+signature: "ffmpeg-video-audio-sync -> creative: Debug and fix FFmpeg video-audio synchronization issues including duration"
 description: Debug and fix FFmpeg video-audio synchronization issues including duration
 author: Synthos
 license: MIT
 version: 1.2
-license: MIT
   mismatches, sample rate problems, and MP4 concatenation pitfalls. Covers ffprobe
   diagnostics, stream trimming, audio conversion, and verification of synced output.
 allowed-tools:
@@ -23,9 +42,7 @@ metadata:
     - excalidraw
     - figure-generation
 
-
 ---
-
 
 ## IO_CONTRACT
 
@@ -33,9 +50,6 @@ metadata:
 - **output**: `synced_output: str — 音视频同步文件`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-
-
 
 # FFmpeg Video-Audio Sync Troubleshooting
 
@@ -205,14 +219,12 @@ For creating professional demo videos from PPTX slides (competition demos, prese
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -226,7 +238,4 @@ For creating professional demo videos from PPTX slides (competition demos, prese
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Ffmpeg Video Audio Sync
-

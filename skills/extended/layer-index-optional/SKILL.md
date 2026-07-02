@@ -1,5 +1,26 @@
 ---
 name: layer-index-optional
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: meta
+signature: "layer-index-optional -> meta: Navigation index for optional skills — creative tools, productivity, social moni"
+related_skills: ['layer-index']
 description: "Navigation index for optional skills — creative tools, productivity, social monitoring, gaming, and platform-specific integrations."
 version: 1.0.0
 license: MIT
@@ -86,7 +107,6 @@ Navigation index for optional skills: creative tools, productivity, social monit
 - **input**: `layer: str, query: str, context: dict` — Layer name, search query, and context
 - **output**: `skill_list: list[dict]` — Filtered list of skills matching the query
 
-
 ## 验证清单 · VERIFICATION
 
 1. **输入验证**: 输入参数/文件/路径是否完整且有效
@@ -95,14 +115,12 @@ Navigation index for optional skills: creative tools, productivity, social monit
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -118,6 +136,4 @@ Navigation index for optional skills: creative tools, productivity, social monit
 
 > 对应原则：P3（人机分层 — 路由器负责路由，原子负责执行）
 
-
 # Layer Index Optional
-

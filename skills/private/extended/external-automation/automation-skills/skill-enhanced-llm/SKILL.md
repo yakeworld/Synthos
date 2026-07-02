@@ -1,5 +1,26 @@
 ---
 name: skill-enhanced-llm
+license: MIT
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: mlops
+related_skills: ['llm-model-selection', 'mlops-toolchain']
 description: Skill-Enhanced LLM Reasoning methodology — skill hierarchy, dynamic selection, skill chain orchestration, quality assessment
 metadata:
   synthos:
@@ -355,7 +376,4 @@ evolution-cycle:
 - `references/skill-usage-data.md` — 首次完整采集的技能使用率数据(27个技能、21个cron任务、1352次运行)
 - `references/skill-usage-data-v2.md` — 更新版：含已归档任务、技能库统计、evolution-state.json摘要
 
-
-
 # Skill Enhanced Llm
-

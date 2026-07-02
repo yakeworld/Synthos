@@ -1,24 +1,39 @@
 ---
 
 name: evolution
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: meta
+signature: "evolution -> meta: ⚡ P0 自进化引擎。Synthos evolution engine v2.20 — 四态决策+硬收敛+GEPA反射分析+自动基准+Pareto优化+外部吸收"
 description: ⚡ P0 自进化引擎。Synthos evolution engine v2.20 — 四态决策+硬收敛+GEPA反射分析+自动基准+Pareto优化+外部吸收+教训学习+黄金验证+自扩关键词+漂移检测+渐进披露+Git即记忆。Hooks注入+置信度评分+并行Agent审计+会话上下文注入+Prompt Snippets。
 author: Synthos
 license: MIT
 version: 2.23
-license: MIT
 metadata:
   synthos:
     priority: P0
     atom_type: meta-evolution
     description: "⚡ P0 自进化引擎。Synthos evolution engine v2.23 — 四态决策+硬收敛+GEPA反射分析+自动基准+Pareto优化+外部吸收+教训学习+黄金验证+自扩关键词+漂移检测+渐进披露+Git即记忆。v2.23: diagnose.py独立计算optimize/coverage（2024-06-28）、知识质量权重模型、P0技能验证清单注入、批量验证注入方法论（2026-06-28 Cycle 186-187）。"
     signature: "cycle: int, prev_state: dict, lessons: dict, skill_inventory: list[Skill] -> evolution_report: dict -> evolution_report: dict, new_state: evolution-state.json, log_entry: evolution-log.md, new_state: evolution-state.json"
-    related_skills: [project-experience-distillation, quality-gate, research-paper-search, self-deception-risk]
-
+    related_skills: ["project-experience-distillation", "quality-gate", "self-deception-risk"]
 
 ---
-
-
-
 
 # Evolution Engine — 自进化引擎
 
@@ -61,7 +76,7 @@ metadata:
 
 ### 吸收记录文件
 
-- `references/absorption-claude-code-skills-2026-06-05.md` — 完整吸收记录 (5 层提取 + 关键教训)
+- `ref/absorption-claude-code-skills-2026-06-05.md` — 完整吸收记录 (5 层提取 + 关键教训)
 - `references/absorption-skillopt-2026-06-28.md` — SkillOpt diff-based 迭代 + 四段式结构吸收记录
 
 ## 吸收方法论清单
@@ -272,14 +287,14 @@ evolution-log.md 新增 `kept` / `discarded` 标记，区分成功/失败迭代�
 - `references/absorption-standard.md` — 吸收标准体系（五维比较+质量门）
 - `references/absorption-autocontext-2026-06-05.md` — autocontext方法论吸收记录
 - `references/absorption-paperdebugger-2026-06-05.md` — PaperDebugger方法论吸收记录
-- `references/absorption-724-office-2026-06-05.md` — 724-office Nudge System吸收记录
+- `ref/absorption-724-office-2026-06-05.md` — 724-office Nudge System吸收记录
 - `references/auto-continuation-enforcement-pattern.md` — 自动持续迭代协议的完整执行模式（diagnose→commit→check→next cycle 三步骤），批量循环方法论，分阶段内容深度提升策略（验证→示例→规则→原则→Golden）
 - `references/auto-continuation-rules.md` — 自动持续迭代规则（阈值+条件）
 - `references/cycle-104-probe-failure.md` — Cycle 104 探针脚本超时失败完整记录与根因分析
 - `references/cycle-175-score-correction.md` — Cycle 175 评分估值修正 (0.9647→0.9600, 公式必须精确计算不可估算)
 - `references/batch-benchmark-improvement.md` — Cycle 182 批量改进策略：版本+IO_CONTRACT 100% 覆盖，benchmark 从 0.8648→0.9568
 - `references/diagnose-blind-spots.md` — diagnose.py 已知的检测盲区：staged deletes 污染 dirty count、WARNING 不自动触发 re-benchmark、YAML 前导键检测 false positive
-- `references/self-deception-risk.md` — 状态声称 vs 实际测量偏差检测（独立技能：self-deception-risk），Cycle 68-71/85/182 完整记录
+- `ref/self-deception-risk.md` — 状态声称 vs 实际测量偏差检测（独立技能：self-deception-risk），Cycle 68-71/85/182 完整记录
 
 ### Nudge 系统注入 (724-office absorption)
 
@@ -306,7 +321,7 @@ evolution-log.md 新增 `kept` / `discarded` 标记，区分成功/失败迭代�
 - `references/git-tracked-private-exclusion.md` — diagnose.py git tracked 排除 private/ 路径修复记录
 - `references/cycle-184-185-evolution.md` — Cycle 184-185 完整进化记录（diagnose.py 字段修复 + git 排除 + knowledge_score 校准）
 - `references/cycle-184-individual.md` — Cycle 184 详细技术报告（独立计算修复 + 权重模型 + P0验证清单注入）
-- `references/gitkeep-pattern.md` — **NEW** 2026-06-28: 空目录 .gitkeep 占位模式，解决 absorption dirty count 问题
+- `ref/gitkeep-pattern.md` — **NEW** 2026-06-28: 空目录 .gitkeep 占位模式，解决 absorption dirty count 问题
 - `references/batch-verification-injection.md` — 批量验证清单注入方法论（35-at-a-time 优先级排序+权重预估）
 - `references/cycle-189-200-auto-loop-run.md` — **NEW** 2026-06-28: auto-loop.py 首次实战记录（Cycle 193-200，8个连续周期，burnout 保护触发）
 
@@ -839,8 +854,4 @@ Nudge 系统 = 结构行为校正 (Structural Behavior Correction)。核心机�
 
 > 每项验证必须可执行、可记录、可复现。
 
-
-
-
 # Evolution
-

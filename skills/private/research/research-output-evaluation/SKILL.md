@@ -1,11 +1,32 @@
 ---
 name: research-output-evaluation
+license: MIT
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: research
+related_skills: ['training-pipeline-audit', 'paper-harvest']
 description: "科研产出评估 — 评估研究者的实际发表论文数量/质量分布、管线产出效率、临床功底与计算建模的平衡。核心发现：管线产量≠质量（中位数55/100，55.7%条件通过）。覆盖论文库扫描、质量分层、产出效率分析、临床vs合成数据审计。"
 version: 1.0.0
 priority: P1
 execution_rule: "当用户要求'评估我''评估论文管线''分析产出质量'或类似查询时执行。"
 signature: "paper_directory/ + quality_reports/ -> evaluation_report.md (publication_count, quality_distribution, production_efficiency, clinical_depth, synthetic_data_ratio)"
-related_skills: [paper-pipeline, quality-gate, paper-numerical-integrity-audit, paperjury, project-experience-distillation, evolution, sci-paper-quality-review]
+related_skills: ["paper-pipeline", "quality-gate", "paperjury", "project-experience-distillation", "evolution"]
 ---
 
 # Research Output Evaluation — 科研产出评估
@@ -195,6 +216,62 @@ done
 
 **三者缺一不可**。一篇论文若临床深度高但计算创新性低 → 可投临床期刊。若计算创新性强但临床深度低 → 可投方法学期刊。若数据真实性为零 → 不可发表。
 
+## 单篇论文评估方法（2026-07-01 新增）
+
+对具体论文做结构化评估时，按以下维度进行：
+
+### 评估维度
+
+| 维度 | 检查项 | 权重 | 来源 |
+|------|--------|------|------|
+| 质量门 | quality_score, gate_status, G1-G7 | 0.20 | state.json |
+| 参考文献完整性 | 引用密度、虚构引用替换、thebibliography vs references.bib | 0.15 | .tex, references.bib |
+| 实验充分性 | 数据集数量、基线模型、消融实验、跨数据集验证 | 0.20 | 03-code/, state.json, experiment_results.json |
+| 代码完整性 | 03-code/中是否有实际实现（非stub）、实验脚本可运行 | 0.10 | 03-code/ |
+| 数据完整性 | 04-data/中是否有实际数据（非模板） | 0.05 | 04-data/ |
+| 图表质量 | 05-figures/中图表数量、质量、是否与正文对应 | 0.05 | 05-figures/ |
+| 叙事质量 | 核心主张是否清晰、故事线是否单一、临床意义是否明确 | 0.15 | paper.tex |
+| 投稿建议 | 基于以上维度推荐期刊等级和修改优先级 | 0.10 | 综合判断 |
+
+### 评估输出格式
+
+```
+## [论文标题] 评估
+
+### 整体评价：[等级] — [一句话总结]
+
+**基本状态：**
+- 质量分 X/100，Gates 全 PASS/有WARN
+- 目录结构完整/有缺失
+- LaTeX 可编译/有错误
+
+### ✅ 优势
+1. ...
+2. ...
+
+### ⚠️ 问题
+1. **[问题类别]** — 具体问题 + 证据 + 建议
+2. ...
+
+### 投稿建议
+| 维度 | 评级 | 说明 |
+|------|------|------|
+| 创新性 | B+ | ... |
+| 实验充分性 | C | ... |
+| 叙事质量 | B | ... |
+| 临床价值 | A- | ... |
+| 写作规范 | B- | ... |
+
+**综合建议：[修改建议 + 推荐期刊等级]**
+```
+
+### 典型陷阱
+
+- **论文不在标准路径**：HCS-3WT 在 `/media/yakeworld/sda2/papers/` 而非 `Synthos/outputs/papers/`，评估前需先定位
+- **03-code/只有stub**：空壳目录（只有 README.md, requirements.txt）≠ 有代码
+- **quality_score 与真实质量不一致**：state.json 可能记录了历史最高分，但最新修改未更新
+- **引用质量≠引用数量**：29条bib但正文只引用5篇，说明文献综述不足
+
 ## 与 quality-gate 的关系
 
 - `quality-gate` 检查**单篇论文**的结构完整性（G1-G7）
@@ -205,8 +282,8 @@ done
 
 ## 支持文件
 
-- `references/output-evaluation-checklist.md` — 评估清单和评分表模板
-- `references/synthetic-vs-clinical-data-guide.md` — 合成数据 vs 临床数据评估方法
+- `ref/output-evaluation-checklist.md` — 评估清单和评分表模板
+- `ref/synthetic-vs-clinical-data-guide.md` — 合成数据 vs 临床数据评估方法
 
 ## 实战数据（2026-06-20）
 
@@ -252,13 +329,11 @@ done
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## 约束规则 · RULES
 
@@ -266,7 +341,6 @@ done
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -282,7 +356,4 @@ done
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Research Output Evaluation
-

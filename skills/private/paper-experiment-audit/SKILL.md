@@ -1,6 +1,26 @@
 ---
 name: paper-experiment-audit
-description: 论文实验审计 — 从代码+数据+文档提取研究空白+假设。方法论与规则，具体审计步骤见 references/。
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: paper-tools
+signature: "paper-experiment-audit -> paper-tools: 论文实验审计 — 从代码+数据+文档提取研究空白+假设。方法论与规则，具体审计步骤见 ref/。"
+description: 论文实验审计 — 从代码+数据+文档提取研究空白+假设。方法论与规则，具体审计步骤见 ref/。
 version: 2.0.0
 author: Synthos
 license: MIT
@@ -202,7 +222,7 @@ metadata:
 
 - `references/diabetes-datasets-reference.md` — 糖尿病相关公开数据集参考
 - `references/multi-script-cross-verify.md` — 多实验脚本输出交叉验证方法
-- `references/notebook-vs-script-pattern.md` — Notebook vs Python 脚本对应关系模式
+- `ref/notebook-vs-script-pattern.md` — Notebook vs Python 脚本对应关系模式
 - `references/paper-json-numerical-consistency-check.md` — 论文数值与experiment_results.json一致性审计方法
 - `references/hcs3wt-p0-numerical-remediation-2026-06-29.md` — HCS-3WT实战：P0数值修复完整案例（k=6统一、数值替换、编译验证）
 - `references/hcs3wt-figure-audit-2026-06-29.md` — HCS-3WT实战：论文图片完整性审计（fig6重复引用检测、消融实验验证方法）
@@ -234,13 +254,11 @@ metadata:
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -254,7 +272,4 @@ metadata:
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Paper Experiment Audit
-

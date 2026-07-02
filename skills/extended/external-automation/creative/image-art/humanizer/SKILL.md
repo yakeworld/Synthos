@@ -1,5 +1,25 @@
 ---
 name: humanizer
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: creative
+signature: "humanizer -> creative: AI文本检测规避方法论 — 识别并消除AI生成文本的29种模式特征，注入人类写作个性与声音，使文本听起来自然、有观点、有灵魂。"
 description: "AI文本检测规避方法论 — 识别并消除AI生成文本的29种模式特征，注入人类写作个性与声音，使文本听起来自然、有观点、有灵魂。"
 version: 1.2.0
 license: MIT
@@ -209,8 +229,8 @@ Hermes 在撰写用户端散文时也应应用此技能——发布说明、PR�
 | 文件 | 内容 |
 |------|------|
 | `references/ai-patterns-full.md` | 29项AI模式的完整Before→After对照 |
-| `references/voice-calibration.md` | 声音校准的详细指南 |
-| `references/full-example.md` | 完整的改写示例（含Before/After对比）|
+| `ref/voice-calibration.md` | 声音校准的详细指南 |
+| `ref/full-example.md` | 完整的改写示例（含Before/After对比）|
 | `BOUNDARY.md` | 技能边界声明 |
 | `EVIDENCE_SCHEMA.md` | 技术证据架构 |
 | `IO_CONTRACT.md` | 输入输出规范 |
@@ -231,7 +251,6 @@ Hermes 在撰写用户端散文时也应应用此技能——发布说明、PR�
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## Golden 集合 · GOLDEN SET
 
 - **Golden Input**: 标准输入样本（覆盖正常路径）
@@ -242,7 +261,4 @@ Hermes 在撰写用户端散文时也应应用此技能——发布说明、PR�
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Humanizer
-

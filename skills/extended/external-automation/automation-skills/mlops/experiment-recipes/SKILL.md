@@ -1,6 +1,27 @@
 ---
 
 name: experiment-recipes
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: mlops
+signature: "experiment-recipes -> mlops: ML训练配方与预设——架构选择、训练循环、优化器、调度器、混合精度、内存优化、调试。 提炼自实战经验，非外部代码搬运。每个配方记录原理而非逐行代码。"
+related_skills: ['biomechanical-regulation-ode', 'computational-ode-modeling']
 license: MIT
 author: Synthos
 allowed-tools: Read
@@ -33,9 +54,7 @@ metadata:
     - pytorch
     - reference
 
-
 ---
-
 
 ## IO_CONTRACT
 
@@ -43,9 +62,6 @@ metadata:
 - **output**: `result: dict — 技能执行结果（结构因技能而异）`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
-
-
 
 # Experiment Recipes / 实验配方参考
 
@@ -182,7 +198,6 @@ metadata:
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
 
-
 ## Golden 集合 · GOLDEN SET
 
 - **Golden Input**: 标准输入样本（覆盖正常路径）
@@ -193,7 +208,4 @@ metadata:
 
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
-
-
 # Experiment Recipes
-

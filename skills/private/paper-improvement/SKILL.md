@@ -1,5 +1,25 @@
 ---
 name: paper-improvement
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: paper-tools
+signature: "paper-improvement -> paper-tools: 论文质量改进方法论 — 数值伪造修复、前沿文献补充、消融实验、统计显著性、声明添加的完整改进路径。"
 description: "论文质量改进方法论 — 数值伪造修复、前沿文献补充、消融实验、统计显著性、声明添加的完整改进路径。"
 version: 1.2.0
 license: MIT
@@ -9,7 +29,7 @@ metadata:
     signature: "task_desc: str, params: dict -> result: dict"
     atom_type: skill
     priority: P2
-    related_skills: [paper-pipeline, sci-paper-quality-review, writing, reproducibility-audit, paper-improvement-patterns, openml-benchmark]
+    related_skills: ["paper-pipeline", "reproducibility-audit", "paper-improvement-patterns", "openml-benchmark"]
 
 ---
 
@@ -315,7 +335,6 @@ content.replace('\\\\cite', '\\cite').replace('\\\\textbf', '\\textbf')
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## Golden 集合 · GOLDEN SET
 
 - **Golden Input**: 标准输入样本（覆盖正常路径）
@@ -326,7 +345,4 @@ content.replace('\\\\cite', '\\cite').replace('\\\\textbf', '\\textbf')
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Paper Improvement
-

@@ -1,5 +1,25 @@
 ---
 name: personal-knowledge
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: core
+signature: "personal-knowledge -> core: Personal Knowledge Management - Integrates 44 papers, 33 literature reviews, 90+"
 description: "Personal Knowledge Management - Integrates 44 papers, 33 literature reviews, 90+ project outputs into structured searchable knowledge. Converts scattered step_*.md, reference_*.md, paper.tex files into a connected knowledge graph."
 version: 1.0.0
 author: Synthos
@@ -30,7 +50,7 @@ Goal: Convert all Synthos outputs across 98 evolution cycles, 103 paper projects
 ## IO_CONTRACT
 
 - **input**: query: str - Natural language search query
-- **input**: scope: str = "all" - Search scope (papers/references/output/logs)
+- **input**: scope: str = "all" - Search scope (papers/ref/logs)
 - **output**: knowledge_items: list[dict] - Structured knowledge entries (title, summary, source, date, links)
 - **output**: summary: str - Synthesized answer to the query
 - **output**: gaps: list[str] - Knowledge gaps (valuable but uncovered areas)
@@ -107,7 +127,6 @@ Support these query patterns:
 - research-timeline.md - Chronological research progress
 - knowledge-roi.md - Time/output ROI analysis per domain
 
-
 ## 验证清单 · VERIFICATION
 
 1. **输入验证**: 输入参数/文件/路径是否完整且有效
@@ -116,13 +135,11 @@ Support these query patterns:
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## 约束规则 · RULES
 
@@ -130,7 +147,6 @@ Support these query patterns:
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -150,7 +166,4 @@ Support these query patterns:
 
 *格物致知，知止而后有定. Scattered knowledge, once organized, becomes wisdom.*
 
-
-
 # Personal Knowledge
-

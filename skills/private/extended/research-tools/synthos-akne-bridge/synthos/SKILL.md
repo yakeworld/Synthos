@@ -1,5 +1,25 @@
 ---
 name: synthos
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: meta
+signature: "synthos -> meta: >"
 description: ">"
 version: 1.0.0
 license: MIT
@@ -12,10 +32,6 @@ metadata:
     related_skills: []
 
 ---
-
-
-
-
 
 ## IO_CONTRACT
 
@@ -503,7 +519,6 @@ export OPENAI_API_KEY="your_key"
 - **质量协议覆盖率**: 4.12% (IO_CONTRACT)
 - **版本签名覆盖率**: 1.03%
 
-
 ## 验证清单 · VERIFICATION
 
 1. **输入验证**: 输入参数/文件/路径是否完整且有效
@@ -511,7 +526,6 @@ export OPENAI_API_KEY="your_key"
 3. **输出验证**: 输出格式/内容是否符合预期
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -528,7 +542,4 @@ export OPENAI_API_KEY="your_key"
 > **动灵在内，不假外求 — 主动发现，不等人说**
 > **主动探索，主动发现，主动执行 — 禁止等待用户指示**
 
-
-
 # Synthos
-

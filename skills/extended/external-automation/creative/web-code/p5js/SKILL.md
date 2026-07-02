@@ -1,5 +1,25 @@
 ---
 name: p5js
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: creative
+signature: "p5js -> creative: p5.js创意编程方法论 — 从概念到产出的交互式可视化艺术生产管线。涵盖2D/3D渲染、粒子系统、GLSL着色器、像素操作、音频响应与动画。"
 description: "p5.js创意编程方法论 — 从概念到产出的交互式可视化艺术生产管线。涵盖2D/3D渲染、粒子系统、GLSL着色器、像素操作、音频响应与动画。"
 version: 1.2.0
 license: MIT
@@ -222,7 +242,6 @@ Puppeteer 无头渲染必须使用 `noLoop()`，由捕获脚本控制帧前进�
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## Golden 集合 · GOLDEN SET
 
 - **Golden Input**: 标准输入样本（覆盖正常路径）
@@ -233,7 +252,4 @@ Puppeteer 无头渲染必须使用 `noLoop()`，由捕获脚本控制帧前进�
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # P5Js
-

@@ -1,5 +1,14 @@
 ---
 name: infrastructure-as-code
+license: MIT
+
+## Operational Steps
+1. 
+2. 
+3. 
+category: devops
+signature: "infrastructure-as-code -> devops: 基础设施即代码 — 配置管理、环境一致性、版本控制、自动化部署。为Synthos系统实现IaC实践。"
+related_skills: ['continuous-delivery-pipeline', 'system-reliability-engineering']
 description: "基础设施即代码 — 配置管理、环境一致性、版本控制、自动化部署。为Synthos系统实现IaC实践。"
 version: 1.0.0
 allowed-tools:
@@ -80,6 +89,12 @@ triggers:
    - 数据恢复: 从备份恢复知识图谱/论文/技能
 
 ## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
 
 - **配置漂移**: 生产环境手动修改配置是最常见的IaC破坏者。所有配置变更必须通过代码(配置文件+Git)进行，禁止手动编辑生产配置。
 - **备份不测试**: 备份必须经过恢复测试。备份文件存在不代表可恢复。每次重大变更后验证备份可恢复。
@@ -109,13 +124,11 @@ triggers:
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## 约束规则 · RULES
 
@@ -123,7 +136,6 @@ triggers:
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -139,7 +151,4 @@ triggers:
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Infrastructure As Code
-

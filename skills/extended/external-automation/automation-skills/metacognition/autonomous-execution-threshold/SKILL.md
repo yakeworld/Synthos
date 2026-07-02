@@ -1,5 +1,25 @@
 ---
 name: autonomous-execution-threshold
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: meta
+signature: "autonomous-execution-threshold -> meta: **≥80%置信度 = 闭嘴执行。** 不输出推测文案、不给选项、不喊\"开始自主执行\"口号。用户看到的是执行结果，不是选择题。"
 description: "**≥80%置信度 = 闭嘴执行。** 不输出推测文案、不给选项、不喊\"开始自主执行\"口号。用户看到的是执行结果，不是选择题。"
 version: 1.0.0
 license: MIT
@@ -13,16 +33,12 @@ metadata:
 
 ---
 
-
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
 - **output**: `result: dict — 技能执行结果（结构因技能而异）`
 
 > 对应原则：P2（机械原子暴露输入输出规范）
-
 
 # 自主执行阈值策略
 
@@ -311,7 +327,6 @@ Step 2 → Step 2.5 CONSISTENCY GATE → ...
 2. 将该场景从"反向案例库表"中拔出来加入"阈值矩阵"的 🟢 直接执行区
 3. 在主内容体（而非引用文件）中添加显式的**禁止模式**说明
 4. 命令式"不要做X"比描述式"用户偏好是Y"更有效
-
 
 ## 决策流程
 
@@ -819,7 +834,4 @@ delegate_task 默认使用 `delegation.model` 配置（qwen3.6-35b-nvfp4）。�
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 
-
-
 # Autonomous Execution Threshold
-

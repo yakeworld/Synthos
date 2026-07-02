@@ -1,5 +1,26 @@
 ---
 name: cognitive-atom-architecture
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: meta
+signature: "cognitive-atom-architecture -> meta: Methodology for transforming operational skill sets into independent cognitive a"
+related_skills: ['layer-index', 'evolution']
 description: "Methodology for transforming operational skill sets into independent cognitive atoms with strict DAG dependencies, input/output contracts, and Synthos framework alignment. v4.0.0 syncretic framework: Eastern ontology (格物通理/取象通变/天人合一) + Western epistemology (经权度信/墨证求真/庄周观模) + 熵减律·生生之谓易 (ultimate purpose) + 大道至简 (cross-cutting razor)."
 version: 4.0.0
 author: Hermes Agent
@@ -414,13 +435,11 @@ See `references/philosophical-foundations.md` for the full 7+1 Syncretic Cogniti
 
 All original reference files, templates, and scripts should be intact at `~/.hermes/skills/cognitive-atom-architecture/references/`. See `skill_view('cognitive-atom-architecture', file_path=...)` to access individual references.
 
-
 ## 示例 · EXAMPLES
 
 1. **基本用法**: 标准输入 → 标准输出
 2. **边界用例**: 空输入、特殊字符、异常路径
 3. **错误场景**: 缺失依赖、权限不足、网络异常
-
 
 ## 约束规则 · RULES
 
@@ -443,7 +462,4 @@ Key reference files added in v4.0.0:
 - `references/philosophy-engineering-verification-pattern.md` — methodology for tracing philosophical constraints through atomic skills (2026-05-23)
 - `references/east-west-syncretism-pattern.md` — pattern for merging Eastern and Western philosophical concepts into unified engineering constraints
 
-
-
 # Cognitive Atom Architecture
-

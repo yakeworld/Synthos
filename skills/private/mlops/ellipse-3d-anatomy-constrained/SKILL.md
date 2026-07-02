@@ -1,6 +1,13 @@
 ---
 name: ellipse-3d-anatomy-constrained
+license: MIT
+
+## Operational Steps
+1. 
+2. 
+3. 
 category: mlops
+related_skills: ['ellipse-to-3d-circle', 'llm-model-selection']
 description: 用户特异性推导：椭圆→3D圆通过解剖约束（R=2r, d=√3r）消除方位角模糊。覆盖法向量公式、光轴平面、Rodrigues旋转、多帧眼球中心求解。源自AKNE眼动研究笔记。
 signature: "ellipse-3d-anatomy-constrained -> processed_result"
 ---
@@ -37,6 +44,12 @@ z1 = sqrt(3*R_iris^2 - (x1-x0)^2 - (y1-y0)^2)
 M = I + [v]_x + [v]_x^2 / (1 + O·O')
 
 ## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
 1. 单帧无法确定眼球中心
 2. z1 为虚数时：椭圆参数与解剖约束矛盾
 3. 用户设定 Center_eye 在 XY 平面 (z=0)
@@ -63,13 +76,11 @@ M = I + [v]_x + [v]_x^2 / (1 + O·O')
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## 约束规则 · RULES
 
@@ -77,7 +88,6 @@ M = I + [v]_x + [v]_x^2 / (1 + O·O')
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -93,7 +103,4 @@ M = I + [v]_x + [v]_x^2 / (1 + O·O')
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # Ellipse 3D Anatomy Constrained
-

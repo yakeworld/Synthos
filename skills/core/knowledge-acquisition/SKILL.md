@@ -1,12 +1,31 @@
 ---
 
 name: knowledge-acquisition
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: core
+signature: "knowledge-acquisition -> core: 多源学术论文检索：Semantic Scholar / PubMed / Crossref / OpenAlex / arXiv / bioRxiv。"
 description: 多源学术论文检索：Semantic Scholar / PubMed / Crossref / OpenAlex / arXiv / bioRxiv。
 author: Synthos
 license: MIT
 version: 1.7.0
   Agent-native执行，纯skill+curl零Python。含API弹性层、本地缓存、自动回退链。 返回论文元数据、摘要、PDF。宁无所得，不取伪术。
-license: MIT
 allowed-tools: terminal Read Write task_delegation (bash, view/write, agent, inline)
 metadata:
   synthos:
@@ -14,13 +33,9 @@ metadata:
     atom_type: cognitive-atom
     description: External knowledge acquisition — search PubMed, Semantic Scholar, OpenAlex, arXiv, bioRxiv, etc.
     signature: "query: str, sources: list[str], date_range: str -> candidates: list[PaperCandidate] -> candidates: list[PaperCandidate] (title, doi, source, relevance, abstract_summary, pdf_url)"
-    related_skills: []
-
+    related_skills: ['knowledge-extraction', 'association-discovery']
 
 ---
-
-
-
 
 # 知识获取 (Knowledge Acquisition)
 
@@ -99,7 +114,7 @@ Agent-native认知原子。使用技能库+终端curl检索学术文献，零Pyt
 | 2 | PubMed | 无响应→Crossref |
 | 3 | arXiv → HTTPS + curl -L（必须加 -L 跟随302重定向）→ 无代理直接可用|
 | 4 | OpenAlex → {word: [positions]} 反转重建摘要|
-| 🇨🇳 **PubScholar** → ⚠️ 需要 VPN（海外连接被中断）或 Playwright 浏览器；curl API 连接被拒绝。替代：Crossref 中文检索 + 万方数据 |
+| 🇨🇳 **PubScholar** → ⚠️ 网络可达但 REST API 需 RSSHub 签名；唯一可行方式：Playwright 浏览器自动化（已安装 Chromium）或自行部署 RSSHub 路由 |
 | ⛔ bioRxiv/medRxiv ⛔ | **API 服务器宕机 (DNS 解析失败)**，跳过→Crossref 预印本替代 |
 | 7 | Web scrape | 深度抓取 |
 | 8 | 本地缓存 | 离线兜底 |
@@ -160,13 +175,14 @@ notebooklm source add "$(cat pdfs/{bibkey}.md)" --type text --title "{bibkey}" -
 | 5 | OpenAlex abstract_inverted_index 格式为 `{word: [positions]}`，需反转重建摘要
 | 6 | PDF 下载失败 — 跳过，不阻塞流程
 ## 命令层
-| 10 | **CNKI (kns.cnki.net) 海外 IP 返回 HTTP 418** — 知网有严格 IP 地理围栏，海外直接拒绝。RSSHub 的 cnki 路由代码已分析但无法从海外节点部署。中文文献替代方案：PubScholar（需 VPN/浏览器，curl 直连被拒绝）或 Crossref 中文检索。
+| 10 | **CNKI (kns.cnki.net) 海外 IP 返回 HTTP 418** — 知网有严格 IP 地理围栏，海外直接拒绝。RSSHub 的 cnki 路由代码已分析但无法从海外节点部署。中文文献替代方案：PubScholar（Playwright 浏览器自动化，网络可达）或 Crossref 中文检索。
 | 11 | **HuggingFace SSL 证书过期/无效** — `ERR_CERT_COMMON_NAME_INVALID` 或 `SSL certificate problem: certificate has expired`。HuggingFace API (HTTPS) 和页面可能完全不可用，curl 和浏览器都会失败。 | 如果目标是 Ollama 模型追踪，直接从 Ollama 页面提取数据即可，不需要 HuggingFace。如果确实需要 HF 数据，用 `curl --insecure` 跳过证书验证。这是一个已知的环境状态问题，HF 的证书可能临时失效 |
 | 12 | **browser_snapshot 截断** — 页面内容超过 8000 字符时会被截断，丢失模型/论文列表。 | 必须用 `browser_console` + JavaScript 直接提取 DOM 数据，这是最可靠的方式 |
 | 13 | **下载量/统计数字格式多样** — 有的是 `15.9M` (百万)，有的是 `108.8K` (千)，有的是 `8,901` (纯数字)。 | 用正则 `([\\d,\\.]+)K?` 提取，然后判断后缀 K/M 进行数量级转换 |
 | 14 | **arXiv Atom 默认命名空间陷阱** — arXiv API 返回的 XML 使用默认 `http://www.w3.org/2005/Atom` 命名空间，`<title>` 标签是默认的而非 `<atom:title>`。正则 `r'<title[^>]*>([^<]+)</title>'` 会同时匹配：①第一个 title 是查询描述（如 `arXiv Query: search_query=...`），②第二个 title 才是论文标题。**必须跳过第一个 match，取第二个**。摘要同理 — `<summary>` 第一个 match 可能为空（取决于 API 响应结构）。 | 用 `re.findall(r'<title[^>]*>([^<]+)</title>', xml)` 取 `titles[1]`（第2个），摘要用 `summaries[0]`。authors 仍用 `r'<atom:name>([^<]+)</atom:name>'`（有显式 atom 前缀）|
 | 15 | **curl | python3 被 tirith 安全扫描拦截** — 当 `curl | python3` 管道被 security scan 阻止时，正确做法是先写 `.py` 脚本文件再 `python3 script.py` 执行。 | 用 `write_file` 创建 `/tmp/xxx.py`，然后用 `terminal(command="python3 /tmp/xxx.py")` 执行。不要试图用 inline python 管道 curl 输出 |
 | 16 | **S2_API_KEY 环境变量缺失** — 某些环境中 `os.environ.get("S2_API_KEY", "")` 返回空字符串，此时 Semantic Scholar 调用直接返回空 JSON 而不会抛错。 | 必须检查 key 是否空值后再发起请求；空值时立即跳入 fallback 链（见 `references/literature-scan-without-s2-key.md`）|
+| 19 | **PubScholar 速率限制 A0500** — 同一 IP 多次请求后触发 `Exceeding the access frequency limit`，需等待 5-10 分钟后重试。连续调用间隔建议 ≥60 秒。 | 不要连续快速请求，每次请求间隔 ≥60 秒；频率过高时先通过 Crossref/PubMed 完成检索，PubScholar 仅作为补充源 |
 | 17 | **OpenAlex `search` 参数是全文搜索，非关键词搜索** — OpenAlex API 的 `search` 参数执行的是全文搜索（fulltext.search），返回所有正文中提及该词的论文，而非仅标题/摘要匹配。搜索词含空格时需要 URL-encode。`from_publication_date` 是**无效参数**——OpenAlex API 报错但不返回错误码。正确做法是用 `filter=publication_year:YYYY` 或 `filter=from_publication_date:YYYY-01-01`。 | 用 `filter=` 替代 `from_publication_date=`，搜索含空格术语时注意空格可能被 API 当作查询分隔符 |
 | 18 | **PubMed 多词查询静默失败** — PubMed E-utilities 的 `term` 参数中，含空格的多词短语（如 "ocular torsion"、"tear film"）经常因 MeSH 展开问题返回 0 结果但 `esearch.fcgi` 返回 `rc=0`，造成"静默失败"。用 `+` 连接符（如 `ocular+torsion`）或用 `AND` 连接符可以恢复。跨调用间隔超过 3-4 秒会触发 rate limit 返回空。 | 遇到 PubMed 返回 0 结果但预期应有结果时，优先尝试 URL-encoded `+` 或 `AND` 连接符，并确保连续调用间隔 ≥2s |
 
@@ -210,13 +226,11 @@ notebooklm source add "$(cat pdfs/{bibkey}.md)" --type text --title "{bibkey}" -
   - 输出: 符合 SKILL.md IO_CONTRACT 的标准 JSON（papers + search_meta + sources_success/failed）
   - 特性: 自动去重、回退链、速率限制、provenance 标注、exit code 0/1
 
-
 ## 示例 · EXAMPLES
 
 1. **基本用法**: 标准输入 → 标准输出
 2. **边界用例**: 空输入、特殊字符、异常路径
 3. **错误场景**: 缺失依赖、权限不足、网络异常
-
 
 ## 约束规则 · RULES
 
@@ -224,7 +238,6 @@ notebooklm source add "$(cat pdfs/{bibkey}.md)" --type text --title "{bibkey}" -
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -238,7 +251,4 @@ notebooklm source add "$(cat pdfs/{bibkey}.md)" --type text --title "{bibkey}" -
 
 > 每个示例必须可独立运行、有明确输入输出、包含错误处理。
 
-
-
 # Knowledge Acquisition
-

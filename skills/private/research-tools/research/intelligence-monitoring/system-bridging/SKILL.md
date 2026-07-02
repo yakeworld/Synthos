@@ -1,7 +1,27 @@
 ---
 
-
 name: system-bridging
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: devops
+signature: "system-bridging -> devops: 跨系统连接模式 — 两个独立系统（知识图谱/论文管线/技能库/监控系统）之间的双向桥接。覆盖连接协议、数据注入、反向查询、同步守护、重叠检测。"
+related_skills: ['capacity-planning', 'system-reliability-engineering']
 description: 跨系统连接模式 — 两个独立系统（知识图谱/论文管线/技能库/监控系统）之间的双向桥接。覆盖连接协议、数据注入、反向查询、同步守护、重叠检测。
 version: 1.0.0
 license: MIT
@@ -24,17 +44,12 @@ metadata:
     - cross-reference
     - bridge-protocol
 
-
-
 ---
-
-
 
 ## IO_CONTRACT
 
 - **input**: `source_system: str, target_system: str` — 用户请求描述、上下文信息
 - **output**: `bridge_spec: dict — 系统桥接`
-
 
 > 对应原则：P2（机械原子暴露输入输出规范）
 
@@ -225,13 +240,11 @@ Bridge v2 修复了 v1 的三个致命问题：
 - **Output**: 7个文件 + 执行报告
 - **Pattern**: 结构模板化，内容参数化
 
-
 ## 示例 · EXAMPLES
 
 1. **基本用法**: 标准输入 → 标准输出
 2. **边界用例**: 空输入、特殊字符、异常路径
 3. **错误场景**: 缺失依赖、权限不足、网络异常
-
 
 ## 约束规则 · RULES
 
@@ -239,7 +252,6 @@ Bridge v2 修复了 v1 的三个致命问题：
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -253,7 +265,4 @@ Bridge v2 修复了 v1 的三个致命问题：
 
 > 每个示例必须可独立运行、有明确输入输出、包含错误处理。
 
-
-
 # System Bridging
-

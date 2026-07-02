@@ -1,10 +1,30 @@
 ---
 name: quality-gate
+license: MIT
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: core
 description: "⚡ P0 闸门技能。四层质量架构：①响应级漂移检查 ②项目级L1-L4交付闸门 ③论文管线G1-G7原子闸门 ④SCI内容评审。通用铁律：任务完成→质量评估→不达标→循环执行。无skill_view记录=门不通过。G5引用质量为最关键门。G7通过→自动sci-paper-quality-review。"
 version: 2.40.0
 priority: P0
 signature: "deliverable: dict, context: dict -> quality_report: dict (L0-L4 scores + gate_pass: bool + fix_suggestions: list) -> trigger-loop signal"
-related_skills: [project-experience-distillation, evolution, sci-paper-quality-review, paper-pipeline, knowledge-acquisition, knowledge-extraction, association-discovery, hypothesis-generation, argument-expression, viewpoint-verification, paperjury, citation-appropriateness-verification, retraction-investigation, paper-knowledge-extraction, paper-knowledge-base]
+related_skills: ['citation-appropriateness-verification', 'paper-experiment-audit']
 ---
 
 # Quality Gate — 质量闸门
@@ -32,7 +52,6 @@ related_skills: [project-experience-distillation, evolution, sci-paper-quality-r
 | 引用恰当性 | 参考文献全文 | PDF内容校验+语义比对 |
 | 数据可追溯 | 实验记录、代码、JSON输出 | 源文件检查 |
 | 方向一致性 | 系统生长路径、进化日志 | 人工判断+方向检查 |
-
 
 ## 触发条件 · TRIGGER_CONDITIONS
 
@@ -63,28 +82,28 @@ related_skills: [project-experience-distillation, evolution, sci-paper-quality-r
 | 2026-06-23 | 2.9.5 | 新增BBL/bib/tex同步检查陷阱；新增G2门后重新编译步骤；新增图真实性和数值一致性检查 |
 | 2026-06-23 | 2.9.6 | 新增多源交叉验证铁律；新增消融值来自不同实验配置的检测模式；新增政府申报方案检查告警 |
 | 2026-06-24 | 2.13.0 | 新增 state.json 内部不一致检测（top-level vs gates_result quality_score）；新增多JSON源 ensemble 成员交叉比对；新增 comprehensive-quality-report-template.md 参考文件 |
-| 2026-06-24 | 2.13.2 | 新增单栏排版陷阱（表格超宽、图宽过大、对比表列溢出）；新增 references/single-column-layout-pitfalls.md | 新增通用tmux后台脚本协议（替代jupyter nbconvert等复杂编排）；新增Top-1模型主导Ensemble规则；新增LaTeX patch双转义反斜杠陷阱；扩充state.json内部不一致检测；保存comprehensive-quality-report-template.md |
+| 2026-06-24 | 2.13.2 | 新增单栏排版陷阱（表格超宽、图宽过大、对比表列溢出）；新增 ref/single-column-layout-pitfalls.md | 新增通用tmux后台脚本协议（替代jupyter nbconvert等复杂编排）；新增Top-1模型主导Ensemble规则；新增LaTeX patch双转义反斜杠陷阱；扩充state.json内部不一致检测；保存comprehensive-quality-report-template.md |
 | 2026-06-24 | 2.15.1 | 新增自主修复不问原则（用户纠正：自己做主不待批准）；新增 OpenML 基准对比作为 G4 数据完整性检查的扩展；新增 EuropePMC 作为 PDF 下载备用通道（Kapoor2023 实战验证） |
-| 2026-06-24 | 2.16.0 | 新增 OpenML Claim-Only 检测（G2.5子项）；新增统计量可追溯性检查（p-value/Cohen's d 需在代码中记录）；新增 PDF-bib DOI 不匹配检测（G5子项）；新增 JSON-to-JSON ensemble 三角校验（横向对比所有 JSON 的 ensemble 成员）；新增 references/codex-comprehensive-quality-report-workflow.md |
+| 2026-06-24 | 2.16.0 | 新增 OpenML Claim-Only 检测（G2.5子项）；新增统计量可追溯性检查（p-value/Cohen's d 需在代码中记录）；新增 PDF-bib DOI 不匹配检测（G5子项）；新增 JSON-to-JSON ensemble 三角校验（横向对比所有 JSON 的 ensemble 成员）；新增 ref/codex-comprehensive-quality-report-workflow.md |
 | 2026-06-24 | 2.17.0 | 新增 自主修复闭环协议（codex-comprehensive-quality-report-workflow.md Step 5）；新增 修复决策矩阵（可自主修复 vs 需人工）；新增 fix-log.md 模板；扩充 comprehensive-quality-report-template.md 增加"报告生成后的必做动作"警告 |
 | 2026-06-24 | 2.18.0 | 新增 G6 论文约束系统检查框架：同实体跨位约束、声明-证据对齐约束、比较-基准对齐约束、叙事-数据比例约束。四种约束类型独立于具体论文领域。 |
-| 2026-06-24 | 2.19.0 | 新增审稿人评价框架（Q1-Q6六问）：假说问、空白问、解法问、实验问、结论问、价值问。六问不取代G1-G7，而是将G1-G7发现组织到审稿人视角下。新增六问评分标准（60分制）与投稿判定。新增 references/skill-design-abstraction-levels.md 记录抽象层次方法论。 |
-| 2026-06-24 | 2.20.0 | 调研 12 个建立已久的审稿框架（PROBAST/TRIPOD/Cochrane/AMSTAR2/EQUATOR 等），提取三项结构性改进待后续版本落地：领域级判定取代总分（Cochrane RoB2）、关键项一票否决（AMSTAR2）、论文类型识别→不同模板（EQUATOR Network）。新增 references/established-review-frameworks.md 和 references/paper-constraint-system.md。 |
+| 2026-06-24 | 2.19.0 | 新增审稿人评价框架（Q1-Q6六问）：假说问、空白问、解法问、实验问、结论问、价值问。六问不取代G1-G7，而是将G1-G7发现组织到审稿人视角下。新增六问评分标准（60分制）与投稿判定。新增 ref/skill-design-abstraction-levels.md 记录抽象层次方法论。 |
+| 2026-06-24 | 2.20.0 | 调研 12 个建立已久的审稿框架（PROBAST/TRIPOD/Cochrane/AMSTAR2/EQUATOR 等），提取三项结构性改进待后续版本落地：领域级判定取代总分（Cochrane RoB2）、关键项一票否决（AMSTAR2）、论文类型识别→不同模板（EQUATOR Network）。新增 ref/established-review-frameworks.md 和 ref/paper-constraint-system.md。 |
 | 2026-06-25 | 2.25.0 | 新增 G2.5 隐藏数据集检测（Hidden Dataset Detection）：代码已跑但论文未报的数据集，区分"实验设计缺陷"与"论文呈现不足"；HCS-3WT 实战：WDBC 结果存于 experiment_results.json 但论文仅一句消融提及，正确判定 P1 而非 P2：一篇不过不换下一篇，全部通过才停。Hermes→Codex 迭代协议（Hermes决策，Codex执行，Hermes验证）。新增 cron 整合模式（paper-quality-iteration 每4小时驱动）。更新核心理念表。|。从 ~/.hermes/skills/ 迁移到 Synthos/skills/core/。补 GOLDEN_SET.md + cases/expected/。四报告框架集成到 comprehensive-quality-report-template。认知同步协议：Codex 从 Synthos 文件系统直接加载技能，不再嵌入任务文件。事件驱动 cron 架构：文献监控→PDF收割→评审链。|
-| 2026-06-25 | 2.28.0 | 新增 cron 作业 tmux 会话清理协议；新增 state.json 结构变体检测（gates_result.gates 可为 list 或 dict；hard_fails 字段不与个体 gate status 对应）；新增低分 PASS vs HARD_FAIL 决策区分；新增 Codex tmux 多行指令发送模式（每行 send-keys + Enter，需要 Enter 推进）；新增 references/off-axis-iris-fix-2026-06-25.md 修复实录。|
-| 2026-06-25 | 2.30.0 | 三项铁律：凡引必验新增"搜索替代文献优先"规则（PDF不可达时先搜等价引用替换而非仅标注）；G5引用审计新增"数据集引用规则"（优先引用描述数据的原始论文而非仓库URL）；新增 references/pdf-alternative-search-protocol.md 替代搜索协议 |
+| 2026-06-25 | 2.28.0 | 新增 cron 作业 tmux 会话清理协议；新增 state.json 结构变体检测（gates_result.gates 可为 list 或 dict；hard_fails 字段不与个体 gate status 对应）；新增低分 PASS vs HARD_FAIL 决策区分；新增 Codex tmux 多行指令发送模式（每行 send-keys + Enter，需要 Enter 推进）；新增 ref/off-axis-iris-fix-2026-06-25.md 修复实录。|
+| 2026-06-25 | 2.30.0 | 三项铁律：凡引必验新增"搜索替代文献优先"规则（PDF不可达时先搜等价引用替换而非仅标注）；G5引用审计新增"数据集引用规则"（优先引用描述数据的原始论文而非仓库URL）；新增 ref/pdf-alternative-search-protocol.md 替代搜索协议 |
 | 2026-06-25 | 2.32.0 | 实战教训固化为铁律：凡引必验新增"DOI可解析性优先于PDF存在性"规则（禁止仅查bib有无DOI字段）。检查员报告模板新增`Resolved?`列，DOI 404→FICTITIOUS_REFERENCE。Hermes→Codex 协作协议新增"咨询模式"（Codex可以给建议/报告，Hermes决断）。用户确认工作流：<br>① Hermes决断策略 → Codex执行 → Codex报告 → Hermes验证<br>② Hermes征求Codex意见 → Codex分析建议 → Hermes决定 |
-| 2026-06-25 | 2.33.0 | 新增"外部驱动管线路径"检查协议：cron 作业的质量门扫描必须覆盖所有三条管线路径（`~/outputs/papers/` + `~/桌面/article_todo/` + `/media/yakeworld/sda2/Synthos/outputs/papers/`），不能仅查 `~` 目录。主管线在外部驱动上（157篇），`~` 仅为队列/报告副本。新增 `references/multi-path-pipeline-scan.md` 参考文件。实战教训：2026-06-25 首次发现主管线在 sda2 而非 home 目录，仅扫 home 会得到空结果。新增批量状态扫描的权威数据源确认规则。 |
-| 2026-06-25 | 2.35.0 | 新增撤稿论文审计四步法（查→下→QC→论文工厂检测）；新增 retracted-paper-audit-methodology.md 参考文件；新增论文工厂 9 指标检测清单和作者重叠网络分析。实战案例：温州市人民医院 3 篇撤稿论文审计 + 跨领域作者重叠发现。 |：部分论文使用 thebibliography 环境而非 references.bib 文件（如 stroke-prediction）。当 06-references/ 无 .bib 文件时，paper-references-scanning 子技能会静默返回空结果（不报错），导致引用审计跳过。必须在 G5 引用审计的**第一步**（扫描 bib 之前）先检查论文是否使用了 inline bibliography（grep thebibliography paper.tex）。若使用 inline bib，改用 inline 引用提取脚本（引用键从 \\\\cite{} 提取，引用内容从 thebibliography 环境直接读取）。stroke-prediction 有 10 篇 inline 引用，D10a=100%，但引用总量偏少（10篇）需要后续迭代补充。新增 references/inline-bibliography-audit.md；新增 references/retracted-paper-investigation.md 撤稿调查协议 |
+| 2026-06-25 | 2.33.0 | 新增"外部驱动管线路径"检查协议：cron 作业的质量门扫描必须覆盖所有三条管线路径（`~/outputs/papers/` + `~/桌面/article_todo/` + `/media/yakeworld/sda2/Synthos/outputs/papers/`），不能仅查 `~` 目录。主管线在外部驱动上（157篇），`~` 仅为队列/报告副本。新增 `ref/multi-path-pipeline-scan.md` 参考文件。实战教训：2026-06-25 首次发现主管线在 sda2 而非 home 目录，仅扫 home 会得到空结果。新增批量状态扫描的权威数据源确认规则。 |
+| 2026-06-25 | 2.35.0 | 新增撤稿论文审计四步法（查→下→QC→论文工厂检测）；新增 retracted-paper-audit-methodology.md 参考文件；新增论文工厂 9 指标检测清单和作者重叠网络分析。实战案例：温州市人民医院 3 篇撤稿论文审计 + 跨领域作者重叠发现。 |：部分论文使用 thebibliography 环境而非 references.bib 文件（如 stroke-prediction）。当 06-ref/ 无 .bib 文件时，paper-references-scanning 子技能会静默返回空结果（不报错），导致引用审计跳过。必须在 G5 引用审计的**第一步**（扫描 bib 之前）先检查论文是否使用了 inline bibliography（grep thebibliography paper.tex）。若使用 inline bib，改用 inline 引用提取脚本（引用键从 \\\\cite{} 提取，引用内容从 thebibliography 环境直接读取）。stroke-prediction 有 10 篇 inline 引用，D10a=100%，但引用总量偏少（10篇）需要后续迭代补充。新增 ref/inline-bibliography-audit.md；新增 ref/retracted-paper-investigation.md 撤稿调查协议 |
 | 2026-06-25 | 2.35.0 | 新增"质量报告必须输出完整四报告"陷阱（用户纠正：不是应该有4个完整的这个质量检查报告的吗）；新增 ablation-leakage-implementation.md 中 Leaky SMOTE 索引对齐陷阱（SMOTE后必须重新做CV分割，不可用原始索引） |
 | 2026-06-25 | 2.36.0 | 新增 baseline_inconsistency_detection.md（摘要基线不一致检测）：delta值用A作基线但报告中B为基准。新增 numeric_cross_location_consistency.md（关键数值跨位置一致性）：F1膨胀率等核心数字在7+个位置需一致。新增 stale_quality_report_trap.md（旧报告可能完全错误但state.json仍标记PASS） |
-| 2026-06-26 | 2.39.0 | 新增 D10a false failure 陷阱（inline bib vs references.bib mismatch）；新增 references/d10a-inline-bib-debugging-2026-06-26.md 实战调试记录；修复 inline bibliography 审计陷阱：当论文同时使用 inline thebibliography 且有 references.bib 时，D10a 必须从 cite ↔ bibitem 计算而非 cite ↔ bib，否则产生假阴性 |
+| 2026-06-26 | 2.39.0 | 新增 D10a false failure 陷阱（inline bib vs references.bib mismatch）；新增 ref/d10a-inline-bib-debugging-2026-06-26.md 实战调试记录；修复 inline bibliography 审计陷阱：当论文同时使用 inline thebibliography 且有 references.bib 时，D10a 必须从 cite ↔ bibitem 计算而非 cite ↔ bib，否则产生假阴性 |
 | 2026-06-27 | 2.41.0 | 新增 `state.json scan scope` 陷阱（批量扫描时过滤 papers/submissions/queue/_archive 等非论文目录）；新增 `quality_score_normalized variant` 陷阱（quality_score_normalized 不遵循 /100 缩放规则，不同论文有不同计算公式）；修复批量扫描脚本的论文计数假阳性问题（从 93→93 含过滤逻辑，实际有效论文需排除非论文目录）；新增 inline bibliography D10a 追踪缺失检测（68/93 篇 D10a=?） |
-| 2026-06-27 | 2.42.0 | 新增 `paper_count_discrepancy` 陷阱：state.json 统计数（93篇）与 agent-tracker.json completed_papers 数（63篇）不一致，扫描脚本未排除 kaggle-leakage-audit、submissions 等非管线论文目录。修复：扫描必须限定在直接子目录中的 state.json，排除有 state.json 但非管线论文的目录（kaggle-leakage-audit、submissions、papers 索引等）。新增 references/paper-count-discrepancy-trap.md |
+| 2026-06-27 | 2.42.0 | 新增 `paper_count_discrepancy` 陷阱：state.json 统计数（93篇）与 agent-tracker.json completed_papers 数（63篇）不一致，扫描脚本未排除 kaggle-leakage-audit、submissions 等非管线论文目录。修复：扫描必须限定在直接子目录中的 state.json，排除有 state.json 但非管线论文的目录（kaggle-leakage-audit、submissions、papers 索引等）。新增 ref/paper-count-discrepancy-trap.md |
 | 2026-06-27 | 2.43.0 | 新增 `state.json_audit_flag_freshness` 陷阱（crispdm-wdbc 实战）：state.json audit_history 中的 P2 标记不自动可信，必须独立数值计算验证。cross_dataset_consistency 检测新增重验证规则。crispdm-wdbc 案例：state.json 标记"交叉数据集delta convention不一致"但实际计算确认三数据集使用相同约定（绝对值×100），标记为假阳性并清除。 |
-| 2026-06-27 | 2.44.0 | 新增早期DOI 404判定规则（references/pdf-alternative-search-protocol.md）：SAGE/Springer/AJP等出版社的2010年前DOI在DOI解析器+Crossref均返回404/403，但论文真实存在，判定为[WARN]非[FAIL]。bppv-canalith-relocation-ode实战：12个引用中5/12失败(42%)但全部真实。新增DOI前缀→Crossref状态对照表。 |
+| 2026-06-27 | 2.44.0 | 新增早期DOI 404判定规则（ref/pdf-alternative-search-protocol.md）：SAGE/Springer/AJP等出版社的2010年前DOI在DOI解析器+Crossref均返回404/403，但论文真实存在，判定为[WARN]非[FAIL]。bppv-canalith-relocation-ode实战：12个引用中5/12失败(42%)但全部真实。新增DOI前缀→Crossref状态对照表。 |
 | 2026-06-29 | 2.45.0 | 新增 paper_json_numerical_consistency 检查（G7子项）：论文数值必须与 experiment_results.json 一致。k=N 参数不一致、样本量/特征数不一致、图脚本硬编码检测。HCS-3WT 实战：代码 k=15 vs 论文 k=6，15 处数值更新，fig3/fig4 改为 JSON 读取，PDF 编译通过，state.json 0.73→0.88。 |
-| 2026-06-29 | 2.46.0 | 新增 state.json CLAIMED vs 07-quality/ VERIFIED 审计陷阱（用户纠正：state.json PASS 不等于质量报告完整）。审计队列（AUDIT_QUEUE.md）中论文的状态判定必须独立于 state.json 声明：state.json 的 gate_status=PASS 是\"声称已修复\"，07-quality/ 目录的4份报告是\"已验证修复\"。审计时必须读取 07-quality/ 的实际文件清单，确认 report-1~4 全部存在且内容完整。缺失报告 → 无论 state.json 显示什么，都视为未验证。新增 NEEDS_REPAIR 状态（quality_score<0.85 或关键指标失败时标记）。新增 AUDIT_QUEUE.md 审计协议：读队列→取首篇QS≠0→检查07-quality/ 4份报告→若全部PASS→移除；若P0_WAITING_USER→BLOCKED；否则NEEDS_REPAIR。新增 references/audit-queue-protocol.md 完整协议文档。 |
+| 2026-06-29 | 2.46.0 | 新增 state.json CLAIMED vs 07-quality/ VERIFIED 审计陷阱（用户纠正：state.json PASS 不等于质量报告完整）。审计队列（AUDIT_QUEUE.md）中论文的状态判定必须独立于 state.json 声明：state.json 的 gate_status=PASS 是\"声称已修复\"，07-quality/ 目录的4份报告是\"已验证修复\"。审计时必须读取 07-quality/ 的实际文件清单，确认 report-1~4 全部存在且内容完整。缺失报告 → 无论 state.json 显示什么，都视为未验证。新增 NEEDS_REPAIR 状态（quality_score<0.85 或关键指标失败时标记）。新增 AUDIT_QUEUE.md 审计协议：读队列→取首篇QS≠0→检查07-quality/ 4份报告→若全部PASS→移除；若P0_WAITING_USER→BLOCKED；否则NEEDS_REPAIR。新增 ref/audit-queue-protocol.md 完整协议文档。 |
 
 ### state.json CLAIMED vs 07-quality/ VERIFIED — 审计队列状态验证陷阱（新增 2026-06-29）
 
@@ -142,7 +161,7 @@ related_skills: [project-experience-distillation, evolution, sci-paper-quality-r
 
 **修复**：选择正确基线，统一全文所有位置，修正数值。
 
-**参考**：`references/baseline-inconsistency-detection.md`
+**参考**：`ref/baseline-inconsistency-detection.md`
 
 ### cross_dataset_consistency — 交叉数据集delta convention一致性
 
@@ -157,7 +176,7 @@ related_skills: [project-experience-distillation, evolution, sci-paper-quality-r
 
 **修复**：统一为相对值（推荐科学论文惯例），全文明确标注。
 
-| references/cross-dataset-consistency-check.md (含 crispdm-wdbc 假阳性案例) |
+| ref/cross-dataset-consistency-check.md (含 crispdm-wdbc 假阳性案例) |
 
 **关联**：常与 `baseline_inconsistency_detection` 同时出现。旧报告（stale_quality_report_trap）通常不检测此问题。**特别注意**：旧 audit 的 P2 标记可能是假阳性，必须通过数值计算重新验证。
 
@@ -184,7 +203,7 @@ related_skills: [project-experience-distillation, evolution, sci-paper-quality-r
 
 **检测方法**：对每个核心数值，grep 全文所有位置，逐位置对比。
 
-**参考**：`references/numeric-cross-location-consistency.md`
+**参考**：`ref/numeric-cross-location-consistency.md`
 
 ### stale_quality_report_trap — 旧报告过期陷阱
 
@@ -195,7 +214,7 @@ related_skills: [project-experience-distillation, evolution, sci-paper-quality-r
 2. 对比报告中 D8/D10a 值 vs state.json reference_health
 3. 不一致 → 报告已过期，必须重新审计
 
-**参考**：`references/stale-quality-report-trap.md`
+**参考**：`ref/stale-quality-report-trap.md`
 
 ### re-verification_trap — 重验证必须执行（新增 2026-06-26）
 
@@ -210,7 +229,7 @@ related_skills: [project-experience-distillation, evolution, sci-paper-quality-r
 6. 如果旧修复仍然有效 → 标记 VERIFIED；如果有残留 → 执行修复
 7. 更新 fix-log.md 添加重验证记录
 
-**参考**：`references/re-verification-audit-pattern.md`
+**参考**：`ref/re-verification-audit-pattern.md`
 
 ### paper_json_numerical_consistency — 论文-JSON 数值一致性检查（新增 2026-06-29）
 
@@ -227,7 +246,7 @@ related_skills: [project-experience-distillation, evolution, sci-paper-quality-r
 8. 重新编译 LaTeX（检查 Table 最后一行是否缺 `\\`）
 9. 更新 state.json
 
-**参考**：`paper-experiment-audit/references/paper-json-numerical-consistency-check.md`
+**参考**：`paper-experiment-audit/ref/paper-json-numerical-consistency-check.md`
 
 ### block_vs_in_progress_decision — 队列状态精确判定
 
@@ -262,7 +281,7 @@ for state_path in glob.glob(os.path.join(base, '*/state.json')):
     # 1. 过滤归档/模板/知识目录
     if parent_dir.startswith('_'):
         continue
-    # 2. 过滤非论文目录（完整列表见 references/paper-count-discrepancy-trap.md）
+    # 2. 过滤非论文目录（完整列表见 ref/paper-count-discrepancy-trap.md）
     non_paper_dirs = {
         'papers', 'submissions', 'queue', 'research', 'knowledge-index',
         'kaggle-leakage-audit'
@@ -316,9 +335,9 @@ for state_path in glob.glob(os.path.join(base, '*/state.json')):
 
 **对应原则**：模板存在的意义就是被完整使用。部分输出的报告比没有更差——它给用户虚假的质量感知。
 
-**2026-06-26 新增 — 文献监控交付物质量门（L2）**：cron 作业的文献监控产出需要质量闸门验证，包括论文发现可信度、下载可用性、与管线重叠检测。详见 `references/retracted-paper-audit-methodology.md`。
+**2026-06-26 新增 — 文献监控交付物质量门（L2）**：cron 作业的文献监控产出需要质量闸门验证，包括论文发现可信度、下载可用性、与管线重叠检测。详见 `ref/retracted-paper-audit-methodology.md`。
 
-**2026-06-26 新增 — 撤稿论文与管线论文状态分离（L3）**：撤稿论文审计产物（如温州撤稿论文）只有 quality_report.md 没有 state.json，这是预期行为。cron 批量扫描需区分"审计目标（无 state.json）"和"管线论文（必须有 state.json）"。详见 `references/quality-gate-cron-bulk-scan.md` 的"质量报告有但 state.json 缺失"章节。
+**2026-06-26 新增 — 撤稿论文与管线论文状态分离（L3）**：撤稿论文审计产物（如温州撤稿论文）只有 quality_report.md 没有 state.json，这是预期行为。cron 批量扫描需区分"审计目标（无 state.json）"和"管线论文（必须有 state.json）"。详见 `ref/quality-gate-cron-bulk-scan.md` 的"质量报告有但 state.json 缺失"章节。
 
 **覆盖范围**：适用于所有论文类型的质量检查（临床ML用PROBAST，基础医学用实验专项，综述用AMSTAR2，通用用模板默认项）。
 
@@ -407,8 +426,4 @@ grep -i 'undefined' paper.log | grep -i 'cite\\|label'
 
 > 每项验证必须可执行、可记录、可复现。
 
-
-
-
 # Quality Gate
-

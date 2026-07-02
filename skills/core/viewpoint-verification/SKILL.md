@@ -1,6 +1,26 @@
 ---
 
 name: viewpoint-verification
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: core
+signature: "viewpoint-verification -> core: 对假设和论证进行多角度验证（反方观点、证伪条件、鲁棒性），支持 Bayesian 评分、可证伪性检验。"
 description: "对假设和论证进行多角度验证（反方观点、证伪条件、鲁棒性），支持 Bayesian 评分、可证伪性检验。"
 author: Synthos
 license: MIT
@@ -12,7 +32,7 @@ metadata:
     atom_type: cognitive-atom
     description: "Multi-perspective hypothesis and argument verification"
     signature: "hypothesis: str, context: dict -> verification_report: dict (score, evidence, counter_evidence, confidence)"
-    related_skills: [hypothesis-generation, argument-expression, quality-gate]
+    related_skills: ['hypothesis-generation', 'argument-expression']
 
 ---
 
@@ -76,8 +96,4 @@ metadata:
 
 见 `BOUNDARY.md` — 本原子只做验证，不做假设生成、不做论证构建、不做关联发现。
 
-
-
-
 # Viewpoint Verification
-

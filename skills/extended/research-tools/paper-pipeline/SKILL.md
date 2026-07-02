@@ -1,5 +1,25 @@
 ---
 name: paper-pipeline
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: research-tools
+signature: "paper-pipeline -> research-tools: Complete paper pipeline: retrieval, extraction, quality review, analysis, and pu"
 description: "Complete paper pipeline: retrieval, extraction, quality review, analysis, and publication."
 version: 1.0.1
 license: MIT
@@ -38,7 +58,7 @@ Composite skill that merges 35 paper-related skills into a unified pipeline.
 - **paper-citation-health**: Scan all papers in `outputs/papers/` for citation bibliographic health metrics D8 (bib entries) and D10a (cite-to-bib match %).
 - **paper-cron-scan**: 路由到 `v32-multi-direction-scan` — 所有旋转扫描和白空间验证由此技能执行。独立 paper-cron-scan 技能已合并入 v32。
 - **paper-repair**: Directory index for paper-repair: paper-repair
-- **paper-directory-organization**: Directory index for paper-directory-organization: paper-directory-organization — audit, categorize, and reorganize paper project directories. Covers empty-dir cleanup, legacy-format migration, archive management, structural normalization, and directory classification taxonomy (ACTIVE/LEGACY/EMPTY/SYSTEM/NONSTANDARD/OLD/BACKUP). See `paper-directory-organization/references/paper-directory-cleanup-2026-06-29.md` for a completed 89-paper cleanup example.
+- **paper-directory-structure**: Directory index for paper-directory-structure: 论文目录结构标准化 — 所有论文写作流程必须强制使用此标准目录结构。See `paper-writing/paper-directory-structure/SKILL.md` for the full standard structure, create/upgrade scripts, and validation protocol.
 - **paper-quality-deep-review**: 论文质量深度审查引擎 — 从文献下载→内容分析→研究空白验证→科学假设评估→解决方法评估→文献引用质量评分→综合评分。
 - **paper-queue-audit**: Directory index for paper-queue-audit: paper-queue-audit
 - **research-queue-audit**: Research queue audit and management — read/validate research-queue.json, check candidate state consistency, detect stale entries, sync state layers. Implementation lives in `v32-multi-direction-scan` (Steps 5-6 + pitfalls). This is a routing stub — the actual queue lifecycle protocol is in the v32 scan skill.
@@ -100,6 +120,7 @@ Papers and pipeline state are spread across **three locations**. All cron agents
 | `~/outputs/papers/` | Queue files (processed_papers.txt, low_score_papers.txt, no_state_papers.txt), bib-standards reports (`bib-standards-report-YYYY-MM-DD.md`) | Cron output reports, queue tracking |
 | `~/桌面/article_todo/` | Actively developed papers (7 core direction papers — iris, pupil, SCC, BPPV — with submission materials) | Writing workspace. See `references/article-todo-inventory.md` |
 | `/media/yakeworld/sda2/Synthos/outputs/papers/` | **Main pipeline** — 132 paper directories, `paper-queue.json`, `research-queue.json`, `_knowledge_only/` (21 research candidates), `state.json`, `submissions/` | Full paper pipeline + knowledge pipeline + evolution tracking |
+| `/media/yakeworld/sda2/papers/` | **Non-standard paper storage** — Papers developed outside the Synthos pipeline (e.g., hcs3wt-breast-cancer). Must be checked during pipeline scans. See `paper-pipeline-automation` for multi-path scanning methodology. | External papers not yet integrated into Synthos structure |
 
 > ⚠️ **Critical distinction**: Two separate queue files with different semantics:
 - `paper-queue.json` (132 papers) — full paper pipeline with quality scores, gate status, notes
@@ -110,6 +131,8 @@ Papers and pipeline state are spread across **three locations**. All cron agents
 **Agent log**: `/media/yakeworld/sda2/Synthos/outputs/papers/agent-log.md` (cron execution history).
 
 > ⚠️ **Pitfall**: Home `~/outputs/papers/` queue files (`processed_papers.txt`, etc.) reflect a subset and may be stale. Always read `/media/yakeworld/sda2/Synthos/outputs/papers/paper-queue.json` for authoritative state.
+
+> ⚠️ **External Projects Are Not Part of Pipeline**: `/home/yakeworld/projects/` contains independent external project code that has zero overlap with Synthos. These projects must be analyzed via `project-absorption` skill before being integrated. Do NOT assume projects in `/home/yakeworld/projects/` are part of the paper pipeline — they are not.
 
 > ⚠️ **Agent-Log Append-Only Protocol**: `agent-log.md` is written by multiple cron jobs (autonomous-core-researcher, paper-repair, paper-layer-b-review, literature-monitor, etc.). **NEVER overwrite it with write_file**. Always use patch to append new entries after the last line. If accidentally overwritten, reconstruct from session_search (all pipeline cron sessions are stored in the session DB) and rewrite the combined file.
 
@@ -124,7 +147,7 @@ When verifying D10a (cite-to-bibitem match rate), these traps cause false positi
 | **Template markers** | `<label>` in `\cite{<label>}` flags as orphan | Filter keys containing `<` or `>` |
 | **Stale reference_health** | state.json `reference_health.D10a` disagrees with `d8_d10a_scan.d10a` | `d8_d10a_scan` is authoritative (updated by batch scan). `reference_health` may be stale pre-repair snapshot. |
 | **Stale .bbl from different bib source** | D10a=0% despite inline thebibliography having correct keys. .bbl exists but was generated from a different .bib file with incompatible key naming (e.g., short keys in bbl vs long keys in tex cite commands). Script uses bbl (priority 1) → 0 matches. | Delete all stale `.bbl` files in the paper directory. Script will fall back to inline thebibliography or a fresh bibtex run. **Always check**: does the bbl's bibitem keys match the tex citation style? If key naming conventions differ, the bbl is from a different compilation era. |
-| **Missing .bib masquerading as .txt** | `\bibliography{reference4}` causes BibTeX "I didn't find a database entry" for ALL cites, but `reference4.txt` exists with full content. The `.bib` extension is missing — BibTeX only reads `.bib` files. | Search for files with the same basename but `.txt` extension (e.g., `reference4.txt`, `06-references/reference4.txt`). Copy to `.bib` extension. **Check**: does the `.txt` file cover all cited keys? It may be from a different draft version and missing newer citations. After copying, run bibtex to identify remaining gaps. |
+| **Missing .bib masquerading as .txt** | `\bibliography{reference4}` causes BibTeX "I didn't find a database entry" for ALL cites, but `reference4.txt` exists with full content. The `.bib` extension is missing — BibTeX only reads `.bib` files. | Search for files with the same basename but `.txt` extension (e.g., `reference4.txt`, `06-ref/reference4.txt`). Copy to `.bib` extension. **Check**: does the `.txt` file cover all cited keys? It may be from a different draft version and missing newer citations. After copying, run bibtex to identify remaining gaps. |
 | **Stale .bbl from older tex revision** | D10a < 100% even though bib entries exist in the .bib file. The .bbl filename doesn't match the .tex filename (e.g., `revision20241117.bbl` but tex is `revision20241118v3.tex`). The old bbl predates newer citations added to the tex. | Delete the stale .bbl. Recompile: `pdflatex → bibtex → pdflatex×2`. Verify the new .bbl filename matches the tex basename. |
 | **Wrong .tex file selected** (multi-tex directories) | D10a=0% or nonsensical results (e.g., 3 cites R1/R2/R3 with 30 bibitems). Scan may pick up a LaTeX template file (e.g., `Sage_LaTeX_Guidelines.tex`) before the real manuscript (`articlev2.tex` or `paper.tex`). **Self-perpetuating trap**: if `paper.tex` stays as the template, every cron cycle re-flags it at 0.0% regardless of prior fixes. | **Diagnose**: Check which tex was scanned with `grep -l '\\begin{document}' *.tex`. Look for realistic citation keys (not R1/R2/R3 or `<label>`). Prefer tex with the most real cites and `\begin{document}`. **Fix**: Copy/link the real manuscript to `paper.tex` so future batch scans pick it up correctly. Delete/rename template files if they shadow the real manuscript. Then clean aux and recompile to produce `paper.bbl`. |
 | **article_todo workspace scanning** | The main `d10a-batch-scan.py` targets `/media/yakeworld/sda2/Synthos/outputs/papers/` only. Papers in `~/桌面/article_todo/` need separate D10a checks. | Run a targeted scan on `~/桌面/article_todo/` using the same methodology: extract cites, find bib/bbl, compute D10a. The article_todo papers typically use .bbl-based references; stale .bbl is the #1 D10a issue here. See `references/article-todo-d10a-repair.md`. |
@@ -142,7 +165,7 @@ When running `scripts/unified-scan-audit.py` for a comprehensive pipeline health
 
 | Pitfall | Symptom | Fix |
 |:---|:---|:---|
-| **Bib not in 01-manuscript/** | Papers score low because `unified-scan-audit.py` only checks `01-manuscript/references.bib` for entry counts | Bib files in other subdirectories (08-references/, etc.) still get scanned and counted in the overall totals. Low entry count in 01-manuscript/ is expected if bib is elsewhere. Check `papers[].file` in the output for actual locations. |
+| **Bib not in 01-manuscript/** | Papers score low because `unified-scan-audit.py` only checks `01-manuscript/ref.bib` for entry counts | Bib files in other subdirectories (08-ref/, etc.) still get scanned and counted in the overall totals. Low entry count in 01-manuscript/ is expected if bib is elsewhere. Check `papers[].file` in the output for actual locations. |
 | **09-manuscript subdirectories** | Script picks up `outputs/papers/XXX/09-manuscript/` as a "paper" directory | These are output subdirectories, not papers. They won't have state.json and won't appear in `state_data`. If they appear in paper results, it's because they contain a .bib file — filter by checking for state.json presence. |
 | **Stale 09-manuscript** | An `09-manuscript` directory at top-level has no state.json (e.g., `09-manuscript` at `outputs/papers/02-corneal-tension-ODE/09-manuscript/`) | This is a leftover directory. Can be safely removed if the parent paper's publication directory is clean. |
 | **state.json steps=0 with high score** | A paper has `quality_score=96` but `steps_completed=[]` (empty) | The state.json was likely cleared/overwritten. Check if paper artifacts still exist. If so, the score may be accurate but the state is inconsistent — update steps_completed to reflect actual state. |
@@ -160,7 +183,7 @@ When running `scripts/unified-scan-audit.py` for a comprehensive pipeline health
 4. For each paper below threshold: **First check if `paper.tex` is the real manuscript or a template** — when D10a=0.0% with `source=inline` and orphans >10, 90% of the time `paper.tex` is the elsarticle/Sage template. `grep -c '\\citep{' paper.tex` tells you instantly (template = 0, real manuscript = 20+ for natbib papers). If template → copy the real tex to `paper.tex`, recompile, re-scan. Then identify orphan cause (comment? template? missing bibitem? missing .bbl? wrong bib source? stale bbl? missing .bib extension? NEEDS_VERIFICATION notes? natbib `\citep` blind spot?)
 5. Fix and re-verify (delete stale bbls first if present; check for `.txt` siblings of missing `.bib` files; fill missing entries; remove NEEDS_VERIFICATION note lines; recompile pdflatex→bibtex→pdflatex×2)
 6. **Post-fix**: run bibtex separately to catch entries missing from the `.bib` that were previously in the `.bbl` (old bbl may have had bibitems not in current bib file). BibTeX warnings reveal these silently-matched-before entries.
-7. **article_todo check**: After pipeline scan, run a targeted D10a scan on `~/桌面/article_todo/`. The most common issue in article_todo is stale .bbl from older revision. Fix: delete old .bbl, recompile. See `paper-references-scanning/references/article-todo-d10a-check.md` for the full targeted scan methodology (created 2026-06-22).
+7. **article_todo check**: After pipeline scan, run a targeted D10a scan on `~/桌面/article_todo/`. The most common issue in article_todo is stale .bbl from older revision. Fix: delete old .bbl, recompile. See `paper-references-scanning/ref/article-todo-d10a-check.md` for the full targeted scan methodology (created 2026-06-22).
 8. **Direction filter**: Skip peripheral-direction papers (corneal, lens, vitreous, tear film, tinnitus, brainstem, dysphagia, etc.). Only repair core-direction papers (pupil/iris, 3D eyeball, SCC, BPPV, VOR, algorithm components, dataset audits, Synthos system, AI teaching).
 
 ## Manual Layer B (NotebookLM Cron Fallback)
@@ -232,7 +255,6 @@ done
 - **input**: `paper_path: str, analysis_type: str` — Paper path and analysis type
 - **output**: `analysis_report: dict` — Complete analysis report
 
-
 ## 验证清单 · VERIFICATION
 
 1. **输入验证**: 输入参数/文件/路径是否完整且有效
@@ -241,14 +263,12 @@ done
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -264,6 +284,4 @@ done
 
 > 对应原则：P3（人机分层 — 路由器负责路由，原子负责执行）
 
-
 # Paper Pipeline
-

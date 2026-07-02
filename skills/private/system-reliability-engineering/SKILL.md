@@ -1,5 +1,14 @@
 ---
 name: system-reliability-engineering
+license: MIT
+
+## Operational Steps
+1. 
+2. 
+3. 
+category: devops
+signature: "system-reliability-engineering -> devops: 系统可靠性工程 — SRE、可观测性、混沌工程、容量规划、事故响应。基于Google SRE方法论，为Synthos系统建立可靠性保障体系。"
+related_skills: ['capacity-planning', 'observability-system']
 description: "系统可靠性工程 — SRE、可观测性、混沌工程、容量规划、事故响应。基于Google SRE方法论，为Synthos系统建立可靠性保障体系。"
 version: 2.0.0
 allowed-tools:
@@ -90,6 +99,12 @@ triggers:
    - 定期演练: 月度桌面演练、季度实战演练、年度综合演练
 
 ## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
 
 - **错误预算计算陷阱**: 不可用时间包含所有SLO违规(不仅是停机)，还包括性能降级和错误率升高。计算时用总时间-合规时间/总时间，不是简单1-SLO。
 - **告警疲劳**: 初始告警规则过多会导致告警疲劳。建议从3-5个核心告警开始，逐步增加。告警必须关联行动——收到告警后必须有明确操作。
@@ -123,7 +138,6 @@ triggers:
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## Golden 集合 · GOLDEN SET
 
 - **Golden Input**: 标准输入样本（覆盖正常路径）
@@ -134,7 +148,4 @@ triggers:
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-
-
 # System Reliability Engineering
-

@@ -1,5 +1,25 @@
 ---
 name: figure-generation
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: creative
+signature: "figure-generation -> creative: 作图技能体系 — 科学数据图、架构图、流程图、宣传封面、论文转PPT、PDF逆向工程、QA自动化。所有作图请求的统一入口。"
 description: 作图技能体系 — 科学数据图、架构图、流程图、宣传封面、论文转PPT、PDF逆向工程、QA自动化。所有作图请求的统一入口。
 version: 2.2.0
 license: MIT
@@ -38,7 +58,7 @@ metadata:
 └── 模式J: 质量报告可视化（HTML+Firefox/Pillow）
 ```
 
-**原则：作图技能不是越多越好。所有模式的核心思想在SKILL.md中，代码在references/中，可执行脚本在scripts/中。**
+**原则：作图技能不是越多越好。所有模式的核心思想在SKILL.md中，代码在ref/中，可执行脚本在scripts/中。**
 
 ## 核心思想：一图胜千言
 
@@ -292,8 +312,8 @@ PDF中无源代码的图 → pdftotext提取坐标 → 重建Python脚本。
 
 质检报告→视觉图 — HTML+Firefox/Pillow三模式。
 
-- 见 `feishu-file-send/references/pdf-chinese-rendering.md` — PDF 中文渲染修复（pandoc + xelatex + ctex header）
-- 见 `feishu-image-send/references/pdf-image-extraction.md` — PDF 图片提取与发送（无脚本场景）
+- 见 `feishu-file-send/ref/pdf-chinese-rendering.md` — PDF 中文渲染修复（pandoc + xelatex + ctex header）
+- 见 `feishu-image-send/ref/pdf-image-extraction.md` — PDF 图片提取与发送（无脚本场景）
 
 ### 执行失败回退层级
 
@@ -405,7 +425,7 @@ fig.savefig(f"{name}.pdf", bbox_inches='tight', pad_inches=0.1)  # 出版级PDF
 | references/pdf-chinese-encoding.md | pandoc + xelatex + ctex header 生成中文PDF（CJK字体、编码、错误处理） |
 - 见 `references/figure-audit-runbook.md` — 论文作图完整性审计管线（6步）
 - 见 `references/pupil-shape-literature-search.md` — 文献检索方法（PubMed API，本地 session 无 API 密钥）
-- 见 `feishu-file-send/references/pdf-chinese-rendering.md` — PDF 中文渲染修复（pandoc + xelatex + ctex header）
+- 见 `feishu-file-send/ref/pdf-chinese-rendering.md` — PDF 中文渲染修复（pandoc + xelatex + ctex header）
 | **模式代码** | |
 | references/architecture-flow-diagrams.md | 架构/流程图程序化布局模板 |
 | references/hybrid-figure-workflow.md | 混合工作流模式（架构→数据分离） |
@@ -423,7 +443,7 @@ fig.savefig(f"{name}.pdf", bbox_inches='tight', pad_inches=0.1)  # 出版级PDF
 | references/excalidraw/references/colors.md | 颜色对照表 |
 | references/excalidraw/references/dark-mode.md | 深色模式指南 |
 | references/excalidraw/references/examples.md | 完整Excalidraw元素示例 |
-| references/excalidraw/references/pd_risk_roadmap.excalidraw | 示例文件（风险路线图） |
+| ref/pd_risk_roadmap.excalidraw | 示例文件（风险路线图） |
 | references/excalidraw/scripts/upload.py | 上传Excalidraw获取分享链接 |
 | **Pillow封面** | |
 | references/pil-image/scripts/generate_cover.py | 标准封面图生成 |
@@ -468,6 +488,4 @@ fig.savefig(f"{name}.pdf", bbox_inches='tight', pad_inches=0.1)  # 出版级PDF
 **输入**：请求描述、上下文信息。
 **输出**：执行结果、状态反馈。
 
-
 # Figure Generation
-

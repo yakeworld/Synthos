@@ -1,6 +1,26 @@
 ---
 
 name: bppv-expert
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: research-tools
+signature: "bppv-expert -> research-tools: 'Structured BPPV (Benign Paroxysmal Positional Vertigo) medical knowledge"
 version: 1.0.0
 license: MIT
 author: Synthos
@@ -39,18 +59,14 @@ metadata:
     - repositioning
     - medical-expert
 
-
 ---
-
 
 ## IO_CONTRACT
 
 - **input**: `patient_data: dict, symptoms: str` — 用户请求描述、上下文信息
 - **output**: `treatment_plan: dict — BPPV专家系统`
 
-
 > 对应原则：P2（机械原子暴露输入输出规范）
-
 
 # BPPV Expert — Extended Skill for Synthos
 
@@ -171,7 +187,6 @@ Absorbed from AKNE knowledge graph (yakeworld/.knowledge/) — 2026-05-12
 - **Checklist**: Run all 6 verification items after activation.
 - **Output**: Structured answer with confidence score and source references.
 
-
 ## 示例 · EXAMPLES
 
 1. **基本用法**: 标准输入 → 标准输出
@@ -187,14 +202,12 @@ When asked "BPPV有哪几篇比较成熟的？" or "our BPPV papers review":
 5. Propose testable hypotheses (最小刺激阈值假说, BPPV慢动力学探针假说, etc.)
 6. Produce prioritized action list (P0/P1/P2)
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -211,7 +224,4 @@ When asked "BPPV有哪几篇比较成熟的？" or "our BPPV papers review":
 ### Related Skills
 - `research/scc-bppv-kinematics` — Computational SCC morphometry + kinematic simulation from centerline data (complementary: this skill provides clinical knowledge, scc-bppv-kinematics provides the computational pipeline)
 
-
-
 # Bppv Expert
-

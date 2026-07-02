@@ -1,6 +1,26 @@
 ---
 
 name: knowledge-extraction
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
+category: core
+signature: "knowledge-extraction -> core: 从单篇论文中提取结构化知识（实体、关系、主张、证据），输出 KnowledgeItem JSON。可选 pwbench 逆向工程模式。"
 description: "从单篇论文中提取结构化知识（实体、关系、主张、证据），输出 KnowledgeItem JSON。可选 pwbench 逆向工程模式。"
 author: Synthos
 license: MIT
@@ -12,7 +32,7 @@ metadata:
     atom_type: cognitive-atom
     description: "Single-paper structured knowledge extraction"
     signature: "paper_content: str, schema: dict -> structured_knowledge: dict (entities, relations, claims, evidence)"
-    related_skills: [knowledge-acquisition, paper-knowledge-extraction]
+    related_skills: ['knowledge-acquisition', 'association-discovery']
 
 ---
 
@@ -73,8 +93,4 @@ metadata:
 
 见 `BOUNDARY.md` — 本原子只做单论文结构化提取，不跨论文比较，不生成假设，不表达论证。
 
-
-
-
 # Knowledge Extraction
-

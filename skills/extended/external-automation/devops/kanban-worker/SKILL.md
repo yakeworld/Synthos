@@ -1,5 +1,12 @@
 ---
 name: kanban-worker
+
+## Operational Steps
+1. 
+2. 
+3. 
+category: devops
+signature: "kanban-worker -> devops: Your workspace kind determines how you should behave inside `$HERMES_KANBAN_WORK"
 description: "Your workspace kind determines how you should behave inside `$HERMES_KANBAN_WORKSPACE`:"
 version: 1.0.0
 license: MIT
@@ -12,10 +19,6 @@ metadata:
     related_skills: []
 
 ---
-
-
-
-
 
 ## IO_CONTRACT
 
@@ -176,6 +179,12 @@ If you open the task and `kanban_show` returns `runs: [...]` with one or more cl
 - Complete a task you didn't actually finish. Block it instead.
 
 ## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
 
 **Task state can change between dispatch and your startup.** Between when the dispatcher claimed and when your process actually booted, the task may have been blocked, reassigned, or archived. Always `kanban_show` first. If it reports `blocked` or `archived`, stop — you shouldn't be running.
 
@@ -192,7 +201,6 @@ Every tool has a CLI equivalent for human operators and scripts:
 - `kanban_create` ↔ `hermes kanban create "title" --assignee <profile> [--parent <id>]`
 - etc.
 
-
 ## 验证清单 · VERIFICATION
 
 1. **输入验证**: 输入参数/文件/路径是否完整且有效
@@ -201,14 +209,12 @@ Every tool has a CLI equivalent for human operators and scripts:
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
-
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -224,7 +230,4 @@ Every tool has a CLI equivalent for human operators and scripts:
 
 Use the tools from inside an agent; the CLI exists for the human at the terminal.
 
-
-
 # Kanban Worker
-

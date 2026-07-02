@@ -1,10 +1,29 @@
 ---
 name: workstation-onboarding
+
+## Operational Steps
+1. 
+2. 
+3. 
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
 description: "研究生工作站环境配置 — 在远程服务器上创建用户账号、安装 Python 科学计算环境 + Codex CLI + Hermes Agent"
 version: 1.2.0
 author: Synthos
 license: MIT
 category: devops
+related_skills: ['codex-install-guide', 'docker-vllm-troubleshoot']
 metadata:
   synthos:
     priority: P2
@@ -280,13 +299,11 @@ hermes chat -q '你的提示' -Q
 2. **边界用例**: 空输入、特殊字符、异常路径
 3. **错误场景**: 缺失依赖、权限不足、网络异常
 
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
 2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
 3. **可复现性**: 每一步操作必须可重复，结果可验证
-
 
 ## 约束规则 · RULES
 
@@ -294,7 +311,6 @@ hermes chat -q '你的提示' -Q
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 
 ## Golden 集合 · GOLDEN SET
 
@@ -310,7 +326,4 @@ hermes chat -q '你的提示' -Q
 
 > 每个示例必须可独立运行、有明确输入输出、包含错误处理。
 
-
-
 # Workstation Onboarding
-
