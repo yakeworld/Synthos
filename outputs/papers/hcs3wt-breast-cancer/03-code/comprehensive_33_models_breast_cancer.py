@@ -107,15 +107,15 @@ def build_model_list():
     return m
 
 
-def strict_helix_benchmark(X, y, dataset_name, n_splits=10, apply_smote=True):
+def strict_helix_benchmark(X, y, dataset_name, model_list, n_splits=10, apply_smote=True):
     """Run ALL models under strict Helix CV isolation."""
     if not isinstance(X, pd.DataFrame):
         X = pd.DataFrame(X)
     skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=RANDOM_STATE)
     results = []
-    n_models = len(ALL_MODELS)
+    n_models = len(model_list)
     
-    for mi, (model_name, clf_fn) in enumerate(ALL_MODELS.items(), 1):
+    for mi, (model_name, clf_fn) in enumerate(model_list.items(), 1):
         start = time.time()
         f1_s, recall_s, acc_s, prec_s, auc_s = [], [], [], [], []
         n_success = 0
@@ -177,13 +177,13 @@ def load_wdbc():
 def load_coimbra():
     try:
         import urllib.request, zipfile, io
-        url = "https://archive.ics.uci.edu/ml/machine-learning-databases/00547/breast-cancer-coimbra.zip"
+        url = "https://archive.ics.uci.edu/static/public/451/breast+cancer+coimbra.zip"
         req = urllib.request.urlopen(url, timeout=30)
         zf = zipfile.ZipFile(io.BytesIO(req.read()))
         csv_name = [f for f in zf.namelist() if f.endswith('.csv')][0]
         df = pd.read_csv(zf.open(csv_name))
-        X = df.iloc[:, 1:-1]
-        y = (df.iloc[:, -1].astype(str).str.lower() == 'malignant').astype(int)
+        X = df[[c for c in df.columns if c != 'Classification']]
+        y = (df['Classification'].astype(str).str.lower().isin(['malignant', '2'])).astype(int)
         if len(np.unique(y)) < 2:
             return None, None, None
         return X, y, "Breast Cancer Coimbra (UCI)"
@@ -200,7 +200,7 @@ if __name__ == "__main__":
     X_wdbc, y_wdbc, name_wdbc = load_wdbc()
     print(f"=== {name_wdbc} ({len(y_wdbc)} samples, {X_wdbc.shape[1]} features) ===", file=sys.stderr)
     t0 = time.time()
-    wdbc_results = strict_helix_benchmark(X_wdbc, y_wdbc, name_wdbc, n_splits=10)
+    wdbc_results = strict_helix_benchmark(X_wdbc, y_wdbc, name_wdbc, ALL_MODELS, n_splits=10)
     wdbc_elapsed = time.time() - t0
     print(f"\n=== WDBC RESULTS ({len(wdbc_results)} models, {wdbc_elapsed:.1f}s) ===")
     for i, r in enumerate(wdbc_results, 1):
@@ -219,7 +219,7 @@ if __name__ == "__main__":
     if X_coimbra is not None and len(np.unique(y_coimbra)) >= 2:
         print(f"\n=== {name_coimbra} ({len(y_coimbra)} samples, {X_coimbra.shape[1]} features) ===", file=sys.stderr)
         t0 = time.time()
-        coimbra_results = strict_helix_benchmark(X_coimbra, y_coimbra, name_coimbra, n_splits=5)
+        coimbra_results = strict_helix_benchmark(X_coimbra, y_coimbra, name_coimbra, ALL_MODELS, n_splits=5)
         coimbra_elapsed = time.time() - t0
         print(f"\n=== COIMBRA RESULTS ({len(coimbra_results)} models, {coimbra_elapsed:.1f}s) ===")
         for i, r in enumerate(coimbra_results, 1):
