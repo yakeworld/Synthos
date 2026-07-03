@@ -127,6 +127,12 @@ Cron任务运维：诊断error状态、修复脚本缺陷、验证连接性。�
 
 - **vLLM 端口引用过时**: Docker 容器端口映射变更后，cron 脚本/代码中残留旧端口引用。症状：curl 连接被拒（connection refused），但 vLLM 容器实际正常运行。诊断方法：1) `ssh <host> "docker ps --format '{{.Names}}\t{{.Ports}}'"` 获取实际端口映射；2) `grep -rn "2000[1-3]\|8000" ~/.hermes/scripts/ scripts/` 查找旧端口引用；3) 更新为实际端口（通常为 8000）。注意：端口 8000 是 vLLM 默认 HTTP API 端口，20001/20002/20003 可能是宿主机端口映射，但如果 Docker 配置为 `0.0.0.0:8000->8000/tcp`，则直接访问 8000 即可。
 
+- **Cron enabled_toolsets 控制 execute_code 可用性**：`enabled_toolsets` 是工具集级别的过滤，不是 prompt 层面的。如果 job 的 `enabled_toolsets` 不包含 `code_execution`，agent **根本看不到** execute_code 工具。如果包含或未设置（None 意味着全部），agent 可能调用它——但 cron session 中 execute_code 会被安全拦截并导致 session 异常退出。修复：给 cron job 设置 `enabled_toolsets` 为 `['terminal', 'web', 'skills', 'memory', 'session_search', 'file']`（排除 `code_execution`、`browser`、`messaging`、`clarify`、`delegation`、`cronjob`）。设置方式：直接修改 `~/.hermes/cron/jobs.json` 中的 `enabled_toolsets` 字段。
+
+- **Cron enabled_toolsets 不生效的时序问题**：scheduler 的 `get_due_jobs()` 从 jobs.json 文件重新加载 job 配置。如果 enabled_toolsets 的修改在 job 启动 AFTER scheduler 已经读取了旧配置，则该次运行仍用旧配置。修复：手动将 `next_run_at` 设为过去时间，并确保 `last_run_at` 为 null，scheduler 会立即拾取。参考：2026-07-03 发现修改 enabled_toolsets 后，08:35 启动的 session 仍然调用了 browser（因为 scheduler 在修改前已经读取了旧配置）。
+
+- **work2（主节点 100.100.252.99, 2×3090）vs work1（备份 100.125.10.93, 8×4090, TP2）性能差异**：work1（amax-backup）虽然GPU数量多，但TP2（张量并行2）模式导致推理延迟更高，生成 65K tokens 时容易触发 cron 超时（600s）。work2（主节点）虽然只有2卡，但单卡推理更快，更适合 cron 任务。诊断：如果 cron job 报 `Request timed out` 且走的是 amax-backup，切换到 work2 通常能解决。
+
 ## 参考
 
 - `references/cron-error-diagnosis-pattern.md` — 错误分类与诊断模式
@@ -139,6 +145,7 @@ Cron任务运维：诊断error状态、修复脚本缺陷、验证连接性。�
 - `references/cron-provider-drift.md` — 服务器节点变更后 cronjob provider 名称漂移的诊断与修复
 - `references/cron-batch-timeout-diagnosis.md` — Codex profile 不匹配导致批量 cron 超时诊断与恢复
 - `references/cron-provider-rename-procedure.md` — 完整的 config provider 重命名 + cron job 批量迁移流程（remove+recreate, 8处config引用, 10个job迁移, 验证命令）
+- `references/cron-enabled-toolsets-exec-code.md` — Cron enabled_toolsets控制execute_code可用性的完整指南（工具集过滤机制、时序问题、手动触发方法、实测案例）
 
 ## 验证清单 · VERIFICATION
 
