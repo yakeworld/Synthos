@@ -227,3 +227,21 @@ evolution-loop.py
 pinn_gen_main.py
 pinn_gen_worker.py
 paper-queue.json
+
+# ============================================
+# 22. 敏感参考文件（含实际凭证/密钥）
+# ============================================
+skills/private/extended/external-automation/debug-env-variables/references/ss-dual-key-failover.md
+skills/private/core/citation-appropriateness-verification/references/ss-api-key-management.md
+skills/private/extended/external-automation/debug-env-variables/references/api-key-fallback-pattern.md
+skills/extended/external-automation/automation-skills/github/references/git-credential-sanitization.md
+tools/paper-manager/src/sources/pubscholar.py
+
+# ============================================
+# 23. 备份/残留文件
+# ============================================
+*.bak
+*.bak.*
+*.fix*
+*.v1
+*.v2
