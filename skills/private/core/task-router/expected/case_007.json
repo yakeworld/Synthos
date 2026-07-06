@@ -1,6 +1,0 @@
-{
-  "query": "🔬 科学发现 → 假说验证 🧪",
-  "mode": "exploratory_loop",
-  "chain": ["association-discovery", "hypothesis-generation", "viewpoint-verification"],
-  "complexity": "full"
-}
