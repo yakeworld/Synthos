@@ -3,19 +3,22 @@
 name: association-discovery
 
 ## Operational Steps
-1. 
-2. 
-3. 
+1. 从上游知识提取获取结构化知识项
+   对知识项两两配对，检查7类关系：矛盾/补充/演进/空白/因果/并行/依赖
+   对每对关系标注confidence (0-1)
+   按confidence排序，输出关联报告
+   发现研究空白 → 标记为HYP输入
 
 ## Pitfalls
-- 
-- 
+- 不要跳过低confidence关联 — 可能发现创新点
+- 不要只找同领域关联 — 跨领域关联更有价值
+- 7类关系必须全检查，不可跳过
 
 ## Verification
-- 
-- 
-- 
-- 
+- [ ] 7类关系均检查过
+- [ ] 每对关联有confidence评分
+- [ ] 关联按confidence排序
+- [ ] 研究空白已标记
 1. 
 2. 
 3. 

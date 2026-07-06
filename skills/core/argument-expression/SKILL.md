@@ -3,19 +3,22 @@
 name: argument-expression
 
 ## Operational Steps
-1. 
-2. 
-3. 
+1. 从上游HYP或ASC输入获取待论证的假说/关联
+   加载对应领域的论证结构模板（refs/argument-templates.md）
+   构建论据链：主张→证据→推理→结论
+   检查论证完整性（每步有证据支撑）
+   输出 structured argument chain (JSON)
 
 ## Pitfalls
-- 
-- 
+- 不要自行发明论据 — 所有论据必须来自上游知识提取
+- 不要跳步：主张必须紧跟证据
+- 不要过度论证：只论证核心假设
 
 ## Verification
-- 
-- 
-- 
-- 
+- [ ] 论据链有明确的主张
+- [ ] 每条论据有证据支撑
+- [ ] 结论由论据逻辑推导
+- [ ] 输出为结构化JSON
 1. 
 2. 
 3. 

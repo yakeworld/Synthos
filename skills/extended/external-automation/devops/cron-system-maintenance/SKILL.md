@@ -3,9 +3,10 @@
 name: cron-system-maintenance
 
 ## Operational Steps
-1. 
-2. 
-3. 
+1. 确认输入参数完整
+2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
+3. 验证输出符合契约
+4. 保存结果并报告
 category: mlops
 signature: "cron-system-maintenance -> mlops: 'Cron任务运维：诊断error状态、修复脚本缺陷、验证连接性。覆盖cron job list分析、错误分类、脚本语法验证、prompt更新、vLLM多节点负"
 related_skills: []
@@ -133,6 +134,17 @@ Cron任务运维：诊断error状态、修复脚本缺陷、验证连接性。�
 
 - **work2（主节点 100.100.252.99, 2×3090）vs work1（备份 100.125.10.93, 8×4090, TP2）性能差异**：work1（amax-backup）虽然GPU数量多，但TP2（张量并行2）模式导致推理延迟更高，生成 65K tokens 时容易触发 cron 超时（600s）。work2（主节点）虽然只有2卡，但单卡推理更快，更适合 cron 任务。诊断：如果 cron job 报 `Request timed out` 且走的是 amax-backup，切换到 work2 通常能解决。
 
+- **vLLM stale timeout 默认 300s，不足以处理长提示词**：当 cron 任务的提示词较长（200-500字）且 LLM 需要读取文件+复杂分析时，300 秒不够。vLLM 生成响应超过 300s 被 kill → `RuntimeError: Request timed out`。**修复**：在 config.yaml 的 `custom_providers` 中为对应 provider 添加 `stale_timeout_seconds: 900`。诊断方法：检查 `grep -A2 "name: work[123]" ~/.hermes/config.yaml` 看是否已有 stale_timeout 配置。**注意**：不要看到超时就盲目改为 `no_agent=true`，这会丢失 LLM 分析能力。应先增加 stale_timeout + 压缩提示词，观察是否改善。
+
+- **并发冲突导致系统性超时**：多个 cron 任务在同一秒触发且使用相同 model/provider → 并发压力导致 vLLM 响应延迟 → 超时。诊断：检查同一秒触发的任务（如 09:00 有 3 个任务同时触发）。修复：错开 schedule（如 09:00 / 09:05 / 09:10）。
+
+- **cron 超时根因分类**：看到 `RuntimeError: Request timed out` 时按以下分类树排查：
+  1. LLM 推理超时 → 检查 vLLM stale_timeout、提示词复杂度、并发冲突
+  2. 脚本执行超时 → 检查 no_agent 脚本是否 > 脚本超时阈值
+  3. 基础设施问题 → 检查 vLLM 可达性、provider 配置、API key
+  4. 技能缺失（伪超时）→ cron 引用了不存在的 SKILL.md
+  详见 `references/cron-timeout-root-cause-diagnosis.md`。
+
 ## 参考
 
 - `references/cron-error-diagnosis-pattern.md` — 错误分类与诊断模式
@@ -146,6 +158,8 @@ Cron任务运维：诊断error状态、修复脚本缺陷、验证连接性。�
 - `references/cron-batch-timeout-diagnosis.md` — Codex profile 不匹配导致批量 cron 超时诊断与恢复
 - `references/cron-provider-rename-procedure.md` — 完整的 config provider 重命名 + cron job 批量迁移流程（remove+recreate, 8处config引用, 10个job迁移, 验证命令）
 - `references/cron-enabled-toolsets-exec-code.md` — Cron enabled_toolsets控制execute_code可用性的完整指南（工具集过滤机制、时序问题、手动触发方法、实测案例）
+- `references/no-agent-false-timeout-pattern.md` — no_agent=false 脚本任务超时模式诊断与修复（2026-07-05 实测 3 个 job 修复案例，含过度修正警告）
+- `references/cron-timeout-root-cause-diagnosis.md` — cron 超时根因分类与修复矩阵（vLLM stale timeout + 提示词压缩 + 并发冲突诊断，替代盲目 no_agent=true）
 
 ## 验证清单 · VERIFICATION
 

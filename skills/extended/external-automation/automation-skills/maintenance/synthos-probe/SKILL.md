@@ -2,9 +2,10 @@
 name: synthos-probe
 
 ## Operational Steps
-1. 
-2. 
-3. 
+1. 确认输入参数完整
+2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
+3. 验证输出符合契约
+4. 保存结果并报告
 category: meta
 signature: "synthos-probe -> meta: Class: maintenance / audit"
 related_skills: ['maintenance']

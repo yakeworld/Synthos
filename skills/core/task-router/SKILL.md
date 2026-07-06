@@ -3,19 +3,24 @@
 name: task-router
 
 ## Operational Steps
-1. 
-2. 
-3. 
+1. 分析用户查询，提取意图复杂度
+   选择执行模式：标准链 / 探索循环 / 研究双循环 / 并行执行
+   确定原子链（从6个认知原子中选择）
+   创建运行目录 outputs/{session_id}/
+   初始化 pipeline_trace.json
+   执行原子链（详见各原子SKILL.md）
+   汇总输出，报告用户
 
 ## Pitfalls
-- 
-- 
+- 不要对简单查询使用双循环（过度复杂化）
+- 不要跳步：每步保存独立JSON
+- 执行完向用户报告，不要静默退出
 
 ## Verification
-- 
-- 
-- 
-- 
+- [ ] 执行模式匹配查询复杂度
+- [ ] 每步保存独立JSON
+- [ ] pipeline_trace.json 完整
+- [ ] 已向用户报告
 1. 
 2. 
 3. 

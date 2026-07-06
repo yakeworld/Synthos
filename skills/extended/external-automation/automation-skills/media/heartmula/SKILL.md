@@ -2,9 +2,10 @@
 name: heartmula
 
 ## Operational Steps
-1. 
-2. 
-3. 
+1. 确认输入参数完整
+2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
+3. 验证输出符合契约
+4. 保存结果并报告
 category: creative
 signature: "heartmula -> creative: HeartMuLa is a family of open-source music foundation models (Apache-2.0) that g"
 description: "HeartMuLa is a family of open-source music foundation models (Apache-2.0) that generates music conditioned on lyrics and tags, with multilingual support. Generates full songs from lyrics + tags. Comparable to Suno for open-source. Includes:"

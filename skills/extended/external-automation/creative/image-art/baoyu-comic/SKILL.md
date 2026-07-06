@@ -2,9 +2,10 @@
 name: baoyu-comic
 
 ## Operational Steps
-1. 
-2. 
-3. 
+1. 确认输入参数完整
+2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
+3. 验证输出符合契约
+4. 保存结果并报告
 category: creative
 signature: "baoyu-comic -> creative: Adapted from [baoyu-comic](https://github.com/JimLiu/baoyu-skills) for Hermes Ag"
 description: "Adapted from [baoyu-comic](https://github.com/JimLiu/baoyu-skills) for Hermes Agent's tool ecosystem."
