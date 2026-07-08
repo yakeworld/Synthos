@@ -24,8 +24,9 @@ Hermes 将完整的 SKILL.md（12KB+）注入 LLM 提示词，导致总输入超
 
 **修复**：URL-编码为 `%5BTitle%2FAbstract%5D`。
 
-### 4. Semantic Scholar 限流（2个任务）
-`literature-monitor` 和 `daily-intelligence` 调 S2 API 无 key，返回 429。
+### 4. Semantic Scholar 429（已修正）
+`literature-monitor` 和 `daily-intelligence` 调用 S2 API 无 key，返回 429。
+原因：S2 429 仅发生在无 API Key（匿名请求被拒），非 API 限流。
 
 **修复**：添加 `S2_API_KEY` 环境变量引用。
 
@@ -45,8 +46,8 @@ Hermes 将完整的 SKILL.md（12KB+）注入 LLM 提示词，导致总输入超
 | research-proposal-generator | ❌ 链式污染 | ✅ 断链 |
 | project-library-scan | ❌ 提示词过长 | ✅ 精简 |
 | daily-papers-report | ❌ 提示词过长 | ✅ 精简 |
-| literature-monitor | ❌ URL编码+S2限流 | ✅ URL编码+S2 key |
-| daily-intelligence | ❌ S2限流+长提示 | ✅ S2 key+精简 |
+| literature-monitor | ❌ URL编码+S2无key | ✅ URL编码+S2 key |
+| daily-intelligence | ❌ S2无key+长提示 | ✅ S2 key+精简 |
 | synthos-daily-promo | ❌ 15项超长目录 | ✅ 精简 |
 
 ## 后续建议

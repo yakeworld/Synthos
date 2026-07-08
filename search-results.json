@@ -1,0 +1,30 @@
+{
+  "total_queries": 1,
+  "total_papers": 1,
+  "papers": [
+    {
+      "title": "title 21660",
+      "authors": [],
+      "year": "2025",
+      "doi": "10.1351/goldbook.21660",
+      "url": "https://doi.org/10.1351/goldbook.21660",
+      "pdf_url": "",
+      "journal": "The IUPAC Compendium of Chemical Terminology",
+      "abstract": "",
+      "source": "crossref",
+      "cited_by": 0,
+      "pmid": "",
+      "is_oa": true,
+      "open_url": "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+      "volume": "",
+      "issue": "",
+      "pages": "",
+      "metadata": {
+        "reference_count": 0,
+        "license_url": "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+        "license_start": "{'date-parts': [[2019, 7, 1]], 'date-time': '2019-07-01T00:00:00Z', 'timestamp': 1561939200000}",
+        "alternative_ids": []
+      }
+    }
+  ]
+}

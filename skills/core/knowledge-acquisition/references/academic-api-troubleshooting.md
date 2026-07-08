@@ -43,7 +43,24 @@ fetch_url = f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubme
      ab = " ".join(word for word, pos in sorted(ab_inv.items(), key=lambda x: min(x[1])))
      ```
 
-## Semantic Scholar Pitfalls
+## Journal Download Patterns
+
+### Cloudflare-protected Journals
+Certain major publishers use Cloudflare bot-protection on their DOI resolvers. When downloading via `unified_download.py` or direct `curl https://doi.org/DOI`, the following consistently fail:
+- **ASCO Publications** (ascopubs.org) — JCO, JCO Oncology Practice
+- **Elsevier** (sciencedirect.com, elsenexus.elsevier.io) — most journals
+- **Lancet / Cell Press** — cell.com
+- **Sage** (sagepub.com)
+- **Springer** (link.springer.com) — only some OA titles work
+
+**Detection**: Downloaded "PDF" file < 10KB and starts with `<!DOCTYPE` or `<HTML`.
+**Workaround**:
+1. Try Semantic Scholar API for open access PDF URL (often hosts a legitimate copy)
+2. Check PubMed Central for OA version
+3. Check arXiv/medRxiv preprint versions
+4. If none available, cite the paper without full-text download (record in bib as citation-only)
+
+### Semantic Scholar Pitfalls
 
 ### API Key Dependency
 

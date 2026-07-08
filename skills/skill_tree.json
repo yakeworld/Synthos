@@ -1,6 +1,6 @@
 {
   "version": "3.4",
-  "updated": "2026-05-15T08:00:00Z",
+  "updated": "2026-07-08T18:30:00Z",
   "description": "Synthos技能树 - 全部技能拓扑",
   "architecture": {
     "layer_0_ideation": {
@@ -335,6 +335,33 @@
     "test_007": {
       "status": "completed",
       "result": "success"
+    }
+  },
+  "nodes": {
+    "extended.research-tools.research.literature": {
+      "id": "extended.research-tools.research.literature",
+      "name": "literature",
+      "category": "research-tools",
+      "description": "文献检索统一入口 — 搜索、下载、验证三位一体，多源聚合，管道编排。",
+      "version": "3.0.0",
+      "priority": "P0",
+      "atom_type": "unified-entry",
+      "parent": null,
+      "children": [],
+      "dependencies": {
+        "upstream": [],
+        "downstream": [
+          "paper-pipeline",
+          "reference-enrichment-pipeline",
+          "citation-verification"
+        ]
+      },
+      "file_count": 84,
+      "file": "skills/extended/research-tools/research/literature/SKILL.md",
+      "tested": true,
+      "status": "active",
+      "implementation": "unified_package",
+      "absorbed_from": ""
     }
   }
 }

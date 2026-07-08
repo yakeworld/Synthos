@@ -130,7 +130,7 @@ tools/paper-manager/batch_meddata_all.py
 # ============================================
 /research/
 data/
-literature/
+/literature/
 
 # 14. 已淘汰的根目录条目（历史引用，安全保留）
 # ============================================

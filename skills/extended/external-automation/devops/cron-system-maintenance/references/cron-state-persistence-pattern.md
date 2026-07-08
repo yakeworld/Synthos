@@ -8,14 +8,24 @@ Cron jobs that produce sequential/iterative output (e.g., daily promo posts cycl
 3. Manual investigation of cron job configs
 
 ## Case Study: synthos-daily-promo (2026-06-25)
+The June 25 run timed out before producing output. June 26 run had to reconstruct state from output files + session DB.
 
-The June 25 run of `synthos-daily-promo` timed out before producing output. The June 26 run had to:
-1. Check cron output directory for any successful run markers
-2. Search session DB for previous feature posts
-3. Confirm no state file exists
-4. Decide to start from Feature #1 (since no successful post was recorded)
+## Case Study: synthos-daily-promo (2026-07-07)
+Previous run calculated rotation as "Day 32 mod 10 = 2 -> Slot 3" which was WRONG. The actual daily progression from cron output files showed: 07-03=#1, 07-04=#2, 07-05=#3, 07-06=#4, 07-07=#5 (文献监控). Modular arithmetic failed because it did not account for the actual first day correctly.
 
-**Root cause**: The cron job prompt says "记录上次发的功能编号" (record last posted feature number) but there is NO mechanism to actually do this. The agent is asked to remember but has no durable state to write to.
+## Case Study: synthos-daily-promo (2026-07-08)
+This run also failed to reconstruct the rotation correctly. The correct approach: read the most recent successful output file and extract the function number from its title, then increment by 1. More reliable than any modular arithmetic.
+
+## Key Lesson: NEVER rely on date arithmetic for cron job rotation.
+Date-based calculations are fragile (leap years, timezone issues, DST, missed runs, off-by-one errors, ambiguous first day). Always derive state from actual output files. The most recent successful output file IS the source of truth.
+
+## Fix: Option C - Embed state check in cron prompt
+Add a state-check step to the cron job prompt:
+1. Check if the state file exists
+2. Read the number, increment it
+3. Use this as your feature number
+4. Write the new number back to the file
+5. If the file does not exist, start from 1
 
 ## Fix Patterns
 

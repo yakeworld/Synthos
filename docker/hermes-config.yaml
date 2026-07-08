@@ -1,0 +1,17 @@
+# Hermes Agent — Default Configuration
+# This is a template. User should replace API_KEY with their actual key.
+# Copy to ~/.hermes/config.yaml inside container or mount as volume.
+
+model:
+  default: qwen3.6-35b-nvfp4
+  provider: custom:local
+
+custom_providers:
+  - name: local
+    base_url: http://localhost:8000/v1
+    api_key: "${API_KEY:-EMPTY}"
+    model: qwen3.6-35b-nvfp4
+
+agent:
+  max_turns: 150
+  gateway_timeout: 1800

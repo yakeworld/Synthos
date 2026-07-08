@@ -94,6 +94,18 @@ metadata:
 - Golden Output: paper.tex compiled + quality-report.md with score ≥ 0.85
 - Golden Error: exit code 1 when pipeline fails at any step
 
+## Supplementary Citation Enrichment (after quality check)
+
+When quality check identifies missing references or when user requests "补充检索更多文献":
+
+1. Analyze existing citations: `grep "cite{" paper.tex | sort -u`
+2. Multi-direction search: 5-8 queries covering different sub-domains
+3. Score papers by relevance (method + domain + evaluation = 5-point scale)
+4. Select 8-15 most relevant papers
+5. Download PDFs — expect 30-50% failure rate on Cloudflare-protected journals
+6. Convert to Markdown for reference directory
+7. Add to `references.bib` and insert `\cite{}` in paper.tex at appropriate locations
+
 ## 相关脚本
 
 - `scripts/paper_dir_validator.py` — 论文目录结构验证

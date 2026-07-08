@@ -33,7 +33,7 @@ metadata:
 
 **Agent-native 认知原子。文献检索 100% 通过脚本执行，禁止临时拼 curl 命令。**
 
-- 检索 → 调用 `scripts/multi_source_search.py` 或 `scripts/unified_search.py`
+- 检索 → 调用 `scripts/literature.py search`（统一入口，支持字段过滤和 DOI 精确检索）
 - PDF 下载 → 调用 `scripts/unified_download.py`
 - 所有逻辑封装在脚本中，SKILL.md 只定义**何时调用、传什么参数、如何处理输出**
 
@@ -60,13 +60,13 @@ metadata:
 cd /media/yakeworld/sda2/Synthos/skills/extended/research-tools/research/paper-retrieval/scripts/
 
 # 方案 A: 四源统一检索（推荐，快速）
-python3 multi_source_search.py "{topic}" --max {max_papers} --verbose --output {output_dir}/search_results.json
+python3 literature.py search "{topic}" --max {max_papers} --output {output_dir}/search_results.json
 
 # 方案 B: 8 源统一入口（需更完整结果）
-python3 unified_search.py "{topic}" --db all --limit {max_papers} --out {output_dir}/search_results.json
+python3 literature.py search "{topic}" --sources crossref pubmed openalex arxiv --max {max_papers} --output {output_dir}/search_results.json
 
 # 前置检查：连通性测试（首次执行或怀疑网络异常时）
-python3 multi_source_search.py --test
+python3 literature.py test
 ```
 
 **环境要求**：
@@ -94,7 +94,8 @@ python3 multi_source_search.py --test
 ```bash
 cd /media/yakeworld/sda2/Synthos/skills/extended/research-tools/research/paper-retrieval/scripts/
 
-# 从搜索结果批量下载
+# 批量下载 — unified_download.py 要求 JSON 格式为 {"papers": [{"title":"...", "doi":"...", "source":"..."}, ...]}
+# 如果搜索结果不是此格式，需要先转换（见陷阱）
 python3 unified_download.py --batch {output_dir}/search_results.json --output-dir {pdf_output_dir}
 
 # 单篇下载
@@ -145,8 +146,8 @@ python3 unified_download.py {DOI_or_ID} --output {output_dir}/paper.pdf
 
 | 脚本 | 路径 | 用途 | 入口 |
 |------|------|------|------|
-| multi_source_search.py | `../extended/.../scripts/` | 四源统一检索 | `python3 multi_source_search.py "query"` |
-| unified_search.py | `../extended/.../scripts/` | 8 源统一检索入口 | `python3 unified_search.py "query" --db all` |
+| literature.py | `../extended/.../scripts/` | 统一检索/下载/验证 | `python3 literature.py search "query"` |
+# 废弃: unified_search.py 和 multi_source_search.py 已被 literature.py 取代
 | unified_download.py | `../extended/.../scripts/` | PDF 全文下载 | `python3 unified_download.py --batch results.json` |
 | pdf_download_engine.py | `../extended/.../scripts/` | 下载核心引擎（30+ 源） | 被 unified_download.py 调用 |
 
@@ -156,8 +157,12 @@ python3 unified_download.py {DOI_or_ID} --output {output_dir}/paper.pdf
 
 > 完整陷阱见 `refs/academic-api-troubleshooting.md`
 
-- **S2 API Key 为空**：脚本返回空 JSON 不报错 → 必须先检测 key 非空
+- **严禁使用临时脚本** — 文献检索 100% 走 `literature.py` 统一入口。禁止在 `/tmp/` 写临时 Python 文件或用 `subprocess` 调用脚本 — 所有逻辑已在脚本中封装。这是用户明确纠正过的纪律。
+- **S2 API Key 为空** — `literature.py` 使用 sources/semantic_scholar.py，双 key 轮换自动回退到 PubMed + OpenAlex + arXiv。
+- **unified_download.py 批量格式不兼容** — `unified_download.py --batch` 期望 `{"papers": [...]}` 格式。`literature.py search` 输出包含 `papers` 数组，可直接提取传给 `--batch`，或改用单篇下载。
 - **PubMed 多词静默失败**：用 `+` 或 `AND` 连接词 → 详见 refs
+- **PubMed 多词静默失败**：用 `+` 或 `AND` 连接词 → 详见 refs
+- **OpenAlex 返回 NoneType 错误** — 某些关键词查询（如带连字符的词组）触发 `AttributeError: 'NoneType' object has no attribute 'get'`，原因是 `authorships` 字段为 None。处理方案：在 `_reconstruct_abstract` 和作者列表构建时增加 `or []` 保护。
 - **OpenAlex `search` 是全文搜索**：用 `filter=` 而非 `from_publication_date=` → 详见 refs
 - **arXiv 需加 `-L` 跟随重定向** → 由脚本处理，Agent 无需关心
 - **bioRxiv/medRxiv API 宕机**：跳过，用 Crossref 预印本替代
@@ -186,8 +191,9 @@ python3 unified_download.py {DOI_or_ID} --output {output_dir}/paper.pdf
 
 ## 参考文档
 
-- `refs/academic-api-troubleshooting.md` — API 常见问题与解决方案
-- `refs/CITATION_VERIFICATION.md` — 引用验证方法
+- `references/academic-api-troubleshooting.md` — API 常见问题与解决方案
+- `references/literature-scan-without-s2-key.md` — 无 S2 Key 时的回退方案
+- `references/supplementary-literature-search.md` — 参考文献补充检索与质量筛选流程（多方向检索→评分→筛选→下载→Markdown）
 - `refs/literature-scan-without-s2-key.md` — 无 S2 Key 时的回退方案
 - `refs/CHANGE_LOG.md` — 技能变更记录
 - `refs/IO_CONTRACT.md` — 输入输出契约详情
