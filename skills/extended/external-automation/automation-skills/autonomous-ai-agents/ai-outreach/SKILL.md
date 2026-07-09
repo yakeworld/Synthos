@@ -1,6 +1,7 @@
 ---
-
 name: ai-outreach
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -54,7 +55,6 @@ metadata:
     - moltbook-connector
     version: 1.1.0
 
----
 
 ## IO_CONTRACT
 

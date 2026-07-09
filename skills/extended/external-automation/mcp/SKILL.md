@@ -1,6 +1,7 @@
 ---
-
 name: mcp
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -36,7 +37,6 @@ metadata:
     signature: 'mcp -> sub-skills: [mcp-ecosystem-guide, native-mcp]'
     related_skills: ["mcp-ecosystem-guide", "native-mcp"]
 
----
 
 ## IO_CONTRACT
 

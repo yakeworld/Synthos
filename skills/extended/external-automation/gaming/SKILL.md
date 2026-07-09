@@ -1,6 +1,7 @@
 ---
-
 name: gaming
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -36,7 +37,6 @@ metadata:
     signature: 'gaming -> sub-skills: [minecraft-modpack-server, pokemon-player]'
     related_skills: ["minecraft-modpack-server", "pokemon-player"]
 
----
 
 ## IO_CONTRACT
 

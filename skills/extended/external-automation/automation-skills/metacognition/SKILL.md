@@ -1,6 +1,7 @@
 ---
-
 name: metacognition
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -36,7 +37,6 @@ metadata:
     signature: 'metacognition -> sub-skills: [autonomous-execution-threshold, memory-enhancement, memory-optimization-system]'
     related_skills: ["autonomous-execution-threshold", "memory-optimization-system"]
 
----
 
 ## IO_CONTRACT
 

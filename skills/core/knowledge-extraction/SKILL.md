@@ -1,6 +1,7 @@
 ---
-
 name: knowledge-extraction
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 从上游知识获取获取论文列表
@@ -36,7 +37,6 @@ metadata:
     signature: "paper_content: str, schema: dict -> structured_knowledge: dict (entities, relations, claims, evidence)"
     related_skills: ['knowledge-acquisition', 'association-discovery']
 
----
 
 # Knowledge Extraction — 知识提取
 

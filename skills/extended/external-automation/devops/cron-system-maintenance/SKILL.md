@@ -1,6 +1,7 @@
 ---
-
 name: cron-system-maintenance
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -28,7 +29,6 @@ metadata:
     author: Synthos
     signature: 'job_list -> diagnose -> fix -> verify'
 
----
 
 ## IO_CONTRACT
 

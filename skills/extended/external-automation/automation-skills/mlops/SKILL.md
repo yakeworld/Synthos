@@ -1,6 +1,7 @@
 ---
-
 name: mlops
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -36,7 +37,6 @@ metadata:
     signature: 'mlops -> sub-skills: [biomechanical-regulation-ode, computational-ode-modeling, crispdm-helix-experiment]'
     related_skills: ["biomechanical-regulation-ode", "computational-ode-modeling", "crispdm-helix-experiment", "experiment-recipes"]
 
----
 
 ## IO_CONTRACT
 

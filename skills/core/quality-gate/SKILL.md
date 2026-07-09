@@ -7,7 +7,6 @@ author: Synthos
 license: MIT
 version: 3.0.0
 priority: P0
-allowed-tools: terminal, Read, Write
 metadata:
   synthos:
     priority: P0

@@ -1,6 +1,7 @@
 ---
-
 name: smart-home
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -37,7 +38,6 @@ metadata:
     signature: 'smart-home -> sub-skills: [openhue]'
     related_skills: ["openhue"]
 
----
 
 ## IO_CONTRACT
 

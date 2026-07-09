@@ -1,6 +1,7 @@
 ---
-
 name: media
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -36,7 +37,6 @@ metadata:
     signature: 'media -> sub-skills: [gif-search, heartmula, songsee]'
     related_skills: ["gif-search", "heartmula", "songsee", "spotify"]
 
----
 
 ## IO_CONTRACT
 

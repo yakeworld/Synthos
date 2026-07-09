@@ -1,6 +1,7 @@
 ---
-
 name: shared
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -35,7 +36,6 @@ metadata:
     description: "父级技能 — 共享资源 — 跨技能引用的通用资源。"
     signature: 'shared -> sub-skills: [references]'
     
----
 
 ## IO_CONTRACT
 

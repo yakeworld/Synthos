@@ -1,6 +1,7 @@
 ---
-
 name: github
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -36,7 +37,6 @@ metadata:
     signature: 'github -> sub-skills: [codebase-inspection, github-auth, github-code-review]'
     related_skills: ["codebase-inspection", "github-discussions"]
 
----
 
 ## IO_CONTRACT
 

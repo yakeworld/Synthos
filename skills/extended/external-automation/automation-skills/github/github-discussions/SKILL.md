@@ -1,6 +1,7 @@
 ---
-
 name: github-discussions
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -43,7 +44,6 @@ metadata:
     - github-repo-management
     version: 1.0.0
 
----
 
 ## IO_CONTRACT
 

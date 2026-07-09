@@ -1,6 +1,7 @@
 ---
-
 name: maps
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -55,7 +56,6 @@ related_skills: ['google-workspace', 'airtable']
     - linear
     version: 1.2.0
 
----
 
 ## IO_CONTRACT
 

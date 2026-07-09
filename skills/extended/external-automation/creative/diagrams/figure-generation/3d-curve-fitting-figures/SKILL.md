@@ -1,6 +1,7 @@
 ---
-
 name: 3d-curve-fitting-figures
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -45,7 +46,6 @@ metadata:
     - curve-fitting
     - scientific-figures
 
----
 
 ## IO_CONTRACT
 

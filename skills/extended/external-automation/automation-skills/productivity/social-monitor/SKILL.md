@@ -1,5 +1,7 @@
 ---
 name: social-monitor
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -33,7 +35,6 @@ metadata:
     signature: "task_desc: str, context: dict -> result: dict"
     related_skills: []
 
----
 
 # social-monitor
 

@@ -1,6 +1,7 @@
 ---
-
 name: devops
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -36,7 +37,6 @@ metadata:
     signature: 'devops -> sub-skills: [cron-system-maintenance, kanban-orchestrator, kanban-worker]'
     related_skills: ["cron-system-maintenance", "kanban-orchestrator", "kanban-worker"]
 
----
 
 ## IO_CONTRACT
 

@@ -1,5 +1,7 @@
 ---
 name: memory-optimization-system
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -35,7 +37,6 @@ metadata:
     - quality-gate
     priority: P2
 
----
 > **注意**: 本技能是记忆管理的唯一入口。`memory-enhancement` 已合并至此。
 
 ---

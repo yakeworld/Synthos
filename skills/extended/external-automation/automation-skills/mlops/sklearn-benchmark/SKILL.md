@@ -1,6 +1,7 @@
 ---
-
 name: sklearn-benchmark
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -48,7 +49,6 @@ metadata:
     - model-evaluation
     - mlops
 
----
 
 ## IO_CONTRACT
 

@@ -1,6 +1,7 @@
 ---
-
 name: codex
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -45,7 +46,6 @@ metadata:
     last_updated: 2026-06-19
     update_reason: Multi-node profile architecture + cron script conversion
 
----
 
 ## IO_CONTRACT
 

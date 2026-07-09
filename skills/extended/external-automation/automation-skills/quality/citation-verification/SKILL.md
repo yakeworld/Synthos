@@ -1,5 +1,7 @@
 ---
 name: citation-verification
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -31,7 +33,6 @@ metadata:
     atom_type: quality
     signature: "paper_dir: str -> citation_report: dict (phase1, phase2, phase3, overall)"
     related_skills: ["paper-pipeline", "quality-gate"]
----
 
 # 引用三验 — 参考文献验证
 

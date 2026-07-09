@@ -1,6 +1,7 @@
 ---
-
 name: notion
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -58,7 +59,6 @@ prerequisites:
   env_vars:
   - NOTION_API_KEY
 
----
 
 ## IO_CONTRACT
 

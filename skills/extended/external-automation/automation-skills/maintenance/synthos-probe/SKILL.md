@@ -1,5 +1,7 @@
 ---
 name: synthos-probe
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -21,7 +23,6 @@ metadata:
     priority: P2
     related_skills: []
 
----
 
 ## IO_CONTRACT
 

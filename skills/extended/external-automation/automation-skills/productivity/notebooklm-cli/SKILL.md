@@ -1,6 +1,7 @@
 ---
-
 name: notebooklm-cli
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -37,7 +38,6 @@ metadata:
     author: Synthos
     signature: 'action: str, params: dict -> result: dict'
 
----
 
 ## IO_CONTRACT
 

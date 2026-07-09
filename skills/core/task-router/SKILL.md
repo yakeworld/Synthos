@@ -1,6 +1,7 @@
 ---
-
 name: task-router
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 分析用户查询，提取意图复杂度
@@ -41,7 +42,6 @@ metadata:
       query: str, context: dict -> route: str, atom_chain: list[str], execution_mode: str | route: str, atom_chain: list[str], execution_mode: str, pipeline_trace: pipeline_trace.json
     related_skills: ['knowledge-acquisition', 'hypothesis-generation', 'argument-expression']
 
----
 
 # Task Router — Synthos 系统入口
 

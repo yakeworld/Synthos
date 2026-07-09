@@ -1,5 +1,7 @@
 ---
 name: creative-ideation
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -32,7 +34,6 @@ metadata:
     priority: P2
     related_skills: ['creative', 'creative-tools']
 
----
 version: 1.0.0
 
 ## IO_CONTRACT

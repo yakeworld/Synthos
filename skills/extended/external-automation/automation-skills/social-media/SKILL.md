@@ -1,6 +1,7 @@
 ---
-
 name: social-media
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -36,7 +37,6 @@ metadata:
     signature: 'social-media -> sub-skills: [xurl, xhs-content]'
     related_skills: ["xurl"]
 
----
 
 ## IO_CONTRACT
 

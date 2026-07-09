@@ -1,6 +1,7 @@
 ---
-
 name: powerpoint
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -38,7 +39,6 @@ metadata:
     - nature-paper2ppt
     - pil-image-generation
 
----
 
 ## IO_CONTRACT
 

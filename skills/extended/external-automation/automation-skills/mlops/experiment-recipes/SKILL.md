@@ -1,6 +1,7 @@
 ---
-
 name: experiment-recipes
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -55,7 +56,6 @@ metadata:
     - pytorch
     - reference
 
----
 
 ## IO_CONTRACT
 

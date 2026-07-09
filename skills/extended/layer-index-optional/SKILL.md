@@ -1,5 +1,7 @@
 ---
 name: layer-index-optional
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -32,7 +34,6 @@ metadata:
     atom_type: layer-index
     signature: "layer: str, query: str, context: dict -> skill_list: list[dict]"
     related_skills: []
----
 
 # Optional Skills — 可选技能
 

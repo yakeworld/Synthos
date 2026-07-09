@@ -1,6 +1,7 @@
 ---
-
 name: autonomous-ai-agents
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -36,7 +37,6 @@ metadata:
     signature: 'autonomous-ai-agents -> sub-skills: [ai-outreach, claude-code, codex]'
     related_skills: ["ai-outreach", "claude-code", "codex", "hermes-agent", "moltbook-connector"]
 
----
 
 ## IO_CONTRACT
 

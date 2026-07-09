@@ -1,5 +1,7 @@
 ---
 name: hypothesis-generation
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 从ASC的输出获取研究空白/矛盾点
@@ -37,7 +39,6 @@ metadata:
       - association-discovery
       - argument-expression
       - viewpoint-verification
----
 
 # Hypothesis Generation
 

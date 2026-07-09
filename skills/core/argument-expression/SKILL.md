@@ -1,6 +1,7 @@
 ---
-
 name: argument-expression
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 从上游HYP或ASC输入获取待论证的假说/关联
@@ -37,7 +38,6 @@ metadata:
     signature: "claims: list[Claim], evidence: list[Evidence] -> argument_chain: ArgumentChain (structure, strengths, gaps, counterarguments)"
     related_skills: ['hypothesis-generation', 'viewpoint-verification']
 
----
 
 # Argument Expression — 论证表达
 

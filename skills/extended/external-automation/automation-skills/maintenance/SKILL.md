@@ -1,6 +1,7 @@
 ---
-
 name: maintenance
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -36,7 +37,6 @@ metadata:
     signature: 'maintenance -> sub-skills: [synthos-probe]'
     related_skills: ["synthos-probe"]
 
----
 
 ## IO_CONTRACT
 

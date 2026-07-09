@@ -1,6 +1,7 @@
 ---
-
 name: viewpoint-verification
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 从上游HYP或ARG获取待验证的假说/论证
@@ -37,7 +38,6 @@ metadata:
     signature: "hypothesis: str, context: dict -> verification_report: dict (score, evidence, counter_evidence, confidence)"
     related_skills: ['hypothesis-generation', 'argument-expression']
 
----
 
 # Viewpoint Verification — 观点验证
 

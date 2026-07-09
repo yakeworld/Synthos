@@ -1,6 +1,7 @@
 ---
-
 name: chinese-form-automation
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -32,7 +33,6 @@ metadata:
     atom_type: skill
     priority: P1
     related_skills: []
----
 
 ## IO_CONTRACT
 

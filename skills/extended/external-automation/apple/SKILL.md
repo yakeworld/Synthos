@@ -1,6 +1,7 @@
 ---
-
 name: apple
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -36,7 +37,6 @@ metadata:
     signature: 'apple -> sub-skills: [apple-notes, apple-reminders, findmy]'
     related_skills: ['apple-notes', 'apple-reminders', 'findmy', 'imessage', 'macos-computer-use']
 
----
 
 ## IO_CONTRACT
 

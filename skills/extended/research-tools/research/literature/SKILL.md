@@ -14,7 +14,9 @@ metadata:
     priority: P0
     description: "文献检索统一包 — 搜索7源（统一返回 pdf_url+local_links+links）、下载核心（pdf_download_engine + unified_download），搜索即获取全文链接。"
     linked_files:
-      - citation-verification
+---
+
+- citation-verification
       - reference-enrichment-pipeline
       - paper-pipeline
       - bib-structure-audit
@@ -39,7 +41,6 @@ metadata:
     - scripts/download/pdf_download_engine.py
     - scripts/download/unified_download.py
     - scripts/merge-search-results.py  # 多轮搜索结果合并去重
----
 
 # 文献检索 (Literature)
 

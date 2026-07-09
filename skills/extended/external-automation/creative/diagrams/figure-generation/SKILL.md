@@ -1,5 +1,7 @@
 ---
 name: figure-generation
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -39,7 +41,6 @@ metadata:
     - image_generate
     - manim-video
     - sketch
----
 
 ## 技能体系架构（v2.0 — 单一入口）
 

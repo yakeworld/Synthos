@@ -1,6 +1,7 @@
 ---
-
 name: productivity
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -36,7 +37,6 @@ metadata:
     signature: 'productivity -> sub-skills: [airtable, chinese-form-automation, google-workspace]'
     related_skills: ["airtable", "chinese-form-automation", "google-workspace", "jupyter-live-kernel", "linear"]
 
----
 
 ## IO_CONTRACT
 

@@ -9,7 +9,6 @@ version: 2.0.0
 author_type: cognitive-atom
 priority: P0
 description: 多源学术论文检索：Semantic Scholar / PubMed / Crossref / OpenAlex / arXiv。脚本驱动执行，零临时编程。
-allowed-tools: terminal, Read, Write
 metadata:
   synthos:
     priority: P0

@@ -1,6 +1,7 @@
 ---
-
 name: association-discovery
+version: 1.0.0
+---
 
 ## Operational Steps
 1. 从上游知识提取获取结构化知识项
@@ -37,7 +38,6 @@ metadata:
     signature: "knowledge_base: dict, query: str -> associations: list[Association] (type, strength, confidence, source)"
     related_skills: ['knowledge-extraction', 'hypothesis-generation']
 
----
 
 # Association Discovery — 关联发现
 
