@@ -4,6 +4,10 @@ version: 1.0.0
 ---
 
 ## Operational Steps
+## 契约层 · IO_CONTRACT
+
+**输入**：请求描述、上下文信息。
+**输出**：执行结果、状态反馈。
 1. 从上游HYP或ASC输入获取待论证的假说/关联
    加载对应领域的论证结构模板（refs/argument-templates.md）
    构建论据链：主张→证据→推理→结论
