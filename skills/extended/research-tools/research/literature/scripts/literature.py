@@ -1,17 +1,39 @@
 #!/usr/bin/env python3
-"""
-文献检索统一 CLI 入口。
+"""文献检索统一 CLI 入口
 
-用法:
-  literature search "topic" --sources semantic_scholar pubmed scihub --max 10
-  literature download --paper search_results.json --output-dir /tmp/pdfs
-  literature verify --paper-dir /path/to/paper
-  literature pipeline search "topic" --sources semantic_scholar pubmed --max 10 --output-dir /tmp/results
-  literature test
+职责: 统一的文献检索/下载/验证管线 CLI。
+所有操作通过 subcommand 路由：search, download, verify, pipeline, test。
 
-搜索返回: {papers: [...], total: N, sources_queried: [], errors: []}
-下载: 遍历论文的 {pdf_url, local_links, links} 直接下载，无需竞速。
-私人源 MedData 在 pipeline 中作为兜底自动调用。
+架构:
+  search → 多源检索 → 合并去重 → JSON 输出
+  download → 论文 JSON → 遍历链接 → 下载 PDF → 报告
+  pipeline → search + download + MedData 兜底 → 完整报告
+  verify → 论文目录 → BIB/PDF 状态 → 报告
+  test → 所有源连通性测试
+
+设计决策:
+- 统一 CLI 入口，隐藏底层 sources/ 和 download/ 模块
+- 搜索时按 DOI 去重，避免同一论文多个来源重复
+- download 遍历 {pdf_url, local_links, links} 按优先级下载，无需竞速
+- MedData 作为 pipeline 中 PDF 未找到的兜底源
+- 所有函数不抛异常，错误通过 errors 数组报告
+
+数据流:
+  用户输入 → literature.py → sources/*.py (search) → 标准化纸
+  → 去重 → JSON 输出
+  JSON → download/ → smart_download() → verify_pdf() → 保存 PDF
+  → 报告
+
+限制:
+- 需要 SEMANTIC_SCHOLAR_API_KEY 环境变量（S2 源）
+- 部分源需要网络环境支持（Sci-Hub 等可能受限）
+- 搜索结果的 PDF 链接可能过期
+
+退出码:
+  0: 成功
+  1: 用法错误（缺少 subcommand 或参数）
+
+依赖: sources/, download/ (同目录下), urllib (stdlib), json (stdlib)
 """
 import sys
 import os
@@ -24,7 +46,7 @@ from typing import Optional
 sys.path.insert(0, str(Path(__file__).parent))
 
 from sources import SOURCE_REGISTRY, DEFAULT_SOURCES
-from download import smart_download, run_test, verify_pdf, normalize_doi, download_meddata
+from download import smart_download, run_test, verify_pdf, normalize_doi, download_meddata, safe_filename
 
 
 def parse_query(raw: str):

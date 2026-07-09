@@ -7,13 +7,38 @@ import os
 import re
 import time
 
-# Environment variables
-MEDDATA_API_KEY = os.environ.get("MEDDATA_API_KEY", "")
+# ===== 网络超时配置 =====
+CONNECT_TIMEOUT = int(os.environ.get("LIT_CONNECT_TIMEOUT", "5"))
+READ_TIMEOUT = int(os.environ.get("LIT_READ_TIMEOUT", "30"))
+TOTAL_TIMEOUT = int(os.environ.get("LIT_TOTAL_TIMEOUT", "60"))
+
+# ===== 文件限制 =====
+MAX_SIZE = 30 * 1024 * 1024  # ~30MB
+
+# ===== PDF 验证 =====
+VERIFY_PDF_HEADER = b"%PDF-1."
+VERIFY_PDF_HEADER_BYTES = len(VERIFY_PDF_HEADER)
+
+# ===== 重试配置 =====
+MAX_RETRIES = int(os.environ.get("LIT_MAX_RETRIES", "2"))
+RETRY_DELAY = int(os.environ.get("LIT_RETRY_DELAY", "2"))
+
+# ===== User-Agent =====
+USER_AGENT = "Synthos-Literature/1.0"
+
+# ===== 代理配置 =====
 TOR_PROXY_URL = os.environ.get("TOR_PROXY", "socks5://127.0.0.1:9050")
-SS_API_KEY = os.environ.get("SEMANTIC_SCHOLAR_API_KEY", "")
+TOR_PROXY = TOR_PROXY_URL  # alias for backward compatibility
+
+# ===== 输出配置 =====
+MAX_FILENAME_LENGTH = 60
 DEFAULT_OUTPUT_DIR = os.environ.get("PDF_OUTPUT_DIR", "./outputs/papers/pdfs")
 
-# S2 rate limiter
+# ===== API Keys =====
+MEDDATA_API_KEY = os.environ.get("MEDDATA_API_KEY", "")
+SS_API_KEY = os.environ.get("SEMANTIC_SCHOLAR_API_KEY", "")
+
+# ===== S2 Rate Limiter =====
 _s2_request_count = 0
 _s2_last_request_time = 0
 
@@ -34,26 +59,23 @@ def _find_pdf_links(html):
     return re.findall(pattern, html)
 
 
-# Sci-Hub domains (sorted by reliability based on Synthos history)
+# ===== Sci-Hub domains (sorted by reliability) =====
 SCIHUB_DOMAINS = [
     "https://sci-hub.ru",
     "https://sci-hub.ee",
     "https://sci-hub.wf",
-    "https://sci-hub.vg",       # Tor-verified working (2026-06-19)
-    "https://sci-hub.ren",
     "https://sci-hub.se",
 ]
 
-# Tor-verified working domain (2026-06-19)
-SCIHUB_TOR_DOMAIN = "https://sci-hub.vg"
+SCIHUB_TOR_DOMAIN = "https://sci-hub.do"
 
-# Frontiers journal mapping (DOI prefix → journal slug)
+# ===== Frontiers journal mapping (DOI prefix → journal slug) =====
 FRONTIERS_PREFIXES = {
-    "10.3389/f": "f",          # fneur, fimmu, fncom, etc.
+    "10.3389/f": "f",  # fneur, fimmu, fncom, etc.
     "10.3389/fsymp": "fsymp",
 }
 
-# Cloudflare detection
+# ===== Cloudflare detection =====
 _CLOUDFLARE_SIGNATURES = [
     b'cf-browser-verification',
     b'Checking your browser',
@@ -62,10 +84,10 @@ _CLOUDFLARE_SIGNATURES = [
     b'Attention Required',
 ]
 
-# PDF magic header
+# ===== PDF magic header =====
 PDF_MAGIC = b'%PDF'
 
-# Validate PDF fingerprint (avoid known pseudopdf)
+# ===== Known pseudopdf MD5s (avoid false positives) =====
 KNOWN_PSEUDOPDF_MD5 = {
     "fd469bd7cd29446f2800f099e3b71457",  # MedData pseudopdf
 }

@@ -38,6 +38,7 @@ metadata:
     - scripts/sources/scihub.py
     - scripts/download/pdf_download_engine.py
     - scripts/download/unified_download.py
+    - scripts/merge-search-results.py  # 多轮搜索结果合并去重
 ---
 
 # 文献检索 (Literature)
@@ -95,7 +96,11 @@ literature/             ← P0 统一入口
     - `references/bashrc-export-concatenation-bug.md` — bashrc 中两个 export 写一行的 bug：key 值被污染
     - `references/pubscholar-fix-2026-07-06.md` — PubScholar 修复实录：RSSHub 路径错误、XML 解析、国内实例
     - `references/session-2026-07-07-search-troubleshooting.md` — 多源搜索排障实录
-- `references/pubscholar-api-signature.md` — PubScholar 签名规范
+- references/documentation-standards.md  # 四层文档规范 (L1-L4)
+    - references/filter-pipeline.md          # 文献检索筛选管线 (关键词→检索→去重→筛选→BibTeX)
+- `references/filter-pipeline.md` — 文献检索筛选管线操作手册
+- `references/documentation-standards.md` — 四层文档规范 (L1-L4)
+- `scripts/merge-search-results.py` — 多轮搜索合并去重工具
 - `references/pubscholar-curl-api-fix.md` — PubScholar 迁移记录
 - `references/s2-dual-key-failover.md` — S2 双 key 轮换
     - `references/pmc-fulltext-coverage-analysis.md` — PMC 全文覆盖分析（期刊类型 vs 发表时间，预检查方法）
@@ -252,7 +257,82 @@ for source_name, url in paper["links"].items():
 }
 ```
 
+## 文档规范
+
+本文档管线遵循 L1/L2/L3/L4 四层文档体系，详细规范见 `code-documentation` 技能（`skill_view(name='code-documentation')`）。
+
+| 层次 | 实现 |
+|------|------|
+| L1 函数级 | 所有 sources/ 和 download/ 文件中的 docstring |
+| L2 模块级 | 每个模块文件头部的职责/设计/限制/依赖说明 |
+| L3 架构 | 待创建 references/architecture.md |
+| L4 用户 | SKILL.md 中的 CLI 用法段落 |
+
 ## CLI 用法
+
+```bash
+# 基本检索
+python3 literature.py search "topic" --sources semantic_scholar pubmed scihub --max 10
+
+# DOI 精确检索
+python3 literature.py search "doi:10.1038/s41586-019-1799-6"
+
+# 字段过滤 (author:/year:/title:)
+python3 literature.py search "deep learning author:hinton year:2020"
+
+# 下载
+python3 literature.py download --input search_results.json --output-dir /tmp/pdfs
+
+# 管线 (搜索→下载→报告)
+python3 literature.py pipeline search "topic" --sources crossref pubmed --output-dir /tmp/results
+
+# 连通性测试
+python3 literature.py test
+```
+
+### 输入/输出格式
+
+**搜索输出**:
+```json
+{
+  "topic": "vestibular",
+  "papers": [...],
+  "total": 5,
+  "sources_queried": ["semantic_scholar", "pubmed"],
+  "errors": []
+}
+```
+
+**纸结构** (标准化):
+```json
+{
+  "title": str,
+  "doi": str,
+  "authors": [str],
+  "year": int,
+  "pdf_url": str,          // 优先免费 PDF 直链
+  "local_links": [str],    // 免费 CDN 直链数组
+  "links": {str: str},     // 所有链接 {name: url}
+  "source": str,           // 来源名
+  "citation_count": int,
+  "abstract": str,
+  "url": str,
+  "venue": str,
+  "provenance": str
+}
+```
+
+### 退出码
+| 码 | 含义 |
+|---|---|
+| 0 | 成功 |
+| 1 | 用法错误 |
+
+### 错误处理
+- 单个源失败 → errors 数组记录，不影响其他源
+- 网络超时 → 自动跳过该源
+- 零结果 → total=0，检查关键词是否过窄
+- PDF 非 PDF → smart_download() 返回 None，继续下一个链接
 
 ### 搜索
 
@@ -262,13 +342,32 @@ python3 scripts/literature.py search "three-way decision clinical" --sources sem
 
 # 仅 S2 检索
 python3 scripts/literature.py search "vestibular ocular reflex" --sources semantic_scholar --max 5
+
+# DOI 精确检索（调用各源的 search_by_doi()）
+python3 scripts/literature.py search "doi:10.1038/s41586-019-1799-6" --sources pubmed semantic_scholar
+
+# 作者过滤
+python3 scripts/literature.py search "vestibular author:baloh" --sources crossref pubmed --max 5
+
+# 年份范围
+python3 scripts/literature.py search "vestibular" --sources pubmed --year-range 2020-2024
+
+# 标题精确匹配
+python3 scripts/literature.py search "title:three-way decision" --sources crossref --max 3
 ```
+
+字段解析规则：
+- `doi:xxx` 或 `10.xxx/` — DOI 精确检索
+- `author:xxx` — 作者过滤（映射到各源特定的 author 参数）
+- `year:xxx` — 年份过滤（按搜索结果后筛）
+- `title:xxx` — 标题精确匹配
+- 组合使用：`"dementia author:jiang year:2023"`
 
 ### 下载
 
 ```bash
-# 默认尝试 DOI 直连 → Sci-Hub
-python3 scripts/literature.py download --doi 10.3322/caac.21694 -o paper.pdf
+# 从论文 JSON 下载 PDF（遍历 pdf_url → local_links → links）
+python3 scripts/literature.py download --input search_results.json -d /path/to/output
 ```
 
 ### 管线
@@ -277,6 +376,19 @@ python3 scripts/literature.py download --doi 10.3322/caac.21694 -o paper.pdf
 # 搜索 → 下载 → 报告，完整管线
 python3 scripts/literature.py pipeline "three-way decision" --sources semantic_scholar pubmed --max 15 --output-dir /path/to/results
 ```
+
+### 测试
+
+```bash
+# 连通性测试（所有源状态）
+python3 scripts/literature.py test
+```
+
+## 旧脚本迁移
+
+- `unified_search.py` → `literature.py search`（所有功能已合并，包括 parse_query 字段解析和 DOI 精确检索）
+- `multi_source_search.py` → `literature.py search --sources multi_source`（四源 S2/PubMed/OpenAlex/arXiv）
+- 详见 `references/unified-search-fixes.md`（历史修复记录，已标记 DEPRECATED）
 
 ## 环境变量配置
 
@@ -315,9 +427,140 @@ export S2_FALLBACK_KEY="s2k-你的备用S2_API密钥"
 
 **实际可靠源: 7/7 全部通过。每个源统一返回 pdf_url + local_links + links。**
 
-## Pitfalls
+## 文献检索筛选管线
 
-- **S2 双 key 轮换**: `semantic_scholar.py` 内置主备双 key 自动轮换。key 从环境变量 `SEMANTIC_SCHOLAR_API_KEY` 和 `S2_FALLBACK_KEY` 读取。`_try_next_key()` 在每次请求失败时调用。
+从论文提取关键词 → 5 轮检索（多源聚合）→ DOI 去重 → 关键词匹配过滤 → 保存 BibTeX。
+
+```bash
+# 1. 检索（多源并行）
+# 每轮检索后保存中间结果
+python3 literature.py search "关键词" --sources semantic_scholar crossref openalex --max 15 > search_1.json
+python3 literature.py search "关键词2" --sources semantic_scholar crossref openalex --max 15 > search_2.json
+
+# 2. 合并去重（按 DOI 去重）
+python3 -c "
+import json, glob
+all_papers = []
+seen = set()
+for f in glob.glob('search_*.json'):
+    data = json.load(open(f))
+    for p in data.get('papers', []):
+        doi = p.get('doi', '') or p.get('provenance', '')
+        if doi and doi not in seen:
+            seen.add(doi)
+            all_papers.append(p)
+json.dump(all_papers, open('all_papers.json', 'w'), ensure_ascii=False, indent=2)
+print(f'Total unique: {len(all_papers)}')
+"
+
+# 3. 关键词匹配筛选（人工判断后脚本辅助）
+# 参考 /tmp/breast_cancer_relevant.json 的筛选逻辑
+python3 << 'PYEOF'
+import json
+
+papers = json.load(open('all_papers.json'))
+# 定义相关关键词列表
+relevant_kws = [
+    "three-way decision", "confidence-based", "uncertainty",
+    "trustworthy", "explainable", "stacking meta-learning",
+    "breast cancer classification", "human-in-the-loop",
+    "abstention classification", "deferred diagnosis",
+]
+
+def is_relevant(paper):
+    title = paper.get('title', '').lower()
+    abstract = paper.get('abstract', '')
+    if isinstance(abstract, dict):
+        abstract = json.dumps(abstract)
+    text = title + " " + str(abstract).lower()
+    return any(kw in text for kw in relevant_kws)
+
+relevant = [p for p in papers if is_relevant(p)]
+json.dump(relevant, open('relevant.json', 'w'), ensure_ascii=False, indent=2)
+print(f'Relevant: {len(relevant)} / {len(papers)}')
+PYEOF
+
+# 4. 生成 BibTeX
+# 从 relevant.json 手动提取关键论文写入 .bib 文件，或
+# 在论文目录中创建 references/related-works.bib
+```
+
+**筛选原则**：
+- 先宽后窄：第一轮检索保留尽可能多，后续逐步过滤
+- 跨域相关也保留（如三域决策在医学诊断中，不限于乳腺癌）
+- DOI 去重是关键步骤——同一论文被多个源返回时只保留一次
+
+## 下载模块 import 链修复
+
+`download/__init__.py` 必须正确匹配各子模块的实际函数名。常见陷阱：
+
+1. **`__init__.py` 导入的函数名必须存在于子模块中**：检查每个 `from .module import func` 时确认 `func` 确实存在于 `module.py`。用 `grep 'def ' module.py` 验证。
+2. **函数名可能不同**：`__init__.py` 可能写 `download_arxiv` 但实际是 `download_arxiv_pdf`。对齐所有导入。
+3. **`normalize_doi` 必须从 http.py 显式导入**：放在 `__all__` 中但没 import 会导致 ImportError。
+4. **每个函数在 `__all__` 列表中必须实际存在**：删除不存在的导出。
+5. **重复导入必须合并**：`from .http import ...` 只能出现一次，合并为单一行。
+6. **Python 3.12 SyntaxWarning `\:` 导致 import 失败**：docstring 中的 `\: ` 被识别为非法转义序列，整个文件导入失败。修复：将 `: /` 等写法改为完整单词如 `colon asterisk`。
+
+## 源适配器文档规范
+
+每个 `sources/*.py` 文件必须包含：
+- 模块级 docstring：API 端点、认证方式、rate limit、返回字段映射、已知限制
+- 每个 `search()` 方法：`原理` 段落解释"为什么这样做"，`参数映射` 段落说明输入→API→输出
+- 每个 `search_by_doi()` 方法：说明是否支持，若不支持返回 None
+
+## 文档规范
+
+## 文档规范
+
+本文管线遵循 L1/L2/L3/L4 四层文档体系，详细规范见 `references/documentation-standards.md`：
+- **L1 函数级**: 所有 sources/ 和 download/ 文件中的 docstring（参数/返回值/异常/原理）
+- **L2 模块级**: 每个模块文件头部的职责/设计/限制/依赖说明
+- **L3 架构**: `references/architecture.md`（管线图/数据流/协议/历史决策）
+- **L4 用户**: SKILL.md 中的 CLI 用法段落（用法/示例/错误码/FAQ）
+
+## 文献检索筛选管线
+
+从论文提取关键词 → 5 轮检索（多源聚合）→ DOI 去重 → 关键词匹配过滤 → 保存 BibTeX。
+
+```bash
+# 1. 检索（多源并行）
+python3 literature.py search "关键词" --sources semantic_scholar crossref openalex --max 15 > search_1.json
+
+# 2. 合并去重（按 DOI 去重）
+python3 -c "
+import json, glob
+all_papers = []
+seen = set()
+for f in glob.glob('search_*.json'):
+    data = json.load(open(f))
+    for p in data.get('papers', []):
+        doi = p.get('doi', '') or p.get('provenance', '')
+        if doi and doi not in seen:
+            seen.add(doi)
+            all_papers.append(p)
+json.dump(all_papers, open('all_papers.json', 'w'), ensure_ascii=False, indent=2)
+"
+
+# 3. 关键词匹配筛选
+# 手动判断后保存 relevant.json
+
+# 4. 生成 BibTeX — 保存在论文目录: paper.tex 所在目录/references/related-works.bib
+```
+
+## 文献检索筛选示例
+
+完整流程参考乳腺癌论文（HCS-3WT）检索：
+
+1. **读取论文正文**：`outputs/papers/hcs3wt-breast-cancer/01-manuscript/paper.tex`
+2. **提取检索关键词**：从 abstract/sections/keywords 提取 5 个检索方向
+3. **5 轮检索**：3 源（S2 + CrossRef + OpenAlex），每轮 max=15
+4. **合并去重**：按 DOI 去重，得到 117 篇唯一论文
+5. **关键词匹配**：自动筛选 + 人工判断，得到 15 篇高度相关文献
+6. **保存结果**：
+   - `05-references/related-works.bib` — BibTeX 可直接 \cite{}
+   - `05-references/related-works/README.md` — 筛选说明文档
+
+## Pitfallskey 从环境变量 `SEMANTIC_SCHOLAR_API_KEY` 和 `S2_FALLBACK_KEY` 读取。`_try_next_key()` 在每次请求失败时调用。
 - **OpenAlex filter 日期格式**: `from_publication_date:2020` → 400 Bad Request。正确: `from_publication_date:2020-01-01`（`YYYY-MM-DD`）。
 - **搜索接口一致性**: 所有 7 个活跃源的 `search()` 方法签名一致: `search(topic, max_results=10, year_range=None) → list[dict]`。返回字段含 title/authors/source/doi/provenance/year/abstract/url/pdf_url/citation_count/venue/local_links/links。
 - **搜索即获取全文链接**: 所有 7 个源的 `search()` 必须返回 `{pdf_url, local_links, links}` 完整下载地址集。下载阶段不再按 DOI 重新查源。
@@ -346,11 +589,11 @@ export S2_FALLBACK_KEY="s2k-你的备用S2_API密钥"
   - ✗ Springer/Wiley/SAGE/Elsevier 等付费期刊 → 不收录（除非作者自存档）
   - 实测：PMID 42388699 (Front Neurol, 2026-06-17) → PMCID 13318616 ✅；PMID 42402503 (Eur Arch Otol, Springer, 2026) → 无 PMC ✗
   - 管线优化：在 PMC 全文管线前增加期刊类型预筛 — Frontiers/MDPI/BMC 等 OA 期刊优先走 PMC 管线，Springer/Wiley/Elsevier 跳过 PMC 管线改用 S2/Sci-Hub
-- **不另起入口**: 检索管线已有 `literature` 统一入口（P0）。创建新搜索/下载脚本前，先检查是否可复用已有源。已有入口时勿重复创造。
+- **已验证**: `unified_search.py "vestibular neuritis" --db crossref pubmed --limit 3` 成功返回 4 篇 → 见 `references/unified-search-fixes.md`
 
 ## 架构变更记录
 
-### 2026-07-08: 文献技能统一合并
+### 2026-07-08: 文献脚本统一（unified_search + multi_source_search → literature.py）
 
 **关键变化**：paper-retrieval 下所有子技能（pubmed/openalex/biorxiv/research-paper-search/scientific-database-lookup）均为空壳（仅有元数据文件，无实际代码），其 references 全部合并进 `literature/references/`。删除了 paper-retrieval 整个目录，文献检索=下载=验证全部在 `literature/` 一个目录下。
 
@@ -361,6 +604,37 @@ export S2_FALLBACK_KEY="s2k-你的备用S2_API密钥"
 
 **Pitfall — 空壳子技能识别**：
 paper-retrieval 下的子技能（pubmed/openalex/biorxiv/research-paper-search/scientific-database-lookup）只有 BOUNDARY/EVIDENCE_SCHEMA/CHANGE_LOG/IO_CONTRACT/SKILL.md，scripts 为空。这些是历史遗留的空壳，合并其 references 后直接删除即可，不必保留。
+
+### 2026-07-08: 下载模块模块化重构
+
+**变化**：`pdf_download_engine.py`（1615行）拆分为 `download/` 子包，7个模块。
+
+**新架构**：
+```
+download/
+  __init__.py          — 统一导出45个函数/类
+  config.py            — 全局配置（API Key、域名、正则、限流）
+  utils.py             — 工具函数（safe_filename/verify_pdf/save_pdf）
+  http.py              — HTTP下载（requests/Tor/curl_cffi）
+  tier1_oa.py          — Tier 1: OA直链（arXiv/Crossref/Unpaywall/PMC等）
+  tier2_scihub.py      — Tier 2: Sci-Hub（直连+Tor）
+  tier3_backup.py      — Tier 3: 备份（LibGen/MedData）
+  tier4_publishers.py  — Tier 4: 出版社（S2/BioRxiv/Core/Sciencedirect等）
+  scheduler.py         — 调度器（race_downloads/batch_download/run_test）
+```
+
+**重构原则**：根目录只保留管线层（CLI 入口），所有实现下沉到子目录。管线层只做 `from ... import ...`，不写实现。每个子模块单一职责。`config.py` 集中管理所有常量和环境变量。
+
+**重构后统计**：管线层 ~1560 行，下载引擎 1325 行，数据源 1011 行，总 4811 行。
+
+**重构后陷阱**：
+- 拆分后 `__pycache__` 缓存旧版本，测试前需清理
+- config.py 可能被意外替换/截断——检查 `SCIHUB_DOMAINS`、`FRONTIERS_PREFIXES`、`SS_API_KEY` 等关键常量是否存在
+- 旧脚本引用了新拆分函数的变量名，需统一（如 `TOR_PROXY` → `TOR_PROXY_URL`），需保留别名兼容
+- relative import 要求包结构正确，`__init__.py` 必须有且无循环依赖
+
+**Pitfall — 脚本重复检测**：
+合并脚本前必须对比文件签名（函数列表、行数、文件大小）。
 
 **Pitfall — 脚本重复检测**：
 合并脚本前必须对比文件签名（函数列表、行数、文件大小）。literature 下的新版本统一替代 paper-retrieval 的旧版本。重复文件包括：pdf_download_engine.py、unified_download.py、arxiv_final.py、crossref_search.py、openalex_search.py、search_s2.py、pubmed_search.py 等。

@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 """
-调度器 — 并行竞速下载 + 批量下载 + 连通性测试。
-管线层：编排各 tier 的下载函数，返回统一结果。
+调度器 — 串行顺序下载。
+管线层：按顺序依次尝试各 tier，每一层独立返回明确结果。
 """
 import hashlib
 import json
 import os
 import sys
 import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -20,7 +19,8 @@ from .tier1_oa import (
     search_pmc_for_pubmed,
 )
 from .tier2_scihub import download_scihub_direct, download_scihub_via_tor
-from .tier3_backup import download_libgen, download_meddata
+from .tier3_backup import download_libgen
+from .meddata import try_meddata
 from .tier4_publishers import (
     normalize_doi, download_s2_pdf, download_biorxiv_pdf, download_core,
     download_doi2pdf, download_via_openurl, download_sciencedirect,
@@ -28,92 +28,153 @@ from .tier4_publishers import (
 )
 
 
-def race_downloads(  # type: ignore[no-redef]
+def sequential_download(
     doi: str | None = None, title: str | None = None,
     arxiv_id: str | None = None, pmid: str | None = None,
     pmcs_id: str | None = None, external_ids: dict | None = None,
-    timeout: int = 60
+    timeout: int = 30, save_dir: str | None = None,
 ) -> Dict[str, Any]:
-    """Race multiple download sources concurrently."""
-    results: List[Any] = []
+    """按顺序尝试各层下载，返回每一层的结果。"""
+    results: List[Dict[str, Any]] = []
     start_time = time.time()
+    winner = {"content": None, "source": None}
 
-    source_fns = []
+    def _run(name, fn, desc, max_timeout):
+        """执行一个下载层，返回结果。"""
+        t0 = time.time()
+        try:
+            content = fn()
+            elapsed = round(time.time() - t0, 1)
+            if content and verify_pdf(content):
+                result = {
+                    "layer": name,
+                    "source": desc,
+                    "status": "success",
+                    "elapsed": elapsed,
+                    "size": len(content),
+                    "md5": hashlib.md5(content).hexdigest(),
+                }
+                if not winner["content"]:
+                    winner["content"] = content
+                    winner["source"] = desc
+                return result
+            else:
+                return {
+                    "layer": name, "source": desc,
+                    "status": "no_pdf", "elapsed": elapsed,
+                }
+        except Exception as e:
+            elapsed = round(time.time() - t0, 1)
+            return {
+                "layer": name, "source": desc,
+                "status": "error", "error": str(e),
+                "elapsed": elapsed,
+            }
 
-    # Tier 0: Semantic Scholar (instant OA URL)
+    # ── Tier 0: Semantic Scholar ──
     if doi:
         ext_ids = {}
         if external_ids and isinstance(external_ids, dict):
             ext_ids = external_ids
-        source_fns.append(("s2_pdf", lambda: download_s2_pdf(doi=doi, external_ids=ext_ids), "Semantic Scholar OA"))
+        results.append(_run(
+            "tier0",
+            lambda: download_s2_pdf(doi=doi, external_ids=ext_ids),
+            "Semantic Scholar OA", timeout
+        ))
 
-    # Tier 1: OA Direct (instant)
+    # ── Tier 1: OA Direct ──
     if doi:
         ndoi = normalize_doi(doi)
-        source_fns.append(("crossref", lambda: download_crossref_link(ndoi), "CrossRef OA"))
-        source_fns.append(("unpaywall", lambda: download_unpaywall(ndoi), "Unpaywall"))
-        source_fns.append(("frontiers", lambda: download_frontiers_pdf(ndoi), "Frontiers"))
-        source_fns.append(("plos", lambda: download_plos_pdf(ndoi), "PLOS"))
-        source_fns.append(("core", lambda: download_core(ndoi), "CORE"))
-        source_fns.append(("doi2pdf", lambda: download_doi2pdf(ndoi), "DOI2PDF"))
+        results.append(_run("tier1",
+            lambda: download_crossref_link(ndoi),
+            "CrossRef OA", timeout))
+        results.append(_run("tier1",
+            lambda: download_unpaywall(ndoi),
+            "Unpaywall", timeout))
+        results.append(_run("tier1",
+            lambda: download_frontiers_pdf(ndoi),
+            "Frontiers", timeout))
+        results.append(_run("tier1",
+            lambda: download_plos_pdf(ndoi),
+            "PLOS", timeout))
+        results.append(_run("tier1",
+            lambda: download_core(ndoi),
+            "CORE", timeout))
+        results.append(_run("tier1",
+            lambda: download_doi2pdf(ndoi),
+            "DOI2PDF", timeout))
 
     if pmid:
-        source_fns.append(("pmc_elink", lambda: _try_pmc_via_pmid(pmid), "PMC via PMID"))
+        results.append(_run("tier1",
+            lambda: _try_pmc_via_pmid(pmid),
+            "PMC via PMID", timeout))
 
     if pmcs_id:
-        source_fns.append(("pmc", lambda: download_pubmed_central(pmcs_id), "PMC"))
+        results.append(_run("tier1",
+            lambda: download_pubmed_central(pmcs_id),
+            "PMC", timeout))
 
-    # Tier 2: Sci-Hub
-    if doi:
-        source_fns.append(("scihub_direct", lambda: download_scihub_direct(doi), "Sci-Hub direct"))
+    if arxiv_id:
+        results.append(_run("tier1",
+            lambda: download_arxiv_pdf(arxiv_id),
+            "arXiv", timeout))
 
-    # Tier 3: Backup
+    # ── Tier 2: Sci-Hub ──
     if doi:
-        source_fns.append(("meddata", lambda: download_meddata(doi=doi) if doi else None, "MedData"))
+        results.append(_run("tier2",
+            lambda: download_scihub_direct(doi),
+            "Sci-Hub direct", timeout))
+        results.append(_run("tier2",
+            lambda: download_scihub_via_tor(doi),
+            "Sci-Hub via Tor", timeout))
+
+    # ── Tier 3: Backup ──
+    if doi:
+        results.append(_run("tier3",
+            lambda: try_meddata(doi=doi, output_path=".") if doi else None,
+            "MedData", timeout))
         if title:
-            source_fns.append(("libgen", lambda: download_libgen(title=title), "LibGen"))
+            results.append(_run("tier3",
+                lambda: download_libgen(title=title),
+                "LibGen", timeout))
 
-    # Tier 4: Publishers
+    # ── Tier 4: Publishers ──
     if doi:
         ndoi = normalize_doi(doi)
-        source_fns.append(("sciencedirect", lambda: download_sciencedirect(ndoi), "ScienceDirect"))
-        source_fns.append(("springer", lambda: download_springer(ndoi, title or ""), "Springer"))
-        source_fns.append(("wiley", lambda: download_wiley(ndoi), "Wiley"))
-        source_fns.append(("ieee", lambda: download_ieee(ndoi), "IEEE"))
-        source_fns.append(("acm", lambda: download_acm(ndoi), "ACM"))
+        results.append(_run("tier4",
+            lambda: download_sciencedirect(ndoi),
+            "ScienceDirect", timeout))
+        results.append(_run("tier4",
+            lambda: download_springer(ndoi, title or ""),
+            "Springer", timeout))
+        results.append(_run("tier4",
+            lambda: download_wiley(ndoi),
+            "Wiley", timeout))
+        results.append(_run("tier4",
+            lambda: download_ieee(ndoi),
+            "IEEE", timeout))
+        results.append(_run("tier4",
+            lambda: download_acm(ndoi),
+            "ACM", timeout))
 
-    # Run racing
-    winning_source = None
-    content: Optional[bytes] = None
+    elapsed = round(time.time() - start_time, 2)
 
-    with ThreadPoolExecutor(max_workers=min(12, max(1, len(source_fns)))) as pool:
-        futures = {}
-        for name, fn, desc in source_fns:
-            if fn is not None:
-                futures[pool.submit(fn)] = (name, desc)
-
-        for future in as_completed(futures, timeout=timeout):
-            name, desc = futures[future]
-            try:
-                result = future.result(timeout=timeout)
-                if result and verify_pdf(result):
-                    winning_source = desc
-                    content = result
-                    for f in futures:
-                        f.cancel()
-                    break
-            except Exception:
-                continue
-
-    elapsed = time.time() - start_time
+    # 保存成功的 PDF
+    content = winner.get("content") or None
+    if content and save_dir:
+        name = (doi or title or "unknown")[:50]
+        out = Path(save_dir) / f"{name}.pdf"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_bytes(content)
 
     return {
-        "status": "success" if content else "failed",
-        "content": content,
-        "winning_source": winning_source or "none",
-        "elapsed": round(elapsed, 2),
-        "size": len(content) if content else 0,
-        "md5": hashlib.md5(content).hexdigest() if content else "",
+        "layers": results,
+        "status": "success" if winner.get("content") else "failed",
+        "content": winner.get("content"),
+        "winning_source": winner.get("source") or "none",
+        "elapsed": elapsed,
+        "size": len(winner.get("content")) if winner.get("content") else 0,
+        "md5": hashlib.md5(winner.get("content")).hexdigest() if winner.get("content") else "",
     }
 
 
@@ -125,103 +186,49 @@ def _try_pmc_via_pmid(pmid: str) -> Optional[bytes]:
     return None
 
 
-def batch_download(candidates: List[Dict], output_dir: str | None = None) -> Dict[str, Any]:
-    """Batch download papers from search results."""
-    if output_dir is None:
-        output_dir = config.DEFAULT_OUTPUT_DIR
-    Path(output_dir).mkdir(parents=True, exist_ok=True)
-
-    results: List[Dict[str, Any]] = []
-    max_workers = min(8, len(candidates))
-
-    start = time.time()
-    with ThreadPoolExecutor(max_workers=max_workers) as pool:
-        futures: Dict[Any, Dict] = {}
-        for p in candidates:
-            if not p.get("title"):
-                results.append({"title": "?", "status": "skipped", "reason": "no title"})
-                continue
-            title_safe = "".join(c if c.isalnum() or c in "._-" else "_" for c in p.get("title", "?")[:60])
-            doi = p.get("doi", "") or ""
-            if doi:
-                clean = doi.replace("/", "_").replace(".", "_")
-                out = os.path.join(output_dir, f"{clean}.pdf")
-            else:
-                out = os.path.join(output_dir, f"{title_safe}.pdf")
-            Path(out).parent.mkdir(parents=True, exist_ok=True)
-
-            f = pool.submit(race_downloads,
-                doi=p.get("doi"), title=p.get("title"),
-                arxiv_id=p.get("arxiv_id"), pmid=p.get("pmid"),
-                external_ids=p.get("external_ids", {}),
-                timeout=60)
-            futures[f] = p
-
-        for future in as_completed(futures, timeout=600):
-            p = futures[future]
-            title = p.get("title", "?")[:50]
-            try:
-                result = future.result(timeout=60)
-                results.append(result)
-                status_icon = "✅" if result.get("status") == "success" else "❌"
-                method = result.get("winning_source", "?")
-                print(f"  {status_icon} {title}  source={method:20s}  elapsed={result.get('elapsed', 0):5.1f}s  size={result.get('size', 0):>7d}B")
-            except Exception as e:
-                results.append({"title": title, "status": "error", "error": str(e)})
-                print(f"  ❌ {title}  ERROR: {e}")
-
-    elapsed = time.time() - start
-    downloaded = sum(1 for r in results if r.get("status") == "success")
-
-    record: Dict[str, Any] = {"total": len(candidates), "downloaded": downloaded, "elapsed": round(elapsed, 2), "papers": results}
-
-    record_path = os.path.join(output_dir, "download_record.json")
-    with open(record_path, "w") as f:
-        json.dump(record, f, indent=2, ensure_ascii=False)
-
-    print(f"\n{'='*60}")
-    print(f"Total: {len(candidates)}  OK: {downloaded}  Time: {elapsed:.1f}s")
-    print(f"Record: {record_path}")
-    print(f"{'='*60}")
-
-    return record
-
-
 def run_test() -> Dict[str, Any]:
-    """Run connectivity test for all download sources."""
-    test_dois = {
-        "arxiv": ("arxiv_pdf", "2101.00001"),
-        "frontiers": ("frontiers_pdf", "10.3389/fneur.2020.00001"),
-        "plos": ("plos_pdf", "10.1371/journal.pone.0230001"),
-        "crossref": ("crossref_link", "10.1038/s41586-020-2649-2"),
-        "unpaywall": ("unpaywall", "10.1038/s41586-020-2649-2"),
-        "scihub": ("scihub_direct", "10.1016/j.cell.2020.02.001"),
-        "doi2pdf": ("doi2pdf", "10.1038/s41586-020-2649-2"),
-        "core": ("core", "10.1038/s41586-020-2649-2"),
-        "openurl": ("openurl", "10.1038/s41586-020-2649-2"),
-    }
+    """连通性测试：对每一层独立测试。"""
+    test_cases = [
+        ("tier0", "s2_pdf", "10.1038/s41586-020-2649-2", download_s2_pdf),
+        ("tier1", "crossref", "10.1038/s41586-020-2649-2", download_crossref_link),
+        ("tier1", "unpaywall", "10.1038/s41586-020-2649-2", download_unpaywall),
+        ("tier1", "frontiers", "10.3389/fneur.2020.00001", download_frontiers_pdf),
+        ("tier1", "plos", "10.1371/journal.pone.0230001", download_plos_pdf),
+        ("tier1", "core", "10.1038/s41586-020-2649-2", download_core),
+        ("tier1", "doi2pdf", "10.1038/s41586-020-2649-2", download_doi2pdf),
+        ("tier2", "scihub", "10.1016/j.cell.2020.02.001", download_scihub_direct),
+        ("tier3", "meddata", "10.1016/j.cell.2020.02.001", lambda: try_meddata(doi="10.1016/j.cell.2020.02.001", output_path=".")),
+    ]
 
     results = {}
-    for name, test_doi in test_dois.items():
+    for layer, name, doi, func in test_cases:
         try:
-            func_map = {
-                "arxiv_pdf": download_arxiv_pdf,
-                "frontiers_pdf": download_frontiers_pdf,
-                "plos_pdf": download_plos_pdf,
-                "crossref_link": download_crossref_link,
-                "unpaywall": download_unpaywall,
-                "scihub_direct": download_scihub_direct,
-                "doi2pdf": download_doi2pdf,
-                "core": download_core,
-                "openurl": download_via_openurl,
-            }
-            if name in func_map:
-                func = func_map[name]
-                content = func(test_doi)
-                results[name] = "ok" if content and verify_pdf(content) else "fail"
-            else:
-                results[name] = "skip"
+            content = func()
+            results[f"{layer}/{name}"] = "ok" if content and verify_pdf(content) else "fail"
         except Exception:
-            results[name] = "error"
+            results[f"{layer}/{name}"] = "error"
 
     return results
+
+
+if __name__ == "__main__":
+    # 示例：单篇下载
+    import argparse
+    parser = argparse.ArgumentParser(description="Sequential paper download")
+    parser.add_argument("--doi", help="DOI to download")
+    parser.add_argument("--title", help="Title for backup download")
+    parser.add_argument("--pmid", help="PMID for MedData")
+    parser.add_argument("--save", help="Save directory")
+    args = parser.parse_args()
+
+    result = sequential_download(
+        doi=args.doi, title=args.title, pmid=args.pmid,
+        save_dir=args.save,
+    )
+
+    print(json.dumps({
+        k: v for k, v in result.items() if k != "content"
+    }, indent=2, ensure_ascii=False))
+
+    for layer in result.get("layers", []):
+        print(f"  {layer['layer']:5s} {layer['source']:20s} → {layer['status']}")

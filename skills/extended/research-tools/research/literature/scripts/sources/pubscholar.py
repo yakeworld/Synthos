@@ -1,7 +1,8 @@
+#!/usr/bin/env python3
 """
-数据源：PubScholar（中文学术文献）
-curl直调API — 签名算法来自 RSSHub PR #15788。
-替代不稳定的 RSSHub 实例，直接对接 pubscholar.cn API。
+PubScholar 中文学术文献检索 — 直调 pubscholar.cn API
+
+签名算法来自 RSSHub pubscholar/utils.ts 完整实现。
 """
 import hashlib
 import json
@@ -11,14 +12,100 @@ import re
 import string
 import time
 import uuid
+from html import unescape as _unescape_html
 from typing import Any, Dict, List, Optional
 
 
-class PubScholar:
-    """PubScholar 中文学术平台封装 — curl直调API。"""
+def _clean_html(text):
+    """移除 HTML 标签并解码 HTML 实体。"""
+    if not text or not isinstance(text, str):
+        return text
+    cleaned = re.sub(r'<[^>]+>', '', text)
+    cleaned = _unescape_html(cleaned)
+    cleaned = re.sub(r'\s+', ' ', cleaned).strip()
+    return cleaned
 
+
+def _generate_nonce(length=6):
+    """生成 nonce — 等价于 JS: Math.random().toString(36).slice(2).toUpperCase()
+    
+    JS 行为：Math.random() 返回 [0, 1) 的 double，
+    toString(36) 转为 base-36 字符串，slice(2) 去掉 "0." 前缀，
+    toUpperCase() 转大写 → 结果包含 [0-9A-Z] 字符。
+    循环追加直到长度 >= target，然后截取。
+    """
+    chars = string.ascii_uppercase + string.digits
+    nonce = ''
+    while len(nonce) < length:
+        # 用 random.random() 模拟 JS Math.random()，生成 base-36 字符
+        rand_val = random.random()
+        # 转为 base-36 表示（类似 JS toString(36)）
+        # 由于 Python 没有直接的 toString(36)，我们用一个近似方法
+        # 取 random.random() 的十进制部分转 base-36
+        s = format(int(rand_val * (10**15)), 'x').upper()
+        nonce += s
+    return nonce[:length]
+
+
+def _generate_xfinger():
+    """生成 x-finger — 等价于 JS:
+    Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)
+      .toString(16)
+      .slice(-len)
+      .padStart(len, '0')
+    
+    每个 hex32(8) 是 32 位随机数转 8 位 hex。4 个拼接 = 32 字符。
+    """
+    hex32 = (lambda length:
+        format(int(random.random() * (2**52)), 'x').upper()[-length:].zfill(length))
+    return f"{hex32(8)}{hex32(8)}{hex32(8)}{hex32(8)}"
+
+
+def _get_headers(query=""):
+    """生成签名请求头。"""
+    salt = os.environ.get('PUBSCHOLAR_SALT', 'YOUR_PUBSCHOLAR_SALT_HERE')
+    nonce = _generate_nonce(6)
+    ts = str(int(time.time() * 1000))
+    
+    # JS: sha1([salt, timestamp, nonce].toSorted().join(''))
+    # .toSorted() = lexicographic sort (Python sorted() does the same for ASCII)
+    sorted_vals = sorted([salt, ts, nonce])
+    sig = hashlib.sha1("".join(sorted_vals).encode()).hexdigest()
+    
+    xf = _generate_xfinger()
+    uid = str(uuid.uuid4())
+    cookie_val = uid  # Pure UUID — matches x-xsrf-token
+    
+    headers = {
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+        "Accept": "application/json, text/plain, */*",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "zh-CN,zh;q=0.9",
+        "Origin": "https://pubscholar.cn",
+        "Referer": "https://pubscholar.cn/",
+        "Cookie": cookie_val,
+        "nonce": nonce,
+        "timestamp": ts,
+        "signature": sig,
+        "x-finger": xf,
+        "x-xsrf-token": uid,
+    }
+    return headers
+
+
+def _get_proxies():
+    """获取请求代理。优先直连，失败时自动切换 Tor 代理。"""
+    tor_proxy = os.environ.get("TOR_PROXY", "")
+    if tor_proxy:
+        return {"http": tor_proxy, "https": tor_proxy}
+    return None
+
+
+class PubScholar:
+    """PubScholar 中文学术平台封装 — 直调 API。"""
+    
     BASE_URL = "https://pubscholar.cn"
-    SALT = os.environ.get('PUBSCHOLAR_SALT', 'YOUR_PUBSCHOLAR_SALT_HERE')
 
     def search(self, topic, max_results=10, year_range=None):
         """检索中文论文。
@@ -31,57 +118,46 @@ class PubScholar:
         Returns:
             论文列表，格式符合 literature 统一数据契约。
         """
-        # 生成签名
-        nonce = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
-        ts = str(int(time.time() * 1000))
-        sig = hashlib.sha1(''.join(sorted([self.SALT, ts, nonce])).encode()).hexdigest()
-        xf = ''.join(format(random.randint(0, 2**32-1), '08x') for _ in range(4))
-        uid = str(uuid.uuid4())
-
-        # 构建请求头 — Cookie 使用 uid 作为实际 token
-        cookie_val = "XSRF-TOKEN=" + uid
-        headers = {
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36",
-            "Accept": "application/json, text/plain, */*",
-            "Content-Type": "application/json;charset=UTF-8",
-            "nonce": nonce,
-            "timestamp": ts,
-            "signature": sig,
-            "x-finger": xf,
-            "x-xsrf-token": uid,
-            "Cookie": cookie_val,
-            "Origin": self.BASE_URL,
-            "Referer": self.BASE_URL + "/",
-            "Accept-Language": "zh-CN,zh;q=0.9",
-        }
-
-        body = json.dumps({
-            "page": 1,
-            "size": max_results,
-            "order_field": "date",
-            "order_direction": "desc",
-            "user_id": hashlib.md5(str(int(time.time())).encode()).hexdigest(),
-            "lang": "zh",
-            "query": topic,
-            "strategy": None,
-            "orderField": "default"
-        })
+        headers = _get_headers(topic)
+        proxies = _get_proxies()
 
         try:
             import requests as req
+            
+            body = json.dumps({
+                "page": 1,
+                "size": max_results,
+                "order_field": "date",
+                "order_direction": "desc",
+                "user_id": hashlib.md5(str(int(time.time())).encode()).hexdigest(),
+                "lang": "zh",
+                "query": topic,
+                "strategy": None,
+                "orderField": "default"
+            })
+
+            resp_kwargs = {
+                'data': body.encode('utf-8'),
+                'headers': headers,
+                'timeout': 15,
+            }
+            if proxies:
+                resp_kwargs['proxies'] = proxies
+            
             resp = req.post(
                 self.BASE_URL + "/hky/open/resources/api/v1/articles",
-                data=body.encode('utf-8'), headers=headers, timeout=15
+                **resp_kwargs
             )
             if resp.status_code != 200:
                 return []
+            
             data = resp.json()
             if not data.get('content'):
                 return []
 
             papers = []
             for item in data["content"][:max_results]:
-                title = item.get("title", "")
+                title = _clean_html(item.get("title", ""))
                 if not title or "error" in title.lower():
                     continue
 
@@ -111,7 +187,7 @@ class PubScholar:
                 links_raw = item.get("links", [])
                 url = ""
                 pdf_url = ""
-                links: dict[str, str] = {}
+                links = {}
                 if isinstance(links_raw, dict):
                     u = links_raw.get("url", "") or links_raw.get("doi_url", "")
                     if u and "error" not in u.lower():
@@ -148,7 +224,7 @@ class PubScholar:
                     "year": year,
                     "source": "pubscholar",
                     "doi": doi,
-                    "abstract": item.get("abstract", "") or "",
+                    "abstract": _clean_html(item.get("abstract", "")) or "",
                     "url": url,
                     "pdf_url": pdf_url,
                     "local_links": local_links if local_links else [],

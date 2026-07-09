@@ -22,7 +22,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from download import (
-    race_downloads,
+    sequential_download,
     verify_pdf,
     save_pdf,
     smart_download,
@@ -206,7 +206,7 @@ def _download_one(paper: Dict[str, Any], output_path: str = None) -> Dict[str, A
 
     # 3. 竞速引擎兜底
     start = time.time()
-    result = race_downloads(
+    result = sequential_download(
         doi=doi or None, title=title,
         arxiv_id=arxiv_id or None,
         pmid=pmid or None,

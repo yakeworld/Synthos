@@ -5,15 +5,13 @@ signature: "paper_path: str -> analysis_report: dict"
 description: 论文管线 — 组合3个核心步骤：检索→下载→质检。所有子步骤走独立脚本。
 author: Synthos
 license: MIT
-version: 2.0.0
-priority: P0
-allowed-tools: terminal, Read, Write, task_delegation
+version: 3.0.0
 metadata:
   synthos:
     atom_type: composite-skill
     description: Paper pipeline — retrieval → download → quality check. All sub-steps call scripts.
     signature: "research_topic: str -> final_paper: str, quality_report: dict"
-    related_skills: ['knowledge-acquisition', 'pdf-download-racing', 'quality-gate']
+    related_skills: ['literature', 'pdf-download-engine', 'quality-gate']
 ---
 
 # Paper Pipeline
@@ -24,9 +22,9 @@ metadata:
 
 ```
 用户查询
-  → [Step 1] 知识获取 (knowledge-acquisition)
-    → papers.json (论文列表)
-  → [Step 2] PDF 下载 (pdf-download-racing)
+  → [Step 1] 知识获取 (literature search)
+    → search_results.json (论文列表)
+  → [Step 2] PDF 下载 (literature download)
     → paper.pdf (全文)
   → [Step 3] 质量检查 (quality-gate)
     → quality-report.md (质量报告)
@@ -36,17 +34,20 @@ metadata:
 
 ### Step 1: 知识获取
 
-调用 `knowledge-acquisition` 技能：
+调用 `literature` 技能的 `literature.py search` 子命令：
 - 输入：用户研究主题
-- 输出：`papers.json`（论文列表，含 DOI、标题、摘要、PDF链接）
-- 参考：`skills/core/knowledge-acquisition/SKILL.md`
+- 输出：`search_results.json`（论文列表，含 DOI、标题、摘要、PDF链接）
+- 参考：`skills/extended/research-tools/research/literature/SKILL.md`
 
 ### Step 2: PDF 下载
 
-对 Step 1 结果调用 `pdf-download-racing` 技能：
-- 输入：`papers.json`
-- 输出：PDF 文件 + `download_record.json`
-- 参考：`skills/extended/research-tools/research/paper-retrieval/research-paper-search/SKILL.md`
+对 Step 1 结果调用 `literature` 技能的 `literature.py download` 子命令：
+- 输入：`search_results.json`（从 `literature.py search` 输出）
+- 输出：PDF 文件 + `download_report.json`
+- **内部机制**：使用 `sequential_download()` 串行顺序下载（替代旧的 `race_downloads()` 并行竞态）
+- 参考：`skills/extended/research-tools/research/literature/SKILL.md`
+
+**注意**：Sci-Hub 目前不可用（所有域名失效），下载主要依赖 OA 直链（Unpaywall、arXiv、Frontiers 等）。
 
 ### Step 3: 质量检查
 
@@ -106,7 +107,18 @@ When quality check identifies missing references or when user requests "补充�
 6. Convert to Markdown for reference directory
 7. Add to `references.bib` and insert `\cite{}` in paper.tex at appropriate locations
 
+## 论文收割（Cron 自动流水线）
+
+从文献监控（literature-monitor）的输出自动收割论文：
+1. 读取监控报告（`~/.hermes/cron/output/<job-id>/<latest>.md`）
+2. 提取 PMID/DOI/标题/作者
+3. PubMed E-utilities XML 模式批量 fetch（**必须用 `retmode=xml`**，JSON 模式经常返回空）
+4. 为每篇创建 `outputs/papers/<slug>/` 目录，含 state.json + summary.md
+5. 收割完成后，每篇论文进入质量检查流程
+
+详见 `cron-paper-harvest` 技能。
+
 ## 相关脚本
 
-- `scripts/paper_dir_validator.py` — 论文目录结构验证
+- `scripts/literature-download.py` — 从 literature search 结果下载 PDF
 - `scripts/unified_scan.py` — 批量扫描工具

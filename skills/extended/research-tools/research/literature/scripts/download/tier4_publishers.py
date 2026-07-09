@@ -77,6 +77,7 @@ def download_s2_pdf(doi=None, external_ids=None):
                 pdf_url = val["url"]
                 break
     if not pdf_url and doi:
+        from .config import _s2_rate_limit
         _s2_rate_limit()
         url = "https://api.semanticscholar.org/graph/v1/paper/DOI:" + normalize_doi(doi) + "?fields=title,year,openAccessPdf,externalIds,citedByUrl"
         try:

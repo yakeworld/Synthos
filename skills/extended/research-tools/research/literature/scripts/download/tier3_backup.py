@@ -1,3 +1,4 @@
+# DEPRECATED: This file was replaced by meddata.py which has the correct SSO login + full_look workflow
 #!/usr/bin/env python3
 """
 Tier 3: 备份下载 — LibGen（图书）+ MedData（机构库）。

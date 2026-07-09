@@ -165,7 +165,9 @@ python3 unified_download.py {DOI_or_ID} --output {output_dir}/paper.pdf
 - **OpenAlex 返回 NoneType 错误** — 某些关键词查询（如带连字符的词组）触发 `AttributeError: 'NoneType' object has no attribute 'get'`，原因是 `authorships` 字段为 None。处理方案：在 `_reconstruct_abstract` 和作者列表构建时增加 `or []` 保护。
 - **OpenAlex `search` 是全文搜索**：用 `filter=` 而非 `from_publication_date=` → 详见 refs
 - **arXiv 需加 `-L` 跟随重定向** → 由脚本处理，Agent 无需关心
-- **bioRxiv/medRxiv API 宕机**：跳过，用 Crossref 预印本替代
+- **PubMed E-Utilities 是当前主力检索源（2026-07-10 实测）**：无需认证，完全可用。ESearch（搜索）+ EFetch（摘要 XML）。XML 解析需用 `<PMID>` 标签（非 `PMID-xxx`），作者用 `<Author><LastName><FirstName>` 结构。
+- **OA 直链 100% 被出版商反爬（2026-07-09 实测）**：MDPI/IOP/Nature/Elsevier/Springer/JAMA 全部返回 403/HTML。必须用 `verify_pdf()` 检查 `%PDF-` magic number，空字符串 `pdf_url` 不等于无链接（可能 `links.oa` 中有有效链接）。
+- **Sci-Hub 所有域名需人机验证（2026-07-10）**：仅 `sci-hub.ru` 的 Altcha 数学题可自动化；需通过 `100.65.157.17:8118` HTTP 代理。ss 代理（`SS_CONFIG empty`）不可用。Playwright 自动化需用户授权。
 
 ## 验证清单
 
@@ -189,6 +191,11 @@ python3 unified_download.py {DOI_or_ID} --output {output_dir}/paper.pdf
 - Golden Output: JSON with ≥3 papers, provenance, source coverage
 - Golden Error: exit code 1 when all sources fail
 
+## 参考文档
+
+- `references/academic-api-troubleshooting.md` — API 常见问题与解决方案
+- `references/literature-scan-without-s2-key.md` — 无 S2 Key 时的回退方案
+- `references/supplementary-literature-search.md` — 参考文献补充检索与质量筛选流程（多方向检索→评分→筛选→下载→Markdown）
 ## 参考文档
 
 - `references/academic-api-troubleshooting.md` — API 常见问题与解决方案
