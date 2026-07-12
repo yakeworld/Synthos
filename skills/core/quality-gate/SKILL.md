@@ -5,8 +5,11 @@ signature: "quality-gate -> core: 四层质量架构，固定流程强制执行"
 description: P0 质量闸门。四层架构：L0动灵层 → L0.5数据诚实门 → G1-G7管线门 → L4内容评审。固定模板，零自由发挥。
 author: Synthos
 license: MIT
-version: 3.0.0
+version: 3.1.0
 priority: P0
+entrypoint_type: cognitive
+entrypoint_cmd: "检查D8≥80%, D10a≥90%, 0 undefined citation"
+entrypoint_desc: "质量闸门。输入: paper_dir, 输出: gate_result"
 metadata:
   synthos:
     priority: P0

@@ -5,7 +5,10 @@ signature: "viewpoint-verification -> core: 对假设和论证进行多角度验
 description: "对假设和论证进行多角度验证（反方观点、证伪条件、鲁棒性），支持 Bayesian 评分、可证伪性检验。"
 author: Synthos
 license: MIT
-version: 2.0.0
+version: 2.1.0
+entrypoint_type: cognitive
+entrypoint_cmd: "从反方观点、证伪条件、鲁棒性三角度验证"
+entrypoint_desc: "认知原子"
 priority: P1
 atom_type: cognitive-atom
 allowed-tools: [terminal, read_file, write_file, web_search, session_search]

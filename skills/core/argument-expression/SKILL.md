@@ -5,7 +5,10 @@ signature: "argument-expression -> core: 将假设转化为结构化学术论证
 description: "将假设转化为结构化学术论证（论文章节+论据链），支持 Toulmin 模型、Hyland 修辞框架、IMRAD 验证。"
 author: Synthos
 license: MIT
-version: 2.0.0
+version: 2.1.0
+entrypoint_type: cognitive
+entrypoint_cmd: "将假说展开为Toulmin结构化学术论证"
+entrypoint_desc: "认知原子"
 priority: P1
 atom_type: cognitive-atom
 allowed-tools: [terminal, read_file, write_file, session_search]

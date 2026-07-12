@@ -5,7 +5,10 @@ signature: "association-discovery -> core: 跨论文识别知识关联（矛盾�
 description: "跨论文识别知识关联（矛盾、补充、演进、空白），构建知识图谱。基于 Boden 创造力理论分类关联类型。"
 author: Synthos
 license: MIT
-version: 2.0.0
+version: 2.1.0
+entrypoint_type: cognitive
+entrypoint_cmd: "从知识条目中识别矛盾/补充/演进/空白四类关联"
+entrypoint_desc: "认知原子"
 priority: P1
 atom_type: cognitive-atom
 allowed-tools: [terminal, read_file, write_file, session_search]

@@ -22,8 +22,8 @@ version: 1.0.0
 2. 
 3. 
 category: productivity
-signature: "productivity -> productivity: 生产力工具 — Airtable、Google Workspace、Linear、Notion、Jupyter等。"
-description: 生产力工具 — Airtable、Google Workspace、Linear、Notion、Jupyter等。
+signature: "productivity -> productivity: 生产力工具 — 表单自动化、Jupyter、地图、PPT、Notion等。"
+description: 生产力工具 — 表单自动化、Jupyter、地图、PPT、Notion等。
 author: Synthos
 license: MIT
 version: 1.0.0
@@ -33,9 +33,9 @@ metadata:
   synthos:
     priority: P2
     atom_type: parent-skill
-    description: "父级技能 — 生产力工具 — Airtable、Google Workspace、Linear、Notion、Jupyter等。"
-    signature: 'productivity -> sub-skills: [airtable, chinese-form-automation, google-workspace]'
-    related_skills: ["airtable", "chinese-form-automation", "google-workspace", "jupyter-live-kernel", "linear"]
+    description: "父级技能 — 生产力工具 — 表单自动化、Jupyter、地图、PPT、Notion等。"
+    signature: 'productivity -> sub-skills: [chinese-form-automation, jupyter-live-kernel, maps, markitdown-convert, notebooklm-cli, notion, obsidian, powerpoint, webhook-subscriptions, youtube-content]'
+    related_skills: ["chinese-form-automation", "jupyter-live-kernel", "maps", "notebooklm-cli", "notion", "powerpoint"]
 
 
 ## IO_CONTRACT
@@ -47,26 +47,19 @@ metadata:
 
 # productivity
 
-> 父级技能目录，包含 17 个子技能。
+> 父级技能目录，包含 10 个子技能。
 > 子技能通过Hermes技能加载机制自动发现，无需显式调用。
 
 ## 子技能
 
-- `airtable`
 - `chinese-form-automation`
-- `google-workspace`
 - `jupyter-live-kernel`
-- `linear`
 - `maps`
 - `markitdown-convert`
-- `nano-pdf`
 - `notebooklm-cli`
 - `notion`
 - `obsidian`
-- `ocr-and-documents`
 - `powerpoint`
-- `python-docx`
-- `teams-meeting-pipeline`
 - `webhook-subscriptions`
 - `youtube-content`
 
@@ -102,7 +95,7 @@ metadata:
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 ```
-skill_view(name='airtable')  # 加载第一个子技能
+skill_view(name='chinese-form-automation')  # 加载第一个子技能
 ```
 
 父级SKILL.md仅作为目录索引，实际执行由子技能完成。

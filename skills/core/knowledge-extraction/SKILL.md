@@ -5,7 +5,10 @@ signature: "knowledge-extraction -> core: 从单篇论文中提取结构化知�
 description: "从单篇论文中提取结构化知识（实体、关系、主张、证据），输出 KnowledgeItem JSON。可选 pwbench 逆向工程模式。"
 author: Synthos
 license: MIT
-version: 2.0.0
+version: 2.1.0
+entrypoint_type: cognitive
+entrypoint_cmd: "从论文输入中提取实体、关系、主张、证据四域"
+entrypoint_desc: "知识提取。输入: papers(list), 输出: knowledge_items(list)"
 priority: P1
 atom_type: cognitive-atom
 allowed-tools: [terminal, read_file, write_file, web_extract, vision_analyze]

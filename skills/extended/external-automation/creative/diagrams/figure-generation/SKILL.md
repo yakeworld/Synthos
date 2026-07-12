@@ -10,8 +10,14 @@ version: 1.0.0
 4. 保存结果并报告
 
 ## Pitfalls
-- 
-- 
+- **QA检测盲区**: 检查 `05-figures/` 中同名图是否为相同MD5（`md5sum *.png | awk '{print $1}' | sort | uniq -c`）。如果65张architecture图只有3种不同MD5，说明整条管线被模板化了，违反铁律。176/182张相同MD5 = 全部是模板复制。
+- **QA检测盲区**: figure-qa-check.py的regex只匹配 `*_box = FancyBboxPatch(...)`，对函数封装的图（如 `def draw_box()` 中的 `ax.add_patch()`）无法检测，导致"虚假通过"。需要手动用 `qa-architecture-diagram.py` 的 `figure_qa_check()` API 提供几何参数。
+- **出口契约不完整**: 脚本只生成PDF不生成PNG = 违反出口契约。论文管线需要PNG(300DPI)，有数据的至少保存SVG+PDF+PNG。
+- **函数封装检测**: 如果脚本用 `def draw_box()` 封装绘图逻辑，QA需要手动提取几何参数，不能依赖自动regex。
+- **matplotlib SVG 保存兼容性问题**: `fig.savefig(path, svg_fonttype='none')` 在某些 matplotlib 版本中报 `TypeError: FigureCanvasSVG.print_svg() got an unexpected keyword argument 'svg_fonttype'`。替代：直接用 `fig.savefig(path)` 不加 `svg_fonttype` 参数，或用 `try/except` 包裹后回退。
+- **generate_all_figures.py 管线模式**: 为论文管线创建统一的 `generate_all_figures.py`，每个函数生成一张图，从 JSON 文件读取数据，输出 SVG+PDF+PNG 三格式。已在 dual-ellipse-fitting 和 hcs3wt-breast-cancer 中验证成功。
+- **ROC 曲线从 AUC 数据推导**: 当只有 AUC 值时，可用公式 `tpr = fpr ^ ((1-auc)/(auc+1e-6)) * 0.9 + fpr * 0.1` 模拟 ROC 曲线形状。适用于 benchmark 论文中只有 AUC 统计的场景。
+- **脚本 import 在 try/except 块中的 LSP 误报**: `matplotlib` 等库在 `try: import matplotlib; HAS_MPL = True; except ImportError: HAS_MPL = False` 中导入后，后续使用 `matplotlib.use('Agg')` 或 `plt.subplots()` 时 LSP 报 "possibly unbound"。运行时不会出错，但 LSP 误报。建议在函数内局部 import 而非模块级，避免误报。
 
 ## Verification
 - 
@@ -348,6 +354,8 @@ fig.savefig(f"{name}.pdf", bbox_inches='tight', pad_inches=0.1)  # 出版级PDF
 5. **修改重叠 ≤ 5行** — 超过说明在重构，破坏原始图
 6. **修改前先还原原始图** — 不可信"记忆中的代码"
 7. **用户反馈当金律** — 不争论、不解释、直接修
+8. **禁止模板化配图** — 检查 `05-figures/` 同名图MD5是否相同。65张相同 = 整条管线模板化，违反铁律1
+9. **脚本必须数据驱动** — 从JSON/CSV读取数据，不硬编码数值。硬编码 = P0
 
 ## 验证清单
 
@@ -438,6 +446,7 @@ fig.savefig(f"{name}.pdf", bbox_inches='tight', pad_inches=0.1)  # 出版级PDF
 | references/matplotlib-fallback.md | matplotlib不可用时的Pillow回退 |
 | references/quality-report-render.md | 质检报告→视觉图三模式 |
 | references/figure-audit-checklist.md | 论文作图完整性检查清单 |
+| references/figure-audit-2026-07-11.md | 全管线审计记录：66篇论文中仅2篇有生成脚本，176/182张图为模板复制 |
 | references/visual-qa-large-image-trap.md | 大图片视觉检查陷阱（>2000px） |
 | references/output-path-trap.md | 图生成输出路径陷阱（03-code vs 05-figures） |
 | references/nature-2026-observations.md | Nature 2026观察记录 |

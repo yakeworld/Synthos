@@ -18,7 +18,8 @@ from .tier1_oa import (
     download_crossref_link, download_unpaywall, download_pubmed_central,
     search_pmc_for_pubmed,
 )
-from .tier2_scihub import download_scihub_direct, download_scihub_via_tor
+from .scientific_hub import download as download_scihub_direct
+from .tier3_backup import download_libgen  # 已在 tier3 中
 from .tier3_backup import download_libgen
 from .meddata import try_meddata
 from .tier4_publishers import (
@@ -119,14 +120,11 @@ def sequential_download(
             lambda: download_arxiv_pdf(arxiv_id),
             "arXiv", timeout))
 
-    # ── Tier 2: Sci-Hub ──
+    # ── Tier 2: Sci-Hub (bban.top CDN 直连) ──
     if doi:
         results.append(_run("tier2",
             lambda: download_scihub_direct(doi),
-            "Sci-Hub direct", timeout))
-        results.append(_run("tier2",
-            lambda: download_scihub_via_tor(doi),
-            "Sci-Hub via Tor", timeout))
+            "Sci-Hub bban.top", timeout))
 
     # ── Tier 3: Backup ──
     if doi:
@@ -197,6 +195,7 @@ def run_test() -> Dict[str, Any]:
         ("tier1", "core", "10.1038/s41586-020-2649-2", download_core),
         ("tier1", "doi2pdf", "10.1038/s41586-020-2649-2", download_doi2pdf),
         ("tier2", "scihub", "10.1016/j.cell.2020.02.001", download_scihub_direct),
+        ("tier2", "scihub_bban", "10.1016/j.jcrs.2019.04.024", download_scihub_direct),
         ("tier3", "meddata", "10.1016/j.cell.2020.02.001", lambda: try_meddata(doi="10.1016/j.cell.2020.02.001", output_path=".")),
     ]
 

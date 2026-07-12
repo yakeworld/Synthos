@@ -1,47 +1,18 @@
 ---
 name: task-router
-version: 1.0.0
----
-
-## Operational Steps
-1. 分析用户查询，提取意图复杂度
-   选择执行模式：标准链 / 探索循环 / 研究双循环 / 并行执行
-   确定原子链（从6个认知原子中选择）
-   创建运行目录 outputs/{session_id}/
-   初始化 pipeline_trace.json
-   执行原子链（详见各原子SKILL.md）
-   汇总输出，报告用户
-
-## Pitfalls
-- 不要对简单查询使用双循环（过度复杂化）
-- 不要跳步：每步保存独立JSON
-- 执行完向用户报告，不要静默退出
-
-## Verification
-- [ ] 执行模式匹配查询复杂度
-- [ ] 每步保存独立JSON
-- [ ] pipeline_trace.json 完整
-- [ ] 已向用户报告
-1. 
-2. 
-3. 
+version: 1.2.0
+entrypoint_type: cognitive
+entrypoint_cmd: "分析查询→选模式→定原子链→建pipeline_trace→调度"
+entrypoint_desc: "系统入口。输入: query(str), 输出: pipeline_trace.json"
 category: core
-signature: "task-router -> core: Synthos系统入口。路由用户查询到正确的认知原子链或执行模式。 四模式：标准链 / 探索循环 / 研究双循环 / 并行执行。 Agent-native执行，"
-description: Synthos系统入口。路由用户查询到正确的认知原子链或执行模式。 四模式：标准链 / 探索循环 / 研究双循环 / 并行执行。 Agent-native执行，纯skill驱动零Python。
-author: Synthos
-license: MIT
-version: 1.0.0
-allowed-tools: shell (bash), Read (view), Write (write), task_delegation (agent, inline),
-  skill_loader (view with file path)
+description: "Synthos系统入口。分析查询→选执行模式→定原子链→调度执行→汇总输出。"
+signature: "query: str, context: dict -> route: str, atom_chain: list[str], execution_mode: str, pipeline_trace: pipeline_trace.json"
+allowed-tools: shell (bash), Read (view), Write (write), task_delegation (agent, inline), skill_loader (view with file path)
 metadata:
   synthos:
     priority: P0
     atom_type: parent-skill
-    description: Synthos系统入口。路由用户查询到正确的认知原子链或执行模式。 四模式：标准链 / 探索循环 / 研究双循环 / 并行执行。
-    signature: |
-      query: str, context: dict -> route: str, atom_chain: list[str], execution_mode: str | route: str, atom_chain: list[str], execution_mode: str, pipeline_trace: pipeline_trace.json
-    related_skills: ['knowledge-acquisition', 'hypothesis-generation', 'argument-expression']
-
+---
 
 # Task Router — Synthos 系统入口
 
@@ -49,18 +20,53 @@ metadata:
 
 - **input**: `query: str` — 用户原始查询
 - **input**: `context: dict` — 当前会话上下文（含已执行原子、历史输出）
-- **output**: `route: str` — 选择模式（standard_chain / exploration_loop / research_double_loop / parallel_execution）
-- **output**: `atom_chain: list[str]` — 目标认知原子链（按依赖顺序）
+- **output**: `route: str` — 选择模式
+- **output**: `atom_chain: list[str]` — 目标认知原子链
 - **output**: `execution_mode: str` — 具体执行模式描述
-- **output**: `status: dict` — 路由决策日志（含 confidence, alternatives_considered）
-> 对应原则：P2（机械原子暴露输入输出规范）
+- **output**: `status: dict` — 路由决策日志
+
+## Entrypoint 调度机制
+
+从 2026-07 起，所有 core skill 声明了 entrypoint 元数据。task-router 按以下规则自动调度：
+
+### exec 类型（有脚本）
+
+```yaml
+entrypoint_type: exec
+entrypoint: /path/to/script.py
+entrypoint_cmd: script "$var1" --param "$var2"
+```
+
+1. 读 entrypoint_cmd，替换 $变量
+2. 执行命令
+3. 捕获输出
+4. 输出给下一原子
+
+### cognitive 类型（推理）
+
+```yaml
+entrypoint_type: cognitive
+entrypoint_cmd: "从输入中提取四域"
+```
+
+1. 加载 skill → 读 entrypoint_cmd
+2. Agent 按描述执行推理
+3. 输出结构化 JSON
+4. 更新 pipeline_trace
+
+### 回退策略
+
+- `skill_view(name)` 失败 → 检查 standalone-* 类 skill
+- standalone skill 应优先检查 `which literature` 等 CLI
+- 都不存在时 → 直接提示用户配置
+
 ## 原理层·文言
 
 > 路由者，问之所向也。问大则大行，问细则细究。
 > 四维之径：一曰直行（标准链），二曰环探（探索），
 > 三曰双环（研究），四曰并行（并进）。
 > 路定则行，行必录迹。不轻问，不妄答。
-> **链可接续，器可传参。AI为器，人为魂。**
+> AI为器，人为魂。
 
 ## 方法层·白话
 
@@ -70,43 +76,23 @@ metadata:
 
 **始终加载** — 这是所有用户查询的第一个入口点。每次会话自动触发。
 
-## 验证清单
-
-- [ ] 查询已分析：模式确定 + 原子链确定
-- [ ] 运行目录已创建
-- [ ] 每步保存独立JSON文件
-- [ ] 汇总输出包含所有原子结果
-- [ ] 执行模式匹配查询复杂度
-
----
-
-## 工作目录
-
-```
-/media/yakeworld/sda2/Synthos/
-├── outputs/papers/          # 论文产出
-├── outputs/evolution/       # 进化日志
-├── evolution-log.md         # 进化链记录
-└── skills/                  # 所有认知原子
-```
-
 ## 执行流程
 
 ### 第0步：创建运行目录
-每个执行会话创建唯一目录：`outputs/{session_id}/`，含 `pipeline_trace.json`
+
+```
+outputs/{session_id}/
+  └── pipeline_trace.json
+```
 
 ### 第1步：分析查询 → 确定执行模式
 
-**四模式选择矩阵：**
-
-| 模式 | 适用 | 原子链 | 行为 |
-|:---
-  io_contract: input: ['query: str, context: dict -> route: str, atom_chain: list[str], execution_mode: str', 'output: ['route: str, atom_chain: list[str], execution_mode: str, pipeline_trace: pipeline_trace.json']
---|:-----|:-------|:-----|
-| **标准链** | 一次性查询：搜索文献/提取信息/写段文字 | ACQ→EXT→ARG 或 自定义短链 | 顺序执行，每步完报告 |
-| **探索循环** | 需迭代优化的单一问题 | HYP→ARG→VER, 循环 | 提出→检验→修改, 循环≥2次 |
-| **研究双循环** | 完整研究任务：文献+发现+假说+论文 | ACQ→EXT→ASC→GAP→HYP→ARG→VER | 外环(计划)+内环(执行) |
-| **并行执行** | 独立子任务可并行 | 各子任务独立链 | 并行执行子任务 |
+| 模式 | 适用 | 原子链 |
+|:-----|:-----|:-------|
+| **标准链** | 搜索/提取/写段文字 | ACQ→EXT→ARG |
+| **探索循环** | 需迭代优化的单一问题 | HYP→ARG→VER, 循环≥2次 |
+| **研究双循环** | 完整研究任务 | ACQ→EXT→ASC→GAP→HYP→ARG→VER |
+| **并行执行** | 独立子任务可并行 | 各子任务独立链 |
 
 **查询→模式判断规则：**
 - "搜索/查找/找文献" → 标准链(ACQ→EXT)
@@ -116,93 +102,57 @@ metadata:
 - "写论文/完整研究" → 研究双循环(全链)
 - 包含"同时/分别" → 并行执行
 
-### 第2-7步：标准执行
+### 第2-7步：执行原子链 — 通过 delegate_task 派发
 
-```
-for each atom in chain:
-  1. 加载技能：open skills/{atom}/SKILL.md
-  2. 从上游JSON读取输入
-  3. 执行原子任务
-  4. 保存输出到 {atom}_{sequence}.json
-  5. 报告简况
-```
+每个原子不应由 task-router 直接执行，而是通过 `delegate_task` 派发给子 Agent。这是2026-07-11实测验证的正确模式。
 
-### 探索循环（exploratory_loop）
-
+**正确的派发方式：**
 ```
-初始化: 定义目标+指标+基线
-循环:
-  1. 提出修改假说（HYP）
-  2. 实施并生成论证（ARG）
-  3. 验证结果（VER）
-  4. 与基线对比
-  5. 通过→keep，不通过→discard+改方向
-  6. 检查退出条件
-退出: 达目标 / 连续3次无进展 / 用户叫停
+# ✅ 正确：传用户原话
+delegate_task(
+    context="",                    # 空！不微操
+    goal="搜索3D nystagmus文献",    # 用户原话
+    toolsets=["terminal","file","web","skills"]
+)
 ```
 
-### 研究双循环（research_twoloop）
-
+**错误的派发方式（本会话踩过的坑）：**
 ```
-外循环(规划者):
-  1. 宽搜索(ACQ) → 多源文献
-  2. 跨域关联(ASC) → 发现矛盾/空白
-  3. 锁定GAP → 定义研究缺口
-  4. 生成假说(HYP) → 可证伪预测
-  5. 计划子任务 → 交内循环
-
-内循环(执行者):
-  对每个子任务:
-  1. 提取(EXT) → 精准信息
-  2. 论证(ARG) → 结构化输出
-  3. 验证(VER) → 多角度检查
-  4. 反馈给外循环 → 调整计划
+# ❌ 错误：写满微操指令
+delegate_task(
+    context="先加载knowledge-acquisition技能，会redirect到literature，
+            然后调literature.py成熟脚本，不要自己写API...",
+    goal="搜索...返回前8篇..."
+)
 ```
 
-### 并行执行
+**关键原则：**
+- **context 留空或极简** — 子 Agent 自己有 SOUL.md（task-router first、skill-first、调成熟脚本）
+- **goal 就是用户原话** — 不要转写，不要加步骤说明
+- **toolsets 给 terminal+file+web+skills** 让子 Agent 自己选择
+- **不要微操** — 告诉它"做什么"而不是"怎么做"
 
-```
-子任务列表 → 并行执行子任务
-汇总: 收集所有子任务输出 → 统一格式
-注意: 子任务不可依赖彼此输出
-```
+**验证子 Agent 行为的标准（2026-07-11实测方法）：**
+1. 它加载了 skill 吗？（tool_trace 中 skill_view 调用）
+2. 它调了成熟脚本还是自己写实现？（看 tool_trace 中 terminal 是否执行了 literature.py 等）
+3. 执行成功吗？（看 summary 中的结果）
+4. 耗时是否合理？（看 duration_seconds）
 
-### 链式组合（v1.8 — 吸收 Fabric Pattern Chaining）
+**批量子任务陷阱（2026-07-11实测）：**
+- 不要试图让一个子 Agent 处理 >10 篇论文——子 Agent 有超时限制
+- 批量处理不应写 Python 脚本调 literature.py——每篇独立调 API 太慢
+- 正确做法：让子 Agent 直接用 Sci-Hub CDN 批量下载已知 DOI（快，0.7s/篇）
 
-支持管道式技能链：`技能A → 技能B → 技能C`，前者的输出自动成为后者的输入。
-
-```yaml
-chain_example:
-  # 提炼论文摘要 → 提取洞见
-  - skill: knowledge-acquisition
-    args: {topic: "3D eye tracking"}
-  - skill: knowledge-extraction
-    args: {mode: "findings"}        # 自动接收上游 output.papers
-  - skill: association-discovery
-    args: {mode: "patterns"}        # 自动接收上游 output.knowledge_items
-```
-
-链式组合与标准链的区别：
-- 标准链：Agent逐步骤解释+决策（适合有判断点的任务）
-- 链式组合：数据按契约自动流转（适合无分支的流水线任务）
-
-### 第11步：循环模式汇总
-
-每次迭代后保存 checkpoint。会话恢复时从 checkpoint 读状态。
-
----
-
-## 输出格式（pipeline_trace.json）
+### 输出格式（pipeline_trace.json）
 
 ```json
 {
   "session_id": "uuid",
   "query": "用户原始输入",
   "mode": "standard|exploratory|research_twoloop|parallel",
-  "chain": ["knowledge-acquisition", "knowledge-extraction", ...],
+  "chain": ["knowledge-acquisition", "knowledge-extraction"],
   "atoms": {
     "knowledge-acquisition": {
-      "input": "...",
       "output_file": "outputs/{session_id}/ka_01.json",
       "status": "completed|failed|skipped"
     }
@@ -223,22 +173,69 @@ chain_example:
 5. **执行完向用户报告** — 汇总+关键发现+文件路径
 6. **双循环陷阱** — 外循环不执行具体任务(只是规划+分派)，内循环不修改计划(只执行+反馈)
 7. **循环模式不适用一次性查询** — 搜索/提取类查询用标准链
+8. **子Agent context 陷阱** — 不要在 delegate_task 的 context 里写详细步骤。子Agent有自己的SOUL.md。context 写越多，子Agent越倾向于"理解后再实现"而非"直接调用成熟脚本"
+9. **批量任务陷阱** — 不要试图让一个子Agent处理大量论文（>10篇）。每个子Agent有超时限制。大任务应拆成多个并行子任务
+10. **literature.py S2 限流** — semantic_scholar 源经常 429 导致整个 search 挂死。搜索时排除 S2（用 crossref+pubmed+openalex），或先用 curl 探测 S2 状态
 
 ---
 
-## 命令层
+## delegate_task 铁律
 
-- **Signature**: `query: str -> pipeline_trace.json + 汇总报告`
-- **Allowed tools**: shell, Read, Write, task_delegation, skill_loader
-- **Output**: 原子级JSON + pipeline_trace.json + 用户终报
-- **Execution**: 每步独立JSON → 不拼接 → 汇总时引用文件路径
+子任务派发时，遵循以下原则：
 
-## Golden 集合 · GOLDEN SET
+```python
+# ✅ 正确
+delegate_task(goal="用户的原话描述")
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+# ❌ 错误：加 context 微操
+delegate_task(goal="...", context="先加载skill A, 再调脚本B, 然后...")
+```
 
-> Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
+**规则：**
+- `context` 参数传空串 `""` — 不加微操指令
+- `goal` 传用户原话或极简描述
+- 子 Agent 有自己的 SOUL.md + 技能库，信任它自行决策
+- 子 Agent 找不到 ACQ skill 时，会 fallback 到 `literature search` CLI 命令
+- 本会话实测：微操版 interrupted，信任版 5 篇 PDF ✅
 
-# Task Router
+执行任何任务前，按优先级检查：
+
+### L0：不重新造轮子
+- **先查 skill 库** — skills_list 看有没有现成技能
+- **再查成熟脚本** — literature.py、paper-manager/download_one.py 等
+- **最后查成功案例** — 之前怎么做的（如 dual-ellipse 处理流程）
+- **只有以上都不存在时**，才自己写实现
+
+### L1：能调用
+- skill_view(name) 能加载 → 内容非空
+- 不是 redirect stub（knowledge-acquisition 指向 literature，必须跟下去）
+- 脚本路径存在、CLI 参数正确
+
+### L2：执行稳定
+- 步骤可复现，参数已验证
+- pitfall 覆盖已知坑
+- 同一输入 → 同一输出
+
+### L3：成功优先
+- 调成熟脚本 > 读代码后再实现 > 自己从头写
+- 先调通一个最小用例 → 再扩展
+
+### 常见违规模式（此会话发现）
+- ❌ 写了 batch_pipeline_v1~v5 系列，每次都在重新实现下载逻辑。应有：直接调 literature.py
+- ❌ 子任务读了现有脚本但没调用，自己写 wget。应：直接 python3 existing_script.py
+- ❌ 7 源检索写成自定义 API 调用。应：直接用 literature.py --sources ...
+- ❌ 只查 .bbl 不查内联 thebibliography。应：同时处理两种引用格式
+
+### 用户风格偏好
+- 简短直接，数据优先
+- 要做就直接做完，不用先问"要不要"
+- 做错了直接说错在哪
+- 每次执行后给可验证的结果，不是描述
+
+## Verification
+
+- [ ] 查询已分析：模式确定 + 原子链确定
+- [ ] 运行目录已创建
+- [ ] 每步保存独立JSON文件
+- [ ] pipeline_trace.json 完整
+- [ ] 已向用户报告

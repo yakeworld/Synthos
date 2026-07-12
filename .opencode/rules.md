@@ -42,7 +42,7 @@
 3. 文件尾 %%EOF（倒数100字节内）
 4. 文件大小 ≥1000 字节
 
-工具：`tools/paper-manager/download_one.py`
+工具：`tools/literature/scripts/literature.py`
 
 ## 5️⃣ 参考文献管线
 

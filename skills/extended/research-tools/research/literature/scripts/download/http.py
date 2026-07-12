@@ -29,7 +29,7 @@
 
   safe_filename(title, max_length=60) → str
     - 将标题安全转为文件名
-    - 去除/替换非法字符: /\:*?"<>|
+    - 去除/替换非法字符: /\\:*?"<>|
     - 截断到 max_length
 
   generate_bibkey(authors, year, title_short=None) → str

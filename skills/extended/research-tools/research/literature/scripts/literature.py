@@ -2,6 +2,7 @@
 """文献检索统一 CLI 入口
 
 职责: 统一的文献检索/下载/验证管线 CLI。
+所有 PDF 下载通过 bban.top CDN 直连完成（https://sci.bban.top/pdf/{DOI}.pdf）。
 所有操作通过 subcommand 路由：search, download, verify, pipeline, test。
 
 架构:
@@ -46,7 +47,7 @@ from typing import Optional
 sys.path.insert(0, str(Path(__file__).parent))
 
 from sources import SOURCE_REGISTRY, DEFAULT_SOURCES
-from download import smart_download, run_test, verify_pdf, normalize_doi, download_meddata, safe_filename
+from download import smart_download, run_test, verify_pdf, normalize_doi, safe_filename, download_scihub, try_meddata
 
 
 def parse_query(raw: str):
@@ -241,6 +242,10 @@ def cmd_download(args):
                 if isinstance(url, str) and url.startswith("http"):
                     links_to_try.append(("local_link", url))
 
+        # Sci-Hub CDN 兜底: 有 DOI 时直连 bban.top
+        if doi:
+            links_to_try.append(("sci_hub_cdn", f"https://sci.bban.top/pdf/{doi}.pdf"))
+
         links = p.get("links", {})
         if isinstance(links, dict):
             for name, url in links.items():
@@ -355,6 +360,10 @@ def cmd_pipeline(args):
             for url in local_links:
                 if isinstance(url, str) and url.startswith("http"):
                     links_to_try.append(("local_link", url))
+
+        # Sci-Hub CDN 兜底: 有 DOI 时直连 bban.top
+        if doi:
+            links_to_try.append(("sci_hub_cdn", f"https://sci.bban.top/pdf/{doi}.pdf"))
 
         links = p.get("links", {})
         if isinstance(links, dict):

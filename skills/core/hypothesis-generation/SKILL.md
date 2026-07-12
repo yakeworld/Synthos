@@ -1,6 +1,9 @@
 ---
 name: hypothesis-generation
-version: 1.0.0
+version: 1.1.0
+entrypoint_type: cognitive
+entrypoint_cmd: "从研究空白生成可证伪假说，含验证方法"
+entrypoint_desc: "假说生成。输入: gaps, 输出: hypotheses"
 ---
 
 ## Operational Steps
