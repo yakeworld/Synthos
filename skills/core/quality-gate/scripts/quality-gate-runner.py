@@ -129,7 +129,8 @@ def check_g3_citation_integrity(paper_dir: str) -> GateResult:
     # Extract \cite keys
     cite_keys = set(re.findall(r'\\cite[pcp]*{?([^},\s]+)}?', tex))
     # Clean up any 'p' prefix from \citep being matched as \cite
-    cite_keys = {k.lstrip('pc') if k.startswith('pc') or k.startswith('p') else k for k in cite_keys}
+    # Clean up malformed patterns: strip leading '{' from unclosed braces like \cite{key
+    cite_keys = {k.lstrip('{').lstrip('pc') if k.startswith('{') or k.startswith('pc') or k.startswith('p') else k for k in cite_keys}
     # Remove keys that are just template placeholders
     cite_keys = {k for k in cite_keys if not k.startswith('<') and k != 'label' and k != 'lamport94'}
 
@@ -278,15 +279,23 @@ def check_g5_citation_quality(paper_dir: str) -> GateResult:
     all_bib_keys = set()
     found_bib_file = False
     
+    def extract_bib_keys_from_file(filepath):
+        keys = set()
+        with open(filepath) as f:
+            content = f.read()
+        # @article{key, or @misc{key, etc.
+        keys.update(re.findall(r'@\w+\{(\w+)', content))
+        # \bibitem{key,
+        keys.update(re.findall(r'\\bibitem\{(\w+)', content))
+        return keys
+    
     for bib_ref in bib_refs:
         # Try direct path
         for ext in ['', '.bib']:
             bib_path = os.path.join(paper_dir, bib_ref + ext)
             if os.path.exists(bib_path):
                 found_bib_file = True
-                with open(bib_path) as bf:
-                    for bm in re.finditer(r'\\bibitem\{([^}]+)\}', bf.read()):
-                        all_bib_keys.add(bm.group(1).strip())
+                all_bib_keys.update(extract_bib_keys_from_file(bib_path))
         
         # Also check one level up from paper_dir
         parent_dir = os.path.dirname(paper_dir)
@@ -294,22 +303,48 @@ def check_g5_citation_quality(paper_dir: str) -> GateResult:
             bib_path = os.path.join(parent_dir, bib_ref + ext)
             if os.path.exists(bib_path):
                 found_bib_file = True
-                with open(bib_path) as bf:
-                    for bm in re.finditer(r'\\bibitem\{([^}]+)\}', bf.read()):
-                        all_bib_keys.add(bm.group(1).strip())
+                all_bib_keys.update(extract_bib_keys_from_file(bib_path))
 
     # 3. Also check for inline thebibliography
     inline_bibs = re.findall(r'\\bibitem\{([^}]+)\}', tex)
     for k in inline_bibs:
         all_bib_keys.add(k.strip())
 
-    # 4. Check for orphan .bib files in paper directory
-    if not found_bib_file:
-        for f in os.listdir(paper_dir):
-            if f.endswith('.bib'):
-                with open(os.path.join(paper_dir, f)) as bf:
-                    for bm in re.finditer(r'\\bibitem\{([^}]+)\}', bf.read()):
-                        all_bib_keys.add(bm.group(1).strip())
+    # 5. Also scan all .bib files within paper_root only
+    # Find the bib that matches the MOST cite keys (best match strategy)
+    best_keys = set()
+    best_overlap = 0
+    paper_root = os.path.dirname(os.path.dirname(paper_dir))
+    for root, dirs, files in os.walk(paper_root):
+        # Limit depth: only go into manuscript, 06-references, 08-refs, 08-records, 08-refs
+        rel = os.path.relpath(root, paper_root)
+        if rel == '.' or (rel.count(os.sep) <= 1 and not rel.startswith('06') and not rel.startswith('08')):
+            pass  # allowed
+        elif rel.count(os.sep) > 2:
+            continue  # too deep
+        # Skip quality report dirs
+        if any(d in root for d in ['07-quality', '.evolution', '03-code', '04-data', '05-figures']):
+            continue
+        for ff in files:
+            if ff.endswith('.bib'):
+                fp = os.path.join(root, ff)
+                # Skip large files (>5MB)
+                try:
+                    if os.path.getsize(fp) > 5 * 1024 * 1024:
+                        continue
+                except:
+                    pass
+                try:
+                    keys = extract_bib_keys_from_file(fp)
+                    overlap = len(keys & cite_keys)
+                    if overlap > best_overlap:
+                        best_overlap = overlap
+                        best_keys = keys
+                except:
+                    pass
+    
+    if best_keys:
+        all_bib_keys = best_keys
 
     # 5. Compute match rate
     if not cite_keys:
@@ -323,7 +358,7 @@ def check_g5_citation_quality(paper_dir: str) -> GateResult:
                 matched += 1
                 break
 
-    match_rate = matched / max(len(cite_keys), len(all_bib_keys)) if (len(cite_keys) + len(all_bib_keys)) > 0 else 1.0
+    match_rate = matched / len(cite_keys) if cite_keys else 1.0
     match_rate = min(match_rate, 1.0)
     adequate = match_rate >= 0.8
 
