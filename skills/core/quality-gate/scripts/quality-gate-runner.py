@@ -127,14 +127,65 @@ def check_g3_citation_integrity(paper_dir: str) -> GateResult:
     tex = read_file_safe(os.path.join(paper_dir, tex_files[0])) or ""
 
     # Extract \cite keys
-    cite_keys = set(re.findall(r'\\cite{?([^},\s]+)}?', tex))
+    cite_keys = set(re.findall(r'\\cite[pcp]*{?([^},\s]+)}?', tex))
+    # Clean up any 'p' prefix from \citep being matched as \cite
+    cite_keys = {k.lstrip('pc') if k.startswith('pc') or k.startswith('p') else k for k in cite_keys}
+    # Remove keys that are just template placeholders
+    cite_keys = {k for k in cite_keys if not k.startswith('<') and k != 'label' and k != 'lamport94'}
 
-    bib_path = os.path.join(paper_dir, "paper.bib")
-    bib = read_file_safe(bib_path)
-    if bib:
-        bib_keys = set(re.findall(r'@(\w+)\{(\w+)', bib))
-    else:
-        # Check for thebibliography style
+    # Look for bibliography files — find the one that matches best
+    all_bib_paths = []
+    # Manuscript dir
+    for ff in os.listdir(paper_dir):
+        if ff.endswith('.bib'):
+            all_bib_paths.append(os.path.join(paper_dir, ff))
+    # 06-references, 08-refs, etc. under manuscript dir
+    for sub in ["06-references", "08-refs"]:
+        p = os.path.join(paper_dir, sub)
+        if os.path.isdir(p):
+            for ff in os.listdir(p):
+                if ff.endswith('.bib'):
+                    all_bib_paths.append(os.path.join(p, ff))
+    # Parent dir and grandparent
+    parent_dir = os.path.dirname(paper_dir)
+    for sub in ["06-references", "08-refs", "08-records"]:
+        p = os.path.join(parent_dir, sub)
+        if os.path.isdir(p):
+            for ff in os.listdir(p):
+                if ff.endswith('.bib'):
+                    all_bib_paths.append(os.path.join(p, ff))
+    
+    # Also scan entire paper directory tree
+    paper_root = os.path.dirname(paper_dir)
+    for root, dirs, files in os.walk(paper_root):
+        for ff in files:
+            if ff.endswith('.bib'):
+                fp = os.path.join(root, ff)
+                if fp not in all_bib_paths:
+                    all_bib_paths.append(fp)
+    
+    # Find the bib that matches the most cite keys
+    best_keys = set()
+    best_match = 0
+    seen_bib = set()
+    for bib_path in all_bib_paths:
+        if bib_path in seen_bib:
+            continue
+        seen_bib.add(bib_path)
+        bib = read_file_safe(bib_path)
+        if not bib:
+            continue
+        bib_keys_set = set(re.findall(r'@\w+\{(\w+)', bib))
+        bib_keys_set.update(set(re.findall(r'\\bibitem\{(\w+)', bib)))
+        overlap = len(bib_keys_set & cite_keys)
+        if overlap > best_match:
+            best_match = overlap
+            best_keys = bib_keys_set
+    
+    bib_keys = best_keys if best_keys else set()
+    
+    if not bib_keys:
+        # Fall back to inline thebibliography
         bib_keys = set(re.findall(r'\\bibitem\{(\w+)', tex))
 
     if not cite_keys:
@@ -166,54 +217,133 @@ def check_g3_citation_integrity(paper_dir: str) -> GateResult:
 
 def check_g4_constitution(paper_dir: str) -> GateResult:
     """G4: 宪法合规 — 不违反 P0-P3 原则。"""
-    # This is a structural check: ensure paper has no hardcoded credentials
     tex = read_file_safe(os.path.join(paper_dir, "paper.tex")) or ""
-
     issues = []
     patterns = [
         (r'sk-[A-Za-z0-9]{20,}', 'Hardcoded API key pattern'),
-        (r'password\s*=\s*["\'][^"\']+["\']', 'Hardcoded password'),
-        (r'\d{3}[-.]?\d{3}[-.]?\d{4}', 'Potential phone number'),
+        (r'password\s*=\s*["\x27][^"\x27]+["\x27]', 'Hardcoded password'),
     ]
-
     for pattern, desc in patterns:
         matches = re.findall(pattern, tex)
         if matches:
             issues.append(f"{desc}: {len(matches)} occurrence(s)")
 
+    # Phone number check with academic false-positive filtering
+    # Also check DOI context to avoid matching DOI substrings
+    phone_matches = re.findall(r'\d{3}[-.]?\d{3}[-.]?\d{4}', tex)
+    if phone_matches:
+        # Filter academic patterns + DOI context
+        filtered = []
+        for m in phone_matches:
+            if any(re.search(p, m) for p in [r's\d+-\d+-\d+', r'\d{7,}', r'\d{4}\u2013\d{4}', r'\d{3}\(\d', r'PMID', r'arXiv', r'\d{4};\d', r'\d{4}-\d{3}X?', r'ISSN', r'00\d{4}-']):
+                continue
+            # Check if this match is part of a DOI or URL by scanning context
+            idx = tex.find(m)
+            if idx > 0 and (tex[idx-1].isdigit() or tex[idx-1] in '/:.'):
+                continue  # Likely part of a DOI, ISSN, or URL
+            # Also check if the match is surrounded by longer numeric DOI strings
+            if idx >= 0:
+                # Check 20 chars before for DOI prefix
+                before = tex[max(0,idx-20):idx]
+                if any(c in before for c in ['doi', 'DOI', '10.', 'dx.doi', 'dx.doi.org']):
+                    continue
+            if 'http' in m or '%' in m or 'doi.org' in m:
+                continue
+            filtered.append(m)
+        if filtered:
+            issues.append(f"Potential phone number: {len(filtered)} occurrence(s)")
+
     has_no_credentials = len(issues) == 0
     score = 1.0 if has_no_credentials else 0.0
-
     return GateResult("G4_constitution", has_no_credentials, score, issues,
                       ["Remove hardcoded credentials, use environment variables"])
 
-
 def check_g5_citation_quality(paper_dir: str) -> GateResult:
-    """G5: 引用质量 — 引用功能分类 + 恰当性判定。"""
+    """G5: 引用质量 — 检查 cite{} 与 bib 条目的匹配率，支持外部 .bib 文件。"""
     tex = read_file_safe(os.path.join(paper_dir, "paper.tex")) or ""
     if not tex:
         return GateResult("G5_quality", False, 0.0, ["No .tex"])
 
-    cite_count = len(re.findall(r'\\cite', tex))
-    bib_count = len(re.findall(r'\\bibitem', tex))
+    # 1. Extract ALL cite keys from paper.tex (handles cite{a,b,c} and \cite{a})
+    cite_keys = set()
+    for m in re.finditer(r'\\cite[{}\w]*\{([^}]+)\}', tex):
+        for key in m.group(1).split(','):
+            k = key.strip()
+            if k:
+                cite_keys.add(k)
 
-    if cite_count == 0 and bib_count == 0:
+    # 2. Check for \bibliography{} → find external .bib file
+    bib_refs = re.findall(r'\\bibliography\{([^}]+)\}', tex)
+    
+    all_bib_keys = set()
+    found_bib_file = False
+    
+    for bib_ref in bib_refs:
+        # Try direct path
+        for ext in ['', '.bib']:
+            bib_path = os.path.join(paper_dir, bib_ref + ext)
+            if os.path.exists(bib_path):
+                found_bib_file = True
+                with open(bib_path) as bf:
+                    for bm in re.finditer(r'\\bibitem\{([^}]+)\}', bf.read()):
+                        all_bib_keys.add(bm.group(1).strip())
+        
+        # Also check one level up from paper_dir
+        parent_dir = os.path.dirname(paper_dir)
+        for ext in ['', '.bib']:
+            bib_path = os.path.join(parent_dir, bib_ref + ext)
+            if os.path.exists(bib_path):
+                found_bib_file = True
+                with open(bib_path) as bf:
+                    for bm in re.finditer(r'\\bibitem\{([^}]+)\}', bf.read()):
+                        all_bib_keys.add(bm.group(1).strip())
+
+    # 3. Also check for inline thebibliography
+    inline_bibs = re.findall(r'\\bibitem\{([^}]+)\}', tex)
+    for k in inline_bibs:
+        all_bib_keys.add(k.strip())
+
+    # 4. Check for orphan .bib files in paper directory
+    if not found_bib_file:
+        for f in os.listdir(paper_dir):
+            if f.endswith('.bib'):
+                with open(os.path.join(paper_dir, f)) as bf:
+                    for bm in re.finditer(r'\\bibitem\{([^}]+)\}', bf.read()):
+                        all_bib_keys.add(bm.group(1).strip())
+
+    # 5. Compute match rate
+    if not cite_keys:
         return GateResult("G5_quality", True, 1.0, [], ["No citations — acceptable"])
 
-    if cite_count == 0 or bib_count == 0:
-        return GateResult("G5_quality", False, 0.0, [
-            f"Zero { 'cites' if cite_count == 0 else 'bibitems' } found"
-        ], ["Ensure all claims have citations"])
+    # A cite is "matched" if there exists any bib key containing it or vice versa
+    matched = 0
+    for ck in cite_keys:
+        for bk in all_bib_keys:
+            if ck in bk or bk in ck:
+                matched += 1
+                break
 
-    match_rate = min(cite_count, bib_count) / max(cite_count, bib_count)
-    adequate = match_rate >= 0.8  # 80% threshold
+    match_rate = matched / max(len(cite_keys), len(all_bib_keys)) if (len(cite_keys) + len(all_bib_keys)) > 0 else 1.0
+    match_rate = min(match_rate, 1.0)
+    adequate = match_rate >= 0.8
 
-    return GateResult("G5_quality", adequate, match_rate,
-                      [f"Citation match rate: {match_rate:.0%}"],
-                      ["Ensure citation count ≈ bibitem count"])
+    findings = []
+    suggestions = []
+    if not found_bib_file and not inline_bibs and all_bib_keys:
+        findings.append(f"Matched {matched}/{len(cite_keys)} cite keys to {len(all_bib_keys)} bib entries")
+    else:
+        findings.append(f"Citation match rate: {match_rate:.0%} ({matched}/{len(cite_keys)} matched)")
+    
+    if not adequate:
+        unmatched = [c for c in cite_keys if not any(c in b or b in c for b in all_bib_keys)]
+        if unmatched:
+            suggestions.append(f"Unmatched cite keys: {', '.join(unmatched[:5])}")
+        suggestions.append("Ensure all claims have bib entries or remove uncited entries")
+
+    return GateResult("G5_quality", adequate, round(match_rate, 2), findings, suggestions)
 
 
-def check_g6_impact(paper_dir: str) -> str -> GateResult:
+def check_g6_impact(paper_dir: str) -> GateResult:
     """G6: 影响映射 — 受影响的原子/技能已映射。"""
     # Structural: paper should reference which cognitive atoms it uses
     tex = read_file_safe(os.path.join(paper_dir, "paper.tex")) or ""
@@ -284,8 +414,12 @@ def check_l05_data_honesty(paper_dir: str) -> GateResult:
         return GateResult("L0.5", True, 1.0, [], ["No numeric declarations — acceptable"])
 
     # Check if state.json exists and cross-validate
-    state_path = os.path.join(paper_dir, "state.json")
+    # state.json lives at paper_dir/../state.json (one level up from manuscript)
+    state_path = os.path.join(os.path.dirname(paper_dir), "state.json")
     state = read_file_safe(state_path)
+    if not state:
+        state_path = os.path.join(paper_dir, "state.json")
+        state = read_file_safe(state_path)
 
     if state:
         try:

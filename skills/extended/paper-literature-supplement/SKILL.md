@@ -68,9 +68,9 @@ python3 /media/yakeworld/sda2/Synthos/skills/extended/paper-literature-supplemen
 │   查 .bbl（有）或 paper.tex 内联（无 .bbl）
 │   → 已有引用列表
 │
-├─ Step 3: 下载 PDF
-│   Sci-Hub CDN: sci.bban.top/pdf/{doi}.pdf
-│   代理轮换: 518 代理池（CDN限流时）
+Phase 3: 全文下载
+    │   Sci-Hub CDN: https://sci.bban.top/pdf/{doi}.pdf（直连 PDF，无需 HTML 中转）
+    │   唯一有效入口，所有有 DOI 的论文自动通过 bban.top 直连下载
 │   → PDF 文件
 │
 ├─ Step 4: 验证引用

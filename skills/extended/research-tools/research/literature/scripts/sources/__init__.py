@@ -19,8 +19,7 @@ SOURCE_REGISTRY = {
     "arxiv": ArXiv,
     "pubscholar": PubScholar,
     "scihub": SciHub,
-    "libgen": LibGen,
-}
+    }
 
 # Default sources to query
 DEFAULT_SOURCES = ["semantic_scholar", "pubmed", "crossref", "arxiv", "pubscholar"]
