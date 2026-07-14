@@ -3,7 +3,7 @@
 
 职责: 通过 S2 Graph API v1 检索英文学术文献，返回包含完整 PDF 链接集的论文数据。
 设计决策: 
-- 双 key 轮换（SEMANTIC_SCHOLAR_API_KEY + S2_FALLBACK_KEY），失败自动切换
+- 单 key 认证（SEMANTIC_SCHOLAR_API_KEY 环境变量）
 - 搜索时一次性拉取 openAccessPdf + pdfUrls + urls + externalIds，下载时零额外请求
 - 不用于 DOI 精确检索（search_by_doi 仅作兜底）
 限制:
@@ -47,34 +47,14 @@ class SemanticScholar:
 
     BASE_URL = "https://api.semanticscholar.org/graph/v1"
 
-    # S2 API keys — 主备双 key，优先主 key。失败时 _try_next_key() 自动切换。
-    # 为什么双 key：S2 rate limit 1000 req/h per key，双 key = 2000 req/h。
+    # S2 API key — 单 key（SEMANTIC_SCHOLAR_API_KEY 环境变量）
     API_KEYS = [
-        os.environ.get("SEMANTIC_SCHOLAR_API_KEY", "").strip().strip('"').strip("'"),
-        os.environ.get("S2_FALLBACK_KEY", "").strip().strip('"').strip("'")
+        os.environ.get("SEMANTIC_SCHOLAR_API_KEY", "").strip().strip('"').strip("'")
     ]
-    API_KEYS = [k for k in API_KEYS if k]
 
     def __init__(self, api_key_index: int = 0):
         self._key_index = api_key_index
         self.api_key = self.API_KEYS[self._key_index % len(self.API_KEYS)] if self.API_KEYS else ""
-
-    def _try_next_key(self) -> bool:
-        """失败时切换到下一个 key。
-
-        原理：S2 API 的 429 和 5xx 错误通常是临时的。
-        主 key 耗尽后切换到备 key，避免完全失败。
-        最多尝试 len(API_KEYS) 次。
-
-        返回:
-            True: 切换成功
-            False: 无可用 key
-        """
-        if len(self.API_KEYS) > 1:
-            self._key_index = (self._key_index + 1) % len(self.API_KEYS)
-            self.api_key = self.API_KEYS[self._key_index % len(self.API_KEYS)]
-            return True
-        return False
 
     def search(self, topic: str, max_results: int = 10, year_range: Optional[str] = None) -> list[dict]:
         """检索文献。收集所有 PDF 链接。
@@ -147,9 +127,7 @@ class SemanticScholar:
             return papers
 
         except Exception:
-            # 任何异常都尝试换 key 并重试，不向上传播错误
-            if self._try_next_key():
-                return self.search(topic, max_results, year_range)
+            # 任何异常都直接返回空列表，不重试（单 key，无备用）
             return []
 
     def search_by_doi(self, doi: str) -> Optional[dict]:
@@ -177,8 +155,6 @@ class SemanticScholar:
                 data = json.loads(resp.read().decode())
             return self._to_paper(data) if data else None
         except Exception:
-            if self._try_next_key():
-                return self.search_by_doi(doi)
             return None
 
     def _to_paper(self, data: dict) -> Optional[dict]:
