@@ -103,10 +103,85 @@ def download_unpaywall(doi: str) -> Optional[bytes]:
 
 
 def download_pubmed_central(pmcs_id: str) -> Optional[bytes]:
-    """Download PDF from PubMed Central."""
-    url = f"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC{pmcs_id}/pdf/"
-    from .http import download_http
-    return download_http(url, timeout=30)
+    """Download PDF from PubMed Central.
+
+    策略：
+    1. 通过 efetch 获取 JATS XML，尝试提取 self-uri（PDF 直链）
+    2. NCBI 已不再通过 pdf/ 路径直接提供 PDF（返回 HTML），需回退
+    3. XML → 提取标题/正文 → Markdown → pandoc → PDF
+    """
+    import xml.etree.ElementTree as ET
+
+    # Step 1: 获取 JATS XML
+    xml_url = f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id={pmcs_id}&retmode=xml"
+    try:
+        req = urllib.request.Request(xml_url)
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            xml_content = resp.read()
+    except Exception:
+        return None
+
+    try:
+        root = ET.fromstring(xml_content)
+    except ET.ParseError:
+        return None
+
+    # Step 2: NCBI 已不再通过 pdf/ 路径提供 PDF（超时 30s），直接跳过
+    # 仅当有已知有效自部署 PDF 服务时启用
+
+    # Step 3: XML → Markdown → pandoc → PDF
+    import subprocess
+    import tempfile
+    import os
+
+    try:
+        # 从 XML 提取文本构建 Markdown
+        md_lines = []
+        for article_title in root.iter('article-title'):
+            t = article_title.text
+            if t:
+                md_lines.append(f"# {t.strip()}")
+        for sec in root.iter('sec'):
+            title = sec.find('title')
+            if title is not None and title.text:
+                md_lines.append(f"## {title.text}")
+            for p in sec.iter('p'):
+                text = ''.join(p.itertext()).strip()
+                if text:
+                    md_lines.append(text)
+
+        # 写入临时 Markdown
+        # 替换常见 Unicode 数学符号为 ASCII（pdflatex 不支持 Unicode）
+        md_text = '\n\n'.join(md_lines)
+        for uni, ascii_rep in [('≥', '>='), ('≤', '<='), ('≠', '!='), ('→', '->'),
+                                ('∑', 'SUM'), ('∏', 'PROD'), ('μ', 'u'), ('α', 'a')]:
+            md_text = md_text.replace(uni, ascii_rep)
+
+        with tempfile.NamedTemporaryFile(suffix='.md', delete=False, mode='w', encoding='utf-8') as md_f:
+            md_path = md_f.name
+            md_f.write(md_text)
+
+        with tempfile.NamedTemporaryFile(suffix='.pdf', delete=False) as pdf_f:
+            pdf_path = pdf_f.name
+
+        try:
+            result = subprocess.run(
+                ['pandoc', '-f', 'markdown', '-o', pdf_path, md_path, '--pdf-engine=pdflatex'],
+                capture_output=True, timeout=120, text=True
+            )
+            # pandoc 返回 exit 43（LuaLaTeX zlib 不匹配）但 PDF 可能已生成
+            # 只要 PDF 文件存在且非空就接受
+            if os.path.getsize(pdf_path) > 100 and open(pdf_path, 'rb').read().startswith(b"%PDF-"):
+                with open(pdf_path, 'rb') as f:
+                    return f.read()
+        finally:
+            for p in (md_path, pdf_path):
+                try: os.unlink(p)
+                except: pass
+    except Exception:
+        pass
+
+    return None
 
 
 def search_pmc_for_pubmed(pmid: str) -> Optional[str]:
