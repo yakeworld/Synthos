@@ -48,9 +48,42 @@ class SemanticScholar:
     BASE_URL = "https://api.semanticscholar.org/graph/v1"
 
     # S2 API key — 单 key（SEMANTIC_SCHOLAR_API_KEY 环境变量）
-    API_KEYS = [
-        os.environ.get("SEMANTIC_SCHOLAR_API_KEY", "").strip().strip('"').strip("'")
-    ]
+    API_KEYS = []
+    # Load from environment in priority order:
+    # 1. SEMANTIC_SCHOLAR_API_KEY env var (from .bashrc/.secrets)
+    # 2. .env file (Hermes Agent's .env)
+    # 3. ~/.secrets (fallback)
+    _key = os.environ.get("SEMANTIC_SCHOLAR_API_KEY", "").strip().strip('"').strip("'")
+    if not _key:
+        # Try Hermes .env file
+        env_path = os.path.expanduser("~/.hermes/.env")
+        if os.path.exists(env_path):
+            with open(env_path, "r") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line or line.startswith("#"):
+                        continue
+                    if line.startswith("SEMANTIC_SCHOLAR_API_KEY="):
+                        val = line.split("=", 1)[1].strip().strip('"').strip("'")
+                        if val:
+                            _key = val
+                            break
+    if not _key:
+        # Try ~/.secrets
+        secrets_path = os.path.expanduser("~/.secrets")
+        if os.path.exists(secrets_path):
+            with open(secrets_path, "r") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line or line.startswith("#"):
+                        continue
+                    if line.startswith("SEMANTIC_SCHOLAR_API_KEY="):
+                        val = line.split("=", 1)[1].strip().strip('"').strip("'")
+                        if val:
+                            _key = val
+                            break
+
+    API_KEYS = [_key] if _key else []
 
     def __init__(self, api_key_index: int = 0):
         self._key_index = api_key_index
@@ -94,7 +127,7 @@ class SemanticScholar:
             "limit": str(min(max_results, 20)),  # S2 硬性上限 20
             "fields": (
                 "title,authors,year,openAccessPdf,externalIds,venue,"
-                "citationCount,tldr,abstract,publicationTypes,urls,pdfUrls"
+                "citationCount,tldr,abstract,publicationTypes"
             ),
         }
         if year_range:

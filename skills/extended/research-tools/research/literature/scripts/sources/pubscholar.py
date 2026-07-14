@@ -110,6 +110,10 @@ class PubScholar:
     def search(self, topic, max_results=10, year_range=None):
         """检索中文论文。
 
+        注意：PubScholar 已改为第三方应用认证模式（2026-07），
+        开放 API 调用返回 {"cause":"第三方应用独立请求时，无此操作权限","failure":true}。
+        除非有 APP_ID/APP_SECRET 凭证，否则此源返回空列表。
+
         Args:
             topic: 搜索关键词
             max_results: 最大结果数
@@ -118,6 +122,14 @@ class PubScholar:
         Returns:
             论文列表，格式符合 literature 统一数据契约。
         """
+        # Check if credentials are available
+        app_id = os.environ.get('PUBSCHOLAR_APP_ID', '')
+        app_secret = os.environ.get('PUBSCHOLAR_APP_SECRET', '')
+        if not app_id or not app_secret:
+            # API requires authentication — silently return empty
+            # (matching existing behavior of not crashing the pipeline)
+            return []
+
         headers = _get_headers(topic)
         proxies = _get_proxies()
 

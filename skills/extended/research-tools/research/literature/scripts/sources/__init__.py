@@ -22,6 +22,6 @@ SOURCE_REGISTRY = {
     }
 
 # Default sources to query
-DEFAULT_SOURCES = ["semantic_scholar", "pubmed", "crossref", "arxiv", "pubscholar"]
+DEFAULT_SOURCES = ["semantic_scholar", "pubmed", "crossref", "arxiv"]
 
 __all__ = ["SOURCE_REGISTRY", "DEFAULT_SOURCES", "SemanticScholar", "PubMed", "CrossRef", "OpenAlex", "ArXiv", "PubScholar", "SciHub", "LibGen"]

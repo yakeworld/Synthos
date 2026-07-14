@@ -3,10 +3,10 @@ name: literature
 category: research-tools
 signature: "literature -> research-tools: 文献检索统一入口"
 description: 文献检索统一入口 — 搜索、下载、验证三位一体，多源聚合，管道编排。
-version: 4.0.0
+version: 5.1.0
 author: Synthos
 license: MIT
-updated: 2026-07-12
+updated: 2026-07-15
 metadata:
   synthos:
     signature: "literature search/download/verify/pipeline"
@@ -29,6 +29,12 @@ metadata:
       - references/libgen-playwright-search.md
       - references/libgen-download-mirror-status.md
       - references/s2-single-key-consolidation-2026-07-15.md
+      - references/ncbi-pmc-pdf-access-change-2026-07-14.md
+      - references/s2-api-fields-2026-07-15.md
+      - references/pubscholar-api-failure-2026-07-15.md
+      - references/s2-key-loading-2026-07-15.md
+      - references/pmc-pdf-pandoc-replacement-2026-07-15.md
+      - references/knowledge-acquisition-source-status-2026-07-15.md
 ---
 
 # 文献检索 (Literature)
@@ -61,7 +67,7 @@ metadata:
 | CrossRef | 直连 | 无 | ✅ open_access 字段 | ✅ 可用 | 元数据补入、DOI 验证 |
 | OpenAlex | 直连 | 无 | ✅ oa_url + oa_pdf | ✅ 可用 | 开放学术图谱 |
 | arXiv | 直连 | 无 | ✅ 直接 PDF 链接 | ✅ 可用 | CS/AI 预印本 |
-| PubScholar | curl直调POST | 无 | ✅ local_links CDN | ✅ 可用 | 中文文献 |
+| PubScholar | curl直调POST | 无 | ✅ local_links CDN | ⚠️ API 返回 HTML，JSON 解析失败 | 中文文献（API 可能已失效） |
 | Sci-Hub | CDN | 无 | ✅ bban.top/pdf/{DOI}.pdf | ✅ 可用（直连PDF） | 灰区论文兜底 |
 | LibGen | Playwright浏览器模拟 | 无 | ✅ 搜索可用，下载需第三方 | ⚠️ 检索可用，下载受限 | 期刊论文+图书备份 |
 
@@ -160,6 +166,10 @@ export UNPAYWALL_EMAIL="..."   # 可选，提高速率限制
 
 **2026-07-15 S2 单 key 修正**：S2_FALLBACK_KEY 已删除，`semantic_scholar.py` 仅读取 `SEMANTIC_SCHOLAR_API_KEY`。`_try_next_key()` 机制移除。key 同时存在于 `~/.bashrc` 和 `~/.secrets`，值一致。S2 不卡死。
 
+**2026-07-15 S2 API 字段修复**：S2 Graph API 移除了 `pdfUrls` 和 `urls` 字段（返回 400 `Unrecognized or unsupported fields`）。`fields` 参数改为：`title,authors,year,openAccessPdf,externalIds,venue,citationCount,tldr,abstract,publicationTypes`。
+
+**2026-07-15 S2 Key 多源加载**：`SemanticScholar.API_KEYS` 类属性在模块加载时计算，优先级：(1) `SEMANTIC_SCHOLAR_API_KEY` 环境变量 → (2) `~/.hermes/.env` → (3) `~/.secrets`。`execute_code` 沙箱不 source `.bashrc`/`.secrets`，需从 `.env` 或 `~/.secrets` 手动读取 key。
+
 ## 代码恢复与版本管理
 
 **代码位置**：`skills/extended/research-tools/research/literature/scripts/`
@@ -192,7 +202,8 @@ commit `d18616e` 是最后完整包含 literature 代码的提交。恢复后需
 - **文献监控替代搜索路径（2026-07-13）**：当 literature.py 不可用时（脚本缺失），可通过 PubMed E-utilities API 直接搜索。PubMed 搜索覆盖广、精度高，是文献监控的首选替代方案。OpenAlex API 在 cron 环境中可能因搜索词编码问题返回 400，需 URL encode 空格为 `+`。
 - **bban.top CDN 恢复（2026-07-13 最终确认）** — `https://sci.bban.top/pdf/{DOI}.pdf` 直连返回真实 PDF（791KB，7页，DOI 10.1016/j.jcrs.2019.04.024 验证通过）。唯一有效 Sci-Hub 入口。GET 返回 PDF 字节（%PDF-），无需 HTML 中转，无需 iframe 解析，无需域名查找。代码简化为 78 行（download/scientific_hub.py），所有文献下载通过此链路完成。
 - **PIPELINE PDF 来源**：管线中 724 篇参考文献 PDF（709 真实，1179 MB）是通过 literature.py 多源获取的（Crossref、PubMed、CORE 等），不是通过 bban.top 下载的。bban.top 失效不影响已下载的文献，但影响新论文获取。
-- **PMC URL 不是 PDF 直链**：PubMed PMC 文章返回的 `pdf_url` 是 HTML 页面（`https://www.ncbi.nlm.nih.gov/pmc/articles/PMC.../`），不是 PDF 文件。`smart_download()` 下载后 `verify_pdf()` 失败（HTML 不是 `%PDF-`），返回 None。**解决方案**：使用 `pmc_fulltext.py` 通过 E-utilities 获取 JATS XML → pandoc 转换 PDF；或从 `tier1_oa.py` 中 `download_pubmed_central()` 调用（需传入 PMCID）。
+- **PMC PDF 直链已失效（2026-07-14）**：NCBI 不再通过 `/articles/PMC{id}/pdf/{filename}` 提供 PDF（返回 HTML 或 301 重定向），旧实现返回 None 或超时 30s。使用 `download_pubmed_central(pmcs_id)` 函数，它已重构为 XML→Markdown→pandoc→PDF 管线。Unicode 数学符号（≥ ≤ →）必须替换为 ASCII 兼容形式。详见 `references/ncbi-pmc-pdf-access-change-2026-07-14.md`。
+- **PubScholar API 已失效（2026-07-15 实测）**：POST `https://www.pubscholar.cn/hky/open/resources/api/v1/articles` 返回 HTML（SPA），非 JSON。`requests.post().json()` 抛 `JSONDecodeError`。状态码 200 但 content-type 为 text/html。代码中 `if resp.status_code != 200: return []` 不会触发（200 是正常状态码），后续 `resp.json()` 失败被 `except Exception: return []` 捕获，返回空列表。如需中文文献，手动通过 PubScholar 网页搜索或等待 API 恢复。
 - **literature.py download 需要 JSON 文件**：`--input` 参数必须指向文件路径，不支持 stdin。JSON 格式必须是 `{"papers": [...]}`，不是纯列表。
 - **CORE需要API key**：Cloudflare拦截无key请求。免费注册获取key。
 - **OpenAlex year=None KeyError**：先做类型检查再切片。
