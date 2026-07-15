@@ -31,10 +31,10 @@ metadata:
       - references/s2-single-key-consolidation-2026-07-15.md
       - references/ncbi-pmc-pdf-access-change-2026-07-14.md
       - references/s2-api-fields-2026-07-15.md
-      - references/pubscholar-api-failure-2026-07-15.md
-      - references/s2-key-loading-2026-07-15.md
-      - references/pmc-pdf-pandoc-replacement-2026-07-15.md
+      - references/pubscholar-api-2026-07-15.md
       - references/knowledge-acquisition-source-status-2026-07-15.md
+      - references/pmc-pdf-pandoc-replacement-2026-07-15.md
+      - references/literature-cli-bug-workaround.md
 ---
 
 # 文献检索 (Literature)
@@ -67,7 +67,7 @@ metadata:
 | CrossRef | 直连 | 无 | ✅ open_access 字段 | ✅ 可用 | 元数据补入、DOI 验证 |
 | OpenAlex | 直连 | 无 | ✅ oa_url + oa_pdf | ✅ 可用 | 开放学术图谱 |
 | arXiv | 直连 | 无 | ✅ 直接 PDF 链接 | ✅ 可用 | CS/AI 预印本 |
-| PubScholar | curl直调POST | 无 | ✅ local_links CDN | ⚠️ API 返回 HTML，JSON 解析失败 | 中文文献（API 可能已失效） |
+| PubScholar | curl直调POST | APP_ID/SECRET | ✅ local_links CDN | ❌ 开放API关闭，IP封锁 | 中文文献（需开发者凭证/国内IP） |
 | Sci-Hub | CDN | 无 | ✅ bban.top/pdf/{DOI}.pdf | ✅ 可用（直连PDF） | 灰区论文兜底 |
 | LibGen | Playwright浏览器模拟 | 无 | ✅ 搜索可用，下载需第三方 | ⚠️ 检索可用，下载受限 | 期刊论文+图书备份 |
 
@@ -170,6 +170,12 @@ export UNPAYWALL_EMAIL="..."   # 可选，提高速率限制
 
 **2026-07-15 S2 Key 多源加载**：`SemanticScholar.API_KEYS` 类属性在模块加载时计算，优先级：(1) `SEMANTIC_SCHOLAR_API_KEY` 环境变量 → (2) `~/.hermes/.env` → (3) `~/.secrets`。`execute_code` 沙箱不 source `.bashrc`/`.secrets`，需从 `.env` 或 `~/.secrets` 手动读取 key。
 
+**2026-07-15 PubScholar API 关闭**：PubScholar 开放 API 已关闭，改为第三方应用认证。POST 返回 {"cause":"第三方应用独立请求时，无此操作权限","failure":true}。IP 级别封锁（当前服务器 IP 被拒）。代码在 `sources/pubscholar.py` 中已加入 `PUBSCHOLAR_APP_ID`/`APP_SECRET` 检查，无凭证时静默返回空列表。**注意**：重大 API 变更需征求用户意见，不应擅自修改默认源配置。恢复路径：RSSHub 路由/国内住宅 IP/浏览器自动化/等待开放 API 恢复。详见 `references/pubscholar-full-analysis-2026-07-15.md`。
+
+**2026-07-15 PMC PDF 替换**：NCBI `/articles/PMC{id}/pdf/` 路径不再提供 PDF（返回 HTML）。`download_pubmed_central()` 重构为：JATS XML → 提取标题/正文 → Markdown → pdflatex → PDF。Unicode 数学符号（≥ ≤ → ∑ μ α）需替换为 ASCII。详见 `references/pmc-pdf-pandoc-replacement-2026-07-15.md`。
+
+**2026-07-15 知识获取源测试**：S2(2.4s, 3篇, 2有PDF)、PubMed(3.7s, 3篇, 1有PDF)、CrossRef(1.7s, 3篇, 0有PDF)、OpenAlex(62.6s, 3篇, 3有PDF)、arXiv(0.3s, 2篇, 0有PDF)、PubScholar(0.3s, 0篇, 需认证)。4 源正常运行。详见 `references/knowledge-acquisition-source-status-2026-07-15.md`。
+
 ## 代码恢复与版本管理
 
 **代码位置**：`skills/extended/research-tools/research/literature/scripts/`
@@ -192,6 +198,7 @@ commit `d18616e` 是最后完整包含 literature 代码的提交。恢复后需
 
 ## Pitfalls
 
+- **literature.py search 子命令完全失效 (2026-07-15)**: 检索 15 篇已知文献全部 0 结果。根因在 CLI 包装层（JSON 输出格式不匹配各源返回），而非各源函数。各源独立函数调用完全正常：`from sources.pubmed import PubMed; pm = PubMed(); papers = pm.search("query", max_results=5)` 返回真实论文（100% DOI 覆盖）。`from sources.crossref import CrossRef` 和 `from sources.semantic_scholar import SemanticScholar` 也工作正常。OpenAlex 可用但 `year=None` 较多。下载仍可用 literature.py download（需先手动构建 JSON 文件）。详见 `references/literature-cli-bug-workaround.md`。
 - **LibGen 搜索需要 Playwright（JS 渲染）** — libgen.bz 的条目详情和文件列表完全由 JS 渲染，requests/curl 无法解析。必须使用 Playwright 模拟浏览器：`from sources.libgen import LibGen; LibGen.search("query")`。纯 HTTP 搜索只返回 MD5 ID 列表，不含详细信息。
 - **LibGen 下载链接不可靠** — LibGen 提供的第三方镜像（randombook.org、annas-archive.gl、libgen.pw）大部分不可用：randombook 返回广告页面、libgen.pw 连接拒绝、annas-archive 重定向循环。仅 Sci-Hub.ru 返回 HTML 但不一定是 PDF。**LibGen 作为检索源非常强大（DOI精确检索、期刊论文+图书），但作为下载源需要备用方案。** 下载策略：(1) 第一优先 bban.top CDN，(2) 第二优先 Crossref/PubMed/OA 直链，(3) 第三优先 S2 openAccessPdf，(4) LibGen 仅作为检索源。
 - **bban.top 是唯一可靠的 Sci-Hub 下载入口** — `https://sci.bban.top/pdf/{DOI}.pdf` 直连返回 PDF 字节。旧实现（HTML 中转、域名查找）已全部删除。
@@ -209,3 +216,4 @@ commit `d18616e` 是最后完整包含 literature 代码的提交。恢复后需
 - **OpenAlex year=None KeyError**：先做类型检查再切片。
 - **SyntaxWarning `\\:`**：`download/http.py` 第 32 行 docstring 中有非法转义序列 `/\\\\:`，会导致 Python 3.12 语法警告。修复：改为 `/\\\\\\\\:` 或直接写冒号 `/ : ? " < > |`。
 - **literature.py 脚本缺失**：`skills/extended/research-tools/research/literature/` 目录下无 Python 脚本文件，SKILL.md 中描述的来源处理代码均不存在。git 中也不存在。如需执行文献检索，必须通过独立 API 调用（PubMed/E-utilities、CrossRef、OpenAlex）或先恢复代码（`git checkout d18616e`）。
+- **PDF 魔数验证用 `startswith` 而非切片**：`content[:8] == b"%PDF-"` 永远是 `False`（`%PDF-` 是 5 字节，`[:8]` 取到 `%PDF-1.5`）。必须用 `content[:5] == b"%PDF-"` 或 `content.startswith(b"%PDF-")`。此 bug 在 `download_pubmed_central()` 中导致 PMC PDF 明明成功生成却返回 None。
