@@ -41,6 +41,15 @@ metadata:
 
 > 多源求索，博观约取。
 
+## 2026-07-20 清理说明
+
+**scripts/ 已删除**。旧检索脚本代码已迁移到独立 pip 包：
+- **`tools/literature-search/`** — pip 包（`pip install .` 即可安装），代码路径 `src/literature_search/`
+- GitHub: `github.com/yakeworld/literature-search`
+- 检索已统一使用 **jabkit**（26 源，本地 recompiled）
+
+本 SKILL.md 保留作为**下载管道架构和陷阱的知识参考**。`tools/` 目录不在 git 追踪中（`tools/` 已入 .gitignore）。
+
 ## 架构变更（2026-07）
 
 **文献检索已统一为 `jabkit` 入口。** `literature.py`（本 skill）降级为 **PDF 下载与管线编排**的辅助工具。
