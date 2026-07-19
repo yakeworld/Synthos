@@ -47,7 +47,8 @@ from typing import Optional
 sys.path.insert(0, str(Path(__file__).parent))
 
 from sources import SOURCE_REGISTRY, DEFAULT_SOURCES
-from download import smart_download, run_test, verify_pdf, normalize_doi, safe_filename, download_scihub, try_meddata
+from download import smart_download, verify_pdf, normalize_doi, safe_filename, download_scihub, try_meddata
+from download.scheduler import run_test as old_run_test
 
 
 def parse_query(raw: str):
@@ -428,8 +429,33 @@ def cmd_pipeline(args):
 
 
 def cmd_test(args):
-    """连通性测试。"""
-    print(json.dumps(run_test(), indent=2, ensure_ascii=False))
+    """连通性测试（原版，单测下载层）。"""
+    print(json.dumps(old_run_test(), indent=2, ensure_ascii=False))
+
+
+def cmd_diagnose(args):
+    """综合诊断：检索测试 + DOI解析 + 下载测试。"""
+    diagnose_script = Path(__file__).parent / "literature_diagnose.py"
+    if not diagnose_script.exists():
+        print(json.dumps({"error": "diagnose script not found", "path": str(diagnose_script)}, indent=2))
+        return
+    import subprocess
+    r = subprocess.run(
+        [sys.executable, str(diagnose_script)],
+        capture_output=True, text=True, timeout=300,
+        cwd=str(Path(__file__).parent),
+    )
+    if r.returncode != 0:
+        print(json.dumps({"error": "diagnose failed", "stderr": r.stderr[:500]}, indent=2))
+        return
+    # 输出结果
+    try:
+        report = json.loads(r.stdout)
+        print(json.dumps(report, indent=2, ensure_ascii=False))
+    except json.JSONDecodeError:
+        print(r.stdout)
+        if r.stderr:
+            print("STDERR:", r.stderr[:500])
 
 
 def main():
@@ -465,8 +491,12 @@ def main():
     sp.set_defaults(func=cmd_pipeline)
 
     # test
-    sp = subparsers.add_parser("test", help="连通性测试")
+    sp = subparsers.add_parser("test", help="连通性测试（仅下载层）")
     sp.set_defaults(func=cmd_test)
+
+    # diagnose
+    sp = subparsers.add_parser("diagnose", help="综合诊断：检索+DOI解析+下载测试")
+    sp.set_defaults(func=cmd_diagnose)
 
     args = parser.parse_args()
 

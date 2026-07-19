@@ -1,31 +1,25 @@
 #!/usr/bin/env python3
 """
-Tier 3: 备份下载 — 纯引用层，实际实现来自 sources 模块。
+Tier 3: 备份下载 — LibGen + MedData。
 
-设计决策:
-  不再在此文件中实现下载逻辑，所有实现统一归口到 sources/ 模块。
+LibGen: 通过 Playwright 搜索 libgen.bz → MD5 → 镜像下载
+MedData: 通过 SSO + full_look + viewtext 下载
 """
-from typing import Optional, Dict, Any
+from typing import Optional, Dict
 
 def download_libgen(doi: str = None, title: str = None) -> Optional[bytes]:
     """从 LibGen 下载（通过 sources.libgen）。"""
     try:
         from ..sources.libgen import LibGen
-        libgen = LibGen()
+        lg = LibGen()
         if doi:
-            result = libgen.search_by_doi(doi)
-        elif title:
-            result = libgen.search(title[:100])
-        else:
-            return None
-        
-        if result and isinstance(result, dict):
-            pdf_url = result.get('pdf_url', result.get('download_link'))
-            if pdf_url and isinstance(pdf_url, str):
-                import requests
-                r = requests.get(pdf_url, timeout=30)
-                if r.content[:4] == b'%PDF' and len(r.content) > 100:
-                    return r.content
+            result = lg.search(doi, max_results=3)
+            if result:
+                return lg.download(result[0]["edition_id"])
+        if title:
+            result = lg.search(title[:100], max_results=3)
+            if result:
+                return lg.download(result[0]["edition_id"])
         return None
     except Exception:
         return None

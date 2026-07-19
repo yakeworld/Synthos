@@ -9,7 +9,7 @@ import urllib.request
 from typing import Optional
 
 from .utils import verify_pdf
-from .http import download_http
+from .http_download import download_http
 from . import config
 
 SS_API_KEY=os.environ.get("SEMANTIC_SCHOLAR_API_KEY", "")

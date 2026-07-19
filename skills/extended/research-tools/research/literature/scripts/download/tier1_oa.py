@@ -12,7 +12,7 @@ from typing import Optional
 def download_arxiv_pdf(arxiv_id: str) -> Optional[bytes]:
     """Download PDF from arXiv directly."""
     url = f"https://arxiv.org/pdf/{arxiv_id}.pdf"
-    from .http import download_http
+    from .http_download import download_http
     content = download_http(url, timeout=30)
     if content and content[:4] == b'%PDF' and len(content) > 100:
         return content
@@ -34,7 +34,7 @@ def download_frontiers_pdf(doi: str) -> Optional[bytes]:
     if m:
         journal = m.group(1)
         url = f"https://www.frontiersin.org/journals/{journal}/articles/{doi}/pdf"
-        from .http import download_http
+        from .http_download import download_http
         content = download_http(url, timeout=30)
         if content and content[:4] == b'%PDF' and len(content) > 100:
             return content
@@ -48,7 +48,7 @@ def download_plos_pdf(doi: str) -> Optional[bytes]:
     """Download PDF from PLOS journals."""
     doi_no_slash = doi.replace('/', '')
     url = f"https://journals.plos.org/plosone/article/file?id={doi_no_slash}&type=pdf"
-    from .http import download_http
+    from .http_download import download_http
     return download_http(url, timeout=30)
 
 
@@ -67,7 +67,7 @@ def download_crossref_link(doi: str) -> Optional[bytes]:
         if link.get("intended-application") == "text-mining" or link.get("content-type") == "unspecified":
             link_url = link.get("url", "")
             if link_url and ("pdf" in link_url.lower() or link_url.endswith(".pdf")):
-                from .http import download_http
+                from .http_download import download_http
                 content = download_http(link_url, timeout=30)
                 if content and content[:4] == b'%PDF' and len(content) > 100:
                     return content
@@ -75,7 +75,7 @@ def download_crossref_link(doi: str) -> Optional[bytes]:
     if oa:
         pdf_url = oa.get("pdf_url") or oa.get("url")
         if pdf_url:
-            from .http import download_http
+            from .http_download import download_http
             return download_http(pdf_url, timeout=30)
     return None
 
@@ -97,7 +97,7 @@ def download_unpaywall(doi: str) -> Optional[bytes]:
     if oa_location:
         pdf_url = oa_location.get("pdf_url") or oa_location.get("url")
         if pdf_url:
-            from .http import download_http
+            from .http_download import download_http
             return download_http(pdf_url, timeout=30)
     return None
 

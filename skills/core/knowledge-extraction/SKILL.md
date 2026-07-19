@@ -5,7 +5,7 @@ signature: "knowledge-extraction -> core: 从单篇论文中提取结构化知�
 description: "从单篇论文中提取结构化知识（实体、关系、主张、证据），输出 KnowledgeItem JSON。可选 pwbench 逆向工程模式。"
 author: Synthos
 license: MIT
-version: 2.1.0
+version: 2.2.0
 entrypoint_type: cognitive
 entrypoint_cmd: "从论文输入中提取实体、关系、主张、证据四域"
 entrypoint_desc: "知识提取。输入: papers(list), 输出: knowledge_items(list)"
@@ -18,7 +18,7 @@ metadata:
     atom_type: cognitive-atom
     description: "Single-paper structured knowledge extraction — entities, relations, claims, evidence"
     signature: "paper_content: str, schema: dict -> structured_knowledge: dict (entities, relations, claims, evidence)"
-    related_skills: ['knowledge-acquisition', 'association-discovery', 'hypothesis-generation']
+    related_skills: ['knowledge-acquisition', 'association-discovery', 'hypothesis-generation', 'pdf-to-markdown']
 ---
 
 # Knowledge Extraction — 知识提取
@@ -62,16 +62,30 @@ metadata:
 
 ### Step 1: 加载论文内容
 
-```bash
-# 方式A: 从PDF提取文本
-pdftotext paper.pdf /tmp/paper_content.txt
+优先 Markdown（markitdown），回退 raw text（pdftotext）。
 
-# 方式B: 从已下载的Markdown（推荐）
+```bash
+# 方式A（首选）: markitdown 转换 → Markdown
+# 保留表格结构、标题层级，provenance 标注更准
+markitdown paper.pdf > /tmp/paper_content.md
+
+# 方式B（回退）: pdftotext → raw text
+# 当 markitdown 失败（扫描PDF/超大/加密）时使用
+pdftotext -layout paper.pdf /tmp/paper_content.txt
+
+# 方式C: 从已下载的 Markdown 文件直接读
 cat /path/to/paper.md
 
-# 方式C: 从摘要/网页
+# 方式D: 从摘要/网页
 web_extract(url)  # 或直接粘贴摘要
 ```
+
+**级联规则**：
+1. 先跑 `markitdown paper.pdf > /tmp/try.md`
+2. 检查输出：`wc -c /tmp/try.md` ≥ 200 且含文本 → ✅ 用 Markdown（设 `meta.source = "markdown_extracted"`）
+3. 失败（空/超时）→ 回退 pdftotext（设 `meta.source = "pdf_text"`）
+
+> **为什么优先 Markdown**：表格结构保留 → 证据提取更准（数值不乱）；标题层级保留 → section 标注从"猜"变"定"。
 
 ### Step 2: 四域结构化提取
 
@@ -231,7 +245,7 @@ python3 -c "import json; json.dump(knowledge_item, open('outputs/{paper_dir}/07-
     "doi": "10.xxxx",
     "extraction_mode": "standard|pwbench",
     "extracted_at": "ISO时间戳",
-    "source": "pdf|abstract|markdown"
+    "source": "markdown_extracted|pdf_text|abstract"
   },
   "entities": [
     {"name": "...", "type": "...", "aliases": [...], "provenance": {...}}
@@ -270,13 +284,16 @@ python3 -c "import json; json.dump(knowledge_item, open('outputs/{paper_dir}/07-
 | 5 | **生成式幻觉** — 在提取中添加原文没有的内容 | 所有输出必须可追溯到原文具体句子，用 provenance 锁定 |
 | 6 | **pwbench 模式混入实验结果** — 逆向工程时错误包含了实验数据 | Sparse/Dense Idea 不允许包含实验结果——这是留给模型自行运行验证的 |
 | 7 | **忘记保存 JSON** — 提取后只在对话中输出，未持久化 | 必须保存到 `outputs/{paper_dir}/07-quality/knowledge.json` |
-| 8 | **摘要不够用** — 只读了摘要就提取，错失全文细节 | 优先读全文PDF（pdftotext），摘要只能用于快速筛选 |
+|| 8 | **摘要不够用** — 只读了摘要就提取，错失全文细节 | 优先读全文 PDF，用 markitdown 转 Markdown。摘要只能用于快速筛选 |
+|| 9 | **只用了 pdftotext 丢失表格和结构** — 表格列被打散，数值证据不准；标题层级模糊，section 标注靠猜 | 优先用 `markitdown`（保留 Markdown 结构），失败才回退 `pdftotext -layout` |
 
 ---
 
 ## 验证清单
 
 - [ ] 输入已验证：paper_content 非空，有来源标记
+- [ ] 加载方式已尝试 markitdown → 失败才回退 pdftotext
+- [ ] meta.source 正确标记（markdown_extracted / pdf_text / abstract）
 - [ ] 四域完整：entities, relations, claims, evidence 均有数据
 - [ ] 置信度区分：所有 claim 标注了 stated/suggested/speculated
 - [ ] 数值有位置：所有数值声明标注了 section/figure/table

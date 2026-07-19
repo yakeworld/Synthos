@@ -3,16 +3,16 @@ name: literature
 category: research-tools
 signature: "literature -> research-tools: 文献检索统一入口"
 description: 文献检索统一入口 — 搜索、下载、验证三位一体，多源聚合，管道编排。
-version: 5.1.0
+version: 5.2.0
 author: Synthos
 license: MIT
-updated: 2026-07-15
+updated: 2026-07-19
 metadata:
   synthos:
-    signature: "literature search/download/verify/pipeline"
+    signature: "literature search/download/verify/pipeline/diagnose"
     atom_type: unified-entry
     priority: P0
-    description: "文献检索统一包 — 搜索11源（统一返回 pdf_url+local_links+links）、下载核心（pdf_download_engine + unified_download），搜索即获取全文链接。"
+    description: "文献检索统一包 — 搜索11源、下载核心、综合诊断（literature diagnose）"
     linked_files:
       - references/sci-hub-cdn-bban-top.md
       - references/scihub-domain-scan-2026-07-10.md
@@ -41,20 +41,23 @@ metadata:
 
 > 多源求索，博观约取。
 
-## 原理
+## 架构变更（2026-07）
 
-文献检索是一个统一的包（package），不是多个独立 skill。所有检索、下载、验证逻辑集中管理，通过统一 CLI 入口调用。
+**文献检索已统一为 `jabkit` 入口。** `literature.py`（本 skill）降级为 **PDF 下载与管线编排**的辅助工具。
 
-**核心原则：搜索即获取全文链接。** 每个搜索源在 `search()` 时就把所有可用的 PDF 链接一起返回。下载阶段只需遍历链接下载，不再按 DOI 重新查源。
+```
+检索（搜索 BibTeX） → jabkit fetch（26 源，统一入口）
+下载（获取全文 PDF） → literature.py download（bban.top / Sci-Hub 等）
+管线（批量处理）     → literature.py pipeline
+```
 
 **完整链路**：`search() → 获取 {pdf_url, local_links, links} → 遍历 links 下载 → 保存到目标目录`
 
 ## 触发条件
-- 需要检索学术文献（主题/关键词/研究问题）
-- 需要下载论文全文
+- 需要**下载**论文全文（PDF 下载层）
 - 需要验证论文引用质量
-- 需要执行完整的检索→下载→验证管线
-- **用户要求"用文献检索技能"** — 这是唯一入口，不要自行调用 Crossref/PubMed 等独立 API
+- 需要执行**下载→验证**管线
+- jabkit 不可用时的检索回退
 
 ## 数据源（7 源 + 4 扩展源）
 
@@ -133,24 +136,21 @@ Sci-Hub 和 LibGen 在 `__all__` 中声明但未入 registry（需手动 `--sour
 
 ## CLI用法
 
+**检索（jabkit 优先）：**
+
 ```bash
-# 基本检索
-python3 literature.py search "topic" --sources pubmed crossref openalex arxiv core --max 10
+# jabkit 检索（26 源，S2 已修复）
+jabkit fetch --provider=Crossref --query="topic" --porcelain
+jabkit fetch --provider=SemanticScholar --query="topic" --porcelain
+```
 
-# DOI精确检索
-python3 literature.py search "doi:10.1038/s41586-019-1799-6"
+**下载（已迁移至 knowledge-acquisition）：**
+PDF 全文下载统一使用 `doi-fetch`，详见 `knowledge-acquisition` skill 的"全文下载"章节。
 
-# 字段过滤
-python3 literature.py search "deep learning author:hinton year:2020"
-
-# 下载
-python3 literature.py download --input search_results.json --output-dir /tmp/pdfs
-
-# 管线
+**管线（literature.py）：**
+```bash
 python3 literature.py pipeline "topic" --sources crossref pubmed --output-dir /path
-
-# 测试连通性
-python3 literature.py test
+python3 literature.py diagnose
 ```
 
 ## 环境变量
@@ -198,7 +198,10 @@ commit `d18616e` 是最后完整包含 literature 代码的提交。恢复后需
 
 ## Pitfalls
 
-- **literature.py search 子命令完全失效 (2026-07-15)**: 检索 15 篇已知文献全部 0 结果。根因在 CLI 包装层（JSON 输出格式不匹配各源返回），而非各源函数。各源独立函数调用完全正常：`from sources.pubmed import PubMed; pm = PubMed(); papers = pm.search("query", max_results=5)` 返回真实论文（100% DOI 覆盖）。`from sources.crossref import CrossRef` 和 `from sources.semantic_scholar import SemanticScholar` 也工作正常。OpenAlex 可用但 `year=None` 较多。下载仍可用 literature.py download（需先手动构建 JSON 文件）。详见 `references/literature-cli-bug-workaround.md`。
+- ~~**literature.py search 子命令完全失效 (2026-07-15)**:~~ ✅ **已修复 (2026-07-19)**。原因为 CLI 包装层 JSON 输出格式不匹配各源返回，现已修正。search 子命令当前工作正常。
+- **`literature test` 传参 bug (2026-07-18 发现, 2026-07-19 修复)**: 原 `run_test()` 函数调下载函数时不传 DOI 参数，导致所有下载层报告 `"error"`。现已修正。改用 `literature diagnose` 进行综合诊断。
+- **`literature diagnose` 新增 (2026-07-19)**: 三阶段综合诊断：检索测试（遍历7源）+ DOI解析测试 + 下载测试（12通道，20s超时保护）。输出结构化 JSON。命令：`literature diagnose`。
+- **`download/http.py` 文件名冲突**: 文件名 `http.py` 与 Python 标准库 `http` 模块同名。当从 `download/` 目录运行时，`import http.client` 会错误解析到本地文件。目前从 `scripts/` 目录调用可避免。长期需重命名文件。
 - **LibGen 搜索需要 Playwright（JS 渲染）** — libgen.bz 的条目详情和文件列表完全由 JS 渲染，requests/curl 无法解析。必须使用 Playwright 模拟浏览器：`from sources.libgen import LibGen; LibGen.search("query")`。纯 HTTP 搜索只返回 MD5 ID 列表，不含详细信息。
 - **LibGen 下载链接不可靠** — LibGen 提供的第三方镜像（randombook.org、annas-archive.gl、libgen.pw）大部分不可用：randombook 返回广告页面、libgen.pw 连接拒绝、annas-archive 重定向循环。仅 Sci-Hub.ru 返回 HTML 但不一定是 PDF。**LibGen 作为检索源非常强大（DOI精确检索、期刊论文+图书），但作为下载源需要备用方案。** 下载策略：(1) 第一优先 bban.top CDN，(2) 第二优先 Crossref/PubMed/OA 直链，(3) 第三优先 S2 openAccessPdf，(4) LibGen 仅作为检索源。
 - **bban.top 是唯一可靠的 Sci-Hub 下载入口** — `https://sci.bban.top/pdf/{DOI}.pdf` 直连返回 PDF 字节。旧实现（HTML 中转、域名查找）已全部删除。
@@ -214,6 +217,6 @@ commit `d18616e` 是最后完整包含 literature 代码的提交。恢复后需
 - **literature.py download 需要 JSON 文件**：`--input` 参数必须指向文件路径，不支持 stdin。JSON 格式必须是 `{"papers": [...]}`，不是纯列表。
 - **CORE需要API key**：Cloudflare拦截无key请求。免费注册获取key。
 - **OpenAlex year=None KeyError**：先做类型检查再切片。
-- **SyntaxWarning `\\:`**：`download/http.py` 第 32 行 docstring 中有非法转义序列 `/\\\\:`，会导致 Python 3.12 语法警告。修复：改为 `/\\\\\\\\:` 或直接写冒号 `/ : ? " < > |`。
-- **literature.py 脚本缺失**：`skills/extended/research-tools/research/literature/` 目录下无 Python 脚本文件，SKILL.md 中描述的来源处理代码均不存在。git 中也不存在。如需执行文献检索，必须通过独立 API 调用（PubMed/E-utilities、CrossRef、OpenAlex）或先恢复代码（`git checkout d18616e`）。
-- **PDF 魔数验证用 `startswith` 而非切片**：`content[:8] == b"%PDF-"` 永远是 `False`（`%PDF-` 是 5 字节，`[:8]` 取到 `%PDF-1.5`）。必须用 `content[:5] == b"%PDF-"` 或 `content.startswith(b"%PDF-")`。此 bug 在 `download_pubmed_central()` 中导致 PMC PDF 明明成功生成却返回 None。
+- ~~**SyntaxWarning `\\\\:`**~~: `download/http.py` 第 32 行 docstring 中的非法转义序列。已知。
+- ~~**literature.py 脚本缺失**~~: ✅ 脚本存在。
+- ~~**PDF 魔数验证用 `startswith` 而非切片**~~: ✅ 已修复。

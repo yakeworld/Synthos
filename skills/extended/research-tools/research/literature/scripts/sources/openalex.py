@@ -3,7 +3,7 @@
 
 职责: 通过 OpenAlex API 检索开放学术图谱，覆盖所有学科。
 设计决策:
-- 无需 API key，公共 API
+- 可选 API key（OPENALEX_API_KEY env），有 key 时走 100 req/s 快速池
 - 搜索时按引用数排序（sort=cited_by_count:desc），优先高质量论文
 - 默认 from_publication_date=2020，避免旧文献淹没
 - best_oa_location 自动获取 OA PDF 链接
@@ -14,12 +14,13 @@
 
 API 协议:
   GET https://api.openalex.org/works?search={query}&per_page=N&sort=cited_by_count:desc&filter=from_publication_date:2020-01-01
-  认证: 无
+  认证: x-api-key header（可选，无 key 限 10 req/s，有 key 限 100 req/s）
   响应: {"results": [{...}], "meta": {"count": N}}
 
 依赖: urllib (stdlib)
 """
 import json
+import os
 import urllib.request
 import urllib.parse
 from typing import Optional
@@ -28,7 +29,7 @@ from typing import Optional
 class OpenAlex:
     """OpenAlex API 封装。
 
-    开放学术图谱，无需 API key。覆盖 2500+ 万论文，所有学科。
+    开放学术图谱，可选 API key（OPENALEX_API_KEY）。有 key 走 100 req/s 快速池。
 
     搜索策略:
       - 关键词搜索 → 按引用数降序排列 → 过滤 2020 年后
@@ -48,6 +49,29 @@ class OpenAlex:
     """
 
     BASE_URL = "https://api.openalex.org"
+    _API_KEY: str = ""
+
+    @classmethod
+    def _load_api_key(cls) -> str:
+        if cls._API_KEY:
+            return cls._API_KEY
+        key = os.environ.get("OPENALEX_API_KEY", "").strip().strip('"').strip("'")
+        if not key:
+            # Try ~/.secrets
+            secrets_path = os.path.expanduser("~/.secrets")
+            if os.path.exists(secrets_path):
+                with open(secrets_path) as f:
+                    for line in f:
+                        line = line.strip()
+                        # Handle both "export KEY=val" and "KEY=val" formats
+                        stripped = line.replace("export ", "", 1).strip()
+                        if stripped.startswith("OPENALEX_API_KEY="):
+                            val = stripped.split("=", 1)[1].strip().strip('"').strip("'")
+                            if val:
+                                key = val
+                                break
+        cls._API_KEY = key
+        return key
 
     def search(self, topic: str, max_results: int = 10, year_range: Optional[str] = None) -> list[dict]:
         """检索 OpenAlex 文献。
@@ -93,10 +117,14 @@ class OpenAlex:
         url = f"{self.BASE_URL}/works?{query_string}"
 
         try:
-            req = urllib.request.Request(url, headers={
+            headers = {
                 "User-Agent": "Synthos-Literature/1.0",
                 "Accept": "application/json",
-            })
+            }
+            api_key = self._load_api_key()
+            if api_key:
+                headers["x-api-key"] = api_key
+            req = urllib.request.Request(url, headers=headers)
             with urllib.request.urlopen(req, timeout=30) as resp:
                 data = json.loads(resp.read().decode())
 

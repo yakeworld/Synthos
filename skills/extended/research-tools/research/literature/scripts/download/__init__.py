@@ -18,7 +18,7 @@ from .config import (
 from .utils import (
     safe_filename, save_pdf, verify_pdf, generate_bibkey
 )
-from .http import smart_download, download_via_curl, download_via_urllib, normalize_doi
+from .http_download import smart_download, download_via_curl, download_via_urllib, normalize_doi
 from .tier1_oa import (
     download_arxiv_pdf, download_frontiers_pdf, download_plos_pdf,
     download_crossref_link, download_unpaywall, download_pubmed_central,

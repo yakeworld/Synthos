@@ -208,6 +208,9 @@ tools/_archive/
 tools/monitoring/
 tools/pptx/
 tools/research/
+tools/doi-fetch/
+tools/lit-import/
+tools/literature-search/
 
 # ============================================
 # 21. 根目录 Python 脚本（已存档，不入库）

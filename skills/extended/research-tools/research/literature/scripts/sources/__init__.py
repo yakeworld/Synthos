@@ -19,6 +19,7 @@ SOURCE_REGISTRY = {
     "arxiv": ArXiv,
     "pubscholar": PubScholar,
     "scihub": SciHub,
+    "libgen": LibGen,
     }
 
 # Default sources to query

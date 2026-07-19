@@ -175,7 +175,7 @@ delegate_task(
 7. **循环模式不适用一次性查询** — 搜索/提取类查询用标准链
 8. **子Agent context 陷阱** — 不要在 delegate_task 的 context 里写详细步骤。子Agent有自己的SOUL.md。context 写越多，子Agent越倾向于"理解后再实现"而非"直接调用成熟脚本"
 9. **批量任务陷阱** — 不要试图让一个子Agent处理大量论文（>10篇）。每个子Agent有超时限制。大任务应拆成多个并行子任务
-10. **literature.py S2 限流** — semantic_scholar 源经常 429 导致整个 search 挂死。搜索时排除 S2（用 crossref+pubmed+openalex），或先用 curl 探测 S2 状态
+10. **文献检索：jabkit 优先，literature.py 仅下载** — 搜索学术文献用 `jabkit fetch`（26 源，S2 已修复），`literature.py` 仅用于 PDF 下载和管线编排
 
 ---
 

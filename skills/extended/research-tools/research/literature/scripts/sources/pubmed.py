@@ -10,20 +10,32 @@
 限制:
 - 非生物医学领域覆盖差
 - 无 PDF 直链（除 PMC 外），链接为 PubMed 页面
-- 速率限制：3 req/秒 per IP（未实施，依赖 curl timeout 保护）
+- 速率限制：无 key 3 req/s，设 NCBI_API_KEY 后 10 req/s
 
 API 协议:
   POST https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi
   POST https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi
-  认证: 无（公共 API，但建议注册 email 避免限流）
+  认证: 可选 NCBI_API_KEY 环境变量（提升限流至 10 req/s）
   响应: JSON 格式
 
 依赖: curl (subprocess), json (stdlib)
 """
 import json
+import os
 import subprocess
 import time
 from typing import Optional
+
+# 读取 NCBI API Key
+NCBI_API_KEY = os.environ.get("NCBI_API_KEY", "").strip()
+
+
+def _api_params(**kwargs) -> str:
+    """构建 POST data，含 api_key（如有）。"""
+    parts = [f"{k}={v}" for k, v in kwargs.items()]
+    if NCBI_API_KEY:
+        parts.append(f"api_key={NCBI_API_KEY}")
+    return "&".join(parts)
 
 
 class PubMed:
@@ -35,6 +47,9 @@ class PubMed:
     两步查询流程:
       1. esearch(term=topic, retmax=N) → 获取 PMID 列表
       2. esummary(id=pmid1,pmid2,...) → 获取每篇详细信息
+
+    NCBI_API_KEY 环境变量：
+      设此变量后限流从 3 req/s 提升至 10 req/s，retmax 硬限取消。
 
     参数映射:
       search() 输入: topic (str), max_results (int), year_range (str|None)
@@ -56,7 +71,7 @@ class PubMed:
 
         参数:
             topic: 搜索关键词
-            max_results: 最大结果数（实际限制为每批次 3 个 PMID）
+            max_results: 最大结果数
             year_range: 未使用（PubMed API 不支持年份过滤）
         返回:
             list[dict]: 标准化论文列表。
@@ -66,20 +81,15 @@ class PubMed:
         原理:
             - PubMed 是生物医学领域最权威的索引，覆盖 3900+ 期刊
             - 使用 esearch + esummary 两步查询，避免单次请求过大
-            - max_results 限制为 3 是因为 esummary 单次最多处理 200 个 ID，
-              但为避免网络超时和 API 限流，取 3 作为安全值
-            - 如需更多结果，调用方应多次调用（带 offset）
-        示例:
-            >>> p = PubMed()
-            >>> papers = p.search("vestibular neuritis", max_results=3)
-            >>> len(papers) <= 3
-            True
+            - 无 NCBI_API_KEY 时 max_results 硬限 3；
+              有 key 时提升至 min(max_results, 50)
         """
         # Step 1: esearch — 获取 PMID 列表
+        safe_max = min(max_results, 50) if NCBI_API_KEY else min(max_results, 3)
         esearch_cmd = (
             f'curl -s --connect-timeout 5 --max-time 10 '
             f'-X POST "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi" '
-            f'-d "db=pubmed&term={topic}&retmax={min(max_results, 3)}&retmode=json"'
+            f'-d "{_api_params(db="pubmed", term=topic, retmax=safe_max, retmode="json")}"'
         )
         try:
             result = subprocess.run(esearch_cmd, shell=True, capture_output=True, text=True, timeout=15)
@@ -112,7 +122,7 @@ class PubMed:
             cmd = (
                 f'curl -s --connect-timeout 5 --max-time 10 '
                 f'-X POST "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi" '
-                f'-d "db=pubmed&term={doi}%5Baid%5D&retmode=json"'
+                f'-d "{_api_params(db="pubmed", term=f"{doi}[aid]", retmode="json")}"'
             )
             result = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=10)
             if result.returncode != 0:
@@ -136,18 +146,19 @@ class PubMed:
         返回:
             list[dict]: 标准化论文列表
         原理:
-            - esummary 单次最多处理 200 个 ID，但为避免超时，最多取前 3 个
+            - esummary 单次最多处理 200 个 ID，但避免超时控制并发
             - 结果中 result 是 dict，key 为 PMID 字符串（非整数）
             - 需要过滤非 PMID 的 key（如 error 字段）
         """
         if not pmid_list:
             return []
 
-        pmid_str = ",".join(pmid_list[:3])  # 最多 3 个
+        batch_size = 50 if NCBI_API_KEY else 3
+        pmid_str = ",".join(pmid_list[:batch_size])
         esummary_cmd = (
             f'curl -s --connect-timeout 5 --max-time 10 '
             f'-X POST "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi" '
-            f'-d "db=pubmed&id={pmid_str}&retmode=json"'
+            f'-d "{_api_params(db="pubmed", id=pmid_str, retmode="json")}"'
         )
         try:
             result = subprocess.run(esummary_cmd, shell=True, capture_output=True, text=True, timeout=30)
@@ -157,9 +168,7 @@ class PubMed:
             data = json.loads(result.stdout)
             papers = []
             result_section = data.get("result", {})
-            # result 是 dict，key 为 PMID 字符串: result["42388699"] -> doc
             for pmid, doc in result_section.items():
-                # Skip the metadata keys that aren't PMIDs
                 if not pmid.isdigit():
                     continue
                 paper = {
@@ -183,7 +192,6 @@ class PubMed:
                     "provenance": f"source=pubmed, pmid={pmid}",
                 }
                 if paper["pmc"]:
-                    # 有 PMC → 构建直接 PMC PDF/full-text URL
                     paper["pdf_url"] = f"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC{paper['pmc']}/"
                     paper["links"]["pmc_fulltext"] = paper["pdf_url"]
                 if paper["title"]:
@@ -194,13 +202,9 @@ class PubMed:
         except Exception:
             return []
 
-    def _extract_year(self, pubdate: str) -> Optional[int]:
-        """从 pubdate 字符串提取年份。
-
-        pubdate 格式示例: "2020 Jan", "2020", "Winter 2020"
-        返回:
-            int or None: 四位年份
-        """
+    @staticmethod
+    def _extract_year(pubdate: str) -> Optional[int]:
+        """从 pubdate 字符串提取年份。"""
         if not pubdate:
             return None
         parts = pubdate.replace(",", " ").split()
@@ -209,28 +213,17 @@ class PubMed:
                 return int(p)
         return None
 
-    def _extract_pmc_id(self, doc: dict) -> str:
-        """从 articleids 或 externalids 提取 PMC 号（纯数字）。
-
-        优先级:
-          1. articleids (type=pmc 或 type=pmcid)
-          2. externalids.PMC
-
-        返回:
-            str: 纯数字 PMC ID（不含 "PMC" 前缀），如 "4236699"
-            空字符串表示无 PMC
-        """
-        # Try articleids first
+    @staticmethod
+    def _extract_pmc_id(doc: dict) -> str:
+        """从 articleids 或 externalids 提取 PMC 号（纯数字）。"""
         for aid in doc.get("articleids", []):
             if isinstance(aid, dict):
                 idtype = aid.get("idtype", "")
                 value = aid.get("value", "")
                 if idtype in ("pmc", "pmcid"):
-                    # 提取纯数字: "PMC4236699" -> "4236699"
                     num = str(value).lstrip("PMC").lstrip("pmc").lstrip("PMC-")
                     if num and num.isdigit():
                         return num
-        # Fallback: externalids PMC
         pmc = doc.get("externalids", {}).get("PMC", "")
         if pmc:
             return str(pmc).lstrip("PMC").lstrip("pmc").lstrip("PMC-")
