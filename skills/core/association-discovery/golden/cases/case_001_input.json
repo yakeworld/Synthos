@@ -1,0 +1,83 @@
+[
+  {
+    "id": "ext/001",
+    "meta": {
+      "title": "OSIRIS: Open-Source Iris Segmentation for Unconstrained Environments",
+      "authors": ["Daugman J., et al."],
+      "doi": "10.1016/j.patcog.2023.01.001",
+      "source": "constructed"
+    },
+    "entities": [
+      {"name": "OSIRIS", "type": "method", "provenance": {"section": "Abstract"}},
+      {"name": "iris_segmentation", "type": "phenomenon", "provenance": {"section": "Abstract"}},
+      {"name": "deep_learning", "type": "method", "provenance": {"section": "Methods"}}
+    ],
+    "claims": [
+      {
+        "claim": "OSIRIS achieves 98.2% segmentation accuracy on CASIA-Iris-V4 under unconstrained conditions",
+        "type": "finding",
+        "confidence": "stated",
+        "evidence_refs": ["ev/001"],
+        "provenance": {"section": "Results", "sentence": "OSIRIS achieves 98.2% segmentation accuracy on CASIA-Iris-V4"}
+      }
+    ],
+    "evidence": [
+      {
+        "id": "ev/001",
+        "evidence": "98.2% accuracy on CASIA-Iris-V4, 95.1% on UBIRIS.v2",
+        "type": "numeric",
+        "value": 98.2,
+        "unit": "percent",
+        "provenance": {"section": "Results", "table": "Table 3"}
+      }
+    ]
+  },
+  {
+    "id": "ext/002",
+    "meta": {
+      "title": "Revisiting Iris Segmentation: Why Deep Learning Underperforms on Off-Axis Images",
+      "authors": ["Smith A., Chen B."],
+      "doi": "10.1109/TBIOM.2024.001",
+      "source": "constructed"
+    },
+    "entities": [
+      {"name": "deep_learning_segmentation", "type": "method", "provenance": {"section": "Abstract"}},
+      {"name": "iris_segmentation", "type": "phenomenon", "provenance": {"section": "Abstract"}},
+      {"name": "off_axis", "type": "concept", "provenance": {"section": "Introduction"}}
+    ],
+    "claims": [
+      {
+        "claim": "Deep learning models show less than 85% accuracy on off-axis iris images, with performance degrading by 15% compared to frontal captures",
+        "type": "finding",
+        "confidence": "stated",
+        "evidence_refs": ["ev/002"],
+        "provenance": {"section": "Results", "sentence": "Deep learning models show less than 85% accuracy on off-axis images"}
+      },
+      {
+        "claim": "Traditional Daugman integro-differential operator outperforms deep learning on off-axis images by 8% (89% vs 81%)",
+        "type": "finding",
+        "confidence": "stated",
+        "evidence_refs": ["ev/003"],
+        "provenance": {"section": "Discussion"}
+      }
+    ],
+    "evidence": [
+      {
+        "id": "ev/002",
+        "evidence": "DL models: 81-85% accuracy on off-axis subset of CASIA-Iris-V4",
+        "type": "numeric",
+        "value": 83,
+        "unit": "percent",
+        "provenance": {"section": "Results", "figure": "Fig 4"}
+      },
+      {
+        "id": "ev/003",
+        "evidence": "Daugman operator: 89% vs DL: 81% on same off-axis test set",
+        "type": "numeric",
+        "value": 8,
+        "unit": "percent",
+        "provenance": {"section": "Discussion"}
+      }
+    ]
+  }
+]

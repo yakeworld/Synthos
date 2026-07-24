@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "source_count": 2,
+    "pair_count": 1,
+    "analyzed_at": "2026-07-20T00:00:00Z",
+    "topic": "iris_segmentation"
+  },
+  "associations": [
+    {
+      "id": "asc-001",
+      "type": "contradiction",
+      "aspect": "深度学习在虹膜分割非约束条件下的准确性",
+      "sources": ["ext/001", "ext/002"],
+      "papers": [
+        {"doi": "10.1016/j.patcog.2023.01.001"},
+        {"doi": "10.1109/TBIOM.2024.001"}
+      ],
+      "claim_a": "OSIRIS在非约束条件下达98.2%准确率（含多样化光照和角度）",
+      "claim_b": "深度学习模型在离轴图像上准确率不足85%（15%的性能下降）",
+      "confidence": 0.75,
+      "evidence": "ext/001 Table 3 vs ext/002 Fig 4: 同一CASIA-Iris-V4数据集的不同子集，但'非约束条件'应包含离轴场景，两篇结论方向相反",
+      "resolvable": true,
+      "cross_domain": false
+    },
+    {
+      "id": "asc-002",
+      "type": "complement",
+      "aspect": "传统方法 vs 深度学习的分场景表现",
+      "sources": ["ext/001", "ext/002"],
+      "papers": [
+        {"doi": "10.1016/j.patcog.2023.01.001"},
+        {"doi": "10.1109/TBIOM.2024.001"}
+      ],
+      "claim_a": "OSIRIS在标准正面虹膜图像上表现优异（98.2%）",
+      "claim_b": "深度学习在离轴场景下表现下降，传统Daugman方法仍有优势（89% vs 81%）",
+      "confidence": 0.90,
+      "evidence": "ext/001证明DL在标准正面有效；ext/002证明DL在离轴失效、传统方法在此场景更优。两篇互补覆盖了不同子场景",
+      "resolvable": true,
+      "cross_domain": false
+    }
+  ],
+  "gaps": [
+    {
+      "id": "gap-001",
+      "gap_statement": "缺乏在统一测试协议下评估深度学习虹膜分割在离轴vs正面图像上的对比研究",
+      "evidence": "ext/001在'非约束条件'下测试但未细分离轴子集；ext/002专门测试离轴但使用不同模型架构。两篇无法直接对比",
+      "filled_by": "设计控制变量实验：同一DL模型在标准正面和离轴子集上的性能对比",
+      "priority": "H",
+      "related_papers": ["10.1016/j.patcog.2023.01.001", "10.1109/TBIOM.2024.001"]
+    }
+  ],
+  "summary": {
+    "total_associations": 2,
+    "by_type": {
+      "contradiction": 1,
+      "complement": 1,
+      "evolution": 0,
+      "gap": 1,
+      "causation": 0,
+      "parallel": 0,
+      "dependency": 0
+    },
+    "high_confidence": 2,
+    "gaps_found": 1
+  }
+}
