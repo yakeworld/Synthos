@@ -4,7 +4,6 @@ version: 1.0.0
 category: meta
 signature: "autonomous-execution-threshold -> meta: **≥80%置信度 = 闭嘴执行。** 不输出推测文案、不给选项、不喊\"开始自主执行\"口号。用户看到的是执行结果，不是选择题。"
 description: "**≥80%置信度 = 闭嘴执行。** 不输出推测文案、不给选项、不喊\"开始自主执行\"口号。用户看到的是执行结果，不是选择题。"
-version: 1.0.0
 license: MIT
 author: Synthos
 metadata:
