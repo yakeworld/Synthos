@@ -1,23 +1,35 @@
 ---
 name: quality-gate
 category: core
-signature: "quality-gate -> core: 四层质量架构，固定流程强制执行"
+signature: 'quality-gate -> core: 四层质量架构，固定流程强制执行'
 description: P0 质量闸门。四层架构：L0动灵层 → L0.5数据诚实门 → G1-G7管线门 → L4内容评审。固定模板，零自由发挥。
 author: Synthos
 license: MIT
 version: 3.1.0
 priority: P0
 entrypoint_type: cognitive
-entrypoint_cmd: "检查D8≥80%, D10a≥90%, 0 undefined citation"
-entrypoint_desc: "质量闸门。输入: paper_dir, 输出: gate_result"
+entrypoint_cmd: 检查D8≥80%, D10a≥90%, 0 undefined citation
+entrypoint_desc: '质量闸门。输入: paper_dir, 输出: gate_result'
 metadata:
   synthos:
-    priority: P0
-    atom_type: meta-component
-    description: 质量闸门 — 强制固定流程，不靠Agent自行判断。
-    signature: "paper_dir: str -> quality_report: dict"
-    related_skills: ['knowledge-extraction', 'paper-pipeline']
+    priority: P2
+    atom_type: mechanical
+    description: P0 质量闸门。四层架构：L0动灵层 → L0.5数据诚实门 → G1-G7管线门 → L4内容评审。固定模板，零自由发挥。
+    signature: 'quality-gate -> core: 四层质量架构，固定流程强制执行'
+    related_skills:
+    - knowledge-extraction
+    - paper-pipeline
+    synthos_version: 3.1.0
+    synthos_skill_md_hash: auto
+    synthos_asserted_compliance: P2,P3
+    synthos_mechanical_atoms: ''
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- session_search
 ---
+
 
 # Quality Gate — 质量闸门
 
@@ -69,7 +81,7 @@ python3 quality-gate-runner.py \
 
 ### Step 4: 生成报告
 
-按固定模板生成报告，使用 `refs/comprehensive-quality-report-template.md`：
+按固定模板生成报告，使用 `references/comprehensive-quality-report-template.md`：
 
 ```bash
 # 将 quality_report.json 加载，按模板输出 Markdown 报告
@@ -81,7 +93,7 @@ python3 quality-gate-runner.py \
 ### Step 5: 修复循环（如未通过）
 
 1. 按 severity 排序 issues（P0 → P1 → P2）
-2. 对每个问题，参考 `refs/quality-gate-fix-recipes.md` 获取修复方案
+2. 对每个问题，参考 `references/quality-gate-fix-recipes.md` 获取修复方案
 3. 执行修复（patch paper.tex / 清理 bib / 重编译）
 4. 重编译验证：
    ```bash
@@ -149,10 +161,10 @@ python3 quality-gate-runner.py \
 
 ## 固定报告模板
 
-- `refs/comprehensive-quality-report-template.md` — 报告结构模板（四份报告）
-- `refs/quality-gate-fix-recipes.md` — 每个常见问题的修复方案
-- `refs/codex-g7-quality-workflow.md` — G7 详细工作流
-- `refs/stale-quality-report-trap.md` — 旧报告过期陷阱
+- `references/comprehensive-quality-report-template.md` — 报告结构模板（四份报告）
+- `references/quality-gate-fix-recipes.md` — 每个常见问题的修复方案
+- `references/codex-g7-quality-workflow.md` — G7 详细工作流
+- `references/stale-quality-report-trap.md` — 旧报告过期陷阱
 
 ## 陷阱
 
