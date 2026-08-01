@@ -1,25 +1,45 @@
 ---
 name: association-discovery
 category: core
-signature: "association-discovery -> core: 跨论文识别知识关联（矛盾、补充、演进、空白），构建知识图谱。基于 Boden 创造力理论分类关联类型。"
-description: "跨论文识别知识关联（矛盾、补充、演进、空白），构建知识图谱。基于 Boden 创造力理论分类关联类型。"
+signature: 'association-discovery -> core: 跨论文识别知识关联（矛盾、补充、演进、空白），构建知识图谱。基于 Boden 创造力理论分类关联类型。'
+description: 跨论文识别知识关联（矛盾、补充、演进、空白），构建知识图谱。基于 Boden 创造力理论分类关联类型。
 author: Synthos
 license: MIT
 version: 2.1.0
 entrypoint_type: cognitive
-entrypoint_cmd: "从知识条目中识别矛盾/补充/演进/空白四类关联"
-entrypoint_desc: "认知原子"
+entrypoint_cmd: 从知识条目中识别矛盾/补充/演进/空白四类关联
+entrypoint_desc: 认知原子
 priority: P1
 atom_type: cognitive-atom
-allowed-tools: [terminal, read_file, write_file, session_search]
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- session_search
 metadata:
   synthos:
-    priority: P1
-    atom_type: cognitive-atom
-    description: "Cross-paper association discovery — identify contradictions, complements, evolution, gaps. Boden creativity theory."
-    signature: "knowledge_base: dict, query: str -> associations: list[Association] (type, strength, confidence, source)"
-    related_skills: ['knowledge-extraction', 'hypothesis-generation', 'viewpoint-verification']
+    priority: P0
+    atom_type: cognitive
+    description: 跨论文识别知识关联（矛盾、补充、演进、空白），构建知识图谱。基于 Boden 创造力理论分类关联类型。
+    signature: 'association-discovery -> core: 跨论文识别知识关联（矛盾、补充、演进、空白），构建知识图谱。基于 Boden 创造力理论分类关联类型。'
+    related_skills:
+    - knowledge-extraction
+    - hypothesis-generation
+    - viewpoint-verification
+    synthos_version: 2.1.0
+    synthos_model_version_pin: anthropic/claude-4-opus-max@latest
+    synthos_model_tested_on: '2026-07-01T00:00:00Z'
+    synthos_asserted_compliance: P0,P1,P2
+    synthos_mechanical_atoms: ''
+    synthos_io_contract_ref: references/IO_CONTRACT.md
+    synthos_evidence_schema_ref: references/EVIDENCE_SCHEMA.md
+    synthos_boundary_proof_ref: references/BOUNDARY.md
+    synthos_change_log_ref: references/CHANGE_LOG.md
+    synthos_golden_set_ref: golden/GOLDEN_SET.md
+    synthos_golden_set_origin: self_defined
+    synthos_pass_threshold: '0.85'
 ---
+
 
 # Association Discovery — 关联发现
 

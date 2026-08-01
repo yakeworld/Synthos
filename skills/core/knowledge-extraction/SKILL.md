@@ -1,25 +1,47 @@
 ---
 name: knowledge-extraction
 category: core
-signature: "knowledge-extraction -> core: 从单篇论文中提取结构化知识（实体、关系、主张、证据），输出 KnowledgeItem JSON。可选 pwbench 逆向工程模式。"
-description: "从单篇论文中提取结构化知识（实体、关系、主张、证据），输出 KnowledgeItem JSON。可选 pwbench 逆向工程模式。"
+signature: 'knowledge-extraction -> core: 从单篇论文中提取结构化知识（实体、关系、主张、证据），输出 KnowledgeItem JSON。可选 pwbench 逆向工程模式。'
+description: 从单篇论文中提取结构化知识（实体、关系、主张、证据），输出 KnowledgeItem JSON。可选 pwbench 逆向工程模式。
 author: Synthos
 license: MIT
 version: 2.2.0
 entrypoint_type: cognitive
-entrypoint_cmd: "从论文输入中提取实体、关系、主张、证据四域"
-entrypoint_desc: "知识提取。输入: papers(list), 输出: knowledge_items(list)"
+entrypoint_cmd: 从论文输入中提取实体、关系、主张、证据四域
+entrypoint_desc: '知识提取。输入: papers(list), 输出: knowledge_items(list)'
 priority: P1
 atom_type: cognitive-atom
-allowed-tools: [terminal, read_file, write_file, web_extract, vision_analyze]
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- web_extract
+- vision_analyze
 metadata:
   synthos:
-    priority: P1
-    atom_type: cognitive-atom
-    description: "Single-paper structured knowledge extraction — entities, relations, claims, evidence"
-    signature: "paper_content: str, schema: dict -> structured_knowledge: dict (entities, relations, claims, evidence)"
-    related_skills: ['knowledge-acquisition', 'association-discovery', 'hypothesis-generation', 'pdf-to-markdown']
+    priority: P0
+    atom_type: cognitive
+    description: 从单篇论文中提取结构化知识（实体、关系、主张、证据），输出 KnowledgeItem JSON。可选 pwbench 逆向工程模式。
+    signature: 'knowledge-extraction -> core: 从单篇论文中提取结构化知识（实体、关系、主张、证据），输出 KnowledgeItem JSON。可选 pwbench 逆向工程模式。'
+    related_skills:
+    - knowledge-acquisition
+    - association-discovery
+    - hypothesis-generation
+    - pdf-to-markdown
+    synthos_version: 2.2.0
+    synthos_model_version_pin: anthropic/claude-4-opus-max@latest
+    synthos_model_tested_on: '2026-07-01T00:00:00Z'
+    synthos_asserted_compliance: P0,P1,P2
+    synthos_mechanical_atoms: ''
+    synthos_io_contract_ref: references/IO_CONTRACT.md
+    synthos_evidence_schema_ref: references/EVIDENCE_SCHEMA.md
+    synthos_boundary_proof_ref: references/BOUNDARY.md
+    synthos_change_log_ref: references/CHANGE_LOG.md
+    synthos_golden_set_ref: golden/GOLDEN_SET.md
+    synthos_golden_set_origin: self_defined
+    synthos_pass_threshold: '0.85'
 ---
+
 
 # Knowledge Extraction — 知识提取
 

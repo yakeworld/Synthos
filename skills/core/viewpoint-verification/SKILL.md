@@ -1,25 +1,46 @@
 ---
 name: viewpoint-verification
 category: core
-signature: "viewpoint-verification -> core: 对假设和论证进行多角度验证（反方观点、证伪条件、鲁棒性），支持 Bayesian 评分、可证伪性检验。"
-description: "对假设和论证进行多角度验证（反方观点、证伪条件、鲁棒性），支持 Bayesian 评分、可证伪性检验。"
+signature: 'viewpoint-verification -> core: 对假设和论证进行多角度验证（反方观点、证伪条件、鲁棒性），支持 Bayesian 评分、可证伪性检验。'
+description: 对假设和论证进行多角度验证（反方观点、证伪条件、鲁棒性），支持 Bayesian 评分、可证伪性检验。
 author: Synthos
 license: MIT
 version: 2.1.0
 entrypoint_type: cognitive
-entrypoint_cmd: "从反方观点、证伪条件、鲁棒性三角度验证"
-entrypoint_desc: "认知原子"
+entrypoint_cmd: 从反方观点、证伪条件、鲁棒性三角度验证
+entrypoint_desc: 认知原子
 priority: P1
 atom_type: cognitive-atom
-allowed-tools: [terminal, read_file, write_file, web_search, session_search]
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- web_search
+- session_search
 metadata:
   synthos:
-    priority: P1
-    atom_type: cognitive-atom
-    description: "Multi-perspective hypothesis and argument verification — falsification, robustness, Bayesian scoring"
-    signature: "hypothesis: str, context: dict -> verification_report: dict (score, evidence, counter_evidence, confidence)"
-    related_skills: ['hypothesis-generation', 'argument-expression', 'quality-gate']
+    priority: P0
+    atom_type: cognitive
+    description: 对假设和论证进行多角度验证（反方观点、证伪条件、鲁棒性），支持 Bayesian 评分、可证伪性检验。
+    signature: 'viewpoint-verification -> core: 对假设和论证进行多角度验证（反方观点、证伪条件、鲁棒性），支持 Bayesian 评分、可证伪性检验。'
+    related_skills:
+    - hypothesis-generation
+    - argument-expression
+    - quality-gate
+    synthos_version: 2.1.0
+    synthos_model_version_pin: anthropic/claude-4-opus-max@latest
+    synthos_model_tested_on: '2026-07-01T00:00:00Z'
+    synthos_asserted_compliance: P0,P1,P2
+    synthos_mechanical_atoms: ''
+    synthos_io_contract_ref: references/IO_CONTRACT.md
+    synthos_evidence_schema_ref: references/EVIDENCE_SCHEMA.md
+    synthos_boundary_proof_ref: references/BOUNDARY.md
+    synthos_change_log_ref: references/CHANGE_LOG.md
+    synthos_golden_set_ref: golden/GOLDEN_SET.md
+    synthos_golden_set_origin: self_defined
+    synthos_pass_threshold: '0.85'
 ---
+
 
 # Viewpoint Verification — 观点验证
 

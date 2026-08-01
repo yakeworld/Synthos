@@ -2,17 +2,39 @@
 name: task-router
 version: 1.2.0
 entrypoint_type: cognitive
-entrypoint_cmd: "分析查询→选模式→定原子链→建pipeline_trace→调度"
-entrypoint_desc: "系统入口。输入: query(str), 输出: pipeline_trace.json"
+entrypoint_cmd: 分析查询→选模式→定原子链→建pipeline_trace→调度
+entrypoint_desc: '系统入口。输入: query(str), 输出: pipeline_trace.json'
 category: core
-description: "Synthos系统入口。分析查询→选执行模式→定原子链→调度执行→汇总输出。"
-signature: "query: str, context: dict -> route: str, atom_chain: list[str], execution_mode: str, pipeline_trace: pipeline_trace.json"
-allowed-tools: shell (bash), Read (view), Write (write), task_delegation (agent, inline), skill_loader (view with file path)
+description: Synthos系统入口。分析查询→选执行模式→定原子链→调度执行→汇总输出。
+signature: 'query: str, context: dict -> route: str, atom_chain: list[str], execution_mode: str, pipeline_trace: pipeline_trace.json'
+allowed-tools:
+- shell (bash)
+- Read (view)
+- Write (write)
+- task_delegation (agent
+- inline)
+- skill_loader (view with file path)
 metadata:
   synthos:
     priority: P0
-    atom_type: parent-skill
+    atom_type: router
+    synthos_version: 1.2.0
+    synthos_model_version_pin: anthropic/claude-4-opus-max@latest
+    synthos_model_tested_on: '2026-07-01T00:00:00Z'
+    synthos_asserted_compliance: P0,P1,P2
+    synthos_mechanical_atoms: ''
+    synthos_io_contract_ref: references/IO_CONTRACT.md
+    synthos_evidence_schema_ref: references/EVIDENCE_SCHEMA.md
+    synthos_boundary_proof_ref: references/BOUNDARY.md
+    synthos_change_log_ref: references/CHANGE_LOG.md
+    synthos_golden_set_ref: golden/GOLDEN_SET.md
+    synthos_golden_set_origin: self_defined
+    synthos_pass_threshold: '0.85'
+    description: Synthos系统入口。分析查询→选执行模式→定原子链→调度执行→汇总输出。
+    signature: 'query: str, context: dict -> route: str, atom_chain: list[str], execution_mode: str, pipeline_trace: pipeline_trace.json'
+license: MIT
 ---
+
 
 # Task Router — Synthos 系统入口
 

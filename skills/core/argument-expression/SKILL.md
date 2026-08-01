@@ -1,25 +1,45 @@
 ---
 name: argument-expression
 category: core
-signature: "argument-expression -> core: 将假设转化为结构化学术论证（论文章节+论据链），支持 Toulmin 模型、Hyland 修辞框架、IMRAD 验证。"
-description: "将假设转化为结构化学术论证（论文章节+论据链），支持 Toulmin 模型、Hyland 修辞框架、IMRAD 验证。"
+signature: 'argument-expression -> core: 将假设转化为结构化学术论证（论文章节+论据链），支持 Toulmin 模型、Hyland 修辞框架、IMRAD 验证。'
+description: 将假设转化为结构化学术论证（论文章节+论据链），支持 Toulmin 模型、Hyland 修辞框架、IMRAD 验证。
 author: Synthos
 license: MIT
 version: 2.1.0
 entrypoint_type: cognitive
-entrypoint_cmd: "将假说展开为Toulmin结构化学术论证"
-entrypoint_desc: "认知原子"
+entrypoint_cmd: 将假说展开为Toulmin结构化学术论证
+entrypoint_desc: 认知原子
 priority: P1
 atom_type: cognitive-atom
-allowed-tools: [terminal, read_file, write_file, session_search]
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- session_search
 metadata:
   synthos:
-    priority: P1
-    atom_type: cognitive-atom
-    description: "Academic argument construction from hypotheses — Toulmin model, Hyland rhetoric, IMRAD validation"
-    signature: "claims: list[Claim], evidence: list[Evidence] -> argument_chain: ArgumentChain (structure, strengths, gaps, counterarguments)"
-    related_skills: ['hypothesis-generation', 'viewpoint-verification', 'association-discovery']
+    priority: P0
+    atom_type: cognitive
+    description: 将假设转化为结构化学术论证（论文章节+论据链），支持 Toulmin 模型、Hyland 修辞框架、IMRAD 验证。
+    signature: 'argument-expression -> core: 将假设转化为结构化学术论证（论文章节+论据链），支持 Toulmin 模型、Hyland 修辞框架、IMRAD 验证。'
+    related_skills:
+    - hypothesis-generation
+    - viewpoint-verification
+    - association-discovery
+    synthos_version: 2.1.0
+    synthos_model_version_pin: anthropic/claude-4-opus-max@latest
+    synthos_model_tested_on: '2026-07-01T00:00:00Z'
+    synthos_asserted_compliance: P0,P1,P2
+    synthos_mechanical_atoms: ''
+    synthos_io_contract_ref: references/IO_CONTRACT.md
+    synthos_evidence_schema_ref: references/EVIDENCE_SCHEMA.md
+    synthos_boundary_proof_ref: references/BOUNDARY.md
+    synthos_change_log_ref: references/CHANGE_LOG.md
+    synthos_golden_set_ref: golden/GOLDEN_SET.md
+    synthos_golden_set_origin: self_defined
+    synthos_pass_threshold: '0.85'
 ---
+
 
 # Argument Expression — 论证表达
 

@@ -1,7 +1,7 @@
 ---
 name: literature
 category: research-tools
-signature: "literature -> research-tools: 文献检索统一入口"
+signature: 'literature -> research-tools: 文献检索统一入口'
 description: 文献检索统一入口 — 搜索、下载、验证三位一体，多源聚合，管道编排。
 version: 5.2.0
 author: Synthos
@@ -9,33 +9,43 @@ license: MIT
 updated: 2026-07-19
 metadata:
   synthos:
-    signature: "literature search/download/verify/pipeline/diagnose"
-    atom_type: unified-entry
-    priority: P0
-    description: "文献检索统一包 — 搜索11源、下载核心、综合诊断（literature diagnose）"
+    signature: 'literature -> research-tools: 文献检索统一入口'
+    atom_type: mechanical
+    priority: P2
+    description: 文献检索统一入口 — 搜索、下载、验证三位一体，多源聚合，管道编排。
     linked_files:
-      - references/sci-hub-cdn-bban-top.md
-      - references/scihub-domain-scan-2026-07-10.md
-      - references/s2-dual-key-failover.md
-      - references/s2-deprecated-fields-400-fix-2026-07-11.md
-      - references/pmc-fulltext-coverage-analysis.md
-      - references/sci-hub-bban-endpoint-notes.md
-      - references/paper-pdf-completion-workflow.md
-      - references/cornerstone-bib-rebuild-2026-07-11.md
-      - references/core-api-2026-07-12.md
-      - references/new-sources-2026-07-12.md
-      - references/code-recovery-and-source-mismatch.md
-      - references/bban-top-cdn-recovery-2026-07-13.md
-      - references/libgen-playwright-search.md
-      - references/libgen-download-mirror-status.md
-      - references/s2-single-key-consolidation-2026-07-15.md
-      - references/ncbi-pmc-pdf-access-change-2026-07-14.md
-      - references/s2-api-fields-2026-07-15.md
-      - references/pubscholar-api-2026-07-15.md
-      - references/knowledge-acquisition-source-status-2026-07-15.md
-      - references/pmc-pdf-pandoc-replacement-2026-07-15.md
-      - references/literature-cli-bug-workaround.md
+    - references/sci-hub-cdn-bban-top.md
+    - references/scihub-domain-scan-2026-07-10.md
+    - references/s2-dual-key-failover.md
+    - references/s2-deprecated-fields-400-fix-2026-07-11.md
+    - references/pmc-fulltext-coverage-analysis.md
+    - references/sci-hub-bban-endpoint-notes.md
+    - references/paper-pdf-completion-workflow.md
+    - references/cornerstone-bib-rebuild-2026-07-11.md
+    - references/core-api-2026-07-12.md
+    - references/new-sources-2026-07-12.md
+    - references/code-recovery-and-source-mismatch.md
+    - references/bban-top-cdn-recovery-2026-07-13.md
+    - references/libgen-playwright-search.md
+    - references/libgen-download-mirror-status.md
+    - references/s2-single-key-consolidation-2026-07-15.md
+    - references/ncbi-pmc-pdf-access-change-2026-07-14.md
+    - references/s2-api-fields-2026-07-15.md
+    - references/pubscholar-api-2026-07-15.md
+    - references/knowledge-acquisition-source-status-2026-07-15.md
+    - references/pmc-pdf-pandoc-replacement-2026-07-15.md
+    - references/literature-cli-bug-workaround.md
+    synthos_version: 5.2.0
+    synthos_skill_md_hash: auto
+    synthos_asserted_compliance: P2,P3
+    synthos_mechanical_atoms: ''
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- session_search
 ---
+
 
 # 文献检索 (Literature)
 

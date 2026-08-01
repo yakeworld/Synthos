@@ -3,20 +3,40 @@ name: knowledge-acquisition
 category: core
 version: 6.0.0
 entrypoint_type: cognitive-atom
-entrypoint_desc: "检索 → 下载"
-signature: "query/DOI -> bibliography + PDF"
-description: "检索(jabkit) → 下载(doi-fetch)"
+entrypoint_desc: 检索 → 下载
+signature: query/DOI -> bibliography + PDF
+description: 检索(jabkit) → 下载(doi-fetch)
 metadata:
   synthos:
     priority: P0
-    atom_type: cognitive-atom
-    related_skills: ["knowledge-extraction", "pdf-to-markdown"]
+    atom_type: cognitive
+    related_skills:
+    - knowledge-extraction
+    - pdf-to-markdown
+    synthos_version: 6.0.0
+    synthos_model_version_pin: anthropic/claude-4-opus-max@latest
+    synthos_model_tested_on: '2026-07-01T00:00:00Z'
+    synthos_asserted_compliance: P0,P1,P2
+    synthos_mechanical_atoms: ''
+    synthos_io_contract_ref: references/IO_CONTRACT.md
+    synthos_evidence_schema_ref: references/EVIDENCE_SCHEMA.md
+    synthos_boundary_proof_ref: references/BOUNDARY.md
+    synthos_change_log_ref: references/CHANGE_LOG.md
+    description: 检索(jabkit) → 下载(doi-fetch)
+    signature: query/DOI -> bibliography + PDF
 triggers:
-  - 需要搜索学术文献
-  - 有DOI需要下PDF
-  - "找一下XX方面的文献"
-  - 需要批量扫描参考文献的全文链接
+- 需要搜索学术文献
+- 有DOI需要下PDF
+- 找一下XX方面的文献
+- 需要批量扫描参考文献的全文链接
+license: MIT
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- session_search
 ---
+
 
 # 知识获取
 
