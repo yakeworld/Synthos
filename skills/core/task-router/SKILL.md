@@ -201,6 +201,39 @@ delegate_task(
 
 ---
 
+## 架构参考：deer-flow 模式 (bytedance/deer-flow)
+
+2026年最活跃的开源Super Agent框架（78.7k stars, 2898 commits, 2026-02登顶GitHub Trending #1）。
+
+### 与Synthos的架构对比
+
+| 模式 | Synthos | deer-flow | 借鉴价值 |
+|------|---------|-----------|----------|
+| 技能加载 | 始终加载 skill_view | Progressive (按需加载) | ⚠️ 大skill（paper-writing, devops）可考虑按需加载 |
+| 技能激活 | auto-trigger | Slash-activation (`/skill-name`) | ✅ 精准控制单轮工具集 |
+| 沙箱隔离 | 无 | E2B沙箱 per subagent | ✅ subagent隔离执行，防越权 |
+| 记忆管理 | 无持久化 | Long-term Memory | ✅ 跨会话记忆增强 |
+| 工具权限 | 全局 allowed-tools | Skill-level allowed-tools (slash-activation后生效) | ✅ 更精细的权限控制 |
+| 子任务派发 | delegate_task | Subagent orchestration + Session Goals | ✅ 长程任务分解范式 |
+
+### 关键洞察
+
+1. **Progressive Skill Loading**: 技能只在需要时加载，保持上下文窗口精简。Synthos的skill-first架构可借鉴：大技能包不是一次性全部加载。
+
+2. **Slash-Activation**: `/skill-name` 激活特定技能，该技能的`allowed-tools`策略在此轮生效。这是精准控制工具集的有效方式。
+
+3. **Sandbox Isolation**: 每个Subagent在独立沙箱中运行，有独立的文件系统、进程空间。Synthos的delegate_task可借鉴此隔离思想。
+
+4. **Session Goals**: 长程任务分解为明确的session goals，每个goal有明确的输入/输出契约。
+
+### 对Synthos的启示
+
+- delegate_task的context留空是正确的 — 与deer-flow的渐进式技能加载理念一致
+- skill_view按需加载可进一步优化上下文窗口利用率
+- subagent隔离可考虑通过独立tmux会话实现
+
+---
+
 ## delegate_task 铁律
 
 子任务派发时，遵循以下原则：
