@@ -1,5 +1,6 @@
 ---
 name: openhue
+description: "openhue"
 version: 1.0.0
 ---
 

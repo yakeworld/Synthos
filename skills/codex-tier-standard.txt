@@ -1,0 +1,73 @@
+# codex-tier-standard.txt — codex 常驻技能白名单 (standard tier)
+# 设计原则: core 认知原子全量常驻 + 用户高频工作技能
+# 注意: 名单必须用 Synthos/skills 下的【实际技能目录名】(见 skills 全清单)
+# 修改后重跑: ./scripts/publish-skills-to-codex.sh
+# 按需技能不在此列 → 不投影 (codex 2% budget 限制, 全量会移除所有描述)
+
+# ---- core 认知原子 (8, 常驻) ----
+argument-expression
+association-discovery
+hypothesis-generation
+knowledge-acquisition
+knowledge-extraction
+quality-gate
+task-router
+viewpoint-verification
+
+# ---- 论文管线 / 质量 ----
+paper-experiment-audit
+paper-improvement
+paper-improvement-patterns
+paper-submission-priority
+paperjury
+paper-literature-supplement
+citation-appropriateness-verification
+reference-directory-cleanup
+reproducibility-audit
+latex-compilation-troubleshooting
+quality
+
+# ---- 文献检索 / 知识 ----
+literature
+citation-bib-crossref
+dataset-discovery
+knowledge-base-audit
+kg-bridge
+openml-benchmark
+pima-audit
+pidd-leakage-audit
+kaggle-leakage-audit
+training-pipeline-audit
+
+# ---- BPPV / 眼动 / 临床 (核心研究领域) ----
+bppv-expert
+ellipse-to-3d-circle
+ellipse-3d-anatomy-constrained
+ode-simulation-tuning
+journal-selection-medical-ai
+hcs-3wt-breast-cancer-diagnosis
+graduate-student-mentoring
+research-output-evaluation
+
+# ---- 工具链 / 环境 ----
+codex-cli
+codex-install-guide
+cron-diagnostics
+linux-environment-troubleshoot
+linux-ime
+latex-compilation-troubleshooting
+workstation-onboarding
+k230-development-lessons
+k230-photo-timing
+llm-inference-os
+
+# ---- Synthos 系统自身 ----
+synthos
+evolution
+cognitive-atom-architecture
+conversation-to-memory
+project-experience-distillation
+synthos-skill-audit
+synthos-probe
+skill-absorption
+autonomous-execution-threshold

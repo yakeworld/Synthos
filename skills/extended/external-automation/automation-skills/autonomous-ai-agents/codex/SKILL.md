@@ -1,5 +1,6 @@
 ---
 name: codex
+description: "codex"
 version: 1.0.0
 ---
 

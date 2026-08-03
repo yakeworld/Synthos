@@ -1,5 +1,6 @@
 ---
 name: baoyu-comic
+description: "baoyu-comic"
 version: 1.0.0
 ---
 

@@ -1,5 +1,6 @@
 ---
 name: ascii-art
+description: "ascii-art"
 version: 1.0.0
 ---
 

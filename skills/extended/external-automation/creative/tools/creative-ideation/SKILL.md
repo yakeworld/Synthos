@@ -1,5 +1,6 @@
 ---
 name: creative-ideation
+description: "creative-ideation"
 version: 1.0.0
 ---
 

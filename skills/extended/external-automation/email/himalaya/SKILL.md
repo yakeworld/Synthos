@@ -1,5 +1,6 @@
 ---
 name: himalaya
+description: "himalaya"
 version: 1.0.0
 ---
 

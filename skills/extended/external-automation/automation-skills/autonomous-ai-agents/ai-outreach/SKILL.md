@@ -1,5 +1,6 @@
 ---
 name: ai-outreach
+description: "ai-outreach"
 version: 1.0.0
 ---
 

@@ -238,3 +238,4 @@ tools/paper-manager/src/sources/pubscholar.py
 *.v1
 *.v2
 /outputs/papers/*/06-references/pdfs/
+*.bak-*

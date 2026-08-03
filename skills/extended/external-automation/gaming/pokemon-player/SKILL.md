@@ -1,5 +1,6 @@
 ---
 name: pokemon-player
+description: "pokemon-player"
 version: 1.0.0
 ---
 

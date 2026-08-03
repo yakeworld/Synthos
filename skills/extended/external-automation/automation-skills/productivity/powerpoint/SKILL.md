@@ -1,5 +1,6 @@
 ---
 name: powerpoint
+description: "powerpoint"
 version: 1.0.0
 ---
 

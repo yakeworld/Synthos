@@ -1,5 +1,6 @@
 ---
 name: apple-notes
+description: "apple-notes"
 version: 1.0.0
 ---
 

@@ -1,5 +1,6 @@
 ---
 name: spotify
+description: "spotify"
 version: 1.0.0
 ---
 

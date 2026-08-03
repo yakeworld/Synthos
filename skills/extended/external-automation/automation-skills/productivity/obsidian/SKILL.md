@@ -1,5 +1,6 @@
 ---
 name: obsidian
+description: "obsidian"
 version: 1.0.0
 ---
 

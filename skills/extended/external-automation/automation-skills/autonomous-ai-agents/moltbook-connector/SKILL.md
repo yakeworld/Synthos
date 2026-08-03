@@ -1,5 +1,6 @@
 ---
 name: moltbook-connector
+description: "moltbook-connector"
 version: 1.0.0
 ---
 

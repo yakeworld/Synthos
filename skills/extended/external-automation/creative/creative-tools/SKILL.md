@@ -1,5 +1,6 @@
 ---
 name: creative-tools
+description: "creative-tools"
 version: 1.0.0
 ---
 

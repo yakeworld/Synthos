@@ -1,5 +1,6 @@
 ---
 name: notion
+description: "notion"
 version: 1.0.0
 ---
 

@@ -1,5 +1,6 @@
 ---
 name: jupyter-live-kernel
+description: "jupyter-live-kernel"
 version: 1.0.0
 ---
 

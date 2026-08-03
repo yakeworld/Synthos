@@ -1,0 +1,83 @@
+{
+  "total_papers": 87,
+  "papers_processed": 15,
+  "total_added": 70,
+  "total_failed": 18,
+  "results": [
+    {
+      "name": "02-corneal-tension-ODE",
+      "added": 6,
+      "failed": 0
+    },
+    {
+      "name": "104-perilymph-fistula-ODE",
+      "added": 6,
+      "failed": 0
+    },
+    {
+      "name": "105-lacrimal-drainage-ODE",
+      "added": 4,
+      "failed": 0
+    },
+    {
+      "name": "121-blink-dynamics-ODE",
+      "added": 6,
+      "failed": 0
+    },
+    {
+      "name": "124-vitreous-humor-ODE",
+      "added": 6,
+      "failed": 0
+    },
+    {
+      "name": "137-ciliary-body-ODE",
+      "added": 6,
+      "failed": 0
+    },
+    {
+      "name": "146-vitreous-cortex-structural-ODE",
+      "added": 0,
+      "failed": 6
+    },
+    {
+      "name": "162-corneal-hydration-dynamics-ODE",
+      "added": 6,
+      "failed": 0
+    },
+    {
+      "name": "Paper_100_fixation-vernier-PINN",
+      "added": 6,
+      "failed": 0
+    },
+    {
+      "name": "Paper_101_optokinetic-reflex-PINN",
+      "added": 6,
+      "failed": 0
+    },
+    {
+      "name": "VEMP-PINN",
+      "added": 6,
+      "failed": 0
+    },
+    {
+      "name": "concussion-oculomotor-PINN",
+      "added": 6,
+      "failed": 0
+    },
+    {
+      "name": "diplopia-binocular-fusion-ODE",
+      "added": 6,
+      "failed": 0
+    },
+    {
+      "name": "endolymph-hydropressure-ode",
+      "added": 0,
+      "failed": 6
+    },
+    {
+      "name": "head-impulse-ODE",
+      "added": 0,
+      "failed": 6
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 ---
 name: songsee
+description: "songsee"
 version: 1.0.0
 ---
 

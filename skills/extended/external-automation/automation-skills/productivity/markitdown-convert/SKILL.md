@@ -1,5 +1,6 @@
 ---
 name: markitdown-convert
+description: "markitdown-convert"
 version: 1.0.0
 ---
 

@@ -1,5 +1,6 @@
 ---
 name: shared
+description: "shared"
 version: 1.0.0
 ---
 

@@ -1,5 +1,6 @@
 ---
 name: figure-generation
+description: "figure-generation"
 version: 1.0.0
 ---
 

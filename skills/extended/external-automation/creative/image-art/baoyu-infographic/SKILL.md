@@ -1,5 +1,6 @@
 ---
 name: baoyu-infographic
+description: "baoyu-infographic"
 version: 1.0.0
 ---
 

@@ -1,5 +1,6 @@
 ---
 name: codebase-inspection
+description: "codebase-inspection"
 version: 1.0.0
 ---
 

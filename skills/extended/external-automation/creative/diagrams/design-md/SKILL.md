@@ -1,5 +1,6 @@
 ---
 name: design-md
+description: "design-md"
 version: 1.0.0
 ---
 

@@ -1,5 +1,6 @@
 ---
 name: metacognition
+description: "metacognition"
 version: 1.0.0
 ---
 

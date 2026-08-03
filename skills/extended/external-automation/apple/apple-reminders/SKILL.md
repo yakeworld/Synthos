@@ -1,5 +1,6 @@
 ---
 name: apple-reminders
+description: "apple-reminders"
 version: 1.0.0
 ---
 

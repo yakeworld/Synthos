@@ -1,5 +1,6 @@
 ---
 name: claude-design
+description: "claude-design"
 version: 1.0.0
 ---
 

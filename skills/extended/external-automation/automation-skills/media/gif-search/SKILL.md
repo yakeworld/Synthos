@@ -1,5 +1,6 @@
 ---
 name: gif-search
+description: "gif-search"
 version: 1.0.0
 ---
 

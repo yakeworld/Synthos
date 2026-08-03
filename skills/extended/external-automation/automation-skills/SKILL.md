@@ -1,5 +1,6 @@
 ---
 name: automation-skills
+description: "automation-skills"
 version: 1.0.0
 ---
 

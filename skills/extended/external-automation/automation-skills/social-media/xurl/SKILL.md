@@ -1,5 +1,6 @@
 ---
 name: xurl
+description: "xurl"
 version: 1.0.0
 ---
 

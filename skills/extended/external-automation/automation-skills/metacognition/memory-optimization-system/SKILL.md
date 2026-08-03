@@ -1,5 +1,6 @@
 ---
 name: memory-optimization-system
+description: "memory-optimization-system"
 version: 1.0.0
 ---
 

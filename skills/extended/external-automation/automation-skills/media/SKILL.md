@@ -1,5 +1,6 @@
 ---
 name: media
+description: "media"
 version: 1.0.0
 ---
 

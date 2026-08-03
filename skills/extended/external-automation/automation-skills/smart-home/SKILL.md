@@ -1,5 +1,6 @@
 ---
 name: smart-home
+description: "smart-home"
 version: 1.0.0
 ---
 

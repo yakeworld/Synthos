@@ -1,5 +1,6 @@
 ---
 name: ascii-video
+description: "ascii-video"
 version: 1.0.0
 ---
 

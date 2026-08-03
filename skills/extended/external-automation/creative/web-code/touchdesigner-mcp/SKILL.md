@@ -1,5 +1,6 @@
 ---
 name: touchdesigner-mcp
+description: "touchdesigner-mcp"
 version: 1.0.0
 ---
 

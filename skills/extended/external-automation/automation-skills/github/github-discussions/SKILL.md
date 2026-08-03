@@ -1,5 +1,6 @@
 ---
 name: github-discussions
+description: "github-discussions"
 version: 1.0.0
 ---
 

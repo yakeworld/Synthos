@@ -1,5 +1,6 @@
 ---
 name: humanizer
+description: "humanizer"
 version: 1.0.0
 ---
 

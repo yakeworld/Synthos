@@ -1,5 +1,6 @@
 ---
 name: autonomous-ai-agents
+description: "autonomous-ai-agents"
 version: 1.0.0
 ---
 

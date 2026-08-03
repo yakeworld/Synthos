@@ -1,5 +1,6 @@
 ---
 name: red-teaming
+description: "red-teaming"
 version: 1.0.0
 ---
 

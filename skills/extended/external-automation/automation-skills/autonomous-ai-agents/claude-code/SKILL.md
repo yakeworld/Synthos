@@ -1,5 +1,6 @@
 ---
 name: claude-code
+description: "claude-code"
 version: 1.0.0
 ---
 

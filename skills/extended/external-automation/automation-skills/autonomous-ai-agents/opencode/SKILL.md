@@ -1,5 +1,6 @@
 ---
 name: opencode
+description: "opencode"
 version: 1.0.0
 ---
 

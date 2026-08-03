@@ -1,5 +1,6 @@
 ---
 name: github
+description: "github"
 version: 1.0.0
 ---
 

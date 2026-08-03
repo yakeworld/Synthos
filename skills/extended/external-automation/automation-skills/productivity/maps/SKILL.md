@@ -1,5 +1,6 @@
 ---
 name: maps
+description: "maps"
 version: 1.0.0
 ---
 

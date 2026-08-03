@@ -1,5 +1,6 @@
 ---
 name: minecraft-modpack-server
+description: "minecraft-modpack-server"
 version: 1.0.0
 ---
 

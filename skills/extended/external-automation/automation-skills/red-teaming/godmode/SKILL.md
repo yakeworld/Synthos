@@ -1,5 +1,6 @@
 ---
 name: godmode
+description: "godmode"
 version: 1.0.0
 ---
 

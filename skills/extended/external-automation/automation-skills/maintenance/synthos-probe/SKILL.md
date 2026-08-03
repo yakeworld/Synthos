@@ -1,5 +1,6 @@
 ---
 name: synthos-probe
+description: "synthos-probe"
 version: 1.0.0
 ---
 

@@ -1,5 +1,6 @@
 ---
 name: ffmpeg-video-audio-sync
+description: "ffmpeg-video-audio-sync"
 version: 1.0.0
 ---
 

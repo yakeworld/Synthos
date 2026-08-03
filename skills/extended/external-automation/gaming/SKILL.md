@@ -1,5 +1,6 @@
 ---
 name: gaming
+description: "gaming"
 version: 1.0.0
 ---
 

@@ -1,5 +1,6 @@
 ---
 name: kanban-orchestrator
+description: "kanban-orchestrator"
 version: 1.0.0
 ---
 

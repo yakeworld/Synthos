@@ -1,5 +1,6 @@
 ---
 name: kanban-worker
+description: "kanban-worker"
 version: 1.0.0
 ---
 

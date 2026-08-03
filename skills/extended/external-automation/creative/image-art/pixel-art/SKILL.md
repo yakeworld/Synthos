@@ -1,5 +1,6 @@
 ---
 name: pixel-art
+description: "pixel-art"
 version: 1.0.0
 ---
 

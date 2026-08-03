@@ -1,5 +1,6 @@
 ---
 name: macos-computer-use
+description: "macos-computer-use"
 version: 1.0.0
 ---
 

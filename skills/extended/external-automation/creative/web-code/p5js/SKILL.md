@@ -1,5 +1,6 @@
 ---
 name: p5js
+description: "p5js"
 version: 1.0.0
 ---
 

@@ -1,5 +1,6 @@
 ---
 name: youtube-content
+description: "youtube-content"
 version: 1.0.0
 ---
 

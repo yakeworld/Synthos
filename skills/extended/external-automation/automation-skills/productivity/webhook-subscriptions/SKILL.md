@@ -1,5 +1,6 @@
 ---
 name: webhook-subscriptions
+description: "webhook-subscriptions"
 version: 1.0.0
 ---
 

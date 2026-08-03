@@ -1,5 +1,6 @@
 ---
 name: songwriting-and-ai-music
+description: "songwriting-and-ai-music"
 version: 1.0.0
 ---
 

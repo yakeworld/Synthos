@@ -1,5 +1,6 @@
 ---
 name: citation-verification
+description: "citation-verification"
 version: 1.0.0
 ---
 

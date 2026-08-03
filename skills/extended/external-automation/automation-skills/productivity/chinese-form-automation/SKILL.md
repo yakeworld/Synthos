@@ -1,5 +1,6 @@
 ---
 name: chinese-form-automation
+description: "chinese-form-automation"
 version: 1.0.0
 ---
 

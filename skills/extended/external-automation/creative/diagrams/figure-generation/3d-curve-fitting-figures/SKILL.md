@@ -1,5 +1,6 @@
 ---
 name: 3d-curve-fitting-figures
+description: "3d-curve-fitting-figures"
 version: 1.0.0
 ---
 
