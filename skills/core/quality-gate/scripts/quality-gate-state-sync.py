@@ -32,7 +32,7 @@ def find_tex_files(manuscript_dir):
 def count_cite_keys(tex_path, bib_path):
     """
     Count unique cite keys in tex and match against bib.
-    Handles multi-key citations like \cite{A,B,C}.
+    Handles multi-key citations like \\cite{A,B,C}.
     """
     try:
         with open(tex_path) as f:
