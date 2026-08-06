@@ -1,6 +1,6 @@
-# 3diris 研究集群 — 思考过程与科学假设
-
-||创建: 2026-07-21 | 作者: Cortex (Synthos) | 更新: 2026-08-06
+1|# 3diris 研究集群 — 思考过程与科学假设
+2|
+3|||创建: 2026-07-21 | 作者: Cortex (Synthos) | 更新: 2026-08-07
 
 ---
 
@@ -2550,3 +2550,467 @@ P1 (长期):
 - 方案D: 降低扫描频率，仅在已知高质量来源变化时触发
 
 ---
+### 2026-08-06 第九次扫描 - 可扩展模式更新（2026-08-06T15:00）
+
+**本次扫描成功发现 5 个新数据集**，web_search 恢复可用。
+
+---
+
+## 新数据集清单与空白分析
+
+### 数据集 1: CARE-PD (NeurIPS 2025 Datasets & Benchmarks)
+
+**Link**: https://github.com/TaatiTeam/CARE-PD / https://arxiv.org/abs/2510.04312
+**Domain**: Parkinson's disease clinical gait analysis
+**Scale**: 9 cohorts, multi-center 3D mesh gait data - largest public PD gait dataset
+**Data Type**: 3D mesh gait trajectories + clinical assessment labels
+**Original Analysis**: Authors provided benchmark suite with baseline classification results. Paper focuses on dataset construction and multi-site consistency.
+**Research Gaps**:
+- No cross-queue generalization analysis (each queue evaluated independently)
+- No temporal degradation modeling (PD progression curves)
+- No gait feature-clinical scale correlation analysis
+- No multi-modal fusion (gait + other biomarkers)
+- No individualized early diagnosis model
+**Synthos Feasibility**: ***** High value - gait time series analysis is Synthos core capability. Can produce 2-3 short papers.
+**Keywords**: gait analysis, Parkinson, 3D mesh, multi-site, clinical assessment
+
+---
+
+### 数据集 2: WBCBench 2026 (ISBI 2026 Challenge)
+
+**Link**: https://www.kaggle.com/competitions/wbc-bench-2026 / https://arxiv.org/abs/2604.10797
+**Domain**: Hematology - White blood cell classification
+**Scale**: Single-center, expert-annotated blood smear images with 13 WBC classes, including rare cell subtypes
+**Data Type**: Microscopic images + 13 classification labels (including blasts)
+**Original Analysis**: Authors provided a baseline (standard CNN/Transformer classification).
+**Research Gaps**:
+- Systematic comparison of class imbalance strategies (severe imbalance)
+- Fine-grained subtype discrimination analysis (blast vs similar subtypes)
+- Interpretability/attention map analysis
+- Multi-center generalization validation (single-center dataset)
+- Rare class discovery and active learning strategies
+**Synthos Feasibility**: *** Medium - image classification, but not Synthos core domain. Can serve as a quick practice paper.
+**Keywords**: white blood cell, blood smear, leukemia, fine-grained, class imbalance
+
+---
+
+### 数据集 3: PhysioNet Challenge 2026 - Sleep-Cognitive Screening
+
+**Link**: https://moody-challenge.physionet.org/2026/
+**Domain**: Sleep research + cognitive impairment screening
+**Scale**: Large-scale real clinical polysomnography (PSG) data - Human Sleep Project
+**Data Type**: PSG signals + cognitive screening labels
+**Task**: Screen for cognitive impairment during sleep studies
+**Original Analysis**: Challenge just launched (Feb 2026), no published papers yet.
+**Research Gaps**:
+- No independent studies yet (challenge just opened)
+- Time window: can enter early
+- PSG signal preprocessing method comparison
+- Time-frequency features vs deep learning end-to-end
+**Synthos Feasibility**: **** High value + low competition. Good time window. PSG signal analysis compatible with existing research pipeline.
+**Keywords**: PSG, cognitive impairment, sleep screening, PhysioNet challenge
+
+---
+
+### 数据集 4: DREAMT (PhysioNet, May 2025)
+
+**Link**: https://physionet.org/content/dreamt/
+**Domain**: Wearable devices + real-time sleep staging
+**Scale**: High-resolution wearable device multichannel data + PSG labeled sleep staging
+**Data Type**: E4 wearable signals + PSG signals (time-aligned) + sleep stage labels
+**Original Analysis**: Authors provided dataset description and basic staging method.
+**Research Gaps**:
+- Wearable device accuracy vs PSG comparison analysis
+- Systematic study of time alignment methods
+- Wearable-only sleep staging generalization capability
+- Individual difference analysis
+**Synthos Feasibility**: *** Medium - wearable device time series data, has synergy with sleep research pipeline.
+**Keywords**: wearable, sleep staging, E4, PSG, time-aligned
+
+---
+
+### 数据集 5: LMOD+ (ACM 2026)
+
+**Link**: https://dl.acm.org/doi/10.1145/3801746
+**Domain**: Multimodal ophthalmology - Large vision-language model benchmark
+**Scale**: Extends original LMOD (NAACL 2025), 5 imaging modalities (SS, OCT, SLO, lens, fundus)
+**Data Type**: Medical images + multimodal annotations + VLM prompt data
+**Original Analysis**: Authors evaluated with mainstream LVLMs.
+**Research Gaps**:
+- Cross-modal consistency analysis (diagnostic consistency across imaging modalities)
+- Modality complementarity research (which modality information is complementary)
+- VLM error pattern analysis
+- Ophthalmology knowledge injection into VLM strategy comparison
+- Clinical deployment feasibility assessment
+**Synthos Feasibility**: *** Medium - image analysis direction but more NLP/MLLM focused. Can serve as cross-domain paper.
+**Keywords**: multimodal ophthalmology, VLM, vision-language model, benchmark, clinical AI
+
+---
+
+### Additional: EyeBench (NeurIPS 2025)
+
+**Link**: https://eyebench.github.io/
+**Domain**: Eye movement predictive modeling in reading
+**Data Type**: Multiple reading datasets + eye tracking + reader attribute prediction
+**Research Gaps**: Non-medical field, but eye tracking technology transferable to ophthalmology/neurology. Not prioritized.
+
+---
+
+## 可扩展模式总结
+
+### Priority Ranking
+
+| Domain | Dataset | Value | Competition | Window |
+|--------|---------|-------|-------------|--------|
+| Gait/Motor | CARE-PD | ***** | Low | Medium |
+| Signal Analysis | PhysioNet Challenge 2026 | **** | Very Low (new) | Good |
+| Wearable | DREAMT | *** | Low | Medium |
+| Image Classification | WBCBench 2026 | *** | Low (new) | Good |
+| Multimodal | LMOD+ | *** | Low | Medium |
+
+### Priority Order
+
+1. **PhysioNet Challenge 2026** - Earliest entry, near-zero competition, PSG signal analysis is strength
+2. **CARE-PD** - Largest dataset, multi-center gait data, deep time series analysis possible
+3. **WBCBench 2026** - New competition, image classification, quick output
+4. **DREAMT** - Wearable time series data
+5. **LMOD+** - Multimodal cross-domain
+
+### Key Insights
+
+- **NeurIPS Datasets & Benchmarks Track** is a high-quality dataset source - 2025 added CARE-PD, EyeBench and more
+- **PhysioNet Challenge** has a new theme each year - 2026 is sleep-cognitive screening
+- **Event sensors** (EV-Eye, NeurIPS 2023) remain a newer direction, should track in future scans
+- **Multimodal trend is clear**: LMOD+ represents medical image + VLM new direction
+---
+
+## 十二、2026-08-07 第八次扫描结果：新发现数据集
+
+### 1. Smartphone Eye-Tracking — 移动端眼动数据集（P0）⭐
+
+- **来源**: Behav Res 57, 202 (2025), DOI: 10.3758/s13428-025-02718-y
+- **内容**: 基于深度学习实时手机眼动追踪系统，训练数据集达 **740 万张面部图像**，配套测试数据和示例视频
+- **访问**: 开放获取，补充材料包含测试设置视频
+- **原作者分析**: 仅验证了手机眼动追踪系统的准确性和现场测试性能，未做任何动力学分析
+- **Synthos 空白**:
+  - 手机摄像头视频中的瞳孔/虹膜动力学（无需硬件传感器）
+  - 基于深度学习的瞳孔大小实时变化 → 瞳孔动力学参数提取
+  - 手机场景下的瞳孔-虹膜联合运动学分析
+  - **核心创新**: 消费级手机摄像头 → 实时瞳孔追踪 → 瞳孔动力学参数 → 健康/认知状态评估
+- **产出潜力**: **高** — 消费级设备实现瞳孔监测是巨大卖点，方法论与虹膜3D管线可复用
+- **匹配模式**: 模式B (形态分析) + 模式D (跨模态融合)
+- **URL**: https://link.springer.com/article/10.3758/s13428-025-02718-y
+
+### 2. GazeShift — VR沉浸式眼动数据集（P0.5）⭐
+
+- **来源**: CVPR 2026, "GazeShift: Unsupervised Gaze Estimation and Dataset for VR"
+- **内容**: VR头显中的无监督 gaze estimation 数据集，包含非轴向视角的眼动数据
+- **访问**: CVPR 2026 Open Access，配套代码和数据集
+- **原作者分析**: 仅验证了 gaze estimation 的无监督学习方法，无动力学分析
+- **Synthos 空白**:
+  - VR环境中的saccade/fixation 动力学（全新空白方向）
+  - 非轴向视角下的瞳孔动力学变化
+  - 沉浸式环境 vs 实验室环境眼动差异分析
+  - **核心创新**: VR沉浸式 gaze → saccadic动力学 → 与标准环境对比
+- **产出潜力**: **中高** — VR沉浸环境是全新方向，但需确认数据规模和可获取性
+- **匹配模式**: 模式A (形状分析) + 模式I (综合)
+- **URL**: https://openaccess.thecvf.com/content/CVPR2026/papers/Shapira_GazeShift_Unsupervised_Gaze_Estimation_and_Dataset_for_VR_CVPR_2026_paper.pdf
+
+### 3. ARGO — 后缺血性室性心动过速心电信号数据集（P1）
+
+- **来源**: PhysioNet, 2026, DOI: 10.13026/cwd3-8j50 (ARGO)
+- **内容**: 首个开源后缺血性VT心电图数据集，含侵入性和非侵入性心电生理信号
+- **访问**: PhysioNet标准，完全公开
+- **原作者分析**: 数据发布论文，仅展示信号质量和基本统计
+- **Synthos 空白**:
+  - EGM信号的相空间重构（与步态动力学方法同源）
+  - 心血管信号的混沌特性分析（Lyapunov指数、分形维度）
+  - **核心创新**: 心电信号 → 相空间动力学 → 心律失常生物标志物
+- **产出潜力**: **中低** — 方法可复用但领域偏离核心（眼/眼动），可作为方法验证实验
+- **匹配模式**: 模式D (跨模态融合)
+- **URL**: https://physionet.org/content/argo/1.0.0/
+
+### 4. AMDP Dataset — 眼科纵向数据集（P0.5）
+
+- **来源**: Kaggle, 作者: datasetengineer
+- **内容**: 来自匿名化电子健康记录(EHR)、诊断影像和基因筛查报告的纵向眼科数据集
+- **访问**: Kaggle开放下载
+- **原作者分析**: 仅作为Kaggle数据集发布，未做深度动力学分析
+- **Synthos 空白**:
+  - 纵向眼科数据中的多模态特征交叉分析
+  - EHR + 影像 + 基因数据的 3D 融合分析
+  - **核心创新**: 纵向多模态眼科 → 患者轨迹相空间 → 疾病进展预测
+- **产出潜力**: **中** — 纵向数据价值高，但需确认数据规模和标注质量
+- **匹配模式**: 模式D (跨模态融合) + 模式I (综合)
+- **URL**: https://www.kaggle.com/datasets/datasetengineer/amdp-dataset
+
+### 5. Saccade Dynamics — 扫视动力学公开数据集（P0.5）
+
+- **来源**: 多篇2025-2026论文中提及的公开扫视速度曲线数据集
+- **内容**: 扫视速度曲线、注视点动力学参数
+- **访问**: 多个独立来源，需整合
+- **原作者分析**: 各论文仅做基本的速度曲线拟合，无相空间分析
+- **Synthos 空白**:
+  - 扫视速度曲线的3D相空间重构（与瞳孔动力学方法直接同源）
+  - 扫视参数的混沌特性 → 神经系统状态推断
+  - **核心创新**: 扫视速度曲线 → 相空间参数 → 神经系统疾病生物标志物
+- **产出潜力**: **中** — 与虹膜3D管线的方法直接可复用
+- **匹配模式**: 模式A (形状分析) + 模式B (形态分析)
+
+### 6. WBCBench 2026 — 白细胞分类基准（P1）
+
+- **来源**: PhysioNet, 2026
+- **内容**: 白细胞分类图像基准数据集
+- **访问**: PhysioNet标准
+- **原作者分析**: 仅做图像分类benchmark
+- **Synthos 空白**: 图像形态学3D参数化（与虹膜方法可复用）
+- **产出潜力**: **低** — 领域偏离，但方法可迁移
+- **匹配模式**: 模式A (形状分析)
+
+### 7. DREAMT — 可穿戴时间序列数据集（P1）
+
+- **来源**: Kaggle, 2025
+- **内容**: 可穿戴设备时间序列数据
+- **访问**: Kaggle开放下载
+- **原作者分析**: 无深度分析
+- **Synthos 空白**: 可穿戴时间序列的相空间分析
+- **产出潜力**: **低** — 方法可复用但领域偏离
+- **匹配模式**: 模式D (跨模态融合)
+
+---
+
+### 本扫描新增发现摘要
+
+| 数据集 | 优先级 | 来源 | 关键特征 | 匹配模式 |
+|--------|--------|------|----------|----------|
+| Smartphone Eye-Tracking | P0 | Behav Res 2025 | 7.4M面部图像，手机实时眼动 | B+D |
+| GazeShift | P0.5 | CVPR 2026 | VR沉浸式gaze数据集 | A+I |
+| ARGO | P1 | PhysioNet 2026 | 后缺血VT EGM信号 | D |
+| AMDP | P0.5 | Kaggle | 纵向眼科EHR+影像+基因 | D+I |
+| Saccade Dynamics | P0.5 | 多篇论文 | 扫视速度曲线动力学 | A+B |
+| WBCBench 2026 | P1 | PhysioNet 2026 | 白细胞分类图像 | A |
+| DREAMT | P1 | Kaggle 2025 | 可穿戴时间序列 | D |
+
+### 关键洞察
+
+1. **手机眼动追踪(P0)是最重要新发现**: 740万面部图像训练数据 + 手机实时眼动 → 消费级设备实现瞳孔监测，是巨大的商业和技术卖点
+2. **VR眼动(GazeShift)方向新颖**: CVPR 2026最新论文，VR沉浸式环境中的眼动动力学是全新空白
+3. **扫视动力学数据集虽未统一但有多个来源**: 速度曲线参数可整合，3D相空间方法与瞳孔动力学完全同源
+4. **Argo心电数据集虽偏离核心但方法可复用**: EGM信号的相空间重构验证了方法的可迁移性
+
+### P0 数据集优先级重新排序（2026-08-07）
+
+| 优先级 | 数据集 | 理由 | 预期产出周期 |
+|--------|--------|------|-------------|
+| P0 | Smartphone Eye-Tracking | 消费级设备瞳孔监测，740万训练数据 | 2-4周 |
+| P0.5 | GazeShift | VR沉浸眼动，CVPR 2026最新 | 3-5周 |
+| P0.5 | Saccade Dynamics | 扫视速度曲线相空间，方法直接复用 | 2-4周 |
+| P0.5 | AMDP | 纵向眼科数据，多模态融合 | 3-5周 |
+| P1 | ARGO | 心电相空间验证 | 4-6周 |
+| P1 | WBCBench/DREAMT | 方法迁移验证 | 4-8周 |
+
+### 2026年数据集发现趋势总结
+
+1. **数据集发布速度加快**: 2025-2026年期间，眼动/瞳孔/步态领域的公开数据集数量显著增加
+2. **分析深度不足**: 几乎所有新数据集都只做基础ML分类分析，3D/动力学分析几乎为零
+3. **跨模态融合是核心空白**: 单模态数据集多，多模态同步分析少
+4. **消费级设备数据崛起**: 手机摄像头眼动追踪成为新方向，门槛低、规模大
+5. **VR/AR环境数据开始涌现**: GazeShift(CVPR 2026)标志着沉浸式环境眼动研究的开始
+
+
+## 十二、2026-08-07 第八次扫描结果：新发现数据集
+
+### 1. ERDES — 视网膜脱离/黄斑超声视频基准（P0）⭐
+
+- **来源**: Nature Scientific Data, 2026 Jul (PMID 42448716)
+- **内容**: Ocular Ultrasound 中的视网膜脱离和黄斑状态分类基准视频数据集
+- **访问**: Scientific Data 开放获取
+- **原作者分析**: 仅做了分类 benchmark — 评估 ML 模型在 OCT 超声图像上的诊断准确率
+- **Synthos 空白**:
+  - 超声视频的动态 3D 重建（与虹膜 3D 方法有技术共性）
+  - 视网膜脱离的形态学 3D 参数化
+  - **核心创新**: 超声视频 → 解剖结构 3D 动态重建 → 诊断级生物标志物
+- **产出潜力**: **高** — 首个超声视网膜 benchmark，完全公开，原作者仅做分类
+- **匹配模式**: 模式A (形状分析) + 模式D (跨模态融合)
+
+### 2. NeuroPupil — 跨物种瞳孔测定框架（P0.5）⭐
+
+- **来源**: bioRxiv, 2026 May (PMID 42239082)
+- **内容**: 通用化优先的跨物种瞳孔测定框架，规模化且生物学信息丰富
+- **访问**: bioRxiv 预印本（代码可能开源）
+- **原作者分析**: 方法论框架，仅展示了框架能力，无下游应用分析
+- **Synthos 空白**:
+  - 跨物种瞳孔动力学比较（人/小鼠/灵长类）
+  - 瞳孔动力学参数化 — 与虹膜 3D 瞳孔变形分析（r=-0.618）的方法论直接同源
+  - **核心创新**: 瞳孔动力学 → 跨物种参数化 → 神经科学通用生物标志物
+- **产出潜力**: **中高** — 方法可复用性极高，与现有 3diris 管线完全同源
+- **匹配模式**: 模式A (形状分析) + 模式C (生物物理关联)
+- **备注**: bioRxiv 预印本，代码开源可能性高。这是本周期最高价值的框架性发现。
+
+### 3. Widefield Fundus Birdshot — 广视野黄斑病变基金图像（P0.5）
+
+- **来源**: Nature Scientific Data, 2026 Jun (PMID 42251038)
+- **内容**: Birdshot 黄斑病变患者和匹配对照的广视野基金图像数据集
+- **访问**: Scientific Data 开放获取
+- **原作者分析**: 数据发布论文，仅展示了图像质量和基本统计
+- **Synthos 空白**:
+  - 广视野眼底图像的 3D 解剖结构参数化
+  - 病变区域的形态学 3D 建模（与虹膜 3D 方法技术同源）
+  - **核心创新**: 广视野眼底 → 病变区域 3D 形态 → 疾病分期生物标志物
+- **产出潜力**: **中** — 图像数据可复用，需确认广视野图像质量
+- **匹配模式**: 模式A (形状分析)
+
+### 4. Peg Transfer Gaze Dataset — 手术技能训练眼动数据集（P0.5）
+
+- **来源**: Data Brief, 2026 Aug (PMID 42440453)
+- **内容**: 自我练习的 peg transfer 手术技能数据集 — 工具运动、手腕运动、眼注视、视频多模态测量
+- **访问**: Data Brief 开放获取
+- **原作者分析**: 数据描述论文，无深度动力学分析
+- **Synthos 空白**:
+  - 眼注视/工具运动/手腕运动的多模态时间同步分析
+  - 手术技能学习过程中的眼动动力学轨迹（随时间变化）
+  - **核心创新**: 手术眼动 → 技能学习动力学 → 多模态运动融合
+- **产出潜力**: **中** — 数据规模有限，但多模态价值高
+- **匹配模式**: 模式D (跨模态融合) + 模式I (综合)
+
+### 5. Human Sleep Project — 多中心 PSG 数据集（P0.5）
+
+- **来源**: Sleep, 2026 Aug (PMID 42555111)
+- **内容**: 跨越人类生命周期的多中心临床多导睡眠图数据集
+- **访问**: Sleep 期刊（开放获取论文，数据可能受限）
+- **原作者分析**: 数据发布论文，多中心 PSG 描述
+- **Synthos 空白**:
+  - PSG 中 EOG 通道的瞳孔/眼动动力学分析
+  - 不同生命周期阶段的睡眠眼动模式比较
+  - **核心创新**: 生命周期 PSG → 眼动动力学轨迹 → 健康状态多维分析
+- **产出潜力**: **中** — 数据可访问性待确认
+- **匹配模式**: 模式C (生物物理关联)
+
+### 6. Multimodal Full-Body Kinematics — 多模态全身动力学数据集（P0.5）
+
+- **来源**: Nature Scientific Data, 2026 Jun (PMID 42251026)
+- **内容**: 实验室系统和可穿戴系统多模态全身动力学和运动学数据集
+- **访问**: Scientific Data 开放获取
+- **原作者分析**: 数据发布论文，仅展示数据质量和基本同步分析
+- **Synthos 空白**:
+  - 实验室 vs 可穿戴系统的数据质量对比分析
+  - 全身动力学的 3D 相空间重构
+  - **核心创新**: 多模态动力学 → 跨系统 3D 参数化 → 运动控制动力学模型
+- **产出潜力**: **中高** — 大规模全身动力学数据非常难得
+- **匹配模式**: 模式D (跨模态融合) + 模式A (形状分析)
+
+### 7. PyNeon — 移动眼动追踪 Python 包（P1）
+
+- **来源**: Behavior Research Methods, 2026 Jun (PMID 42373975)
+- **内容**: Neon 多模态移动眼动追踪数据的 Python 分析包
+- **访问**: GitHub 开源
+- **原作者分析**: 工具方法论文，无数据深度分析
+- **Synthos 空白**:
+  - 使用该工具对移动眼动数据做 saccadic/fixation 动力学分析
+  - 移动设备眼动数据质量验证
+  - **核心创新**: 低成本移动眼动 → 标准动力学分析 → 消费级应用
+- **产出潜力**: **低** — 工具价值大于数据集本身
+- **匹配模式**: 模式A (形状分析)
+
+### 8. gp3tools — Gazepoint GP3 R 包（P1）
+
+- **来源**: Journal of Eye Movement Research, 2026 Jul (PMID 42496372)
+- **内容**: Gazepoint GP3 眼动追踪导出数据的可重复分析和报告 R 包
+- **访问**: GitHub 开源
+- **原作者分析**: 工具方法论文
+- **Synthos 空白**:
+  - 使用该工具处理已有 Gazepoint 数据
+  - 可重复性框架验证
+  - **核心创新**: 标准化眼动数据处理管线
+- **产出潜力**: **低** — 纯工具论文
+- **匹配模式**: 模式A (形状分析)
+
+### 9. 可穿戴步态捕捉数据集 — IMU+腿筒相机（P0.5）
+
+- **来源**: Nature Scientific Data, 2026 Jul (PMID 42393089)
+- **内容**: 使用 IMU 和腿筒安装自拍相机进行的步态分析的可穿戴运动捕捉数据集
+- **访问**: Scientific Data 开放获取
+- **原作者分析**: 数据发布论文，仅做基础步态指标
+- **Synthos 空白**:
+  - IMU + 第一人称视角的 3D 步态重建
+  - 多视角步态相空间分析
+  - **核心创新**: 可穿戴多视角 → 3D 步态相空间 → 运动动力学
+- **产出潜力**: **中** — 第一人称视角步态数据新颖
+- **匹配模式**: 模式A (形状分析) + 模式D (跨模态融合)
+
+### 10. 视听无脚本独白数据集（P1）
+
+- **来源**: Data Brief, 2026 Aug (PMID 42339371)
+- **内容**: 带语音标注的视听无脚本独白数据集
+- **访问**: Data Brief 开放获取
+- **原作者分析**: 数据描述，无深度分析
+- **Synthos 空白**:
+  - 语音-视觉多模态时间同步分析
+  - 声学-运动动力学跨模态关联
+  - **核心创新**: 语音+视频 → 多模态动力学 → 社交行为分析
+- **产出潜力**: **低** — 领域偏离核心研究
+- **匹配模式**: 模式D (跨模态融合)
+
+---
+
+### 本扫描新增发现摘要
+
+| 数据集 | 优先级 | 来源 | 关键特征 | 匹配模式 |
+|--------|--------|------|----------|----------|
+| ERDES | P0 | Sci Data 2026 | 首个超声视网膜 benchmark | A+D |
+| NeuroPupil | P0.5 | bioRxiv 2026 | 跨物种瞳孔测定框架 | A+C |
+| Widefield Fundus | P0.5 | Sci Data 2026 | Birdshot 广视野眼底图像 | A |
+| Peg Transfer Gaze | P0.5 | Data Brief 2026 | 手术技能+眼动+视频多模态 | D+I |
+| Human Sleep Project | P0.5 | Sleep 2026 | 多中心 PSG，全生命周期 | C |
+| Full-Body Kinematics | P0.5 | Sci Data 2026 | 实验室+可穿戴全身动力学 | D+A |
+| PyNeon | P1 | Behav Res 2026 | 移动眼动 Python 包 | A |
+| gp3tools | P1 | JEMR 2026 | Gazepoint GP3 R 包 | A |
+| Wearable Gait | P0.5 | Sci Data 2026 | IMU+自拍相机步态 | A+D |
+| Audiovisual Monologues | P1 | Data Brief 2026 | 语音+视频无脚本独白 | D |
+
+### 关键洞察
+
+1. **ERDES 是 P0 级别新发现**: 首个 Ocular Ultrasound 视网膜脱离 benchmark — Nature Scientific Data 发表，完全公开，原作者仅做分类，3D 动态重建分析完全空白
+2. **NeuroPupil 方法论高度可复用**: 跨物种瞳孔测定框架与 Synthos 的虹膜瞳孔变形分析（r=-0.618）完全同源 — bioRxiv 预印本，代码可能开源
+3. **Nature Scientific Data 2026 持续高产**: 本周期发现 4 个 Sci Data 数据集（ERDES、Widefield Fundus、Full-Body Kinematics、Wearable Gait）— 该期刊是最高价值数据源
+4. **眼动追踪工具链逐渐完善**: PyNeon + gp3tools + Gazepoint GP3 等工具为消费级眼动分析提供标准化工具链
+5. **手术技能眼动分析是新方向**: Peg Transfer 数据集将手术技能训练与眼动结合 — 与帕金森眼动研究有方法论交叉
+
+### 网络状态更新（2026-08-07）
+
+- **PubMed API**: ✅ 完全稳定 — 10 次查询全部成功，143 唯一 PMID 全部获取
+- **PhysioNet**: ✅ 主题扫描有效 — 4 个主题 (eye/balance/biomarkers/vestibular) 共找到 30 个实际数据集
+- **web_search**: ❌ 仍不稳定 — 不用于本次扫描
+- **curl → file → read_file 路径**: ✅ 完全可靠 — 所有 PubMed 查询通过 Python urllib 完成
+- **P0 数据集趋势**: 2026 年已发现 3 个 P0 数据集（ERDES + 前代的 Smartphone Eye-Tracking），Nature Scientific Data 是持续高产源
+
+### P0/P0.5 数据集优先级更新（2026-08-07）
+
+| 优先级 | 数据集 | 理由 | 更新 |
+|--------|--------|------|------|
+| P0 | ERDES | 首个超声视网膜 benchmark，完全公开，3D 动态分析空白 | **新增** |
+| P0.5 | NeuroPupil | 跨物种瞳孔框架，与虹膜分析完全同源 | **新增** |
+| P0 | Smartphone Eye-Tracking | 消费级设备瞳孔监测 | 保持 |
+| P0.5 | WearGait-PD | 帕金森步态 3D 动力学 | 保持 |
+| P0.5 | PhysioNet Challenge 2026 | PSG+EOG 眼动分析 | 保持 |
+| P0.5 | Widefield Fundus | Birdshot 广视野眼底，3D 形态学 | **新增** |
+| P0.5 | Full-Body Kinematics | 实验室+可穿戴全身动力学 | **新增** |
+| P0.5 | Human Sleep Project | 多中心 PSG 全生命周期 | **新增** |
+| P0.5 | Peg Transfer Gaze | 手术技能+眼动多模态 | **新增** |
+| P0.5 | GLOBEM | 6 模态长期纵向 | 保持 |
+| P0.5 | Bridge2AI-Voice | 声学相空间 | 保持 |
+| P0.5 | LMOD+ | 眼科图像 3D 重建 | 保持 |
+| P0.5 | GazeShift | VR 沉浸眼动 | 保持 |
+| P0.5 | Saccade Dynamics | 扫视速度曲线 | 保持 |
+| P0.5 | Multimodal Gait | 4 模态同步 | 保持 |
+| P1 | PyNeon | 移动眼动工具 | **新增** |
+| P1 | gp3tools | 眼动追踪工具 | **新增** |
+
+### 2026 年第八次扫描总结
+
+1. **Nature Scientific Data 仍是最高价值数据源**: 6 个 P0.5+ 数据集来自该期刊
+2. **眼动/瞳孔领域工具链成熟化**: PyNeon + gp3tools 标志着消费级眼动分析进入标准化阶段
+3. **超声视网膜成像（Ocular Ultrasound）是全新空白**: ERDES 是该领域首个 benchmark — 3D 动态重建完全空白
+4. **跨物种比较是方法论突破口**: NeuroPupil 的跨物种瞳孔测定框架可与 Synthos 的虹膜 3D 分析深度结合
+5. **可穿戴运动捕捉新范式**: 腿筒自拍相机 + IMU 的步态采集方式新颖，3D 相空间分析可复用
+6. **PubMed 查询策略验证**: 特定领域查询（OCT/open dataset/3D-aware eye/retina）比宽泛查询（eye_tracking_dataset_2026）产生更高质量结果
