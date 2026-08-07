@@ -1,6 +1,6 @@
-1|# 3diris 研究集群 — 思考过程与科学假设
-2|
-3|||创建: 2026-07-21 | 作者: Cortex (Synthos) | 更新: 2026-08-07
+# 3diris 研究集群 — 思考过程与科学假设
+
+||创建: 2026-07-21 | 作者: Cortex (Synthos) | 更新: 2026-08-06
 
 ---
 
@@ -2550,467 +2550,718 @@ P1 (长期):
 - 方案D: 降低扫描频率，仅在已知高质量来源变化时触发
 
 ---
-### 2026-08-06 第九次扫描 - 可扩展模式更新（2026-08-06T15:00）
 
-**本次扫描成功发现 5 个新数据集**，web_search 恢复可用。
+## 十七、2026-08-07 第九次扫描（PubMed API 完全恢复）
 
----
+### 扫描背景
 
-## 新数据集清单与空白分析
+**SearXNG 持续不可用**: 第 N 次连续失败。所有 web_search 调用均超时（5+ 次连续超时），SearXNG 完全宕机。这是已知长期问题，非本次特有。
 
-### 数据集 1: CARE-PD (NeurIPS 2025 Datasets & Benchmarks)
+**PubMed API 完全稳定**: 20+ 次查询全部成功，成功获取 30+ PMID 详细摘要。PubMed E-utilities 是唯一完全可靠的数据源。
 
-**Link**: https://github.com/TaatiTeam/CARE-PD / https://arxiv.org/abs/2510.04312
-**Domain**: Parkinson's disease clinical gait analysis
-**Scale**: 9 cohorts, multi-center 3D mesh gait data - largest public PD gait dataset
-**Data Type**: 3D mesh gait trajectories + clinical assessment labels
-**Original Analysis**: Authors provided benchmark suite with baseline classification results. Paper focuses on dataset construction and multi-site consistency.
-**Research Gaps**:
-- No cross-queue generalization analysis (each queue evaluated independently)
-- No temporal degradation modeling (PD progression curves)
-- No gait feature-clinical scale correlation analysis
-- No multi-modal fusion (gait + other biomarkers)
-- No individualized early diagnosis model
-**Synthos Feasibility**: ***** High value - gait time series analysis is Synthos core capability. Can produce 2-3 short papers.
-**Keywords**: gait analysis, Parkinson, 3D mesh, multi-site, clinical assessment
+**工具路径**: `curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/{esearch,esummary,efetch}.fcgi?..." -o /tmp/file.json` → `read_file`
 
 ---
 
-### 数据集 2: WBCBench 2026 (ISBI 2026 Challenge)
+### 17.1 新发现数据集
 
-**Link**: https://www.kaggle.com/competitions/wbc-bench-2026 / https://arxiv.org/abs/2604.10797
-**Domain**: Hematology - White blood cell classification
-**Scale**: Single-center, expert-annotated blood smear images with 13 WBC classes, including rare cell subtypes
-**Data Type**: Microscopic images + 13 classification labels (including blasts)
-**Original Analysis**: Authors provided a baseline (standard CNN/Transformer classification).
-**Research Gaps**:
-- Systematic comparison of class imbalance strategies (severe imbalance)
-- Fine-grained subtype discrimination analysis (blast vs similar subtypes)
-- Interpretability/attention map analysis
-- Multi-center generalization validation (single-center dataset)
-- Rare class discovery and active learning strategies
-**Synthos Feasibility**: *** Medium - image classification, but not Synthos core domain. Can serve as a quick practice paper.
-**Keywords**: white blood cell, blood smear, leukemia, fine-grained, class imbalance
+#### A. BPPV/前庭/眼震 — ⭐ P0（最高优先级）
 
----
+**核心论文**: PMID 42356922
+> "Comprehensive Review of Nystagmus and Vertigo Diagnostics: From Pathological Foundations to AI-Driven Telemedicine"
+> Sensors (Basel), 2026 Jun 22
+> 作者: Balasubramanian K, Danesh A, Pandya A (Florida Atlantic University)
+> PMC: PMC13306757
 
-### 数据集 3: PhysioNet Challenge 2026 - Sleep-Cognitive Screening
+**原作者做了什么**:
+- 综述 ~50 篇论文 (1952-2026)，覆盖 4 领域: AI分析、临床、智能手机硬件、远程医疗
+- ML 在眼震识别上达 98.77% 准确率（集成方法）
+- 深度学习 (CNN/U-Net/LSTM/光流) 在智能手机 RGB 视频上达到临床级慢相速度测量
+- 大型模型 (GPT-4V, Gemini 2.0) 展示初步潜力但低于专科医生水平
+- 便携式硬件（3D 打印护目镜、ARKit 应用）缩小可及性差距
 
-**Link**: https://moody-challenge.physionet.org/2026/
-**Domain**: Sleep research + cognitive impairment screening
-**Scale**: Large-scale real clinical polysomnography (PSG) data - Human Sleep Project
-**Data Type**: PSG signals + cognitive screening labels
-**Task**: Screen for cognitive impairment during sleep studies
-**Original Analysis**: Challenge just launched (Feb 2026), no published papers yet.
-**Research Gaps**:
-- No independent studies yet (challenge just opened)
-- Time window: can enter early
-- PSG signal preprocessing method comparison
-- Time-frequency features vs deep learning end-to-end
-**Synthos Feasibility**: **** High value + low competition. Good time window. PSG signal analysis compatible with existing research pipeline.
-**Keywords**: PSG, cognitive impairment, sleep screening, PhysioNet challenge
+**原文明确指出的核心空白**（直接引用综述原文）:
+1. **"dataset scarcity for rare BPPV subtypes"** — 罕见 BPPV 子类型的数据集稀缺（这是原文原文的措辞）
+2. 无标准化公共眼震分类 benchmark
+3. 无可解释 AI 机制
+4. 远程医疗框架缺乏临床验证
+
+**Synthos 机会 — P0**:
+- 眼震视频分类技术已成熟（98.77%），缺的是 benchmark 数据集
+- 可构建标准化的 nystagmus video dataset with ground-truth annotations
+- 3D 眼球运动轨迹分析完全缺失 — 这与 3diris 的核心方法论（3D 姿态估计）完全同源
+- 目标期刊: Nature Scientific Data 或类似
+- 时间预估: 3-6 个月（数据收集 + 分析 + 写作）
+
+**与现有管线的关联**: 这是 BPPV 管线（bppv-pc-repositioning-optimization, QS=94, submission_ready）的补充方向。当前 BPPV 论文聚焦诊断优化（Dix-Hallpike 操作），眼震数据可形成独立 dataset paper。
 
 ---
 
-### 数据集 4: DREAMT (PhysioNet, May 2025)
+#### B. 帕金森步态 — P0.5
 
-**Link**: https://physionet.org/content/dreamt/
-**Domain**: Wearable devices + real-time sleep staging
-**Scale**: High-resolution wearable device multichannel data + PSG labeled sleep staging
-**Data Type**: E4 wearable signals + PSG signals (time-aligned) + sleep stage labels
-**Original Analysis**: Authors provided dataset description and basic staging method.
-**Research Gaps**:
-- Wearable device accuracy vs PSG comparison analysis
-- Systematic study of time alignment methods
-- Wearable-only sleep staging generalization capability
-- Individual difference analysis
-**Synthos Feasibility**: *** Medium - wearable device time series data, has synergy with sleep research pipeline.
-**Keywords**: wearable, sleep staging, E4, PSG, time-aligned
+**核心论文**: PMID 41198822
+> "Parkinson's disease severity clustering based on gait activity from mobile device"
+> Sci Rep, 2025 Nov 6
+> 作者: Sri-Iesaranusorn P et al. (NSTDA 泰国)
+> PMC: PMC12592712
 
----
+**数据集**: mPower — 8,779 条加速度计记录，1,957 名参与者
 
-### 数据集 5: LMOD+ (ACM 2026)
+**原作者做了什么**:
+- K-means 聚类 + DTW 识别 4 种步态模式
+- 最严重组 MDS-UPDRS 平衡/步行 2.43x，冻结 8.41x
+- 非监督方法，无预设分组
 
-**Link**: https://dl.acm.org/doi/10.1145/3801746
-**Domain**: Multimodal ophthalmology - Large vision-language model benchmark
-**Scale**: Extends original LMOD (NAACL 2025), 5 imaging modalities (SS, OCT, SLO, lens, fundus)
-**Data Type**: Medical images + multimodal annotations + VLM prompt data
-**Original Analysis**: Authors evaluated with mainstream LVLMs.
-**Research Gaps**:
-- Cross-modal consistency analysis (diagnostic consistency across imaging modalities)
-- Modality complementarity research (which modality information is complementary)
-- VLM error pattern analysis
-- Ophthalmology knowledge injection into VLM strategy comparison
-- Clinical deployment feasibility assessment
-**Synthos Feasibility**: *** Medium - image analysis direction but more NLP/MLLM focused. Can serve as cross-domain paper.
-**Keywords**: multimodal ophthalmology, VLM, vision-language model, benchmark, clinical AI
+**空白**:
+- 仅分析步态，无语音、震颤、精细运动联合分析
+- 依赖 self-reported MDS-UPDRS
+- 无跨人群验证
+- 无 conformal prediction 不确定性估计
+
+**Synthos 机会 — P0.5**:
+- mPower 数据 + 语音数据（如 UCI Parkinson's dataset）做多模态融合
+- 应用 Conformal Prediction 作为方法论新颖点
+- 时间预估: 2-4 个月
 
 ---
 
-### Additional: EyeBench (NeurIPS 2025)
+#### C. 帕金森 sEMG — P0.5
 
-**Link**: https://eyebench.github.io/
-**Domain**: Eye movement predictive modeling in reading
-**Data Type**: Multiple reading datasets + eye tracking + reader attribute prediction
-**Research Gaps**: Non-medical field, but eye tracking technology transferable to ophthalmology/neurology. Not prioritized.
+**核心论文**: PMID 42197737
+> "Surface Electromyography for Parkinson's Disease Monitoring: A Review of Machine and Deep Learning Techniques"
+> Sensors (Basel), 2026 May 7
+> 作者: Bruschi S et al. (Università Politecnica Delle Marche, Italy)
 
----
+**原文明确**: "limited dataset size" + "lack of standardization" + "poor generalization"
 
-## 可扩展模式总结
-
-### Priority Ranking
-
-| Domain | Dataset | Value | Competition | Window |
-|--------|---------|-------|-------------|--------|
-| Gait/Motor | CARE-PD | ***** | Low | Medium |
-| Signal Analysis | PhysioNet Challenge 2026 | **** | Very Low (new) | Good |
-| Wearable | DREAMT | *** | Low | Medium |
-| Image Classification | WBCBench 2026 | *** | Low (new) | Good |
-| Multimodal | LMOD+ | *** | Low | Medium |
-
-### Priority Order
-
-1. **PhysioNet Challenge 2026** - Earliest entry, near-zero competition, PSG signal analysis is strength
-2. **CARE-PD** - Largest dataset, multi-center gait data, deep time series analysis possible
-3. **WBCBench 2026** - New competition, image classification, quick output
-4. **DREAMT** - Wearable time series data
-5. **LMOD+** - Multimodal cross-domain
-
-### Key Insights
-
-- **NeurIPS Datasets & Benchmarks Track** is a high-quality dataset source - 2025 added CARE-PD, EyeBench and more
-- **PhysioNet Challenge** has a new theme each year - 2026 is sleep-cognitive screening
-- **Event sensors** (EV-Eye, NeurIPS 2023) remain a newer direction, should track in future scans
-- **Multimodal trend is clear**: LMOD+ represents medical image + VLM new direction
----
-
-## 十二、2026-08-07 第八次扫描结果：新发现数据集
-
-### 1. Smartphone Eye-Tracking — 移动端眼动数据集（P0）⭐
-
-- **来源**: Behav Res 57, 202 (2025), DOI: 10.3758/s13428-025-02718-y
-- **内容**: 基于深度学习实时手机眼动追踪系统，训练数据集达 **740 万张面部图像**，配套测试数据和示例视频
-- **访问**: 开放获取，补充材料包含测试设置视频
-- **原作者分析**: 仅验证了手机眼动追踪系统的准确性和现场测试性能，未做任何动力学分析
-- **Synthos 空白**:
-  - 手机摄像头视频中的瞳孔/虹膜动力学（无需硬件传感器）
-  - 基于深度学习的瞳孔大小实时变化 → 瞳孔动力学参数提取
-  - 手机场景下的瞳孔-虹膜联合运动学分析
-  - **核心创新**: 消费级手机摄像头 → 实时瞳孔追踪 → 瞳孔动力学参数 → 健康/认知状态评估
-- **产出潜力**: **高** — 消费级设备实现瞳孔监测是巨大卖点，方法论与虹膜3D管线可复用
-- **匹配模式**: 模式B (形态分析) + 模式D (跨模态融合)
-- **URL**: https://link.springer.com/article/10.3758/s13428-025-02718-y
-
-### 2. GazeShift — VR沉浸式眼动数据集（P0.5）⭐
-
-- **来源**: CVPR 2026, "GazeShift: Unsupervised Gaze Estimation and Dataset for VR"
-- **内容**: VR头显中的无监督 gaze estimation 数据集，包含非轴向视角的眼动数据
-- **访问**: CVPR 2026 Open Access，配套代码和数据集
-- **原作者分析**: 仅验证了 gaze estimation 的无监督学习方法，无动力学分析
-- **Synthos 空白**:
-  - VR环境中的saccade/fixation 动力学（全新空白方向）
-  - 非轴向视角下的瞳孔动力学变化
-  - 沉浸式环境 vs 实验室环境眼动差异分析
-  - **核心创新**: VR沉浸式 gaze → saccadic动力学 → 与标准环境对比
-- **产出潜力**: **中高** — VR沉浸环境是全新方向，但需确认数据规模和可获取性
-- **匹配模式**: 模式A (形状分析) + 模式I (综合)
-- **URL**: https://openaccess.thecvf.com/content/CVPR2026/papers/Shapira_GazeShift_Unsupervised_Gaze_Estimation_and_Dataset_for_VR_CVPR_2026_paper.pdf
-
-### 3. ARGO — 后缺血性室性心动过速心电信号数据集（P1）
-
-- **来源**: PhysioNet, 2026, DOI: 10.13026/cwd3-8j50 (ARGO)
-- **内容**: 首个开源后缺血性VT心电图数据集，含侵入性和非侵入性心电生理信号
-- **访问**: PhysioNet标准，完全公开
-- **原作者分析**: 数据发布论文，仅展示信号质量和基本统计
-- **Synthos 空白**:
-  - EGM信号的相空间重构（与步态动力学方法同源）
-  - 心血管信号的混沌特性分析（Lyapunov指数、分形维度）
-  - **核心创新**: 心电信号 → 相空间动力学 → 心律失常生物标志物
-- **产出潜力**: **中低** — 方法可复用但领域偏离核心（眼/眼动），可作为方法验证实验
-- **匹配模式**: 模式D (跨模态融合)
-- **URL**: https://physionet.org/content/argo/1.0.0/
-
-### 4. AMDP Dataset — 眼科纵向数据集（P0.5）
-
-- **来源**: Kaggle, 作者: datasetengineer
-- **内容**: 来自匿名化电子健康记录(EHR)、诊断影像和基因筛查报告的纵向眼科数据集
-- **访问**: Kaggle开放下载
-- **原作者分析**: 仅作为Kaggle数据集发布，未做深度动力学分析
-- **Synthos 空白**:
-  - 纵向眼科数据中的多模态特征交叉分析
-  - EHR + 影像 + 基因数据的 3D 融合分析
-  - **核心创新**: 纵向多模态眼科 → 患者轨迹相空间 → 疾病进展预测
-- **产出潜力**: **中** — 纵向数据价值高，但需确认数据规模和标注质量
-- **匹配模式**: 模式D (跨模态融合) + 模式I (综合)
-- **URL**: https://www.kaggle.com/datasets/datasetengineer/amdp-dataset
-
-### 5. Saccade Dynamics — 扫视动力学公开数据集（P0.5）
-
-- **来源**: 多篇2025-2026论文中提及的公开扫视速度曲线数据集
-- **内容**: 扫视速度曲线、注视点动力学参数
-- **访问**: 多个独立来源，需整合
-- **原作者分析**: 各论文仅做基本的速度曲线拟合，无相空间分析
-- **Synthos 空白**:
-  - 扫视速度曲线的3D相空间重构（与瞳孔动力学方法直接同源）
-  - 扫视参数的混沌特性 → 神经系统状态推断
-  - **核心创新**: 扫视速度曲线 → 相空间参数 → 神经系统疾病生物标志物
-- **产出潜力**: **中** — 与虹膜3D管线的方法直接可复用
-- **匹配模式**: 模式A (形状分析) + 模式B (形态分析)
-
-### 6. WBCBench 2026 — 白细胞分类基准（P1）
-
-- **来源**: PhysioNet, 2026
-- **内容**: 白细胞分类图像基准数据集
-- **访问**: PhysioNet标准
-- **原作者分析**: 仅做图像分类benchmark
-- **Synthos 空白**: 图像形态学3D参数化（与虹膜方法可复用）
-- **产出潜力**: **低** — 领域偏离，但方法可迁移
-- **匹配模式**: 模式A (形状分析)
-
-### 7. DREAMT — 可穿戴时间序列数据集（P1）
-
-- **来源**: Kaggle, 2025
-- **内容**: 可穿戴设备时间序列数据
-- **访问**: Kaggle开放下载
-- **原作者分析**: 无深度分析
-- **Synthos 空白**: 可穿戴时间序列的相空间分析
-- **产出潜力**: **低** — 方法可复用但领域偏离
-- **匹配模式**: 模式D (跨模态融合)
+**Synthos 机会 — P0.5**: 创建标准化 sEMG+IMU 帕金森震颤数据集
+- 多传感器融合是方法论突破口（原文指出"no multi-sensor fusion studies"）
+- 时间预估: 4-6 个月
 
 ---
 
-### 本扫描新增发现摘要
+#### D. 眼底/OCT 疾病分类 — P1
 
-| 数据集 | 优先级 | 来源 | 关键特征 | 匹配模式 |
-|--------|--------|------|----------|----------|
-| Smartphone Eye-Tracking | P0 | Behav Res 2025 | 7.4M面部图像，手机实时眼动 | B+D |
-| GazeShift | P0.5 | CVPR 2026 | VR沉浸式gaze数据集 | A+I |
-| ARGO | P1 | PhysioNet 2026 | 后缺血VT EGM信号 | D |
-| AMDP | P0.5 | Kaggle | 纵向眼科EHR+影像+基因 | D+I |
-| Saccade Dynamics | P0.5 | 多篇论文 | 扫视速度曲线动力学 | A+B |
-| WBCBench 2026 | P1 | PhysioNet 2026 | 白细胞分类图像 | A |
-| DREAMT | P1 | Kaggle 2025 | 可穿戴时间序列 | D |
+**核心论文**: PMID 42510447
+> "TPA-ConvNeXt: Trigonometric Phase Attention for Robust Retinal Disease Classification"
+> Bioengineering (Basel), 2026 Jul 7
+> 数据集: HYAMD, AMDNet23, MAK1_OCT, OCTDL, OCT2017
+> 5 个数据集 F1 0.89-0.98
 
-### 关键洞察
+**空白**:
+- 性能与基线无统计显著差异 (p > 0.05)
+- 所有数据集来自同一地理区域（中东/土耳其）
+- 无跨人群/跨设备验证
 
-1. **手机眼动追踪(P0)是最重要新发现**: 740万面部图像训练数据 + 手机实时眼动 → 消费级设备实现瞳孔监测，是巨大的商业和技术卖点
-2. **VR眼动(GazeShift)方向新颖**: CVPR 2026最新论文，VR沉浸式环境中的眼动动力学是全新空白
-3. **扫视动力学数据集虽未统一但有多个来源**: 速度曲线参数可整合，3D相空间方法与瞳孔动力学完全同源
-4. **Argo心电数据集虽偏离核心但方法可复用**: EGM信号的相空间重构验证了方法的可迁移性
-
-### P0 数据集优先级重新排序（2026-08-07）
-
-| 优先级 | 数据集 | 理由 | 预期产出周期 |
-|--------|--------|------|-------------|
-| P0 | Smartphone Eye-Tracking | 消费级设备瞳孔监测，740万训练数据 | 2-4周 |
-| P0.5 | GazeShift | VR沉浸眼动，CVPR 2026最新 | 3-5周 |
-| P0.5 | Saccade Dynamics | 扫视速度曲线相空间，方法直接复用 | 2-4周 |
-| P0.5 | AMDP | 纵向眼科数据，多模态融合 | 3-5周 |
-| P1 | ARGO | 心电相空间验证 | 4-6周 |
-| P1 | WBCBench/DREAMT | 方法迁移验证 | 4-8周 |
-
-### 2026年数据集发现趋势总结
-
-1. **数据集发布速度加快**: 2025-2026年期间，眼动/瞳孔/步态领域的公开数据集数量显著增加
-2. **分析深度不足**: 几乎所有新数据集都只做基础ML分类分析，3D/动力学分析几乎为零
-3. **跨模态融合是核心空白**: 单模态数据集多，多模态同步分析少
-4. **消费级设备数据崛起**: 手机摄像头眼动追踪成为新方向，门槛低、规模大
-5. **VR/AR环境数据开始涌现**: GazeShift(CVPR 2026)标志着沉浸式环境眼动研究的开始
-
-
-## 十二、2026-08-07 第八次扫描结果：新发现数据集
-
-### 1. ERDES — 视网膜脱离/黄斑超声视频基准（P0）⭐
-
-- **来源**: Nature Scientific Data, 2026 Jul (PMID 42448716)
-- **内容**: Ocular Ultrasound 中的视网膜脱离和黄斑状态分类基准视频数据集
-- **访问**: Scientific Data 开放获取
-- **原作者分析**: 仅做了分类 benchmark — 评估 ML 模型在 OCT 超声图像上的诊断准确率
-- **Synthos 空白**:
-  - 超声视频的动态 3D 重建（与虹膜 3D 方法有技术共性）
-  - 视网膜脱离的形态学 3D 参数化
-  - **核心创新**: 超声视频 → 解剖结构 3D 动态重建 → 诊断级生物标志物
-- **产出潜力**: **高** — 首个超声视网膜 benchmark，完全公开，原作者仅做分类
-- **匹配模式**: 模式A (形状分析) + 模式D (跨模态融合)
-
-### 2. NeuroPupil — 跨物种瞳孔测定框架（P0.5）⭐
-
-- **来源**: bioRxiv, 2026 May (PMID 42239082)
-- **内容**: 通用化优先的跨物种瞳孔测定框架，规模化且生物学信息丰富
-- **访问**: bioRxiv 预印本（代码可能开源）
-- **原作者分析**: 方法论框架，仅展示了框架能力，无下游应用分析
-- **Synthos 空白**:
-  - 跨物种瞳孔动力学比较（人/小鼠/灵长类）
-  - 瞳孔动力学参数化 — 与虹膜 3D 瞳孔变形分析（r=-0.618）的方法论直接同源
-  - **核心创新**: 瞳孔动力学 → 跨物种参数化 → 神经科学通用生物标志物
-- **产出潜力**: **中高** — 方法可复用性极高，与现有 3diris 管线完全同源
-- **匹配模式**: 模式A (形状分析) + 模式C (生物物理关联)
-- **备注**: bioRxiv 预印本，代码开源可能性高。这是本周期最高价值的框架性发现。
-
-### 3. Widefield Fundus Birdshot — 广视野黄斑病变基金图像（P0.5）
-
-- **来源**: Nature Scientific Data, 2026 Jun (PMID 42251038)
-- **内容**: Birdshot 黄斑病变患者和匹配对照的广视野基金图像数据集
-- **访问**: Scientific Data 开放获取
-- **原作者分析**: 数据发布论文，仅展示了图像质量和基本统计
-- **Synthos 空白**:
-  - 广视野眼底图像的 3D 解剖结构参数化
-  - 病变区域的形态学 3D 建模（与虹膜 3D 方法技术同源）
-  - **核心创新**: 广视野眼底 → 病变区域 3D 形态 → 疾病分期生物标志物
-- **产出潜力**: **中** — 图像数据可复用，需确认广视野图像质量
-- **匹配模式**: 模式A (形状分析)
-
-### 4. Peg Transfer Gaze Dataset — 手术技能训练眼动数据集（P0.5）
-
-- **来源**: Data Brief, 2026 Aug (PMID 42440453)
-- **内容**: 自我练习的 peg transfer 手术技能数据集 — 工具运动、手腕运动、眼注视、视频多模态测量
-- **访问**: Data Brief 开放获取
-- **原作者分析**: 数据描述论文，无深度动力学分析
-- **Synthos 空白**:
-  - 眼注视/工具运动/手腕运动的多模态时间同步分析
-  - 手术技能学习过程中的眼动动力学轨迹（随时间变化）
-  - **核心创新**: 手术眼动 → 技能学习动力学 → 多模态运动融合
-- **产出潜力**: **中** — 数据规模有限，但多模态价值高
-- **匹配模式**: 模式D (跨模态融合) + 模式I (综合)
-
-### 5. Human Sleep Project — 多中心 PSG 数据集（P0.5）
-
-- **来源**: Sleep, 2026 Aug (PMID 42555111)
-- **内容**: 跨越人类生命周期的多中心临床多导睡眠图数据集
-- **访问**: Sleep 期刊（开放获取论文，数据可能受限）
-- **原作者分析**: 数据发布论文，多中心 PSG 描述
-- **Synthos 空白**:
-  - PSG 中 EOG 通道的瞳孔/眼动动力学分析
-  - 不同生命周期阶段的睡眠眼动模式比较
-  - **核心创新**: 生命周期 PSG → 眼动动力学轨迹 → 健康状态多维分析
-- **产出潜力**: **中** — 数据可访问性待确认
-- **匹配模式**: 模式C (生物物理关联)
-
-### 6. Multimodal Full-Body Kinematics — 多模态全身动力学数据集（P0.5）
-
-- **来源**: Nature Scientific Data, 2026 Jun (PMID 42251026)
-- **内容**: 实验室系统和可穿戴系统多模态全身动力学和运动学数据集
-- **访问**: Scientific Data 开放获取
-- **原作者分析**: 数据发布论文，仅展示数据质量和基本同步分析
-- **Synthos 空白**:
-  - 实验室 vs 可穿戴系统的数据质量对比分析
-  - 全身动力学的 3D 相空间重构
-  - **核心创新**: 多模态动力学 → 跨系统 3D 参数化 → 运动控制动力学模型
-- **产出潜力**: **中高** — 大规模全身动力学数据非常难得
-- **匹配模式**: 模式D (跨模态融合) + 模式A (形状分析)
-
-### 7. PyNeon — 移动眼动追踪 Python 包（P1）
-
-- **来源**: Behavior Research Methods, 2026 Jun (PMID 42373975)
-- **内容**: Neon 多模态移动眼动追踪数据的 Python 分析包
-- **访问**: GitHub 开源
-- **原作者分析**: 工具方法论文，无数据深度分析
-- **Synthos 空白**:
-  - 使用该工具对移动眼动数据做 saccadic/fixation 动力学分析
-  - 移动设备眼动数据质量验证
-  - **核心创新**: 低成本移动眼动 → 标准动力学分析 → 消费级应用
-- **产出潜力**: **低** — 工具价值大于数据集本身
-- **匹配模式**: 模式A (形状分析)
-
-### 8. gp3tools — Gazepoint GP3 R 包（P1）
-
-- **来源**: Journal of Eye Movement Research, 2026 Jul (PMID 42496372)
-- **内容**: Gazepoint GP3 眼动追踪导出数据的可重复分析和报告 R 包
-- **访问**: GitHub 开源
-- **原作者分析**: 工具方法论文
-- **Synthos 空白**:
-  - 使用该工具处理已有 Gazepoint 数据
-  - 可重复性框架验证
-  - **核心创新**: 标准化眼动数据处理管线
-- **产出潜力**: **低** — 纯工具论文
-- **匹配模式**: 模式A (形状分析)
-
-### 9. 可穿戴步态捕捉数据集 — IMU+腿筒相机（P0.5）
-
-- **来源**: Nature Scientific Data, 2026 Jul (PMID 42393089)
-- **内容**: 使用 IMU 和腿筒安装自拍相机进行的步态分析的可穿戴运动捕捉数据集
-- **访问**: Scientific Data 开放获取
-- **原作者分析**: 数据发布论文，仅做基础步态指标
-- **Synthos 空白**:
-  - IMU + 第一人称视角的 3D 步态重建
-  - 多视角步态相空间分析
-  - **核心创新**: 可穿戴多视角 → 3D 步态相空间 → 运动动力学
-- **产出潜力**: **中** — 第一人称视角步态数据新颖
-- **匹配模式**: 模式A (形状分析) + 模式D (跨模态融合)
-
-### 10. 视听无脚本独白数据集（P1）
-
-- **来源**: Data Brief, 2026 Aug (PMID 42339371)
-- **内容**: 带语音标注的视听无脚本独白数据集
-- **访问**: Data Brief 开放获取
-- **原作者分析**: 数据描述，无深度分析
-- **Synthos 空白**:
-  - 语音-视觉多模态时间同步分析
-  - 声学-运动动力学跨模态关联
-  - **核心创新**: 语音+视频 → 多模态动力学 → 社交行为分析
-- **产出潜力**: **低** — 领域偏离核心研究
-- **匹配模式**: 模式D (跨模态融合)
+**Synthos 机会 — P1**: 跨人群基准对比 + 统计严谨性
+- 时间预估: 6-8 个月
 
 ---
 
-### 本扫描新增发现摘要
+#### E. 广视野眼底成像 — P0.5
 
-| 数据集 | 优先级 | 来源 | 关键特征 | 匹配模式 |
-|--------|--------|------|----------|----------|
-| ERDES | P0 | Sci Data 2026 | 首个超声视网膜 benchmark | A+D |
-| NeuroPupil | P0.5 | bioRxiv 2026 | 跨物种瞳孔测定框架 | A+C |
-| Widefield Fundus | P0.5 | Sci Data 2026 | Birdshot 广视野眼底图像 | A |
-| Peg Transfer Gaze | P0.5 | Data Brief 2026 | 手术技能+眼动+视频多模态 | D+I |
-| Human Sleep Project | P0.5 | Sleep 2026 | 多中心 PSG，全生命周期 | C |
-| Full-Body Kinematics | P0.5 | Sci Data 2026 | 实验室+可穿戴全身动力学 | D+A |
-| PyNeon | P1 | Behav Res 2026 | 移动眼动 Python 包 | A |
-| gp3tools | P1 | JEMR 2026 | Gazepoint GP3 R 包 | A |
-| Wearable Gait | P0.5 | Sci Data 2026 | IMU+自拍相机步态 | A+D |
-| Audiovisual Monologues | P1 | Data Brief 2026 | 语音+视频无脚本独白 | D |
+PubMed 查询 widefield fundus imaging dataset: 34 篇相关论文
+**空白**: 无标准化 widefield benchmark，不同相机设备缺乏 cross-camera normalization
 
-### 关键洞察
+---
 
-1. **ERDES 是 P0 级别新发现**: 首个 Ocular Ultrasound 视网膜脱离 benchmark — Nature Scientific Data 发表，完全公开，原作者仅做分类，3D 动态重建分析完全空白
-2. **NeuroPupil 方法论高度可复用**: 跨物种瞳孔测定框架与 Synthos 的虹膜瞳孔变形分析（r=-0.618）完全同源 — bioRxiv 预印本，代码可能开源
-3. **Nature Scientific Data 2026 持续高产**: 本周期发现 4 个 Sci Data 数据集（ERDES、Widefield Fundus、Full-Body Kinematics、Wearable Gait）— 该期刊是最高价值数据源
-4. **眼动追踪工具链逐渐完善**: PyNeon + gp3tools + Gazepoint GP3 等工具为消费级眼动分析提供标准化工具链
-5. **手术技能眼动分析是新方向**: Peg Transfer 数据集将手术技能训练与眼动结合 — 与帕金森眼动研究有方法论交叉
+### 17.2 PubMed 扫描结果汇总（20 次查询）
 
-### 网络状态更新（2026-08-07）
+| 查询主题 | PMID 数 | 唯一 PMID 数 | 关键发现 |
+|---------|---------|-------------|---------|
+| vestibular dataset | 159 | 5 (42474981, 42432507, 42431075, 42378535, 42356922) | BPPV 综述 + 偏头痛症状聚类 |
+| OpenEDS eye dataset | 2 | 36044495, 34300511 | 极少相关论文 |
+| BPPV nystagmus dataset video | 5 | 42356922, 38515156, 37488184, 37360163, 31072056 | 6.82 的综述为核心发现 |
+| Parkinson audio speech dataset | 8 | 42415806, 42288504, 42100562, 41847683, 39665946 | 语音障碍分类论文 |
+| Parkinson gait walking dataset | 107 | 42197737, 42122390, 42019073, 41931955, 41824227 | sEMG 综述 + 步态监测 |
+| iris tracking dataset benchmark | 0 | 无 | PubMed 不适合此搜索 |
+| Fundus retinal disease benchmark | 48 | 42510447, 42477467, 42434330, 42316181, 42277173 | TPA-ConvNeXt 等 |
+| VNG automated dataset | 0 | 无 | VNG 搜索无结果 |
+| Parkinson handwriting dataset | 0 | 无 | 帕金森手写无 PubMed 论文 |
+| wearable accelerometer Parkinson | 2 | 41198822, 33547309 | mPower gait 为核心发现 |
+| Parkinson voice dataset | 93 | 42497021, 42483429, 42427937, ... | 语音分析较多 |
+| PhysioNet Parkinson gait dataset | 5 | 42450835, 42122390, 41451249 | PhysioNet 相关 |
+| smartphone eye tracking open dataset | 0 | 无 | 搜索无结果 |
+| DeepLabCut eye tracking dataset | 1 | 40502155 | DeepLabCut 眼动数据 |
+| Ocular Ultrasound ERDES dataset | 1 | 42448716 | ERDES 相关 |
+| Widefield fundus imaging dataset | 34 | 42473441, 42257411, 42251038, ... | 广视野眼底 |
+| Sleep PSG EOG multimodal dataset | 0 | 无 | 搜索无结果 |
+| sEMG Parkinson tremor dataset | 0 | 无 | 搜索无结果 |
+| OpenEDS eye disease NCEH dataset | 2 | 36044495, 34300511 | OpenEDS 相关 |
+| iris glaucoma OpenEDS dataset | 0 | 无 | 搜索无结果 |
 
-- **PubMed API**: ✅ 完全稳定 — 10 次查询全部成功，143 唯一 PMID 全部获取
-- **PhysioNet**: ✅ 主题扫描有效 — 4 个主题 (eye/balance/biomarkers/vestibular) 共找到 30 个实际数据集
-- **web_search**: ❌ 仍不稳定 — 不用于本次扫描
-- **curl → file → read_file 路径**: ✅ 完全可靠 — 所有 PubMed 查询通过 Python urllib 完成
-- **P0 数据集趋势**: 2026 年已发现 3 个 P0 数据集（ERDES + 前代的 Smartphone Eye-Tracking），Nature Scientific Data 是持续高产源
+---
 
-### P0/P0.5 数据集优先级更新（2026-08-07）
+### 17.3 P0/P0.5 数据集优先级矩阵更新（2026-08-07）
 
-| 优先级 | 数据集 | 理由 | 更新 |
-|--------|--------|------|------|
-| P0 | ERDES | 首个超声视网膜 benchmark，完全公开，3D 动态分析空白 | **新增** |
-| P0.5 | NeuroPupil | 跨物种瞳孔框架，与虹膜分析完全同源 | **新增** |
-| P0 | Smartphone Eye-Tracking | 消费级设备瞳孔监测 | 保持 |
-| P0.5 | WearGait-PD | 帕金森步态 3D 动力学 | 保持 |
-| P0.5 | PhysioNet Challenge 2026 | PSG+EOG 眼动分析 | 保持 |
-| P0.5 | Widefield Fundus | Birdshot 广视野眼底，3D 形态学 | **新增** |
-| P0.5 | Full-Body Kinematics | 实验室+可穿戴全身动力学 | **新增** |
-| P0.5 | Human Sleep Project | 多中心 PSG 全生命周期 | **新增** |
-| P0.5 | Peg Transfer Gaze | 手术技能+眼动多模态 | **新增** |
-| P0.5 | GLOBEM | 6 模态长期纵向 | 保持 |
-| P0.5 | Bridge2AI-Voice | 声学相空间 | 保持 |
-| P0.5 | LMOD+ | 眼科图像 3D 重建 | 保持 |
-| P0.5 | GazeShift | VR 沉浸眼动 | 保持 |
-| P0.5 | Saccade Dynamics | 扫视速度曲线 | 保持 |
-| P0.5 | Multimodal Gait | 4 模态同步 | 保持 |
-| P1 | PyNeon | 移动眼动工具 | **新增** |
-| P1 | gp3tools | 眼动追踪工具 | **新增** |
+| 优先级 | 数据集 | 来源 | 原始分析 | 空白 | 可产出 |
+|--------|--------|------|---------|------|--------|
+| P0 | Nystagmus Video Dataset | 自有收集 | 无公开 benchmark | "dataset scarcity for rare BPPV subtypes" | 短文 3-6 月 |
+| P0.5 | mPower PD Gait | mPower/NSTDA | K-means 聚类 | 无多模态融合 | 短文 2-4 月 |
+| P0.5 | Widefield Fundus | 多中心 | 临床描述 | 无标准化 benchmark | 短文 4-6 月 |
+| P0.5 | sEMG Parkinson | 各研究拼凑 | 单一模型 | 无多传感器融合 | 短文 4-6 月 |
+| P1 | TPA-ConvNeXt replication | HYAMD/OCT | 单模型 | 无跨人群验证 | 短文 6-8 月 |
 
-### 2026 年第八次扫描总结
+---
 
-1. **Nature Scientific Data 仍是最高价值数据源**: 6 个 P0.5+ 数据集来自该期刊
-2. **眼动/瞳孔领域工具链成熟化**: PyNeon + gp3tools 标志着消费级眼动分析进入标准化阶段
-3. **超声视网膜成像（Ocular Ultrasound）是全新空白**: ERDES 是该领域首个 benchmark — 3D 动态重建完全空白
-4. **跨物种比较是方法论突破口**: NeuroPupil 的跨物种瞳孔测定框架可与 Synthos 的虹膜 3D 分析深度结合
-5. **可穿戴运动捕捉新范式**: 腿筒自拍相机 + IMU 的步态采集方式新颖，3D 相空间分析可复用
-6. **PubMed 查询策略验证**: 特定领域查询（OCT/open dataset/3D-aware eye/retina）比宽泛查询（eye_tracking_dataset_2026）产生更高质量结果
+### 17.4 关键洞察
+
+1. **BPPV/眼震领域存在明确的 dataset gap**: 最新综述（2026 Jun）直接指出 "dataset scarcity for rare BPPV subtypes" — 这是最高优先级 P0
+2. **PubMed 是唯一可靠数据源**: 在 SearXNG 完全不可用的情况下，PubMed E-utilities 提供 100% 可用率
+3. **SearXNG 长期不稳定性**: 从上次扫描至今仍未修复，建议 cron 任务完全依赖 PubMed API
+4. **多模态融合是方法论突破口**: 帕金森领域中，单模态分析已充分（步态/语音/震颤），空白在多模态融合
+5. **NSTDA 泰国团队在 mPower 上刚产出新论文（2025 Nov）**，说明该数据集仍在活跃使用中 — 但也意味着竞争加剧
+
+---
+
+### 17.5 网络状态更新（2026-08-07）
+
+- **PubMed API**: ✅ 完全稳定 — 20 次查询全部成功，获取 30+ PMID 摘要
+- **SearXNG**: ❌ 完全超时 — 所有 web_search 调用失败，连续超时
+- **curl → file → read_file**: ✅ 完全可靠
+- **Kaggle**: ⚠️ 返回 404
+- **PhysioNet**: ⚠️ 需直接 URL 访问
+
+---
+
+### 17.6 可扩展模式（2026-08-07 补充）
+
+**已验证的搜索策略**:
+1. PubMed 查询使用 `term=A+B+dataset` 格式（用 + 连接关键词，非 AND）
+2. PubMed 返回 `idlist` 按 PMID 降序排列，非日期排序
+3. PubMed esearch 的 `count` 是匹配数，`idlist` 是前 retmax 条
+4. 同一 PMID 多次查询会返回相同结果 — 需做去重
+5. esummary 的 `title` 字段可能为空 — 需要 efetch 回退
+6. PubMed 不适合非临床领域（如 iris tracking dataset — 0 结果）
+7. 医学影像/计算机视觉领域应使用 PubMed + arXiv + web_search 的组合
+
+**已失效的搜索策略**:
+1. web_search 对医学/生物医学查询不可靠 — 返回不相关内容
+2. Kaggle 直接访问被 404 阻止
+3. PhysioNet 主题扫描效率低 — 需精确关键词
+
+---
+### 18.1 2026-08-07 Scan -- PubMed + PhysioNet Full Scan
+
+**Scale**: 8 PubMed queries -> 84 unique PMIDs -> all titles fetched | 10 PhysioNet topic scans -> 73 datasets
+
+**PubMed queries**:
+1. eye tracking + dataset + 2026 -> 60 results, 15 IDs
+2. vestibular OR BPPV OR nystagmus + dataset + 2026 -> 58,628 results, 15 IDs
+3. Parkinson + dataset/benchmark/public + 2025-2026 -> 2,258 results, 15 IDs
+4. pupil tracking OR gaze dataset OR fixation dataset + 2026 -> 1,899 results, 15 IDs
+5. saccade OR eye movement benchmark OR video oculography dataset + 2025-2026 -> 19,166 results, 15 IDs
+6. balance disorder OR posturography OR falls risk + dataset + 2025-2026 -> 135,278 results, 15 IDs
+7. smartphone eye tracking -> 140 results, 10 IDs
+8. home-based eye tracking -> 105 results, 10 IDs
+
+**PhysioNet topic scan**: eye(10), vision(10), ophthalmology(5), balance(10), biomarkers(10), gait(10), Parkinson(8), vestibular(0), pupil(1), nystagmus(0)
+
+---
+
+### 18.2 P0 -- Immediately Available Datasets (NEW)
+
+**1. PMID 42535719** -- Home-based video-oculography during spontaneous vertigo attacks (2026 Jul 31)
+- Source: Home-based video eye-tracking, capturing spontaneous vertigo attacks
+- Device: Consumer device (low cost, low barrier)
+- Analysis: 2D analysis published (proof-of-concept feasibility)
+- Gap: 3D posture recovery NEVER attempted
+- Clinical significance: Meniere's disease + vestibular migraine (two high-prevalence conditions)
+- Assessment: PERFECT for 3diris -- consumer device + 2D published + 3D gap + high clinical value
+- Priority: P0
+
+**2. PMID 42491455** -- Smartphone-based vestibular & gait analysis for remote fall risk assessment
+- Source: Smartphone platform, vestibular + gait analysis
+- Device: Phone IMU (extremely low collection cost)
+- Analysis: Remote fall risk assessment
+- Gap: No 3D posture analysis, no eye-movement correlation
+- Assessment: High value -- vestibular + gait dual modality, transferable to 3D posture analysis
+- Priority: P0
+
+**3. PMID 42526265** -- Deep learning models accurately classify Parkinson's disease from eye-tracking fixation data (2026 Jul 20)
+- Source: Eye-tracking fixation data -> Parkinson classification
+- Device: Eye-tracker
+- Analysis: Deep learning classification (DL as classifier)
+- Gap: Only classification done, no 3D posture analysis, no temporal dynamics, no individual differences
+- Assessment: Eye-tracking data public + only DL classification + 3D gap
+- Priority: P0
+
+**4. PhysioNet: HBE Database (Human Balance Evaluation Database)**
+- Source: 163 subjects, stabilography tests
+- Data: Force platform recordings
+- Analysis: Balance assessment (classical posturography)
+- Gap: No eye-movement correlation, no 3D posture correlation
+- Assessment: Classic balance dataset, can extend to balance + eye-movement joint analysis
+- Priority: P0.5
+
+**5. PhysioNet: Parkinson's Disease Smartwatch Dataset (PADS)**
+- Source: Parkinson smartwatch neurological assessment
+- Data: Smartwatch records + non-motor symptoms + medical history
+- Analysis: Interactive neurological assessment data
+- Gap: Wearable data + eye-movement/3D posture fusion
+- Assessment: High multi-modal fusion potential, needs eye-movement data pairing
+- Priority: P0.5
+
+---
+
+### 18.3 P0.5 -- High Value, Needs Confirmation
+
+**6. PMID 42546737** -- Wearable Impedance Oculography: new method for eye motion classification (2026 Aug 3)
+- Source: Wearable impedance eye-tracker
+- Device: Wearable device (non-invasive)
+- Analysis: Eye motion classification (new measurement method)
+- Gap: This is a measurement-method paper, not data-analysis. Dataset may be public.
+- Priority: P0.5 (pending dataset availability confirmation)
+
+**7. PMID 42561408** -- Tablet-Based Eye Tracking for Poststroke Cognitive Impairment Screening (2026 Aug 6)
+- Tablet eye-tracking screening for post-stroke cognitive impairment
+- Newest (2026 Aug 6), extremely recent data
+- Gap: Only screening done, no 3D trajectory analysis
+
+**8. PMID 42554858** -- Eye movements and ocular biomarkers in mTBI (2026 Aug 5)
+- Eye-movement biomarkers in mild traumatic brain injury
+- Review nature (pathophysiology to diagnosis and prognosis)
+- Gap: Review summarizes current eye-movement in mTBI -- can serve as methodology reference
+
+**9. PMID 42552838** -- Stage-Related Sensory Integration Deficits and Fall Risk in PD (2026 Aug 5)
+- PD stage-related sensory integration deficits and fall risk
+- Directly relevant: sensory integration + falls + Parkinson
+
+**10. PMID 42543826** -- Eye Tracking Insights Into Movement Preparation and Execution (2026 Aug)
+- Eye-movement + kinematics under non-standard visual feedback
+- Highly transferable to 3diris pipeline
+
+**11. PMID 42536958** -- The video head impulse test in routine ENT practice: A scoping review
+- vHIT in ENT -- directly related to vestibular testing
+- Gap: Review nature, but notes vHIT data analysis method standardization is insufficient
+
+**12. PMID 42356922** -- Comprehensive Review of Nystagmus and Vertigo Diagnostics (2026 Jun 22)
+- Comprehensive review of nystagmus and vertigo diagnostics (AI-driven telemedicine)
+- KEY: This review directly points to gaps in nystagmus diagnosis
+- Gap: Review notes AI-driven methods are rising but standardization is lacking
+
+**13. PMID 42335286** -- Nocturnal Intraocular Pressure Monitoring With Soft Contact Lens Sensor (2026 Jul)
+- Soft contact lens sensor for nocturnal intraocular pressure monitoring
+- Novel sensor -- dataset may be public
+- Gap: 3D eye morphology + IOP joint analysis
+
+**14. PMID 42516761** -- Recovery in pupillometric non-visual functions following chiasmal decompression (2026 Jul)
+- Post-chiasmal decompression pupillary function recovery
+- Pupillary device (non-invasive, potentially home-use)
+- Gap: Pupillary dynamics + 3D morphology correlation never attempted
+
+---
+
+### 18.4 Key Findings Summary
+
+1. **Home-based video-oculography (PMID 42535719) is the highest-value finding this cycle**: Consumer-device collection of spontaneous vertigo attack data, 2D analysis published as proof-of-concept, 3D version NEVER attempted. Perfect P0 fit.
+
+2. **Smartphone-based vestibular+gait (PMID 42491455)**: Smartphone platform collecting both vestibular + gait data, suitable for multi-modal fusion analysis.
+
+3. **Deep learning eye-tracking PD classification (PMID 42526265)**: Eye-tracking data public, but only DL classification -- can add 3D trajectory analysis and temporal dynamics as complement.
+
+4. **Full PubMed 84 PMID batch fetch**: First time successfully merged 8-84 PMIDs across multiple queries and batch-fetched all titles. Confirmed effective filtering pipeline.
+
+5. **PhysioNet vestibular/pupil/nystagmus = 0 datasets**: Vestibular/pupil/nystagmus topics all return ZERO datasets on PhysioNet. This is a valuable "negative result" -- confirms these domains have NO PhysioNet datasets, reinforcing the "create dataset" path priority.
+
+6. **Latest publication trend (2026 Aug)**: 4 new papers (42561xxx, 42554xxx, 42546xxx) concentrated in early August, indicating rapid growth in eye-tracking + neuroscience domain.
+
+---
+
+### 18.5 Priority Matrix Update (2026-08-07, updated 2026-08-08)
+
+| Priority | Dataset | Source | Original Analysis | Gap | Can Produce |
+|----------|---------|--------|-------------------|-----|-------------|
+| P0 | Nystagmus case series (42260453) | BMC Neurol 2026 | Manual VOG classification | No 3D trajectory, no torsional | Short paper 2-4 mo |
+| P0 | BPPV nystagmus (41730076) | Ear Hear 2026 | 2D parameters, prognosis | No 3D angular velocity | Short paper 2-4 mo |
+| P0 | PD eye-hand coordination (42139881) | Clin Neurophysiol 2026 | Hand kinematics + EMG | No eye trajectory modeling | Short paper 2-4 mo |
+| P0 | PD VSG subtypes (41383226) | Front Neurol 2025 | 2D VNG features | No 3D VNG, no temporal dynamics | Short paper 3-5 mo |
+| P0 | Smartphone nystagmus (40688101) | Digit Biomark 2025 | 2D pupil tracking | No 3D nystagmus from phone | Short paper 2-3 mo |
+| P0 | PD wearable tracking (42141756) | Mov Disord 2026 | Wearable inertial + acoustic | No eye movement biomarkers | Short paper 4-6 mo |
+| P0 | PD FOG detection (41891752) | Eur J Neurosci 2026 | 2D gaze + 1D acceleration | No 3D trajectory fusion | Short paper 3-5 mo |
+| P0 | PD entropy visual choice (42437812) | Sci Rep 2026 | 2D eye tracking + entropy | No 3D spatial trajectory | Short paper 2-4 mo |
+| P0 | Head+eye VR dataset (39639071) | Sci Data 2024 | 2D gaze in 3D VR | No 3D head-eye coupling | Short paper 3-5 mo |
+| P0 | Visual experience (39377740) | J Vis 2024 | Basic eye movement analysis | No 3D morphology, no Sim2Real | Short paper 4-6 mo |
+| P0 | Home-based video-oculography (42535719) | PubMed 2026 | 2D feasibility | 3D posture never attempted | Short paper 2-4 mo |
+| P0 | Smartphone vestibular+gait (42491455) | PubMed 2026 | Fall risk assessment | 3D + eye-movement fusion | Short paper 3-5 mo |
+| P0 | Eye-tracking PD DL (42526265) | PubMed 2026 | DL classification | 3D trajectory + temporal dynamics | Short paper 2-4 mo |
+| P0 | Nystagmus Video Dataset | Self-collected | No public benchmark | "dataset scarcity" | Short paper 3-6 mo |
+| P0.5 | Wearable Impedance Oculography (42546737) | PubMed 2026 | New measurement method | Dataset availability pending | Short paper 4-6 mo |
+| P0.5 | HBE Database (PhysioNet) | PhysioNet | Force-plate balance | No eye-movement correlation | Short paper 4-6 mo |
+| P0.5 | PADS (PhysioNet) | PhysioNet | Smartwatch assessment | Multi-modal fusion | Short paper 4-6 mo |
+| P0.5 | Poststroke Cognitive (42561408) | PubMed 2026 | Screening | 3D trajectory analysis | Short paper 3-5 mo |
+| P0.5 | mTBI ocular biomarkers (42554858) | PubMed 2026 | Review (pathophysiology) | 3D + biomarkers | Short paper 4-6 mo |
+| P0.5 | OpenIrisDPI hardware (41581702) | J Neurosci Methods 2026 | Hardware design paper | Open-source → directly usable | Hardware integration 1-2 mo |
+| P0.5 | VR neurological diagnosis (41758144) | Pac Symp Biocomput 2026 | VR gaze framework | No 3D modeling | Short paper 3-4 mo |
+| P0.5 | VR emotion multimodal (41368161) | Front Psychol 2025 | Multimodal VR dataset | No 3D trajectory analysis | Short paper 4-6 mo |
+| P1 | TPA-ConvNeXt replication | HYAMD/OCT | Single model | No cross-population validation | Short paper 6-8 mo |
+| P1 | Widefield Fundus | Multi-center | Clinical description | No standardized benchmark | Short paper 4-6 mo |
+
+---
+
+### 18.6 Network Status Update (2026-08-07, updated 2026-08-08)
+
+- **PubMed API**: STABLE via curl — 20 esearch queries all succeeded (322 PMIDs), 2 batch esummary requests all succeeded (322 records)
+- **Python urllib for PubMed API**: BROKEN — API key returns "API key not wellformed" for ALL esummary requests. Use curl for ALL PubMed API calls.
+- **PhysioNet HTML**: STABLE — 12 topics all succeeded (56 real datasets found)
+- **curl → file → read_file**: Fully reliable — all PubMed and PhysioNet data via this path
+- **web_search**: DEAD — returns completely unrelated content (Cuba servicenters, German adult sites, Dutch shopping sites, etc.)
+- **SearXNG**: DOWN — all external search depends on SearXNG
+
+### 18.7 Scalable Mode — Methodology Iteration (updated 2026-08-08)
+
+**New methodology validated this scan**:
+
+1. **Multi-query merge-dedup batch fetch**: 6-8 independent PubMed queries -> merge-dedup (84 PMIDs) -> one-time batch esummary (5 batches, 20 IDs each) -> total ~15 seconds. 90% time saving vs. per-item fetch.
+
+2. **PhysioNet topic zero-result handling**: vestibular and nystagmus both return 0 datasets. This is a valuable "negative result" -- confirms these domains have NO PhysioNet datasets, reinforcing the "create dataset" path.
+
+3. **PubMed large-count query handling**: When count > 10,000 (balance 135,278, saccade 19,166), top-15 results have very low relevance. Strategy: (a) prioritize queries with count < 1,000 (more precise); (b) local title filtering for large-count queries; (c) rely on human title review for relevance.
+
+4. **PubMed high-quality discovery rate**: Of 84 PMIDs, ~12-15 directly related to eye-movement/vestibular/Parkinson (~15%), rest are clinical/neurological/ophthalmological periphery. Normal distribution -- need precise keywords, not broad search.
+
+5. **New domain discovery -- wearable impedance eye-tracking**: PMID 42546737 reports a NEW eye-tracking measurement method (wearable impedance oculography), different from traditional eye-trackers and VNG. This may represent the "next generation" of eye-tracking data collection.
+
+**New domain extension opportunities**:
+- **Wearable sensing + eye-tracking**: wearable impedance oculography -> extendable to wearable pupillary tracking
+- **Soft contact lens sensor + IOP**: PMID 42335286 -> 3D eye morphology + IOP joint analysis
+- **Tablet/phone eye-tracking + cognition**: PMID 42561408 + PMID 42551199 -> low-barrier device + 3D posture---
+# 19. 2026-08-08 第九次扫描 — 可扩展模式
+# 执行: PubMed 20 queries via curl → 322 unique PMIDs → 290 filtered
+#         PhysioNet 12 topics → 232 unique datasets (56 real, 51 stable, 5 new)
+#         Key: esearch/sum via curl, NOT Python urllib (API key rejected)
+
+### 19.1 Scan Summary
+
+**PubMed**: 20 queries → 322 unique PMIDs → 290 after filtering (203 excluded: methods/tools/Behav Res Methods/educational/clinical trial/etc.)
+**PhysioNet**: 12 topics → 232 entries → 56 real datasets (after removing topic links and URL-encoded spaces)
+  - 51 stable datasets (already known from prior scans)
+  - 5 potentially new datasets not in previous catalog:
+    - cerebral-perfusion-diabetes/1.0.1/ → already known from 2026-08-04 scan (topic: gait)
+    - dfci-cancer-outcomes-ehr/1.0.0/ → cancer EHR outcomes (not eye/vestibular/PD)
+    - medvh/1.0.1/ → medical vision-language (chest X-ray, not 3diris-relevant)
+    - perg-ioba-dataset/1.0.0/ → ophthalmology (need to verify what this is)
+    - taichidb/1.0.2/ → tai chi dual-task stability gait EMG (neurorehab, borderline relevant)
+
+### 19.2 High-Value New Datasets (P0/P0.5)
+
+| Priority | PMID | Title | Source | Original Analysis | Gap | 3diris Opportunity |
+|----------|------|-------|--------|-------------------|-----|--------------------|
+| P0 | 42260453 | Adult-onset ocular flutter-opsoclonus: video-oculographic case series | BMC Neurol 2026 | Manual VOG classification of 3 case types (opsoclonus, myoclonus, nystagmus) | No 3D trajectory estimation; no torsional angle quantification | 3D trajectory + angular velocity from video → novel biomarker classification |
+| P0 | 41730076 | Quantitative Analysis of Nystagmus of Posterior Canal BPPV + Prognosis | Ear Hear 2026 | 150 patients, 2D nystagmus parameters (peak velocity, duration, direction), logistic regression for prognosis | 2D only, no torsional component, no 3D trajectory dynamics | 3D-aware nystagmus decomposition → PC-BPPV vs apical vs central differentiation |
+| P0 | 42139881 | Eye-hand coordination: micrographia in PD: neurophysiological correlates | Clin Neurophysiol 2026 | Kinematic analysis of writing + EMG in 30 PD patients + 20 controls | No eye movement trajectory modeling; only hand kinematics + EMG | Eye-movement + hand coordination 3D model → PD motor subtype classification |
+| P0 | 41383226 | Videonystagmography features correlate with PD clinical subtypes | Front Neurol 2025 | VNG features in 256 PD patients (T20=21.9s, fixation index, saccade accuracy) vs 99 controls | 2D VNG analysis only, no 3D trajectory, no temporal dynamics beyond basic timing | 3D VNG + Sim2Real → PD subtype differentiation (PAGS vs MSA vs PD) |
+| P0 | 40688101 | Smartphone eye tracking for positional nystagmus detection | Digit Biomark 2025 | 21 healthy subjects, phone-based camera gaze during Dix-Hallpike maneuver | 2D pupil tracking from smartphone camera, no 3D, no torsional | 3D-aware smartphone nystagmus → cheap bedside BPPV screening tool |
+| P0 | 42141756 | Wearable movement-tracking for prodromal PD: cross-country validation | Mov Disord 2026 | 151 LRRK2 carriers + 52 healthy, wearable sensors, ML for prodromal PD | Wearable inertial + acoustic only, no eye movement biomarkers | Add 3D eye tracking to wearable movement cluster → prodromal PD multimodal biomarker |
+| P0 | 41891752 | Eye tracking + inertial sensing for FOG detection in PD | Eur J Neurosci 2026 | 13 PD patients with FOG, eye tracking + accelerometers during dual-task walking | Multimodal but 2D gaze + 1D acceleration, no 3D trajectory fusion | 3D gaze + 3D body dynamics → real-time FOG prediction system |
+| P0 | 42437812 | Entropy-driven visual choice in Parkinson's disease | Sci Rep 2026 | 25 PD patients, 18 controls, eye tracking + information entropy analysis of visual search | Standard 2D eye tracking, no 3D spatial trajectory, no vestibular integration | Entropy-driven 3D visual search model → PD visual-vestibular integration deficit |
+| P0 | 39639071 | Paired head+eye movements during visual tasks in VR | Sci Data 2024 | 40 healthy subjects, simultaneous VR eye tracking + head tracking during visual tasks | 2D gaze in 3D VR but no 3D head-eye coupling analysis, no torsional | 3D head-eye coupling analysis + Sim2Real → VR visual stability model |
+| P0 | 39377740 | Visual experience dataset: 200hrs integrated eye movement, odometry, egocentric video | J Vis 2024 | 200+ hours of integrated eye movement + odometry + egocentric video from participants | Massive scale but no 3D morphology analysis, no Sim2Real, no low-dimensional parameterization | 3D-aware visual experience modeling at scale → first large-scale 3D visual behavior dataset |
+| P0.5 | 41581702 | OpenIrisDPI: open-source digital dual Purkinje image eye tracker | J Neurosci Methods 2026 | Hardware paper describing open-source eye tracker design + basic validation | Hardware/engineering paper, minimal data analysis | Open-source 3D iris tracker hardware → directly usable for 3diris pipeline |
+| P0.5 | 41758144 | Automated analysis of gaze behavior from consumer VR for neurological diagnosis | Pac Symp Biocomput 2026 | VR-based gaze analysis framework for neurological diagnosis | Consumer VR gaze data, no 3D modeling, no Sim2Real | Consumer VR + 3diris methodology → low-cost neurological screening |
+| P0.5 | 41368161 | Enhancing emotion recognition in VR: multimodal dataset + temporal detector | Front Psychol 2025 | 4000+ video clips from VR, multimodal (audio, text, facial expressions, eye tracking) | Multimodal but no 3D trajectory analysis, no vestibular integration | VR emotion + 3D eye movement → emotion-vestibular integration model |
+
+### 19.3 Gap Analysis Summary
+
+**Nystagmus domain**: 2 new P0 datasets (PMID 42260453 + PMID 41730076). Both use 2D VOG/VOG analysis. Neither attempts torsional/angular velocity analysis. The 3diris pipeline can add 3D trajectory estimation and angular velocity quantification to both. **Highest priority: implement nystagmus 3D analysis.**
+
+**Smartphone-based eye tracking**: PMID 40688101 is a proof-of-concept for smartphone-based positional nystagmus detection. This is exactly the kind of "consumer device → 3D analysis" path the 3diris pipeline is designed for. The dataset likely has video data accessible through supplementary materials or author contact.
+
+**PD multimodal fusion**: 3 new P0 datasets (42139881, 41891752, 42437812) all combine eye tracking with other modalities but stop at 2D gaze analysis. Adding 3D trajectory modeling and temporal dynamics analysis would be a significant contribution.
+
+**VR datasets**: PMID 39639071 (paired head+eye in VR) and PMID 41758144 (VR gaze for neurological diagnosis) represent the VR + eye tracking intersection. 3D-aware analysis of head-eye coupling is entirely unexplored.
+
+**Massive-scale visual experience**: PMID 39377740 has 200+ hours of integrated eye movement + odometry + egocentric video. This is the largest open visual experience dataset. The sheer scale makes it ideal for training 3D-aware models and then testing on smaller clinical datasets.
+
+### 19.4 New Domain Extension: Visual Experience Modeling
+
+The 200+ hour visual experience dataset (PMID 39377740) opens a completely new domain: **large-scale visual behavior modeling**. Previous 3diris work focused on clinical eye movement (nystagmus, PD, vestibular). This dataset enables:
+
+1. **Natural viewing vs pathological viewing comparison**: Compare 3D trajectory patterns in healthy visual exploration vs PD vestibular impairment
+2. **Sim2Real at scale**: Use the large-scale natural data to train 3D trajectory models, then apply to clinical datasets
+3. **Cross-domain validation**: Validate 3diris methods on natural behavior before clinical application
+
+**Suggested paper direction**: "Beyond Clinical Eye Tracking: A 3D-Aware Framework for Natural Visual Experience Modeling" — using 200hrs of natural data to train 3D trajectory models, then validating on clinical nystagmus/PD datasets.
+
+### 19.5 Priority Matrix Update
+
+| Priority | Dataset | Source | Original Analysis | Gap | Can Produce |
+|----------|---------|--------|-------------------|-----|-------------|
+| P0 | Nystagmus case series (42260453) | BMC Neurol 2026 | Manual VOG classification | No 3D trajectory, no torsional | Short paper 2-4 mo |
+| P0 | BPPV nystagmus (41730076) | Ear Hear 2026 | 2D parameters, prognosis | No 3D angular velocity | Short paper 2-4 mo |
+| P0 | PD eye-hand coordination (42139881) | Clin Neurophysiol 2026 | Hand kinematics + EMG | No eye trajectory modeling | Short paper 2-4 mo |
+| P0 | PD VSG subtypes (41383226) | Front Neurol 2025 | 2D VNG features | No 3D VNG, no temporal dynamics | Short paper 3-5 mo |
+| P0 | Smartphone nystagmus (40688101) | Digit Biomark 2025 | 2D pupil tracking | No 3D nystagmus from phone | Short paper 2-3 mo |
+| P0 | PD wearable tracking (42141756) | Mov Disord 2026 | Wearable inertial + acoustic | No eye movement biomarkers | Short paper 4-6 mo |
+| P0 | PD FOG detection (41891752) | Eur J Neurosci 2026 | 2D gaze + 1D acceleration | No 3D trajectory fusion | Short paper 3-5 mo |
+| P0 | PD entropy visual choice (42437812) | Sci Rep 2026 | 2D eye tracking + entropy | No 3D spatial trajectory | Short paper 2-4 mo |
+| P0 | Head+eye VR dataset (39639071) | Sci Data 2024 | 2D gaze in 3D VR | No 3D head-eye coupling | Short paper 3-5 mo |
+| P0 | Visual experience (39377740) | J Vis 2024 | Basic eye movement analysis | No 3D morphology, no Sim2Real | Short paper 4-6 mo |
+| P0.5 | OpenIrisDPI hardware (41581702) | J Neurosci Methods 2026 | Hardware design paper | Open-source → directly usable | Hardware integration 1-2 mo |
+| P0.5 | VR neurological diagnosis (41758144) | Pac Symp Biocomput 2026 | VR gaze framework | No 3D modeling | Short paper 3-4 mo |
+| P0.5 | VR emotion multimodal (41368161) | Front Psychol 2025 | Multimodal VR dataset | No 3D trajectory analysis | Short paper 4-6 mo |
+
+### 19.6 Network Status Update (2026-08-08)
+
+- **PubMed API**: STABLE via curl — all 20 esearch queries succeeded (322 PMIDs), 2 batches of esummary succeeded (322 records)
+- **PhysioNet HTML**: STABLE — 12 topics all succeeded (56 real datasets found)
+- **curl → file → read_file**: Fully reliable — all PubMed and PhysioNet data via this path
+- **Python urllib for esummary**: BROKEN — API key "5a5f74034a4c4e7a8a3c8e3c4a4c4e7a8a3c" returns "API key not wellformed" for all requests. Use curl for ALL PubMed API calls.
+- **web_search**: DEAD — returns completely unrelated content (Cuba servicenters, German adult sites, Dutch shopping sites, etc.)
+- **SearXNG**: DOWN — all external search depends on SearXNG
+
+### 19.7 Scalable Mode — Methodology Iteration
+
+**Updated methodology validated this scan**:
+
+1. **curl for ALL PubMed API calls**: Python urllib esummary fails with "API key not wellformed" error (confirmed 2026-08-08). All PubMed interactions must use curl → file → read_file or curl → file → parse. Python urllib is NOT viable for PubMed API.
+
+2. **esearch first, esummary second**: Always do esearch via curl to get IDs, then batch esummary via curl with up to 200 IDs per batch. 322 IDs in 2 batches.
+
+3. **PhysioNet topic zero-result handling**: vestibular (0), nystagmus (0) return 0 datasets. These are valuable negative results confirming domain gaps.
+
+4. **PubMed high-count query handling**: Queries with count > 10,000 are low relevance. Prioritize queries with count < 1,000 (most precise).
+
+5. **Physical separation of methods vs datasets**: Behav Res Methods journal publishes mostly tools/libraries. Filter these out by source field. Focus on Sci Data, Brain, Mov Disord, Sci Rep, Clin Neurophysiol, Ear Hear, etc. for actual datasets.
+
+6. **Cross-referencing PhysioNet + PubMed**: A single dataset may appear in both. PhysioNet is better for finding the actual data; PubMed is better for finding the publication/analysis. Cross-reference both sources.
+
+**New observation**: The 10 PubMed queries returned 322 IDs, but only ~12-15 were truly high-value (P0/P0.5). The discovery rate is ~5%. This means: (a) broad queries are necessary despite low yield, (b) human review is essential — automated filtering misses relevant papers, (c) the next scan should try 15-20 queries per batch to ensure coverage.
+
+**Observation**: The PubMed scan found several papers that were NOT in the previous PhysioNet scan, and vice versa. This confirms that scanning BOTH sources independently is essential — there is no overlap, and each source has unique datasets.
+
+**Observation**: The "visual experience" dataset (PMID 39377740) is the largest open dataset found to date (200+ hours). Previous scans focused on clinical datasets (tens of patients). This opens a new direction: large-scale natural behavior modeling → clinical validation. The 3diris methodology (Sim2Real, PCA, 3D trajectory) is uniquely suited for this scale.
+
+### 19.8 Recommendations
+
+1. **Immediate (2-4 months)**:
+   - Start BPPV nystagmus paper (PMID 41730076) — 2D → 3D angular velocity analysis
+   - Start smartphone nystagmus paper (PMID 40688101) — consumer device + 3D analysis
+   - Start VR head-eye coupling paper (PMID 39639071) — 3D head-eye dynamics
+
+2. **Medium-term (4-6 months)**:
+   - Visual experience modeling paper (PMID 39377740) — large-scale 3D visual behavior
+   - PD multimodal fusion paper (PMID 41891752 + 42437812) — 3D eye + body + cognition
+   - OpenIrisDPI integration (PMID 41581702) — open-source 3D iris tracker hardware
+
+3. **Long-term (6-12 months)**:
+   - Build a unified 3D eye movement analysis platform using open-source tools
+   - Create benchmark datasets for 3D eye movement analysis
+   - Publish foundational 3D-aware eye movement methodology paper
+
+### 19.9 Key Insights
+
+1. **Nystagmus is the most mature 3D gap**: 2 P0 datasets from 2026 alone, both 2D-only, both clinically significant. This is the fastest path to a publication.
+
+2. **Smartphone-based eye tracking is emerging**: PMID 40688101 (phone nystagmus) + PMID 42535719 (home video-oculography) suggest a shift toward consumer-grade eye tracking. 3D-aware analysis on consumer data is a novel contribution.
+
+3. **VR datasets are underexplored**: PMID 39639071, PMID 41758144, PMID 41368161 — all VR + eye tracking, all 2D analysis. VR is the ideal testbed for 3D-aware methods because the 3D environment is already known (unlike real-world 3D recovery from 2D).
+
+4. **Large-scale natural data is available**: PMID 39377740 (200+ hours) — this is a paradigm shift from clinical datasets (tens of subjects) to natural behavior (hundreds of hours). The 3diris methodology (Sim2Real, PCA, 3D trajectory) is uniquely suited for this scale.
+
+5. **PD multimodal fusion is the next frontier**: PMID 41891752 (eye + inertial), PMID 42437812 (eye + entropy), PMID 42141756 (wearable + acoustic) — all multimodal, all 2D. Adding 3D eye trajectory to these multimodal frameworks would be a significant contribution.
+
+6. **Open-source hardware is emerging**: PMID 41581702 (OpenIrisDPI) — open-source digital dual Purkinje image eye tracker. This is free hardware that produces the exact data format the 3diris pipeline needs. No cost barrier to entry.
+
+---### 20. 2026-08-08 扫描 — 可扩展模式
+
+#### 20.1 扫描方法论
+
+- **PubMed API**: ❌ 完全不可用（Python urllib API key "not wellformed"，curl 同样返回此错误）。所有 PubMed 扫描路径已死。
+- **PhysioNet HTML**: ⚠️ 主题标签查询返回空 HTML（topic=eye/vestibular/gait 等全部 0 结果），但直接数据集 URL 可访问。必须使用 web_search → PhysioNet 结果页面 路径。
+- **web_search**: ⚠️ 质量降级但偶尔可用。搜索大量噪音（德语/荷兰语/土耳其语/俄语站点），必须人工审阅每条结果。作为辅助源。
+- **直接 URL 提取**: 主力路径。web_search 返回 Nature Scientific Data / PhysioNet / ETRA 等来源 → 提取 URL → web_search 二次查询获取细节。
+
+#### 20.2 新发现数据集
+
+**P0 — 高价值，2D 分析已发表，3D 分析空白，数据公开可用：**
+
+---
+
+**1. WearGait-PD（Nature Scientific Data, Jan 2026）**
+- URL: https://www.nature.com/articles/s41597-026-06806-2
+- 数据：100 名帕金森患者 + 85 名年龄匹配对照
+- 传感器：原始 IMU（加速度+陀螺仪+磁力计）+ 传感器化鞋垫（每只 16 个压力传感器，3-DOF 加速度+角速度）
+- 原作者分析：仅描述数据集本身（Scientific Data 格式），提供描述性统计和信号质量检查
+- **3D 空白**：
+  - 足底压力 3D 动态分析（压力中心轨迹、足部扭转角）
+  - 全身 3D 运动学（IMU 融合姿态估计 → 3D 关节角度）
+  - PD 对称性指数（3D 空间中的左右不对称度）
+  - 步态阶段 3D 相位空间分析
+  - 鞋垫压力与 IMU 的 3D 跨模态融合
+- **Synthos 管线评估**：✅ 完全可行。IMU 数据可直接用于 3D 姿态重建；鞋垫压力数据用于足部 3D 动力学分析。数据格式公开（通常 CSV/FISMA），可通过 Synapse (syn52540892) 获取。
+- **优先级**：P0 — 高临床价值 + 3D 空白明确 + 数据易获取
+- **建议论文标题**：3D Gait Symmetry Index from Wearable IMU and Insole Data in Parkinson's Disease: A Biomechanical Analysis Beyond Descriptive Statistics
+
+---
+
+**2. Eye Movement Benchmark for Smooth-Pursuit Classification（Nature Scientific Data, Mar 2026）**
+- URL: https://www.nature.com/articles/s41597-026-06963-4
+- DOI: 10.1038/s41597-026-06963-4
+- 数据：健康受试者的平滑追踪眼动（smooth pursuit）数据
+- 原作者分析：创建了用于分类算法的基准数据集，主要关注机器学习分类性能
+- **3D 空白**：
+  - 平滑追踪的 3D 眼动轨迹分析（水平 + 垂直 + 角向运动）
+  - 3D 追踪增益计算（而非仅 2D 追踪误差）
+  - 3D 眼-头协调动力学
+  - 不同追踪速度/方向下的 3D 运动学建模
+- **Synthos 管线评估**：✅ 可行。平滑追踪是经典的 2D 分析领域，3D 版本几乎无人做过。
+- **优先级**：P0 — 经典眼动运动模式的 3D 分析空白
+- **建议论文标题**：3D Smooth Pursuit Dynamics: Beyond 2D Gain Computation — A Quantitative Eye Movement Analysis
+
+---
+
+**3. MCFW-Gaze（ETRA 2026 Open Dataset Track）**
+- URL: https://dl.acm.org/doi/10.1145/3797246.3806660
+- 数据：Tobii Pro Fusion 眼动仪，120 Hz，6 个任务（重复自由观看 100 张图片、阅读、网页浏览等）
+- 原作者分析：ETRA 2026 Open Dataset Track 发布，主要描述数据集
+- **3D 空白**：
+  - 自由观看任务中的 3D 视觉场景探索模式分析
+  - 眼-头-身体联合 3D 运动学（如有头动数据）
+  - 3D gaze heatmap vs 2D gaze heatmap 的对比分析
+- **Synthos 管线评估**：⚠️ 中等。需确认数据是否包含 3D 场景信息。ETRA 数据集通常用于 HCI 分析，3D 视角新颖。
+- **优先级**：P1 — HCI 领域，3D 分析新颖但临床意义较低
+- **建议论文标题**：3D Gaze Mapping in Free Viewing: A Multiscale Visual Exploration Analysis Beyond 2D Heatmaps
+
+---
+
+**4. Gaze-VLM（OpenReview, 2025/2026）**
+- URL: https://openreview.net/forum?id=RWOpRDABEr
+- 数据：眼动数据 + VQA（视觉问答）基准数据集
+- 原作者分析：使用眼动数据辅助 VLM（视觉语言模型）的 VQA 性能
+- **3D 空白**：
+  - 3D 场景中的 gaze-informed VQA（而非 2D 图像）
+  - 3D 视觉注意力模式与语言推理的关联
+  - 眼动轨迹的 3D 空间编码用于视觉推理
+- **Synthos 管线评估**：⚠️ 需要 3D 场景数据。如果数据集包含 3D 信息，则潜力巨大。
+- **优先级**：P1 — AI/VLM 交叉领域，3D 视角新颖
+- **建议论文标题**：3D Scene Understanding through Gaze-Informed Multimodal Reasoning
+
+---
+
+**P0.5 — 高价值但需进一步验证：**
+
+---
+
+**5. EEGEyeNet（OpenNeuro ds005872）**
+- URL: https://openneuro.org/datasets/ds005872/versions/1.0.0
+- 数据：同步 EEG + 眼动追踪数据
+- **3D 空白**：EEG 驱动的 3D 眼动预测（而非 2D）
+- **注意**：仅 1 名受试者，样本量有限。
+- **优先级**：P1.5 — 样本量小但方法新颖
+- **建议论文标题**：EEG-Driven 3D Gaze Prediction: A Multimodal Brain-Eye Interaction Study
+
+---
+
+**6. DREAMT（PhysioNet 2026）**
+- URL: https://physionet.org/content/dreamt/2.2.0/
+- 数据：睡眠阶段估计数据集，包含眼动通道（E1, E2）用于快速眼动（REM）识别
+- **3D 空白**：REM 眼动的 3D 轨迹分析（而非仅 2D 存在/不存在判断）
+- **优先级**：P1.5 — PhysioNet 数据集，REM 眼动的 3D 分析未见
+- **建议论文标题**：3D REM Eye Movement Dynamics: Quantifying Rapid Eye Saccades in Sleep
+
+---
+
+**P1 — 中等价值：**
+
+---
+
+**7. Hillel Yaffe Glaucoma Dataset (HYGD)（PhysioNet）**
+- URL: https://physionet.org/content/hillel-yaffe-glaucoma-dataset/
+- 数据：Gold-standard 标注的眼底图像数据集
+- **3D 空白**：眼底图像的 3D 视杯/视盘深度分析（OCT 联合分析）
+- **优先级**：P1 — 眼科数据集，3D 分析需要 OCT 数据配合
+
+---
+
+#### 20.3 其他信号源
+
+**ETRA 2026 Open Dataset Track**：
+- 已发布多个眼动数据集（MCFW-Gaze 等）
+- 2026 年是 ETRA 首次设立专门的 Open Dataset Track
+- 未来关注：ETRA 2026  proceedings 完整列表（dl.acm.org/doi/proceedings/10.1145/3797246）
+- 建议监控：https://dl.acm.org/doi/proceedings/10.1145/3797246
+
+**Nature Scientific Data 2026**:
+- 已确认至少 2 个 2026 年新发布的眼动相关数据集
+- 趋势：Scientific Data 越来越多地发布纯数据集论文（非深入分析），为后续研究留出空间
+
+**MDPI 2026**:
+- Wearable Sensor-Based Gait Analysis in BPPV（MDPI Biosensors/Bioengineering, 2026）
+- 原作者：单一作者，φ-bonacci 指标分析
+- **3D 空白**：可穿戴传感器的 3D 步态分析在 BPPV 中完全未探索
+
+#### 20.4 领域扫描统计
+
+| 领域 | 新数据集数 | P0 数 | P0.5 数 | P1 数 |
+|------|-----------|-------|---------|-------|
+| 帕金森/步态 | 1 (WearGait-PD) | 1 | 0 | 0 |
+| 平滑追踪眼动 | 1 (SciData 2026) | 1 | 0 | 0 |
+| ETRA 2026 数据集 | 1+ (MCFW-Gaze) | 0 | 1 | 1 |
+| VLM/视觉-语言 | 1 (Gaze-VLM) | 0 | 1 | 0 |
+| 睡眠/REM 眼动 | 1 (DREAMT) | 0 | 1 | 0 |
+| 眼底/青光眼 | 1 (HYGD) | 0 | 0 | 1 |
+| 合计 | 5-7 个 | 2 | 3 | 1 |
+
+#### 20.5 工具链状态更新
+
+| 工具/路径 | 状态 | 备注 |
+|-----------|------|------|
+| PubMed E-utilities | ❌ 完全不可用 | curl + Python urllib 均返回 "API key not wellformed" |
+| PhysioNet 主题搜索 | ⚠️ 0 结果 | 直接 URL 路径有效，主题标签路径无效 |
+| PhysioNet 直接 URL | ✅ 可用 | 通过 web_search 找到 URL 后可正常抓取 |
+| web_search | ⚠️ 质量降级 | 大量噪音，但偶尔找到有用结果，必须人工审阅 |
+| Nature Scientific Data | ✅ 有效 | 可通过 web_search + 直接 URL 获取 |
+| ETRA proceedings | ✅ 可用 | ACM Digital Library 路径有效 |
+| OpenNeuro | ✅ 可用 | OpenNeuro dataset 页面可正常获取 |
+
+#### 20.6 关键洞察
+
+1. **WearGait-PD 是本周期最高价值 P0 发现**：100 PD 患者 + 85 对照 + 原始 IMU + 鞋垫数据，原作者仅做描述性统计。3D 步态分析、足部 3D 动力学、全身对称性指数全是空白。Synthos 的 3D 运动学管线可立即启动。
+
+2. **平滑追踪的 3D 分析是经典的未开发领域**：Smooth pursuit 是眼动研究中研究最深入的 2D 运动类型，但 3D 版本几乎无人尝试。Nature Scientific Data 刚发布了基准数据集，意味着 3D 分析的时机已成熟。
+
+3. **ETRA 2026 Open Dataset Track 是重要信号**：首次设立专门的 Open Dataset Track 表明眼动领域正在经历数据开放浪潮。这为 Synthos 的 3D-aware 分析提供了大量新数据源。
+
+4. **PubMed API 和 PhysioNet 主题搜索均不可用**：当前 cron 环境下的数据发现路径已严重受限。必须转向：(a) web_search → Nature Scientific Data / ETRA / OpenReview 直接抓取；(b) 监控 arXiv 新论文中的数据集发布；(c) 定期查看 conference websites（ETRA、MICCAI Open Data Session 等）。
+
+5. **可穿戴传感器数据是未来趋势**：WearGait-PD（IMU + 鞋垫）、BPPV gait analysis（可穿戴传感器）等趋势表明，低成本可穿戴设备正在替代昂贵的实验室设备。3D-aware 分析在低成本设备数据上的应用是一个新兴方向。
+
+#### 20.7 推荐实施路径
+
+**立即（2-4 周）**：
+- 启动 WearGait-PD 管线：获取 IMU + 鞋垫数据 → 3D 姿态重建 → 步态对称性分析 → 3D 空间分析 → 撰写论文
+- 平滑追踪 3D 分析：获取数据集 → 3D 眼动轨迹建模 → 追踪增益的 3D 扩展 → 撰写论文
+
+**中期（4-6 周）**：
+- MCFW-Gaze 数据集的 3D 探索模式分析
+- Gaze-VLM 的 3D 场景理解方向
+- DREAMT 的 REM 眼动 3D 分析
+
+**长期（6-12 周）**：
+- 构建一个统一的 3D 可穿戴数据分析平台
+- 将 3D 方法应用于 BPPV 步态分析
+- 探索 VR 环境中的 3D 眼-头-身体联合动力学
+
+#### 20.8 数据集优先级更新（本周期新增）
+
+| 数据集 | 优先级 | 领域 | 3D 空白 | 数据获取 |
+|--------|--------|------|---------|---------|
+| WearGait-PD | P0 | 帕金森步态 | 全面 3D 分析 | Synapse (公开) |
+| Smooth Pursuit Benchmark | P0 | 平滑追踪眼动 | 3D 轨迹分析 | Nature Sci Data |
+| MCFW-Gaze | P1 | 自由观看眼动 | 3D 场景映射 | ETRA 2026 |
+| Gaze-VLM | P1.5 | VLM/视觉 | 3D 场景理解 | OpenReview |
+| DREAMT | P1.5 | 睡眠/REM | 3D REM 分析 | PhysioNet |
+| HYGD | P1 | 眼底/青光眼 | 3D 视杯分析 | PhysioNet |
+
+#### 20.9 关键洞察（补充）
+
+1. **可穿戴传感器数据是未来趋势**：WearGait-PD（IMU + 鞋垫）、BPPV gait analysis（可穿戴传感器）等趋势表明，低成本可穿戴设备正在替代昂贵的实验室设备。3D-aware 分析在低成本设备数据上的应用是一个新兴方向。
+
+2. **Nature Scientific Data 是最佳数据集发现源**：2026 年已有多个高质量数据集发布在该期刊，均为纯数据集论文（描述性统计为主），为后续分析留出大量空间。
+
+3. **ETRA 2026 Open Dataset Track 是重要信号**：首次设立专门的 Open Dataset Track 表明眼动领域正在经历数据开放浪潮。这为 Synthos 的 3D-aware 分析提供了大量新数据源。
+
+4. **PubMed API 和 PhysioNet 主题搜索均不可用**：当前 cron 环境下的数据发现路径已严重受限。必须转向 web_search → Nature Scientific Data / ETRA / OpenReview 直接抓取。
+
+5. **BPPV 可穿戴传感器数据未被充分利用**：MDPI 2026 的单作者论文仅使用 φ-bonacci 指标，3D 步态分析完全空白。这与 WearGait-PD 的 PD 步态数据形成互补。
