@@ -4842,3 +4842,279 @@ PD 前驱期监测信号族 (2026-08-11 确立):
 6. [工具] 情绪运动学数据集 (PhysioNet): 3D 姿态方法迁移训练资源
 ```
 
+
+
+## 二十六、2026-08-11 第十六次扫描结果：增量发现
+
+### 26.1 搜索范围与结果统计
+
+| 渠道 | 结果 |
+|------|------|
+| PubMed esearch | 16 查询 (plain term, 无 date bracket) → 251 唯一 PMIDs → esummary 全量审阅 |
+| PubMed efetch XML | 6 新候选 84KB 完整摘要 ✅ (连续第五轮可用) |
+| PhysioNet | 12 主题页 + 最新发布排序 + News → 11 新候选 (全部去重后) |
+| web_search | ❌ SearXNG Connection refused (2/2 失败) — 与 08-11 上轮一致, 零依赖确认 |
+| Kaggle API | ❌ 无 ~/.kaggle/kaggle.json key — 本轮无法直连, 保持 PubMed/PhysioNet 主力 |
+
+去重方法: 对全部候选 grep 3diris-thinking.md + 16 个 session-log, 净新增 17 项 (6 PubMed + 11 PhysioNet)。已排除: 42502107 (IR瞳孔, 已收录 1294行), 42426025 (movie-watching 神经影像, 已收录 4368行), 41957027 (PD症状日记, 已收录 4184行), 42477375 (EmoRoad, 已收录 4590行), 42440453 (Peg Transfer, 08-07 已收录), 42526265 (PD-fixation-DL, 已收录 P0), eeg-eye-gaze-for-fls / eye-tracking-ecg / perg-ioba / olst-mocap / b2ai-voice / kinecal / hbedb / noneeg / wearable-exercise-frailty / accelerometry-walk-climb-drive (均已收录)。
+
+### 26.2 新发现数据集
+
+#### P0.5 — 高价值 (公开 + 3D/多模态空白)
+
+**1. 多中心 MEG-EEG+眼动视觉意识数据集 (PMID 42215489)** — Sci Data 2026-05, BIDS 格式公开
+- 内容: 100人双中心 (UK/China), MEG+EEG+眼动+结构MRI (T1), 另有 iEEG/fMRI 伴随论文。GNW vs IIT 意识理论 adversarial collaboration 设计, 4类视觉刺激 × 3视角 × 3时长 Go/No-Go 任务。
+- 原作者做了什么: 神经科学理论验证 (意识相关性 NCC), 数据质量评估, BIDS 组织。
+- 未做的空白: (a) 眼动数据未被用于 3D 凝视动力学分析 — 任务中的扫视/注视结构 vs 意识状态 (b) 瞳孔动力学与感知阈值/报告准确性的耦合 (c) 眼动-EEG/MEG 跨模态相位耦合 (模式G), 视觉意识转换时刻的微眼跳结构。
+- 管线适配: 模式D/G 跨模态融合 — 眼动动力学 + MEG/EEG 解码, 与 Cogitate iEEG+Eye 互为补充。公开下载 + BIDS 标准 = 低摩擦启动。
+
+**2. IMU+小腿第一视角相机步态数据集 (PMID 42393089)** — Sci Data 2026-07, 公开
+- 内容: 10健康人 × 14次行走, 平地/跑步机/坡道/楼梯 4 种模式, IMU + shank 第一视角视频 + 光学动捕金标准 + 肌肉骨骼建模关节角, 327分钟, 每脚 588k 帧 + HOF 光流特征。自称首个 IMU+shank 视频+金标准关节角的公开基准。
+- 原作者做了什么: 数据采集与同步验证, HOF 特征提取, 关节角金标准构建。
+- 未做的空白: (a) 第一视角视频的 3D 步态姿态估计 (b) IMU+视频跨模态融合的关节角回归对比 (c) 疾病组缺失 — 健康基准可做 PD 步态迁移学习参考 (模式E)。
+- 管线适配: 模式C/E — 步态方法迁移训练资源, 与 WearGait-PD (P0) 互补 (健康对照侧)。
+
+#### P1 — 中期 (公开, 部分相关)
+
+**3. EyePhone 智能手机眼动检测 skew deviation (PMID 42553253)** — Front Neurol 2026, 可行性研究
+- 内容: 智能手机眼动 app 模拟 HINTS 眼检查中的 skew 测试 (垂直眼位偏移检测), 用于急性眩晕卒中鉴别 (HINTS 98% 敏感度/97% 特异度)。
+- 未做的空白: 3D 垂直眼位定量 (当前为 2D 模拟), 智能手机视频的 3D 眼球姿态估计 → 前庭卒中床旁筛查。
+- 管线适配: 模式E — 智能手机眼动 → 3D 姿态迁移, 与前庭/BPPV 管线 (41336982, 42535719) 汇合。
+
+**4. gaitpdb — PD 步态经典数据集 (PhysioNet)** — 公开, 经典 Hausdorff
+- 内容: PD 患者 vs 对照, 足底力记录 → 步幅/支撑相时间序列, 含双任务 (serial 7 减法) 子集。
+- 未做的空白: (a) 3D 压力中心轨迹重构 (当前仅 1D 时间序列分析) (b) 双任务步态动力学的 3D 相空间重构 (c) 步幅时间分形维度 vs 3D 姿态参数联合。
+- 管线适配: 模式A/B — 3D 步态动力学, 与 PD 指纹管线互补 (经典数据, 易于复现验证)。
+
+**5. gaitndd — 神经退行性步态数据库 (PhysioNet)** — 公开
+- 内容: Huntington / Parkinson / ALS / 对照 4 组 64 记录, 足底力步态。原文明确声明 "much is still unknown" (亚相动力学、步态不对称性、非线性)。
+- 未做的空白: 疾病间步态动力学差异的 3D 分析, 亚相 (stance/swing) 动力学, 多病种分类基准。
+- 管线适配: 模式A/F — 跨病种步态表型, 与 PD 指纹并排对比。
+
+**6. Hip-ROM-Y (PMID 42476994)** — Sci Data 2026-07, 公开
+- 内容: 16 健康男性, 6 髋关节 ROM 动作 × 3 解剖平面, 8 IMU + 光学动捕关节角标签 + 逐帧动作标签。
+- 未做的空白: 3D 关节轨迹分析, IMU 姿态估计迁移 (髋关节替代步态的关节动力学)。
+- 管线适配: 模式A — 关节 ROM 3D 动力学, 低优先但数据质量高。
+
+**7. embedding-brset-mbrset (PhysioNet v1.0.0)** — 公开
+- 内容: BRSET/mBRSET 眼底图的预计算嵌入 (解决高分辨率训练算力 + 隐私限制), 已收录 mBRSET (P0) 的嵌入伴侣资源。
+- 未做的空白: 嵌入空间 3D 几何分析, 疾病亚型聚类, 与 3diris 视网膜管线 (模式A) 衔接。
+- 管线适配: 模式E — 无需 GPU 的快速复现通道, 与 mBRSET 联动。
+
+**8. 6周纵向可穿戴压力数据集 (PMID 42393096)** — Sci Data 2026-07, 公开
+- 内容: 31 工作者 6 周, IBI + 加速度计 (52Hz) + 主观压力多时间点, RELAX app JITAI。
+- 未做的空白: 纵向压力动力学的 3D 相空间, 压力效价 (valence) 的生理指纹。
+- 管线适配: 模式D — 纵向生理, 情绪运动学补充 (P1 工具)。
+
+**9. cded — 老年糖尿病脑微血管数据集 (PhysioNet v1.0.1)** — 公开
+- 内容: 69 糖尿病/对照 55-75 岁, TCD + MRI + HR/BP/呼吸 + 平衡测试 (含头高位倾斜/坐站)。
+- 未做的空白: 平衡数据 + 脑血流动力学联合 3D 分析, 姿势控制-脑灌注关联。
+- 管线适配: 模式F — 平衡+生理多模态, 前庭/平衡管线延伸。
+
+**10. VR 飞行任务多模态生理数据集 (PhysioNet virtual-reality-piloting v1.0.0)** — 公开
+- 内容: VR ILS 仪表着陆协议, 4 难度 × 12 runs, 生理+飞行表现+交互数据。
+- 未做的空白: VR 内 3D 头眼协调动力学 (若有眼动通道), 难度-生理状态轨迹。
+- 管线适配: 模式D — VR 多模态, 与 AVP/MQP 设备系列 (P1) 并列。
+
+**11. NeuroPupil (PMID 42239082)** — bioRxiv 2026-05, 工具
+- 内容: 跨物种瞳孔追踪深度学习框架, U-Net + 多主体池化训练, 泛化优先, 效率显著优于现方法。
+- 未做的空白: 非工具 — 但可作为 Pupil-DLC / PSO 特征库 (P0) 的备选瞳孔追踪引擎 (模式E 方法迁移)。
+- 管线适配: 工具集成, 与 Eye-Gaze Dynamics (41651881) P0 管线联动。
+
+#### P1.5/P2 — 低优先 (参考/工具)
+
+**12. b2ai-voice-pediatric (PhysioNet v1.1.0)** — P1.5: Bridge2AI Voice 儿科扩展, 语音生物标志物 (已收录成人 3.1.0, 儿科为新增版本)。
+**13. emgdb (PhysioNet)** — P2: EMG 教学示例, 参考。
+**14. umwdb (PhysioNet)** — P2: 10 健康男性长期步态分形动力学, 经典参考。
+**15. hospital-activity-bosch (PhysioNet v1.0)** — P2: 住院患者腕戴 Bosch 活动监测。
+**16. sleep-dep-hemo-cog (PhysioNet v1.0.0)** — P2: 24h 睡眠剥夺 fNIRS+认知, n=10 小样本。
+**17. big-ideas-glycemic-wearable (PhysioNet v1.1.3)** — P2: 血糖变异性+可穿戴, 糖尿病前驱。
+
+### 26.3 本扫描新增发现摘要
+
+```
+净新增 17 项 (6 PubMed + 11 PhysioNet)
+├── P0.5 (2): 多中心 MEG-EEG+眼动 (42215489) / IMU+shank 视频步态 (42393089)
+├── P1 (9): EyePhone 前庭卒中 (42553253) / gaitpdb / gaitndd / Hip-ROM-Y (42476994)
+│            / embedding-brset-mbrset / 6周压力 (42393096) / cded / VR飞行 / NeuroPupil
+├── P1.5 (1): b2ai-voice-pediatric
+└── P2 (5): emgdb / umwdb / hospital-activity-bosch / sleep-dep-hemo-cog / glycemic-wearable
+```
+
+### 26.4 本扫描关键洞察
+
+1. **MEG-EEG+眼动 (42215489) 是本轮最高价值发现**: 100 人双中心大样本 + 眼动通道 + BIDS 标准化, 意识研究领域的 adversarial collaboration 设计保证了数据质量。3D 眼动动力学 × 意识状态是完全未开发的交叉点 — 比 Cogitate (iEEG+眼动) 样本量更大、结构更标准。
+
+2. **IMU+第一视角视频步态 (42393089) 补齐健康对照基准**: WearGait-PD (P0) 有 PD 患者但缺健康视频; 该数据集提供健康组 IMU+视频+金标准关节角 — PD 分类模型的域适应训练资源。
+
+3. **前庭/卒中筛查工具链成型**: EyePhone (42553253) + 智能手机眼震 (41336982) + 家用 VOG (42535719) — 智能手机眼动正在成为前庭筛查的主流载体, 3D 垂直眼位定量是共同空白。
+
+4. **PhysioNet 经典步态数据集 (gaitpdb/gaitndd) 首次进入候选**: 之前轮次聚焦 Sci Data 新数据集, 忽略了经典数据集的 3D 重构机会 — 经典数据 + 新 3D 方法 = 低风险高可复现产出。
+
+5. **web_search 连续两轮宕机 (SearXNG Connection refused)**: PubMed (16/16) + PhysioNet (12/12) 双通道完全覆盖, 扫描链路对 web_search 依赖为零 — 与 08-11 上轮结论一致, 可正式移出关键路径。
+
+### 26.5 可扩展模式更新 (第六轮)
+
+**新增: 经典数据集 3D 重构模式 (第 6 档扩展)**
+
+```
+经典数据集 3D 重构 (2026-08-11 确立):
+├── 发现: gaitpdb (PD步态) / gaitndd (HD+PD+ALS) — PhysioNet 老牌数据集
+│   长期被 1D 时间序列分析 (步幅时间分形) 占据
+├── 机会: 原始足底力记录 → 3D 压力中心轨迹 / 亚相动力学 / 相空间重构
+├── 优势: (a) 数据完全公开无摩擦 (b) 原作者分析可复现做验证
+│   (c) 新 3D 方法 + 经典数据 = 对比基线明确 (d) 引用量高的数据集 = 审稿人熟悉
+└── 判定: 老数据集 + 新维度方法 = 低风险短文通道 (模式A/B)
+    → 与 Sci Data 新数据集发现并行, 构成双轨扫描
+```
+
+**新增: 眼动-神经影像多中心数据集信号族 (第 5 个独立信号族)**
+
+```
+眼动×神经影像 (2026-08-11 确立):
+├── Cogitate iEEG+Eye (已收录) → MEG-EEG+眼动 100人双中心 (42215489, NEW)
+├── movie-watching 神经影像 (42426025, 已收录 08-10) → fMRI+眼动预测 (42534530)
+└── 模式: 眼动作为意识/认知状态的低成本代理通道, 与高成本神经影像同步采集
+    → 3D 眼动动力学 × 神经解码的联合分析是普遍空白
+    → 触发条件: 眼动+EEG/fMRI/MEG 同步数据集 = P0.5 起步
+```
+
+**推荐实施路径 (更新)**
+
+```
+1. [P0 不变] Eye-Gaze Dynamics (41651881) 瞳孔 PSO 特征库 — 继续推进
+2. [P0.5 新增] 42215489 MEG-EEG+眼动: 验证下载 → 3D 眼动×意识状态分析
+   → 与 Cogitate 构成"眼动×神经影像"双子集
+3. [P0.5 跟进] 42393089 IMU+视频步态: 健康对照基准 → WearGait-PD 域适应
+4. [P1 监控] EyePhone (42553253) 数据公开性 → 前庭卒中 3D 垂直眼位
+5. [P1 工具] NeuroPupil 评估 → 瞳孔追踪引擎备选 (Pupil-DLC 对比)
+6. [监控] 经典步态 3D 重构: gaitpdb/gaitndd 双任务 3D 相空间短文方向
+7. [监控] RBD-眼动公开数据集 (触发 P0); 事件相机眼动 (触发模式I)
+
+
+## 二十七、2026-08-11 第十七次扫描结果：增量发现
+
+### 27.1 搜索范围与结果统计
+
+| 渠道 | 结果 |
+|------|------|
+| PubMed esearch | 10 查询 (plain term) → 251 唯一 PMIDs → 轻过滤 79 → 人工审阅 |
+| PubMed efetch XML | 13 候选 257KB 完整摘要 ✅ (连续第六轮可用) |
+| PhysioNet | 12 主题页 (eye-tracking/vision/ophthalmology/retina/balance/gait/accelerometry/neurological/sleep/radiology/parkinson) + latest sort + News |
+| web_search | ❌ SearXNG Connection refused (3/3) — 连续三轮宕机, 零依赖确认 |
+| Kaggle API | ❌ 无 kaggle.json key — 保持 PubMed/PhysioNet 主力 |
+
+去重方法: 全部候选 grep 3diris-thinking.md (4993 行) + 17 个 session-log。净新增 13 项 (4 PubMed 核心 + 9 PhysioNet/其余)。已排除: 42546737 (Wearable IOG, 已收录 3 处 2811/2891/4455行), 42511376 (Saccade Information Channels, 已收录 1675行), 42502107 (IR 瞳孔, 1294行), MIMIC-Eye (1515行), parkinsons-disease-smartwatch, minute-level-step-count-nhanes, body-sway-music-vr, gait-maturation-db, multimodal-gait-dataset, hillel-yaffe-fundus-amd, plantar, cded, gaitpdb, gaitndd, REFLACX。
+
+### 27.2 新发现数据集
+
+#### P0.5 — 高价值 (公开 + 多模态空白)
+
+**1. egd-cxr — 放射科医生眼动+CXR+音频多模态数据集 (PhysioNet v1.0.0)** — 公开
+- 内容: 放射科医生解读 1,083 张公开 CXR 图像 (选自 MIMIC-CXR, 1,038 受试者 20-80 岁), 同步采集 4 种对齐模态: 图像 + 转录报告文本 + 口述音频 + 眼动数据。
+- 原作者做了什么: 数据采集与模态对齐, 放射科教育/感知研究基线。
+- 未做的空白: (a) 眼动数据未被用于 3D 凝视动力学 — 阅片扫视/注视结构 vs 报告内容的跨模态关联 (b) 口述音频的韵律特征与眼动扫视模式的联合时序分析 (c) 阅片路径的 3D 相空间重构 (模式D/G), 与 MIMIC-Eye (P0.5) 构成"放射科眼动双子集"。
+- 管线适配: 模式D — 跨模态 (眼动+音频+文本), 视觉搜索动力学。公开下载 = 低摩擦启动。音频通道是 MIMIC-Eye 没有的增量。
+
+#### P1 — 中期 (公开基准/工具/临床信号)
+
+**2. Eyettention II (PMID 42547680)** — Behav Res Methods 2026-08, 模型+数据公开 (摘要含 publicly available/https 信号)
+- 内容: 阅读眼动扫视路径生成模型, 双序列架构端到端预测注视位置 + 词内落点 + 注视时长, 轻量 GPU 可训, 超越 SOTA 扫视路径预测。
+- 未做的空白: 阅读眼动 3D 化 (当前为 2D 屏幕坐标), 词内落点分布的 3D 眼球姿态解释, 与 Eye-Gaze Dynamics (41651881) 阅读管线衔接。
+- 管线适配: 模式E — 阅读眼动方法迁移, 工具/基准价值 (非数据集本身)。
+
+**3. PyNeon (PMID 42373975)** — Behav Res Methods 2026, 开源 Python 包
+- 内容: Pupil Labs Neon 移动眼动仪多模态数据 (眼动+运动+场景相机) 对齐/集成/分析的一站式 Python 包。
+- 未做的空白: 非数据集 — 工具。作为移动眼动分析引擎, 与 OKN MMIC (P1 工具, 已收录) 互补。
+- 管线适配: 工具集成 — Neon 设备族 (OKN MMIC / MQP 系列) 的数据处理标准层。
+
+**4. IMU-Guided CRP for BPPV (PMID 42528373)** — Clin Exp Otorhinolaryngol 2026, 临床信号
+- 内容: 88 例 BPPV 患者 (2019-2021), 可穿戴 IMU 引导耳石复位 (IMU-CRP, n=44) vs 专科医师复位 (n=44), 实时音频反馈, 分析头动参数 (旋转精度/保持时长/往返误差) 与 24h 疗效 (Epley 61.1% vs 66.7%, 无显著差异)。
+- 未做的空白: (a) 头动参数 (rotation accuracy/holding duration/to-and-fro error) 的 3D 动力学分析 — 当前仅一维统计 (b) IMU 头动轨迹 vs 复位成功的相空间差异 (c) 自复位 BPPV 的 3D 头动定量标准。
+- 管线适配: 模式E — BPPV 家用设备管线 (41336982 智能手机眼震 / 42535719 家用 VOG) 的头动通道补充。数据公开性待确认。
+
+#### P1.5 — 需申请/数据未公开
+
+**5. RAMSES 黄斑病多模态数据集 (PMID 42473441)** — Ophthalmol Sci 2026, INSIGHT 受控访问
+- 内容: Moorfields 2017-2025 黄斑病真实世界纵向多模态数据集 (Topcon/Heidelberg OCT + 临床数据), INSIGHT Health Data Research Hub 受控访问。
+- 未做的空白: OCT 结构-功能关联的 3D 分析 (已有 OCT 体积数据), 疾病分诊 AI 基准。
+- 管线适配: 模式A — 视网膜管线参考; 需机构申请, 摩擦高。
+
+**6. ADHD 脑干眼动生物标志物 (PMID 42448769)** — Sci Rep 2026, 439 人 14 中心
+- 内容: 任务诱发瞳孔直径 + 双眼眼动同步性, MIL 框架分类 ADHD, 14 临床中心 439 参与者。
+- 未做的空白: 数据未公开 (临床验证论文), 但 3D 眼动同步性×瞳孔动力学 = ADHD 客观标志物方向确认。
+- 管线适配: 模式D 参考 — 与已有 ADHD 眼动管线联动 (监控)。
+
+**7. nqmitcsxpd — neuroQWERTY MIT-CSXPD (PhysioNet v1.0.0)** — 公开
+- 内容: MIT-CSXPD 击键动力学 PD 数据集 (neuroQWERTY 系列), 键盘打字特征。
+- 未做的空白: 击键动力学与运动表型的 3D 关联 (键程/时序的相空间), PD 早期筛查。
+- 管线适配: 模式A/F 延伸 — 低优先但完全公开。
+
+#### P2 — 低优先 (参考/方法)
+
+**8. 加速计表示转移动力学 PD 诊断 (PMID 42545552)** — Lifetime Data Anal 2026: 腕戴加速计预训练表示 + 分层马尔可夫链建模睡眠/活动状态转换预测 PD 诊断时间。方法参考。
+**9. 瞳孔性眼震 — 前庭偏头痛标志物 (PMID 42345619)** — Audiol Res 2026: 瞳孔直径自发振荡 (pupillary nystagmus) 定量, VM 客观标志物候选。信号参考 (与 42548108 前庭偏头痛瞳孔测量互证)。
+**10. NUSHU 智能鞋 PD 步态验证 (PMID 42515329)** — Sensors 2026: 智能鞋 vs Vicon 时空参数验证 (健康老人+PD)。设备参考。
+**11. 腕戴活动记录 vs MDS-UPDRS ML (PMID 42516414)** — Front Digit Health 2026: 25Hz 加速计估计 UPDRS, 探索性。方法参考。
+**12. latte-cxr (PhysioNet v1.0.0)** — REFLACX 衍生的局部对齐 image-text 对 (3,926 bbox-statement), 非眼动。
+**13. tappy (PhysioNet v1.0.0)** — 击键数据, 与 nqmitcsxpd 同类。
+**14. inipdmsa (PhysioNet v1.0)** — 鼻内胰岛素 PD/MSA 认知试验, 临床数据。
+**15. VOG 扫视疲劳 MG vs 脑神经麻痹 (PMID 42504749)** — Eur J Neurol 2026: 3D VOG 扫视疲劳已用于临床鉴别 — 3D 方法已在此领域落地, 参考。
+**16. 60,000 UK 步数表型关联 (PMID 42526147)** — IJNS 2026: UK Biobank 加速计衍生, 表型参考。
+
+### 27.3 本扫描新增发现摘要
+
+```
+净新增 13 项 (4 PubMed 核心 + 9 PhysioNet/其余)
+├── P0.5 (1): egd-cxr 放射科眼动+音频 (PhysioNet)
+├── P1 (3): Eyettention II (42547680) / PyNeon (42373975) / IMU-CRP BPPV (42528373)
+├── P1.5 (3): RAMSES (42473441) / ADHD 眼动标志物 (42448769) / nqmitcsxpd
+└── P2 (6): 42545552 / 42345619 / 42515329 / 42516414 / latte-cxr / tappy / inipdmsa / 42504749 / 42526147
+```
+
+### 27.4 本扫描关键洞察
+
+1. **egd-cxr 是 MIMIC-Eye 的音频+文本互补版**: MIMIC-Eye (P0.5) 已有眼动+影像, egd-cxr 新增口述音频+转录报告 — 4 模态对齐 (眼动/影像/音频/文本) 的视觉搜索动力学是全新交叉点。放射科眼动双子集 = 模式D 双入口。
+
+2. **BPPV 头动通道补齐**: IMU-CRP (42528373) 证明 IMU 引导自复位可行 (疗效与专科医师相当), 头动参数 (旋转精度/保持时长/往返误差) 是明确 3D 空白 — 与前庭管线 (41336982 眼震 / 42535719 家用 VOG) 汇合, "眼动+头动"双通道家用 BPPV 筛查雏形成型。
+
+3. **移动眼动工具生态成熟**: PyNeon (Neon 分析) + Eyettention II (阅读扫视) + OKN MMIC — 工具层快速膨胀, 数据采集成本持续下降, 3D 分析空白保持。
+
+4. **web_search 连续三轮宕机 (SearXNG Connection refused)**: PubMed (10/10) + PhysioNet (12/12) 双通道完全覆盖, 扫描链路对 web_search 依赖为零 — 正式移出关键路径, 从"辅助源"降级为"已死源"监控。
+
+### 27.5 可扩展模式更新 (第七轮)
+
+**新增: 放射科眼动多模态双子集模式 (第 7 档扩展)**
+
+```
+放射科眼动双子集 (2026-08-11 确立):
+├── MIMIC-Eye (P0.5, 已收录 1515行): 眼动 + CXR 影像
+├── egd-cxr (P0.5, NEW): 眼动 + CXR + 口述音频 + 转录报告文本 (4模态对齐)
+└── 模式: 同一阅片场景的互补模态版本 → 跨数据集交叉验证
+    → 音频-眼动时序耦合 (口述节奏 vs 扫视结构) 是 MIMIC-Eye 无法做的增量
+    → 触发条件: 出现同一任务域的互补模态数据集 = 双子集识别
+```
+
+**新增: BPPV 双通道家用筛查信号族 (第 6 个独立信号族)**
+
+```
+BPPV 双通道筛查 (2026-08-11 确立):
+├── 眼动通道: 智能手机眼震 (41336982) + 家用 VOG (42535719)
+├── 头动通道: IMU 引导复位 (42528373, NEW) — 旋转精度/保持时长/往返误差
+└── 模式: 眼动 (半规管功能) + 头动 (复位执行质量) 双通道家用闭环
+    → 3D 头动轨迹 vs 复位成功的相空间差异 = 明确空白
+    → 触发条件: 出现家用 BPPV 头动定量数据集 = P0.5 起步
+```
+
+**推荐实施路径 (更新)**
+
+```
+1. [P0 不变] Eye-Gaze Dynamics (41651881) 瞳孔 PSO 特征库 — 继续推进
+2. [P0.5 新增] egd-cxr: 验证下载 → 眼动+音频+文本 4模态阅片动力学分析
+   → 与 MIMIC-Eye 构成放射科眼动双子集 (模式D 双入口)
+3. [P0.5 跟进] 42215489 MEG-EEG+眼动: 验证下载 → 3D 眼动×意识状态
+4. [P1 监控] IMU-CRP BPPV (42528373) 数据公开性 → 3D 头动动力学短文
+5. [P1 工具] PyNeon + Eyettention II 评估 → 移动/阅读眼动分析引擎备选
+6. [监控] RAMSES (42473441) INSIGHT 申请通道; ADHD 眼动数据公开性
+7. [监控] RBD-眼动公开数据集 (触发 P0); 事件相机眼动 (触发模式I)
+```
