@@ -5436,3 +5436,297 @@ BPPV 双通道筛查 (2026-08-11 确立):
 8. [监控] 自然行为眼动范式: Pupil-DLC (42401399) + EyeFatigue Tracker (42048137) 工具吸收评估
 ```
 
+
+## 三十、2026-08-12 第二十次扫描结果：增量发现
+
+### 30.1 搜索范围与结果统计
+
+```
+PubMed:  10 主题 esearch (2026/06/01-08/12, pdat) → 251 唯一 PMID → 人工审阅 → 9 条 efetch
+PhysioNet: 10 主题 (eye/eye-tracking/vision/ophthalmology/human vision/retina/biomarkers/balance/gait/neurological) + sort=latest → 全部 curl 成功
+Kaggle:  8 组查询 (OpenEDS/eye tracking/vestibular/PD gait/iris/saccade/pupil/nystagmus) — API 无认证 HTTP 200, 首次激活
+web_search: 连续第六轮宕机 (SearXNG Connection refused) — 零依赖运行第八轮
+净新增: 9 项 (1 P0 + 1 P0.5 + 2 P1 + 5 P1.5)
+PhysioNet 净新增: 0 (全部候选已在 1-19 轮收录)
+```
+
+### 30.2 新发现数据集
+
+#### P0 — 高价值 (公开 + 3D 空白 + 临床意义高)
+
+**WearGait-PD** (PMID 41680227, Sci Data 2026; Kaggle 双公开)
+```
+├── 100 PD + 85 年龄匹配对照 (最大 PD 步态可穿戴队列之一)
+├── 13 个身体 IMU: 3-DOF 加速度/角速度/磁场 + 朝向四元数 (全身 3D!)
+├── 压力鞋垫: 每脚 16 传感器绝对压力
+├── 同步: 步道 (gait walkway) 参考系统
+└── 原分析:
+    ├── Sensors 2025 (41013102): 144 个 CoP 特征 (位置/动态/频率/随机域), TUG, 5 分类器 → PD 检测
+    ├── JBHI 2026 (41325121): 跨人群 HAR (SG-LSTM 双分支)
+    └── 未做: 13 IMU 全身 3D 节段朝向动力学 / 节段协调 / 相空间重构 / IMU×鞋垫融合
+    → 3D 空白明确, 2D (CoP) 已发表, 3D 从未尝试 → 符合 P0 全标准
+可得性: Kaggle 下载端点 HTTP 200 无认证 (3.4GB) + Sci Data → ✅ 公开零摩擦
+```
+
+#### P0.5 — 高价值 (公开 + 运动学空白)
+
+**REHAB** (PMID 42557255, Sci Data 2026)
+```
+├── 120 卒中后患者, 两周康复方案
+├── 27 标准评估动作 + 16 康复训练动作
+├── 可穿戴传感器肢体运动学信号
+└── 3D 空白: 肢体 3D 轨迹/关节动力学康复评估 (模式B 短文候选)
+可得性: Sci Data → 公开 ✅
+```
+
+#### P1 — 中期 (公开/规模大, 3D 弱相关)
+
+**Human Sleep Project (HSP)** (PMID 42555111, Sleep 2026)
+```
+├── 119,234 夜 PSG / 90,000+ 患者 / 5 美国中心 / 全生命周期 — 规模记录级
+├── 3D 空白低; HR×加速计×EEG 分期多模态可做跨模态
+└── 访问待确认 (联盟数据, 可能需申请)
+```
+
+**Measured + Synthetic 6-DoF Head Motion** (PMID 42491487, J Med Imaging 2026)
+```
+├── 25 志愿者立体光学追踪 6-DoF 头动轨迹 + VAE 预训练生成合成集
+├── 用途: CBCT 运动仿真与补偿
+└── 3D 空白: 头动 6-DoF 轨迹动力学 / 头-眼耦合 (与 EyePhone/眨眼×头动 成族)
+可得性: 摘要明确 "open resource" ✅
+```
+
+#### P1.5 — 需确认/临床信号
+
+| 数据集 | PMID | 说明 |
+|--------|------|------|
+| ASC-emotion | 42569523 | 自闭症儿童情绪失调隐私保护数据集 (Erasmus+), 访问待确认 |
+| BPPV 延迟诊断 ML | 42369378 | 10,422 BPPV 北京队列 LR/RF/XGB/LGBM 预测延迟诊断; 数据未公开 |
+| LLM 前庭诊断 | 42572244 | 前瞻性多中心 LLM 诊断性能基准 (JMIR); 无数据集 |
+| 猕猴前庭×凝视 | 42399106 | 步态+凝视运动学, 前庭功能驱动凝视稳定; 动物数据不公开 |
+| UK Biobank 腕戴步态 PD | 42570098 | 73,413 人 17 数字步态生物标志物预测 PD 诊断; Biobank 需申请 |
+
+### 30.3 本扫描新增发现摘要
+
+| # | 数据集 | 来源 | 类型 | 3D 空白 | 优先级 |
+|---|--------|------|------|---------|--------|
+| 1 | WearGait-PD | Sci Data + Kaggle 2026-08 | 13×IMU 全身 3D + 鞋垫 | 全身 3D 节段动力学 (仅 2D CoP 已发) | **P0** |
+| 2 | REHAB | Sci Data 2026 | 卒中康复可穿戴运动学 | 肢体 3D 轨迹康复评估 | P0.5 |
+| 3 | Human Sleep Project | Sleep 2026 | 119K PSG 多中心 | 多模态分期 | P1 |
+| 4 | 6-DoF Head Motion | J Med Imaging 2026 | 头动轨迹+合成 | 头动 3D 动力学/头-眼耦合 | P1 |
+| 5 | ASC-emotion | MethodsX | 自闭症情绪数据集 | — | P1.5 |
+| 6 | BPPV 延迟诊断 ML | Prev Med Rep | 10K BPPV 队列模型 | — | P1.5 |
+| 7 | LLM 前庭诊断 | JMIR | LLM 诊断基准 | — | P1.5 |
+| 8 | 猕猴前庭×凝视 | J Neurosci | 动物运动学 | 前庭-凝视耦合信号 | P1.5 |
+| 9 | UK Biobank 步态 PD | J Neural Transm | 73K 人群步态 | 诊断前 3D 步态变化 | P1.5 |
+
+### 30.4 本扫描关键洞察
+
+1. **WearGait-PD 是第 20 轮以来最强的 P0 候选**: 13 个 IMU 的**原始朝向四元数**意味着全身 3D 运动学可直接重建, 而原分析 (Sensors 2025) 只碰了鞋垫 CoP (2D 特征)。数据下载零摩擦 (Kaggle 3.4GB HTTP 200 无认证) — 启动成本全管线最低。
+2. **PD 可穿戴步态数据族成型 (第 12 档扩展)**: WearGait-PD (P0) + iPad-PD + MPD-DF + UK Biobank 腕戴 + parkinsons-disease-smartwatch → 跨数据集 3D 步态动力学短文群 (模式A/B 富矿), 每个数据集 3D 空白互补。
+3. **Kaggle API 恢复为可用通道 — 第三主通道**: 前 19 轮未验证; 本轮确认无认证 list/view/download 全通 (HTTP 200)。对 eye tracking/PD 覆盖好, 对 vestibular/BPPV/nystagmus 覆盖弱 (0 结果) — 领域分工: PubMed/PhysioNet 管前庭, Kaggle 管眼动/步态。
+4. **6-DoF 头动资产族 (第 13 档扩展)**: 42491487 (CBCT 头动) + EyePhone 前庭卒中 (42553253) + 眨眼×头动 (42427559) → 头动 6-DoF 轨迹是跨任务可复用 3D 资产, 头-眼耦合分析是共同空白。
+5. **PhysioNet 进入饱和期**: 连续两轮净新增 0 — 老数据集 3D 重构 (双轨) 和 PubMed/Kaggle 新发是当前主力增长点。
+6. **web_search 连续六轮宕机**: 三通道 (PubMed/PhysioNet/Kaggle) 完全覆盖, 死亡源监控持续。
+
+### 30.5 可扩展模式更新 (第十轮)
+
+**新增: PD 可穿戴步态数据族 (第 12 档扩展)**
+
+```
+PD 可穿戴步态 (2026-08-12 确立):
+├── WearGait-PD (NEW, P0): 13×IMU 朝向四元数 + 鞋垫 CoP — 全身 3D 空白
+├── iPad-PD (已收录): 平板数字健康步态
+├── MPD-DF (已收录): 多模态 PD 数据
+├── UK Biobank 腕戴 (NEW, P1.5): 73K 人群诊断前步态
+└── parkinsons-disease-smartwatch (已收录): 智能手表
+    → 触发条件: 含原始 IMU 朝向/3D 运动学 + 原分析仅 1D/2D = P0 起步
+    → 模式: 逐数据集 3D 重构 → 跨数据集协调性对比短文群 (模式A/B)
+```
+
+**新增: 6-DoF 头动资产族 (第 13 档扩展)**
+
+```
+6-DoF 头动 (2026-08-12 确立):
+├── 42491487 (NEW): CBCT 头动轨迹 + VAE 合成, open resource
+├── EyePhone 前庭卒中 42553253 (已收录): 家用视频前庭
+├── 眨眼×头动 42427559 (已收录): 自然行为耦合
+└── 头-眼协调 (42399106 信号): 前庭驱动凝视稳定
+    → 触发条件: 6-DoF 头动轨迹数据 = 跨任务 3D 复用资产
+    → 模式: 头动动力学 (轨迹分形/相空间) + 头-眼耦合 (模式D)
+```
+
+**新增: Kaggle API 通道 (第三主通道)**
+
+```
+Kaggle API (2026-08-12 首次激活):
+├── list:  /api/v1/datasets/list?search=X   (无认证 HTTP 200)
+├── view:  /api/v1/datasets/view/{owner}/{slug}  (含 description)
+├── download: /api/v1/datasets/download/{owner}/{slug}  (HTTP 200 直接可下)
+└── 分工: eye tracking/PD/iris 覆盖好; vestibular/BPPV/nystagmus 覆盖弱 → 前庭仍靠 PubMed/PhysioNet
+```
+
+### 30.6 推荐实施路径 (更新)
+
+```
+1. [P0 新增·最高优先] WearGait-PD: 下载 3.4GB (Kaggle 直链) → 13 IMU 朝向四元数全身 3D 重建
+   → 对比 Sensors 2025 的 CoP 2D 结果 → "3D-Aware Full-Body Kinematic Analysis Beyond CoP" 短文
+2. [P0 不变] Eye-Gaze Dynamics (41651881) 瞳孔 PSO 特征库 — 继续推进
+3. [P0.5 新增] REHAB: 卒中康复 3D 轨迹评估 — 与 WearGait-PD 同属"可穿戴运动学 3D 重构"通道
+4. [P1 跟进] 6-DoF Head Motion (42491487): 验证下载 → 头动动力学 + 头-眼耦合分析
+5. [P1 评估] Human Sleep Project: 确认访问方式; 119K PSG 若可申请 = 睡眠分期+眼动基线
+6. [监控] PhysioNet 降频 (饱和); Kaggle API 加入常规三通道扫描; OpenEDS 季度检查不变
+7. [信号] BPPV 延迟诊断 (42369378) + LLM 前庭诊断 (42572244): 前庭 AI 临床前沿, 供论文引用/背景
+```
+
+
+## 三十一、2026-08-12 第二十一次扫描结果：增量发现
+
+### 31.1 扫描概况
+
+- 渠道: PubMed esearch (10 主题) → 370 唯一 PMID → esummary → 20 条 efetch 摘要 (371KB XML) + PhysioNet 11 主题 + sort=latest + Kaggle API 9 查询
+- web_search: 连续第七轮宕机 (SearXNG Connection refused), 零依赖运行第九轮 — 已死源监控持续
+- PhysioNet: 净新增 0 (连续第三轮饱和); 新候选 i-care/nacef/charis-gui 均为 ICU/肺炎/脑自调节, 非 3diris 相关
+- OpenEDS 季度检查: Kaggle 仅镜像 (soumicksarker 2023 / nguynphancminh 2025 / label-mapping 2025-10 / psf-openeds-lensless 2026-01), **无官方新版本**
+- efetch: 连续第三轮可用 (20/20 摘要完整), 可得性信号扫描可全量执行
+
+### 31.2 新增发现 (2 P1 + 1 P1.5 数据集 + 6 P1.5 信号)
+
+| 数据集 | PMID | 类型 | 3D 空白 | 优先级 |
+|--------|------|------|---------|--------|
+| Peg-Transfer 手术技能多模态 | 42440453 | Data in Brief 2026 | 腕/器械 3D 运动学 × 凝视-工具耦合 | **P1** |
+| 自然光照瞳孔-光谱联合 | 42502107 | Sci Data 2026-07 | 自然条件瞳孔 3D 动力学 × 光谱辐照度耦合 | **P1** |
+| ActiTect RBD 筛查管线 | 42286243 | NPJ Digit Med | 开源 ML 管线 (非数据集), iRBD 可穿戴族资产 | P1.5 |
+| NUSHU 智能鞋 PD 步态 | 42515329 | Sensors | 鞋垫 IMU 3D 步态; 数据未确认 | P1.5 |
+| Ceraxis 数字化 PD 评估 | 42515380 | Sensors | IMU+力+触摸 9 模块; 数据未公开 | P1.5 |
+| PSP vs PD 可穿戴步态 ML | 42561739 | Gait Posture | 可解释数字生物标志物; 数据未公开 | P1.5 |
+| 瞳孔性眼震 × 前庭性偏头痛 | 42345619 | Audiol Res | 瞳孔振荡前庭标志物; 数据未公开 | P1.5 |
+| 前庭皮层爆发编码自运动 | 42566537 | Sci Adv | 动物神经生理; 自运动编码方向信号 | P1.5 |
+| EmoRoad Sci Data 确认 | 42477375 | Sci Data | 与第14轮记录重复, 仅补 PMID | — |
+
+### 31.3 本扫描关键洞察
+
+1. **Peg-Transfer 数据集 (42440453) 是第 14 档扩展模式的最佳载体**: 双侧腕 IMU + 器械柄 IMU + 眼动 + 视频四流同步 (85 会话 1971 试次), 公开仓库可访问 — 手腕 3D 运动学 × 凝视-工具耦合 (手眼协调) 是明确未做空白, 与模式D 管线一一对应。
+2. **自然光照瞳孔数据 (42502107) 开启第 15 档扩展**: IR 瞳孔图像 + 近角膜面光谱辐照度, 室内外自然条件日常任务 — 瞳孔动力学从实验室走向自然条件, 光-瞳响应 3D 建模空白。
+3. **PhysioNet 三连零净新增**: 饱和确认, 双轨扫描 (经典数据集 3D 重构) 权重继续提升。
+4. **efetch 稳定性确认**: 371KB XML 20/20 提取成功 — 可得性信号扫描 (Step 2.5) 全量可执行, 提高 P0/P1 判定精度。
+5. **前庭×瞳孔信号族**: 42345619 (瞳孔性眼震 VM) + 42548108 (VM 瞳孔测量阴性) — 瞳孔作为前庭轴标志物的临床信号持续, 供论文背景引用。
+6. **新数据集发布节奏放缓**: 2026-08 中旬纯数据集 P0/P0.5 发现率下降, 方法/临床研究占比上升; Kaggle 空壳上传 (white-noise-postural 0.03MB files 空) 需警惕。
+7. **web_search 连续七轮宕机**: 三通道 (PubMed/PhysioNet/Kaggle) 完全覆盖, 已死源监控持续。
+
+### 31.4 可扩展模式更新 (第十一轮)
+
+**新增: 手术技能眼-手协调 3D 通道 (第 14 档扩展)**
+
+```
+手术技能眼-手协调 (2026-08-12 确立):
+├── Peg-Transfer 42440453 (NEW, P1): 腕 IMU + 器械 IMU + 眼动 + 视频 四流
+├── peg-transfer 家族 (Data in Brief, 1971 试次, 85 会话)
+├── 相关: 眼科手术合成定位 42466112 (P1.5, 合成工具)
+└── 相关: 机器人手术技能评估 41803398 (P1.5, 多模态)
+    → 触发条件: 眼动 + 腕/器械 IMU 同步出现 = P1 起步
+    → 模式: 手腕 3D 运动学重建 → 凝视-工具空间耦合 → 技能水平分类 (模式D)
+```
+
+**新增: 自然光照瞳孔-光谱耦合 (第 15 档扩展)**
+
+```
+自然光照瞳孔动力学 (2026-08-12 确立):
+├── 42502107 (NEW, P1): IR 瞳孔图像对 + 光谱辐照度, 自然条件日常任务
+├── 已收录: 自然场景眼动调节 41946222, 瞳孔-唤醒 42167655
+└── 触发条件: 瞳孔数据 + 环境光/光谱测量同步 = 光-瞳 3D 响应建模空白
+    → 模式: 瞳孔动力学 (光响应曲线/相空间) × 光谱辐照度耦合 (模式D)
+```
+
+**新增: 前庭×瞳孔生物标志物信号族 (第 16 档信号)**
+
+```
+前庭×瞳孔 (2026-08-12 信号):
+├── 42345619: 瞳孔性眼震 = 前庭性偏头痛客观标志物
+├── 42548108: VM 定量瞳孔测量 (阴性结果)
+└── 用途: 论文背景/引用, 无数据集
+```
+
+### 31.5 推荐实施路径 (更新)
+
+```
+1. [P0 不变·最高优先] WearGait-PD: 13 IMU 朝向四元数全身 3D 重建 (Kaggle 直链 1183MB)
+2. [P0 不变] Eye-Gaze Dynamics (41651881) 瞳孔 PSO 特征库
+3. [P1 新增] Peg-Transfer (42440453): 验证仓库直链 → 腕 3D 运动学 × 凝视-工具耦合短文 (模式D)
+4. [P1 新增] 42502107: 验证下载 → 自然光照瞳孔-光谱耦合分析
+5. [P0.5 不变] REHAB 卒中康复 3D 轨迹
+6. [监控] PhysioNet 降至双周 (三连零); Kaggle 三通道常规; OpenEDS 季度检查不变
+7. [信号] 前庭×瞳孔 (42345619/42548108) 供前庭论文背景引用
+```
+
+## 三十二、2026-08-12 第二十二次扫描结果：增量发现
+
+### 32.1 扫描概况
+
+- 渠道: PubMed esearch (10 主题, curl) → 234 唯一 PMID → esummary → 30 候选 → 3 条 efetch 摘要 + PhysioNet sort=latest + Kaggle API 7 查询 (list/view/download 全链路)
+- web_search: 连续第八轮宕机 (SearXNG Connection refused) — 已死源监控持续, 零依赖运行第十轮
+- PhysioNet: 净新增 1 (bidsleep-dataset); BRSET v1.0.2 = mBRSET 已知 (第13轮收录), 仅确认 PhysioNet 托管版本
+- OpenEDS: 第21轮当日已做季度检查, 无官方新版本, 本轮跳过
+- **Kaggle API 行为变更 (本轮确认)**: download 端点裸 URL 返回 404, 必须带 `?datasetVersionNumber=N` (302→200, zip 实测); view 端点 `files` 字段对所有数据集返回空数组 (含已知正常数据集 WearGait-PD) — **files 非空不再可用作空壳检测信号**, 改用 totalBytes + description + usabilityRating 联合判定
+
+### 32.2 新增发现 (1 P0.5 + 1 P1 + 2 P1.5 数据集 + 2 信号)
+
+| 数据集 | 来源 | 类型 | 3D 空白 | 优先级 |
+|--------|------|------|---------|--------|
+| **PLiSI 立体瞳孔定位** | Kaggle jiechunchen/plisi-dataset | 9.5GB, MIT | 立体 NIR 视频 + 9124 合成立体边缘图对 → **3D 瞳孔位置/凝视向量重建** | **P0.5** |
+| OpenNeuro ds007262 工作负荷基准 | PMID 42510485 Bioengineering | EEG+ECG+瞳孔测量 18人 | 瞳孔 3D 动力学 × 工作负荷耦合 (原作者仅 2D 特征) | P1 |
+| neepuEYE 眼睛检测器训练集 | Kaggle jiechunchen/neepueye-dataset | 36MB, MIT | PLiSI 配套预处理资产 (5500 张 NIR 低分辨率眼图) | P1.5 |
+| bidsleep-dataset | PhysioNet 1.0.0 | Dreem2 EEG + Apple Watch HR/加速度 47人 253夜 | 可穿戴睡眠分期; HR×ACC×睡眠阶段多模态 | P1.5 |
+| ALL-GCL 小鼠视网膜 | PMID 42581054 Sci Data 2026-08-11 | 双光子 Ca2+ 功能数据集 | 视网膜功能, 非 3diris 直接相关 | P1.5 |
+| Tablet-PSCI 平板眼动卒中筛查 | PMID 42561408 JMIR 2026 | 142 患者 VPC+反扫视 | 数据未确认公开; 平板眼动筛查族 (iPad-PD 同型) | P1.5 信号 |
+
+### 32.3 本扫描关键洞察
+
+1. **PLiSI 是本轮最高价值发现 — 立体瞳孔定位 = 3D 凝视重建的天然入口**: 自研立体视觉瞳孔仪采集 17 段真实 NIR 视频 + 9124 对合成立体边缘图 (模拟三种条件), 数据 9.5GB 完全公开 (MIT), **无配套论文 (Kaggle-only 发布)** — 意味着原始分析仅停留在"立体图像对中的 2D 瞳孔定位评估", 从立体对三角化出 3D 瞳孔位置 → 3D 凝视向量 → 凝视动力学 (模式A + 3D 重建) 是完整空白。合成子集同时支持 sim2real 验证 (模式B)。与第 3 轮收录的 3diris 核心 (虹膜 3D 形状) 技术同源。
+2. **Kaggle API 三端点行为更新**: list (200, 元数据) / view (200, description + totalBytes) / download (需 `?datasetVersionNumber=N`, 302→200 zip)。下载实测 5.5MB/60s 受出口限速 (~15-20KB/s), 9.5GB 全量需后台 curl 分段 — 优先取合成子集 (边缘图, 体积小) 做方法验证。
+3. **平板眼动筛查族持续扩张**: iPad-PD (第13轮) → Tablet-PSCI (本轮 42561408, 卒中后认知障碍) — 低成本平板眼动任务 (VPC/反扫视) 作为神经退行/脑血管疾病筛查通道的模式已成型, 触发条件: 平板眼动 + 临床队列 = P0.5 起步 (若有公开数据)。
+4. **瞳孔×负荷基准缺口**: 42510485 用 OpenNeuro ds007262 做 EEG+ECG+瞳孔工作负荷分类, 提取 25 个瞳孔特征但全部为 2D 经典特征 (传统模型 > 深度模型) — 瞳孔相空间重构/分形维度/3D 动力学未做, 数据开源 (OpenNeuro) 可直接复用。
+5. **PhysioNet 净新增恢复至 1**: bidsleep (可穿戴睡眠分期) 打破三连零, 但整体仍处饱和期, 双周检查维持。
+6. **发布节奏确认放缓**: 本轮 PubMed 30 候选中 27 条为已收录项 (42576128/42440453/42477375/42215489/42115661/42014748/41651881 等), 纯新数据集仅 2 (ALL-GCL + 42510485 基准); Kaggle 噪声/空壳占比 ~50% (onestop-eye-tracking 无描述、johayerirtiza/eye-tracking 无描述、EATMINT 情绪研究 off-domain、MGI-TED 特征级 2.5MB 过小)。
+7. **web_search 连续八轮宕机**: 三通道 (PubMed/PhysioNet/Kaggle) 完全覆盖, 已死源监控持续。
+
+### 32.4 可扩展模式更新 (第十二轮)
+
+**新增: 立体瞳孔定位 → 3D 凝视重建通道 (第 17 档扩展)**
+
+```
+立体瞳孔 3D 凝视 (2026-08-12 确立):
+├── PLiSI jiechunchen/plisi-dataset (NEW, P0.5): 立体 NIR 瞳孔仪 17 视频 + 9124 合成立体边缘图对
+├── neepuEYE (NEW, P1.5): 配套眼睛检测器训练集 (5500 NIR 眼图, 109 受试)
+├── 已收录: GazeBaseVR, RGBE-Gaze 事件相机 (kHz 凝视高频), Pupil-DLC
+└── 触发条件: 立体瞳孔/双眼同步成像数据出现 = P0.5 起步 (立体对 → 3D 瞳孔深度 → 3D 凝视向量)
+    → 模式: 立体三角化 3D 瞳孔位置 → 凝视向量动力学 (模式A) + 合成子集 sim2real (模式B)
+```
+
+**新增: 平板眼动临床筛查族 (第 18 档信号族)**
+
+```
+平板眼动筛查 (2026-08-12 扩张):
+├── Tablet-PSCI 42561408 (NEW): 卒中后认知障碍, VPC+反扫视, 142 患者, 数据未确认
+├── iPad-PD (第13轮已收录): 帕金森平板眼动
+└── 触发条件: 平板眼动任务 + 临床队列 = 低成本筛查通道模式
+    → 与 Pupil-Walking PD / Eye-Gaze Dynamics 构成"低成本设备眼动"资产族
+```
+
+### 32.5 推荐实施路径 (更新)
+
+```
+1. [P0 不变·最高优先] WearGait-PD: 13 IMU 朝向四元数全身 3D 重建 (Kaggle 下载需加 ?datasetVersionNumber=N)
+2. [P0 不变] Eye-Gaze Dynamics (41651881) 瞳孔 PSO 特征库
+3. [P0.5 新增] PLiSI: 下载合成子集 (9124 边缘图对, 体积小) → 立体瞳孔三角化方法验证 → 3D 凝视向量短文 (模式A/B)
+4. [P1 新增] OpenNeuro ds007262: 瞳孔 3D 动力学 × 工作负荷耦合 (数据开源可直接拉取)
+5. [P1.5 跟进] bidsleep-dataset: 可穿戴睡眠分期 + HR×ACC×睡眠阶段多模态
+6. [P0.5 不变] REHAB 卒中康复 3D 轨迹
+7. [监控] PhysioNet 双周; Kaggle API 更新 (带 versionNumber); OpenEDS 季度检查不变
+```
+
+### 32.6 技能更新 (2026-08-12 第二十二次扫描)
+
+- Kaggle API: download 需 `?datasetVersionNumber=N` (裸 URL 404); view files 字段恒空 → 空壳检测改用 totalBytes+description+usability
+- 本扫描日志: `references/session-log-2026-08-12d.md`
+
