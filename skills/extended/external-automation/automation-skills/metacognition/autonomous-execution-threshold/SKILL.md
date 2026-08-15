@@ -621,3 +621,12 @@ delegate_task 默认使用 `delegation.model` 配置（qwen3.6-35b-nvfp4）。�
 - **Golden Error**: 预期错误信息（覆盖失败路径）
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 # Autonomous Execution Threshold
+
+## 验证清单 (Verification)
+
+- [ ] Step 0 ANALYZE 已按句类+信号词计算动态置信度，而非固定基线
+- [ ] ≥80% 时 JUDGE→ACT 未断裂——输出的是执行结果，不是 `🟢 [推测:...]` 文案
+- [ ] 推理链附在执行内容之后（末尾），不在响应开头
+- [ ] 涉及技能执行时 pipeline_trace 有 skill_view 记录
+- [ ] 被纠正后已停止、记录记忆并 patch 对应 skill（不道歉）
+- [ ] 重复犯错场景已从反向案例库提升到阈值矩阵 🟢 直接执行区

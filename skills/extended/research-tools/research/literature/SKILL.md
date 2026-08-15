@@ -239,3 +239,12 @@ commit `d18616e` 是最后完整包含 literature 代码的提交。恢复后需
 - ~~**SyntaxWarning `\\\\:`**~~: `download/http.py` 第 32 行 docstring 中的非法转义序列。已知。
 - ~~**literature.py 脚本缺失**~~: ✅ 脚本存在。
 - ~~**PDF 魔数验证用 `startswith` 而非切片**~~: ✅ 已修复。
+
+## 验证清单 (Verification)
+
+- [ ] 检索用 `jabkit-rs fetch`（26 源统一入口）；PDF 下载已迁移至 doi-fetch/knowledge-acquisition
+- [ ] S2 请求的 fields 已更新（`pdfUrls`/`urls` 已移除，否则 400）；单 key `SEMANTIC_SCHOLAR_API_KEY` 生效
+- [ ] CrossRef 请求不带 `mail` 参数、`order` 为 `desc`/`asc`
+- [ ] PubMed `esummary` 按扁平 `result` 字典解析（跳过 `uids` 等非字典键）
+- [ ] `literature diagnose` 通过（检索 7 源 + DOI 解析 + 12 通道下载测试）
+- [ ] 下载 PDF 魔数 `%PDF-` 验证；LibGen 仅作检索源，下载走 bban.top

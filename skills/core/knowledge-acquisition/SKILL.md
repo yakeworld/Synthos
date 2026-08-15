@@ -196,3 +196,12 @@ jabkit-rs fetch --provider=SemanticScholar --query="iris" --porcelain |
 - `pdf-to-markdown` — PDF 转可读文本
 - `standalone-literature-search` — 无 jabkit 的回退方案
 - `lit-import` — BibTeX 去重入库
+
+## 验证清单 (Verification)
+
+- [ ] 检索使用 `jabkit-rs fetch`（25s 内出 BibTeX），未误用已弃用的 Java `jabkit`（挂起无输出）
+- [ ] 每个 PDF 魔数验证读 5 字节 `head -c 5` = `%PDF-`（不是 4 字节）
+- [ ] 下载后 `pdfinfo | grep Title` 核对标题，排除串流
+- [ ] bban.top 批量下载遇 429 时已加间隔或 rproxy 代理轮换
+- [ ] 需要 PMID 的源（MedData）已先经 esearch 把 DOI 转 PMID
+- [ ] 多源结果合并后经 lit-import 去重入库，BibTeX 无重复条目

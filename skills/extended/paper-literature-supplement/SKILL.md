@@ -141,3 +141,12 @@ url = f"http://www.meddata.com.cn/api/result/search?current=1&size=10&token={tok
 5. **无 PDF 的引用一律删除** — 保留引用数不低于 20 篇即可。
 6. **Crossref 自动匹配不可靠** — 一个查询可能返回完全不相关的论文。必须人工核对标题和年份。
 7. **context-compression 阈值** — 当前配置 700K/1M（threshold=0.7），不要手动改 config.yaml，用 `hermes config set`。
+
+## 验证清单 (Verification)
+
+- [ ] 检索经聚类（每方向 1 次 × 5 聚类）而非逐篇 80 次检索
+- [ ] 引用优先读 .bbl；无 .bbl 时解析 paper.tex 内联 `\bibitem`
+- [ ] Crossref 自动匹配的 DOI 已人工核对标题+年份（匹配不可靠）
+- [ ] 无 PDF 的引用已删除，保留引用数 ≥ 20 篇
+- [ ] quality-gate 通过：D8 引用完整性 ≥80%、D10a bib-tex 匹配 ≥90%、无 undefined citation
+- [ ] delegate_task 子 Agent 只传 goal 不加 context 微操
