@@ -1,6 +1,6 @@
 # Synthos 问题跟踪 (PROBLEMS.md)
 
-更新时间: 2026-08-16 08:32 (evolution cycle-212 dsh-headless: P031 已关闭; IO_CONTRACT 157/157; P032/P033 登记)
+更新时间: 2026-08-16 08:50 (evolution: P031 关闭; P034 dsh 自动发现仅认 ~/.dsh/skills 已验证; IO_CONTRACT 157/157; P032/P033 登记)
 
 ## 已解决 (Resolved)
 
@@ -33,6 +33,7 @@
 | 编号 | 问题 | 严重度 | 状态 |
 |------|------|--------|------|
 | P030 | dsh 与并行 cron 同库编辑竞态: cycle-211 期间 11 个 private 技能被并行 cron 同时修改, dsh 报告 (15 changed) 与实际 diff (4) 不一致 | 🟡 P1 | 已缓解: 独立 VERIFY 捕获并归因 (cycle-211 记录); 后续 dsh 周期派发前检查并行 cron 状态, 或 commit 时按 diff 归属拆分 |
+| P034 | dsh 技能自动发现仅认 ~/.dsh/skills 目录; customSkillDirs (skills-flat) 未生效 — 156 个技能经 ~/.dsh/skills symlink 可用, 但 11 个技能 (~/.dsh/skills 无链接: dsh-self-evolution, evolution, quality-gate, task-router 等 core/meta) 在 dsh 内不可见 | 🟡 P1 | 已缓解 (cycle-212 实测: headless 可发现 task-router/dsh-self-evolution); 待修复: 将 ~/.dsh/skills 缺失的 11 个链接补齐 (由 gen-dsh-flat 或手动), 并核实 customSkillDirs 是否需显式配置 |
 | P032 | 9 个 SKILL.md 正文为重复两段式结构 (同一内容出现两次, 疑似历史合并事故; dsh cycle-212 发现) | 🟡 P1 | 待修复: 独立文档去重轮 (批量 Python 去重 + 语义核对后 commit) |
 | P033 | skills/private/ 被 .gitignore 忽略且 0 文件入库: 13+ 个 private 技能仅存在于工作区与 symlink 链路, git 无备份; 隐私策略与文档缺口 | 🟡 P1 | 待决策: 纳入 git (含隐私扫描) 或保持 ignore + 文档说明; 需用户裁决隐私边界 |
 | P010 | BPPV 论文 03-code/ 空目录 — 仿真代码缺失 | 🔴 P0 | 投稿阻塞项; 需从来源恢复或补写可复现脚本 |
