@@ -231,8 +231,9 @@ bash -lc 'dsh --profile headless "$(cat /media/yakeworld/sda2/Synthos/outputs/ds
 
 ## 已知陷阱 · dsh 集成
 
-> **投影链路**: Synthos/skills (真相源) → `scripts/gen-dsh-flat.sh` → `~/.dsh/skills-flat` (symlink 展平) → `~/.dsh/profiles/headless/cordis.patch.yml` (customSkillDirs) → dsh agent 可见技能。
-> 若 dsh 内看不到新技能：先重跑 gen-dsh-flat.sh 再检查 frontmatter (name+description 必须存在)。
+> **投影链路（2026-08-16 实测修正）**: dsh 技能**自动发现只认 `~/.dsh/skills/`** 目录（symlink 指向 Synthos/skills 真相源）。`~/.dsh/skills-flat` + profile `customSkillDirs` 链路**未被自动发现消费**（实测：仅含 skills-flat 路径的新技能不可见，`~/.dsh/skills` 有链接的 156 个全部可见）。
+> 若 dsh 内看不到新技能：检查 `~/.dsh/skills/<name>` symlink 是否存在（缺失则手动 `ln -s <真相源目录> ~/.dsh/skills/<name>` 或更新投影脚本）；再检查 frontmatter (name+description 必须存在)。
+> **已知缺口（P034）**: `~/.dsh/skills` 缺 11 个技能链接（dsh-self-evolution、evolution、quality-gate、task-router 等 core/meta 类），需补齐。
 
 ## License
 
