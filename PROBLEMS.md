@@ -1,6 +1,6 @@
 # Synthos 问题跟踪 (PROBLEMS.md)
 
-更新时间: 2026-08-16 07:55 (evolution cycle-211 dsh-headless: dsh 自进化系统上线; P030 登记)
+更新时间: 2026-08-16 08:32 (evolution cycle-212 dsh-headless: P031 已关闭; IO_CONTRACT 157/157; P032/P033 登记)
 
 ## 已解决 (Resolved)
 
@@ -33,7 +33,8 @@
 | 编号 | 问题 | 严重度 | 状态 |
 |------|------|--------|------|
 | P030 | dsh 与并行 cron 同库编辑竞态: cycle-211 期间 11 个 private 技能被并行 cron 同时修改, dsh 报告 (15 changed) 与实际 diff (4) 不一致 | 🟡 P1 | 已缓解: 独立 VERIFY 捕获并归因 (cycle-211 记录); 后续 dsh 周期派发前检查并行 cron 状态, 或 commit 时按 diff 归属拆分 |
-| P031 | dsh 技能投影链路缺失: headless profile customSkillDirs 指向不存在的 ~/.dsh/skills-flat (gen-dsh-flat.sh 从未运行), 156 个 Synthos 技能在 dsh 内不可见, 仅 8 个经 ~/.dsh/skills 符号链接可用 | 🟡 P1 | 待修复: 运行 gen-dsh-flat.sh + 更新 profile 配置, 修复后 dsh 子代理可全量使用 Synthos 技能 |
+| P032 | 9 个 SKILL.md 正文为重复两段式结构 (同一内容出现两次, 疑似历史合并事故; dsh cycle-212 发现) | 🟡 P1 | 待修复: 独立文档去重轮 (批量 Python 去重 + 语义核对后 commit) |
+| P033 | skills/private/ 被 .gitignore 忽略且 0 文件入库: 13+ 个 private 技能仅存在于工作区与 symlink 链路, git 无备份; 隐私策略与文档缺口 | 🟡 P1 | 待决策: 纳入 git (含隐私扫描) 或保持 ignore + 文档说明; 需用户裁决隐私边界 |
 | P010 | BPPV 论文 03-code/ 空目录 — 仿真代码缺失 | 🔴 P0 | 投稿阻塞项; 需从来源恢复或补写可复现脚本 |
 | P011 | BPPV 论文正式投稿 (Elsevier EES 手动上传) | 🔴 P0 | 14项材料齐, 待人工操作 |
 | P012 | state.json 管线 239/241 篇 phase=unknown | 🟡 P1 | 47天停滞, 需批量重扫描 |
