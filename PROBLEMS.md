@@ -1,6 +1,6 @@
 # Synthos 问题跟踪 (PROBLEMS.md)
 
-更新时间: 2026-08-16 07:15 (hourly-briefing: P028 G22 Fig22 修复, P027 已关闭)
+更新时间: 2026-08-16 07:55 (evolution cycle-211 dsh-headless: dsh 自进化系统上线; P030 登记)
 
 ## 已解决 (Resolved)
 
@@ -32,6 +32,7 @@
 
 | 编号 | 问题 | 严重度 | 状态 |
 |------|------|--------|------|
+| P030 | dsh 与并行 cron 同库编辑竞态: cycle-211 期间 11 个 private 技能被并行 cron 同时修改, dsh 报告 (15 changed) 与实际 diff (4) 不一致 | 🟡 P1 | 已缓解: 独立 VERIFY 捕获并归因 (cycle-211 记录); 后续 dsh 周期派发前检查并行 cron 状态, 或 commit 时按 diff 归属拆分 |
 | P010 | BPPV 论文 03-code/ 空目录 — 仿真代码缺失 | 🔴 P0 | 投稿阻塞项; 需从来源恢复或补写可复现脚本 |
 | P011 | BPPV 论文正式投稿 (Elsevier EES 手动上传) | 🔴 P0 | 14项材料齐, 待人工操作 |
 | P012 | state.json 管线 239/241 篇 phase=unknown | 🟡 P1 | 47天停滞, 需批量重扫描 |
