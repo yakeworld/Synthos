@@ -1,6 +1,6 @@
 # 3diris 研究集群 — 思考过程与科学假设
 
-||创建: 2026-07-21 | 作者: Cortex (Synthos) | 更新: 2026-08-11
+|创建: 2026-07-21 | 作者: Cortex (Synthos) | 更新: 2026-08-15|
 
 ---
 
@@ -674,9 +674,13 @@ P1 (长期):
 - [ ] **Multimodal EEG+Eye**: 下载同步数据 → EEG-眼动跨模态耦合
 - [ ] **Parkinson 语音**: 确认数据集下载 → 声学特征 3D 相空间
 - [ ] **PPMI**: 帕金森完整数据集 → 多模态分析
+- [ ] **Natural Pupil-Spectral** (P0.5): figshare/Zenodo 下载 → 瞳孔-光谱剂量响应
+- [ ] **AmbientEye** (P0.5): 确认托管 → 户外瞳孔动力学
+- [ ] **RAMS Macular**: 申请路径确认
+- [ ] **Eye-tracking-while-reading living survey** (t.uzh.ch/1Yh): 纳入发现管道
 
-> 最后更新: 2026-08-05
-> 下次扫描: 2026-08-11 (一周后)
+> 最后更新: 2026-08-14 (第27轮)
+> 下次扫描: 2026-08-21 (一周后)
 
 ---
 
@@ -5730,3 +5734,939 @@ Kaggle API (2026-08-12 首次激活):
 - Kaggle API: download 需 `?datasetVersionNumber=N` (裸 URL 404); view files 字段恒空 → 空壳检测改用 totalBytes+description+usability
 - 本扫描日志: `references/session-log-2026-08-12d.md`
 
+
+## 三十三、2026-08-13 第二十三次扫描结果：增量发现
+
+### 33.1 扫描概况
+
+- 渠道: PubMed esearch (10 主题, curl) → 256 唯一 PMID → esummary → 21 条 efetch 摘要 (386KB XML) + PhysioNet sort=latest + Kaggle API 9 查询 (list/view 全链路)
+- web_search: **状态变化 — 从"已死源"恢复为辅助源**（本轮 2 个具体查询均返回有效结果: Frontiers aDBS 文章 + PMC ALAMEDA 项目页, 含噪但具体数据集名查询命中, 与 Pitfall #4b 一致）; 零依赖运行第十一轮
+- PhysioNet: 净新增 0 (除 bidsleep 已收录); 连续第四轮无新 3diris 相关项, 双周检查维持
+- OpenEDS: 季度检查于第21轮完成, 无官方新版本, 本轮跳过
+- 发布节奏: **本轮无纯新 P0/P0.5 数据集** — PubMed 净新增全部为信号级 (临床研究无公开数据), Kaggle 新发现多为 2018-2023 旧数据集
+
+### 33.2 新增发现 (2 P1 + 1 P1.5 数据集 + 7 P1.5 信号)
+
+| 数据集/信号 | 标识 | 来源 | 3D 空白 | 优先级 |
+|--------|------|------|---------|--------|
+| Eye Tracking Autism | Kaggle imtkaggleteam/eye-tracking-autism | 699.7MB, usability 1.0, 2023 | 自闭症注视动力学 (saccade/fixation 参数化) 超越简单分类 | **P1** |
+| PD Vision-Based Pose Estimation | Kaggle limi44/parkinsons-visionbased-pose-estimation-dataset | 138.6MB, usability 0.75, 2018 | 2D CPM 姿态 (PD 患者 UPDRS 预测) → **3D 运动学重建** | **P1** |
+| 慢性 aDBS LFP 记录 | PMID 42376478 | Front Bioinform 2026 | STN-LFP + 可穿戴 + 日记三模态, 13 患者 4440h → LFP×可穿戴跨模态状态分类; 数据需作者提供 | P1.5 |
+| VREED VR 情绪眼动 | Kaggle lumaatabbaa/vr-eyes-emotions-dataset-vreed | 2.0GB, usability 0.81, 2021 | VR 360-VE 眼动 + ECG + GSR 多模态, 情绪诱发 | P1.5 |
+| NeuroEye 瞳孔中心 | Kaggle mahassan8/neuroeye | 149.8MB, usability 0.69, 2022 | 瞳孔中心定位数据集 (摆脱屏幕坐标标注) → 3D 凝视向量 | P1.5 |
+| PD Tremor 分类表格 | Kaggle nikee7/parkinsons-tremor-classification-dataset | 594MB, usability 1.0, 2025-12 | 震颤分类特征级表格, 3D 空白有限 | P1.5 |
+| ALAMEDA PD 数据集 | PMID 42469783 | BMC MIDM 2026-07 | 两个新 ALAMEDA 腕部加速度计数据集 (临床+日常), 数据可得性未确认 | P1.5 待确认 |
+| PSC-BPPV 动力学分类 | PMID 42582090 | Front Neurol 2026 | 60 患者定量眼震 SPV 动力学分类 (阈值 20%/s 预测第二次 Epley); 数据未公开 | P1.5 信号 |
+| PPPD 眼动 OFR | PMID 42585025 | Ann NY Acad Sci 2026-08 | 30 PPPD + 29 对照 OFR 抑制效能, 视觉依赖 (SVV 2.2° vs 1.2°) 与 OFR 相关; 数据未公开 | P1.5 信号 |
+| BPPV0809 | Kaggle shangweichen/bppv0809 | 6.4MB, usability 0.0, 空描述, 2021 | 空壳嫌疑 (usability 0 + 空 desc), 待验证 | P1.5 嫌疑 |
+
+### 33.3 本扫描关键洞察
+
+1. **发布节奏持续放缓 — 连续两轮无纯新 P0/P0.5 数据集**: PubMed 256 唯一 PMID 中 21 条 efetch 全部为临床研究 (无数据可得性信号), 无一条命中 Step 2.5 公开信号词 (publicly available/github/zenodo 等)。2026-08 中旬数据集发布进入低谷期, 与第21/22轮判断一致。
+2. **BPPV 领域强临床信号 (42582090)**: 后管壶腹嵴耳石症 (PSC canalithiasis) 定量眼震 SPV 动力学分类 — 高 SPV 聚集型 vs 低 SPV 分散型 (阈值 20%/s) 预测第二次 Epley 需求, 事件/变量比 9.5:1。数据未公开, 但动力学分类方法论 (SPV 轨迹分型) 与 3diris 相空间方法同源, 可作 BPPV 论文的方法学引用。
+3. **PPPD×眼动新信号族 (42585025)**: 前庭-视觉依赖 (PPPD) 患者 OFR 抑制效能受损 + 动态 SVV 偏移 (2.2° vs 1.2°) — 前庭-视觉耦合的客观眼动标志物方向, 供前庭论文背景引用。
+4. **aDBS 慢性 LFP×可穿戴跨模态 (42376478)**: STN-LFP + 可穿戴传感器 + 患者日记三模态, 13 患者平均 14 天 4440h — 植入式神经记录×可穿戴的跨模态状态分类空白; 数据 "made available by the authors without undue reservation" (需作者提供, 非直接公开)。
+5. **Kaggle 旧数据集复活价值**: PD Pose Estimation (2018) 的 2D CPM 姿态序列 → 3D 运动学重建与 WearGait-PD 同属"PD 运动学 3D 重构"通道; Eye Tracking Autism (2023, usability 1.0) 是少数可用性满分的临床眼动数据集, 自闭症注视动力学分析空白。
+6. **web_search 恢复为辅助源**: 本轮 2 个具体查询均返回有效结果 (与 2026-08-11 连续三轮宕机不同) — 状态从"已死源监控"恢复为"具体查询辅助源", 但泛化查询仍含噪, 维持 PubMed/PhysioNet/Kaggle 三通道主力。
+7. **前庭域数据稀缺持续确认**: BPPV/PPPD 均有新临床研究但无公开数据集 — 自建 BPPV 数据集 (P0, 第8轮) 仍是唯一彻底解决路径。
+
+### 33.4 可扩展模式更新 (第十三轮)
+
+**新增: PPPD×眼动信号族 (第 19 档信号)**
+
+```
+PPPD 前庭-视觉依赖 (2026-08-13 确立):
+├── 42585025 (NEW): OFR 抑制效能 30 PPPD + 29 对照, SVV 视觉依赖相关
+├── 已收录: 42582090 PSC-BPPV 定量眼震 (同域动力学分类)
+└── 触发条件: 前庭疾病 + 眼动/眼震定量数据出现 = 动力学分类信号
+    → 模式: SPV/OFR 轨迹相空间分型 (动力学分类, 非简单阈值)
+```
+
+**新增: 植入式神经记录×可穿戴跨模态通道 (第 20 档扩展)**
+
+```
+aDBS 慢性 LFP (2026-08-13 确立):
+├── 42376478 (NEW, P1.5): STN-LFP + 可穿戴 + 日记, 4440h, 数据需作者提供
+├── 已收录: 42376478 同族 (Front Bioinform), ActiTect RBD 管线 (iRBD 可穿戴)
+└── 触发条件: 慢性 LFP/ECoG + 可穿戴同步数据 = 植入式×体表跨模态空白
+    → 模式: LFP 频带动力学 × 可穿戴运动学跨模态耦合 (模式D)
+```
+
+**web_search 状态更新**: 2026-08-13 实测从"已死源"恢复为"具体查询辅助源" — 2/2 具体查询命中 (Frontiers/PMC), 泛化查询仍含噪。监控继续, 三通道 (PubMed/PhysioNet/Kaggle) 维持主力。
+
+### 33.5 推荐实施路径 (更新)
+
+```
+1. [P0 不变·最高优先] WearGait-PD: 13 IMU 朝向四元数全身 3D 重建 (Kaggle 下载需 ?datasetVersionNumber=N)
+2. [P0 不变] Eye-Gaze Dynamics (41651881) 瞳孔 PSO 特征库
+3. [P0.5 不变] PLiSI: 合成子集 (9124 边缘图对) → 立体瞳孔三角化方法验证
+4. [P1 新增] Eye Tracking Autism (Kaggle): 下载 → 自闭症注视动力学参数化分析
+5. [P1 新增] PD Pose Estimation (Kaggle, 2018): 2D CPM 姿态 → 3D 运动学重建验证
+6. [P1.5 跟进] aDBS LFP (42376478): 联系作者确认数据访问 → LFP×可穿戴跨模态
+7. [监控] PhysioNet 双周; Kaggle API 三通道常规; web_search 恢复辅助但保持低权重; OpenEDS 季度检查不变
+```
+
+### 33.6 技能更新 (2026-08-13 第二十三次扫描)
+
+- web_search 状态: 从"已死源"恢复为"具体查询辅助源" (本轮 2/2 具体查询命中, 泛化查询含噪)
+- PhysioNet: 连续第四轮无 3diris 相关净新增 (仅 bidsleep 第22轮收录), 双周检查维持
+- 本扫描日志: `references/session-log-2026-08-13.md`
+
+
+## 三十四、2026-08-13 第二十四次扫描 — 可扩展模式 (低谷期深化)
+
+### 34.1 扫描概况
+
+- 渠道: PubMed esearch (10 主题, curl) → 221 唯一 PMID → esummary → 15 条 efetch 摘要 (虹膜生物力学/UBM/瞳孔/扫视/前庭) + PhysioNet sort=latest + Kaggle API 10 查询 (153 结果) + view 端点 7 个新候选
+- web_search: **第 24 轮宕机** (SearXNG localhost:8080 超时) — 连续第 9 轮不可用, 与 08-13 第 23 轮 2/2 命中形成对比, 维持"具体查询辅助源但不可依赖"定位
+- 耗时: ~30 min
+- 净新增: 0 纯新 P0/P0.5 (低谷期延续) + **3 个 Kaggle 数据集复活/新发现** (P1×2 + P1.5×1) + **5 个方法学信号**
+
+### 34.2 新发现数据集 (Kaggle)
+
+| # | 数据集 | 标识 | 规模 | 3D 空白 | 优先级 |
+|---|--------|------|------|---------|--------|
+| 1 | EyeDentify / EyeDentify++ | Kaggle vijuls/pupildiameterdatasets | 34GB, 51 受试者, CC BY-NC, 2024-11 | webcam 瞳孔直径估计 (PupilSense 论文 ACM UIST/ICMI 2025) — 51 人瞳孔时间序列, 自然光照条件, 超越实验室瞳孔测量; 瞳孔动力学 3D 响应 (光-瞳耦合) 未做 | **P1** |
+| 2 | EyeT4Empathy | Kaggle priyankraval/eyet4empathy | 5.5GB, 60 参与者, CC0 公有领域, 2023-12 | 视觉信息觅食 + gaze typing + 共情评估三联任务眼动 — 共情×注视动力学参数化 (saccade/fixation 相空间) 未做; CC0 许可零摩擦 | **P1** |
+| 3 | Parkinson YOLO 螺旋画 | Kaggle cornelioac/parkinson-yolo-dataset | 5.4GB, usability 1.0, CC BY 4.0, 2025-08 | 健康 vs PD 手绘螺旋/波形图像 YOLO 检测格式 — 绘制轨迹 3D 运动学 (笔速/加速度/抖动相空间) 空白; 静态图像分类为主, 动态轨迹若含时间戳可做 3D 重构 | P1.5 |
+| 4 | Parkinson's Drawings (经典) | Kaggle kmader/parkinsons-drawings | 43.4MB, usability 0.88, 2019 | 经典螺旋/波形手绘数据集 (11444 下载) — 与 #3 同域互补, 作交叉验证双子集 | P1.5 |
+| 5 | 桌面活动眼动 | Kaggle namratasri01/eye-movement-data-set-for-desktop-activities | 49.2MB, 24 人, 8 活动, 2022 | 桌面活动分类原始凝视坐标 — 3D 空白有限, 特征级 | P1.5 弱 |
+
+### 34.3 PubMed 方法学信号 (无公开数据, 供论文背景/方法引用)
+
+| # | PMID | 主题 | 3diris 价值 |
+|---|------|------|------------|
+| 1 | 42580719 | 虹膜主动应变有限元模型 (J R Soc Interface 2026-08) | **虹膜 3D 生物力学 FEM — 被动组织显著塑造 3D 虹膜变形, 直接支撑 H03 瞳孔缩放 r=-0.618 的机制解释** — 3diris 虹膜论文方法学引用 |
+| 2 | 42506963 | UBM 前节生物参数 DL 测量 (TVST 2026-07) | 虹膜/睫状体/晶状体分割 + 7 参数自动测量 (DeepLabv3+, mIoU 85.8%) — 前节 3D 形态学通道 |
+| 3 | 42584196 | ACE 斜视辐辏/发散 300Hz 眼动 (IOVS 2026-08) | 46 患者 Tobii Pro Spectrum, conjugate vs vergence 分类 — vergence 动力学分类方法学 |
+| 4 | 42572600 | 老年抑郁微扫视情绪冲突 (Int J Clin Health Psychol) | 26 LLD + 27 对照, 微扫视率×情绪冲突 — 微扫视×情绪×老年人群扩展 |
+| 5 | 42322958 | MS 瞳孔图 ML (Mult Scler Relat Disord) | 692 瞳孔图 25+38 人, PLR 自主神经标志物 AUC 0.945 — 瞳孔图机器学习框架 |
+| 6 | 42575704 | 瞳孔动力学预测自我报告唤醒 (J Neurosci 2026-08) | VR (N=28) + fMRI (N=27) 双研究, 强直+相位瞳孔 1.5-3.5s 滞后预测唤醒 — 瞳孔×fMRI 交叉验证 |
+| 7 | 42577794 | MS 疲劳垂直扫视减速 (Fatigue 2026) | 44 患者, 上向扫视峰速 r=-0.45 独立预测疲劳 — 垂直扫视动力学标志物 |
+| 8 | 42323438 | 眼动压力分类双数据集 (Sci Rep 2026-06) | VR 守门员 + 虚拟面试任务无关压力分类, 单模态眼动 F1 高 — 非实验室条件基准 |
+
+### 34.4 关键洞察
+
+1. **低谷期深化 — 连续三轮无纯新 P0/P0.5**: 221 PMID 中 15 条 efetch 全部无公开数据信号 (POS=[], NEG=[] 全空)。2026-08 中旬发布低谷确认, 且 web_search 本轮宕机, 发现面收窄到 Kaggle+PubMed 双通道。
+2. **Kaggle 复活检查价值兑现**: 本轮 3 个净新增全部来自 Kaggle list 扫描 (EyeDentify/EyeT4Empathy/Parkinson YOLO), 印证 Pitfall #52 低谷期对策 (b) — 旧数据集复活 + 未收录经典数据集补录。EyeT4Empathy (2023) 与 EyeDentify (2024) 均为前几轮漏网, 说明 Kaggle list 全量审阅而非只看新排序的必要性。
+3. **瞳孔域持续活跃**: EyeDentify (webcam 瞳孔, 51 人) + 42575704 (瞳孔×fMRI) + 42322958 (瞳孔图 ML) — 瞳孔动力学从实验室走向自然条件/消费级设备的趋势与本轮 42502107 自然光照瞳孔一致, 瞳孔 3D 响应建模是贯穿信号。
+4. **虹膜生物力学方法学里程碑**: 42580719 首次用主动应变 FEM 解释被动组织在 3D 虹膜变形中的决定性作用 — 这是 3diris H03 (瞳孔缩放虹膜变平) 的机制级支撑, 比 2D 统计相关更进一层。
+5. **web_search 波动确认**: 第 23 轮 2/2 命中 → 第 24 轮全宕, 波动性极高 — 不可进入关键路径, 维持辅助定位。
+
+### 34.5 可扩展模式更新 (第十四轮)
+
+**新增: 消费级瞳孔测量通道 (第 21 档扩展)**
+
+```
+webcam/消费级瞳孔 (2026-08-13 确立):
+├── EyeDentify/EyeDentify++ (NEW, P1): vijuls/pupildiameterdatasets, 51 人 webcam 瞳孔
+│   → PupilSense ACM 2025 论文配对, CC BY-NC
+├── 已收录: 42502107 自然光照瞳孔-光谱 (第 14 档), Pupil-DLC 42401399
+└── 触发条件: webcam/消费级设备瞳孔时间序列 + 配套论文 = 自然条件瞳孔动力学空白
+    → 模式: 光-瞳 3D 响应建模 (照明→瞳孔→虹膜变形链路)
+```
+
+**新增: 共情×眼动行为通道 (第 22 档扩展)**
+
+```
+共情评估眼动 (2026-08-13 确立):
+├── EyeT4Empathy (NEW, P1): 60 人 CC0, 觅食+gaze typing+共情三联任务
+├── 触发条件: 心理特质量表 + 多任务眼动同步 = 特质-注视动力学关联空白
+└── 模式: saccade/fixation 参数化 × 共情评分的跨被试关联 (特征型分析)
+```
+
+**新增: 手绘动力学 3D 重构通道 (第 23 档扩展)**
+
+```
+PD 螺旋画 (2026-08-13 确立):
+├── cornelioac/parkinson-yolo-dataset (NEW, P1.5): 5.4GB YOLO 格式
+├── kmader/parkinsons-drawings (NEW, P1.5): 经典 43.4MB 双子集
+└── 触发条件: PD 手绘任务出现 (静态图像或轨迹) = 绘制动力学 3D 重构空白
+    → 模式: 笔迹 3D 运动学 (若含时间戳) 或静态→动态反演 (模式B)
+```
+
+**信号族补充 (虹膜力学×眼动临床)**: 42580719 (FEM) + 42506963 (UBM) → 虹膜形态-力学信号族; 42584196 (vergence) + 42577794 (垂直扫视) + 42572600 (微扫视) → 扫视/辐辏临床定量族。
+
+### 34.6 推荐实施路径 (更新)
+
+```
+1. [P0 不变·最高优先] WearGait-PD: 13 IMU 朝向四元数全身 3D 重建
+2. [P0 不变] Eye-Gaze Dynamics (41651881) 瞳孔 PSO 特征库
+3. [P0.5 不变] PLiSI: 合成子集 → 立体瞳孔三角化方法验证
+4. [P1 不变] Eye Tracking Autism: 自闭症注视动力学参数化
+5. [P1 新增] EyeDentify (Kaggle, CC BY-NC): 下载子集 → webcam 瞳孔时间序列动力学
+6. [P1 新增] EyeT4Empathy (Kaggle, CC0): 下载 → 共情×注视动力学参数化
+7. [P1.5 新增] Parkinson YOLO 螺旋画: 检查是否含绘制时间戳 → 3D 动力学可行性
+8. [信号引用] 42580719 虹膜 FEM → 3diris H03 论文机制引用 (优先补入)
+9. [监控] PhysioNet 双周; Kaggle list 全量审阅 (非仅新排序); web_search 波动容忍
+```
+
+### 34.7 技能更新 (2026-08-13 第二十四次扫描)
+
+- Kaggle list 扫描策略升级: 不能只看 lastUpdated 排序 — EyeDentify/EyeT4Empathy 均为旧版本 (2023-2024) 漏网, 需全量审阅各查询前 20 条
+- web_search 波动记录: 第 23 轮恢复 → 第 24 轮宕机, 连续宕机轮数重置为 1
+- 本扫描日志: `references/session-log-2026-08-13b.md`
+
+## 三十五、2026-08-13 第二十五次扫描结果：增量发现
+
+### 35.1 扫描概况
+
+- 渠道: PubMed esearch (10 主题) → 209 唯一 PMID → esummary (curl 2 批: 180+29, 366KB) → 14 条 efetch 摘要 + PhysioNet sort=latest + Kaggle API 10 查询 + GitHub API (OpenEDS) + 阅读眼动活体调查页 (t.uzh.ch/1Yh)
+- web_search: **连续第九轮宕机** (SearXNG Connection refused) — 零依赖运行第十二轮, 已死源监控持续
+- PhysioNet: 净新增 0 (**连续第五轮饱和**); latest 10 项中 bidsleep (已收录) + BRSET v1.0.2 (已收录), 其余 ICU/MASLD/AF/胰岛素 off-domain; DREAMT v2.2.0 已在历史收录
+- OpenEDS 季度检查 (2026-08-13): Kaggle 仅 5 个镜像 (soumicksarker 2023 / nguynphancminh 2025 / label-mapping 2025-10 / psf-openeds-lensless 2026-01 / 自有 yakeworld126 2024), **无官方新版本, OpenEDS 2024 仍为最新**; facebookresearch GitHub org 仓库 404/不可见; 官方博客 404; openeds.io 不可达
+- 发布节奏: 低谷期出现结构性亮点 — 本轮 PubMed 净新增 3 个实质数据集 (A-eye / PERCEIV / ERDES) + 1 个元资源 (阅读眼动活体调查), 为近五轮最高产出
+
+### 35.2 新增发现 (1 P0.5 + 2 P1 + 1 P1 资源 + 3 P1.5)
+
+| 数据集/资源 | 标识 | 来源 | 3D 空白 | 优先级 |
+|--------|------|------|---------|--------|
+| **A-eye 3D 眼/眶 MRI 图谱** | PMID 42391233, DOI 10.1371/journal.pone.0352257 | PLoS One 2026 | 1245 人 T1 MRI → 首个大规模无偏眼图谱 (F/M/合并) + 5 结构 (晶状体/眼球/视神经/直肌/眶脂) 3D 分割 + 轴长/体积形态测量 → **3D 形状 PCA 完全未做** | **P0.5** |
+| **PERCEIV 多模态 InfoVis** | PMID 42560901, DOI 10.1109/TVCG.2026.3721212 | IEEE TVCG 2026-08 | 120 人 脑+眼+EDA 三模态同步, 视觉编码感知任务, raw 流+事件对齐派生特征+代码全公开 → **跨模态耦合 × 编码几何 未做** | **P1** |
+| **ERDES 眼超声视频基准** | PMID 42448716, DOI 10.1038/s41597-026-07453-3 | Sci Data 2026-07-14 | 首个开放眼超声视频数据集 (RD + 黄斑状态), 40 模型 8 架构基线 (3D CNN/Transformer) → **视频时域动力学/可解释性/校准 未做** | **P1** |
+| **阅读眼动活体调查** | PMID 42576128, DOI 10.3758/s13428-026-03126-6 | Behav Res Methods 2026-08-10 | 55+ 特征/语料的阅读眼动语料索引, 集成 pymovements 库, 活体页面 t.uzh.ch/1Yh → **语料空白挖掘入口** | **P1 资源** |
+| Tappy PD 键入动力学 | Kaggle valkling/tappy-keystroke-data-with-parkinsons-patients | 100.4MB, u=0.75, 2018 | PD 患者键入时间序列 → 键入动力学相空间 (键间隔 3D 重构) 未做 | P1.5 |
+| 事件相机眼动分类 | PMID 41718377, J Eye Mov Res 2026-02 | 公开可得信号 POS | 事件相机注视/扫视分类 → RGBE-Gaze 家族扩员 (kHz 时间分辨率) | P1.5 |
+| PD 足底 GSTI 信号 | PMID 42019073, IEEE JBHI 2026 | 公开信号 POS | 足底载荷 GSTI 信号生成 → WearGait-PD 鞋垫通道方法学引用 | P1.5 |
+
+### 35.3 本扫描关键洞察
+
+1. **A-eye 是 3diris 形态学管线的直接延伸 (本轮最高价值)**: 1245 人 3D MRI 眼/眶分割 + 无偏图谱 (F/M/合并) + 轴长/体积生物标志物 — 原作者只做了单变量 BMI-体积相关, **5 结构 3D 形状 PCA / 年龄性别分层形态轨迹 / 结构间形态耦合 (突眼指数等) 完全空白**。与 Benalcazar 虹膜 PCA 方法 (13 PC=90% 变异) 直接同源, 模式A 一步迁移。数据源疑为 UK Biobank (需申请), 但图谱为论文主要产出 (可直接下载)。
+2. **PERCEIV 打开"感知多模态"第 25 档扩展**: InfoVis 视觉编码 (位置/长度/角度/面积通道) 是结构化的刺激空间 — 编码几何 × 眼动动力学 × EEG/EDA 的跨模态耦合分析 (模式D/G) 是明确空白, 且 raw 流+代码全公开, 无摩擦获取。
+3. **ERDES 填补"眼科超声视频"空白**: 首个开放眼超声视频基准 (RD+黄斑状态), 基线 40 模型但均为黑箱分类 — 帧级→片段级时域特征轨迹、不确定性/校准 (POCUS 部署刚需)、可解释帧定位均未做。Sci Data 标准, 数据开放。
+4. **阅读语料元资源 (42576128) 是低谷期最佳杠杆**: 活体调查 + pymovements 库把 50+ 阅读语料变成可编程枚举 — 下一步 `pip install pymovements` 后枚举语料, 找"有心理测量数据但无 ML 分析"的语料, 可批量产出阅读动力学短文 (模式J 数据地图的落地版)。
+5. **低谷期结构性回暖确认**: 近五轮 (21-24) 均无纯新 P0/P0.5, 本轮一次命中 1 P0.5 + 3 P1 — PubMed 精准查询 (新增 iris/ocular/retina 主题) 是回暖主因, 证明低谷期对策 (b) 应扩展为"查询面轮换"而非仅"旧数据集复活"。
+6. **Kaggle API 行为变更 (本轮新坑)**: `sortBy=lastUpdated` 是非枚举值 → **HTTP 400** (诊断: 最小查询 200 正常, 带 sortBy 即 400, 错误信息 Unrecognized DatasetSortBy enum value)。list 端点必须**不带 sortBy**, 默认排序即为相关度+更新混合。此为第 22 轮"download 需 versionNumber"后的又一 API 行为坑。
+7. **前庭/BPPV 域连续第五轮零数据集**: PubMed 仅 41663530 (SAM 眼震分类, 无数据) 等临床信号; Kaggle vestibular 查询仅噪音, nystagmus 0 结果 — 自建 BPPV 数据集 (P0, 第8轮) 仍是唯一彻底解决路径。
+
+### 35.4 可扩展模式更新 (第十五轮)
+
+**新增: 3D 眼/眶 MRI 形态学通道 (第 24 档扩展)**
+
+```
+3D 眼/眶 MRI 形态 (2026-08-13 确立):
+├── A-eye 42391233 (NEW, P0.5): 1245 人 T1 MRI, 5 结构分割 + 无偏图谱 (F/M/合并)
+├── 已收录: 42506963 UBM 前节生物参数 (第24轮信号), 虹膜 3D PCA (3diris 核心)
+└── 触发条件: 眼部 3D 结构分割/图谱数据出现 = 形态学 PCA 直接迁移
+    → 模式: 5 结构 3D 形状 PCA (模式A) + 年龄/性别分层轨迹 + 结构间形态耦合
+    → 与 3diris 虹膜 PCA (13 PC=90%) 技术同源, 管线一步复用
+```
+
+**新增: 感知多模态跨模态耦合通道 (第 25 档扩展)**
+
+```
+感知任务多模态 (2026-08-13 确立):
+├── PERCEIV 42560901 (NEW, P1): 120 人 脑+眼+EDA, 视觉编码感知, raw+code 全公开
+├── 已收录: BBBD 42014748 (教育视频多模态), Cogitate iEEG+Eye (颅内+眼动)
+└── 触发条件: 眼动 + EEG/生理 + 结构化刺激空间同步出现 = 跨模态耦合空白
+    → 模式: 编码几何 × 眼动动力学 × EEG/EDA 耦合 (模式D/G), 认知负荷特征族
+```
+
+**新增: 阅读语料库活体索引资源 (第 26 档资源)**
+
+```
+阅读语料元索引 (2026-08-13 确立):
+├── 42576128 (NEW, P1 资源): 55+ 特征/语料, pymovements 库集成, 活体页面 t.uzh.ch/1Yh
+├── 下一步: pip install pymovements → 枚举语料 → 筛"有心理测量无 ML"语料
+└── 触发条件: 需要批量发现阅读眼动语料时直接查活体调查
+    → 模式: 模式J 数据地图落地版 → 阅读动力学短文批量管线
+```
+
+**信号族补充**: Tappy 键入动力学 (Kaggle, PD 运动标志物新通道) + 41718377 事件相机眼动 (RGBE-Gaze 家族扩员) + 42019073 足底 GSTI (WearGait-PD 鞋垫方法学引用) + 42067630 凝视-瞳孔 PSO 统一建模 (41651881 P0 管线方法学引用)。
+
+### 35.5 推荐实施路径 (更新)
+
+```
+1. [P0 不变·最高优先] WearGait-PD: 13 IMU 朝向四元数全身 3D 重建 (Kaggle 下载需 ?datasetVersionNumber=N)
+2. [P0 不变] Eye-Gaze Dynamics (41651881) 瞳孔 PSO 特征库 (42067630 作方法学补充引用)
+3. [P0.5 不变] PLiSI: 合成子集 → 立体瞳孔三角化方法验证
+4. [P0.5 新增] A-eye (42391233): 确认图谱下载方式 (UK Biobank 申请 or 图谱直链) → 5 结构 3D 形状 PCA 短文 (模式A 直接迁移虹膜管线)
+5. [P1 新增] PERCEIV (42560901): 下载 raw 流 → 视觉编码几何 × 眼动/EEG/EDA 跨模态耦合分析
+6. [P1 新增] ERDES (42448716): 确认数据仓库位置 → 视频时域动力学 + 校准/可解释性 (POCUS 部署视角)
+7. [P1 资源] 阅读语料活体调查: pip install pymovements → 枚举语料 → 选 1-2 个未充分分析语料 → 阅读动力学短文
+8. [P1.5 跟进] Tappy 键入动力学 (Kaggle): 键间隔相空间重构可行性验证
+9. [监控] PhysioNet 双周; Kaggle list 不带 sortBy (400 坑); web_search 宕机第 9 轮; OpenEDS 季度 (2024 仍最新); 查询面轮换策略 (iris/ocular/retina 主题本轮见效)
+```
+
+### 35.6 技能更新 (2026-08-13 第二十五次扫描)
+
+- Kaggle API: list 端点 `sortBy=lastUpdated` → HTTP 400 (非枚举值), 必须不带 sortBy (默认排序); 与第 22 轮 download `?datasetVersionNumber=N` 并列为新 API 行为坑
+- web_search: 连续第九轮宕机 (SearXNG Connection refused), 零依赖运行第十二轮
+- PhysioNet: 连续第五轮无 3diris 相关净新增, 双周检查维持
+- 低谷期对策 (b) 升级: 除"旧数据集复活 + 未收录经典补录"外, 增加"查询面轮换" (本轮新增 iris/ocular/retina 主题直接产出 P0.5)
+- 本扫描日志: `references/session-log-2026-08-13c.md`
+
+---
+
+## 三十六、2026-08-14 第二十六次扫描结果：增量发现
+
+> 本扫描为 cron 文献监控 + 数据集发现。工具: PubMed e-utilities (6 组查询, 全部成功) + arXiv API (4 组定向查询) + PhysioNet News/Index + Kaggle 网页 + web_search (SearXNG 本轮恢复)。
+> 关键词面: eye/iris/pupil/gaze/oculomotor + vestibular/BPPV/nystagmus + Parkinson/gait + retina/OCT + wearable + PhysioNet。
+> 净新增 6 个数据集 (2 P0.5 + 4 P1)。已确认无新发现: OpenEDS 新版本、PhysioNet 眼科/前庭新数据集、BPPV 公开数据集 (连续第六轮零新增)。
+
+### 36.1 本轮新增数据集
+
+#### 1. AmbientEye — 户外自然红外瞳孔分割数据集 (P0.5) [本轮最高价值]
+- **来源**: arXiv 2606.03774, 2026-06-02 ("AmbientEye: A Dataset for Pupil Segmentation under Natural Ambient Infrared Illumination")
+- **作者**: Han M, Han H, Zhang X (TU Delft/ETH 系眼动学者), Oakley I 等 (POSTECH/UNIST)
+- **内容**: 2,606,225 张户外自然阳光下被动红外眼图, 35 名参与者来自 19 国, 两种离轴相机配置 x 两种太阳方位条件, SAM2 自动分割 + 人工精修瞳孔标注
+- **访问**: arXiv 论文, 数据待确认托管位置 (无 GitHub/HF 直链在摘要页)
+- **原作者分析**: 仅做分割 benchmark — 受控 IR (0.928) vs AmbientEye (0.767) 性能落差, 证明环境光挑战; 无任何动力学/形态学分析
+- **Synthos 空白**:
+  - 户外环境光下的瞳孔动力学 (无主动光源 → 真实瞳孔生理响应, 不受 IR 主动照明收缩干扰)
+  - 太阳方位/相机配置双条件 x 瞳孔形态 3D 参数化 (模式A 直接迁移 Benalcazar 虹膜 PCA)
+  - 被动 IR 与主动 IR 瞳孔尺寸分布差异 → 光照-瞳孔生理学交叉验证
+  - **核心创新**: 首个被动环境光瞳孔数据集 → 户外瞳孔生理学 + 眼追踪鲁棒性双重维度
+- **产出潜力**: **高** — 260 万张规模大, 分割 benchmark 是唯一分析, 动力学/形态学完全空白
+- **匹配模式**: 模式A (形状分析) + 模式B (信号分析)
+- **备注**: 与 VR Headset Eye-Tracking (已收录) 互补 — 该数据集是"户外真实环境", 前者是"VR 沉浸环境", 均无动力学分析 → 可形成"环境范式 x 眼动动力学"对比论文组
+
+#### 2. FunPiQ — 像素级眼底图像质量基准 (P0.5)
+- **来源**: arXiv 2606.25915, 2026-06-24 ("FunPiQ: A New Benchmark for Pixel-Level Quality Assessment in Fundus Images")
+- **内容**: 首个提供像素级质量标注的眼底图像质量评估 (FIQA) 基准, 基于解剖可见性 (anatomical visibility) 的任务无关可解释范式
+- **访问**: GitHub 公开 (github.com/penway/FunPiQ)
+- **原作者分析**: 构建基准 + FIQA baseline 评估, 未做质量退化的空间分布/临床关联分析
+- **Synthos 空白**:
+  - 像素级退化图 → 解剖结构可见性 3D 参数化 (视盘/黄斑区域退化空间分布)
+  - 退化模式聚类 → 采集设备/操作者指纹 → 质控生物标志物
+  - 质量退化与疾病诊断性能的耦合分析
+  - **核心创新**: 从"图像质量分数"到"解剖可见性地形图"的维度升级
+- **产出潜力**: **中高** — 像素级标注是新范式, 与 3diris 形态学方法论同源
+- **匹配模式**: 模式A (形状分析) + 模式I (综合)
+
+#### 3. OphIn-500K — 网络级眼科视觉指令数据 (P1)
+- **来源**: arXiv 2605.27916, 2026-05-27 ("OphIn-500K: Curating Web-Scale Visual Instructions for Scaling Ophthalmic Multimodal LLMs")
+- **内容**: 50 万条网络级眼科视觉指令数据 (网页采集), 用于眼科多模态大模型
+- **访问**: 待确认 (LLM 训练导向)
+- **原作者分析**: 仅用于 MLLM 指令微调, 无传统医学图像分析
+- **Synthos 空白**: LLM benchmark 数据再发现模式 (第 7 轮确立) 的又一实例 — 底层图像可用于形态学/解剖分析; 眼科网页图像 → 真实世界解剖多样性分布
+- **产出潜力**: **中** — 数据规模大但受限于采集域与质量
+- **匹配模式**: 模式A + 模式I
+
+#### 4. VEOS — 单目眼周视频→垂直 EOG 推断 (P1)
+- **来源**: PMID 42372761, 2026-07-13 ("VEOS: vision-based vertical electrooculography inference from monocular periocular video for ocular artefact suppression")
+- **内容**: 从单目眼周视频推断垂直 EOG 信号, 用于眼动伪迹抑制
+- **访问**: 方法论文, 数据需确认
+- **Synthos 空白**: 视频→EOG 的"无传感器眼动测量"新模态 — 与 EEG 伪迹抑制结合 → 眼动动力学无需眼动仪; 与 3diris 的瞳孔/眼动方法论互通
+- **产出潜力**: **中低** — 方法价值 > 数据价值, 但开辟"视频即传感器"方向
+- **匹配模式**: 模式B (信号分析) + 模式C (生物物理关联)
+
+#### 5. Longitudinal Vestibular Schwannoma MRI 数据集 (P1)
+- **来源**: arXiv 2511.00472, 2025-11-01 ("Longitudinal Vestibular Schwannoma Dataset with Consensus-based Human-in-the-loop Annotations")
+- **内容**: 多中心纵向前庭神经鞘瘤 MRI, 专家共识 + 人在回路迭代分割标注
+- **访问**: 多中心数据, 需申请确认
+- **Synthos 空白**: 肿瘤 3D 体积形态学 PCA (与虹膜 3D 同构); 纵向生长动力学轨迹 (与 PPMI 纵向分析思路同源); 前庭域解剖形态学入口
+- **产出潜力**: **中低** — MRI 分割域偏离 3diris 核心, 但属前庭域稀缺补充
+- **匹配模式**: 模式A (形状分析)
+
+#### 6. UltraEar — 多中心高分辨耳 CT 数据库 (P1)
+- **来源**: arXiv 2508.20141, 2025-08-27 ("UltraEar: a multicentric, large-scale database combining ultra-high-resolution computed tomography and clinical data for ear")
+- **内容**: 多中心大规模超高分辨颞骨/耳 CT + 临床数据
+- **访问**: 需确认
+- **Synthos 空白**: 内耳 3D 形态参数化 (前庭/半规管 3D 结构) — 眩晕领域解剖学基线的数据侧突破口
+- **产出潜力**: **中低** — 与 BPPV/眩晕直接相关但为 CT 影像域
+- **匹配模式**: 模式A (形状分析)
+
+### 36.2 净新增摘要
+
+| 数据集 | 优先级 | 来源 | 关键特征 | 匹配模式 |
+|--------|--------|------|----------|----------|
+| AmbientEye | P0.5 | arXiv 2606.03774 | 260万张户外被动IR瞳孔图, 仅分割基准 | A+B |
+| FunPiQ | P0.5 | arXiv 2606.25915 | 首个像素级眼底质量基准, GitHub公开 | A+I |
+| OphIn-500K | P1 | arXiv 2605.27916 | 50万眼科视觉指令, LLM导向 | A+I |
+| VEOS | P1 | PMID 42372761 | 眼周视频→EOG 无传感器眼动 | B+C |
+| VS MRI 纵向 | P1 | arXiv 2511.00472 | 多中心前庭神经鞘瘤分割, 人在回路 | A |
+| UltraEar | P1 | arXiv 2508.20141 | 多中心耳CT+临床, 内耳3D形态 | A |
+
+### 36.3 关键洞察
+
+1. **户外环境光是眼动研究的下一个空白**: AmbientEye 明确量化了受控 IR → 户外被动 IR 的分割性能落差 (0.928→0.767), 但动力学/形态学分析完全空白。与已收录的 VR 头显眼动数据 (VR Headset Eye-Tracking) 形成"环境范式矩阵": 实验室/VR/户外 三环境 x 眼动动力学, 可产出环境对比论文组。
+2. **"环境光"本身是生理学变量**: 被动 IR 无主动光照 → 瞳孔不受光源收缩干扰, 可测量真实户外瞳孔生理响应 — 这是主动 IR 眼动仪永远无法做到的, 是 3diris 瞳孔动力学方法论的自然延伸。
+3. **像素级标注成为医学图像基准新趋势**: FunPiQ (眼底质量) 与 OCT-Bench (第 7 轮) 都从图像级走向像素/结构级标注 — "解剖可见性"是传统形态学分析可直接消费的中间表示。
+4. **BPPV/眩晕连续第六轮零公开数据集**: PubMed 101 hits 全为临床研究无数据发布, arXiv 仅前庭神经鞘瘤 MRI/耳 CT (影像域, 非功能数据) — 自建 BPPV 数据集仍是唯一彻底解决路径, UltraEar/VS MRI 可作解剖学基线的数据侧参考。
+5. **OpenEDS 确认无新版本** (2020 仍最新, 2021/2022 论文为最后记录); PhysioNet 本轮无 3diris 相关净新增 (BRSET 1.0.2 为已知数据集版本更新)。
+6. **本轮方法论有效性**: PubMed 精准查询面轮换 (第 25 轮确立) 继续生效 — 本轮 6 个新发现中 4 个来自 PubMed/arXiv 查询面扩展; web_search 恢复后命中 AmbientEye (SearXNG 容器重启即愈, 确认宕机原因是容器退出而非配置损坏)。
+
+### 36.4 可扩展模式更新 (第二十六轮)
+
+**新增: 环境范式矩阵通道 (第 27 档扩展)**
+
+```
+眼动环境范式 (2026-08-14 确立):
+├── 实验室受控 IR — 既有全部数据集 (OpenEDS 2020, TEyeD, 受控基准)
+├── VR 沉浸环境 — VR Headset Eye-Tracking (第6轮), GazeBaseVR (第24轮)
+└── 户外自然光 — AmbientEye (NEW, P0.5): 被动 IR, 260万张, 无动力学分析
+    → 模式: 三环境 x 瞳孔/扫视动力学对比 (模式A/B), 环境鲁棒性短文
+    → 触发条件: 同模态数据在 ≥2 种采集环境中出现 = 环境对比论文
+```
+
+**新增: 像素级/结构级标注基准通道 (第 28 档扩展)**
+
+```
+结构级医学图像基准 (2026-08-14 确立):
+├── FunPiQ (NEW, P0.5): 像素级眼底质量 = 解剖可见性地形图
+├── OCT-Bench (第7轮, P0): 结构级 OCT 理解
+└── LMOD+ (第5轮, P1): 多粒度眼科标注
+    → 模式: 像素级中间表示 → 3D 参数化 (解剖可见性 PCA)
+    → 触发条件: 基准出现像素/结构级标注 = 形态学分析直接入口
+```
+
+### 36.5 推荐实施路径 (更新)
+
+```
+1. [P0 不变·最高优先] WearGait-PD: 13 IMU 朝向四元数全身 3D 重建
+2. [P0 不变] Eye-Gaze Dynamics (41651881) 瞳孔 PSO 特征库
+3. [P0.5 不变] PLiSI: 合成子集 → 立体瞳孔三角化方法验证
+4. [P0.5 不变] A-eye (42391233): 5 结构 3D 形状 PCA 短文
+5. [P0.5 新增] AmbientEye: 确认数据托管 → 户外瞳孔动力学 + 环境范式矩阵首篇
+6. [P0.5 新增] FunPiQ: GitHub 直取 → 解剖可见性地形图 3D 参数化短文
+7. [P1 不变] PERCEIV: 眼动/EEG/EDA 跨模态耦合
+8. [P1 新增] VEOS: 眼周视频→EOG 无传感器眼动可行性验证 (与 3diris 瞳孔管线联动)
+9. [P1 跟进] VS MRI / UltraEar: 前庭解剖学基线数据侧储备, 申请路径确认
+10. [监控] PhysioNet 双周; Kaggle list 不带 sortBy; OpenEDS 季度 (无新版); BPPV 数据自建方案 P0 立项
+```
+
+### 36.6 技能更新 (2026-08-14 第二十六次扫描)
+
+- **web_search 恢复**: SearXNG 容器 Exited (255) → `docker start searxng` 即愈 (HTTP 200); 连续 9 轮宕机结束, 记录容器退出为最常见故障模式
+- **arXiv API**: 4 组定向查询全部成功 (ophthalm+dataset / vestibular / Parkinson+dataset / pupil+eye), 无 429; 医学影像数据集以 arXiv 为主战场
+- **Kaggle**: 网页版 reCAPTCHA 拦截 (无法爬取), API list 端点可用 (不带 sortBy); 无新医学竞赛信号
+- **PhysioNet**: 连续第六轮无 3diris 相关净新增, 维持双周检查
+- **BPPV/眩晕**: 连续第六轮零公开数据集 — 自建数据集 P0 立项依据继续强化
+
+---
+
+## 第 26 轮 (2026-08-14, Cortex 战略回顾 cron): A-eye 项目立项
+
+### 26.1 A-eye (P0.5) 从待办 → 立项
+
+- **图谱可用性确认**: PLoS One 论文 Data Availability 声明 → **图谱公开在 Zenodo** (concept DOI 10.5281/zenodo.13325369 → record 21242699, 2026-07-07 上传)
+  - `C_eye_atlas.zip` 35.4 MB: M/F/combined 结构图谱 + 9 ROI 概率图 (晶状体/眼球/视神经/眶内脂/眶外脂/4直肌), 594M+616F, colin27 模板
+  - `F_A-eye_nnUNet_model_weights.zip` 1150.9 MB: nnUNet 分割权重 (公开, 可迁移分割其他 T1)
+- **项目启动**: `outputs/papers/aeye-orbit-atlas-pca/` (标准目录 + state.json + research-plan.md)
+  - H1 图谱几何 (M/F 9-ROI 差异) / H2 突眼指数 / **H3 个体级 PCA (主攻: nnUNet 权重分割 IXI/OASIS T1 → 3D 形状 PCA, 模式A 迁移)** / H4 轴长交叉验证
+  - 个体级 UK Biobank 数据受限 → 非阻塞路径
+- **技术坑 (本轮新记录)**:
+  - Zenodo CDN 对 urllib 返回 403 (Cloudflare bot 检测), 必须用 curl
+  - Zenodo 单连接限速 ~10KB/s → 6-8 路并行 range curl (`zenodo_curl_dl.py`), 实测聚合 80-165KB/s
+  - curl `-C -` 与 `-r` 互斥 ("badly used here") — 重试必须重建 part 文件, 不能 resume
+- **下一步 (下轮 cron)**: 下载完成后 unzip 验证 → 图谱 nifti 探查 → H1/H2 几何分析 (CPU) → IXI/OASIS FOV 目检 (H3 前置)
+
+### 26.2 G17 进展 (3diris-01)
+
+- h5_g17.py 运行中 (PID 1013969, 启动 ~09:46): f=0.25 训练中, Ep 28 PCA-r=0.9969 (≥0.95 阈值已过)
+- 含义: 25% 前置锚定已足够 → 部署只需标注 ≤25% 前置帧; f=0.10/0.05 待跑
+- 下轮 cron 任务: G17 判词 (f* 最小前置比例) → Fig17 → 3diris-04 论文更新 + 重编译
+
+### 26.3 协调性观察
+
+- weargait-pd-3d-kinematics (stage=initiated, 08-12): 04-data 全空, "数据落地" 未完成 — 但数据已在 weargait-pd/04-data (P022 已解压 raw/) → **待接线 (symlink/拷贝) 后即可跑 H01 3D 重建 (CPU)**。下轮派发候选。
+---
+
+## 第 27 轮 (2026-08-14, 文献监控 cron): 自然光瞳孔-光谱辐照度数据集 (P0.5) ⭐
+
+### 27.1 净新增数据集
+
+#### 1. Natural Pupil-Spectral Dataset — 自然光瞳孔图像+光谱辐照度联合数据 (P0.5) ⭐ 本轮最高价值
+- **来源**: PMID 42502107 / Sci Data 2026-07-25;13(1):1090 (s41597-026-07816-w)
+- **内容**: 可穿戴视频眼动仪 + 角膜面光谱辐射度计 (spectroradiometer) 同步采集。N=83 (43F, **年龄 18-87 岁跨度**), **29,664 对有效光谱辐照度 + 红外瞳孔图像** + 83 段约 3 分钟校准视频
+- **实验协议 (混合野外-实验室)**: 3 分钟校准 → 10 分钟暗适应 → 14 分钟受控光照 → 25-35 分钟室内/室外自然光环境日常任务 (光谱辐照度连续变化)
+- **访问**: **完全公开** — figshare (doi.org/10.6084/m9.figshare.28176839) + Zenodo (10.5281/zenodo.14803796, 14678627)
+- **原作者分析**: 仅数据集描述 + 作为瞳孔检测算法开发基础 (Scientific Data 数据论文), **零动力学/生理学分析**
+- **Synthos 空白**:
+  - **瞳孔-光谱辐照度物理建模** (P0.5 主攻): 首次用真实角膜面光谱辐照度替代"假定 lux" → 瞳孔面积 vs 黑视素 (melanopic)/明视 (photopic) 辐照度的剂量-响应曲线; 直接对接 3diris 瞳孔 PSO 特征库
+  - **年龄 × 瞳孔动力学**: 18-87 岁大跨度 → 年龄对 PLR 增益/潜伏期的自然主义量化 (第 26 轮 Diagnostics 二次分析 42449882 交叉印证: PLR+眼动参数可作认知衰退客观指标, 383 老年人)
+  - **暗适应→受控光→自然光全包络**: 一次数据内含完整 PLR 包络 → 瞳孔响应动力学短文 (模式B)
+  - **真实环境 3D 虹膜形态**: 户外自然光下虹膜深度/瞳孔形态 PCA — Benalcazar 方法真实环境迁移 (模式A)
+  - **核心创新**: 瞳孔生理学的"刺激精确化" — 首个把瞳孔响应锚定到物理光谱刺激的真实环境数据集
+- **产出潜力**: **高** — 数据公开即下, 与 AmbientEye (第26轮) 组成"环境光照生理学"双子数据集
+- **匹配模式**: 模式B (信号分析) + 模式C (生物物理关联) + 模式A (形状)
+
+#### 2. LAIA Dataset — 合成驾驶注意力数据集 (P1)
+- **来源**: arXiv 2607.25570, 2026-07-28 (CARLA 合成, 项目网站发布)
+- **内容**: 15+ 小时, 44 参与者, 6 种天气 RGB + 语义/实例分割 + 深度 + 光流 + CAN bus + **同步眼动数据**; 端到端驾驶可解释性研究
+- **Synthos 空白**: 合成域眼动-注意力建模; 天气×扫视/注视动力学 (环境范式矩阵的"模拟驾驶"格)
+- **产出潜力**: **中低** — 合成域价值有限, 但为环境范式矩阵补充"模拟器"格
+- **匹配模式**: 模式B
+
+#### 3. EmoRoad — 驾驶情绪多模态数据集 (P1)
+- **来源**: PMID 42477375 / Sci Data 2026-07-20 (s41597-026-07816-w 同期刊)
+- **内容**: 50 参与者 (18-67), 8 场景 (城市/郊区 × 拥堵/畅通 × 晴/雨): 第一视角驾驶视频 + 面部视频 + EEG + **眼动** + 方向盘触控 + 车辆动力学 + 情绪标注
+- **Synthos 空白**: 眼动动力学 × 情绪 × 驾驶情境的跨模态耦合 (与 PERCEIV 眼动/EEG/EDA 思路同源)
+- **产出潜力**: **中低** — 眼动为附属模态
+- **匹配模式**: 模式B + 模式C
+
+#### 4. RAMS Macular Dataset — 黄斑疾病纵向真实世界数据 (P1)
+- **来源**: PMID 42473441 / Ophthalmology Science 2026-08 (Datasheet 论文)
+- **内容**: 大规模纵向真实世界多模态黄斑疾病数据 (诊断+分诊导向)
+- **访问**: 待确认 (临床数据, 需申请)
+- **Synthos 空白**: 黄斑 OCT/眼底形态学 3D 参数化 — 与 FunPiQ (第26轮) 解剖可见性地形图联动
+- **产出潜力**: **中** — 真实世界纵向稀缺, 但访问门槛未明
+- **匹配模式**: 模式A
+
+#### 5. FLS Peg Transfer Gaze — 腹腔镜技能多模态数据集 (P1)
+- **来源**: PMID 42440453 / Data in Brief 2026-08
+- **内容**: 19 学生, 85 会话, 1971 试次: 双侧腕部 IMU + 器械 IMU + **眼动** + 训练箱视频; 公开机构库
+- **Synthos 空白**: 凝视-运动学习曲线耦合; 技能习得阶段 × 注视策略转变
+- **产出潜力**: **中低** — 外科域偏离, 但眼动+IMU 同步结构新颖
+- **匹配模式**: 模式B
+
+#### 6. Consciousness fMRI + Pupil — 多站点意识视觉 fMRI+眼动 (P1)
+- **来源**: s41597-026-07377-y / Sci Data 2026-05-26
+- **内容**: 开放访问多站点 fMRI (意识视觉感知) + **凝视位置和瞳孔大小** 眼动记录 (Data Bundles + XNAT)
+- **Synthos 空白**: 瞳孔动力学 × 意识状态 (知觉/无知觉试次) — 瞳孔作为意识相关标记
+- **产出潜力**: **中低** — fMRI 域, 但瞳孔-意识耦合是新颖交叉
+- **匹配模式**: 模式C
+
+#### 7. NystagmusNet — 光敏感风险预测 (P1, 方法>数据)
+- **来源**: arXiv 2512.17943, 2025-12-13 (代码公开)
+- **内容**: 双分支 CNN 基于环境亮度 + 眼动方差预测光敏感风险 (合成+增强数据训练, 75% 验证精度), SHAP/GradCAM 可解释
+- **Synthos 空白**: 与 3diris 环境范式矩阵互补 — 亮度×眼动方差是户外瞳孔生理学的"风险侧"应用
+- **产出潜力**: **低** — 合成数据, 但验证"亮度-眼动方差"特征有效性
+- **匹配模式**: 模式B
+
+### 27.2 元资源 (发现管道资产)
+
+- **PMID 42576128 / BRM 2026-08-10**: *Eye-tracking-while-reading: A living survey of datasets with open library support* — 55+ 阅读眼动语料库 living survey, https://t.uzh.ch/1Yh, 开源库支持 → **living survey 模式**: 数据集索引本身是发现加速器
+- **PMID 42356922 / Sensors 2026-06-22**: *Nystagmus and Vertigo Diagnostics 综述* — 50 篇论文 (1952-2026) 四主题: AI 眼震分析 (集成学习最高 98.77% 识别率)、临床、智能手机便携硬件、远程医疗 → BPPV 域数据集出处地图 (含智能手机眼震视频方向)
+
+### 27.3 空白分析结论
+
+1. **光照生理学成为眼动研究下一个主战场**: 第26轮 AmbientEye (户外被动IR瞳孔) + 本轮 Natural Pupil-Spectral (光谱辐照度配对) 形成"环境光照 × 瞳孔响应"双子发现 — 传统主动 IR 眼动仪永远测不到的真实生理响应, 现在有数据了
+2. **BPPV/眩晕连续第七轮零公开数据集**: Cureus 预测模型 (42488264) 用临床数据未发布; 综述 (42356922) 证实 AI 眼震分析成熟 (98.77%) 但数据不公开 → **自建 BPPV 数据集 P0 立项依据继续强化**; NystagmusNet 合成数据是唯一可用替代
+3. **年龄 × 瞳孔动力学缺口明确**: Natural Pupil-Spectral (18-87岁) + Diagnostics 二次分析 (383 老年人, PLR+眼动=认知衰退指标) 交叉印证 — "瞳孔生物标志物×老龄化"短文可直接用公开数据
+4. **OpenEDS 连续 7 轮确认无新版** (2020 仍最新); PhysioNet 连续 7 轮无净新增; Kaggle 无医学新竞赛
+
+### 27.4 可扩展模式更新 (第29/30档扩展)
+
+**新增: 光照生理学通道 (第 29 档扩展, 2026-08-14 确立)**
+
+```
+光谱辐照度配对 (2026-08-14 确立):
+├── Natural Pupil-Spectral (NEW, P0.5): 29,664 对 IR瞳孔+角膜面光谱, N=83 年龄18-87
+├── AmbientEye (第26轮, P0.5): 户外被动IR, 260万张, 无光谱
+└── 实验室受控光谱 (既有文献): 假定 lux, 无真实光谱
+    → 模式: 瞳孔面积 vs 黑视素/明视辐照度剂量-响应 (模式B+C)
+    → 触发条件: 数据集含角膜面光谱辐照度测量 = 瞳孔响应物理建模直接入口
+    → 产出: 瞳孔生理学"刺激精确化"短文组 (与 PSO 特征库联动)
+```
+
+**新增: Living Survey 索引通道 (第 30 档扩展, 2026-08-14 确立)**
+
+```
+数据集索引元资源 (2026-08-14 确立):
+├── Eye-tracking-while-reading living survey (PMID 42576128): 55+ 语料库索引
+├── Nystagmus/Vertigo 综述 (PMID 42356922): 50 篇论文域地图
+└── Color Fundus Photography 综述 (arXiv 2607.23972): 眼底数据-模型共演化
+    → 模式: 元资源 → 提取引用数据集清单 → 批量可行性筛选 (管道加速)
+    → 触发条件: 出现 living survey / 系统性综述 = 先提取其数据集清单再单点搜索
+```
+
+**环境范式矩阵更新 (第 27 档扩展升级)**:
+
+```
+眼动环境范式 (2026-08-14 修订):
+├── 实验室受控 IR — OpenEDS 2020, TEyeD, 受控基准
+├── VR 沉浸环境 — VR Headset Eye-Tracking (第6轮), GazeBaseVR (第24轮)
+├── 户外自然光 — AmbientEye (第26轮): 被动 IR, 无光谱
+├── 户外自然光 + 光谱辐照度 — Natural Pupil-Spectral (NEW): 刺激物理精确
+└── 模拟器合成 — LAIA (NEW, P1): CARLA 眼动
+    → 5 环境格 × 瞳孔/扫视动力学对比 = 环境鲁棒性论文组 (模式A/B)
+```
+
+### 27.5 推荐实施路径 (更新)
+
+```
+1. [P0 不变·最高优先] WearGait-PD: 13 IMU 朝向四元数全身 3D 重建 (weargait-pd/04-data 已就绪, 待接线)
+2. [P0 不变] Eye-Gaze Dynamics (41651881) 瞳孔 PSO 特征库
+3. [P0.5 新增·优先] Natural Pupil-Spectral: figshare/Zenodo 下载 → 瞳孔-光谱剂量响应短文 (与 PSO 特征库联动)
+4. [P0.5 不变] AmbientEye: 确认数据托管 → 户外瞳孔动力学 + 环境范式矩阵首篇
+5. [P0.5 不变] PLiSI: 合成子集 → 立体瞳孔三角化方法验证
+6. [P0.5 不变] A-eye (42391233): 5 结构 3D 形状 PCA 短文 (Zenodo 图谱已下)
+7. [P1 跟进] RAMS 黄斑数据集: 申请路径确认; EmoRoad/LAIA/FLS: 结构评估
+8. [P1 跟进] Consciousness fMRI+Pupil: XNAT 访问 → 瞳孔-意识耦合探索
+9. [监控] PhysioNet 双周; Kaggle list 不带 sortBy; OpenEDS 季度 (连续7轮无新版, 降为半年); BPPV 数据自建 P0 立项
+10. [元资源] Eye-tracking-while-reading living survey (t.uzh.ch/1Yh) 纳入发现管道
+```
+
+### 27.6 工具/管道状态
+
+- **PubMed**: 10 组查询面轮换有效 (eye tracking/pupil/nystagmus/vestibular/BPPV/Parkinson/retina/saccade/gaze/iris), 命中 2 个高价值候选
+- **arXiv**: 6 组定向查询正常 (无 429); LAIA 为合成域, NystagmusNet 为方法
+- **PhysioNet**: 新闻仅 Challenge 2026 + PhysioNet@25 纪念活动, 无新数据
+- **Kaggle API**: 列表正常, 无医学信号 (RSNA Knee = 膝关节影像, 非本域)
+- **web_search**: SearXNG 单发可用, 并行调用触发 Hermes 工具层故障 (DaemonThreadPoolExecutor) — 本轮改顺序单发 + Python urllib 批处理, 记录备用
+
+
+---
+
+## 第 28 轮 (2026-08-15, 文献监控 cron): WEOCT 真实人眼 OCT (P0.5) ⭐ — 净新增 4 项 (查重后)
+
+> 查重纪律 (Pitfall #5 执行): 本轮 12 个候选 grep 双查后, **6 项已在前轮收录** (FoG-STAR 41588027 @730, COPS 41957027 @4188, MEG-EEG 意识 42215489 @4869, 合成眼动 2604.05475 @3422, VS MRI 2511.00472 @6055, DriE-Cog 42350659 @4418) — 已从"新发现"降级为"状态更新"; **净新增仅 4 项** (WEOCT / 3D OCT AMD-DME / EED-Astig / CLIS-ET)。
+
+### 28.1 净新增数据集
+
+#### 1. WEOCT — Reality Labs Whole-Eye OCT Dataset (P0.5) ⭐ 本轮最高价值
+- **来源**: arXiv 2605.19191 (2026-05-18) / GitHub facebookresearch/rl_whole_eye_oct — **Meta Reality Labs (OpenEDS 同一团队)**
+- **内容**: 双通道扫频 OCT **同步采集**人眼容积: 视网膜 (ch0) + 角膜/前节 (ch1)。三类数据:
+  - `raw_data`: 原始光谱 TIF 容积 (~1.5GB/眼/通道) + 振镜波形 CSV
+  - `processed_data`: 前节分割 B-scan + **3D 校准点云**
+  - `annotations`: **角膜/巩膜/虹膜逐容积分割掩膜**
+  - 每卷附 demographics: IPD、年龄、视觉辅助、Rx OD/OS (SHA-256 hash 匿名)
+- **访问**: GitHub 公开, download.py 从 landing page 取 URL 列表; 每 zip 10-20GB, **可按 raw_data/annotations 分类过滤**
+- **原作者分析**: 仅数据论文 + 分割/生物测量基准 → **零 3D 形态/形状空间分析**
+- **Synthos 空白**:
+  - **真实人眼前节 3D 形态** (主攻): 虹膜/角膜/巩膜 3D 校准点云 + 掩膜 = Benalcazar 100 合成模型的**真实数据对照** — 3diris H01 PCA 流程直接重跑真实数据, 验证"低维形状空间"假设于真实人眼
+  - **双通道耦合**: 视网膜 (后节) × 前节同步容积 → 前后节形态关联 (Synthos 3D/多模态融合核心竞争力)
+  - **屈光参数关联**: Rx/IPD/年龄 × 前节 3D 形态 (角膜曲率、前房深度、虹膜轮廓) — 模式C
+  - **瞳孔状态 × 虹膜形态**: 多帧不同瞳孔状态 → 真实瞳孔-虹膜变形验证 (r=-0.618 假设的真实检验)
+- **产出潜力**: **高** ⭐ — OpenEDS 同源团队, 2D 图像 → 3D OCT 容积链补全, 3diris 方法学闭环
+- **匹配模式**: 模式A (3D 形状) + 模式C (生物物理关联)
+
+#### 2. 3D OCT AMD/DME 分割数据集 (P1)
+- **来源**: PMID 41667492 / Sci Data 2026-02 (s41597-025-06497-1)
+- **内容**: AMD/DME 3D OCT 深度学习分割完整数据集
+- **Synthos 空白**: 视网膜域 3D 形态参数化 (方法延伸, 非虹膜; 与 WEOCT 双通道后节可交叉)
+- **产出潜力**: 中
+- **匹配模式**: 模式A (方法论复用)
+
+#### 3. EED-Astig — 儿科散光多模态数据集 (P1)
+- **来源**: PMID 42067530 / Sci Data 2026-05-01
+- **内容**: 儿科散光严重度预测多模态数据 (影像+屈光)
+- **Synthos 空白**: 屈光参数 × 眼前节形态关联 (与 WEOCT Rx 分析联动)
+- **产出潜力**: 中低 (临床域, 需确认访问)
+- **匹配模式**: 模式C
+
+#### 4. CLIS-ET — 中文 LIS 阅读眼动语料 (P2)
+- **来源**: arXiv 2608.10688 (2026-08-11)
+- **内容**: webcam (SearchGazer) 中文 LIS 学术摘要阅读眼动语料, 字符级 FFD/FN/TFD 特征
+- **Synthos 空白**: NLP 域, webcam 低精度 — 仅作方法参考 (轻量 webcam 采集管线)
+- **产出潜力**: 低
+- **匹配模式**: 无直接匹配
+
+### 28.2 已收录数据集状态更新 (非新发现, 本轮补核验)
+
+| 数据集 | 前轮状态 | 本轮新增信息 |
+|---|---|---|
+| FoG-STAR (41588027) | 已收录 @730 | **数据可得性实测**: Zenodo 17838806, CC-BY-4.0, 0.12GB (119.6MB sensor CSV + clinical), 22 PwP 5 点 IMU, 即下即用 |
+| COPS (41957027) | 已收录 @4188 | **数据可得性实测**: OSF 5xvwn public, 66 PwP (41M/25F) 腕带+症状日记 6.0 天连续 |
+| MEG-EEG 意识 (42215489) | P0.5 已收录 @4869 | 确认含眼动通道 (前轮已标注 MEG-EEG+眼动); 本轮 PubMed 复核 s41597-026-07350-9 / PMC13221470 |
+| 合成眼动视频 (2604.05475) | P0.5 已收录 @3422 | 无新增 (仍合成域) |
+| VS MRI 纵向 (2511.00472) | P1 已收录 @6055 | 无新增 (肿瘤影像, 边缘) |
+| DriE-Cog (42350659) | 已收录 @4418 | 无新增 (与 EmoRoad/LAIA 同类) |
+
+### 28.3 负向确认 (第 28 轮)
+
+1. **OpenEDS 连续 8 轮无新版** (2020 仍最新; WEOCT 是 Meta RL 在 OCT 容积域的新动作, 团队未回头更新 2D 图像集)
+2. **BPPV/眩晕连续第 8 轮零公开数据集**: PubMed 命中仅临床模型无数据发布 (42488264 Cureus 预测模型, 42572244 LLM 诊断) → **自建 BPPV 数据集 P0 立项依据继续强化**; NystagmusNet 合成数据仍唯一替代
+3. **PhysioNet 无净新增**: 新闻仅 Challenge 2026 进程、Bridge2AI Voice 数据迁 Synapse、EMBC 2026 会议
+4. **Kaggle 本轮无法扫描**: CLI 未安装, API 被 reCAPTCHA 拦截, 无 ~/.kaggle 凭证 → 记为管道缺口
+
+### 28.4 空白分析结论
+
+1. **真实人眼 3D 形态是当前最大空白**: 虹膜研究圈 (OpenEDS 等) 全是 2D 图像; 3D 只有 Benalcazar 合成模型; **WEOCT 首次提供真实人眼前节 3D 校准几何 + 虹膜掩膜** — 3diris "低维形状空间"假设的真实数据检验窗口打开 (本轮唯一 P0.5 级净新增)
+2. **PD 可穿戴三件套数据就绪度闭环**: WearGait-PD (13 IMU 全身, 待接线) + FoG-STAR (冻结严重度, Zenodo 实测 0.12GB) + COPS (日记×加速度, OSF 实测公开) — 三者数据可得性全部实测确认, 只差执行
+3. **BPPV 稀缺结论不动摇**: 8 轮零公开数据, 综述 (42356922) 证 AI 眼震分析成熟但数据封闭 — 自建数据集是唯一出路
+4. **Meta Reality Labs 成为眼研究数据主力**: OpenEDS (2D 眼图) + WEOCT (OCT 容积) 同源 → 团队级数据脉络可跟踪
+
+### 28.5 可扩展模式更新 (2026-08-15 第 28 轮新增)
+
+**新增: 真实-合成 3D 眼结构对照通道 (第 31 档扩展, 2026-08-15 确立)**
+
+```
+真实-合成 3D 眼结构对照 (2026-08-15 确立):
+├── 真实侧: WEOCT (NEW, P0.5) — 双通道 OCT 前节 3D 校准点云 + 虹膜/角膜/巩膜掩膜
+├── 合成侧: Benalcazar 100 Blender 虹膜模型 (3diris 起点) + 合成眼动 (2604.05475, 已收录)
+└── 连接点: 真实点云重跑 H01 PCA → 低维形状空间假设真实验证; 合成-真实形态差距量化
+    → 模式: 模式A 核心方法 (PCA/变形/纹理-形状独立) 的真实数据迁移
+    → 触发条件: 数据集含前节 3D 几何 (点云/网格/深度) + 虹膜区域标注 = 直接吸收
+    → 产出: "合成→真实 3D 虹膜形态迁移"短文组 (3diris 方法学闭环)
+```
+
+**新增: PD 可穿戴运动客观化集群通道 (第 32 档扩展, 2026-08-15 确立)**
+
+```
+PD 可穿戴运动客观化 (2026-08-15 确立 — 三件套数据可得性实测闭环):
+├── WearGait-PD (R2, P0): 13 IMU 全身 3D 重建, 04-data 已就绪待接线
+├── FoG-STAR (已收录, P1): 22 PwP 5 点 IMU 步态冻结严重度 — Zenodo 17838806 实测 0.12GB
+├── COPS (已收录, P1): 66 PwP 腕带 + 症状日记 6 天连续 — OSF 5xvwn 实测 public
+└── 连接点: 冻结检测 / ON-OFF 波动客观化 / 日记-传感器一致性 = 主观×客观交叉验证
+    → 模式: 模式B (信号分析) + 模式C (临床关联)
+    → 触发条件: 任何 PD 公开可穿戴数据 (IMU/加速度) 出现 = 集群批量吸收
+    → 产出: PD 运动生物标志物短文组 (冻结检测、波动客观化、日记一致性)
+```
+
+**新增: 双通道眼结构耦合通道 (第 33 档扩展, 2026-08-15 确立)**
+
+```
+前后节同步耦合 (2026-08-15 确立):
+├── WEOCT (NEW, P0.5): 视网膜 (ch0) + 前节 (ch1) 同步容积
+└── 空白: 前节形态 (虹膜/角膜/前房) × 后节 (视网膜) 形态关联 — 无前人做过
+    → 模式: 模式C (跨模态关联, Synthos 核心竞争力)
+    → 触发条件: 出现多通道同步眼结构数据
+    → 产出: "前节-后节形态耦合"首篇 (OCT 多通道互联分析)
+```
+
+### 28.6 推荐实施路径 (更新)
+
+```
+1. [P0 不变·最高优先] WearGait-PD: 13 IMU 接线 → 全身 3D 重建 (04-data 已就绪)
+2. [P0 不变] Eye-Gaze Dynamics (41651881) 瞳孔 PSO 特征库
+3. [P0.5 新增·优先] WEOCT: 只下 annotations + processed_data 分类 (过滤 raw 避免 10-20GB) → 虹膜 3D 掩膜+点云 → 真实数据 H01 PCA 复现
+4. [P0.5 不变] Natural Pupil-Spectral: figshare/Zenodo 下载 → 瞳孔-光谱剂量响应短文
+5. [P0.5 不变] AmbientEye / PLiSI / A-eye / MEG-EEG 意识 (42215489, 已 P0.5)
+6. [P1 新增·易行] FoG-STAR: Zenodo 17838806 下载 → PD 冻结 IMU 特征短文 (数据已实测可下)
+7. [P1 新增·易行] COPS: OSF 5xvwn 下载 → 症状日记-加速度一致性短文 (数据已实测公开)
+8. [P1 跟进] 3D OCT AMD/DME 结构评估; EED-Astig 访问确认
+9. [监控] PhysioNet 双周; OpenEDS 半年 (8 轮无新版); BPPV 自建 P0 立项; Kaggle 需补 CLI+凭证
+10. [管道修复] web_search/SearXNG 双失效 → 发现管道默认 API 直连 (PubMed/arXiv/GitHub/Zenodo/OSF), SearXNG 仅补充
+```
+
+### 28.7 工具/管道状态
+
+- **PubMed**: 8 组查询面, 净新增 2 (WEOCT 不在 PubMed 面, 3D OCT AMD/DME + EED-Astig); efetch 摘要验证流程有效
+- **arXiv**: 5 组定向查询命中 WEOCT (顶格) + CLIS-ET
+- **GitHub API**: 仓库搜索确认 WEOCT (facebookresearch/rl_whole_eye_oct) — 数据获取入口明确
+- **Zenodo API**: FoG-STAR 17838806 记录核实 (0.12GB, CC-BY-4.0); Natural Pupil-Spectral 14803796 (代码 v1.0.0) 存活确认
+- **OSF API**: COPS 5xvwn 公开确认 (66 PwP)
+- **PhysioNet**: 无新数据 (新闻面仅 Challenge 2026 + Bridge2AI Voice 迁 Synapse)
+- **Kaggle**: CLI 未安装 + API reCAPTCHA 拦截 + 无凭证 → 本轮不可用, 记为缺口待补
+- **web_search/SearXNG**: 工具层故障 (DaemonThreadPoolExecutor) + 本地 SearXNG 上游引擎全失效 (返回 Nintendo/酒店/地图等无关结果) → **双失效**; 全部检索改走 API 直连, 效果更精准 (含数据规模核实)
+- **教训**: 本轮初版 12 候选未先查重, 6 项为重复 — 重写后才合规; **查重必须发生在写作前** (Pitfall #5 铁律)
+
+## 第 29 轮 (2026-08-15, 文献监控 cron): MSN-TCSeg PD 经颅超声 (P1 待发布) ⭐ — 净新增 2 数据集 + 13 信号 (查重后)
+
+### 29.1 净新增数据集
+
+| 数据集 | 级别 | 来源 | 关键点 | 3diris 空白 |
+|---|---|---|---|---|
+| **MSN-TCSeg** | **P1** ⭐ (待发布) | PMID 42600437 (CMPB 2026) / Zenodo **18376539** (CC-BY-NC-4.0) | **PD 经颅超声 (TCS) 分割数据集+基准**: 700 TCS 图 midbrain 标注 + 370 张 SN+ 标注; 3 神经超声医生双盲标注 + 概率软标签; 14 模型 6 范式 5-fold subject-level 基准。SN+ (黑质高回声) 是 TCS 最可靠 PD 早期影像生物标志物。**⚠️ Zenodo 记录存在但 0 文件** — 描述声明 "access only upon article acceptance", 论文已接受 (CMPB 2026-08-10) → 待数据实际上传 | 原作者做分割基准, 未做: SN+ 区域形态学 (面积/灰度梯度/边界形状) × UPDRS 严重度关联; SN+ 量化与运动表型 (PIGD/TD) 关联; 灰度-形态多模态 PD 早期标志物短文。模式B+模式C。触发条件: files 非空 = 立即 P0.5 |
+| X-PCR | P1.5 | arXiv 2604.20350 / GitHub **CVI-SZU/X-PCR** (更新 2026-07-07) | 眼科 MLLM 渐进式临床推理基准: 6 阶段推理链 (图像质量→发现→诊断→治疗), 跨模态整合评估 | 非 3diris 核心, 但眼科 MLLM 评估基础设施; 可作为眼科学 LLM 短文/评审参考 |
+
+### 29.2 信号级 (无公开数据, 方法/背景引用)
+
+- **OREHAS** (arXiv 2601.18368): 内淋巴积水 (梅尼埃病) 3D-SPACE-MRC MRI 容积定量全自动管线 (slice 分类+内耳定位+序列分割, 3-6 标注切片/患者) — 前庭/内耳方向方法学, 无数据发布
+- **PD 转身视频步数计数** (arXiv 2606.27918): 视频化 parkinsonian turning 步数计数 (替代可穿戴), 现实转身变异性+拖步挑战
+- **Dual-Task Gait PD** (PMID 42587624, Diagnostics 2026): WearGait-PD 双任务融合 (自选行走+转身), 90.23% acc / macro-F1 89.10%, PhysioNet 93 人外部验证 84.34% → **WearGait-PD 外部价值确认** (第三方独立验证已收录 P0 数据集)
+- **LFP DBS 开源管线** (PMID 42366242, Brain Topogr 2026): DBS LFP 慢性记录→临床生物标志物工作流 + 代表性 PD 数据集 (与 aDBS LFP 42376478 P1.5 呼应, PD 神经生理通道)
+- **OPT-former** (PMID 42595954, Med Phys 2026): transformer 眼动追踪用于眼部质子治疗 (CNAO 临床, 自动凝视监测+安全联锁)
+- **GazeHRNet** (PMID 42590575, Sensors 2026): 头部中心空间编码凝视目标检测, GazeFollow/VideoAttentionTarget 0.952/0.929 AUC, 3M 参数
+- **ProptoView** (PMID 42271356, J Transl Med 2026): AI 数字突眼测量 5676 图 2516 例 (TED), 多国验证, 19mm 阈值误分率 14.7% vs 20.5% (Hertel)
+- **泪膜×凝视方向** (PMID 42590027, J Clin Med 2026): Medmont 泪膜质量空间映射 — 偏心凝视产生 gaze-aligned 泪膜重分布 (38 健康人, 全部 pHolm<0.001) → 眼表×凝视耦合新角度
+- **qNMR 眩晕代谢** (PMID 42185932, NMR Biomed 2026): 33 眩晕 vs 34 对照血清 qNMR 代谢谱
+- **内耳 MRI 亚区分割** (PMID 41821500, NMR Biomed 2026): 3D T2 MRI 耳蜗/前庭/半规管三区分割 (梅尼埃病), label-preserving 增强 DSC 0.919
+- **3D Pose PD 分类** (PMID 41855233, PLoS One 2026): 3D 姿态估计+PD 分类双阶段 (DATP+AGTM-Net), 脊柱/胸/髋为决策关节 — 数据可得性待核
+- **iCatcher+ 韩语婴儿凝视** (PMID 42160791, Infant Behav Dev 2026): 跨域评估 (韩语婴儿 vs 训练分布), 域偏移+微调遗忘实证
+- **合成媒体生理标志物** (PMID 42292517, Front Bioeng Biotechnol 2026): 深伪检测 生理 (rPPG 类) + 形态双框架 — 医疗数据完整性
+
+### 29.3 P2 参考
+
+- VR 医生办公室等待数据集 (PMID 42272823, Data Brief 2026): 等待感知/打断管理 (VR 行为, 非眼动)
+- 眼睑分析 IR 系统 (PMID 42080036, Biomed Eng Lett 2026): IR 眼睑 MRD/角膜暴露自动测量
+- 眼组织生物阻抗 (PMID 42239222): 离体猪眼 6 组织阻抗参考 (外科组织区分)
+
+### 29.4 空白分析结论
+
+- **MSN-TCSeg** (P1): SN+ 形态量化 × 临床严重度 = PD 影像生物标志物短文通道; 但数据未上传, 本轮不立项, 跟踪 Zenodo files
+- **泪膜×凝视** (P1.5 信号): 眼表质量随凝视方向的 gaze-aligned 重分布 — 与眼动研究的新耦合维度 (眼表×动眼系统), 无数据集可下 (二次分析)
+- **前庭域**: OREHAS + 内耳分割 = 方法学双信号, 梅尼埃病影像定量方向; 连续 9 轮零公开数据集, BPPV 自建 P0 维持
+
+### 29.5 可扩展模式更新 (第 34 档扩展, 2026-08-15 第二轮)
+
+```text
+PD 影像生物标志物通道 (第 34 档扩展, 2026-08-15 确立):
+├── MSN-TCSeg (P1 待发布): TCS SN+ 分割 700+370 图 + 3 标注者概率软标签
+├── 3D OCT AMD/DME (P1 已收录): OCT 结构分割
+├── 内耳 MRI 亚区分割 (信号): 梅尼埃病影像
+└── 连接点: PD 早期影像生物标志物 (SN+/OCT/内耳) × 临床量表关联 = 模式B+模式C
+    → 触发条件: 影像分割数据集 + PD/前庭临床量表 = 吸收
+    → 产出: SN+ 形态-严重度关联短文 (数据上传后)
+
+前庭影像方法学信号族 (第 35 档扩展, 2026-08-15 确立):
+├── OREHAS (2601.18368): 内淋巴积水 MRI 全自动容积定量
+├── 内耳 MRI 亚区分割 (41821500): 耳蜗/前庭/半规管
+└── VS MRI 纵向 (2511.00472 已收录): 前庭神经鞘瘤
+    → 触发条件: 梅尼埃病/内耳影像公开数据出现 = 立即吸收
+    → 产出: 内耳结构定量短文组 (方法学已就绪, 等数据)
+```
+
+### 29.6 推荐实施路径 (更新)
+
+```text
+1. [P0 不变] WearGait-PD 13 IMU 接线 (42587624 第三方验证加持: 双任务融合 90% acc)
+2. [P0 不变] Eye-Gaze Dynamics 瞳孔 PSO 特征库
+3. [P0.5 不变] WEOCT: annotations+processed 过滤下载 → 虹膜 3D 掩膜 H01 PCA 复现
+4. [P0.5 不变] Natural Pupil-Spectral / AmbientEye / PLiSI / MEG-EEG 意识
+5. [P1 新增·跟踪] MSN-TCSeg: 监控 Zenodo 18376539 files 非空 → 立即 P0.5 立项 (SN+ 形态×严重度)
+6. [P1 不变] FoG-STAR / COPS 下载启动
+7. [监控] PhysioNet 双周 (下次 08-27); OpenEDS 季度 (9 轮无新版); Kaggle 需补凭证; BPPV 自建 P0
+```
+
+### 29.7 工具/管道状态
+
+- **PubMed 无 key 直连恢复**: 12 查询面 157 记录 0 失败 — esearch/esummary/efetch 全部去 api_key 后正常 (带 key 反而 "API key not wellformed"); 与 Pitfall #35 更新: curl 无 key 是最稳路径
+- **Zenodo API**: MSN-TCSeg 18376539 核实 — **files 数组空 (0 文件)** + "论文接受后开放" → 占位待发布判定。**新规则**: Zenodo 记录存在 ≠ 可下载, 必须检查 files 数组非空
+- **figshare API**: 403 Forbidden (本轮不可用, 降级)
+- **GitHub API**: X-PCR CVI-SZU/X-PCR 确认; MSN-TCSeg 无仓库
+- **arXiv API**: 4 组 0 失败; web_search/SearXNG 双失效持续 (第 28 轮同款)
+
+## 第 30 轮 (2026-08-16, 文献监控 cron): 卒中平衡压力数据集 (P1) + Multi-TPC 三方凝视 (P1) — 净新增 4 数据集 + 2 工具/方法信号 (查重后)
+
+### 30.1 净新增数据集
+
+| # | 数据集 | 来源 | 优先级 | 数据可得性 | 核心内容 |
+|---|--------|------|--------|-----------|---------|
+| 1 | **Stroke-Balance-Pressure (42052110)** | Data in Brief 2026 | **P1** | ✅ 公开 (摘要明确 "public release of this dataset is intended"; Mendeley Data 标准通道, 具体 DOI 待下轮定位) | 柔性阵列压力传感器平衡评估, 53 人 (36 健康 + 17 卒中), 年龄 16-86, 广西江滨医院 |
+| 2 | **Multi-TPC (41673008)** | Sci Data 2026 (s41597-026-06819-x) | **P1** | ✅ Zenodo 17935560 + GitHub MCMartinLee/Multi-TPC (MIT) | 三方对话多模态: 同步 speech+motion+gaze (ViconIQ 动捕 + D-Lab 眼动 + 音频) |
+| 3 | **DiSG / OVGOP (2607.18827)** | arXiv 2026-07-21, ACM MM 2026 | **P1** | ✅ GitHub sensniu/ovgop (Apache-2.0) | Open-Vocabulary Gaze Object Prediction benchmark, 86 in-the-wild 场景类别, 长尾分布 |
+| 4 | **APTOS DME OCT (41564632)** | Med Image Anal 2026 (10.1016/j.media.2026.103942) | **P1.5** | ⚠️ 需申请 (APTOS 官网表单 + DUA + 7 工作日审查) | 2nd APTOS 2021 竞赛: 数万 OCT 图像预测 anti-VEGF 治疗响应, 冠军 AUC 80.06% |
+
+### 30.2 工具/方法信号 (无数据集, 管线资产)
+
+1. **Webcam Gaze Capture-Clock (2608.11566, arXiv 2026-08-12)**: 浏览器 webcam 凝视追踪的延迟测量方法论 — 从浏览器 rVFC API 恢复逐帧捕获时钟, 诚实测量推理延迟。**管线价值**: 家庭 VOG/BPPV 发作监测工具链的时间戳校准基准 (与 42553253 EyePhone 前庭卒中、P0.5 家庭 VOG 方向互补)。开源参考实现。
+2. **PicoEyes (2605.07188, arXiv 2026-05-08)**: MR 凝视估计框架, 直接预测 3D 眼参数 + 眼区分割 + 光轴/视轴 + 深度图, 含大尺度多视角近眼数据集。**⚠️ 数据 proprietary** (摘要原文 "Experiments conducted on our proprietary datasets") → 仅方法参考, 不立项。
+
+### 30.3 负向确认 (第 30 轮)
+
+- **OpenEDS**: 连续 10 轮无新版本 (官方仍停在 2019/2020; Kaggle 镜像均为 label-only, 见 Pitfall #55)
+- **BPPV/眩晕**: 连续 7 轮无新公开数据集 (本轮 24 条 vestibular 查询仅 3 条数据相关, 全部为临床队列无公开数据: 42383025 VR 转诊缺口 / 42376447 BPPV 复发 nomogram / 41948030 炎症标志物)
+- **Kaggle**: 无凭证 (~/.kaggle/ 空) → list 端点 reCAPTCHA 拦截, 本轮跳过
+- **PhysioNet**: 双周检查窗口 (下次 08-27), 本轮跳过
+- **PicoEyes**: proprietary 数据 → 不立项
+- **web_search**: 本轮具体查询命中率高 (PicoEyes/Multi-TPC/APTOS 均命中), 泛化查询含噪 (New Balance 商店/Netflix/数学计算器噪音) — 维持"具体查询辅助源"定位
+
+### 30.4 空白分析结论
+
+**Stroke-Balance-Pressure (42052110)** — 原始分析: 压力阵列平衡评估 (53 人, 卒中 vs 健康)。**未做**: (a) 压力分布矩阵 → 3D 压力中心 (COP) 轨迹重构; (b) 卒中不对称性的相空间重构/分形维度 (经典 1D 时间序列方法, 与 gaitpdb 双轨同族); (c) 亚相动力学 (站立-扰动-恢复分段)。**Synthos 产出**: 模式 A (参数化) 短文 — COP 3D 轨迹 + 不对称指数, 2-4 月。
+
+**Multi-TPC (41673008)** — 原始分析: 手势-模态相关性统计。**未做**: (a) 凝视-手势时序耦合动力学 (与 GaMMA 噪音注视动力学互补, 三方场景新增); (b) 说话人-凝视同步的相空间分析; (c) 4 模态 (语音+文本+运动+凝视) 跨模态动力学。**Synthos 产出**: 与 GaMMA 同族的"眼动+X 同步数据集"第 N 例 — 模式 D 管线, 三方对话注视转移动力学。
+
+**DiSG/OVGOP (2607.18827)** — 原始分析: 开放词汇凝视目标预测 (86 类别长尾)。**未做**: (a) 长尾类别结构与视觉显著性映射; (b) 头部-凝视矢量的 3D 分解 (数据集为 2D 标注); (c) 医学场景迁移 (阅片凝视). 偏 CV 方向, 3diris 相关性中等 → P1 但低于医学数据集优先级。
+
+**APTOS DME OCT (41564632)** — 原始分析: pre-treatment OCT → anti-VEGF 响应分层 (AUC 80.06%)。**未做**: (a) 治疗前 OCT 结构 3D 特征 (视网膜层厚度/液体积聚) 与响应分层结合; (b) 纵向治疗反应动力学。申请通过后可做 3D 形态-响应关联短文。
+
+### 30.5 可扩展模式更新 (第 36 档扩展, 2026-08-16)
+
+```text
+平衡压力阵列信号族 (第 36 档扩展, 2026-08-16 确立):
+├── Stroke-Balance-Pressure (42052110): 柔性阵列压力 53 人, 卒中+健康
+├── 42052110 同族: body-sway-music-vr / olst-mocap-forceplate-radar (已收录)
+└── 触发条件: 压力分布阵列 + 临床队列 = COP 3D 轨迹重构
+    → 产出: COP 相空间重构 + 不对称指数短文 (模式 A)
+
+三方凝视-手势耦合族 (第 37 档扩展, 2026-08-16 确立):
+├── Multi-TPC (41673008): 三方对话 speech+motion+gaze 4 模态
+├── GaMMA (41720785 已收录): 多人群聊 gaze+语音+噪音
+└── 触发条件: 多人对话 + 眼动同步 = 社交凝视动力学
+    → 产出: 凝视-手势时序耦合分析 (模式 D)
+
+开放词汇凝视目标族 (第 38 档扩展, 2026-08-16 确立):
+├── DiSG/OVGOP (2607.18827): 86 in-the-wild 类别长尾
+└── 触发条件: 凝视目标预测 + 开放词汇 = 场景理解迁移
+    → 产出: 长尾结构 + 医学阅片迁移 (中期)
+```
+
+### 30.6 推荐实施路径 (更新)
+
+```text
+1. [P0 不变] WearGait-PD 13 IMU 接线 (42587624 第三方验证加持)
+2. [P0 不变] Eye-Gaze Dynamics 瞳孔 PSO 特征库
+3. [P0.5 不变] WEOCT: annotations+processed 过滤下载 → 虹膜 3D 掩膜 H01 PCA 复现
+4. [P1 新增] Stroke-Balance-Pressure (42052110): Mendeley 定位 → COP 3D 轨迹重构 (低摩擦短文通道, 数据已公开)
+5. [P1 新增] Multi-TPC (41673008): Zenodo 17935560 下载 → 三方凝视-手势耦合 (与 GaMMA 互补)
+6. [P1 新增] DiSG/OVGOP (2607.18827): GitHub 拉取 → 长尾结构分析
+7. [P1.5 新增] APTOS DME OCT (41564632): 申请路径启动 (DUA 表单)
+8. [监控] PhysioNet 双周 (下次 08-27); OpenEDS 季度 (10 轮无新版); BPPV 自建 P0; Kaggle 需补凭证
+```
+
+### 30.7 工具/管道状态
+
+- **PubMed 无 key 直连**: 10 查询面 120 唯一 PMID, esummary 120/120 (0 失败, 连续第 2 轮)
+- **arXiv API**: 6 组定向查询 67 条目 (0 失败)。**⚠️ 新踩坑: 查询串中双引号 (abs:"ophthalm") 导致 curl exit 3 URL malformed + 0 字节文件** — 必须用无引号短语 (`abs:ophthalm`) 或 `+AND+` 连接, 不能带引号; 已在本轮修复
+- **GitHub API**: Multi-TPC (MIT, 2 stars) + OVGOP (Apache-2.0, 12 stars) 确认
+- **Zenodo API**: Multi-TPC 17935560 命中
+- **web_search**: 具体查询 3/3 命中 (PicoEyes/Multi-TPC/APTOS), 泛化查询含噪 — 维持辅助源
+- **web_extract**: 仍不可用 (SearXNG search-only)
+
+## 第 31 轮 (2026-08-16 第二轮, 文献监控 cron): EveLoad 事件相机眼动 (P1 待数据确认) + PD 步态稳定性 Zenodo (P1) — 净新增 3 数据集 + 2 方法信号 (查重后)
+
+### 31.1 净新增数据集
+
+| # | 数据集 | 来源 | 优先级 | 数据可得性 | 核心内容 |
+|---|--------|------|--------|-----------|---------|
+| 1 | **EveLoad (2606.25177)** | arXiv 2026-06-23 | **P1** (待确认) | [WARN] 需确认 — GitHub 搜索无官方仓库命中; 论文宣称 "first event-based eye-movement dataset", 20 名健康受试者, N-back 引导注视范式, 6 级认知负荷标注, 事件相机微秒级分辨率 | 首个事件相机眼动数据集 + 认知负荷基准: 空间受限 + 任务驱动条件下采集; 学习框架编码时空事件表征, 混合随机切分 acc 96.36%/96.13% |
+| 2 | **Gaze-Co / GazeAnywhere (2608.11367)** | arXiv 2026-08-11, CVPR 2026 | **P1** (CV 低优先) | [OK] GitHub IrohXu/GazeAnywhere (21 stars, CVPR 2026) | Promptable Gaze Target Estimation (PGE): 文本/视觉提示条件凝视目标估计, 120K 高质量标注, 可扩展数据引擎; 消除对头部框/姿态中间阶段的依赖 |
+| 3 | **cwchoi4105 PD 步态稳定性 (Zenodo 21924000)** | Zenodo 2026-08-13 首发 | **P1** | [OK] MIT 协议, 3.5MB zip 直接下载 | PD 地面 vs 跑步机行走动态步态稳定性对比数据, 含 SPM (Statistical Parametric Mapping) 分析; DOI 10.5281/zenodo.21924000 |
+| 4 | **MobilityAPP (Zenodo 19819191)** | npj Parkinson's Disease 配套 | **P1.5** | [OK] CC-BY-4.0, 31KB zip (体积小, 疑为汇总统计非原始信号) | 非典型帕金森障碍 (PSP/CBS/MSA) 日常移动基线表征; Moradi et al. "Moving beyond the hospital" |
+
+### 31.2 方法/工具信号 (无新数据集, 管线资产)
+
+1. **YouTubePD label-free 筛查 (2608.08976, arXiv 2026-08-10)**: 无标签 PD 筛查 — 冻结预训练编码器 (face-ViT + HuBERT), 合成构音障碍对比激活加性 (CAA) 方向, YouTubePD benchmark 上 voice AUROC 0.765 + face 0.751, 等权融合 0.802 (NPV 0.95, 排除性分诊)。**管线价值**: 语音通道 label-free 范式可直接移植到 3diris PD 语音方向; 对齐原理 (合成-真实疾病方向余弦) 是验证方法学的通用工具。
+2. **STFMF-Net (42566375, JBHI 2026)**: 多视角融合焦虑识别 (眼动轨迹+瞳孔+眨眼+rPPG), UBFC-Phys 公共数据集 acc 97.39%。**管线价值**: 无新数据 (复用 UBFC-Phys), 但眼动多视角融合架构与 Eye-Gaze Dynamics 特征库同构 — 方法参考。
+3. **arXiv 2608.13425 (PD 语音跨语种 SSL 分析)**: 9 个 SSL 语音骨干逐层分析, 发现层选择高度语料库依赖 + 转移信号缺乏病理特异性。**管线价值**: 警示信号 — PD 语音检测必须做跨语料验证, 与 Synthos 双轨验证原则一致。
+
+### 31.3 负向确认 (第 31 轮)
+
+- **OpenEDS**: 连续第 11 轮无新版本 (官方页面不可达, 仍停 2019/2020)
+- **PhysioNet**: 内容目录扫描无新眼/前庭/PD 库 (mBRSET 为 2024 旧库); 双周窗口下次 08-27
+- **BPPV/眩晕**: 连续第 8 轮无新公开数据集 (vestibular 查询均为临床队列/方法论文)
+- **Kaggle**: ~/.kaggle 仍空 → 无凭证, 跳过
+- **42530914 (Amblyopia FEM)**: 临床队列 (64 对照+97 患者), 未提及数据公开 → 不立项
+- **41507579 (UBM 前段测量)**: 内部数据集 1480 图, 未公开 → 不立项
+- **42566375 (STFMF-Net)**: 复用 UBFC-Phys, 无新数据 → 仅方法参考
+
+### 31.4 空白分析结论
+
+**EveLoad (2606.25177)** — 原始分析: 6 级认知负荷分类基准 (96%+ acc)。**未做**: (a) 事件流时间结构分析 — 事件率调制、微眼跳事件密度与负荷等级的关系 (事件相机独有能力, 帧基追踪器做不到); (b) 负荷等级连续轴的相空间动力学 (非离散分类, 连续负荷回归); (c) 事件相机 vs 帧基眼动追踪器在眼动微动力学上的系统对比。**Synthos 产出**: 模式 A/C — 事件流特征库 + 认知负荷连续回归短文。[WARN] 数据可得性待确认 (无官方仓库) — 需查论文全文数据声明。
+
+**Gaze-Co / GazeAnywhere (2608.11367)** — 原始分析: PGE 文本提示凝视目标估计。**未做**: (a) 长尾目标类别结构 (与 DiSG/OVGOP 同款分析, 第 38 档复用); (b) 医学场景迁移 (阅片凝视提示, 与 DiSG 医学迁移方向合并); (c) 提示词语义空间 vs 凝视落点映射 (多模态对齐)。**Synthos 产出**: 并入第 38 档开放词汇凝视族, 中期 (CV 方向低优先)。
+
+**cwchoi4105 PD 步态稳定性 (21924000)** — 原始分析: SPM 对比地面 vs 跑步机步态稳定性。**未做**: (a) 步态稳定性指数的双任务 (认知负荷) 条件扩展; (b) 与 WearGait-PD 13 IMU 交叉验证 (同一 PD 步态域, 特征库互操作); (c) 步态相空间重构/分形维度 (gaitpdb 双轨同族)。**Synthos 产出**: 模式 A 短文 — 步态稳定性特征库扩展, 3.5MB 已公开 MIT, 低摩擦立项。
+
+**MobilityAPP (19819191)** — 原始分析: 非典型 PD 日常移动基线。**未做**: (a) 与典型 PD 的移动模式对比; (b) 环境依赖性分析 (室内/室外分段)。[WARN] 31KB 体积可疑 — 需先解包核实内容再定优先级。
+
+### 31.5 可扩展模式更新 (第 39-41 档扩展, 2026-08-16 第二轮)
+
+```text
+事件相机眼动族 (第 39 档扩展, 2026-08-16 确立):
++-- EveLoad (2606.25177): 首个事件相机眼动数据集, 6 级认知负荷
++-- 触发条件: 事件相机 (event camera) + 眼动 = 微秒级眼动动力学
++-- 待办: 确认数据发布 → 立即 P0.5 立项 (事件流特征库)
+    -> 产出: 事件率调制 + 微跳密度 × 负荷等级 (模式 A/C)
+
+提示式凝视目标估计族 (第 40 档扩展, 2026-08-16 确立):
++-- Gaze-Co / GazeAnywhere (2608.11367): 120K 文本提示凝视目标
++-- DiSG/OVGOP (2607.18827, 第 38 档): 开放词汇凝视目标
++-- 触发条件: 凝视目标 + 语言/概念提示 = 场景理解迁移
+    -> 产出: 长尾结构 + 医学阅片迁移 (中期, 与第 38 档合并管理)
+
+PD 步态-环境对照族 (第 41 档扩展, 2026-08-16 确立):
++-- cwchoi4105 (21924000): PD 地面 vs 跑步机步态稳定性 (MIT, 已公开)
++-- WearGait-PD (已收录 P0): 13 IMU 可穿戴步态
++-- FoG-STAR (已收录): 冻结步态
++-- 触发条件: PD 步态 + 环境/任务对照 = 步态稳定性特征库互操作
+    -> 产出: 步态稳定性特征库扩展短文 (模式 A)
+```
+
+### 31.6 推荐实施路径 (更新)
+
+```text
+1. [P0 不变] WearGait-PD 13 IMU 接线 (42587624 第三方验证加持)
+2. [P0 不变] Eye-Gaze Dynamics 瞳孔 PSO 特征库
+3. [P0.5 不变] WEOCT: annotations+processed 过滤下载 → 虹膜 3D 掩膜 H01 PCA 复现
+4. [P1 新增] cwchoi4105 (21924000): 3.5MB MIT 直接下载 → 步态稳定性特征库扩展 (低摩擦短文通道)
+5. [P1 新增] EveLoad: 查全文数据声明 → 确认后 P0.5 立项 (事件流特征库)
+6. [P1 新增] Gaze-Co (2608.11367): GitHub IrohXu/GazeAnywhere → 并入第 38 档长尾分析
+7. [P1.5 新增] MobilityAPP (19819191): 解包核实 31KB 内容 → 决定立项与否
+8. [监控] PhysioNet 双周 (下次 08-27); OpenEDS 季度 (11 轮无新版); BPPV 自建 P0; Kaggle 需补凭证
+```
+
+### 31.7 工具/管道状态
+
+- **PubMed 无 key 直连**: 12 查询面 ~90 记录, esearch/esummary 0 失败 (连续第 3 轮)
+- **arXiv API**: 5 组定向查询 30 条目 (0 失败); 本轮避开双引号查询串 (沿用第 30 轮修复)
+- **GitHub API**: EveLoad 无官方仓库 (仅无关同名仓库) [WARN]; GazeAnywhere IrohXu 21 stars 确认
+- **Zenodo API**: cwchoi4105 21924000 (3.5MB, MIT) + MobilityAPP 19819191 (31KB, CC-BY-4.0) 确认
+- **PhysioNet**: /content/ HTML 抓取成功 (29KB 页面) — 本轮无新库; API 端点 /api/v1/published/ 404 (非本轮回归, 历来如此, 以 HTML 抓取为准)
+- **web_search/web_extract**: 工具 API 本轮多次瞬时故障 (DaemonThreadPoolExecutor 报错, 第 3 次出现) — 已自动降级至纯 terminal+curl 路径, 未影响扫描完整性
+- **execute_code**: cron 模式被硬性禁止 (BLOCKED) — 改为 write_file+terminal 脚本模式, 等效

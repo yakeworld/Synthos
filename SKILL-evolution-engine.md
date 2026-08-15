@@ -34,6 +34,22 @@
 ### 实际模式
 实际执行优化改变。通过 `--force` 参数启用。
 
+## dsh 驱动进化 (2026-08-16 新增)
+
+需要 LLM 推理能力的改进任务（语义化 IO_CONTRACT、验证清单生成、引用审计、吸收五维评估）
+通过 **dsh headless agent** 隔离执行，由 `skills/extended/dsh-self-evolution` 技能编排：
+
+```
+父 Agent: DIAGNOSE → 构造任务 prompt(4要素, ≤15文件) → VERIFY(独立重算) → RECORD
+    │
+    └─ bash -lc 'dsh --profile headless "<task>"'  →  隔离执行体
+```
+
+关键纪律：
+- dsh 必须经 `bash -lc` 调用（VLLM 凭据环境变量仅存于登录 shell 环境）
+- dsh 不 commit、不改 state/log — 提交由父 Agent 按 commit-scope-check 执行
+- 验证独立重算，声称≠实测 记 self_deception_risk（Cycle 186 自欺教训）
+
 ## 状态管理
 
 状态存储在 `evolution-state.json`：

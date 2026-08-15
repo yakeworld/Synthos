@@ -65,7 +65,7 @@ allowed-tools:
 **文献检索已统一为 `jabkit` 入口。** `literature.py`（本 skill）降级为 **PDF 下载与管线编排**的辅助工具。
 
 ```
-检索（搜索 BibTeX） → jabkit fetch（26 源，统一入口）
+检索（搜索 BibTeX） → jabkit-rs fetch（26 源，统一入口）
 下载（获取全文 PDF） → literature.py download（bban.top / Sci-Hub 等）
 管线（批量处理）     → literature.py pipeline
 ```
@@ -159,8 +159,8 @@ Sci-Hub 和 LibGen 在 `__all__` 中声明但未入 registry（需手动 `--sour
 
 ```bash
 # jabkit 检索（26 源，S2 已修复）
-jabkit fetch --provider=Crossref --query="topic" --porcelain
-jabkit fetch --provider=SemanticScholar --query="topic" --porcelain
+jabkit-rs fetch --provider=Crossref --query="topic" --porcelain
+jabkit-rs fetch --provider=SemanticScholar --query="topic" --porcelain
 ```
 
 **下载（已迁移至 knowledge-acquisition）：**

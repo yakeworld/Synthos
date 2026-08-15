@@ -5,7 +5,7 @@ version: 6.0.0
 entrypoint_type: cognitive-atom
 entrypoint_desc: 检索 → 下载
 signature: query/DOI -> bibliography + PDF
-description: 检索(jabkit) → 下载(doi-fetch)
+description: 检索(jabkit-rs) → 下载(doi-fetch)
 metadata:
   synthos:
     priority: P0
@@ -22,7 +22,7 @@ metadata:
     synthos_evidence_schema_ref: references/EVIDENCE_SCHEMA.md
     synthos_boundary_proof_ref: references/BOUNDARY.md
     synthos_change_log_ref: references/CHANGE_LOG.md
-    description: 检索(jabkit) → 下载(doi-fetch)
+    description: 检索(jabkit-rs) → 下载(doi-fetch)
     signature: query/DOI -> bibliography + PDF
 triggers:
 - 需要搜索学术文献
@@ -42,10 +42,10 @@ allowed-tools:
 
 两步闭环：**检索** → **下载**
 
-## 1. 检索（jabkit 统一入口）
+## 1. 检索（jabkit-rs 统一入口）
 
 ```bash
-jabkit fetch --provider=<源> --query="<关键词>" --porcelain
+jabkit-rs fetch --provider=<源> --query="<关键词>" --porcelain
 ```
 
 26 源。常用：
@@ -58,14 +58,20 @@ jabkit fetch --provider=<源> --query="<关键词>" --porcelain
 | arXiv | 预印本 | 最新研究 |
 | OpenAlex | 全学科 | 100 req/s |
 
-多源搜索：逐个调 `jabkit fetch` 后合并 BibTeX。
+多源搜索：逐个调 `jabkit-rs fetch` 后合并 BibTeX。
 
-### 本地 jabkit 说明
+### 本地 jabkit 说明（2026-08 实测更新）
+
+- **`jabkit`（Java wrapper）= 已弃用，勿用**：执行即挂起（打印 "Java 25 is
+  available…" 后无输出），2026-08-14 实测 261s 无结果。
+- **实际使用 `jabkit-rs`**（Rust 编译版，`~/.local/bin/jabkit-rs`，25s 内出 BibTeX）：
 
 ```bash
-# 我们的 jabkit = yakeworld/jabref fork 编译版，S2 已修复
-jabkit fetch --provider=SemanticScholar --query="iris recognition" --porcelain
+# 我们的 jabkit-rs = yakeworld/jabref fork 编译版，S2 已修复
+jabkit-rs fetch --provider=SemanticScholar --query="iris recognition" --porcelain
 ```
+
+输出格式为 BibTeX（`--porcelain` 仍可传，行为同旧版）。
 
 ### 回退方案（无 jabkit 环境）
 
@@ -156,7 +162,7 @@ scihub-link-scan.py --dir /media/yakeworld/sda2/Synthos/outputs/papers/
 检索 + 下载后，将 BibTeX 追加到文库：
 
 ```bash
-jabkit fetch --provider=SemanticScholar --query="iris" --porcelain |
+jabkit-rs fetch --provider=SemanticScholar --query="iris" --porcelain |
   lit-import --library ~/refs/iris.bib --download-pdf ./pdfs
 ```
 
