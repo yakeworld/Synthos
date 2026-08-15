@@ -1,0 +1,148 @@
+---
+name: falsification-validation
+description: 'Every test must produce:'
+signature: 'falsification-validation -> quality: synthetic skill for falsification validation'
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- session_search
+version: 1.0.0
+license: MIT
+metadata:
+  synthos:
+    atom_type: mechanical
+    description: 'Every test must produce:'
+    signature: 'falsification-validation -> quality: synthetic skill for falsification validation'
+    priority: P2
+    synthos_version: 1.0.0
+    synthos_skill_md_hash: auto
+    synthos_asserted_compliance: P2,P3
+    synthos_mechanical_atoms: ''
+---
+
+
+## IO_CONTRACT
+
+- **input**: 待证伪的技能假设 — 声明、适用场景、可检验条件
+- **input**: 真实任务输入（非 mock/synthetic）— 用于执行证伪测试
+- **output**: 证伪测试结果 — 每个测试含真实输入、期望输出、实际输出、通过/反证判定
+- **output**: 技能信任分级 — 0.9-1.0 继续使用 / 0.5-0.7 需重设计 / <0.5 替换技能
+
+|
+| 0.9-1.0 | High Trust | Continue using |
+| 0.7-0.9 | Medium Trust | Increase monitoring |
+| 0.5-0.7 | Low Trust | Redesign needed |
+| < 0.5 | Unreliable | Replace skill |
+
+## Evidence Requirements
+
+Every test must produce:
+
+1. **Input Data**: Real task input (not mock/synthetic)
+2. **Processing Log**: Intermediate results from skill execution
+3. **Output Results**: Final output from the skill
+4. **Comparison**: Analysis of how output matches expectations
+5. **Metric Calculations**: Quantitative quality scores
+6. **Evidence Storage**: All artifacts saved to `test-results/` directory
+
+## Anti-Patterns to Avoid
+
+- Testing with mock data instead of real data
+- Subjective "looks good" assessments without metrics
+- Only running tests that you expect to pass
+- Updating trust based on single data points
+- Ignoring failure evidence
+- Using inconsistent metric thresholds across tests
+- Not collecting evidence for tests that pass
+- Assuming skill works because it "seems right"
+
+## Related
+
+- Bayesian probability theory
+- Karl Popper's falsificationism
+- Scientific method and hypothesis testing
+- ML model evaluation and validation
+- A/B testing and experimental design
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: 输入参数/文件/路径是否完整且有效
+2. **过程验证**: 中间步骤/转换/计算是否正确
+3. **输出验证**: 输出格式/内容是否符合预期
+4. **边界验证**: 空输入、极大值、异常场景是否处理
+5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+
+## 约束规则 · RULES
+
+1. **输入约束**: 参数类型、范围、格式必须校验
+2. **输出约束**: 返回值结构、编码、命名必须一致
+3. **异常约束**: 错误信息必须包含上下文和恢复建议
+4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
+
+> 违反规则的操作视为不安全，必须拒绝或隔离。
+
+> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+# Falsification Validation---
+
+
+
+
+
+|
+| 0.9-1.0 | High Trust | Continue using |
+| 0.7-0.9 | Medium Trust | Increase monitoring |
+| 0.5-0.7 | Low Trust | Redesign needed |
+| < 0.5 | Unreliable | Replace skill |
+
+## Evidence Requirements
+
+Every test must produce:
+
+1. **Input Data**: Real task input (not mock/synthetic)
+2. **Processing Log**: Intermediate results from skill execution
+3. **Output Results**: Final output from the skill
+4. **Comparison**: Analysis of how output matches expectations
+5. **Metric Calculations**: Quantitative quality scores
+6. **Evidence Storage**: All artifacts saved to `test-results/` directory
+
+## Anti-Patterns to Avoid
+
+- Testing with mock data instead of real data
+- Subjective "looks good" assessments without metrics
+- Only running tests that you expect to pass
+- Updating trust based on single data points
+- Ignoring failure evidence
+- Using inconsistent metric thresholds across tests
+- Not collecting evidence for tests that pass
+- Assuming skill works because it "seems right"
+
+## Related
+
+- Bayesian probability theory
+- Karl Popper's falsificationism
+- Scientific method and hypothesis testing
+- ML model evaluation and validation
+- A/B testing and experimental design
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: 输入参数/文件/路径是否完整且有效
+2. **过程验证**: 中间步骤/转换/计算是否正确
+3. **输出验证**: 输出格式/内容是否符合预期
+4. **边界验证**: 空输入、极大值、异常场景是否处理
+5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+
+## 约束规则 · RULES
+
+1. **输入约束**: 参数类型、范围、格式必须校验
+2. **输出约束**: 返回值结构、编码、命名必须一致
+3. **异常约束**: 错误信息必须包含上下文和恢复建议
+4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
+
+> 违反规则的操作视为不安全，必须拒绝或隔离。
+
+> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+# Falsification Validation
