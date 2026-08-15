@@ -51,6 +51,16 @@ allowed-tools:
 
 > 多源求索，博观约取。
 
+## IO_CONTRACT
+
+- **input**: `query: str` — 检索主题词（`literature search` / `jabkit-rs fetch --query` 入口）
+- **input**: `--sources: list[str]` — 数据源选择（默认 5 源: semantic_scholar, pubmed, crossref, arxiv, pubscholar）
+- **input**: `SEMANTIC_SCHOLAR_API_KEY: env` — S2 单 key（必需，无轮换）
+- **input**: `papers.json: file` — `download --input` 所需的 `{"papers": [...]}` 列表文件
+- **output**: `candidate_records: json` — 多源聚合的候选论文元数据（title/authors/DOI/pdf_url）
+- **output**: `output_dir/*.pdf` — `literature.py pipeline` 下载并 `%PDF-` 魔数验证的全文 PDF
+- **output**: `diagnose_report: json` — `literature diagnose` 三阶段诊断（7 源检索 + DOI 解析 + 12 通道下载测试）
+
 ## 2026-07-20 清理说明
 
 **scripts/ 已删除**。旧检索脚本代码已迁移到独立 pip 包：

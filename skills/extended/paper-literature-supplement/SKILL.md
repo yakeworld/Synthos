@@ -14,6 +14,15 @@ chain:
 
 > 凡文必配30引。不足则补，缺源则索。
 
+## IO_CONTRACT
+
+- **input**: `paper_dir: path` — 论文目录（含 `paper.tex`，引用经 `.bbl` 或内联 `\bibitem` 解析）
+- **input**: `topic_queries: list[str]` — 按主题聚类的检索词（每方向 1 次，替代逐篇检索）
+- **input**: `MEDDATA_PASSWORD: env` — MedData 机构库 SSO 凭证（用于无 DOI 论文的 PMID 全文获取）
+- **output**: `papers/*.pdf` — 补齐至 30+ 篇引用对应的 PDF 全文（%PDF- 魔数验证，无 PDF 引用删除）
+- **output**: `paper.tex` / `.bbl` — 修正后的引用清单（DOI 已 Crossref/PubMed 人工核对）
+- **output**: `quality-gate result` — D8 引用完整性 ≥80%、D10a bib-tex 匹配 ≥90%、无 undefined citation 的质检结论
+
 ## 聚类检索优化（2026-07-11）
 
 替代逐篇检索。80 篇论文按主题聚为 5 个方向，每方向 1 次检索：
