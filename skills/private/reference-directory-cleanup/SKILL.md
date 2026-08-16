@@ -130,3 +130,10 @@ metadata:
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
+
+## 约束规则 · RULES
+1. **子目录 PDF 不自动对应**：`pdfs/` 等子目录下 PDF 可能来自旧管线，删除/迁移前必须逐个与当前 `references.bib` 条目内容比对，不匹配则移入 `_archive/`。
+2. **名称不匹配查内容**：文件名与 bibkey 不一致（如 `Shams2025.pdf` vs `Shams2023BRFSS`）时，用 `pdfinfo` 或打开 PDF 首页验证标题/作者，确认对应关系后再操作。
+3. **Bib 清理顺序**：先清理 `references.bib` 中无效条目 → 再删除 `.tex` 中残留 `\\cite{}` 引用 → 最后 `pdflatex` 重新编译验证 0 undefined reference，禁止乱序操作。
+4. **符号链接而非复制**：PDF 在子目录已存在时，根目录创建 symlink 指向原文件，不重复复制（避免双份漂移）。
+5. **清理后编译验证**：所有删除/迁移完成后必须 `pdflatex paper.tex` 跑通 0 error + 0 undefined reference，再视为清理完成。

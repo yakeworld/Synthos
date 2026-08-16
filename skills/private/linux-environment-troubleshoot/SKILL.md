@@ -252,3 +252,14 @@ version: 2.1.0
 - **Golden Input**: 用户报告 MiKTeX 编译失败，`pdflatex` 输出 "No space left on device"；环境：Ubuntu，MiKTeX TeX Live 安装。
 - **Golden Output**: `df -h` 显示磁盘 60% 可用（非真满）→ 定位 `~/.miktex/texmfs/data/miktex/lock` 残留 → `rm -rf` 清除锁文件 + 损坏日志 → `pdflatex test.tex` 编译通过，PDF 正常生成。
 - **Golden Error**: 见 "No space" 即执行 `apt remove miktex && apt install miktex` 重装 → 诊断：未先 `df -h`/`df -i` 排除真磁盘满，未查锁文件即重装；修复：遵循"先查磁盘→先查锁文件"顺序，清除 lock 后验证，避免不必要的重装。
+
+## 示例 · EXAMPLES
+- **示例一（MiKTeX 假"No space"）**：`df -h` 显示磁盘 60% 可用 → `ls ~/.miktex/texmfs/data/miktex/lock` 见残留 lock 文件 → `rm -rf` 清除锁 + 损坏日志 → `pdflatex test.tex` 编译通过。来源：`df -h`、`ls`、`pdflatex` 输出。
+- **示例二（venv 隔离失效）**：`pip3 show Pillow` Location 指向 `/usr/lib/python3.12`（系统解释器）→ 编辑 `~/.venv/pyvenv.cfg` 加 `include-system-site-packages = false` → 改用 `~/.venv/bin/python3 -m pip install Pillow` → `pip3 show Pillow` Location 变为 `~/.venv/lib/python3.12/site-packages`。来源：`pip3 show`、`pyvenv.cfg` 内容。
+
+## 约束规则 · RULES
+1. **磁盘先行**：报 "No space" 必须先 `df -h` 与 `df -i` 排除真磁盘满/inode 耗尽，再查锁文件。
+2. **锁文件优先重装**：MiKTeX/dpkg 故障先清锁（`~/.miktex/texmfs/data/miktex/lock`、`/var/lib/dpkg/lock*`），90% 情况可恢复，禁止直接 `apt remove` 重装。
+3. **venv 严格隔离**：`pyvenv.cfg` 必须 `include-system-site-packages = false`；装包一律用 venv 内 python（`~/.venv/bin/python3 -m pip`），不用系统 `pip3` 或 `uv pip`（uv 默认不遵循 venv 隔离）。
+4. **路径验证**：`which` 返回的路径必须用 `file` 确认为可执行 ELF（非 broken symlink），再执行。
+5. **反向 Shell 工具**：OpenBSD `nc`（Debian 默认）无 `-e`/`-k` 参数，必须用 `ncat`（nmap 包提供）；tmux socket 用 `~/.tmux-*` 防 `/tmp` 被 tmpfiles 清理。

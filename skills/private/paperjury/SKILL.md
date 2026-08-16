@@ -178,3 +178,10 @@ metadata:
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
+
+## 约束规则 · RULES
+1. **数值不信任文档**：论文数值 claim 只信任独立运行代码的输出；`paper.tex`、`state.json`、notebook cell output 中的数字一律视为待验证，不直接引用。
+2. **无代码即 FABRICATED**：指标无对应 `03-code/` 下脚本与输出 → 标记 FABRICATED，禁止标注 CLOSE 或放行。
+3. **reviewer 独立**：每个 reviewer 必须独立阅读原文，禁止跨轮次共享笔记/结论，防泄漏污染评分。
+4. **不编造实验**：遇到需新实验才能验证的问题，标记 OPEN 交给作者，禁止 paperjury 自行补数据或声称已验证。
+5. **token 预算**：完整庭审单轮 ≤10k tokens，多轮 auto 累计 ≤50k tokens；超限自动终止并输出未决问题清单。
