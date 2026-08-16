@@ -315,6 +315,13 @@ A论文的方法/数据是B论文方法的前提或基础。
 - 不评估关联的价值/可靠性（那是 VER 在需要时的扩展职责）
 - PW-Bench 逆向工程不在本原子范围内
 
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: `knowledge_base: [5 篇 KnowledgeItem]`, `query: "瞳孔对光反射 ODE"`, `min_confidence: 0.0`, `cross_domain: true`
+- **Golden Output**: `meta.pair_count=10`，`summary.by_type` 含 7 类（contradiction/complement/evolution/gap/causation/parallel/dependency）且每条关联含双向引用、confidence(0-1) 与 evidence；gaps.json 每条含 `priority: H/M/L` 并标记为 HYP 输入
+- **Golden Error**: 实体未归一化（"pupil" vs "瞳孔"）直接比较，或无证据断言 gap → 该关联 confidence=0 标记"需验证"，输出不静默丢弃，gaps 条目缺失 evidence 字段即拒写
+
 ## 相关文件
 
 - `references/BOUNDARY.md` — 边界声明

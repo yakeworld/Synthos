@@ -40,6 +40,13 @@ metadata:
 3. **「源一不二，两版同口径。」** — v1 与 v2 使用率数据口径一致，evolution-state.json 摘要为唯一数据源。
 4. **「统计可复，命令可验。」** — 21 个 cron 任务的运行统计命令须可执行、可复现，结果可验。
 
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: `skills/` + cron 任务目录扫描（27 技能 / 21 cron 任务口径）+ `evolution-state.json` 摘要
+- **Golden Output**: `references/skill-usage-data-v2.md`（运行 1352 次、已归档任务、技能库统计，与 v1 同口径）；`unmapped_dirs: []` 清理判定（仅清理未在用目录）
+- **Golden Error**: 未映射目录清理误删在用技能/脚本目录 → 先核后清违反原则，回滚；或 21 个 cron 统计命令不可复现 → 数据无源，报告拒发
+
 ## 十、参考文件
 
 - `references/skill-usage-data.md` — 首次完整采集的技能使用率数据(27个技能、21个cron任务、1352次运行)

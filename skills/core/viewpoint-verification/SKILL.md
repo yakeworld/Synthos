@@ -368,6 +368,13 @@ EOF
 - 伦理筛查不代替正式的IRB伦理审查
 - Bayesian置信度是学术讨论工具，不是正式的统计推断方法
 
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: `hypothesis: "前庭-眼反射失调与眼震幅度正相关"`, `evidence: [2 支持 + 1 反对 Evidence]`, `prior: 0.70`, `mode: "full"`
+- **Golden Output**: verification.json 中 falsifiable=true 且含可检验反例条件；bayesian.posterior=0.85 且 verdict 为五档之一（如 moderate_support）；alternatives ≥ 3；落盘 verification_report.md
+- **Golden Error**: 假设不可证伪（如"宇宙中存在其他智慧生命"）→ Popper 门判 speculative/tautological，禁止进入 Bayesian 更新，bayesian 字段缺失
+
 ## 相关文件
 
 - `references/bayesian-hypothesis/` — Bayesian假设检验完整方法

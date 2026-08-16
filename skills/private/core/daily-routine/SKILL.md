@@ -48,6 +48,13 @@ category: research
 - **Cron运维：** `skill_view(name='devops/cron-system-maintenance')` — 定时任务管理
 - **Self-check：** `skill_view(name='devops/project-health-audit')` — 系统健康检查
 
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: `routine_request: "生成今日 arXiv/PubMed 情报"`
+- **Golden Output**: `routing: "research/daily-intelligence-briefing"` 分流；同类：cron 请求 → `devops/cron-system-maintenance`，健康检查 → `devops/project-health-audit`；本技能不产出执行结果
+- **Golden Error**: 在本技能文件内直接实现日常自动化逻辑（未分流即执行）→ 违反 REDIRECT 边界，验证清单第 2 条不通过
+
 ## 验证清单 (Verification)
 
 - [ ] 已按 REDIRECT 分流至 `research/daily-intelligence-briefing`（每日智报）与 `devops/cron-system-maintenance`（Cron运维）

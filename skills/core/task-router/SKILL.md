@@ -201,6 +201,13 @@ delegate_task(
 
 ---
 
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: `query: "搜索3D nystagmus文献"`, `context: {已执行原子: []}`
+- **Golden Output**: `route: "standard"`, `atom_chain: ["knowledge-acquisition", "knowledge-extraction"]`；创建 `outputs/{session_id}/pipeline_trace.json`（含 session_id/mode/chain/atoms 字段），delegate_task 仅传 goal（用户原话）+ 空 context
+- **Golden Error**: delegate_task 的 context 写入微操指令（如"先加载skill A再调脚本B"）→ 子 Agent 实测中断（微操版 interrupted）；或 >10 篇论文派给单个子 Agent → 超时，应拆为并行子任务
+
 ## 架构参考：deer-flow 模式 (bytedance/deer-flow)
 
 2026年最活跃的开源Super Agent框架（78.7k stars, 2898 commits, 2026-02登顶GitHub Trending #1）。

@@ -70,6 +70,13 @@ python3 /media/yakeworld/sda2/Synthos/skills/extended/paper-literature-supplemen
 - **去形留神** — 管道产出的是可用的 PDF + 可编译的 tex，不是中间文件。
 - **运行即证** — 每步执行后验证，不通则停。
 
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: `paper_dir: "outputs/papers/pima-crispdm"`（引用经 .bbl 解析，22 篇），`topic_queries: ["corneal biomechanics ODE", "vestibular VOR nystagmus BPPV"]`
+- **Golden Output**: 引用补齐至 ≥30 篇且每篇 PDF 过 `%PDF-` 魔数验证；quality-gate 结论 D8 ≥80%、D10a ≥90%、无 undefined citation；无 PDF 引用已删除且剩余 ≥20 篇
+- **Golden Error**: Crossref 自动匹配返回不相关论文 → 必须人工核对标题+年份后修正 DOI；MedData `pmid=1` 占位 PDF（非真实全文）→ 视为下载失败，不得计入
+
 ## 管道流程
 
 ```

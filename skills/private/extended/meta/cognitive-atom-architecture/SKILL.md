@@ -70,8 +70,11 @@ Key reference files added in v4.0.0:
 # Cognitive Atom Architecture---
 
 
+## Golden 集合 · GOLDEN SET
 
-
+- **Golden Input**: `philosophical_framework: references/philosophical-foundations.md`（7+1 框架）, `target_skill: skills/core/knowledge-extraction/SKILL.md`
+- **Golden Output**: 按 extract→trace→classify→fix→verify 五步产出 `engineering_constraints`——每条哲学约束映射到目标技能的 1 条可执行工程约束（含位置与措辞）
+- **Golden Error**: 7+1 框架缺一维（无定义/无度量法/无原子映射）→ 框架失整，追溯中止；references/ 四件套缺件 → "原件无损"不成立，拒绝产出
 
 ## Reference Files (intact — see linked_files)
 

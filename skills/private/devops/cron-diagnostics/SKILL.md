@@ -110,6 +110,13 @@ monitor_keywords = ["heartbeat", "monitor", "scan", "check", "audit", "sync"]
   3. 修复 task-Y deliver 配置
 ```
 
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: 直接触发（无参数）— `cronjob action=list` 采集 15 个 cron 任务全量状态
+- **Golden Output**: 诊断报告 JSON（总任务数/付费/已暂停/错误数与清单交叉一致）+ 优化建议列表，每条建议对应一个可执行 action（update/remove/create）；典型结果：15→10-11 任务、付费 6→4
+- **Golden Error**: 批量 no_agent 任务同时 timeout 且 `ls ~/.codex/profiles/` 缺失 → 判 HIGH 级配置错误，先核对 codex profile 完整性再批量操作
+
 ## 优化操作模式
 
 ### 清理模式（推荐直接执行）

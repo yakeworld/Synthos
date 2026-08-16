@@ -340,6 +340,13 @@ python3 -c "import json; json.dump(knowledge_item, open('outputs/{paper_dir}/07-
 - 不验证观点正误（那是 VER 的职责）
 - PW-Bench 逆向工程不改变"单论文结构化提取"的核心定位
 
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: `paper_content: <markitdown 转换的 Markdown 全文>`, `mode: "standard"`, `output_path: "outputs/{slug}/07-quality/knowledge.json"`
+- **Golden Output**: 四域（entities/relations/claims/evidence）全非空；每条 claim 带 stated/suggested/speculated 置信度与 provenance；数值证据标注 section/figure/table；quality_score.composite ≥ 0.70 则 pass=true
+- **Golden Error**: paper_content 为空（如 markitdown 失败且 pdftotext 亦空）→ 拒绝提取；或 evidence 数值无位置标注 → 验证清单"数值有位置"不通过，JSON 不标记 pass
+
 ## 相关文件
 
 - `references/IO_CONTRACT.md` — 输入输出契约细节

@@ -58,6 +58,13 @@ author: Synthos
 | 培养方案 | `~/workspace/*培养方案.md` | 研究方向与里程碑 |
 | 工作检查报告 | `~/workspace/WORK_CHECK_REPORT.md` | 环境验收证明（generated） |
 
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: `remote_host: "ssh student@10.0.0.5:2222"`（SSH 连通），`software_list: ["codex", "obsidian"]`
+- **Golden Output**: 生成 `~/codex-vllm.sh`（环境变量与默认参数封装）、`~/workspace/START_HERE.md` + `*培养方案.md`、`~/workspace/WORK_CHECK_REPORT.md`（环境验收证明）
+- **Golden Error**: SSH 连通性验证未通过 → 拒绝搭建环境（"道不通，则礼不行"）；WORK_CHECK_REPORT.md 未生成 → 验收不成立，不得声称环境就绪
+
 ## 验证清单 (Verification)
 
 - [ ] `~/codex-vllm.sh` 一键脚本可用（环境变量与默认参数封装生效）

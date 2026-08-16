@@ -195,6 +195,13 @@ python3 quality-gate-runner.py \
 - 不执行自行编写的质量检查逻辑（全部走脚本）
 - 报告生成后必须执行修复循环，不达标不退出
 
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: `paper_dir: "outputs/papers/pima-crispdm"`（含 paper.tex），`mode: "full"`
+- **Golden Output**: `overall_score ≥ 0.85` 且 `overall_pass=true`，G1-G7 与 L0.5 全过（L0.5 score ≥ 0.5），quality-report.md 按固定模板生成并更新 state.json
+- **Golden Error**: 任一 P0 问题（G4_constitution 或 L0.5 score < 0.5）未修复 → runner 退出码 1，`overall_pass=false`，一票否决，进入修复循环
+
 ## Golden
 
 - Golden Input: `{paper_dir: "outputs/papers/pima-crispdm"}`

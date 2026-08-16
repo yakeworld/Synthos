@@ -301,6 +301,13 @@ EOF
 - 不做关联发现（那是ASC）
 - 不自动写完整论文——输出是结构化论据链+章节草案，非最终稿件
 
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: `claims: ["ODE模型可预测瞳孔对光反射动态"]`, `evidence: ["ext/001", "ext/003"]`, `context: {paper_type: "research", journal: "Journal of Neurophysiology"}`, `mode: "full"`
+- **Golden Output**: `arguments.json` 中 argument_chain[0].toulmin 六要素齐备（claim/data/warrant/backing/qualifier/rebuttal），imrad_validation.passed=true，并落盘 introduction_draft.md + imrad_report.md
+- **Golden Error**: 论证中引用了上游未出现的论据（自造论据）→ IMRAD 校验 issue: "evidence ext/009 not found in upstream EXT/ASC output"，imrad_validation.passed=false 且 argument_chain 拒绝交付
+
 ## 相关文件
 
 - `references/toulmin-argument/` — Toulmin论证模型完整参考

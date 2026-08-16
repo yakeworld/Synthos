@@ -46,6 +46,13 @@ author: Hermes Agent
 4. **空间管理** — >2000 chars 时按价值排序删除，优先保留用户偏好和环境细节
 5. **原子操作** — 按操作顺序模板执行：先remove→再replace→再add，确保all-or-nothing
 
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: `session_transcript: <≥5 次工具调用且有明确产出的会话>` + `current_memory: <1800/2200 chars，使用率 82%>`
+- **Golden Output**: memory_entries 均为陈述式且各标注生长方向/框架维度/发酵潜力；操作按 remove→replace→add 顺序执行；consolidation_report 显示使用率回落至 60-75%
+- **Golden Error**: 写入指令式语气（"Always use XXX"）→ 改为陈述式（"User prefers ..."）；容量 >80% 未主动清理 → 整批操作被拒
+
 ## Pitfalls
 
 1. **记录已完成任务**：PR#42 merged、batch done→7天后是噪音，用session_search

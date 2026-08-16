@@ -67,6 +67,13 @@ allowed-tools:
 > **凡下必验，魔数为准。** PDF 落盘必验 `%PDF-` 魔数与 pdfinfo 标题，排除串流与伪件，下载以验证为准绳。
 > **源常变易，以诊为凭。** API 屡有更易（S2 字段、Crossref mail 参数、PMC 直链失效），以 `literature diagnose` 三阶段实测判定源之可用性，不凭记忆行事。
 
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: `literature search "pupil light reflex ODE" --sources crossref pubmed --max 100`（检索）+ `{"papers": [...]}` 文件 → `literature.py pipeline --input`
+- **Golden Output**: 候选 records JSON（title/authors/DOI/pdf_url 齐备）；管线落盘 `output_dir/*.pdf` 且每篇 `%PDF-` 魔数 + pdfinfo 标题验证通过；`literature diagnose` 输出三阶段 JSON（7 源检索 + DOI 解析 + 12 通道下载测试）
+- **Golden Error**: S2 请求仍带 `pdfUrls`/`urls` 字段 → API 返回 400 `Unrecognized or unsupported fields`；PubScholar 已关闭 API → 静默返回空列表，须降级其余 4 源
+
 ## 2026-07-20 清理说明
 
 **scripts/ 已删除**。旧检索脚本代码已迁移到独立 pip 包：
