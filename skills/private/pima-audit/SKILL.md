@@ -69,11 +69,13 @@ metadata:
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 跨数据集对比实验条件一致：ZeroReplacer、Pipeline 结构、CV 设置、评估指标均相同，否则标注"对比无效"
+- [ ] 实验代码为独立 `.py` 脚本且 cell 有输出，无输出记录的 Notebook 视为设计草稿、拒绝作为可复现记录
+- [ ] 基线数量与声称一致（如 helix_benchmark 27/32），缺失模型逐一点名（DummyClassifier/GaussianProcessClassifier/StackingClassifier/TunedThresholdClassifierCV/FixedThresholdClassifier）
+- [ ] 文献验证用 Semantic Scholar + CrossRef/PubMed 多源互补搜索，过滤 Acc>90% 或 F1>0.70 论文并标注数据泄露风险
+- [ ] 高准确率论文交叉参考 OpenML 公开实验（PIDD ID:292）作为第三方验证
+- [ ] 泄漏后 F1 趋同 ~0.70 标注为经验观察而非理论保证，并说明需更多数据集持续验证
+- [ ] 严格区分 Pima（方法论审计 32 基线）与 HCS-3WT（新架构验证 7 模型）范式，未混同结论
 
 ## 核心原则 · PRINCIPLES
 
@@ -155,11 +157,13 @@ metadata:
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 跨数据集对比实验条件一致：ZeroReplacer、Pipeline 结构、CV 设置、评估指标均相同，否则标注"对比无效"
+- [ ] 实验代码为独立 `.py` 脚本且 cell 有输出，无输出记录的 Notebook 视为设计草稿、拒绝作为可复现记录
+- [ ] 基线数量与声称一致（如 helix_benchmark 27/32），缺失模型逐一点名（DummyClassifier/GaussianProcessClassifier/StackingClassifier/TunedThresholdClassifierCV/FixedThresholdClassifier）
+- [ ] 文献验证用 Semantic Scholar + CrossRef/PubMed 多源互补搜索，过滤 Acc>90% 或 F1>0.70 论文并标注数据泄露风险
+- [ ] 高准确率论文交叉参考 OpenML 公开实验（PIDD ID:292）作为第三方验证
+- [ ] 泄漏后 F1 趋同 ~0.70 标注为经验观察而非理论保证，并说明需更多数据集持续验证
+- [ ] 严格区分 Pima（方法论审计 32 基线）与 HCS-3WT（新架构验证 7 模型）范式，未混同结论
 
 ## 核心原则 · PRINCIPLES
 

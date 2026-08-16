@@ -48,11 +48,12 @@ metadata:
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 子目录（`pdfs/`）PDF 逐个与当前 `references.bib` 条目内容比对，未假设自动对应；不匹配者移入 `_archive/` 而非直接删除
+- [ ] 文件名与 bibkey 不一致者（如 `Shams2025.pdf` vs `Shams2023BRFSS`）已用 `pdfinfo` 或打开首页验证标题/作者后再操作
+- [ ] Bib 清理按序执行：清理 `references.bib` 无效条目 → 删除 `.tex` 残留 `\cite{}` → `pdflatex` 重新编译
+- [ ] 子目录已有 PDF 时根目录创建 symlink 指向原文件，未重复复制（避免双份漂移）
+- [ ] 清理完成后 `pdflatex paper.tex` 跑通 0 error + 0 undefined reference，方可视为完成
+- [ ] 根目录最终状态核对：规范化后 PDF/链接数、Bib 总数与清理记录一致（旧元数据/bak 已清）
 
 ## 核心原则 · PRINCIPLES
 

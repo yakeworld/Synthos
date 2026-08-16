@@ -18,7 +18,7 @@ metadata:
     synthos_model_tested_on: '2026-07-01T00:00:00Z'
     synthos_asserted_compliance: P0,P1,P2
     synthos_mechanical_atoms: ''
-    synthos_io_contract_ref: references/IO_CONTRACT.md
+    synthos_io_contract_ref: IO_CONTRACT.md
     synthos_evidence_schema_ref: references/EVIDENCE_SCHEMA.md
     synthos_boundary_proof_ref: references/BOUNDARY.md
     synthos_change_log_ref: references/CHANGE_LOG.md

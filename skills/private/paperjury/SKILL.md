@@ -80,11 +80,13 @@ metadata:
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 实验数值 claim 已回查 `03-code/`：无代码→FABRICATED、有代码数值不匹配→MISMATCH、独立复现→CLOSE，未凭 `paper.tex`/`state.json`/notebook 直接引用
+- [ ] 数值审计输出 JSON+CSV 归档到 references/，claimed vs actual 逐条标注 CLOSE/MISMATCH/FABRICATED
+- [ ] 每个 reviewer 独立阅读原文，未跨轮次共享笔记/结论（防泄漏污染评分）
+- [ ] 需新实验才能验证的问题标记 OPEN 移交作者，未自行补数据或声称已验证
+- [ ] 单轮 ≤10k tokens、多轮累计 ≤50k，超限自动终止并输出未决问题清单
+- [ ] 流程按 L1-L2 结构 → 语义审查 → 修复 → L3-L4 → auto loop 深度庭审 → L5-L7 合规顺序执行
+- [ ] 明确"不替代 peer review、仅为投稿前自查"，未编造实验
 
 ## Golden 集合 · GOLDEN SET
 
