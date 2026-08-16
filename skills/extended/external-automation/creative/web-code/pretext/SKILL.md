@@ -274,3 +274,16 @@ Clone these for inspiration / patterns (all MIT-ish, linked from [pretext.cool](
 Official playground: [chenglou.me/pretext](https://chenglou.me/pretext/) — accordion, bubbles, dynamic-layout, editorial-engine, justification-comparison, masonry, markdown-chat, rich-note.
 
 # Pretext
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[PRET-001]** 需要非矩形区域（如环绕移动物体）的文本布局 → 使用 `layoutNextLineRange` 配合每行动态宽度函数实现流式排版
+- **[PRET-002]** 需要精确的字符级物理效果（如破碎、粒子化） → 使用 `prepareWithSegments` 获取每个字素（grapheme）的位置坐标
+- **[PRET-003]** 需要计算多行文本的最小容器宽度（Shrink-wrap） → 使用 `measureLineStats` 获取最大行宽而非逐行渲染
+- **[PRET-004]** 需要高性能遍历文本统计或物理模拟且无需字符串分配 → 使用 `walkLineRanges` 进行无字符串分配的迭代
+- **[PRET-005]** 处理包含 Emoji、CJK 或组合标记的文本 → 使用 `Intl.Segmenter` 进行字素分割以确保测量准确性
+- **[PRET-006]** 需要避免 DOM 重排（Reflow）导致的布局抖动 → 使用 Canvas 测量 API 在渲染前获取精确高度和换行信息
+- **[PRET-007]** 构建单文件创意演示且无构建步骤 → 通过 `esm.sh` CDN 引入固定版本的 `@chenglou/pretext` 模块

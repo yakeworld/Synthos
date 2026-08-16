@@ -414,3 +414,16 @@ See `references/network-patterns.md` for complete build scripts + shader code.
 > You're not writing code. You're conducting light.
 
 # Touchdesigner Mcp
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[TOUC-001]** 构建节点前 → 必须调用 `td_get_par_info` 和 `td_get_hints` 获取当前版本的参数名与模式，严禁基于训练数据猜测参数
+- **[TOUC-002]** 发生 `tdAttributeError` 时 → 立即停止操作，调用 `td_get_operator_info` 检查失败节点状态后再继续
+- **[TOUC-003]** 编写脚本回调时 → 禁止硬编码绝对路径，必须使用 `me.parent()` 或 `scriptOp.parent()` 等相对路径引用
+- **[TOUC-004]** 执行常规操作时 → 优先使用 `td_create_operator`、`td_set_operator_pars` 等原生 MCP 工具，仅在复杂多步逻辑时回退到 `td_execute_python`
+- **[TOUC-005]** 清理与创建同名节点时 → 必须将销毁和创建拆分为独立的 MCP 调用，禁止在单个 `td_execute_python` 脚本中混合执行以避免 "Invalid OP object" 错误
+- **[TOUC-006]** 设置非商业版 TD 分辨率时 → 显式设置 `outputresolution = 'custom'` 并指定宽高，以突破 1280×1280 的限制
+- **[TOUC-007]** 处理视频编码时 → 在 macOS 上优先使用 `prores` 或 `mjpa`，避免使用 H.264/H.265/AV1 等需要商业授权的编码格式

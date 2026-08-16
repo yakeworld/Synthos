@@ -68,6 +68,19 @@ allowed-tools:
 > **源常变易，以诊为凭。** API 屡有更易（S2 字段、Crossref mail 参数、PMC 直链失效），以 `literature diagnose` 三阶段实测判定源之可用性，不凭记忆行事。
 
 
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[LITE-001]** 执行文献检索任务 → 默认聚合 5 个以上数据源（如 S2, PubMed, CrossRef, arXiv, OpenAlex）进行交叉印证，避免单源偏差
+- **[LITE-002]** 下载 PDF 文件落盘后 → 必须验证文件头 `%PDF-` 魔数及 pdfinfo 标题，以排除串流错误或伪件
+- **[LITE-003]** 调用 Semantic Scholar API 时 → 仅使用 `SEMANTIC_SCHOLAR_API_KEY` 单密钥，且请求字段需剔除已废弃的 `pdfUrls` 和 `urls` 以防 400 错误
+- **[LITE-004]** 面对 API 接口变更或源可用性不确定时 → 运行 `literature diagnose` 进行三阶段实测（检索、DOI 解析、下载测试），不凭记忆假设源可用
+- **[LITE-005]** 检索 ODE/PINN/CS 类论文时 → 必须同时搜索 S2、CrossRef 和 OpenAlex，因为 PubMed 对此类领域覆盖较差
+- **[LITE-006]** 需要获取论文全文 PDF 时 → 优先通过 bban.top CDN 直连构建 URL (`https://sci.bban.top/pdf/{DOI}.pdf`) 下载，无需 HTML 中转或代理
+- **[LITE-007]** 当主检索工具（jabkit）不可用时 → 降级使用 PubMed E-utilities API（esearch/esummary/efetch）作为无需 Key 的检索回退方案
+
 ## Golden 集合 · GOLDEN SET
 
 - **Golden Input**: `literature search "pupil light reflex ODE" --sources crossref pubmed --max 100`（检索）+ `{"papers": [...]}` 文件 → `literature.py pipeline --input`

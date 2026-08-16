@@ -508,3 +508,16 @@ gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -d
 5. 若不存在 → `search_files(pattern='*文件名*', target='files')` 找正确路径
 6. 修正路径后重发
 
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[FEIS-001]** 用户报告 API 调用失败或 404 错误 → 优先检查 `base_url` 指向的服务（vLLM/DeepSeek/飞书），区分是模型节点问题还是飞书网关问题
+- **[FEIS-002]** 诊断消息流中断或无响应 → 按时间顺序追踪 Gateway 日志（接收→解析→提交→响应→发送）以定位具体断点
+- **[FEIS-003]** 遇到 vLLM 节点返回 404 Not Found → 验证模型是否存在于该节点（`curl /v1/models`），若不存在则移除节点或修正模型名
+- **[FEIS-004]** 飞书 MEDIA 附件发送后用户未收到且无报错 → 检查文件大小是否超过 10MB，若超限则使用 Ghostscript 压缩至 10MB 以下后重发
+- **[FEIS-005]** 发送文件附件前 → 必须执行 `ls -la` 验证文件路径真实存在，避免路径错误导致静默失败
+- **[FEIS-006]** 处理 CLI 与飞书平台的并发问题 → 识别 session ID 前缀（`cli:` vs `feishu:`），利用两者完全隔离的特性排除跨平台干扰
+- **[FEIS-007]** 遇到 Stream 断开或 180s 超时错误 → 判定为 vLLM 服务超时或负载过高，需检查节点状态或调整超时配置

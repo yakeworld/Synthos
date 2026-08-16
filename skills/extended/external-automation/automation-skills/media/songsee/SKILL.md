@@ -140,3 +140,15 @@ Multiple `--viz` types render as a grid in a single image.
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Songsee
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[SONG-001]** 需要对比音频特征或调试合成时 → 使用 `--viz` 指定多种可视化类型（如 spectrogram, mel, chroma）以生成多面板网格图
+- **[SONG-002]** 仅需分析音频特定片段时 → 使用 `--start` 和 `--duration` 参数截取时间切片进行局部可视化
+- **[SONG-003]** 处理 WAV/MP3 以外的音频格式时 → 确保系统已安装 `ffmpeg` 以支持原生解码之外的格式转换
+- **[SONG-004]** 需要自动化分析音频内容时 → 将生成的可视化图像作为输入传递给 `vision_analyze` 进行视觉特征提取
+- **[SONG-005]** 需要调整频谱显示细节时 → 通过 `--window`、`--hop` 及 `--min-freq`/`--max-freq` 参数精细控制 FFT 窗口与频率范围
+- **[SONG-006]** 需要标准化输出图像外观时 → 使用 `--style` 选择特定色板（如 magma, viridis）并指定 `--width`/`--height` 统一尺寸

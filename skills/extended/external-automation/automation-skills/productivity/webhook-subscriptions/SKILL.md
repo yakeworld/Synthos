@@ -286,3 +286,15 @@ If webhooks aren't working:
 5. **Firewall/NAT?** The webhook URL must be reachable from the service. For local development, use a tunnel (ngrok, cloudflared).
 6. **Wrong event type?** Check `--events` filter matches what the service sends. Use `hermes webhook test <name>` to verify the route works.
 
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[WEBH-001]** 创建订阅前 → 必须验证 Webhook 平台已启用且 Gateway 正在运行（通过 `hermes webhook list` 或健康检查确认）
+- **[WEBH-002]** 处理外部事件数据 → 使用 `{dot.notation}` 模板变量提取嵌套字段以构建精准 Prompt，避免直接转储完整 JSON
+- **[WEBH-003]** 仅需通知且无需 LLM 推理 → 使用 `--deliver-only` 模式直接透传消息，以零 LLM 成本实现即时推送
+- **[WEBH-004]** 配置安全认证 → 为每个订阅生成或指定 HMAC-SHA256 密钥，并确保上游服务正确配置签名头（如 `X-Hub-Signature-256`）
+- **[WEBH-005]** 调试连接失败 → 按序检查 Gateway 状态、端口监听、防火墙/NAT 可达性及日志中的签名不匹配错误
+- **[WEBH-006]** 管理订阅生命周期 → 利用 `hermes webhook test` 命令配合模拟 Payload 验证路由匹配与 Prompt 渲染逻辑

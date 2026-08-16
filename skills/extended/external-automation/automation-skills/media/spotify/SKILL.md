@@ -191,3 +191,16 @@ Entity types: `track`, `album`, `artist`, `playlist`, `show`, `episode`. Use the
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[SPOT-001]** 用户请求播放特定内容 → 执行单次搜索获取 URI 后立即播放，禁止循环描述搜索结果或进行预检状态查询
+- **[SPOT-002]** 用户请求模糊播放（如“播放某艺术家”） → 优先使用 `types: ["artist"]` 搜索并播放艺术家上下文 URI，利用 Spotify 智能洗牌而非手动选曲
+- **[SPOT-003]** 执行播放、暂停或音量调整等变更操作 → 直接调用对应动作接口，无需先调用 `get_state` 进行预检
+- **[SPOT-004]** 遇到 `403 No active device` 或 `403 Premium required` 错误 → 立即停止重试，明确告知用户需启动 Spotify 客户端或升级 Premium 套餐
+- **[SPOT-005]** 查询当前播放状态返回 `204 No Content` 或 `is_playing: false` → 直接报告“无内容播放”，视为正常状态而非错误，禁止重试
+- **[SPOT-006]** 需要查找用户私有播放列表 → 必须使用 `spotify_playlists list` 接口，严禁使用 `spotify_search` 搜索公共目录
+- **[SPOT-007]** 操作用户库（Library）保存或移除项目 → 严格匹配 `kind` 参数（tracks/albums）与 URI 类型，禁止混用导致 API 端点错误

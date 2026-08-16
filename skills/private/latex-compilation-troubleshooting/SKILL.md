@@ -190,3 +190,16 @@ grep -c 'undefined' paper.log
 
 > (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # Latex Compilation Troubleshooting
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[LATE-001]** 遇到 `Citation undefined` 警告 → 执行 `pdflatex → bibtex → pdflatex → pdflatex` 完整编译链并检查 `.bbl` 文件非空
+- **[LATE-002]** 执行任何批量修改或 `rm` 操作前 → 必须创建带时间戳的 `.bak` 备份，且严禁使用 `paper.*` 通配符删除以防误删源文件
+- **[LATE-003]** 出现 `Misplaced \noalign` 或大量 `Missing \cr` 级联错误 → 检查表格 `\bottomrule` 前一行是否缺失行尾 `\\` 并补全
+- **[LATE-004]** BibTeX 报告特定条目 "didn't find database entry" 但条目存在 → 优先排查 `.bib` 文件早期位置的花括号不匹配或格式错误，而非怀疑条目本身
+- **[LATE-005]** 使用外部 `.bib` 文件时 bibtex 执行失败 → 确保 `.bib` 与 `.tex` 同目录，且在 `\bibliography{}` 前添加 `\bibliographystyle{plain}`
+- **[LATE-006]** 遇到 `algorithmic undefined` 或 `enumitem` 选项报错 → 直接删除不兼容环境/选项，或改用 `algorithm2e` 包/添加 `\usepackage{enumitem}`
+- **[LATE-007]** 验证引用完整性时 → 以 `.bbl` 文件中解析出的 `\bibitem` keys 为权威来源，而非直接扫描 `.bib` 文件

@@ -147,6 +147,19 @@ board.close()
 4. **边界验证**: 空输入、极大值、异常场景是否处理
 5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[SK-001]** 当 `ampy run` (raw REPL) 协议不可用或失败时 → 直接通过 Python 调用 `ampy.pyboard.Pyboard` 底层 API 实现代码执行与文件传输
+- **[SK-002]** 当需要重启 K230 设备且希望实现全自动化时 → 通过串口发送 `import machine; machine.reset()` 执行软重启，避免依赖物理拔插
+- **[SK-003]** 当配置 GPIO 引脚且固件版本未知时 → 检查 `/revision.txt` 确认固件类型，RT-Smart 固件需显式调用 FPIOA 映射，标准 CanMV 固件则直接使用 `machine.Pin`
+- **[SK-004]** 当不同 K230 板型按键 GPIO 编号不一致时 → 通过 `os.uname()[-1]` 检测具体板型，动态分配对应的 GPIO 号及电平逻辑
+- **[SK-005]** 当主循环处于 idle 状态且需检测短按按键时 → 避免使用超过 1ms 的 `time.sleep`，保持微秒级高频轮询以防止错过短按事件
+- **[SK-006]** 当进行主循环重构或分模块开发时 → 严格保持 `while True: main(); time.sleep(1)` 的无限重启结构，确保 GPIO 异常被捕获并打印而非静默吞掉
+- **[SK-007]** 当初始化推理模式 (`inference_mode_start`) 时 → 必须同时设置 `state.current_mode = "inference"` 和 `state.is_running = True`，否则主循环无法进入正确分支
+
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验

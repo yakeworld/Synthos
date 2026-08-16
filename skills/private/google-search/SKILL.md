@@ -438,3 +438,16 @@ engines:
 当 SearXNG 所有引擎全部返回 `ConnectTimeout`（不是个别超时，是集体超时），首先排查宿主机本身是否无外网：
 
 ```bash
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[GOOG-001]** 搜索请求触发 → 严格执行 SerpAPI/Brave API → 自建 SearXNG → Startpage/Tor 的三级降级链，确保服务可用性
+- **[GOOG-002]** 所有搜索路径执行完毕 → 统一输出契约为 `{title, url, snippet, position, engine}` 列表，屏蔽底层引擎差异
+- **[GOOG-003]** 部署 SearXNG 2026+ 版本 → 必须使用 `settings.yml` 而非 `.yaml`，并移除 `limiter.toml` 挂载以避免 schema 校验错误导致容器崩溃
+- **[GOOG-004]** SearXNG 引擎集体超时（ConnectTimeout） → 优先排查宿主机外网连通性，若正常则通过 Tailscale Exit Node 或 Tor SOCKS5 代理切换出口 IP 以绕过数据中心 IP 封锁
+- **[GOOG-005]** 访问 Semantic Scholar API 返回 TCP RST → 识别为 Tor 出口 IP 被 TCP 层封锁（非 429 限流），需切换非 Tor 出口或直连，避免无效重试
+- **[GOOG-006]** 执行学术文献搜索 → 禁用 SearXNG 的 `google_scholar` 专用引擎（易被反爬拦截），改用常规 Google 引擎间接获取 Scholar 链接或直连浏览器
+- **[GOOG-007]** 配置 SearXNG 引擎优先级 → 优先启用 Google 引擎以覆盖学术/临床内容，Bing 仅作为 Google 不可用时的降级备选

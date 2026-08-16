@@ -327,3 +327,16 @@ codex $PROFILE exec "
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Codex
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[CODE-001]** 复杂编码任务（多文件/多步骤） → 优先使用 Codex CLI 而非 OpenCode，仅极轻量脚本使用 OpenCode
+- **[CODE-002]** 通过 tmux 交互发送指令 → 指令文本与 Enter 键必须分两次独立调用 `send-keys` 发送，避免指令卡住
+- **[CODE-003]** 需要并行处理多个独立任务 → 利用 `-p <profile>` 切换不同节点配置，将任务分配到不同后台进程以实现多节点负载
+- **[CODE-004]** 在非 Git 目录执行 Codex → 必须通过 `git init` 创建临时仓库或进入现有仓库，否则 Codex 拒绝运行
+- **[CODE-005]** 在 Cron 或无 PTY 脚本环境中执行 → 使用 `codex exec` 并将 Prompt 作为 CLI 参数传递，无需 PTY 支持
+- **[CODE-006]** 执行高风险或批量自动化任务 → 使用 `--yolo` 模式以跳过沙箱和审批，但需确保任务可信且环境隔离
+- **[CODE-007]** 配置模型供应商 → 仅支持 OpenAI Responses API (`wire_api = "responses"`)，避免使用仅支持 Chat Completions 的供应商

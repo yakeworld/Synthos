@@ -241,3 +241,16 @@ For creating professional demo videos from PPTX slides (competition demos, prese
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Ffmpeg Video Audio Sync
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[FFMP-001]** 视频与音频时长不一致 → 在合并前显式使用 `-t` 裁剪较长流，而非仅依赖 `-shortest` 参数
+- **[FFMP-002]** 音频采样率或声道非标准 → 合并前统一转换为 AAC 44100Hz 立体声 192kbps 标准格式
+- **[FFMP-003]** 多段 MP4 文件需拼接 → 先转换为 TS 中间格式，再使用二进制 `cat` 拼接，最后重编码为 MP4
+- **[FFMP-004]** 源 MP4 使用 `-preset ultrafast` 或 `fast` 编码 → 必须改用 `-preset medium` 或更高，防止 TS 转换时发生静默数据丢失
+- **[FFMP-005]** 所有分段 MP4 的 `start_time` 均为 0.000000 → 禁止直接使用 `-f concat -c copy`，必须通过 TS 二进制拼接避免 PTS 冲突导致的帧丢弃
+- **[FFMP-006]** 视频时长短于旁白音频 → 使用 `-stream_loop -1` 循环视频流配合 `-shortest` 以匹配音频时长
+- **[FFMP-007]** 拼接或同步操作完成后 → 使用 `ffprobe` 对比视频流 (v:0) 与音频流 (a:0) 的 duration，确保差异小于 0.2s

@@ -103,6 +103,19 @@ notebooklm source add /tmp/new_papers_summary.md
 See `references/notebooklm-audit-template.md` for the full audit report format.
 The report should be saved to a **private** directory (e.g. `~/notebooklm-audit/`), NOT in the project's `docs/` directory.
 
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[KNOW-001]** 审计发现核心文献缺失 (P0) → 立即执行 `notebooklm source add` 补充关键来源，优先保障核心项目完整性
+- **[KNOW-002]** 遇到 NotebookLM 认证失败且存在本地 profile 数据 → 确认 CLI 仅读取默认路径 `~/.notebooklm/storage-state.json`，必须通过 `notebooklm login` 重新建立会话，忽略自定义 profile 路径
+- **[KNOW-003]** 需要拆分或重组知识库主题 → 禁止尝试迁移旧源，应新建聚焦主题库并填充新文献，同时将旧库重命名为 "Archive - [原名]" 进行归档
+- **[KNOW-004]** 需要建立跨笔记本的概念关联 → 创建映射文档 (Markdown) 解释关系，并将其作为 Source 同时添加到两个相关笔记本中以实现逻辑桥接
+- **[KNOW-005]** 执行 Source 重命名或删除操作 → 使用 12 字符 UUID 前缀作为标识符，并通过 `echo "y" |` 管道自动确认，避免交互式阻塞
+- **[KNOW-006]** 处理非标准命名的 PDF 来源 (P1) → 识别以数字或日期开头的文件名，限期执行重命名操作以符合标准命名规范
+- **[KNOW-007]** 知识库出现大量未分类或重复笔记本 (P2) → 执行分类整理与去重，将超过阈值的 "其他" 类笔记本进行归类，删除重复项以维持库结构清晰
+
 ## Common Issues Found in Real Systems
 
 ### Pitfall: `networkx.MultiDiGraph.out_edges()` returns 4-tuple in 3.x

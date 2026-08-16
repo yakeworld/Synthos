@@ -49,6 +49,18 @@ category: research
 - **Self-check：** `skill_view(name='devops/project-health-audit')` — 系统健康检查
 
 
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[DAIL-001]** 收到日常自动化请求 → 仅执行分流判断，严禁在本技能内直接实现或执行具体自动化逻辑
+- **[DAIL-002]** 请求涉及 arXiv/HN/PubMed 情报采集 → 重定向至 `research/daily-intelligence-briefing` 技能
+- **[DAIL-003]** 请求涉及定时任务管理或 Cron 运维 → 重定向至 `devops/cron-system-maintenance` 技能
+- **[DAIL-004]** 请求涉及系统健康检查或 Self-check → 重定向至 `devops/project-health-audit` 技能
+- **[DAIL-005]** 请求未匹配到上述三个特定目标 → 提示用户明确意图，禁止猜测执行或自行处理
+- **[DAIL-006]** 执行重定向操作时 → 仅通过 `skill_view` 加载目标技能，不得修改目标技能的内容
+
 ## Golden 集合 · GOLDEN SET
 
 - **Golden Input**: `routine_request: "生成今日 arXiv/PubMed 情报"`

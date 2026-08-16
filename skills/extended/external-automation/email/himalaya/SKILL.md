@@ -356,3 +356,16 @@ RUST_LOG=trace RUST_BACKTRACE=1 himalaya envelope list
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Himalaya
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[HIMA-001]** 服务器文件夹名称与标准名称不匹配 (如 Gmail) → 必须使用 `folder.aliases.X` (复数点分键) 语法配置别名，避免 v1.2.0+ 静默忽略旧语法导致发送失败
+- **[HIMA-002]** 非交互式环境 (Agent/脚本) 需要发送邮件或回复 → 优先使用 `cat << EOF | himalaya template send` 管道输入，避免依赖 `$EDITOR` 交互模式
+- **[HIMA-003]** 需要程序化解析邮件列表或状态 → 始终添加 `--output json` 参数以获取结构化数据，而非解析纯文本输出
+- **[HIMA-004]** 执行 `himalaya account configure` 等需要交互输入的向导 → 必须启用 PTY 模式 (`pty=true`) 运行终端命令，否则无法捕获交互输入
+- **[HIMA-005]** 邮件发送命令返回非零退出码且涉及重试逻辑 → 检查是否因文件夹别名配置错误导致保存失败，严禁盲目重试 SMTP 发送以防止产生重复邮件
+- **[HIMA-006]** 需要安全存储 IMAP/SMTP 密码 → 在配置中使用 `backend.auth.cmd` 指向 `pass`、系统 keyring 或输出密码的命令，避免明文存储
+- **[HIMA-007]** 调试连接或逻辑错误 → 设置 `RUST_LOG=debug` 或 `RUST_LOG=trace` 环境变量以获取详细的日志和回溯信息

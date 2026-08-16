@@ -225,3 +225,15 @@ Bridge lyrics...
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Heartmula
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[HEAR-001]** 当 VRAM 低于 16GB 或需单卡运行大模型时 → 启用 `--lazy_load true` 以按需加载/卸载模型，将峰值显存控制在 ~6.2GB
+- **[HEAR-002]** 当使用 transformers 5.x 且模型在 meta-device 初始化时 → 手动修补 RoPE 缓存，在权重加载后重新初始化 `Llama3ScaledRoPE` 以修复位置编码
+- **[HEAR-003]** 当加载 HeartCodec 遇到 VQ codebook 形状不匹配（scalar vs 0-d tensor）时 → 在 `from_pretrained` 中设置 `ignore_mismatched_sizes=True` 以安全忽略缓冲区差异
+- **[HEAR-004]** 当需要保证高保真音频重建质量时 → 强制 HeartCodec 使用 `float32` 精度，严禁使用 `bfloat16` 以避免音质退化
+- **[HEAR-005]** 当用户无 NVIDIA GPU 或处于 macOS 环境时 → 推荐云端 GPU 服务或在线 Demo，避免本地 CPU 运行导致的 30-60 分钟极慢生成速度
+- **[HEAR-006]** 当输入包含歌词和风格标签时 → 采用括号结构标签（如 [Verse], [Chorus]）格式化歌词，并使用无空格逗号分隔标签，同时注意标签可能被歌词主导的问题

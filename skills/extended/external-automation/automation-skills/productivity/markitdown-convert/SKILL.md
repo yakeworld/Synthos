@@ -268,3 +268,16 @@ aliases: [Paper Title]
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Markitdown Convert
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[MARK-001]** 处理学术 PDF 管线 → 必须将 PDF 转换为 Markdown 作为下载后的强制步骤，以确保全文文本可被可靠索引和质检
+- **[MARK-002]** 执行批量 PDF 转换 → 优先使用 `markitdown` 工具，若失败或输出过短则自动回退至 `pdftotext`，并跳过已存在且大小有效的缓存文件
+- **[MARK-003]** 遇到无文本层或损坏的 PDF → 依次尝试寻找 arXiv/PMC 替代版本、手动补写摘要或启动 OCR 管线（如 marker-pdf），而非直接报错终止
+- **[MARK-004]** 在混合目录中识别主论文 PDF → 优先选择体积最大且排除引用/模板特征的 PDF，其次考虑最新修改时间或文件名匹配度
+- **[MARK-005]** 转换结果需用于 Obsidian 笔记系统 → 检查生成的 Markdown 是否包含 YAML frontmatter，若缺失则自动注入 tags 和 aliases 字段
+- **[MARK-006]** 安装 MarkItDown 依赖 → 必须使用 `uv tool install markitdown --with markitdown[pdf]` 命令，缺少 `[pdf]` extra 会导致依赖缺失异常
+- **[MARK-007]** 处理扫描版或纯图像 PDF → 识别 MarkItDown 无 OCR 能力的限制，转而使用 Tesseract 或 marker-pdf 等专用 OCR 工具进行文本提取

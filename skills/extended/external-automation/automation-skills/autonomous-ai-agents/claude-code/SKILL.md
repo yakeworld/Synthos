@@ -129,3 +129,15 @@ terminal(command="claude 'Task description'", background=true, pty=true, notify_
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Claude Code
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[CLAU-001]** 执行 Claude Code CLI 命令 → 必须启用 `pty=true` 模式以防止进程挂起
+- **[CLAU-002]** 处理长耗时编码任务 → 使用 `background=true` 并设置 `notify_on_complete` 实现异步通知
+- **[CLAU-003]** 执行特定功能开发或重构 → 采用单次任务模式 `claude "task"` 并附带明确的项目上下文
+- **[CLAU-004]** 进行代码审查或安全扫描 → 使用专门的审查指令 `claude "review PR"` 聚焦于 Bug 和安全问题
+- **[CLAU-005]** 开始执行前 → 必须通过 `which claude` 验证 CLI 工具已正确安装
+- **[CLAU-006]** 处理复杂或批量修改需求 → 结合 `delegate_task` 机制进行任务拆分与上下文管理

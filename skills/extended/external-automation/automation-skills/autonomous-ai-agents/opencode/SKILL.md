@@ -176,3 +176,15 @@ ls -lt ~/.local/state/opencode/locks/                 # 锁文件（空=无正�
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Opencode
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[OPEN-001]** 检查 OpenCode 进程状态 → 无进程运行是正常状态（非常驻服务），不应视为故障
+- **[OPEN-002]** 执行复杂编码任务 → 优先使用 Codex CLI，仅将 OpenCode 用于极轻量的一次性脚本
+- **[OPEN-003]** 集成或调用 API 接口 → 严格区分 OpenCode 的 `chat/completions` 与 Codex 的 `responses` API，不可互换
+- **[OPEN-004]** 执行未知子命令（如 doctor/health） → 避免输入，因为会被误解析为路径切换导致报错，仅使用 `models`/`run` 等有效子命令
+- **[OPEN-005]** 检查软件版本或升级 → 使用 `npm update -g opencode-ai` 而非 `npm search`，因该包不在公开索引中
+- **[OPEN-006]** 诊断后端连通性故障 → 按顺序检查 Tailscale 状态及 vLLM 容器运行状态，确认主备节点端口可达

@@ -265,3 +265,15 @@ Match the design to the content:
 - **Data-dense / dashboards:** Sentry, Kraken, Cohere, ClickHouse
 - **Monospace / terminal aesthetic:** Ollama, OpenCode, x.ai, VoltAgent
 
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[POPU-001]** 生成 HTML/CSS 时 → 从 54 个真实设计系统模板中选取匹配风格，加载其完整视觉语言（色彩、排版、组件、间距、阴影）
+- **[POPU-002]** 遇到专有字体无法通过 CDN 加载时 → 使用模板提供的 Google Fonts 替代字体，并严格遵循原模板的字号、字重和字间距以保留视觉特征
+- **[POPU-003]** 构建页面结构时 → 将模板中的色彩调色板定义为 CSS 自定义属性（:root variables），确保样式的一致性和可维护性
+- **[POPU-004]** 需要区分设计流程与视觉实现时 → 结合 `claude-design` 处理设计思维与验证，使用本技能提供具体的视觉词汇和代码实现
+- **[POPU-005]** 交付物为正式设计令牌规范而非渲染页面时 → 切换至 `design-md` 技能生成 DESIGN.md 文件，而非使用本技能的 HTML 生成模式
+- **[POPU-006]** 完成 HTML 文件编写后 → 使用 `write_file` 保存文件，并通过 `browser_vision` 验证视觉准确性，确保符合模板规范

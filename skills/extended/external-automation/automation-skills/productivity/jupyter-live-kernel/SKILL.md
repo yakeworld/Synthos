@@ -249,3 +249,17 @@ setup or heavy computation.
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Jupyter Live Kernel
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[JUPY-001]** 需要跨步骤保持变量状态或进行迭代探索 → 使用 Jupyter Live Kernel 替代无状态的 execute_code
+- **[JUPY-002]** 执行任何脚本命令以获取输出 → 始终添加 --compact 标志以节省 token 并简化 JSON 结构
+- **[JUPY-003]** 服务器启动后首次执行代码或内核重启后 → 预期可能超时，直接重试一次而非立即报错
+- **[JUPY-004]** 需要安装额外的 Python 包 → 必须安装到 JupyterLab 的工具环境中，而非系统全局环境
+- **[JUPY-005]** 仅用于纯 REPL 交互且无需保存笔记结构 → 创建 scratch.ipynb 并仅使用 execute 命令，跳过单元格编辑
+- **[JUPY-006]** 执行包含子命令的脚本参数 → 确保 --path 等全局标志位于子子命令之前（如 variables --path nb.ipynb list）
+- **[JUPY-007]** 遇到执行错误 → 解析返回 JSON 中的 ename 和 evalue 字段以定位具体异常原因
+- **[JUPY-008]** 执行长耗时计算或初始设置 → 显式传递 --timeout 参数（如 60 或 120 秒）以覆盖默认的 30 秒限制

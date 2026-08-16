@@ -191,3 +191,15 @@ Analyze each screenshot with vision to extract coordinates, then compile a route
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Findmy
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[FIND-001]** 当需要获取 FindMy 设备位置且无 CLI/API 可用时 → 使用 AppleScript 激活应用并结合屏幕截图与视觉分析 (vision_analyze) 提取数据
+- **[FIND-002]** 当需要更可靠的 UI 交互或元素定位时 → 优先使用 `peekaboo` 工具进行标注、点击和截图，而非纯 AppleScript
+- **[FIND-003]** 当追踪 AirTag 实时位置时 → 必须保持 FindMy 应用处于前台激活状态，因为最小化或后台运行会停止位置更新
+- **[FIND-004]** 当需要长期监控物品移动轨迹（如宠物巡逻路线）时 → 建立周期性循环（如每 5 分钟）捕获屏幕并记录坐标，以编译完整路径
+- **[FIND-005]** 当解析截图中的位置信息时 → 始终使用 `vision_analyze` 读取文本内容，禁止尝试直接解析像素数据
+- **[FIND-006]** 当执行屏幕捕获操作前 → 必须确认终端已授予“屏幕录制”权限，否则截图将失败或为黑屏

@@ -148,3 +148,15 @@ Each result has multiple formats under `.media_formats`:
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Gif Search
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[GIF-001]** 需要获取轻量级预览或聊天场景下的 GIF → 优先使用 `tinygif` 或 `nanogif` 格式以减小文件体积
+- **[GIF-002]** 执行 Tenor API 搜索请求 → 必须将查询词中的空格编码为 `+` 并对特殊字符进行 URL 编码
+- **[GIF-003]** 需要下载特定 GIF 文件到本地 → 先通过 API 获取 `media_formats.gif.url`，再使用 `curl -sL` 下载该 URL
+- **[GIF-004]** 需要获取 GIF 的完整元数据（标题、尺寸等） → 使用 `jq` 提取 `.results[]` 中的 `title`、`url` 及 `dims` 字段
+- **[GIF-005]** 需要控制搜索结果的数量或内容安全级别 → 在 API 请求中显式设置 `limit` (1-50) 和 `contentfilter` 参数
+- **[GIF-006]** 需要在 Markdown 中直接引用 GIF → 直接使用 API 返回的 GIF URL 嵌入 `![alt](url)` 语法，无需本地下载

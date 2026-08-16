@@ -379,3 +379,16 @@ When tools above don't have what's needed, generate ASCII art directly using the
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Ascii Art
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[ASCI-001]** 文本长度短 (1-8 字符) → 优先使用细节丰富的大字体 (如 `doom`, `block`) 以增强视觉冲击力
+- **[ASCI-002]** 文本长度长 → 优先使用紧凑字体 (如 `small`, `mini`) 以避免布局溢出并保持可读性
+- **[ASCI-003]** 需要本地运行且未安装 Python 环境 → 使用 `asciified` REST API 通过 `curl` 生成，避免依赖 `pip` 安装
+- **[ASCI-004]** 需要为文本添加装饰性边框 → 将文本流通过管道传入 `boxes` 工具并指定设计样式 (如 `stone`, `parchment`)
+- **[ASCI-005]** 需要彩色或特殊视觉效果 (如彩虹、金属) → 使用 `toilet` 工具并应用 ANSI 滤镜 (如 `--gay`, `--metal`)，注意其输出包含转义码
+- **[ASCI-006]** 需要将图像转换为 ASCII 艺术 → 使用 `ascii-image-converter` 并指定尺寸参数 (`-d`) 或启用 Braille 字符 (`-b`) 以优化细节
+- **[ASCI-007]** 需要特定角色的对话气泡效果 → 使用 `cowsay` 并指定角色 (`-f`) 及眼睛/舌头修饰符 (如 `-b`, `-w`) 以定制表情

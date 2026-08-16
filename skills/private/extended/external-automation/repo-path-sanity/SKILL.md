@@ -51,6 +51,18 @@ gh auth status
 gh pr create --title test --body test --head test 2>&1 | grep -i "accessible\|denied"
 ```
 
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[REPO-001]** 遇到 Git 认证或远程连接故障 → 优先执行 `git config --list --show-origin` 溯源配置来源，再下结论
+- **[REPO-002]** 全局 `~/.gitconfig` 存在 `credential.helper` 或 `insteadOf` 配置 → 检查其是否覆盖 Repo 级 `gh auth` 设置，必要时执行 `git config --global --unset` 移除冲突项
+- **[REPO-003]** `gh auth status` 显示已登录但 `gh pr create` 报错 → 检查 PAT Scope，确保包含 `repo` 和 `write:repository` 权限，否则重建 Classic PAT
+- **[REPO-004]** `ssh -vT git@github.com` 返回 "Permission denied (publickey)" → 确认 SSH Key 已正确注册到 GitHub Settings → SSH keys
+- **[REPO-005]** 在 NFS 挂载点（如 `/mnt/nfs`）执行文件遍历或统计 → 使用 `timeout` 限制执行时间并采用浅层命令，避免 `os.walk` 或 `du` 导致 300s 超时
+- **[REPO-006]** 调试 Git 凭据问题 → 组合使用 `grep credential`、`gh auth status` 及 `gh pr create` 测试命令以定位具体故障点
+
 ## NFS Quirks
 
 `/mnt/nfs` is extremely slow — `os.walk()`, `du -sh`, shell loops over all

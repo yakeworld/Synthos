@@ -119,3 +119,17 @@ metadata:
 - **input**: `probe_target: str` — 用户请求描述、上下文信息
 - **output**: `probe_result: dict — Probe探测结果`
 > 对应原则：P2（机械原子暴露输入输出规范）
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[SYNT-001]** 检查文件路径时 → 必须使用 `os.path.exists()` 确认实际路径，防止因层级嵌套（如 `skills/research/`）导致的路径陷阱
+- **[SYNT-002]** 解析 YAML frontmatter 中的 version 字段时 → 必须同时检查顶层 `version` 和嵌套的 `metadata.synthos.version`，以兼容不同结构
+- **[SYNT-003]** 判定 signature 存在性时 → 仅存在 `name:` 字段不足以视为有效 signature，必须要求独立的 signature 声明或 `name:` + `signature:` 组合
+- **[SYNT-004]** 检测 IO_CONTRACT 时 → 必须覆盖多种写法，包括 body 中的 `IO_CONTRACT` 标题以及 `INPUT:`/`OUTPUT:` 块
+- **[SYNT-005]** 统计 SKILL.md 数量时 → 必须使用 `os.walk` 实际遍历计数，而非依赖 spec 声称的数字，且匹配规则需包含 `*SKILL.md` 以覆盖 `ARCHIVED-SKILL.md` 等变体
+- **[SYNT-006]** 比较 Git 追踪状态时 → 必须将文件系统绝对路径转换为相对于仓库根的路径，以匹配 `git ls-files` 的输出格式
+- **[SYNT-007]** 执行周期性 Probe 检查时 → 必须独立验证当前状态，不信任上一周期的 per-atom 结果，以 Cron 运行的实际检测结果为准
+- **[SYNT-008]** 读取 evolution-state.json 时 → 必须优先使用根目录下的主状态文件，并通过 `os.path.exists()` 确认路径，避免误读存档副本

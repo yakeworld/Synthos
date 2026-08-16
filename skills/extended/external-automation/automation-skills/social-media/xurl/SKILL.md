@@ -470,3 +470,15 @@ xurl --app staging /2/users/me             # one-off against staging
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Xurl
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[XURL-001]** 在 Agent/LLM 会话中执行 xurl 命令 → 严禁使用 `--verbose`/`-v` 或任何接受内联密钥的 Flag（如 `--bearer-token`），以防止敏感凭证泄露至上下文
+- **[XURL-002]** 需要验证用户凭证状态时 → 仅使用 `xurl auth status` 命令，禁止读取、解析或打印 `~/.xurl` 文件内容
+- **[XURL-003]** 执行 OAuth 2.0 认证流程时 → 必须指定 `--app` 参数绑定特定应用，否则 Token 会存入无客户端密钥的默认配置导致后续命令鉴权失败
+- **[XURL-004]** 遇到 `UsernameNotFound` 错误或 `/2/users/me` 返回 403 时 → 在 `xurl auth oauth2` 命令中显式传入用户名参数以跳过损坏的用户查找调用
+- **[XURL-005]** 处理帖子 ID 参数时 → 可直接传入完整 URL（如 `https://x.com/user/status/...`），xurl 会自动提取 ID，无需手动解析
+- **[XURL-006]** 涉及应用注册、凭证轮换或初始 OAuth 授权时 → 指导用户在 Agent 会话外手动执行，严禁 Agent 代为执行涉及粘贴密钥的操作

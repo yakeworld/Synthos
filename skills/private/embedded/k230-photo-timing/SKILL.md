@@ -266,3 +266,16 @@ When `/data/320p_photos/` has multiple numbered directories but only one has fil
 
 > (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # K230 Photo Timing
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[SK-001]** 需要绑定 Display 层时 → 必须使用 YUV420SP 格式，因为这是 `bind_layer` 唯一支持的格式
+- **[SK-002]** 需要保存图像文件时 → 必须使用 RGB565 或 RGB888 通道（chn1/chn2），因为 YUV420SP 不支持 `img.save()`
+- **[SK-003]** 使用 `Sensor(id=N, ...)` 构造函数时 → 仅初始化 chn0 通道，禁止设置 chn1/chn2，否则会导致设备立即挂起
+- **[SK-004]** 多传感器场景下 → 仅需调用一次 `sensor.run()` 启动所有传感器，但必须逐个调用 `sensor.stop()` 或统一调用 `Sensor.deinit()`
+- **[SK-005]** 发现照片目录存在但为空时 → 检查 `photo_sequence.txt` 并清理空目录，以识别因串口阻塞导致的静默初始化失败
+- **[SK-006]** 串口完全无响应（ampy 挂起）时 → 执行 `rmmod ftdi_sio` 和 `modprobe ftdi_sio` 重载内核驱动，而非仅发送软复位指令
+- **[SK-007]** 驱动重载后进入 REPL 时 → 连续发送多次 Ctrl+C 和 Ctrl+D 以中断主循环并清除缓冲区，等待 0.5s 后再发送有效命令

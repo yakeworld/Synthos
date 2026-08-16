@@ -76,6 +76,19 @@ For tension/curvature systems, the variable roles differ from biochemical system
 ### Success Criteria
 All 9 metrics pass simultaneously. If any fail, go back to the step where it first started failing and adjust from there.
 
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[ODE-001]** 测量基线前 → 必须在 D=0 条件下运行 1000+ 步以确保系统达到均衡，否则基线数据无效
+- **[ODE-002]** 执行无耦合消融测试 → 必须移除所有耦合机制（如 flow-stress、E→tau、产生项），仅保留稳态衰减和直接加载，以防消融缺口虚高
+- **[ODE-003]** 在新领域进行参数调优 → 从 P140 已验证的基线参数出发，每次仅调整一个参数，禁止对八维参数空间进行盲目网格扫描
+- **[ODE-004]** 设计耦合项方程 → 必须采用加性且基线锚定的形式（如 `eps*(X-X_hp)`），严禁使用乘性正反馈项以避免变量冲顶或失真
+- **[ODE-005]** 验证模型成功标准 → 九项指标（R²、AUC、ablation 等）须同时达标，若任一项失败则退回首个失守步骤重新调优
+- **[ODE-006]** 计算 MAPE 指标 → 应使用曲线拟合残差法（`|y_fit - y_data| / y_data`）而非相对变化法，以准确反映拟合精度
+- **[ODE-007]** 处理非线性耦合导致的基线动态过强 → 优先使用线性形式 `R*(1-S)` 替代非线性形式 `R*S*(1-S)`，以稳定基线动态
+
 ## 示例 · EXAMPLES
 
 **输入**：Retinal Shear P140 v2 — alpha=0.65, beta=0.12, mu=0.04, eps=0.35, kappa=0.14, A_hp=0.42, E_hp=0.55 + D(t) 刺激信号

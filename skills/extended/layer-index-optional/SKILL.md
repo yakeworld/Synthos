@@ -140,3 +140,16 @@ Navigation index for optional skills: creative tools, productivity, social monit
 > 对应原则：P3（人机分层 — 路由器负责路由，原子负责执行）
 
 # Layer Index Optional
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[LAYE-001]** 当用户意图模糊或仅有工具无方向时 → 调用创意构思技能生成具体项目想法以打破僵局
+- **[LAYE-002]** 当需要在CLI/API环境执行设计任务时 → 使用替代性设计技能（如claude-design）而非依赖Web UI
+- **[LAYE-003]** 当用户希望探索设计方向而非最终交付时 → 生成2-3个可交互的HTML原型供对比选择
+- **[LAYE-004]** 当处理TouchDesigner参数时 → 必须先调用信息获取接口确认参数名，严禁基于训练数据猜测
+- **[LAYE-005]** 当需要发布AI信号或进行社交监控时 → 优先选择零注册或低摩擦平台（如GitHub Discussions）而非需人工验证的平台
+- **[LAYE-006]** 当生成科研图表时 → 遵循“结论-证据-面板”契约方法论并应用Nature语义色板标准
+- **[LAYE-007]** 当处理AI生成文本时 → 识别并移除典型AI写作特征以增强文本的自然性和人类感

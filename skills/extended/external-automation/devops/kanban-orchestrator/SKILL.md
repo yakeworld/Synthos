@@ -253,3 +253,15 @@ When a worker profile keeps crashing, hallucinating, or getting blocked by its o
 Hallucination warnings appear on tasks where a worker's `kanban_complete(created_cards=[...])` claim included card ids that don't exist or weren't created by the worker's profile (the gate blocks the completion), or where the free-form summary references `t_<hex>` ids that don't resolve (advisory prose scan, non-blocking). Both produce audit events that persist even after recovery actions — the trail stays for debugging.
 
 # Kanban Orchestrator
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[KANB-001]** 当任务涉及多专家协作、需持久化、需人工介入、可并行或需审计时 → 创建 Kanban 任务而非直接执行或简单委托
+- **[KANB-002]** 当角色定位为编排者 (Orchestrator) 时 → 严格遵循“只路由不执行”原则，禁止自行处理具体工作
+- **[KANB-003]** 当目标模糊或存在歧义时 → 先向用户提出澄清问题，避免生成错误的任务舰队
+- **[KANB-004]** 在创建具体任务前 → 先向用户展示任务依赖图 (Task Graph) 草案，获得确认后再执行创建
+- **[KANB-005]** 当子任务存在依赖关系时 → 使用 `parents` 参数建立依赖链，利用自动晋升机制替代手动协调
+- **[KANB-006]** 当进行大规模架构重构时 → 先定义唯一权威的目标状态文档，再以 3-4 个独立子任务为批次并行启动

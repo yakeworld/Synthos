@@ -892,3 +892,16 @@ Nudge 系统 = 结构行为校正 (Structural Behavior Correction)。核心机�
 - `scripts/auto-loop.py` — 自动进化循环执行
 - Golden 基准测试 — 通过才可发布
 - `references/CHANGE_LOG.md` — 变更日志一致性校验
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[EVOL-001]** 指标未达标或基线清晰 → 执行四态决策（DIAGNOSE/OPTIMIZE/CRYSTALLIZE/EXPLORE），根据状态选择Pareto扫描或GEPA分析
+- **[EVOL-002]** 每次进化循环结束 → 执行Git提交并检查`git status`，确保技能迁移后执行`git rm`+`git add`以维持结构分数准确
+- **[EVOL-003]** 单次改进迭代 → 限制编辑预算（最多3个文件）并将被驳回建议存入`rejected_buffer`，防止发散和重复无效尝试
+- **[EVOL-004]** 连续3轮无进展或相同目标连续2次失败 → 触发硬收敛护栏，自动降级至探索模式或切换优化维度
+- **[EVOL-005]** 吸收外部方法论 → 执行五维评分筛选，剥离具体实现提取可移植原理，并压缩为3-5条文言格言注入现有协议
+- **[EVOL-006]** 多Agent并行进化 → 实施统一状态同步机制，防止各Agent独立演进导致的状态分叉与漂移
+- **[EVOL-007]** 验证技能或基准测试 → 独立计算验证结果（如diagnose.py独立计算optimize/coverage），严禁复用被验证对象的输出以避免自欺

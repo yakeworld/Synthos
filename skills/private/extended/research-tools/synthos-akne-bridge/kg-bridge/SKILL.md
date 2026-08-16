@@ -51,6 +51,18 @@ QueryEngine 的 `_graph_search` 通常使用词袋匹配，对多词/中英混�
 - **fuzzy_node_search**：5 级评分（精确→子串→分词→反向→模糊），回退到所有节点名
 - **combined search**：图结果 + 文本结果融合，graph 结果权重更高
 
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[KGB-001]** 查询成本敏感或日常高频查询 → 优先使用 quick 模式（<1s），仅当需要深度探索时才启用 deep 模式
+- **[KGB-002]** 面对多词或中英混合查询导致词袋匹配失效 → 采用 jieba 分词 + TF-IDF 全文检索，并与图结果融合（图权重更高）
+- **[KGB-003]** 实体解析存在歧义或匹配不确定 → 执行 精确→子串→分词→反向→模糊 五级降级评分策略，逐级回退以避免误投
+- **[KGB-004]** 查询结果噪声过大或数据量爆炸 → 限制输出数量（≤20）并采用 BFS 分层展开，先展示 depth=1 再按需展开 depth=2
+- **[KGB-005]** 需要调用重型依赖（如 sentence-transformers/torch）进行向量搜索 → 避免在 Agent venv 中加载，改用系统 Python 的 TF-IDF 或纯文本分词替代
+- **[KGB-006]** 调用图谱 API 时出现属性错误（AttributeError） → 确认 `resolve_entity` 位于 `QueryEngine` 而非 `KnowledgeGraph`，且 `find_related` 返回值为 3 元组
+
 ## 实施步骤
 
 ### Step 1: 诊断图谱状态

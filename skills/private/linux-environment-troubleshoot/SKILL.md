@@ -263,3 +263,16 @@ version: 2.1.0
 3. **venv 严格隔离**：`pyvenv.cfg` 必须 `include-system-site-packages = false`；装包一律用 venv 内 python（`~/.venv/bin/python3 -m pip`），不用系统 `pip3` 或 `uv pip`（uv 默认不遵循 venv 隔离）。
 4. **路径验证**：`which` 返回的路径必须用 `file` 确认为可执行 ELF（非 broken symlink），再执行。
 5. **反向 Shell 工具**：OpenBSD `nc`（Debian 默认）无 `-e`/`-k` 参数，必须用 `ncat`（nmap 包提供）；tmux socket 用 `~/.tmux-*` 防 `/tmp` 被 tmpfiles 清理。
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[LINU-001]** 报错 "No space left on device" 但磁盘空间充足 → 优先检查并清除残留的锁文件（如 MiKTeX lock）及损坏日志，而非重装软件
+- **[LINU-002]** Python venv 隔离失效或包安装位置错误 → 确保 `pyvenv.cfg` 中 `include-system-site-packages = false`，并强制使用 venv 内的 Python 解释器执行 pip 安装
+- **[LINU-003]** 使用 `uv pip install` 导致包未进入 venv → 避免使用 uv 进行 venv 内包管理，改用 venv 自带的 pip 以遵循 PEP 668 隔离规范
+- **[LINU-004]** 执行命令前需验证可执行文件有效性 → 使用 `file` 命令确认 `which` 返回的路径是有效的 ELF 二进制文件而非 broken symlink
+- **[LINU-005]** 在 Debian/Ubuntu 上建立反向 Shell 失败 → 因 OpenBSD nc 不支持 `-e`/`-k` 参数，必须使用 ncat（nmap 提供）并配合 tmux 持久化会话
+- **[LINU-006]** dpkg/apt 包管理器中断或锁死 → 执行 `sudo dpkg --configure -a` 修复中断状态，并清除 `/var/lib/dpkg/lock*` 等锁文件后重试
+- **[LINU-007]** 长期运行的后台服务（如反向 Shell）会话丢失 → 将 tmux socket 路径指定在用户主目录（`~/.tmux-*`）而非 `/tmp`，以防被系统 tmpfiles 清理

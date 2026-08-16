@@ -38,6 +38,18 @@ metadata:
 - **修复有序**：export 前移 → `BASH_ENV` → 文件回退（`.api_key`）→ `/etc/environment`，依可靠性为序，勿倒置。
 - **自动化不倚 `.bashrc`**：CI、cron、子进程之环境变量，不倚 `.bashrc` 之 export，须用 `/etc/environment` 或文件回退；秘钥更不置 `.bashrc`。
 
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[DEBU-001]** 变量在交互 shell 存在但在 `bash -c` 或子进程中丢失 → 优先检查 `.bashrc` 中的 `case $- in *i*)` 守卫，确认 export 是否位于守卫之前
+- **[DEBU-002]** 需要在非交互 shell 中加载环境变量 → 设置 `BASH_ENV` 指向配置文件，或将 export 语句移至 `.bashrc` 守卫块之前
+- **[DEBU-003]** 自动化场景（CI/cron/subprocess）中环境变量不可靠 → 禁止依赖 `.bashrc`，改用 `/etc/environment` 或应用层文件回退机制
+- **[DEBU-004]** 敏感凭证（API Key）在子进程中读取为空 → 实现文件回退策略（如读取 `.api_key` 文件），避免将密钥硬编码在 shell 配置中
+- **[DEBU-005]** 嵌套 `subprocess.run(shell=True)` 导致引号解析错误 → 使用 `&&` 链接命令或 heredoc 结构，避免在双引号内嵌套单引号导致变量被外层 shell 消费
+- **[DEBU-006]** 诊断变量消失点时缺乏定位依据 → 执行逐层验证（父进程 → `bash -c` → Python 子层），通过 `os.environ` 和 `echo` 对比定位具体失效层级
+
 ## 原理层·文言
 
 > 环境之变，变量之惑。

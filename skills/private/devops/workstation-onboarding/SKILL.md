@@ -59,6 +59,17 @@ author: Synthos
 | 工作检查报告 | `~/workspace/WORK_CHECK_REPORT.md` | 环境验收证明（generated） |
 
 
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[WORK-001]** SSH 连通性验证未通过 → 拒绝搭建任何环境文件，严格执行“道不通，则礼不行”的硬前置约束
+- **[WORK-002]** 配置 codex 运行环境 → 将所有环境变量与默认参数收敛至 `~/codex-vllm.sh` 单一脚本，实现一键启动且不分散配置
+- **[WORK-003]** 学生首次登录引导 → 必须同时提供 `START_HERE.md`（入门步骤）与 `*培养方案.md`（研究方向/里程碑），确保入门与进路缺一不可
+- **[WORK-004]** 环境验收确认 → 必须生成 `WORK_CHECK_REPORT.md` 作为书面凭据，禁止仅凭口头声称环境就绪
+- **[WORK-005]** 分发 Windows 软件 → 必须使用零依赖的绿色便携软件，严禁要求学生安装任何运行库或依赖项
+
 ## Golden 集合 · GOLDEN SET
 
 - **Golden Input**: `remote_host: "ssh student@10.0.0.5:2222"`（SSH 连通），`software_list: ["codex", "obsidian"]`

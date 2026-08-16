@@ -126,3 +126,15 @@ When searching for public healthcare datasets:
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[HEAL-001]** 当需要获取 OpenML 数据集列表时 → 使用 `/api/v1/json/data/list` 端点获取全量数据并在本地过滤，避免使用 `limit/500` 等可能导致空结果的参数
+- **[HEAL-002]** 当解析 OpenML API 响应时 → 区分列表接口（`{"data": {"dataset": [...]}}`）与详情接口（`{"data_set_description": {...}}`）的不同 JSON 结构
+- **[HEAL-003]** 当搜索 UCI Archive 中的经典医疗数据集时 → 预期大量数据集已移除或返回 404，需优先验证 GitHub 镜像或 HuggingFace 的可用性
+- **[HEAL-004]** 当调用 Crossref 或 PubMed API 进行文献/数据检索时 → 使用 `+` 符号或 `quote_plus()` 处理空格，而非标准 URL 编码，以确保查询参数正确解析
+- **[HEAL-005]** 当评估数据集来源的可靠性时 → 优先选择 OpenML 等提供稳定 API 和明确元数据（如 DID、特征数）的来源，规避需要认证或存在付费墙的平台（如 Kaggle）
+- **[HEAL-006]** 当执行数据集发现任务时 → 首先确认输入参数完整性，并在执行核心操作前验证目标源点的可达性（如检查已知死链）

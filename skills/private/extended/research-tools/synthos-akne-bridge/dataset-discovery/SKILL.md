@@ -39,6 +39,18 @@ metadata:
 | **OpenML** | ✅ JSON API | N/A | No | `/api/v1/json/data/list` — response is `data.dataset` array, not `data.data`. `did` not `id`. No stroke datasets found. See `references/openml-api-behavior.md` for full details. |
 | **UCI Archive** | ❌ Removed | ❌ | No | Healthcare Dataset (stroke) and Breast Cancer datasets removed from UCI. All mirrors dead. For alternatives see skill `healthcare-dataset-discovery`. |
 
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[DATA-001]** 调用 OpenML API 获取数据集列表时 → 必须使用 `limit=50` 配合 `offset` 进行分页，严禁单次请求 `limit > 200` 以防 JSON 截断
+- **[DATA-002]** 解析 OpenML API 返回的质量指标数值时 → 必须将字符串类型（如 `"684.0"`）转换为 `float`，不可直接按整数或原生数值处理
+- **[DATA-003]** 验证 GitHub 镜像或远程文件可用性时 → 必须检查文件首行内容（如 `head -1`）以识别 404 HTML 页面，不可仅依赖 HTTP 200 状态码
+- **[DATA-004]** 在 OpenML 中执行数据集搜索时 → 必须使用 `/api/v1/json/data/list/` 接口进行过滤，避免使用无效的 `/tag/` 或 `/name/` 专用端点
+- **[DATA-005]** 所有公开数据源（UCI/GitHub/HF等）均返回 404 或不可用时 → 依据已知 Schema 和统计特征生成固定种子的合成数据集，并明确标注其为合成数据
+- **[DATA-006]** 解析 OpenML API 响应结构时 → 必须从 `data.dataset` 数组中提取数据，并使用 `did` 字段作为唯一标识符，而非 `data.data` 或 `id`
+
 ## OpenML Pitfalls
 
 1. **Pagination limit**: `limit > 200` often produces truncated JSON. Use `limit=50` with `offset` pagination.

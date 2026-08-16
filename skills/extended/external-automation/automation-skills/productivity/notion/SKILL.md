@@ -254,3 +254,16 @@ Common property formats for database items:
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Notion
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[NOTI-001]** 调用 Notion API 时 → 必须包含 `Notion-Version: 2025-09-03` 请求头以符合最新 API 规范
+- **[NOTI-002]** 区分数据库操作场景时 → 创建页面使用 `database_id`，查询数据使用 `data_source_id`
+- **[NOTI-003]** 执行 API 请求前 → 确保目标页面或数据库已通过 Notion UI 共享给对应的 Integration
+- **[NOTI-004]** 处理数据库查询或创建时 → 使用 `/data_sources/` 端点替代旧版 `/databases/` 端点
+- **[NOTI-005]** 构建数据库属性数据时 → 严格遵循特定类型的 JSON 结构（如 Title 需嵌套 `text.content`，Select 需 `name` 字段）
+- **[NOTI-006]** 处理 API 响应数据时 → 使用 `jq` 管道解析 JSON 输出以提升可读性和处理效率
+- **[NOTI-007]** 执行高频 API 请求时 → 控制请求频率在平均 3 次/秒以内以遵守速率限制

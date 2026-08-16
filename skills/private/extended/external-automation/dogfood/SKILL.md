@@ -47,6 +47,19 @@ metadata:
 - **所见必证**：缺陷必附 `browser_vision annotate=true` 之截图，以 `MEDIA:<path>` 内联入报告；无图之断言，不取信于人。
 - **尽览无余**：长页必滚动尽览、多步必全程走通、边缘（空态/长文/特殊字符/快速点击）必试；略其一，则验有隙。
 
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[DOGF-001]** 执行自测任务 → 必须使用覆盖有效/无效输入、多步导航及边界空态的真实用例集，禁止仅测试单一正常路径
+- **[DOGF-002]** 完成页面导航或关键交互后 → 立即调用 `browser_console()` 检查 JS 静默错误，将其视为高价值缺陷发现
+- **[DOGF-003]** 发现缺陷或需要记录观察结果时 → 必须使用 `browser_vision annotate=true` 生成带标注的截图，并以 `MEDIA:<path>` 格式内联至报告作为证据
+- **[DOGF-004]** 面对长页面内容 → 必须执行滚动操作直至页面底部，以检测折叠线以下可能存在的渲染或布局问题
+- **[DOGF-005]** 测试多步业务流程 → 必须端到端完整走通所有导航步骤，确保流程连贯性并验证中间状态转换
+- **[DOGF-006]** 处理表单输入场景 → 必须同时测试有效数据和无效数据（如特殊字符、超长文本），以暴露表单验证逻辑缺陷
+- **[DOGF-007]** 遇到快照引用不清或需分析元素位置时 → 使用 `browser_vision` 配合 `annotate=true` 获取元素标签辅助定位，而非盲目点击
+
 ## Tips
 
 - **Always check `browser_console()` after navigating and after significant interactions.** Silent JS errors are among the most valuable findings.

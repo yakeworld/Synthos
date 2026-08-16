@@ -251,3 +251,15 @@ summary — WCAG findings are the most load-bearing reason to use the CLI.
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Design Md
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[DESI-001]** 当需要定义组件样式时 → 使用 `{token.path}` 引用而非硬编码值，确保设计令牌单一数据源
+- **[DESI-002]** 当定义组件交互状态（如 hover/active）时 → 创建独立的同级组件键（如 `button-primary-hover`）而非嵌套属性
+- **[DESI-003]** 当编写 YAML 中的颜色或负数维度值时 → 必须使用引号包裹字符串（如 `"#1A1C1E"`, `"-0.02em"`）以防止解析错误
+- **[DESI-004]** 当组织 DESIGN.md 文档结构时 → 严格遵循 Overview 到 Do's and Don'ts 的规范章节顺序，禁止重复标题
+- **[DESI-005]** 当完成 DESIGN.md 编写后 → 必须执行 `npx @google/design.md lint` 验证结构完整性及 WCAG 对比度合规性
+- **[DESI-006]** 当用户需要跨项目一致性或代码集成时 → 使用 CLI 导出 Tailwind 或 W3C DTCG JSON 格式以对接现有开发工作流
