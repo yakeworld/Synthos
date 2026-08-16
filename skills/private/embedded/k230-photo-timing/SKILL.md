@@ -158,11 +158,13 @@ When the K230 main loop floods the serial port (print statements, no throttling)
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] Display 绑定通道（chn0）确认为 YUV420SP（`bind_layer` 唯一支持格式），且保存走 chn1/chn2（RGB888/RGB565）而非直接 `img.save()` YUV 帧
+- [ ] 使用 `Sensor(id=N, ...)` 构造函数时仅初始化 chn0，未设置 chn1/chn2（否则设备立即挂起，需 rmmod 恢复）
+- [ ] 多传感器场景：仅调用一次 `sensor.run()` 启动全部，且逐一 `sensor.stop()` 或统一 `Sensor.deinit()`
+- [ ] Throttle 验证：`photo_interval_ms=10/100` 下主循环迭代数与有效 FPS 符合 `1000/millis`，save 成功数与 snapshot 调用数一致
+- [ ] 空照片目录诊断：核对 `photo_sequence.txt` 会话数与有文件的目录数，区分静默初始化失败产生的空目录
+- [ ] 串口无响应（ampy 挂起）时执行 `rmmod ftdi_sio` + `modprobe ftdi_sio` 重载驱动，而非仅软复位
+- [ ] 驱动重载后按恢复协议进 REPL：多次 Ctrl+C → Ctrl+D → 再 Ctrl+C，等待 0.5s 后发首条命令，确认 `>>>` 提示符
 
 ## 核心原则 · PRINCIPLES
 

@@ -122,11 +122,13 @@ The system has been rigorously evaluated with leakage-free 10x5 stratified CV, a
 ## References
 - `references/error-transcript.md` — Common errors and fixes encountered during development
 ## 验证清单 · VERIFICATION
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 单类别折检测：交叉验证中 `len(np.unique(y_train)) < 2` 或 `len(np.unique(y_test)) < 2` 的折已 `continue` 跳过，SMOTE 与 SVC 均未崩溃（HCS-001）
+- [ ] 低自动化率诊断：自动化率 < 10% 时已检查概率直方图，>90% 概率落在 [0.03, 0.95] 则判定特征空间分离度不足并记录为诚实信号（HCS-002）
+- [ ] 元特征防泄漏：Expert C 的 P_A、P_B 特征通过 `cross_val_predict` 生成，未在测试集上训练（HCS-003）
+- [ ] 长实验后台化：10x5 交叉验证（50 折，约 190s）使用后台执行，会话未超时（HCS-004）
+- [ ] SVC 概率 API 兼容：sklearn 1.9+ 使用 `CalibratedClassifierCV(SVC(), ensemble=False)` 替代已弃用的 `probability=True`，含 ImportError 回退（HCS-005）
+- [ ] SMOTE 作用域：Borderline-SMOTE 仅应用于 Expert B 与 Expert C 训练集，Expert A 训练集未做 SMOTE（HCS-006）
+- [ ] 低可分数据集阈值：PIMA 等低可分数据集采用数据集特定阈值优化或放宽阈值（如 0.20/0.80），未硬套默认 0.03/0.95（HCS-007）
 ## 约束规则 · RULES
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致

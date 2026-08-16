@@ -91,11 +91,14 @@ tracking（已扫描/候选）
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 关键词轮转策略已按频率执行：GitHub Topics 每轮、Hermes skills 每轮、arXiv 每 2 轮（对照 references/keyword-rotation.md 核对实际扫描源）
+- [ ] 新发现项目已统一写入 `absorption-ledger.json` 台账，含来源、stars、吸收能力、目标技能字段
+- [ ] 台账条目状态在 tracking→evaluating→absorbed/deferred/archived 生命周期内，且状态变更留有记录
+- [ ] 深度吸收已生成五层吸收记录 `evolution/absorption-{project}.md`（未留痕者不视为有效吸收）
+- [ ] 吸收报告符合 `references/absorption-report-template.md` 模板
+- [ ] 执行顺序正确：先写详细记录文件 → 再追加统一台账 → 最后按 OpenClaw merge pattern 格式归一化
+- [ ] 外部输入/代码已校验参数、类型及范围，未验证的任意代码被拒绝执行
+- [ ] 吸收验证基于 Golden 集合（Input/Output/Error）执行，结果可记录、可复现
 
 ## 约束规则 · RULES
 
@@ -162,14 +165,6 @@ tracking（已扫描/候选）
 - `references/keyword-rotation.md` — 关键词轮转策略和分类
 - `references/absorption-report-template.md` — 吸收报告模板
 - `references/multi-project-comparison.md` — 多项目哲学对比矩阵
-
-## 验证清单 · VERIFICATION
-
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
 ## 约束规则 · RULES
 

@@ -97,11 +97,13 @@ The UCI repository moved to SPA at `archive.ics.uci.edu`. Direct file links (e.g
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] OpenML 请求使用 `limit=50` 配合 `offset` 分页，单次请求未超过 `limit>200`（防 JSON 截断）
+- [ ] 质量指标数值已从字符串转为 `float`（如 `"684.0"` → 684.0），未直接按 int 或原生数值处理
+- [ ] 远程文件（GitHub 镜像等）通过 `head -1` 检查首行内容确认真实存在，未仅依赖 HTTP 200 状态码
+- [ ] OpenML 搜索使用 `/api/v1/json/data/list/` 过滤端点，未调用无效的 `/tag/` 或 `/name/` 端点
+- [ ] 响应数据从 `data.dataset` 数组提取，以 `did` 字段为唯一标识，未误用 `data.data` 或 `id`
+- [ ] 数据源均 404 时，合成数据集基于已知 schema 与固定种子 `random.seed(42)` 生成，并明确标注为合成数据
+- [ ] 候选数据集已与 `outputs/papers/` 现有论文交叉核对，排除重复
 
 ## 约束规则 · RULES
 

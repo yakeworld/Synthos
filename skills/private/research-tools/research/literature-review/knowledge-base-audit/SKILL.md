@@ -174,11 +174,14 @@ research node). The fix is to prioritize `sources/` and `concepts/` nodes over
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] P0 分级：核心项目 notebook 缺失的关键文献已用 `notebooklm source add` 补齐，核心库完整性已确认（KNOW-001）
+- [ ] 认证排障：确认 CLI 仅读取默认路径 `~/.notebooklm/storage-state.json`，若 `list` 报 "Not authenticated" 则执行 `notebooklm login` 重建会话，而非依赖自定义 profile 路径（KNOW-002）
+- [ ] 拆分操作：新建聚焦主题库后，旧库已重命名为 "Archive - [原名]" 归档，未尝试将旧源重新添加到新库（KNOW-003）
+- [ ] 跨库关联：映射文档（Markdown）已创建并作为 source 同时添加到两个相关 notebook，文档含概念映射说明（KNOW-004）
+- [ ] source 操作：rename/delete 均使用 12 字符 UUID 前缀标识符并以 `echo "y" |` 管道自动确认，无交互式阻塞（KNOW-005）
+- [ ] P1 命名：数字/日期前缀命名的非标准 PDF 来源已识别并限期重命名为标准命名（KNOW-006）
+- [ ] P2 整理："其他" 类 notebook 数量超过 10 个的已归类，重复 notebook 已删除，库结构清晰（KNOW-007）
+- [ ] 审计报告已保存到私有目录（如 `~/notebooklm-audit/`），未写入项目 `docs/` 目录
 
 ## 约束规则 · RULES
 

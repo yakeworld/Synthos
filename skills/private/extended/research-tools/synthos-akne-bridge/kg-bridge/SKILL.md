@@ -151,11 +151,14 @@ AKNE 源文件路径中可能包含特殊字符（空格、中文、连字符）
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 模式选路正确：日常查询走 quick（<1s，5-20 节点）、深查才启 deep（10s~min）、健康检查走 bridge（KGB-001）
+- [ ] 多词/中英混合查询已启用 jieba 分词 + TF-IDF 全文检索，且融合评分中图结果权重高于文本结果（KGB-002）
+- [ ] 实体解析按 精确→子串→分词→反向→模糊 五级降级评分执行，歧义时逐级回退未误投他物（KGB-003）
+- [ ] 输出限量 ≤20（`related[:20]`），BFS 分层展开先 depth=1、按需 depth=2，无数百条噪声（KGB-004）
+- [ ] 重型依赖隔离：未在 Agent venv 加载 sentence-transformers/torch，向量检索改用系统 Python 的 TF-IDF 或纯文本分词，且经 terminal 而非 execute_code 执行（KGB-005）
+- [ ] API 调用无 AttributeError：`resolve_entity` 经 `QueryEngine(graph_index=kg)` 调用而非 `KnowledgeGraph`，`find_related` 返回值按 3 元组 `(neighbor, relation_chain, metadata)` 解包（KGB-006）
+- [ ] 含空格/中文/连字符的文件路径已用 `"${query}"` 包裹并在 Python 中经 `os.path.relpath()` 标准化，无 glob 展开问题
+- [ ] 端到端四场景验证通过：已知实体（BPPV→5 邻居）、概念词（眩晕→fuzzy 命中源文件）、多词（眼动追踪→jieba+TF-IDF）、bridge 审计（0 孤儿全连接）
 
 ## 约束规则 · RULES
 

@@ -141,11 +141,14 @@ board.close()
 - **主循环保真**：重构分模块必保 `while True: main(); time.sleep(1)` 之原结构，idle 态无 sleep，GPIO 异常必打印不静默；语义失一则全机失稳。
 
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] `ampy run` 失败时，已改用 Python 直调 `ampy.pyboard.Pyboard`（`/dev/openmvcam` @115200，`enter_raw_repl`/`exec_`/`exit_raw_repl`）完成代码执行与文件传输
+- [ ] 重启通过串口下发 `import machine; machine.reset()` 软重启实现，全链无人工拔插 USB
+- [ ] 配置 GPIO 前已查 `/revision.txt`：RT-Smart 固件（含 `rtsmart`）显式 `fpioa.set_function(pin, FPIOA.GPIO0 + pin)`，标准 CanMV 固件直接用 `machine.Pin` 不叠 FPIOA
+- [ ] 按键 GPIO 已按 `os.uname()[-1]` 检测板型分配：`01studio`→GPIO21(按下=0)、`lckfb`→GPIO53(按下=1)
+- [ ] 主循环保持 `while True: main(); time.sleep(1)` 原结构，idle 态无超 1ms 的 sleep，无重复 `main()` 入口，GPIO 异常均打印不静默吞掉
+- [ ] `inference_mode_start()` 同时设置了 `state.current_mode = "inference"` 与 `state.is_running = True`
+- [ ] 设备死锁（串口完全无输出，sendBreak/Ctrl+C/Ctrl+D 均无效）时以物理拔插 USB 恢复，且以 `lsusb` 成功≠串口可用做假阳性判断
+- [ ] 代码规避 MicroPython 限制（无 f-string/列表推导式/三引号），main.py 无 print 避免串口洪水
 
 
 ## Genes (策略基因)

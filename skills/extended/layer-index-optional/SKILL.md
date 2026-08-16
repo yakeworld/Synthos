@@ -112,11 +112,14 @@ Navigation index for optional skills: creative tools, productivity, social monit
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 查询匹配：layer/query/context 输入下，返回的 skill_list 是否全部与 query 相关且未混入其他层的技能
+- [ ] 索引一致性：列表中的技能名与"Skills in this Layer"清单逐一对应，无遗漏、无失效条目
+- [ ] 签名匹配：输出格式是否符合 IO_CONTRACT 的 `skill_list: list[dict]` 约定
+- [ ] 模糊意图处理（LAYE-001）：query 模糊或"只有工具无方向"时，是否触发创意构思技能而非直接返回空列表
+- [ ] 平台选择（LAYE-005）：涉及 AI 信号/社交监控的查询，是否优先推荐零注册或低摩擦平台（如 GitHub Discussions）
+- [ ] CLI 设计替代（LAYE-002）：query 为设计类任务且处于 CLI/API 环境时，是否指向 claude-design 等替代技能而非 Web UI
+- [ ] 图表契约（LAYE-006）：命中科研图表技能时，是否提示"结论-证据-面板"契约与 Nature 语义色板
+- [ ] 边界场景：空 query 或无匹配技能时，是否返回明确提示而非异常中断
 
 ## 约束规则 · RULES
 

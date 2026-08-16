@@ -92,11 +92,15 @@ pima-crispdm           33   100%    0     0    ✅
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 已对每篇 .tex 提取 \cite 标签集，并对应 .bib 提取条目集，完成双向配对
+- [ ] 无孤儿引用（\cite 有引但 .bib 无对应条目），孤儿标签已逐一列出
+- [ ] 无僵尸条目（.bib 有条目但未被任何 \cite 引用），僵尸条目已逐一列出
+- [ ] D8=0（无 .bib 或 .bib 为空）标记为重症并优先处理缺失/空 .bib 文件
+- [ ] D10a（\cite↔\bib 匹配率）<100% 标记为中等，未匹配引用标签已定位
+- [ ] D8<30 标记为轻症，提示文献支撑可能不足
+- [ ] 审计报告按重症/中等/轻症/混合问题分级输出（含每篇 D8/D10a 数值）
+- [ ] 批量编译/质量门审查前已执行本审计，D8/D10a 指标已喂入 L0.5 数据诚实门
+- [ ] 验证基于 Golden 集合（Input/Output/Error）执行，结果可记录、可复现
 
 ## 约束规则 · RULES
 
@@ -165,14 +169,6 @@ pima-crispdm           33   100%    0     0    ✅
 - `bib-integrity-audit` — DOI completeness and suspicious entries within .bib files (complementary: this skill checks \cite↔\bib matching, that checks \bib entry quality)
 - `paper-pipeline` → `citation-completeness-verification` — same-concept check for in-text \bibitem{} (within a single .tex file, not cross-file)
 - `quality-gate` — D8/D10a metrics feed into L0.5 gate evaluation
-
-## 验证清单 · VERIFICATION
-
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
 
 ## 约束规则 · RULES
 

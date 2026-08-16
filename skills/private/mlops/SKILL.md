@@ -47,11 +47,14 @@ metadata:
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 按请求路由到正确的子域（codex-llm-routing / ellipse-3d-anatomy-constrained / evaluation / inference / models / research / training），路由依据可追溯到请求描述
+- [ ] ellipse-3d-anatomy-constrained 输出满足解剖约束 R=2r 且 d=√3r，方位角模糊已消除
+- [ ] 每个 mlops 子域结论可追溯到具体证据或数据源（MLOP-001：严禁编造数据）
+- [ ] 每一步操作可重复执行且结果一致（MLOP-002 可复现性）
+- [ ] 输入参数类型、范围、格式校验通过，无效输入被拒绝（MLOP-003）
+- [ ] 返回值结构、编码、命名与契约一致（MLOP-004）
+- [ ] 异常路径的错误信息包含上下文背景与恢复建议（MLOP-005）
+- [ ] 改进/测试以 Golden 集合（Input/Output/Error）为单一真理来源且全部通过（MLOP-007）
 
 ## 核心原则 · PRINCIPLES
 

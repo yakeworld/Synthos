@@ -200,11 +200,14 @@ Script timed out after 300s and was killed
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 已识别错误来源的 `base_url`，区分 vLLM 节点 / DeepSeek API / 飞书 API，未将 404 误判为飞书问题（FEIS-001）
+- [ ] 已按时间顺序追踪 Gateway 日志全链路（Received raw → Flushing text batch → response ready → Sending response），定位具体断点（FEIS-002）
+- [ ] vLLM 404 时已 `curl /v1/models` 验证模型是否存在于该节点，并修正节点或模型名（FEIS-003）
+- [ ] 飞书 MEDIA 附件未收到时已检查文件 ≤10MB，超限用 Ghostscript 压缩后重发（FEIS-004）
+- [ ] 发送文件前已 `ls -la <路径>` 验证文件真实存在，未使用 /tmp/ 等不稳定路径（FEIS-005）
+- [ ] 已确认 session 前缀（`cli:` vs `feishu:`），排除 CLI 与飞书 session 隔离带来的跨平台干扰（FEIS-006）
+- [ ] Stream 断开/180s 超时时已判定为 vLLM 节点超时或负载过高，并检查节点状态（FEIS-007）
+- [ ] 诊断结论可追溯至具体日志行（Gateway/agent/errors），未编造数据
 
 ## 核心原则 · PRINCIPLES
 

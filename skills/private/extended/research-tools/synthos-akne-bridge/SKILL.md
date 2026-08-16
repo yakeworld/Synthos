@@ -354,11 +354,15 @@ AKNE 桥接遵循 `kg-bridge`（Knowledge Graph — Agent Bridge）方法论：
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 先诊后治（SYNT-001）：动手修复前是否先运行 `akne-query.sh bridge` 诊断，且最终 orphans=0、skill_connected=total
+- [ ] 逆向边成流（SYNT-002）：是否显式创建 `source_category`/`category_paper`/`concept_paper`/`paper_category` 逆向边，`source→category→paper` 双向路径可达
+- [ ] 三线并行（SYNT-003）：source 节点、content_summary 摘要、vectors.db 向量三线是否齐全，1145 源文件已向量化
+- [ ] 环境隔离（SYNT-004）：逻辑处理走 venv 3.11、AKNE 查询走系统 3.12，未在 execute_code 中 import AKNE
+- [ ] 论文目录规范化（SYNT-005）：论文是否归入 `01-manuscript`/`06-references`/`07-quality` 子目录，无 IMPROPER 残留
+- [ ] 孤立连接（SYNT-006/007）：孤立论文按领域关键词手动映射到 AKNE 分类，技能各连 2-3 源分类与 Wiki 概念
+- [ ] 边方向正确：`source_category_membership` 为 `category→source`，直读 JSON 时检查 `link_type`/`key` 字段而非空的 `relation`
+- [ ] 查询与 API 正确：resolve_entity 走 QueryEngine、find_related/in_edges 按 3 元组解包，多词英文查询用 full 模式 jieba 分词兜底
+- [ ] 内容注入：source 节点 metadata 含 content_summary/content_hash/word_count/h1，Wiki 污染 0 行
 
 ## 约束规则 · RULES
 

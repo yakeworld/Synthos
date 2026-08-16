@@ -79,11 +79,13 @@ codex -p amax exec "echo test"
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 已使用官方包 `@openai/codex` 安装，未使用已移除的旧包名 `@openai/codexec`（CODE-001）
+- [ ] 未安装第三方付费打包器 `@codexapi/codexclaude`，确认 `~/.codex/config.toml` 未被改指向付费端点（CODE-002）
+- [ ] `which codex` 返回有效二进制路径，且 `codex --version` 无报错（CODE-004，防错清单）
+- [ ] 与 `opencode` 共存时隔离完好：`codex` 用 `~/.codex/`，`opencode` 用 `~/.local/share/opencode/`，二进制名不冲突（CODE-003，共存策略）
+- [ ] `ls ~/.codex/profiles/` 下存在所有 cron 脚本引用的 profile 文件（如 `amax`、`hermes`），缺失会导致 `codex exec` 无错误静默批量超时（CODE-005）
+- [ ] `codex -p <name> exec "echo test"` 对每个待用 profile 验证可通（多 Profile 管理节）
+- [ ] 调试 `codex exec` 超时时已优先检查对应 profile 文件是否存在（CODE-006）
 
 ## 核心原则 · PRINCIPLES
 

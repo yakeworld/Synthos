@@ -70,11 +70,13 @@ git push --no-verify
 
 ## 验证清单 · VERIFICATION
 
-1. 输入验证: 输入参数/文件/路径是否完整且有效
-2. 过程验证: 中间步骤/转换/计算是否正确
-3. 输出验证: 输出格式/内容是否符合预期
-4. 边界验证: 空输入、极大值、异常场景是否处理
-5. 错误处理: 失败时是否有明确的错误信息和恢复指引
+- [ ] Git 推送前 pre-push 钩子已触发，对 API Key / GitHub Token / 密码等敏感信息完成扫描（PRIV-001）
+- [ ] 发现的已知泄露凭证或新敏感数据已加入 `~/.hermes/scripts/privacy-scan.sh` 的 `KNOWN_SECRETS` 黑名单数组（PRIV-002）
+- [ ] 仅在使用 `git push --no-verify` 跳过扫描时，已人工确认代码库不含任何敏感信息（PRIV-003）
+- [ ] .gitignore 注释与实际排除规则一致，无私有技能文件（如 `skills/private/` 下文件）被误追踪（PRIV-004）
+- [ ] 历史提交发生泄露时已用 `git-filter-repo` 重写清除，且 `~/.secrets`（mode 600）中的原凭证已轮换（PRIV-005，已知泄漏记录）
+- [ ] 已用 `git ls-tree` 等命令二次验证敏感文件确实未被追踪或已从历史中清除（PRIV-006）
+- [ ] 扫描异常/失败时错误信息包含具体上下文和恢复建议，操作可复现可追溯（PRIV-007）
 
 ## 核心原则 · PRINCIPLES
 

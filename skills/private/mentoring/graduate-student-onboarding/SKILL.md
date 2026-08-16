@@ -44,11 +44,12 @@ Scope tiers:
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 研究方向已按 Scope tiers 分为 Core（全流程：5 pillars + Synthos + 教学 + 算法组件 + 公开数据集）与 Peripheral（仅空白+假设：角膜/晶状体/玻璃体/泪膜/耳鸣/脑震荡生物力学）
+- [ ] 每个 Cron 任务（autonomous-core-researcher / paper-repair / paper-quality-review / paper-layer-b-review / literature-monitor）prompt 中显式列出允许与禁止的方向
+- [ ] paper-repair 仅修复范围内（in-scope）论文；paper-quality-review 与 paper-layer-b-review 对范围外论文执行跳过
+- [ ] literature-monitor 输出分级：核心方向生成完整报告，外围方向仅作附录
+- [ ] 收敛决策（convergence decision）已作为持久化事实写入 Memory，后续 cron 与手动操作基于同一状态
+- [ ] 所有输出通过准确性核查（无编造数据），结论可追溯到具体证据/数据源，操作步骤可重复验证
 
 ## 核心原则 · PRINCIPLES
 
