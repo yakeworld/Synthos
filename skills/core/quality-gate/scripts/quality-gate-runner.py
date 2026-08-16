@@ -379,7 +379,7 @@ def check_g5_citation_quality(paper_dir: str) -> GateResult:
     # Find the bib that matches the MOST cite keys (best match strategy)
     best_keys = set()
     best_overlap = 0
-    paper_root = os.path.dirname(os.path.dirname(paper_dir))
+    paper_root = os.path.dirname(paper_dir)  # FIX 2026-08-16: paper_dir is 01-manuscript, one dirname = single paper dir (was two, scanned all 280 papers' .bib and matched wrong paper)
     for root, dirs, files in os.walk(paper_root):
         # Limit depth: only go into manuscript, 06-references, 08-refs, 08-records, 08-refs
         rel = os.path.relpath(root, paper_root)
