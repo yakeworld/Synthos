@@ -112,6 +112,23 @@ metadata:
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 
+## 示例 · EXAMPLES
+
+**示例 1**（折内预处理）
+- **输入**：对 PIDD（768 样本，不平衡）做 10-fold CV 前，在数据分割前执行 SMOTE 的全量脚本
+- **操作/输出**：按原则「预处入折」与 **PIDD-001**，改用 `imblearn.Pipeline`（**PIDD-002**）把 SMOTE/imputation 放进 Pipeline，仅在各 fold 训练折内执行；产出 `cv_results.csv` 等输出契约
+- **验证**：Recall 不再虚崩至 ~0.50、Precision 不再虚高至 1.00；F1 落于 ≈0.71 界内，未触发 **PIDD-003** 的 F1>0.90 泄漏异常
+
+**示例 2**（F1 异常排查）
+- **输入**：某运行报告 PIDD 模型 F1=0.93
+- **操作/输出**：按 **PIDD-003** 判定为异常，回查折外预处理与全局 imputation（**PIDD-006**），将填充值改为折内独立计算后重跑
+- **验证**：复算 F1 回落到 0.71 量级；`comprehensive_results.json` 前后对照记录泄漏来源
+
+**示例 3**（SHAP 环境）
+- **输入**：对获胜模型做 SHAP 可解释性分析，系统 Python 为 Debian numpy 1.x
+- **操作/输出**：按 **PIDD-004** 建独立 venv 并安装 numpy≥2.0、单独编译安装 CatBoost（约 4 分钟），运行 `run_shap.py`
+- **验证**：SHAP 运行无 numexpr/bottleneck 崩溃；引用 CRISP-DM 时按 **PIDD-005** 已并引 Shearer (2000) 或 Wirth & Hipp (2000)
+
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。

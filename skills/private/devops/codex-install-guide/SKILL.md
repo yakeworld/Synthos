@@ -120,3 +120,9 @@ codex -p amax exec "echo test"
 - **[CODE-004]** 安装完成后 → 执行 `which codex` 和 `codex --version` 以验证二进制路径有效且版本无报错
 - **[CODE-005]** 配置多节点 Profile 时 → 确保 `~/.codex/profiles/` 下存在所有 cron 脚本引用的 profile 文件，避免批量超时
 - **[CODE-006]** 调试 `codex exec` 超时问题时 → 优先检查对应 profile 文件是否存在，因为缺失 profile 会导致无具体错误信息的静默超时
+
+## 示例 · EXAMPLES
+
+- **示例 1**：输入「在 Linux 工作站安装 Codex CLI」→ 执行 `npm i -g @openai/codex`（CODE-001，拒绝旧包名 `@openai/codexec` 与付费打包器 `@codexapi/codexclaude`）→ 验证：`which codex` 返回有效路径且 `codex --version` 无报错（CODE-004/防错清单），`~/.codex/config.toml` 未被改指向付费端点（CODE-002）。
+- **示例 2**：输入「已有 opencode，需 codex 共存」→ 按共存策略利用天然隔离：`codex` 用 `~/.codex/config.toml`、`opencode` 用 `~/.local/share/opencode/auth.json`，二进制名不同（CODE-003）→ 验证：两工具互不覆盖配置，`which codex` / `which opencode` 各自返回独立二进制。
+- **示例 3**：输入「cron 脚本引用 profile `amax`，`codex exec` 批量超时」→ 按 CODE-006 先 `ls ~/.codex/profiles/` 确认 `amax.config.toml` 是否存在（多 Profile 管理节），缺失则按模板创建（model=qwen3.6-35b-nvfp4 / amax 供应商）→ 验证：`codex -p amax exec "echo test"` 返回 `test`，超时消除（CODE-005，验证清单）。

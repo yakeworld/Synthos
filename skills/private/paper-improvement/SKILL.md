@@ -69,3 +69,9 @@ metadata:
 - **[PAPE-004]** 遇到P0级质量缺陷（如数值伪造） → 启动完整修复闭环，包括模式选择、引用修复及数据集统一
 - **[PAPE-005]** LaTeX引用替换失败 → 启用sed脚本作为回退方案
 - **[PAPE-006]** 改进过程结束 → 确保所有验证步骤可执行、可记录且可复现，并生成标准审计报告
+
+## 示例 · EXAMPLES
+
+1. **输入**: 给定论文目录（含 .tex、PDF、references/）。**操作**: 按 PAPE-001 先做输入完整性校验（目录/.tex/PDF 均存在）→ 通过才进入改进流程；缺件则立即阻断。**验证**: VERIFICATION 第一条打勾，阻断或放行决定记录在审计报告（PAPE-006）。
+2. **输入**: 检出 3 条假 DOI（对照 hcs3wt-fake-doi-replacement 记录）。**操作**: 按 PAPE-002 批量替换为真实 DOI 并生成替换日志，日志逐条记录原 DOI→新 DOI；LaTeX 替换失败处按 PAPE-005 用 sed 回退。**验证**: 日志每条可回溯（PAPE-002），回退后引用解析成功（VERIFICATION 第五条）。
+3. **输入**: P0 级数值伪造缺陷。**操作**: 按 PAPE-004 走完整闭环：模式选择 → 引用批量修复 → 数据集统一（参照 hcs3wt-p0-remediation-full-cycle 记录），每步留产物。**验证**: 闭环各步骤产物齐备，最后 pdflatex 编译 0 error、0 undefined reference，数值声称回源验证（VERIFICATION 第六/七条）。

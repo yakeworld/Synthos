@@ -276,3 +276,9 @@ gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -d
 - **[FEIS-005]** 发送文件附件前 → 必须执行 `ls -la` 验证文件路径真实存在，避免路径错误导致静默失败
 - **[FEIS-006]** 处理 CLI 与飞书平台的并发问题 → 识别 session ID 前缀（`cli:` vs `feishu:`），利用两者完全隔离的特性排除跨平台干扰
 - **[FEIS-007]** 遇到 Stream 断开或 180s 超时错误 → 判定为 vLLM 服务超时或负载过高，需检查节点状态或调整超时配置
+
+## 示例 · EXAMPLES
+
+1. 用户报告飞书消息 "API call failed (404 Not Found)" → 按 FEIS-001 检查 agent.log 中的 `base_url`：指向 `http://<node_ip>:8000` 即 vLLM 节点 404（非飞书）；`curl -s http://<ip>:8000/v1/models` 确认模型名存在（FEIS-003），不存在则从轮询配置移除该节点或修正模型名 → 验证：重发消息后 gateway.log 出现 `response ready` + `Sending response`，错误不再复现。
+2. 用户反馈"发 PDF 后没收到附件、无报错" → 按 FEIS-005 先 `ls -la` 确认文件存在且路径不在 /tmp/；发现 33MB 超限（FEIS-004），用 Ghostscript `/screen` 压缩至 2.4MB 后以 `MEDIA:<稳定路径>` 重发 → 验证：附件在飞书正常显示且 ≤10MB，排障清单第 1-8 项全部通过。
+3. CLI 会话 execute_code 超时（300s）后，用户问飞书会话为何"卡住" → 按 FEIS-006 检查 session 前缀 `cli:` vs `feishu:dm:<chat_id>`，确认两平台 session 完全隔离 → 验证：gateway.log 中 `agent:main:feishu:dm:*` 的消息时间线（Received raw → Flushing text batch → response ready → Sending response）完整无断点，CLI 超时未影响飞书会话。

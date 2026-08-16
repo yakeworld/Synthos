@@ -107,3 +107,9 @@ zip -r submission.zip submission/ -x "*/.*"
 # Competition Submission---
 > (P032 去重: 保留第二份 1 行独有内容)
 # Competition Submission
+
+## 示例 · EXAMPLES
+
+1. **输入**：某竞赛通知给出赛道、3 项评分维度、docx 申报表模板与截止时间（COMP-002 以评为纲）→ **操作**：按 COMP-001 循式而作，用 `references/` 下五套模板生成技术规格书、Mermaid timeline 路线图（COMP-005）、视频脚本、申报表、答辩 PPT → **验证**：逐项对照评分维度打勾，无离纲内容（COMP-002；VERIFICATION 第 2 项）。
+2. **输入**：核心素材（技术方案、代码、演示数据）已就绪，格式待美化 → **操作**：按"素材先于格式"原则先校验技术方案与演示数据完整性，再用 python-docx/python-pptx 生成申报表与 PPT（COMP-006/007）→ **验证**：格式美化未掩盖素材缺陷；Mermaid 渲染无误（COMP-005、VERIFICATION 第 3/4 项）。
+3. **输入**：五类产物齐备待交付 → **操作**：执行 `zip -r submission.zip submission/ -x "*/.*"` 后按 COMP-003 打包必核：解压核对包内恰含五类产物、无隐藏文件 → **验证**：完整性检查确认涵盖全部评分维度与格式要求，且当前时间早于截止时间（VERIFICATION 第 6/7 项）。

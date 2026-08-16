@@ -188,3 +188,20 @@ metadata:
 - **[PIMA-005]** 构建普适性论证链时 → 采用“方法论验证 + 种族/人群泛化 + 规模/真实性验证”的多数据集组合策略
 - **[PIMA-006]** 区分不同研究范式时 → 严格隔离“方法论审计”（如 Pima 32 基线）与“新架构验证”（如 HCS-3WT 7 模型），禁止混同结论
 - **[PIMA-007]** 解释泄漏后指标趋同现象（如 F1~0.70）时 → 明确其为经验观察而非理论保证，需通过增加数据集数量来持续验证
+
+## 示例 · EXAMPLES
+
+**示例 1**（跨数据集条件一致性）
+- **输入**：拟在 INSCAT 与 130-US 上复跑 PIDD 的泄漏审计对比
+- **操作/输出**：按 **PIMA-001** 固定 ZeroReplacer、Pipeline 结构、CV 设置与评估指标；实验代码写为独立 `.py` 脚本（**PIMA-002**，Pitfall 1），非无输出 Notebook
+- **验证**：验证清单「对比无效」项未触发；三数据集泄漏后 F1 均趋同 ~0.70，按 **PIMA-007** 标注为经验观察而非理论保证
+
+**示例 2**（文献一致性验证）
+- **输入**：目标数据集的已有论文声称 accuracy > 90%
+- **操作/输出**：按 Step 4 与 **PIMA-003** 用 Semantic Scholar + CrossRef/PubMed 多源搜索，过滤 Acc>90% 或 F1>0.70 的论文并标注泄漏风险；按 **PIMA-004** 交叉参考 OpenML 公开实验（PIDD ID:292，200+ 实验）
+- **验证**：高准确率论文与审计实测（F1≈0.71）偏差显著，形成「跨数据集方法论审计 vs 已有论文声明」对比论证
+
+**示例 3**（基线完整性核查）
+- **输入**：helix_benchmark 记录 27 个模型，论文声称 32 基线
+- **操作/输出**：按 Pitfall 2 逐一点名缺失模型（DummyClassifier、GaussianProcessClassifier、StackingClassifier、TunedThresholdClassifierCV、FixedThresholdClassifier），补齐后重跑
+- **验证**：基线数量 27→32 与声称一致；Pima（方法论审计 32 基线）与 HCS-3WT（新架构 7 模型）按 **PIMA-006** 严格分列，未混同结论

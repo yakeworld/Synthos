@@ -152,3 +152,20 @@ This pattern is most common in papers where:
 - **[PROS-004]** 当引用涉及方法论框架时 → 在对应的 `\subsection` 标题后插入解释性句子并附带引用以增强逻辑连贯性
 - **[PROS-005]** 当执行批量引用修复后 → 运行脚本验证 `\cite` 键与 `\bibitem` 键的集合交集以检测孤儿引用
 - **[PROS-006]** 当验证引用完整性时 → 执行双次 `pdflatex` 编译并检查日志中无 "undefined" 错误以确保交叉引用解析正确
+
+## 示例 · EXAMPLES
+
+**示例 1**（密集散文段锚点插入）
+- **输入**：Meniere's 段为密集散文，`iahn17` 等 bibitem 未在正文锚定
+- **操作/输出**：按 **PROS-003** 用精确短语 "a chronic vestibular disorder characterized by episodic vertigo" 做字符串替换，插入 "disorder\cite{iahn17} characterized by"
+- **验证**：替换后上下文完整未断裂（验证清单 PROS-003 项）；编译后 `grep -c "undefined"` 为 0
+
+**示例 2**（方法簇合并锚点）
+- **输入**：`raissi19`/`chen18`/`sanchez22`/`jagtap22` 四个 PINN 方法框架 bibitem 同属 Methods 簇
+- **操作/输出**：按 **PROS-002** + **PROS-004**，在 `\subsection{PINN Architecture}` 后附解释句 "We follow the physics-informed neural network framework\cite{raissi19,chen18,sanchez22,jagtap22}..."，单锚点合并
+- **验证**：未逐句重复插入；四个键全部出现在 `\cite` 集合中，Orphans 计数为 0
+
+**示例 3**（D10a 覆盖率验证）
+- **输入**：批量 `tex.replace` 修复后的 `paper.tex`
+- **操作/输出**：按 **PROS-005** + **PROS-006** 运行 Verification 节 Python 脚本统计 D10a，再执行双次 `pdflatex`（Compile Verification 节）
+- **验证**：输出 `D10a: N/N = 100%`、`Orphans: 0`；`paper.log` 无 undefined、页码正常输出

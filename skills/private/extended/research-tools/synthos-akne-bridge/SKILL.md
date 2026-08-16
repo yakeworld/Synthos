@@ -393,6 +393,12 @@ AKNE 桥接遵循 `kg-bridge`（Knowledge Graph — Agent Bridge）方法论：
 
 # Synthos Akne Bridge---
 
+## 示例 · EXAMPLES
+
+1. 诊断后连接孤立论文（先诊后治，SYNT-001/006）→ 输入 `akne-query.sh bridge` 报告 N 个 orphans；在 graph.json 为孤立论文添加 `paper_source_domain` 边（如 BPPV/眩晕类 → "BPPV" 分类），并显式创建 `source_category`/`category_paper` 逆向边（SYNT-002，注意 `source_category_membership` 方向为 category→source）→ 验证：重跑 `akne-query.sh bridge` 输出 orphans=0 且 `source→category→paper` 双向路径 YES。
+2. 源节点内容注入与向量化补齐（三线并行，SYNT-003/007）→ 输入未在 vectors.db 的 source 节点；读取文件前 3KB 提取 content_summary/content_hash/h1/h2 注入节点 metadata（Step 9），再向 vectors.db 写入对应向量（Step 10，走系统 Python 3.12，SYNT-004）→ 验证：vectors.db 记录数 = source 节点数（1145/1145 已向量化），`akne-query.sh stats` 的 vectors count 与 graph.json source 数一致。
+3. 多词英文查询兜底（陷阱 8）→ 输入 "eye tracking methodology"；QueryEngine 词袋匹配 `_graph_search` 无效时，改用 `akne-query.sh full` 模式（jieba 分词 + 多 token 子串匹配，阈值≥2）并配合图搜索/向量搜索 → 验证：full 模式返回 entity + neighbors + QueryEngine results + tokens 四类结果，非空；多词查询未走 4 值解包（find_related/in_edges 按 3 元组处理，陷阱 2/3）。
+
 
 
 

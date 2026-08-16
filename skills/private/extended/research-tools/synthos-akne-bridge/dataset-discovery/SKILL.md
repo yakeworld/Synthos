@@ -123,3 +123,20 @@ The UCI repository moved to SPA at `archive.ics.uci.edu`. Direct file links (e.g
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+## 示例 · EXAMPLES
+
+**示例 1 · OpenML 分页检索（Workflow 第 1-2 步）**
+- 输入：医学关键词 "breast cancer" + OpenML 查询参数
+- 操作/输出：`/api/v1/json/data/list/` 按 `limit=50, offset=0/50/100...` 分页（DATA-001/004），从 `data.dataset` 取 `did`（DATA-006），过滤出候选数据集
+- 验证：JSON 无截断、无 `limit>200` 请求，响应按 `data.dataset`/`did` 解析成功
+
+**示例 2 · 字符串指标与 GitHub 镜像核验（Pitfalls 2/6）**
+- 输入：候选数据集的质量指标 `"684.0"` + 某 GitHub 镜像 raw URL
+- 操作/输出：`float("684.0")` 转换（DATA-002）；对 URL `curl` 后 `head -1` 查首行（DATA-003），发现首行含 "404: Not Found"/"html" 即判定镜像失效，不凭 HTTP 200
+- 验证：指标为 float 类型；首行内容判定与状态码结论一致，通过"验物验文，不信状态码"原则
+
+**示例 3 · 源亡则合成（Workaround / DATA-005）**
+- 输入：UCI stroke 数据集全源 404（UCI/GitHub 镜像/HF/Kaggle 均已确认失效）
+- 操作/输出：按已知 schema（12 特征, 5179 行）以 `random.seed(42)` 生成合成数据集并明确标注"合成，基于 UCI schema"
+- 验证：固定种子可复现（P1 原子可复现性），文档明示合成身份，未冒真数据之实

@@ -89,3 +89,22 @@ metadata:
 - **[REFE-004]** PDF在子目录已存在且需根目录访问 → 创建符号链接（symlink）指向原文件，避免复制导致的双份数据漂移
 - **[REFE-005]** 清理或迁移操作完成后 → 必须执行 `pdflatex` 编译验证，确保 0 error 且 0 undefined reference 方可视为完成
 - **[REFE-006]** 处理旧管线遗留文件 → 不假设子目录PDF与当前项目相关，需基于证据驱动原则核查每个文件的有效性
+
+## 示例 · EXAMPLES
+
+> 基于本技能 RULES / Genes / VERIFICATION 的真实流程构造的语义化示例。
+
+1. **子目录旧PDF不自动对应**（RULES #1 / REFE-001 / REFE-006）
+   输入：`pdfs/` 下残留 12 个旧管线 PDF，根目录 `references.bib` 有 29 个条目。
+   操作：逐个比对 `pdfs/` 内 PDF 与当前 bib 条目（标题/作者/年份），不匹配者移入 `_archive/`（8 个归档），匹配者保留。
+   验证：`ls pdfs/` 无残留旧 PDF；`_archive/` 内 8 个文件可列出；根目录 PDF 数与清理记录一致，`pdflatex` 编译 0 error + 0 undefined reference（VERIFICATION 末项）。
+
+2. **文件名与 bibkey 年份不一致**（RULES #2 / REFE-002 / VERIFICATION #2）
+   输入：根目录存在 `Shams2025.pdf`，但 bibkey 为 `Shams2023BRFSS`。
+   操作：用 `pdfinfo Shams2025.pdf`（或打开首页）核查真实标题/作者/年份，确认其对应 `Shams2023BRFSS` 条目后改名对齐。
+   验证：`pdfinfo` 输出年份/标题与 bibkey 一致；`pdflatex paper.tex` 重新编译 0 undefined reference（REFE-005）。
+
+3. **子目录已有PDF不重复复制**（RULES #4 / REFE-004 / VERIFICATION #4）
+   输入：根目录需访问某 PDF，且该 PDF 已存在于 `pdfs/` 子目录。
+   操作：在根目录创建 symlink 指向 `pdfs/` 原文件，而非 `cp` 复制。
+   验证：`ls -l` 显示该文件为符号链接（`->`），`readlink` 解析回 `pdfs/` 原路径，磁盘仅一份实体文件（无双份漂移）。

@@ -96,6 +96,12 @@ metadata:
 
 > 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。
 
+## 示例 · EXAMPLES
+
+- **示例 1**：输入 `papers_dir=outputs/papers/*`（含各论文 `state.json`）→ 按 IO_CONTRACT 从 **顶层**读取 `quality_score`/`D10a`/`Gates_result` 生成投稿候选清单（如 147-lens-capsule-biomechanics-ODE=96 → bppv-canalith-relocation-ode=95）→ 验证：无论文因误查嵌套字段得到 score=-1，且 D10a 数字（100.0）与字符串（"100%"）两种格式均解析成功（PAPE-001/002）。
+- **示例 2**：输入 D10a=0 的论文（如 concussion-oculomotor-PINN）→ 按 PAPE-003 单独核查 `D8_d10a_scan.orphans_count` 与 `zombies_count`，同时检查 Gates_result 是字符串 "PASS" 还是字典 → 验证：引用健康异常被单独标记为「需补充」，而非混入正常候选。
+- **示例 3**：输入选定论文（如 147-lens-capsule-biomechanics-ODE）→ 按「投稿准备清单」执行 `pdflatex paper.tex`（PAPE-005）、全局搜索代码位置（PAPE-004）、创建 GitHub 仓库并推送（PAPE-006）、核验署名 Wenzhou People's Hospital 与邮箱（PAPE-007）→ 验证：pdflatex 0 error、0 undefined ref 并生成最终 PDF，投稿包满足 G7 可复现性要求。
+
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 

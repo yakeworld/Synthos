@@ -83,3 +83,9 @@ metadata:
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+## 示例 · EXAMPLES
+
+- **示例 1**：输入 `coding_task="为 pima 数据集补写 F1 评估脚本"` 但未指定协议 → 按 CODE-001/原则「三议先定」先选定 OpenAI Responses，再按 IO_CONTRACT 校验任务描述与后端配置完整有效后启动 codex CLI → 验证：`agent_status` 记录协议选定与输入验证通过，五项验证清单（输入/过程/输出/边界/错误处理）齐备后才交付 `code_changes`（CODE-002/003）。
+- **示例 2**：输入不完整的路径（如指向不存在的文件）→ 按 CODE-002 拒绝启动 codex CLI 直至输入验证通过，错误信息包含上下文与恢复指引（CODE-005/规则「异常约束」）→ 验证：未启动执行，`agent_status` 明确标记「输入未验，不役代理」。
+- **示例 3**：输入功能改进需求（修改 codex 输出解析逻辑）→ 按 CODE-006 先跑 Golden 集合（Golden Input 正常路径 / Golden Output 精确匹配 / Golden Error 失败路径）→ 验证：Golden 测试全过后才交付补丁，未验证代码严禁执行（CODE-004），失败项已记录原因和修复（CODE-007）。

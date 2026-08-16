@@ -170,6 +170,23 @@ pima-crispdm           33   100%    0     0    ✅
 - `paper-pipeline` → `citation-completeness-verification` — same-concept check for in-text \bibitem{} (within a single .tex file, not cross-file)
 - `quality-gate` — D8/D10a metrics feed into L0.5 gate evaluation
 
+## 示例 · EXAMPLES
+
+**示例 1 · 批量编译前审计**
+- 输入：65 篇论文库（.tex + .bib），触发条件为批量编译前（When to Use / CITA-005）
+- 操作/输出：对每篇提取 \cite 标签集与 .bib 条目集做双向配对（CITA-001），输出 D8/D10a 及问题分级清单
+- 验证：结果应为"总计 65 篇, 健康 16 篇, 问题 49 篇"；D8/D10a 已喂入 L0.5 数据诚实门，通过"先审后编"原则
+
+**示例 2 · 重症分级（D8=0）**
+- 输入：`3d-eye-bppv-diagnosis` 无 .bib 文件
+- 操作/输出：按 CITA-002 标记为重症，列出 62 个孤儿引用（Aw2013, Balatsouras2012, ...），优先补齐 .bib
+- 验证：复跑审计 D8=0→33、D10a 0.0%→100%，孤儿清零，对照 pima-crispdm 的 33/100% 健康基准
+
+**示例 3 · 中等+混合问题定位**
+- 输入：`3d-iris-normalization` D10a=93.8%（孤儿 <label>, lamport94）；`bppv-pc-repositioning` D10a=75% 且僵尸 35 条
+- 操作/输出：按 CITA-003 定位未匹配标签修复；按 CITA-006 将其分级为中等/混合问题（孤儿+僵尸均>5），对症下药
+- 验证：修复后复跑审计 D10a=100%，僵尸清单逐一列出并清零，审计仍满足"分级而报"原则
+
 ## 约束规则 · RULES
 
 1. **输入约束**: 参数类型、范围、格式必须校验
