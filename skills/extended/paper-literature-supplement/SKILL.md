@@ -3,6 +3,7 @@ name: paper-literature-supplement
 category: pipeline
 description: "论文文献补充管道 — ACQ→EXT→下载→质检。输入论文目录，输出补齐至30篇引用+PDF。"
 version: 2.0.0
+signature: "paper_dir: path, topic_queries: list[str] -> papers/*.pdf (30+), paper.tex/.bbl (DOI 核对), quality-gate result (D8≥80%, D10a≥90%)"
 chain:
   - knowledge-acquisition
   - knowledge-extraction
