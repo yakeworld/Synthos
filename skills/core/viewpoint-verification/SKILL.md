@@ -251,6 +251,8 @@ P(H|E)   = 后验置信度
 
 ## Step 6: 输出交付
 
+**工具契约见 [`tools/output-contract.md`](tools/output-contract.md)**（产出清单、格式、错误处理）。
+
 ```bash
 mkdir -p outputs/{session}/
 python3 -c "import json; json.dump(verification_report, open('outputs/{session}/verification.json','w'), indent=2, ensure_ascii=False)"

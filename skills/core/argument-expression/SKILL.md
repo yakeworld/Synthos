@@ -212,6 +212,8 @@ CARS（Create a Research Space）模型三步：
 
 ## Step 7: 输出交付
 
+**工具契约见 [`tools/output-contract.md`](tools/output-contract.md)**（产出清单、格式、错误处理）。
+
 ```bash
 mkdir -p outputs/{session}/
 # 论据链JSON

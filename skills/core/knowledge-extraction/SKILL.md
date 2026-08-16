@@ -102,22 +102,14 @@ metadata:
 
 ### Step 1: 加载论文内容
 
-优先 Markdown（markitdown），回退 raw text（pdftotext）。
+优先 Markdown（markitdown），回退 raw text（pdftotext）。**工具契约见 [`tools/pdf-extraction.md`](tools/pdf-extraction.md)**。
 
 ```bash
 # 方式A（首选）: markitdown 转换 → Markdown
-# 保留表格结构、标题层级，provenance 标注更准
 markitdown paper.pdf > /tmp/paper_content.md
 
 # 方式B（回退）: pdftotext → raw text
-# 当 markitdown 失败（扫描PDF/超大/加密）时使用
 pdftotext -layout paper.pdf /tmp/paper_content.txt
-
-# 方式C: 从已下载的 Markdown 文件直接读
-cat /path/to/paper.md
-
-# 方式D: 从摘要/网页
-web_extract(url)  # 或直接粘贴摘要
 ```
 
 **级联规则**：
@@ -218,12 +210,12 @@ web_extract(url)  # 或直接粘贴摘要
 ### Step 4: 保存
 
 ```bash
-# 保存结构化知识
+# 保存结构化知识（输出契约见 tools/pdf-extraction.md）
 mkdir -p outputs/{paper_dir}/07-quality/
 python3 -c "import json; json.dump(knowledge_item, open('outputs/{paper_dir}/07-quality/knowledge.json','w'), indent=2, ensure_ascii=False)"
 ```
 
-路径规范：`outputs/{paper_slug}/07-quality/knowledge.json`
+路径规范：`outputs/{paper_slug}/07-quality/knowledge.json`（UTF-8, indent=2）
 
 ---
 
