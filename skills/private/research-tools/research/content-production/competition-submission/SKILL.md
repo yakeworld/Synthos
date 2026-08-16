@@ -21,7 +21,6 @@ metadata:
     synthos_mechanical_atoms: ''
 ---
 
-
 ## IO_CONTRACT
 
 - **input**: 竞赛要求 — 赛道、评分维度、格式要求、截止时间、申报表模板
@@ -44,7 +43,6 @@ metadata:
 | PPT | `references/presentation-template.md` | python-pptx |
 
 详见各模板文件。
-
 
 ## Genes (策略基因)
 
@@ -105,23 +103,5 @@ zip -r submission.zip submission/ -x "*/.*"
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Competition Submission---
-
-
-
-
-
---|
-| 技术规格书 | `references/tech-spec-template.md` | Markdown |
-| 路线图 | `references/roadmap-template.md` | Mermaid timeline |
-| 视频脚本 | `references/video-script-template.md` | 分镜脚本格式 |
-| 申报表 | `references/form-filling-guide.md` | python-docx/pdf |
-| PPT | `references/presentation-template.md` | python-pptx |
-
-详见各模板文件。
-
-## Step 4-5: 整合与审核
-
-```bash
-
 > (P032 去重: 保留第二份 1 行独有内容)
 # Competition Submission

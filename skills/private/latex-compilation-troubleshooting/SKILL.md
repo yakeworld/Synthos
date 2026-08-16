@@ -21,7 +21,6 @@ metadata:
     synthos_mechanical_atoms: ''
 ---
 
-
 ` (em-dash)
   - `≤` → `$\leq$`
   - `≥` → `$\geq$`
@@ -150,52 +149,12 @@ grep -c 'undefined' paper.log
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 
 > 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。
-
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
-
 # Latex Compilation Troubleshooting---
-
-
-
-
-
-` (em-dash)
-  - `≤` → `$\leq$`
-  - `≥` → `$\geq$`
-- 或者在preamble添加：`\usepackage[utf8]{inputenc}`（但某些字体仍不支持）
-
-**Environment algorithmic undefined**
-- 根因：`algorithmic`包与elsarticle不兼容或加载失败
-- 解决：直接删除algorithmic环境（论文通常不需要），或改用`algorithm2e`包
-- 检查：`\usepackage{algorithmic}`在preamble中的位置是否正确
-
-#### B. Natbib/Undefined Citations (警告)
-
-**Package natbib Warning: Citation `xxx' undefined**
-- 根因：bibtex未执行或引用缺失
-- 修复流程：`pdflatex → bibtex paper → pdflatex → pdflatex`
-- 检查：paper.bbl是否生成（0字节=失败）
-- 检查：paper.blg是否有"0 warnings"
-- 如果仍有未定义：检查.bib文件中bibkey是否在.tex中被`\cite{}`引用
-
-#### C. Reference Errors
-
-**Missing \begin{document} after graphicspath fix**
-- 根因：正则替换`{{figures/}},{pics/}}`时括号不匹配，导致LaTeX解析器在preamble中找到未闭合括号
-- 修复：`\graphicspath{{05-figures/}}` 确保外层`{}`匹配
-
-### 3. 修复验证
-
-```bash
-
 > (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # Latex Compilation Troubleshooting
-
-
 ## Genes (策略基因)
-
 > 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-
 - **[LATE-001]** 遇到 `Citation undefined` 警告 → 执行 `pdflatex → bibtex → pdflatex → pdflatex` 完整编译链并检查 `.bbl` 文件非空
 - **[LATE-002]** 执行任何批量修改或 `rm` 操作前 → 必须创建带时间戳的 `.bak` 备份，且严禁使用 `paper.*` 通配符删除以防误删源文件
 - **[LATE-003]** 出现 `Misplaced \noalign` 或大量 `Missing \cr` 级联错误 → 检查表格 `\bottomrule` 前一行是否缺失行尾 `\\` 并补全

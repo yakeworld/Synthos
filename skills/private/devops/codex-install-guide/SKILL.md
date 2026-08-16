@@ -21,7 +21,6 @@ metadata:
     synthos_mechanical_atoms: ''
 ---
 
-
 |
 | `@openai/codex` | 官方 | ✅ 当前安装 |
 | `@openai/codexec` | 旧包名 | ❌ 已从 npm registry 移除 |
@@ -104,56 +103,15 @@ codex -p amax exec "echo test"
 - **Golden Input**: 标准输入样本（覆盖正常路径）
 - **Golden Output**: 预期输出（精确匹配或格式校验）
 - **Golden Error**: 预期错误信息（覆盖失败路径）
-
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
-
 > 违反规则的操作视为不安全，必须拒绝或隔离。
-
 > 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。
-
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
-
 # Codex Install Guide---
-
-
-
-
-
-|
-| `@openai/codex` | 官方 | ✅ 当前安装 |
-| `@openai/codexec` | 旧包名 | ❌ 已从 npm registry 移除 |
-| `@codexapi/codexclaude` | 第三方付费打包器 | ❌ 会覆盖 vLLM 配置，拒绝安装 |
-| `opencode-ai` | 独立替代 | ✅ 保留作为共存方案 |
-
-### 共存策略
-
-`codex` 和 `opencode` 互不干扰：
-- `codex` 使用 `~/.codex/config.toml`
-- `opencode` 使用 `~/.local/share/opencode/auth.json`
-- 二进制名不同：`codex` vs `opencode`
-
-## 防错清单
-
-- [ ] 安装后验证 `which codex` 返回有效路径
-- [ ] 确认 `codex --version` 不报错
-- [ ] 不要安装 `@codexapi/codexclaude`（它会修改 `~/.codex/config.toml` 指向付费端点）
-- [ ] 使用 `@openai/codex`，不用旧包名 `@openai/codexec`
-- [ ] 安装后检查 `ls ~/.codex/profiles/` — 如果 cron 脚本引用了 profile 但不存在，会批量超时。确保所有 cron 脚本调用的 profile（如 `amax`、`hermes`）对应文件存在
-
-## 多 Profile 管理
-
-Codex CLI 通过 `~/.codex/profiles/<name>.config.toml` 管理多节点 profile：
-
-```toml
-
 > (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # Codex Install Guide
-
-
 ## Genes (策略基因)
-
 > 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-
 - **[CODE-001]** 安装 Codex CLI 时 → 必须使用官方包 `@openai/codex`，严禁使用已移除的旧包名 `@openai/codexec`
 - **[CODE-002]** 遇到第三方打包器（如 `@codexapi/codexclaude`）时 → 拒绝安装，防止其覆盖 vLLM 配置或修改指向付费端点
 - **[CODE-003]** 需要与 `opencode` 共存时 → 利用二进制名及配置路径（`~/.codex` vs `~/.local/share/opencode`）的天然隔离实现互不干扰
