@@ -191,4 +191,3 @@ The UCI repository moved to SPA at `archive.ics.uci.edu`. Direct file links (e.g
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-# Dataset Discovery

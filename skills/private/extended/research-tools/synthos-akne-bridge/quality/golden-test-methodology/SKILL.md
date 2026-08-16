@@ -132,10 +132,9 @@ metadata:
 
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
-# Golden Test Methodology
 
+> (P032 去重: 保留另一份 6 行独有内容)
 ## 验证清单 (Verification)
-
 - [ ] 覆盖率统计时：`golden/GOLDEN_SET.md` + `cases/` + `expected/` 三者均存在且非空才计数
 - [ ] expected 文件与 cases 数量、命名一一对应
 - [ ] 权重未全部设为 critical（保留区分度）

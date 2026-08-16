@@ -155,4 +155,3 @@ Accepted by `--due` and date filters:
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-# Apple Reminders

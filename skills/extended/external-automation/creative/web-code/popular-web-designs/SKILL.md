@@ -265,4 +265,3 @@ Match the design to the content:
 - **Data-dense / dashboards:** Sentry, Kraken, Cohere, ClickHouse
 - **Monospace / terminal aesthetic:** Ollama, OpenCode, x.ai, VoltAgent
 
-# Popular Web Designs

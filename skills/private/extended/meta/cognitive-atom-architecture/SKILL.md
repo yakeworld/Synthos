@@ -107,10 +107,9 @@ Key reference files added in v4.0.0:
 - `references/philosophy-engineering-verification-pattern.md` — methodology for tracing philosophical constraints through atomic skills (2026-05-23)
 - `references/east-west-syncretism-pattern.md` — pattern for merging Eastern and Western philosophical concepts into unified engineering constraints
 
-# Cognitive Atom Architecture
 
+> (P032 去重: 保留另一份 5 行独有内容)
 ## 验证清单 (Verification)
-
 - [ ] `~/.hermes/skills/cognitive-atom-architecture/references/` 下原始参考文件、模板、脚本完整无损（v4.0.0 四件套齐全）
 - [ ] 哲学框架按 5 步流程（extract→trace→classify→fix→verify）在原子技能中追溯出可执行的工程约束
 - [ ] 每个示例可独立运行、输入输出明确、含错误处理（边界/错误场景各一）
