@@ -225,11 +225,11 @@ summary — WCAG findings are the most load-bearing reason to use the CLI.
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] frontmatter 含必需的 `name:` 与 `colors:`，正文 `##` 章节按 Overview→Colors→Typography→Layout→Elevation→Shapes→Components→Do's/Don'ts 顺序且无重复标题
+- [ ] 所有颜色为带引号 hex 字符串、负维度（如 `-0.02em`）加引号，YAML 解析不报错
+- [ ] `components:` 中样式用 `{token.path}` 引用而非硬编码值；hover/active 等变体为同级键（`button-primary-hover`）而非嵌套属性
+- [ ] `npx -y @google/design.md lint DESIGN.md` 退出码为 0，无 broken-ref / invalid-* 错误；WCAG 对比度结果已在汇报中说明
+- [ ] 如需导出，`export --format tailwind` / `dtcg` 生成的 JSON 可被解析且 token 值与源文件一致
 
 ## 约束规则 · RULES
 

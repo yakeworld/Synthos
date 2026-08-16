@@ -252,11 +252,12 @@ If webhooks aren't working:
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] Gateway 已启用并监听：`hermes gateway run` 运行中，`curl http://localhost:8644/health` 返回 `{"status": "ok"}`
+- [ ] 订阅已注册：`hermes webhook list` 显示目标订阅名，且 `~/.hermes/webhook_subscriptions.json` 中包含对应条目
+- [ ] 路由可触发：`hermes webhook test <name> --payload '{"key":"value"}'` 成功触发 agent run 且 Prompt 中 `{dot.notation}` 字段渲染正确
+- [ ] HMAC 签名匹配：上游服务发送的签名头（GitHub 用 `X-Hub-Signature-256`）与服务端配置的 secret 一致，签名校验通过
+- [ ] 交付目标可达：`--deliver` 指定的目标（telegram/discord/github_comment 等）与 `--deliver-chat-id` 有效，消息成功送达
+- [ ] 若用 `--deliver-only`：POST 成功返回 200，目标失败时返回 502（上游可据此重试）
 
 ## 约束规则 · RULES
 

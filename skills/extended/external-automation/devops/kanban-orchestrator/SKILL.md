@@ -219,11 +219,12 @@ When a worker profile keeps crashing, hallucinating, or getting blocked by its o
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 任务图草案（Task Graph）已展示给用户确认后才创建任务
+- [ ] 每个具体任务均已通过 `kanban_create` 创建并分配给对应专家角色（未自行执行）
+- [ ] 依赖链通过 `parents=[...]` 参数建立，子任务在父任务完成前保持 `todo` 状态
+- [ ] 每个 `kanban_create` 调用均传入 `tenant=os.environ.get("HERMES_TENANT")`（如环境变量已设置）
+- [ ] 大规模重构场景：先定义目标状态文档，再并行启动 3-4 个独立子任务批次
+- [ ] 所有子任务完成后执行统一验证扫描（py_compile / json.load / 文件存在性 / SKILL.md 检查）再向用户报告
 
 ## 约束规则 · RULES
 

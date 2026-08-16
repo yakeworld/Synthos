@@ -230,11 +230,12 @@ Match the design to the content:
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 已从 54 个模板目录中选取与内容匹配的设计系统（按 developer tools/docs/marketing/dark mode 等类别），并加载 `templates/<site>.md` 全文
+- [ ] HTML 的 `:root` 已定义模板 Section 2 的完整色彩调色板为 CSS 自定义属性，排版（字号/字重/字间距）与模板 Section 3 一致
+- [ ] 专有字体已按 Font Substitution 参考表替换为 Google Fonts 替代（含 `<link>` 标签），且严格遵循原模板的 weight/size/letter-spacing
+- [ ] 组件样式（按钮/卡片/间距/阴影）遵循模板 Section 4-6 的规格，viewport meta 与 lang 属性正确
+- [ ] 已用 `write_file` 写入文件并通过 `browser_vision` 截图验证视觉准确性与模板一致性
+- [ ] 交付物为渲染页面而非令牌规范；若需 DESIGN.md 则已切换至 `design-md` 技能
 
 ## 约束规则 · RULES
 

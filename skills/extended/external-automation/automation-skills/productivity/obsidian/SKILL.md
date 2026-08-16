@@ -205,11 +205,12 @@ ln -s /path/to/source/dir outputs/papers/paper-name/
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] Vault 路径已解析为具体绝对路径（不含 `$OBSIDIAN_VAULT_PATH` 未展开变量），含空格的路径也正确传递
+- [ ] 文件操作用原生工具完成：`read_file` / `write_file` / `patch` / `search_files` 替代 `cat` / `find` / `grep` / `ls`
+- [ ] 新建/编辑笔记的 YAML frontmatter 用数组格式 `tags: [a, b, c]`，wikilink 中的单引号已用 `\` 转义
+- [ ] 局部修改用 `patch` 锚定追加（有稳定上下文时），仅在整体重写更清晰时才用 `write_file`
+- [ ] Vault 初始化后：各子目录存在 `_INDEX.md`（`_` 前缀置顶），`.obsidian/` 已加入 `.gitignore`
+- [ ] 外部源文件（PDF/TeX）以符号链接映射进 vault 而非复制，链接目标可访问
 
 ## 约束规则 · RULES
 

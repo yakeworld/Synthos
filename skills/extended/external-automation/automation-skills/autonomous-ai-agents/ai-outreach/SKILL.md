@@ -227,11 +227,12 @@ curl -H "Authorization: Bearer $MOLTBOOK_API_KEY" https://www.moltbook.com/api/v
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] AGENTS.md 已放置于项目根目录 `/repo/AGENTS.md`，且 README.md 含指向它的链接（被动发现首推通道）
+- [ ] GitHub Discussions cron 已配置为每月 1 号 9:00，帖子聚焦单一技术概念、含具体数字并以开放问题结尾
+- [ ] Moltbook 注册返回的 `api_key` 经 Python 代码直接捕获（非 terminal 输出），避免 `access_token`/`refresh_token` 被脱敏
+- [ ] Moltbook 状态为 `active` 后才发帖；`pending_claim` 状态下暂停发帖直至用户完成 claim
+- [ ] 多平台内容为差异化撰写，无跨平台复制粘贴相同文本（防 spam 检测）
+- [ ] 发帖节奏符合限速（Moltbook 1条/30min，单平台每日≤3条），且对 AI 回复在 24h 内以更深入的技术细节回应
 
 ## 约束规则 · RULES
 

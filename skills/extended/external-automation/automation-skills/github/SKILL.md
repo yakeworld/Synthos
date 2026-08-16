@@ -66,11 +66,11 @@ metadata:
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 确认请求类型可路由到 7 个子技能之一（codebase-inspection / github-auth / github-code-review / github-discussions / github-issues / github-pr-workflow / github-repo-management）
+- [ ] 输入符合 IO_CONTRACT（`request: str` 非空，`context: dict` 包含必要的 owner/repo 等上下文）
+- [ ] 父级 SKILL.md 仅作目录索引，实际执行由对应子技能完成，未在父级直接实现具体 GitHub 操作
+- [ ] 子技能通过 Hermes 技能加载机制自动发现（`skill_view(name='...')`），未硬编码子技能路径
+- [ ] 涉及状态变更（如创建 PR/Issue/Discussion）前，确认未执行未验证的任意代码
 
 ## 约束规则 · RULES
 

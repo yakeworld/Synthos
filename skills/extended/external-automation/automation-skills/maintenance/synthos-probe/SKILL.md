@@ -82,11 +82,12 @@ SYNTHOS PROBE: structural=X.X, benchmark=X.X, drift=green | cycle=N, score=X.XX
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 7 核心原子逐一检查 has_version / has_signature / has_io_contract，结构分 = 完全通过数 / 7
+- [ ] `research-ideation` 用 `os.path.exists()` 确认实际位于 `skills/research/research-ideation/SKILL.md`，避免层级路径陷阱
+- [ ] version 同时检查顶层与 `metadata.synthos.version` 嵌套写法；signature 要求独立声明或 `name:`+`signature:` 组合（仅 `name:` 不算）
+- [ ] 全量 SKILL.md 计数用 `os.walk` + `"SKILL.md" in fn` 覆盖 `ARCHIVED-SKILL.md` 变体，不信任 spec 声称数字
+- [ ] git 追踪比较先将绝对路径转为相对仓库根路径再匹配 `git ls-files` 输出
+- [ ] 独立验证当前周期 per-atom 结果，不信任上一周期记录；以 Cron 实际检测为准
 
 ## 约束规则 · RULES
 

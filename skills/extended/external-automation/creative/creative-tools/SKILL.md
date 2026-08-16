@@ -80,11 +80,12 @@ Composite skill that merges 25 overlapping skills into a unified interface.
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 任务已路由到唯一的成员子技能（25 个 members 之一，如 ascii-art、manim-video、heartmula），而非在套件层直接执行
+- [ ] 输入参数 `task_desc`、`context` 符合 IO_CONTRACT（str + dict），非空且可解析
+- [ ] 返回的 `result: dict` 结构一致，能追溯至实际执行的成员技能及其输出
+- [ ] TouchDesigner 相关任务未猜测参数名，先调用了 `td_get_par_info` 获取元数据
+- [ ] 设计方向探索类任务产出 2-3 个可交互 HTML 原型变体供用户对比，而非直接交付成品代码
+- [ ] 任务失败时返回包含上下文与恢复建议的错误报告（含失败步骤和可操作建议），而非裸异常
 
 ## 约束规则 · RULES
 

@@ -97,11 +97,11 @@ social-media/
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 父级目录结构完整：`xurl/SKILL.md` 与 `xhs-content/SKILL.md`（含 `references/`、`templates/`）均可被 Hermes 技能加载机制发现
+- [ ] 用户请求能正确路由到对应子技能（X/Twitter → `xurl`，小红书 → `xhs-content`），而非在父级目录直接执行
+- [ ] 小红书内容包包含正文、标签、封面文案建议与排版建议四要素（对照 `templates/xhs-content-bundle-template.md`）
+- [ ] 小红书发布通道现状确认：无官方 API，仅通过手动复制粘贴或浏览器自动化完成发布
+- [ ] 子技能执行结果符合 IO 契约（`request: str, context: dict` → `result: dict`），结果已保存并报告
 
 ## 约束规则 · RULES
 

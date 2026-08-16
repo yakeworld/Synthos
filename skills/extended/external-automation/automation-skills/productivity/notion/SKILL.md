@@ -227,11 +227,12 @@ Common property formats for database items:
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 环境变量 `NOTION_API_KEY` 已从 `~/.hermes/.env` 读取（`ntn_`/`secret_` 前缀），未硬编码
+- [ ] 每个 curl 请求均携带 `Notion-Version: 2025-09-03` 请求头，缺失时不发起调用
+- [ ] 目标页面/数据库已通过 Notion UI 共享给对应 Integration，避免 404/permission 错误
+- [ ] 创建页面使用 `database_id`，查询数据使用 `data_source_id`（`/v1/data_sources/{id}/query` 端点），两个 ID 未混用
+- [ ] 属性 JSON 结构符合类型规范（Title 嵌套 `text.content`、Select 用 `name` 字段等），请求频率控制在 ~3 req/s 以内
+- [ ] API 响应经 `jq` 管道解析确认结构正确（如 `.results[0].properties`），错误响应含明确原因
 
 ## 约束规则 · RULES
 

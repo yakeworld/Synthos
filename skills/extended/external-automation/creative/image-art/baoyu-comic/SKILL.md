@@ -271,11 +271,11 @@ Full step-by-step workflow (analysis, storyboard, review gates, regeneration var
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] Step 2 风格确认已完成（未跳过）；clarify 超时导致的默认选择已逐条向用户显式展示，未折叠为全默认
+- [ ] 每页/封面调用 `image_generate` 前，其最终提示词已写入 `prompts/NN-{cover|page}-[slug].md`；角色描述已内联嵌入每一页提示词（角色一致性靠文本而非参考图）
+- [ ] 每个返回 URL 已用绝对路径 `curl -fsSL` 下载到 `comic/{topic-slug}/` 下的对应 PNG，且下载后验证文件存在且非空
+- [ ] 输出目录结构完整：`source-{slug}.md`、`analysis.md`、`storyboard.md`、`characters/`、`prompts/`、各页 PNG 齐全；参考图已拷贝至 `refs/` 并在页面 frontmatter 记录 usage/traits
+- [ ] 敏感公众人物已用风格化替代；源内容已扫描并剔除 API key/token 等凭据后才写入任何输出文件
 
 ## 约束规则 · RULES
 

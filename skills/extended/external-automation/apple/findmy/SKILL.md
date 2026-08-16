@@ -165,11 +165,11 @@ Analyze each screenshot with vision to extract coordinates, then compile a route
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 终端已授予「屏幕录制」权限，`screencapture -w -o /tmp/findmy.png` 产出非黑屏截图
+- [ ] `osascript -e 'tell application "FindMy" to activate'` 后 FindMy 窗口在前台（sleep 3 后截图可见）
+- [ ] `vision_analyze` 能读出设备/物品名称与位置文本，而非空白或无关内容
+- [ ] AirTag 追踪期间 FindMy 保持前台且目标页激活，位置坐标随周期捕获持续更新
+- [ ] 截图解析出的位置仅属于用户自己的设备/物品（隐私边界确认）
 
 ## 约束规则 · RULES
 

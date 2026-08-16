@@ -211,11 +211,12 @@ Add hourly cron:
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] `java -version` 与 Mod 包 Minecraft 版本匹配（1.21+→Java21, 1.18-1.20→Java17, ≤1.16→Java8）
+- [ ] `server.properties` 含 `allow-flight=true`、`max-tick-time=180000`；若 `online-mode=false` 则同时 `enforce-secure-profile=false`
+- [ ] JVM `-Xms`/`-Xmx` 按 Mod 数量分配（100-200→6-12G，200-350+→12-24G），且系统保留 ≥8GB 空闲
+- [ ] `ufw status | grep 25565` 确认 25565/tcp 已放行
+- [ ] 用独立启动脚本（引用 `user_jvm_args.txt` 与 Loader 参数）替代自带 `startserver.sh`，规避自动重启循环
+- [ ] 启动后 `tail logs/latest.log` 出现 "Done (Xs)!" 且 `pgrep -fa neoforge|minecraft` 有进程；备份脚本+hourly cron 已生效并限制最多 24 份
 
 ## 约束规则 · RULES
 

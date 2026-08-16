@@ -154,11 +154,12 @@ Before considering the codebase inspection task complete:
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] `pygount` 已安装（`pip install --break-system-packages pygount 2>/dev/null || pip install pygount` 执行成功或已存在）
+- [ ] 命令包含 `--folders-to-skip`，至少排除 `.git,node_modules,venv` 等依赖/构建目录，防止扫描挂起
+- [ ] 使用 `--format=summary` 运行 pygount，获得语言分布、文件数、代码/注释行数汇总表
+- [ ] 按项目类型调整 `--folders-to-skip`（Python / JS-TS / 通用 catch-all）或按需用 `--suffix` 定向过滤语言
+- [ ] 结果解读符合预期：Markdown 计 0 代码行、JSON 计数保守（必要时用 `wc -l` 校准）
+- [ ] 向用户呈现清晰的汇总（语言、文件数、代码行、注释行、百分比）并给出可操作的洞察
 
 ## 约束规则 · RULES
 

@@ -197,11 +197,12 @@ Bridge lyrics...
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] venv 使用 Python 3.10，依赖升级（datasets/transformers）及 RoPE、HeartCodec 两处补丁均已应用
+- [ ] 三个模型 checkpoint（HeartMuLaGen、HeartMuLa-oss-3B、HeartCodec-oss）已下载至 `./ckpt`
+- [ ] VRAM 满足要求（≥8GB 且 `--lazy_load true`，或 ≥16GB），输出日志出现 "CUDA memory" 行
+- [ ] 歌词文件使用括号结构标签（[Verse]/[Chorus] 等），tags 为无空格逗号分隔格式
+- [ ] 生成的 MP3 输出存在且非零字节，时长符合 `--max_audio_length_ms` 上限
+- [ ] HeartCodec 使用 `--codec_dtype float32`（未用 bf16），音质未退化
 
 ## 约束规则 · RULES
 

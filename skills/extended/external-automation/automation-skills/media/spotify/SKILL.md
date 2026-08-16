@@ -164,11 +164,11 @@ Entity types: `track`, `album`, `artist`, `playlist`, `show`, `episode`. Use the
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 播放/库操作前确认 Spotify 有活跃设备（`403 No active device` 出现时停止重试并提示用户先启动客户端）
+- [ ] 播放类变更操作符合 Premium 要求，`403 Premium required` 时不盲目重试，明确告知需升级
+- [ ] 传入的 ID 使用正确的类型化 URI（track/album/artist/playlist），`spotify_library` 的 `kind` 与 URI 类型一致
+- [ ] 找用户私有播放列表用 `spotify_playlists list`（而非 `spotify_search` 公共目录），"正在播放"用单次 `get_currently_playing` 且 204 视为无播放而非错误
+- [ ] 遇 `429 Too Many Requests` 等待后仅重试一次；`401 Unauthorized` 提示用户重新 `hermes auth spotify`
 
 ## 约束规则 · RULES
 

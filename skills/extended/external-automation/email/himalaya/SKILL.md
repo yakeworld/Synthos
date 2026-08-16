@@ -328,11 +328,12 @@ RUST_LOG=trace RUST_BACKTRACE=1 himalaya envelope list
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] `himalaya --version` 可用，且 `~/.config/himalaya/config.toml` 存在并配置了 IMAP/SMTP 凭据（密码经 `pass`/keyring，非明文）
+- [ ] 发送/回复/转发走管道输入（`cat << EOF | himalaya template send`），未依赖 `$EDITOR` 交互模式（交互向导用 `pty=true`）
+- [ ] 程序化解析邮件列表/状态时添加了 `--output json` 参数
+- [ ] Gmail 等非标准文件夹名的服务器使用了 `folder.aliases.X`（复数点分键）语法，未使用 v1.2.0 已废弃的 `alias` 子节
+- [ ] 发送命令退出码非零时，先检查是否因别名配置错误导致保存失败，未盲目重试 SMTP（防止产生重复邮件）
+- [ ] 异常场景下使用 `RUST_LOG=debug` / `RUST_LOG=trace` 定位问题，且失败时有明确的错误信息
 
 ## 约束规则 · RULES
 

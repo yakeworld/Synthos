@@ -237,11 +237,12 @@ Clone these for inspiration / patterns (all MIT-ish, linked from [pretext.cool](
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] Demo 为单个自包含 `.html`，无构建步骤，通过 `esm.sh` 引入固定版本（如 `@0.0.6`）的 `@chenglou/pretext`
+- [ ] 传给 `prepare` 的 font 字符串与 CSS 实际渲染字体完全一致（避免 404 回退导致的测量漂移）
+- [ ] `prepare()`/`prepareWithSegments()` 仅调用一次并缓存，动画循环中只重跑 `layout*`
+- [ ] 文本 corpus 为真实内容（诗歌/代码/README 等），非 lorem ipsum，且与 demo 概念匹配
+- [ ] 至少包含一个交互响应（drag/hover/scroll/click）或 idle 自动运动，且 `prepareWithSegments` 未因非法 font 字符串抛错
+- [ ] 本地 `python3 -m http.server` 打开验证首帧无空白、无 console 错误，中端设备 60fps
 
 ## 约束规则 · RULES
 

@@ -259,11 +259,11 @@ if abs(abs(correct_b) - abs(figure_b)) > 0.001:
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 重建公式显式含中心偏移 `(cx + r*cos(...))*u + (cy + r*sin(...))*v`；`grep -n "cx + r\*cos\|cy + r\*sin" code/*.py` 输出非空且覆盖所有生成脚本
+- [ ] 最终拟合沿 `nearest_neighbor_path` + `np.unwrap` 展开的 θ 进行；`grep -n "argsort" code/*.py` 中 argsort 仅出现在 grid-search 找中心步骤，未用于最终 a/b/A 拟合
+- [ ] RMSE + 螺旋率 b + 视觉质量三者交叉验证：b 落在物理合理范围（约 0.01–0.2），复合图与单标本图中同一曲线 RMSE 相同
+- [ ] 无重复定义的 `fit_logspiral_3d`（Python 最后一个定义会覆盖前面的）；所有图脚本与独立拟合脚本使用同一管线，图标题 RMSE 与控制台输出一致（差 <0.01mm）
+- [ ] 分段数据已按 `seg1 + seg2[-2::-1]` 合并（中点去重）：合并间隙 <0.2mm，总点数 = len(seg1)+len(seg2)-1
 
 ## Golden 集合 · GOLDEN SET
 

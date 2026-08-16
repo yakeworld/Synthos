@@ -52,11 +52,11 @@ This skill has been compressed. Full content is available in references/.
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 输入参数（`workflow_desc` 及相关 prompt/model/parameters）完整且有效，符合 IO 契约
+- [ ] 生成的 ComfyUI 工作流为合法 dict 结构：节点连接、端口类型、参数键均符合 ComfyUI 规范，无悬空或未连线节点
+- [ ] 工作流通过 ComfyUI API 实际执行成功，返回 `image_results`（含 url / dimensions / seed / model_version）且非空
+- [ ] 返回图像可正常下载/打开，分辨率与 dimensions 字段一致
+- [ ] 异常场景（空输入、超大参数、非法模型名）返回带上下文与恢复建议的错误信息，不暴露内部敏感状态
 
 ## 约束规则 · RULES
 

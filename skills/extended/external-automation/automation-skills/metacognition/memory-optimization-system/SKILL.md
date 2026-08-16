@@ -191,11 +191,12 @@ memory 和 fact_store 中内容相似度 > 80% 的条目：
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 长工具输出（>10KB 或 >50行）已保存原文至 `~/.hermes/context_refs/{hash}.md`，回复中仅保留 Mermaid 摘要 + 引用路径
+- [ ] 手动触发 `python3 ~/.hermes/scripts/memory_consolidate.py` 成功执行，与 3:00 cron（job 9926ae23cdbc）行为一致
+- [ ] FSRS 健康评估对记忆条目返回了可检索性分级（可移除 / 低可检索 / 正常 / 健康）
+- [ ] memory 空间按铁律分级处理：>85% 主动清理、>90% 清理+压缩、>95% 强制压缩至 <70%
+- [ ] memory↔fact_store 去重以 fact_store 版本为准（相似度>80%），memory 冗余条目已压缩并记录合并日志
+- [ ] remove/replace 使用短而唯一的 ASCII 前缀匹配，操作后 `capacity: X/2200` 数字确有变化（无 hidden Unicode 静默失败）
 
 ## Golden 集合 · GOLDEN SET
 

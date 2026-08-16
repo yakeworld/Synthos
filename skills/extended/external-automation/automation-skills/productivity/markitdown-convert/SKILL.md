@@ -240,11 +240,12 @@ aliases: [Paper Title]
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 安装使用 `uv tool install markitdown --with markitdown[pdf]`，无 `MissingDependencyException`
+- [ ] 每个 PDF 均有对应 `.md` 存在于 `pdfs_md/`，输出 >50 chars 且非空文件
+- [ ] markitdown 失败时已回退 `pdftotext`；仍失败则写入 `[PDF无法提取文本]` 占位而非静默跳过
+- [ ] 批量转换已排除引用/模板类 PDF（`*reference*`/`*template*`/`*graphical*`/作者年格式），主论文未转错目标
+- [ ] 损坏/无文本层 PDF 已走替代路径（arXiv/PMC 替代版、手动摘要或 marker-pdf OCR）
+- [ ] 用于 Obsidian 的 `paper.md` 已补 YAML frontmatter（tags + aliases）
 
 ## 约束规则 · RULES
 

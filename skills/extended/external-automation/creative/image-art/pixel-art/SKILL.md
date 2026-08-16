@@ -234,11 +234,12 @@ are ported from [pixel-art-studio](https://github.com/Synero/pixel-art-studio)
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 像素化后输出 PNG 在指定路径生成，且像素块尺寸与所选 preset 的 block 参数一致（NEAREST 降采样后无插值模糊）
+- [ ] 输出图像颜色数量与 preset 调色板匹配（用 `Image.open(p).getcolors()` 或肉眼核对）
+- [ ] 指定硬件调色板（如 NES / PICO_8 / GAMEBOY_ORIGINAL）时使用精确大小写键名，无 Key 错误或降级
+- [ ] 如需动画：MP4 经 `ffprobe` 可正常打开且非零大小，场景粒子效果（如 night/rain/snow）符合所选 scene
+- [ ] 源图宽度 <100px 时已先放大，避免 8-10px 大块下细节完全坍缩
+- [ ] mono_green / mono_amber 单色调色板已强制 `color=0.0` 去饱和，无平滑区域条纹伪影
 
 ## 约束规则 · RULES
 

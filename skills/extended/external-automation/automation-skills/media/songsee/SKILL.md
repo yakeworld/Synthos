@@ -112,11 +112,12 @@ Multiple `--viz` types render as a grid in a single image.
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] Go 已安装且 `songsee` 可通过 `go install ...@latest` 正常执行
+- [ ] 输入音频文件存在且格式受支持（WAV/MP3 原生解码；其他格式已安装 `ffmpeg`）
+- [ ] `--viz` 值为合法可视化类型（spectrogram/mel/chroma/hpss/selfsim/loudness/tempogram/mfcc/flux），多类型生成网格图
+- [ ] `--start`/`--duration` 时间切片在音频实际时长范围内，未越界
+- [ ] 输出图像文件存在且非零字节，格式为指定 `--format`（jpg/png）
+- [ ] 输出图像可用 `vision_analyze` 读取，频谱内容清晰可辨
 
 ## 约束规则 · RULES
 

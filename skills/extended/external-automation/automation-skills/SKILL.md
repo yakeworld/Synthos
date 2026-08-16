@@ -128,11 +128,12 @@ def clean_json_for_latex(content):
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 已用 `os.walk()` 在目标论文目录下定位到每篇的 `step_quality_check.md`（兼容不同子目录与命名变体）
+- [ ] 已对 JSON 块执行 LaTeX 反斜杠清理（`clean_json_for_latex`）后再 `json.loads()`，无非法 `\X` 残留导致解析失败
+- [ ] 每篇 quality_score 按格式映射表（score/max_score、total_score、overall_score、detailed_scores、纯文本）归一到 0-100
+- [ ] 已有 `quality_score` 的论文被跳过（查 `state.json`），无重复写入
+- [ ] 批次按 10-15 篇/批拆分执行，避免 34 篇全量超时
+- [ ] `state.json` 中 `quality_score` 与 `gate_status` 已更新且可被后续闸门读取
 
 ## 约束规则 · RULES
 

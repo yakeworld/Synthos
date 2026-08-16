@@ -101,11 +101,11 @@ terminal(command="claude 'Task description'", background=true, pty=true, notify_
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] `which claude` 确认 CLI 已安装（npm 全局或 pip）
+- [ ] 交互/REPL 模式已设 `pty=true`，无挂起
+- [ ] 长任务已用 `background=true` + `notify_on_complete`
+- [ ] 单次任务 `claude "task"` 携带了明确的项目上下文
+- [ ] 审查任务使用了聚焦 Bug/安全的 review 指令
 
 ## 约束规则 · RULES
 

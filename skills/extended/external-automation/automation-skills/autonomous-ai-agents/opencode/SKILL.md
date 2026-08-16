@@ -148,11 +148,12 @@ ls -lt ~/.local/state/opencode/locks/                 # 锁文件（空=无正�
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] `opencode --version` / `which opencode` 确认已安装
+- [ ] `ps aux | grep opencode` 无进程视为正常（非常驻服务）
+- [ ] 配置 `~/.config/opencode/opencode.json` 存在且格式正确
+- [ ] 后端连通性 `nc -zv` 主/备节点端口可达
+- [ ] API 用 `chat/completions`（与 Codex `responses` 不可互换）
+- [ ] 仅用于极轻量一次性脚本，复杂任务走 Codex CLI
 
 ## 约束规则 · RULES
 

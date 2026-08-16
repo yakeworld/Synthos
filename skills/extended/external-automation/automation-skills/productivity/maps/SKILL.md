@@ -248,11 +248,12 @@ python3 ~/.hermes/skills/maps/scripts/maps_client.py nearby --near "Times Square
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] `search` 基准通过："Statue of Liberty" 返回 lat ~40.689、lon ~-74.044
+- [ ] `nearby` 基准通过：`--near "Times Square" --category restaurant --limit 3` 返回 ~500m 内餐厅列表
+- [ ] `nearby` 调用提供了 lat/lon 或 `--near` 之一；全球歧义输入（仅邮编/通用名）已补充国家/州
+- [ ] `distance`/`directions` 目的地使用 `--to` 标志并指定出行模式（driving/walking/cycling）
+- [ ] 区域 POI 查询先 `area` 获取边界框再调 `bbox`；请求频率 ≤1 req/s
+- [ ] "现在营业?" 类问题已核对 `hours` 字段，缺失/模糊时经 `web_search` 复核
 
 ## 约束规则 · RULES
 

@@ -211,11 +211,12 @@ For creating professional demo videos from PPTX slides (competition demos, prese
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 合并前已用 ffprobe 对比视频/音频时长，较长流已用 `-t` 显式裁剪（而非仅依赖 `-shortest`）
+- [ ] 音频已确认为标准格式（AAC 44100Hz 立体声 192kbps），非标准源已先转换再合并
+- [ ] MP4 拼接已走 TS 中间格式（`-c copy` 转 TS → 二进制 `cat` → 重编码 MP4），未对 `start_time` 全为 0 的分段直接 `-f concat -c copy`
+- [ ] 源 MP4 分段编码使用 `-preset medium`（或 higher），未用 `ultrafast`/`fast` 导致 TS 转换静默丢数据
+- [ ] 拼接后 ffprobe 校验：总时长 = 各分段时长之和，且 nb_frames 总和等于分段帧数之和（排除静默丢段）
+- [ ] 最终输出 v:0 与 a:0 的 duration 差值 < 0.2s
 
 ## 约束规则 · RULES
 

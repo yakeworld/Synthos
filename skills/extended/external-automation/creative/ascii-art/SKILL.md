@@ -351,11 +351,12 @@ When tools above don't have what's needed, generate ASCII art directly using the
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 已按决策流（Decision Flow）为请求选择正确的工具（文本横幅→pyfiglet/asciified；边框→boxes；图像转换→ascii-image-converter 等）
+- [ ] 字体/角色选择适配文本长度（短文本用 `doom`/`block` 等细节字体，长文本用 `small`/`mini` 紧凑字体）
+- [ ] 远程 API 请求正确编码（空格 URL-encode 为 `+`，字体名大小写敏感，通过 fonts 端点核实）
+- [ ] 输出在等宽字体下渲染正确，无布局溢出（自定义艺术 ≤60 列宽、横幅 ≤15 行）
+- [ ] LLM 兜底生成时仅使用文档中的 Unicode 字符集（box drawing / block elements / geometric）
+- [ ] 工具未安装时按决策流降级到下一选项（本地→asciified API→curl），并给出明确提示
 
 ## 约束规则 · RULES
 

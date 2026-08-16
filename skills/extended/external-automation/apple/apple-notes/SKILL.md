@@ -121,11 +121,11 @@ memo notes -ex                    # Export to HTML/Markdown
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 前置环境就绪：macOS 已安装 `memo`（`brew tap antoniorodr/memo && brew install antoniorodr/memo/memo`），且 Notes.app 自动化权限已授予（System Settings → Privacy → Automation）
+- [ ] 场景选择正确：非 Obsidian vault、非 agent 内部记忆（应用 `memory` 工具），确属跨设备同步需求才用 Apple Notes
+- [ ] 命令用法正确：查看/搜索用 `memo notes`（`-f`/`-s`）、创建用 `memo notes -a "Title"`、导出用 `-ex`
+- [ ] 限制处理得当：含图片/附件的笔记拒绝直接编辑，仅提示手动处理或改为查看（APPL-002）
+- [ ] 交互模式可用：删除/移动/编辑（`-d`/`-m`/`-e`）在终端支持 pty 时正常完成用户选择（APPL-004）
 
 ## 约束规则 · RULES
 

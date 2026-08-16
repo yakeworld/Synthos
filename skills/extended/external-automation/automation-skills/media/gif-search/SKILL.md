@@ -120,11 +120,12 @@ Each result has multiple formats under `.media_formats`:
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] `TENOR_API_KEY` 环境变量已设置且有效，curl 请求未返回 401/403
+- [ ] 查询词已正确 URL 编码（空格→`+`，特殊字符→`%XX`），API 正常返回 `.results`
+- [ ] `limit` 参数在 1-50 范围内，按需设置了 `contentfilter` 安全级别
+- [ ] jq 提取的 URL 字段（`media_formats.gif.url` / `tinygif.url`）非空且可访问
+- [ ] 下载后本地 GIF 文件存在且非零字节，可正常打开
+- [ ] 聊天/Markdown 场景使用了轻量 `tinygif` 格式或 URL 直接嵌入 `![alt](url)`
 
 ## 约束规则 · RULES
 

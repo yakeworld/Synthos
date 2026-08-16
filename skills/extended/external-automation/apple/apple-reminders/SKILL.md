@@ -130,11 +130,11 @@ Accepted by `--due` and date filters:
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 权限与授权已检查：macOS 环境就绪，`remindctl status` 正常，必要时 `remindctl authorize` 完成授权（APPL-005）
+- [ ] 意图澄清：用户说 "remind me" 时已区分 Apple Reminders（同步设备）vs agent cronjob 警报，日历事件/项目任务已转介其他工具（APPL-001/004）
+- [ ] 创建前确认：提醒内容、所属列表、截止日期三项已与用户确认后再执行 `remindctl add`（APPL-002）
+- [ ] 日期格式正确：`--due` 使用受支持格式（today/tomorrow、YYYY-MM-DD、YYYY-MM-DD HH:mm、ISO 8601）
+- [ ] 输出格式符合用途：程序化解析用 `--json`，人工查看用 `--plain`/`--quiet`（APPL-003）
 
 ## 约束规则 · RULES
 

@@ -382,11 +382,12 @@ See `references/network-patterns.md` for complete build scripts + shader code.
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] `nc -z 127.0.0.1 40404` 通过，且 `GET /mcp` 返回含 TD 版本/PID 的 JSON，确认 twozero MCP 在线
+- [ ] 构建前已对每个用到的 op type 调用 `td_get_par_info` + `td_get_hints`，未凭训练数据猜测参数名
+- [ ] 同名节点的销毁与创建拆分为独立 MCP 调用，未在同一 `td_execute_python` 中混合（无 "Invalid OP object" 错误）
+- [ ] 构建后 `td_get_errors(path, recursive=true)` 无 error/warning，`td_get_operator_info` 确认连线与参数正确
+- [ ] 录制前 `td_get_perf` 确认 FPS > 0，`td_get_screenshot` 确认输出非全黑
+- [ ] 非商业版已显式设置 `outputresolution='custom'` + 宽高，编码用 `prores`/`mjpa`（未用 H.264/H.265/AV1）
 
 ## 约束规则 · RULES
 

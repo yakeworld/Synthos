@@ -261,11 +261,12 @@ Report: topic, layout, style, aspect, language, output path, files created.
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 源内容已保存到 `infographic/{topic-slug}/source-{slug}.{ext}`，且已剥离其中的 API key、token 等凭证
+- [ ] `structured-content.md` 中所有统计数据/引用与原文逐字一致（如 "73% increase" 未被改写为 "significant increase"）
+- [ ] 已加载所选布局的 `references/layouts/<layout>.md` 与所选风格的 `references/styles/<style>.md`，且风格定义在整张信息图中一致应用
+- [ ] 自定义宽高比（如 `3:4`）已正确映射到 `image_generate` 支持的 landscape/portrait/square 中最近的档
+- [ ] 输出目录包含全部 5 个交付文件：`source-*.md`、`analysis.md`、`structured-content.md`、`prompts/infographic.md`、`infographic.png`
+- [ ] `image_generate` 失败时已自动重试一次；已存在的文件已按备份规则改名为 `*-backup-YYYYMMDD-HHMMSS`
 
 ## 约束规则 · RULES
 

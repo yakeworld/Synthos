@@ -273,11 +273,12 @@ print('Comments:', d['comments'])
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] `gh auth status` 显示已认证（前置条件，见 `github-auth` 技能）
+- [ ] 通过 GraphQL 查询获取了仓库 `repository.id` 与目标 `discussionCategories` 的 node ID（非 REST 整数 ID）
+- [ ] 仓库对象 `has_discussions` 为 true（若为 false，需先在 repo settings 启用讨论功能）
+- [ ] 创建 Discussion 使用 GraphQL `createDiscussion` mutation（REST POST 返回 404，不可用）
+- [ ] 长 body 已写入临时 JSON 文件并通过 `gh api graphql --input` 执行，完成 JSON 转义（双引号/换行/反斜杠）
+- [ ] 创建后通过 `gh api /repos/OWNER/REPO/discussions/NUMBER` 回读，确认 title、url、category、comments 与预期一致
 
 ## 约束规则 · RULES
 

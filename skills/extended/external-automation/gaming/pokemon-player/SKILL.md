@@ -247,11 +247,12 @@ Then hold B to speed through attack animations and text.
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 已获取用户 ROM 文件（从未下载或代用户生成 ROM）
+- [ ] `pokemon-agent serve` 启动后 GET /health 返回健康（含 `--load-state` 续档场景）
+- [ ] 每 2-4 步移动后截图并用 vision_analyze 核实位置，未连续发送 >4-5 个动作
+- [ ] 门/楼梯换图后追加 2-3 个 `wait_60`，出建筑后先横向 2 格再行进
+- [ ] 道馆战/新区域等高风险操作前已用描述性名称 POST /save
+- [ ] 停止时已保存游戏、更新 `PKM:PROGRESS` 并终止 serve 与 localhost.run 隧道进程
 
 ## 约束规则 · RULES
 

@@ -185,11 +185,12 @@ Constraint approach inspired by [wttdotm.com/prompts.html](https://wttdotm.com/p
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 选定的约束确实来自约束库（或 references/full-prompt-library.md），且已按"尽可能宽泛"原则解读（"Does this include X?" → Yes）
+- [ ] 恰好产出 3 个具体项目想法（非抽象概念），每个包含一行 pitch + 2-3 句说明
+- [ ] 每个想法都附带 ⏱ 时间预算（weekend / week / month）与 🔧 技术栈标注
+- [ ] 约束选择匹配用户画像（对照 Matching Constraints to Users 表：方向缺失→随机，实用→痛点类，倦怠→低努力类）
+- [ ] 输出符合 Output Format 模板（## Constraint: 头 + 引用块 + ### Ideas 编号列表）
+- [ ] 若用户选定某个想法，已立即进入构建阶段（创建项目、编写代码、迭代交付），而非停留在概念
 
 ## 约束规则 · RULES
 

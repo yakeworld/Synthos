@@ -75,11 +75,12 @@ metadata:
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 正确路由到对应子技能（chinese-form-automation / jupyter-live-kernel / maps / markitdown-convert / notebooklm-cli / notion / obsidian / powerpoint / webhook-subscriptions / youtube-content）而非在父级硬编码逻辑
+- [ ] 接收请求时校验输入参数（request/context）的类型、范围、格式完整性，符合 IO 契约
+- [ ] 核心操作参考本目录 scripts/ 或 references/ 资源，中间步骤/转换/计算正确
+- [ ] 最终输出格式、内容、编码、命名符合契约并正确保存结果
+- [ ] 空输入/极大值/异常场景被边界处理，不崩溃
+- [ ] 失败时提供含上下文与明确恢复建议的错误指引；拒绝执行未验证代码、不暴露内部状态
 
 ## 约束规则 · RULES
 

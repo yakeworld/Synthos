@@ -442,11 +442,11 @@ xurl --app staging /2/users/me             # one-off against staging
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] `xurl --help` 可执行且 `xurl auth status` 显示默认应用（`▸` 标记）持有有效 oauth2 token
+- [ ] 命令未使用 `--verbose`/`-v` 及任何内联密钥 flag（`--bearer-token`、`--client-id` 等）
+- [ ] 会话中未读取、打印或解析 `~/.xurl`；OAuth 授权与凭证注册均由用户在 agent 会话外手动完成
+- [ ] 执行写入操作（post/reply/like/repost/dm/follow/delete）前已确认目标帖子/用户及用户意图
+- [ ] 命令输出为合法 JSON；错误返回非零退出码且解析 `errors` 字段后能映射到 Troubleshooting 表中的修复项
 
 ## 约束规则 · RULES
 

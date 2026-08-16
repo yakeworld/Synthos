@@ -204,11 +204,12 @@ Every tool has a CLI equivalent for human operators and scripts:
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 启动时先执行 `kanban_show` 确认任务状态（非 `blocked`/`archived`）
+- [ ] 工作区类型为 `worktree` 时，`.git` 不存在则先执行 `git worktree add` 初始化
+- [ ] `$HERMES_TENANT` 已设置时，持久化记忆条目均带租户前缀
+- [ ] 代码变更任务使用 `kanban_block(reason="review-required: ...")` 阻塞而非直接 `kanban_complete`
+- [ ] `kanban_complete` 的 `created_cards` 仅包含成功 `kanban_create` 返回的真实 ID（无虚构 ID）
+- [ ] Retry 场景：已读取前次运行的 `outcome`/`error` 并避免重复相同失败路径
 
 ## 约束规则 · RULES
 

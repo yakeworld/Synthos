@@ -298,11 +298,12 @@ codex $PROFILE exec "
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 运行目录是 git 仓库（非 git 目录会直接拒绝）
+- [ ] tmux 交互时指令与 Enter 分两次独立 `send-keys` 发送
+- [ ] 并行任务已分配到不同 `-p <profile>` 节点
+- [ ] `--yolo`（无沙箱）仅用于可信任务/隔离环境
+- [ ] cron 脚本用 `codex exec` + prompt 作 CLI 参数（无 PTY）
+- [ ] 模型供应商仅 OpenAI Responses API（`wire_api = "responses"`）
 
 ## 约束规则 · RULES
 
