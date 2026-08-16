@@ -91,6 +91,12 @@ Every test must produce:
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: 待证伪技能声明 — 如 "citation-verification 技能在 pima-crispdm 数据集上可检出 ≥95% 虚构引用"，含适用场景与可检验条件。
+- **Golden Output**: 每个测试产出完整证据链 — 真实输入（非 mock）、处理日志、最终输出、期望对比、量化指标，全部归档至 `test-results/`；技能信任分级更新（如 0.85 → High Trust，继续监控）。
+- **Golden Error**: 仅用 mock 数据执行测试，3/3 通过即判 "技能可靠" → 诊断：违反"以真为试"原则，反证路径缺失；修复：改用真实任务输入重跑，并补充期望失败的反证测试用例，重新采集证据。
+
 # Falsification Validation---
 
 

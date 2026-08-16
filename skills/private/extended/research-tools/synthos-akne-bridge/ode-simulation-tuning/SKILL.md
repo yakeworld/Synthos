@@ -132,3 +132,9 @@ All 9 metrics pass simultaneously. If any fail, go back to the step where it fir
 - [ ] R² 用指数上升拟合（平滑数据不用 spline）；R² 恰好 0.90 时已放宽 bounds 复核
 - [ ] MAPE 按曲线拟合残差计算（`|y_fit - y_data|/y_data`），非相对变化
 - [ ] 新域参数扫描从 P140 已验证基线出发、一次只调一个参数（P141）
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: Retinal Shear P140 v2 参数初值 — alpha=0.65, beta=0.12, mu=0.04, eps=0.35, kappa=0.14, A_hp=0.42, E_hp=0.55；含完整 2-ODE 方程定义与 D(t) 刺激信号。
+- **Golden Output**: 9 项指标同时达标 — R²=0.997、AUC≥0.90、ablation=5.81x（≥2.0x）、MAPE_R≈0.7%（曲线拟合残差法），Sobol 排序输出，参数组可复现。
+- **Golden Error**: 正反馈耦合 `+kappa*V*(A-A_hp)` 致 A 冲顶（max(A)>0.92），ablation 仅 1.2x（<2.0x）→ 诊断：耦合为乘性正反馈，修复为加性基线锚定 `eps*(A-A_hp)` 并降低 kappa，重跑后 ablation 回升。

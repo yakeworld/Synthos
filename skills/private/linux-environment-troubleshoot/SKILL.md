@@ -246,3 +246,9 @@ version: 2.1.0
 - [ ] `which` 返回路径经 `file` 确认非 broken symlink
 - [ ] 反向 Shell 用 ncat（OpenBSD nc 无 -e/-k），tmux socket 用 `~/.tmux-*` 防清理
 - [ ] dpkg 中断已执行 `sudo dpkg --configure -a` 后再验证
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: 用户报告 MiKTeX 编译失败，`pdflatex` 输出 "No space left on device"；环境：Ubuntu，MiKTeX TeX Live 安装。
+- **Golden Output**: `df -h` 显示磁盘 60% 可用（非真满）→ 定位 `~/.miktex/texmfs/data/miktex/lock` 残留 → `rm -rf` 清除锁文件 + 损坏日志 → `pdflatex test.tex` 编译通过，PDF 正常生成。
+- **Golden Error**: 见 "No space" 即执行 `apt remove miktex && apt install miktex` 重装 → 诊断：未先 `df -h`/`df -i` 排除真磁盘满，未查锁文件即重装；修复：遵循"先查磁盘→先查锁文件"顺序，清除 lock 后验证，避免不必要的重装。
