@@ -103,28 +103,22 @@ metadata:
 ### 架构 (v5.1: Gene 独立进化单位)
 
 ```
-skills/{name}/
-├── SKILL.md (容器: 元数据 + 原则 + 完整文档 + 验证 + Golden)
-└── genes.yaml (独立进化单位: 策略基因) ← v5.1 新增
-    ├── skill: name
-    ├── version: 1.0.0
-    └── genes:
-        - id: XX-001
-          condition: 条件
-          strategy: 策略
-          weight: 1.0
-          # 进化字段:
-          # mutated: false
-          # verified: true
-          # activated: true
-          # history: [{date, action, reason}]
+SKILL.md (容器)
+├── Frontmatter (元数据)
+├── 原则 (Principles)
+├── Genes (策略基因) ← 紧凑层，优先加载 (v5.1: 最小进化单位)
+│   - [XX-001] 条件 → 策略
+│   - 表观遗传: task-router 按任务特征选择激活 Gene
+├── 方法层 (完整文档) ← 深度参考
+├── 验证清单
+└── Golden Set
 ```
 
 **进化操作粒度**: 从"整 SKILL.md 文件"降级为"单条 Gene"
-- DIAGNOSE: 检查 genes.yaml 存在性 + Gene 数量 (4-8) + 一致性
+- DIAGNOSE: 检查 Genes 小节存在性 + Gene 数量 (4-8) + 一致性
 - OPTIMIZE: 变异单条 Gene (修改 strategy)，非整文件
 - VERIFY: Gene-only 条件执行任务 (P1 可复现性)
-- CRYSTALLIZE: 新模式→Gene 候选→验证→录入 genes.yaml
+- CRYSTALLIZE: 新模式→Gene 候选→验证→录入 SKILL.md Genes 小节
 - EPIGENETICS: task-router 按任务激活 Gene 子集 (见 task-router)
 ```
 

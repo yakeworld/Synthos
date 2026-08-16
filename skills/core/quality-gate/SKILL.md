@@ -119,10 +119,10 @@ python3 quality-gate-runner.py \
 ### Gene 验证 (G8 门) — v5.1 核心门
 
 > **验基因，不验长文。** Gene 是独立进化单位 (宪法 P7)，验证 Gene 即验证策略。
-> 存储: `skills/{name}/genes.yaml` (独立 YAML，非 SKILL.md 内小节)
+> 存储: SKILL.md 内 `## Genes` 小节 (紧凑层，优先加载)
 
-- **G8a**: genes.yaml 存在性 — 每技能必须有 genes.yaml (目标: 157/157 = 100%)
-- **G8b**: Gene 一致性 — genes.yaml 策略与 SKILL.md 完整文档不矛盾
+- **G8a**: Genes 小节存在性 — 每技能 SKILL.md 必须有 `## Genes` 小节 (目标: 157/157 = 100%)
+- **G8b**: Gene 一致性 — Genes 策略与 SKILL.md 完整文档不矛盾
 - **G8c**: Gene 可进化性 — 每条 Gene 可独立变异 + 独立验证 (P1 可复现性)
 - **G8d**: Gene 数量 — 每技能 4-8 条 (太少=覆盖不足，太多=失去压缩)
 - **G8e**: 表观遗传激活 — pipeline_trace 记录 gene_activation (activated/suppressed)
