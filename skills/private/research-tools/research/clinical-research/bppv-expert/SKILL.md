@@ -224,9 +224,9 @@ When asked "BPPV有哪几篇比较成熟的？" or "our BPPV papers review":
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
 ## Golden 集合 · GOLDEN SET
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: `patient_data={nystagmus: "upbeating + torsional, fatigable, duration <60s", symptoms: "特定头位诱发的短暂眩晕伴恶心"}` → 触发半规管识别 + 诊断试验选择 + 复位手法
+- **Golden Output**: 结构化方案含四要素（体位/头转角度/时机/预期眼震）的 Epley 手法 + 医学警告"仅作教育用途，临床决策需面诊评估" + confidence: float + 具体 AKNE wiki 来源（如 `dix-hallpike.md`）
+- **Golden Error**: 输入 `nystagmus` 缺失或无法判定受累半规管时 → 拒绝输出复位手法，返回错误信息含上下文（"无法从眼震模式识别受累半规管"）与恢复建议（"请补充 Dix-Hallpike 或仰卧翻滚试验的眼震方向与持续时间的观察记录"）
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 > 每个示例必须可独立运行、有明确输入输出、包含错误处理。

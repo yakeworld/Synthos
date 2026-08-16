@@ -172,9 +172,9 @@ board.close()
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 自动化管理 K230（`/dev/openmvcam` @115200）：Python 直调 `Pyboard.enter_raw_repl()` → `exec_()` → `exit_raw_repl()`，完成代码执行/文件传输/软重启全链无人工拔插 USB
+- **Golden Output**: `exec_("import machine; machine.reset()")` 软重启成功、文件上传下载正常；配置 GPIO 前已查 `/revision.txt`（RT-Smart→显式 FPIOA，CanMV→直接 Pin）并按 `os.uname()[-1]` 分配按键 GPIO（01studio→GPIO21 按下=0，lckfb→GPIO53 按下=1）
+- **Golden Error**: `ampy run`（raw REPL）始终失败 → 改 Python 直调 `ampy.pyboard.Pyboard`；串口完全无输出且 sendBreak/Ctrl+C/Ctrl+D 均无效（设备死锁）→ 物理拔插 USB 恢复
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

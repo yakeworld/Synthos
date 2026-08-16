@@ -91,9 +91,9 @@ metadata:
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 一个 PIDD 泄漏审计目录——独立 `.py` 脚本（非无输出 Notebook）、实验条件已固定（ZeroReplacer/Pipeline/CV 一致）、文献库含 accuracy>90% 论文、OpenML PIDD ID:292 可访问（覆盖正常审计路径）
+- **Golden Output**: 审计结论——基线 27/32 缺失模型逐一点名（DummyClassifier 等 5 个）、文献多源搜索（Semantic Scholar + CrossRef/PubMed）过滤高准确率论文并标注泄漏风险、泄漏后 F1 趋同 ~0.70 标注为经验观察（PIMA-007）、Pima 32 基线与 HCS-3WT 7 模型范式严格分列（精确匹配 VERIFICATION 七条）
+- **Golden Error**: 实验条件不一致（ZeroReplacer/Pipeline/CV 不同）→ 标注"对比无效"；Notebook 无 cell 输出 → 按 PIMA-002 拒绝作为可复现记录；Pima 与 HCS-3WT 结论混同 → 按 PIMA-006 隔离重审（覆盖失败路径）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 
@@ -165,9 +165,9 @@ metadata:
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 一个 PIDD 泄漏审计目录——独立 `.py` 脚本（非无输出 Notebook）、实验条件已固定（ZeroReplacer/Pipeline/CV 一致）、文献库含 accuracy>90% 论文、OpenML PIDD ID:292 可访问（覆盖正常审计路径）
+- **Golden Output**: 审计结论——基线 27/32 缺失模型逐一点名（DummyClassifier 等 5 个）、文献多源搜索（Semantic Scholar + CrossRef/PubMed）过滤高准确率论文并标注泄漏风险、泄漏后 F1 趋同 ~0.70 标注为经验观察（PIMA-007）、Pima 32 基线与 HCS-3WT 7 模型范式严格分列（精确匹配 VERIFICATION 七条）
+- **Golden Error**: 实验条件不一致（ZeroReplacer/Pipeline/CV 不同）→ 标注"对比无效"；Notebook 无 cell 输出 → 按 PIMA-002 拒绝作为可复现记录；Pima 与 HCS-3WT 结论混同 → 按 PIMA-006 隔离重审（覆盖失败路径）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

@@ -217,9 +217,9 @@ Script timed out after 300s and was killed
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 用户报告飞书消息无响应，提供 session_id=`agent:main:feishu:dm:<chat_id>`、错误文本 `API call failed (404 Not Found)`（FEIS-001/002）
+- **Golden Output**: 诊断指向 vLLM 节点（`base_url=http://<ip>:8000`，非飞书），gateway.log 出现完整时间线 Received raw → Flushing text batch → response ready → Sending response，`curl -s http://<ip>:8000/v1/models` 确认模型存在后重发成功（FEIS-002/003）
+- **Golden Error**: `RemoteProtocolError: peer closed connection without sending complete message body`（http_status=200 bytes=0 elapsed=180.07s）→ 判定为 vLLM 180s 超时/负载过高（FEIS-007）；或 MEDIA 附件 33MB>10MB 静默失败 → gs `/screen` 压缩至 2.4MB 后重发成功（FEIS-004）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

@@ -302,9 +302,9 @@ cat /etc/X11/xinit/xinput.d/fcitx 2>/dev/null && echo "警告：仍有 fcitx 残
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: Ubuntu + fcitx5 环境，`dpkg -l | grep fcitx | grep "^ii"` 确认 fcitx5 已装且 `pgrep -a fcitx5` 有 daemon 进程，但 GTK3 应用（如 gedit）中文候选窗口不出现
+- **Golden Output**: 修复后 `env | grep -i "GTK_IM\|QT_IM\|XMODIFIERS"` 三变量统一为 `fcitx5`，`/etc/X11/xinit/xinput.d/fcitx` 无 fcitx4 残留（或已替换为 fcitx5 版本），`ls /usr/lib/x86_64-linux-gnu/gtk-3.0/*/immodules/im-fcitx5.so` 存在，应用重启后中文输入正常
+- **Golden Error**: `snap list firefox` 有输出且 `readlink -f $(which firefox)` 路径含 `/snap/firefox/` → 判定 snap 版硬编码 ibus（`IBUS-CRITICAL: ibus_bus_is_connected == FALSE`），环境变量修复无效，须 `sudo snap remove firefox` 改装 deb 版，而非继续调 `GTK_IM_MODULE`
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

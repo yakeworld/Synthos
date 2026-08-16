@@ -94,9 +94,9 @@ zip -r submission.zip submission/ -x "*/.*"
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 竞赛通知（赛道 + 3 项评分维度 + 格式要求 + 截止时间）+ 就绪的核心素材（技术方案、代码、演示数据）+ `references/` 下五套模板（tech-spec/roadmap/video-script/form-filling/presentation）
+- **Golden Output**: `submission.zip` 满足三项硬断言：① 解包后恰含五类产物（技术规格书/路线图/视频脚本/申报表 docx/答辩 PPT pptx），无多余文件、无 `*/.*` 隐藏文件；② 路线图用 Mermaid timeline 语法且渲染无误，申报表经 python-docx、PPT 经 python-pptx 基于标准模板生成；③ 完整性检查逐项打勾确认涵盖全部评分维度与格式要求，且当前时间早于截止时间
+- **Golden Error**: 完整性检查发现评分维度/格式要求缺项，或当前时间已晚于竞赛截止时间 → 应输出带缺项清单的完整性检查结论并拒绝交付 `submission.zip`，而非静默打包交付；或解包核对发现隐藏文件混入（`-x "*/.*"` 未生效）→ 报"包内含隐藏文件"并重建打包命令
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

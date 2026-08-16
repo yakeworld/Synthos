@@ -80,9 +80,9 @@ metadata:
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 用户请求 "用 Qwen3-VL 在 Linux (Ubuntu/Debian) 高并发部署推理集群" —— 模型名含 VL 后缀、平台评级 ⭐⭐⭐⭐⭐、触发内核调优的正常路径
+- **Golden Output**: 确认 Qwen3-VL 为多模态型号（LLM-001 通过）；选定 Linux (Ubuntu/Debian) 弃用 Windows 原生与 macOS（LLM-003）；实施 Linux 内核调优，实测吞吐提升落在 20-30% 区间且对照 2025 集群优化研究可溯源（LLM-004/LLM-005），部署步骤可逐步重放结果一致（LLM-006）
+- **Golden Error**: 用户请求 "用 Qwen3.5 跑图片分类" —— 模型名无 "VL" 后缀 → 判定纯文本，拒绝图片任务（LLM-001），返回含上下文背景与恢复建议的错误信息并推荐 Qwen2.5-VL/Qwen3-VL 系列（LLM-002）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

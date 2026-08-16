@@ -144,9 +144,9 @@ grep -c 'undefined' paper.log
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 一篇使用外部 `references.bib`（与 paper.tex 同目录）的 elsarticle 论文，preamble 已含 `\bibliographystyle{plain}`，触发条件：首次 `pdflatex` 后 `paper.log` 出现 `Package natbib Warning: Citation 'xxx' undefined`
+- **Golden Output**: 执行 `pdflatex → bibtex paper → pdflatex → pdflatex` 完整链后，`paper.bbl` 非空且 `paper.blg` 显示 0 warnings；`pdflatex -interaction=nonstopmode` 重编译后 `! LaTeX Error` 计数为 0、`grep -c 'undefined' paper.log` 为 0
+- **Golden Error**: `paper.bbl` 为 0 字节或 bibtex 报 `I found no \bibstyle command` → 判定缺失 `\bibliographystyle{plain}`（而非 bib 条目问题）；BibTeX 报 "didn't find a database entry for X" 但条目存在 → 判定 `.bib` 文件早期花括号不匹配，用独立文件最小化编译定位，不修改"嫌疑"条目本身
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

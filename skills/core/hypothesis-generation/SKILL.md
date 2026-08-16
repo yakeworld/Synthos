@@ -385,9 +385,9 @@ PINN/ODE 候选常产生 3-5 个假说，各对应不同的 ODE 参数（增益�
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: OKR-adaptation-PINN 的 gap_analysis 输出（白空间状态=ABSOLUTE_WHITE 前庭适应速率机制空白 + 领域知识摘要含 2-ODE 模型约束与 OKR 增益-频率实验范式 + constraints: 现有临床数据可得性）
+- **Golden Output**: 3 条假说（H1 Gain-Frequency Sigmoid 0.74 / H2 Logarithmic Rate Scaling 0.74 / H3 Ataxia Biomarker τ_adapt 0.84 HIGHEST），每条含五段式（statement+rationale+falsifiability test with rejection criteria"τ_adapt > X ms 即证伪"+evidence matrix≥3 支撑+counter-evidence）且按综合评分排序
+- **Golden Error**: 某假说仅陈述"需要进一步研究"而无定量拒绝标准 → 判定不可证伪，立即丢弃（Pitfall#1 / HG-001），输出中不得出现无 rejection_criteria 的假说
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

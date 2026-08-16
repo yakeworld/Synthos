@@ -320,9 +320,9 @@ echo "total: $(wc -l < /tmp/bibitems.txt)"
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 一篇已可编译的论文（pdflatex 0 error），多组件方法、Discussion 缺少 2024-2026 前沿文献，且声称"显著优于基线"却无统计检验（来源：标准改进流程触发条件）
+- **Golden Output**: ① Discussion 增补 3-5 篇与方法直接相关的前沿文献；② V1→V4 消融表（每组件正贡献，V4 用 \textbf{} 强调）；③ 统计节含配对 t/Wilcoxon、科学计数法 p-value、Cohen's d、1000 次 bootstrap 95% CI；④ Data/Code 声明含具体 URL+MIT 许可证；⑤ D10a=100%（来源：模式1-4 + 质量检查清单）
+- **Golden Error**: 新增 bibitem 未被正文 \cite{} 引用（含 `%%` 注释行内引用）→ D10a<100%，须将引用移至正文锚点；或消融某组件增量为负 → 必须移除该组件（来源：引用注释行陷阱 + 消融关键约束）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

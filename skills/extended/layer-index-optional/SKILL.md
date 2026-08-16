@@ -130,9 +130,9 @@ Navigation index for optional skills: creative tools, productivity, social monit
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: `layer="optional", query="生成科研图表", context={"env":"linux-cli"}`（来源：IO_CONTRACT 输入签名）
+- **Golden Output**: `skill_list` 命中 figure-generation，并提示"结论-证据-面板"契约与 Nature 语义色板（LAYE-006）；列表中技能名与"Skills in this Layer"清单逐一对应，符合 `list[dict]` 格式（来源：验证清单 + 基因 LAYE-006）
+- **Golden Error**: 空 query 或无匹配技能 → 返回明确提示"未找到相关技能，可调用 creative-ideation 探索方向"而非异常中断；query 模糊时触发创意构思（LAYE-001）（来源：验证清单边界场景 + 基因 LAYE-001）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

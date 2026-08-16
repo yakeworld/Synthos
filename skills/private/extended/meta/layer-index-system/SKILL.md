@@ -136,9 +136,9 @@ Navigation index for system maintenance: devops, automation, tool integration, a
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: `layer="devops", query="cron", context={}` — 正常路径：指定 layer 与检索词，命中本层技能列表
+- **Golden Output**: `skill_list: list[dict]` 仅含 devops 层中匹配 "cron" 的条目（如 `cron-system-maintenance`、`devops`），每项为含 name/description 的 dict，结构严格符合 IO_CONTRACT
+- **Golden Error**: `layer` 或 `query` 缺失/类型错误时，按 LAYE-001/LAYE-004 拒绝执行，返回含缺失字段名、上下文与恢复建议的错误信息，且不产出任何 `skill_list`
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

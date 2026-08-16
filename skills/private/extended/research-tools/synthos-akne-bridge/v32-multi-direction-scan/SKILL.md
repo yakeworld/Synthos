@@ -48,9 +48,9 @@ metadata:
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 扫描任务描述 + 上下文（目标方向集合、paper-pipeline 9 核心约束清单），覆盖 Step 0 模式决策的正常路径
+- **Golden Output**: 各方向扫描结果表，格式符合 IO_CONTRACT 输出契约（SK-005），且过程验证确认无 Cycle 245 式 vhit 漂移（SK-004）
+- **Golden Error**: 请求描述/上下文缺失或无效时，触发输入验证并阻断后续流程，错误信息含上下文与恢复指引（SK-002/006）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

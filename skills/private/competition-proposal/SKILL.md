@@ -140,9 +140,9 @@ def set_cell(table, row_idx, col_idx, text):
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: `template.docx`（含 20 列合并单元格表格、带星号必填字段）+ `track="医疗健康"` + 4 段式叙事 JSON（痛点/方案/成效/复制各 1 段，含技术术语 "AI Agent"、"G1-G7" 待去技化转换）
+- **Golden Output**: `filled_application.docx` 满足三项硬断言：① 四段式叙事完整且每段含具体数据；② "AI Agent"/"G1-G7" 等术语已按转换表译为通俗表述（正文 grep 无原术语残留）；③ 赛道行含文本标记 "√ 已选：医疗健康"，长度 > 40 字符的模板占位说明段落已清空（无"（介绍参赛项目的背景..."残留）
+- **Golden Error**: 模板实际行数 < 预期（如 Row 34 不存在）→ 填充脚本应抛出带行/列上下文与恢复建议的异常（"模板行数不足：预期 35 行，实际 N 行"），而非静默截断；或赛道必填字段（营收/融资/Token）对单位类型不可满足时，填充前即报错提示排查星号字段，避免错选赛道
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

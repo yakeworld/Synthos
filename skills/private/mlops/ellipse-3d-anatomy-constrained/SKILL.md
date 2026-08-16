@@ -112,9 +112,9 @@ M = I + [v]_x + [v]_x^2 / (1 + O·O')
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 至少两帧椭圆参数（每帧 a≥b、旋转角 β），虹膜半径 R_iris 已知，眼球中心在 XY 平面 (z=0) —— 触发解剖约束 R_eyeball=2R_iris、d=√3·R_iris 将自由度从 2 压缩到 0
+- **Golden Output**: 3D 法向量 n=[sinα·sinβ, -sinα·cosβ, cosα]（α 由 cosα=b/a 解出，单位化且方向正确）、虹膜中心 3D 坐标（z1 为实数）、由两帧光轴投影直线交点迭代收敛（先估计→计算→收敛）得到的眼球中心、满足正交性的 Rodrigues 旋转矩阵 M=I+[v]_x+[v]_x²/(1+O·O')
+- **Golden Error**: 3·R_iris²-(x1-x0)²-(y1-y0)² < 0 时 z1 为虚数 —— 判定椭圆参数与解剖约束矛盾，不输出虚数，返回带上下文的错误信息并检查输入数据有效性（ELLI-003）；单帧输入则拒绝求解眼球中心（单帧无法确定，ELLI-002）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

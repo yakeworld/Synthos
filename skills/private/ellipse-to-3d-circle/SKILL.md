@@ -224,9 +224,9 @@ $$R_{\text{mm}} = \frac{R_{\text{px}} \cdot d_{\text{mm}}}{f_{\text{px}}}$$
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 正交投影下瞳孔椭圆 center=(u0,v0)、a=24px、b=18px、theta=30°，相机内参 K、焦距 f=800px，先验 circle_radius=2.4mm（来源：IO Contract 输入结构 + Step 1–3）
+- **Golden Output**: 3D 圆参数：alpha=arccos(b/a)≈41.4°，phi=theta±90°（按右手定则定符号），单位法向量 n、正交右手基 (u,v,n)，且 confidence.ambiguity="depth"（深度未引入眼球模型/双目约束）（来源：Step 1–5 + 质量门）
+- **Golden Error**: 输入 b/a∉(0,1]（如 b>a）→ 报错"输入无效：b/a 必须满足 (0,1]"；或 a=b 正对相机 → 提示单帧无法确定旋转状态，需纹理特征点或第二视角（来源：基因 ELLI-001/ELLI-007 + 陷阱3）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

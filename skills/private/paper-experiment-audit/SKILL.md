@@ -53,9 +53,9 @@ metadata:
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 一篇含 WDBC 实验的 LaTeX 论文目录——`thebibliography` 与 `references.bib` 并存、含消融实验独立运行脚本 + 输出 JSON、正文 fig6 重复引用 3 次（覆盖正常审计路径）
+- **Golden Output**: 六条 VERIFICATION 全部打勾的审计日志——数据集版本锁定（699/569 分别记录）、消融复现差值 ≤0.5% 判"一致"、thebibliography↔bib 无 MISMATCH、fig6 冗余引用合并为单次、同一指标 ≥2 独立源交叉核对、每条结论可溯源（精确匹配审计日志模板）
+- **Golden Error**: 跨版本对比（699 vs 569）或消融复现差值 >0.5% 时，输出 MISMATCH 标记并列出差值来源与版本号，阻断后续结论（覆盖失败路径）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

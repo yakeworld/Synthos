@@ -72,9 +72,9 @@ metadata:
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）---
+- **Golden Input**: `project_practice: "P141 视网膜剪切 ODE 调优：从 P140 基线出发，alpha 0.65→0.55，发现正反馈耦合致 A 冲顶，改加性 eps*(A-A_hp) 后 ablation 5.81x"`（取自 EXAMPLES 真实项目实践，覆盖正常路径）
+- **Golden Output**: `reusable_patterns: ["正反馈耦合（乘性）必然导致变量冲顶 → 约束类型: 耦合必须加性且基线锚定", "新域参数搜索从已验证基线出发单参步进，不盲扫多维"]` — 已去除项目名/路径/日期并上升到约束类型级别（PROJ-002），且 `skill_update` 为扩展 ode-simulation-tuning 的 SKILL.md diff（PROJ-004 优先扩展不新建）
+- **Golden Error**: 实践记录未回答反思问题"为什么有效"（PROJ-001），或提炼结果仍含项目实体名/未升型到约束类型（PROJ-002）时 → 拒绝产出 `reusable_patterns`，报"只记录不反思/抽象未升型"并要求补充反思后再提炼---
 
 
 

@@ -223,9 +223,9 @@ Bridge v2 修复了 v1 的三个致命问题：
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 两个已摸底系统根目录 — `SYNTHOS_ROOT`（论文/技能目录）与 `AKNE_ROOT`（图谱/向量库），附 `domain_keywords` 映射与 `known_mappings` 同名实体清单，`sync_direction=a_to_b`（源: IO_CONTRACT 输入表 + 执行步骤 §0 摸底）
+- **Golden Output**: 7 文件全部生成且幂等 — 4 个脚本（`<a>-to-<b>-bridge.py` 等）+ `<a>.md` 项目条目 + `<a>-bridge-protocol.md` + `index.md`；重跑一次后节点数不变（`_exists_node`/`_exists_edge` 去重生效）、`logs/bridge-log.jsonl` 新增一行且 `new_nodes=0`（源: 输出契约 + Bridge v2 增量同步）
+- **Golden Error**: 关键词匹配边权重 < 0.3 或单节点邻接超过上限 → 边被阈值制拒绝（防图爆炸）；`system_a_root` 缺失时脚本以含上下文的错误退出而非静默空跑（源: SYST-003 + 已知陷阱 #2/#7 + 约束规则）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

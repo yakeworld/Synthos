@@ -51,9 +51,9 @@ metadata:
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 一个完整论文目录——含 .tex、PDF、references/，且检出 3 条假 DOI、实验模型清单与 helix_benchmark 存在偏差项（覆盖正常改进路径）
+- **Golden Output**: 改进后 pdflatex 编译 0 error / 0 undefined reference，假 DOI 替换日志逐条可回溯（原 DOI→新 DOI），偏差项（LightGBM/CatBoost 等）逐项列出并处置，四份标准审计报告齐备（精确匹配 VERIFICATION 七条）
+- **Golden Error**: 输入不完整（缺 .tex 或 PDF）→ 按 PAPE-001 立即阻断不进入改进流程；LaTeX 替换失败 → 按 PAPE-005 启用 sed 回退并验证回退后引用解析成功（覆盖失败路径）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

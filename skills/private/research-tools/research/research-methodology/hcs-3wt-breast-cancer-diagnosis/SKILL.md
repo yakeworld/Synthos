@@ -135,9 +135,9 @@ The system has been rigorously evaluated with leakage-free 10x5 stratified CV, a
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
 ## Golden 集合 · GOLDEN SET
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: `data_path="wdbc"`（569 样本、30 特征）→ 执行 10x5 分层交叉验证（50 折，后台执行），theta_low=0.03 / theta_high=0.95
+- **Golden Output**: 诊断报告含自动化率 ≈ 70.9%±6.4%、自动化准确率 ≈ 99.3%±1.0%、Gray Zone 29.1% 伴 1.21x 恶性富集、HCS-3WT accuracy ≈ 0.9475、vs 最佳单模型 SVC 的 FN 降低 ≈ 47.7%；单类别折已被 `continue` 跳过（未触发 SMOTE/SVC 崩溃）
+- **Golden Error**: PIMA 类低可分数据集（自动化率 < 10%，>90% 概率落在 [0.03, 0.95]）→ 不硬套默认阈值，输出含上下文（"特征空间分离度不足"）与恢复建议（"调整阈值至 0.20/0.80 或采用数据集特定阈值优化"）
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。

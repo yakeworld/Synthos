@@ -102,9 +102,9 @@ metadata:
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: K230 训练管线项目：901 帧 K230 图像（800×480）+ 976 帧 OpenEDS 数据 + 7 步 CV 管线（瞳孔定位→区域生长→椭圆精修→眼球中心标定→3D 能量蛇→SAM 眼裂→Seg Mask）+ MobileNetV2+T3EM 4 阶段训练日志（30+20+20+20 epoch）
+- **Golden Output**: paper_plan.json 含 IMRaD 结构 + 15-30 篇文献列表 + 时间表；≥3 个研究空白（如单目 3D 精度极限未验证）+ ≥3 个可检验假设（H1: 分割误差主导总误差 ≥60%，含检验条件与反证路径）；Val Dice=0.8955 / CErr=1.63px 可追溯至训练日志
+- **Golden Error**: 数值（Val Dice/CErr）无法追溯至训练日志或代码输出 → 触发 TRAI-001 数据诚实门（凡数必源），拒绝输出无源指标并标注缺失；研究空白 <3 或假设 <3 则不满足质量门，需补充扫描
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

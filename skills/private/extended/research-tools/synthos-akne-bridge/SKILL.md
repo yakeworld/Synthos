@@ -373,9 +373,9 @@ AKNE 桥接遵循 `kg-bridge`（Knowledge Graph — Agent Bridge）方法论：
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 一份含孤立论文的 AKNE `graph.json`（关系值存于 `link_type`/`key`，`relation` 为空）+ 一个缺少 `01-manuscript`/`06-references`/`07-quality` 子目录的 `outputs/papers/*` 论文目录，作为"先诊后治"修复输入（SYNT-001/005）。
+- **Golden Output**: 重跑 `~/.hermes/scripts/akne-query.sh bridge` 输出 `orphans=0`、`skill_connected=total`、`synthos_paper_with_edges > 0`，且 `source→category→paper` 双向路径 = YES（显式建 `source_category` 等逆向边，SYNT-002）。
+- **Golden Error**: 在 venv 3.11 的 execute_code 中 `import` AKNE/QueryEngine，或按 4 值解包 `kg.find_related()`/`in_edges(data=True)` → 预期 `ModuleNotFoundError`（无 sentence-transformers，SYNT-004）或 `ValueError: too many values to unpack`（陷阱 2/3，应为 3 元组）。
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

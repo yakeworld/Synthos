@@ -128,9 +128,9 @@ This pattern is most common in papers where:
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: `01-manuscript/paper.tex` 含 9+ 个未锚定 bibitem（`iahn17`、`raissi19` 等）+ 密集散文段落，IMRaD 结构、Introduction/Methods 无正式引用
+- **Golden Output**: 按 PROS-002/004 在 `\subsection{PINN Architecture}` 后单锚点合并 `\cite{raissi19,chen18,sanchez22,jagtap22}`，Python 脚本报告 `D10a: N/N = 100%`、`Orphans: 0`，双次 `pdflatex` 后 `grep -c "undefined"` 为 0
+- **Golden Error**: 脚本输出 `Orphans > 0`（如列出未锚定 bibitem 键）→ 触发 PROS-005，须回查映射表（PROS-001）补齐锚点后重跑编译验证
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

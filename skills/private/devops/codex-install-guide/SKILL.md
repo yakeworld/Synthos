@@ -102,9 +102,9 @@ codex -p amax exec "echo test"
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 在已有 `opencode` 的 Linux 工作站安装 Codex CLI，且 cron 脚本引用 profile `amax`（CODE-003/005）
+- **Golden Output**: `npm i -g @openai/codex` 后 `which codex` 返回有效路径、`codex --version` 无报错；`~/.codex/config.toml` 未被指向付费端点；`codex -p amax exec "echo test"` 返回 `test`，与 opencode（`~/.local/share/opencode/`）共存无冲突（CODE-001/002/004）
+- **Golden Error**: cron 脚本引用的 profile 缺失（`ls ~/.codex/profiles/` 无 `amax.config.toml`）→ `codex exec` 无具体错误信息静默批量超时（CODE-006）；或误装 `@codexapi/codexclaude` 覆盖 vLLM 配置指向付费端点（CODE-002，须拒绝）
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 > 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。

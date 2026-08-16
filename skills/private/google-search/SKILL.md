@@ -283,9 +283,9 @@ python3 scripts/web_search.py "query" --engine googler --max 10
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: `python3 scripts/web_search.py "S2 API 论文检索" --engine serpapi --max 10`（三级降级链起点：SerpAPI key 有效，SearXNG 已按 settings.yml 模板部署）
+- **Golden Output**: 10 条 `list[dict]`，每项精确匹配契约 `{title, url, snippet, position, engine}`，`engine` 字段如实标记实际来源（如 `serpapi`），无底层引擎字段混入
+- **Golden Error**: SearXNG 引擎集体 `httpx.ConnectTimeout` 且 `curl https://www.google.com.hk` 返回非 000 时 → 判定为出口 IP 被封锁而非 SearXNG 故障，走 Tailscale Exit Node / Tor SOCKS5 切换路径（GOOG-004），而非重启容器
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

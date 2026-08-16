@@ -86,9 +86,9 @@ metadata:
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: `papers_dir=outputs/papers/*`，各论文含顶层 `quality_score`/`D10a`/`Gates_result` 的 `state.json`（PAPE-001/002）
+- **Golden Output**: 按质量分降序的 `submission_priority_list`（如 147-lens-capsule=96 → bppv=95），缺项标注「需补充/无PDF」，且 D10a 数字与 "100%" 字符串均解析成功
+- **Golden Error**: D10a=0 的论文（如 concussion-oculomotor-PINN）→ 单独核查 orphans/zombies_count 与 Gates_result 格式（字符串/字典），异常标记「需补充」而非混入正常候选（PAPE-003）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

@@ -109,9 +109,9 @@ tracking（已扫描/候选）
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 一个真实外部项目扫描结果 — 例如 GitHub Topics API 返回的某仓库（含 stars、README、skills/ 目录），经关键词轮转策略命中吸收目标（源: 本文件 IO_CONTRACT + 状态生命周期）
+- **Golden Output**: 三层记录全部落盘 — `evolution/absorption-{project}.md` 五层吸收记录 + `absorption-ledger.json` 追加条目（状态 ∈ tracking→evaluating→absorbed/deferred/archived）+ 吸收报告符合 `references/absorption-report-template.md`（源: 项目追踪/参考文件小节）
+- **Golden Error**: 输入含未验证的可执行代码片段时 → 按安全约束拒绝执行并记录上下文；台账状态非法跳转（如 tracking 直接到 absorbed 而无五层记录）→ 标记"未留痕不视为有效吸收"并回退状态（源: 约束规则 + SKIL-004/SKIL-006）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 
@@ -175,9 +175,9 @@ tracking（已扫描/候选）
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 一个真实外部项目扫描结果 — 例如 GitHub Topics API 返回的某仓库（含 stars、README、skills/ 目录），经关键词轮转策略命中吸收目标（源: 本文件 IO_CONTRACT + 状态生命周期）
+- **Golden Output**: 三层记录全部落盘 — `evolution/absorption-{project}.md` 五层吸收记录 + `absorption-ledger.json` 追加条目（状态 ∈ tracking→evaluating→absorbed/deferred/archived）+ 吸收报告符合 `references/absorption-report-template.md`（源: 项目追踪/参考文件小节）
+- **Golden Error**: 输入含未验证的可执行代码片段时 → 按安全约束拒绝执行并记录上下文；台账状态非法跳转（如 tracking 直接到 absorbed 而无五层记录）→ 标记"未留痕不视为有效吸收"并回退状态（源: 约束规则 + SKIL-004/SKIL-006）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

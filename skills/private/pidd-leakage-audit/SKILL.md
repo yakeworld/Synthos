@@ -106,9 +106,9 @@ metadata:
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: PIDD 数据集（768 样本，类别不平衡）+ 在数据分割前执行 SMOTE 的 10-fold CV 脚本（覆盖泄漏路径）
+- **Golden Output**: 按 PIDD-001/002 用 `imblearn.Pipeline` 将 SMOTE/imputation 隔离入折后重跑，F1 回落至 ≈0.71 界内；`cv_results.csv`、`comprehensive_results.json` 均生成，Recall 不再虚崩至 ~0.50
+- **Golden Error**: F1 > 0.90（如 0.93）→ 触发 PIDD-003 泄漏异常，须回查折外预处理与全局 imputation（PIDD-006）并复算 F1 回落到 0.71 量级
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

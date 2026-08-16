@@ -66,9 +66,9 @@ Scope tiers:
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 学生研究方向清单含"5 pillars 公开数据集分析"与"泪膜生物力学"两个方向（取自 EXAMPLES 真实场景，覆盖正常路径）
+- **Golden Output**: 前者划为 Core（全流程）、后者划为 Peripheral（仅空白+假设）的分级决策（GRAD-001），并据此下发 5 个 Cron 任务配置——paper-repair 仅修复 in-scope、literature-monitor 核心出完整报告/外围仅附录（GRAD-002/003/004）；收敛决策作为持久化事实写入 Memory（GRAD-005）
+- **Golden Error**: 研究方向无法按 Scope tiers 归类，或某 cron prompt 未显式列出允许/禁止方向时 → 拒绝生成 onboarding 方案，报出未分类方向名称并要求先补全方向清单（GRAD-002 边界清晰前置）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

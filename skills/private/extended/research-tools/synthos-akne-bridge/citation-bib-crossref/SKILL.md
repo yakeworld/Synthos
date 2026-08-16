@@ -111,9 +111,9 @@ pima-crispdm           33   100%    0     0    ✅
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: `pima-crispdm` 论文库（.tex + .bib，33 个 bib 条目）——覆盖"全健康"正常路径（IO_CONTRACT / 示例 2 基准）
+- **Golden Output**: 审计结果为 D8=33、D10a=100%，孤儿引用与僵尸条目均为 0，问题分级清单为空，健康 ✅
+- **Golden Error**: 对无 .bib 文件的 `3d-eye-bppv-diagnosis` 审计时 → 按 CITA-002 标记 D8=0 重症，报错须列出全部 62 个孤儿标签（Aw2013, Balatsouras2012, ...）并给出补齐 .bib 的恢复建议
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 
@@ -196,9 +196,9 @@ pima-crispdm           33   100%    0     0    ✅
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: `pima-crispdm` 论文库（.tex + .bib，33 个 bib 条目）——覆盖"全健康"正常路径（IO_CONTRACT / 示例 2 基准）
+- **Golden Output**: 审计结果为 D8=33、D10a=100%，孤儿引用与僵尸条目均为 0，问题分级清单为空，健康 ✅
+- **Golden Error**: 对无 .bib 文件的 `3d-eye-bppv-diagnosis` 审计时 → 按 CITA-002 标记 D8=0 重症，报错须列出全部 62 个孤儿标签（Aw2013, Balatsouras2012, ...）并给出补齐 .bib 的恢复建议
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

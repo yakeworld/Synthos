@@ -169,9 +169,9 @@ AKNE 源文件路径中可能包含特殊字符（空格、中文、连字符）
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 已知实体查询 "BPPV"（quick 模式，`akne-query.sh graph`，<1s）——覆盖正常路径（Step 5 端到端验证场景 1）
+- **Golden Output**: 实体经 精确→子串→分词→反向→模糊 五级解析后返回恰好 5 个 depth=1 邻居（`related[:20]` 限量内），结果 ≤20 条、结构化文本可解析；bridge 审计附 0 孤儿、全连接
+- **Golden Error**: 调用 `kg.resolve_entity(q)`（KnowledgeGraph 上）时 → 按 KGB-006 报 `AttributeError: 'KnowledgeGraph' object has no attribute 'resolve_entity'`，恢复建议为改经 `QueryEngine(graph_index=kg).resolve_entity(q)` 调用，且 `find_related` 按 3 元组 `(neighbor, relation_chain, metadata)` 解包（勿 4 元解包致 ValueError）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

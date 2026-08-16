@@ -74,9 +74,9 @@ metadata:
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: `coding_task="为 pima 数据集补写 F1 评估脚本"` + 已选定协议 OpenAI Responses，覆盖输入验证通过的正常路径（CODE-001/002）
+- **Golden Output**: `code_changes`（F1 评估脚本补丁）+ `agent_status` 记录五项验证（输入/过程/输出/边界/错误处理）齐备（CODE-003，原则「五验皆毕」）
+- **Golden Error**: 输入路径指向不存在的文件 → 拒绝启动 codex CLI，`agent_status` 标记「输入未验，不役代理」，错误含上下文与恢复指引（CODE-002/005）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

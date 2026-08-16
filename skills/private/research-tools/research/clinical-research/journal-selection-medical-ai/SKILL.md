@@ -71,9 +71,9 @@ metadata:
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 选题=医学影像 AI 辅助诊断（WDBC 乳腺癌 10x5 分层 CV，HCS-3WT 级联架构），方法学特征=集成学习 + 级联分流；受众=放射学/肿瘤学临床读者；约束=APC ≤ $3000、审稿周期 ≤ 12 周
+- **Golden Output**: 候选期刊推荐列表（≥3 条），每条含 `display_name`、2yr_mean_citedness（OpenAlex API 实测，如 Patterns ≈ 18.4 → Q1）、IF 层级归类、与选题的具体匹配度理由；缺失要素（如 APC）在输出中标注为不确定性
+- **Golden Error**: 选题/方法学特征缺失（输入仅含期刊档次偏好）→ 拒绝择期并返回错误信息含上下文（"选题与方法学特征未明确，无法执行期刊匹配"）与恢复建议（"请补充临床数据类型、方法学特征、目标受众"）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

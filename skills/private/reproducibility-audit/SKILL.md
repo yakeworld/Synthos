@@ -64,9 +64,9 @@ metadata:
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 一篇待复现论文的工作目录——数据集版本号已锁定 + `thebibliography` 环境与 `.bib` 文件双源并存 + 完整代码流程（含可执行的 Golden 集合测试）
+- **Golden Output**: 复现报告——数据集版本核对一致（REPR-001）、`thebibliography` 与 `.bib` 已同步（REPR-002）、所有改进通过 Golden 集合测试（REPR-003），每项验证步骤留痕可记录、可复现
+- **Golden Error**: 数据集版本未锁定 → 判定复现无凭，须先锁定版本再重跑（原则#1 / REPR-001）；或验证失败 → 必须记录具体失败原因及对应修复措施（REPR-004 / REPR-005），禁止静默跳过
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

@@ -63,9 +63,9 @@ metadata:
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: `pdfs/` 子目录含 12 个旧管线 PDF + 根目录 `references.bib` 29 条目，含名称不匹配项（`Shams2025.pdf` vs `Shams2023BRFSS`）
+- **Golden Output**: 按 REFE-001/002 逐个比对归档 8 个不匹配 PDF 至 `_archive/`，名称不匹配者 `pdfinfo` 验证后改名对齐，子目录已有 PDF 建 symlink（REFE-004）；`pdflatex paper.tex` 0 error + 0 undefined reference
+- **Golden Error**: `pdflatex` 报 undefined reference 或 `.tex` 残留 `\cite{}` 指向已删 bib 条目 → 触发 REFE-003，须按序清理 bib → 删 .tex 残留 → 重编译，禁止乱序
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

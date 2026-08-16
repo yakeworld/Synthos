@@ -71,9 +71,9 @@ metadata:
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 类别不平衡数据集（记录正负比）+ 基线配置（所有预处理在 CV 折内）+ 三个泄漏变体（ImputeLeak / SMOTELeak / SevereLeak：全局 impute/scale/SMOTE 先于分割），RF 与 XGB 各一轮
+- **Golden Output**: 泄漏杀伤对比表（基线 vs 各变体 F1 差异）+ 规律总结（全局 SMOTE 为主要杀伤来源；不平衡度越高/模型越复杂杀伤越大；全局标准化几乎无害），RF/XGB 偏差单独标注
+- **Golden Error**: 预处理跨越分割边界未被识别（如全局 SMOTE 先于分割却报告基线 F1）、正样本 <1% 时仅凭 F1≈0 下结论而未补 precision/recall/AUC、或把全局 impute/scale 误标为主要泄漏源
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

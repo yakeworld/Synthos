@@ -192,9 +192,9 @@ research node). The fix is to prioritize `sources/` and `concepts/` nodes over
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 一个真实 NotebookLM 库状态 — `notebooklm list` 输出的 notebook/source 清单 + `~/.notebooklm/profiles/<name>/storage_state.json` 认证快照，库内含数字前缀 PDF（如 "201806596.pdf"）与 >10 个"其他"类 notebook（源: IO_CONTRACT + 分级表 P0/P1/P2）
+- **Golden Output**: 分级审计报告落盘私有目录（`~/notebooklm-audit/`，非项目 docs/）— P0 缺失文献已 `notebooklm source add` 补齐、P1 非标准命名已用 12-char UUID 前缀 `echo "y" | notebooklm source rename` 重命名、P2 "其他"归类+重复删除，格式符合 `references/notebooklm-audit-template.md`（源: 验证清单 KNOW-001/005/006/007）
+- **Golden Error**: `notebooklm list` 返回 "Not authenticated. Run notebooklm login first." 且 profile 目录存有 148 cookies → 诊断判定 CLI 只读默认路径 `~/.notebooklm/storage-state.json`，输出"执行 `notebooklm login` 重建会话"而非继续尝试自定义 profile 路径（源: Auth Troubleshooting 小节 + KNOW-002）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

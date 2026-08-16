@@ -83,9 +83,9 @@ metadata:
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 多方向文献监控请求：方向1 = 瞳孔追踪（PubMed 关键词瞳孔定位/瞳孔分割/arXiv pupil+tracking，各 2-5 变体），方向2 = 眼动分析（眼动/注视点预测/gaze+estimation），时间窗 = 近 3 个月
+- **Golden Output**: 每方向 PubMed E-utilities + arXiv API 并行召回，本地按 pubmed Year / arXiv published 字段过滤日期，标题完全匹配去重后输出 Top N 列表（含关键词匹配 + 时间近度加权分数）
+- **Golden Error**: curl 被安全扫描拦截 → 回退「curl 到文件 + 单独 python3 脚本」；arXiv 宽泛查询噪声（eye tracking 误匹配 particle/counterfactual tracking）→ 改用 `all:eye+AND+all:tracking` 精确布尔表达式重查
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

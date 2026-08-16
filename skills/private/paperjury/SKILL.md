@@ -90,9 +90,9 @@ metadata:
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 一篇含实验指标的论文目录（`paper.tex` 声称 F1=0.92 + `03-code/` 下对应该指标的脚本与运行输出 + quality-gate L1-L2 已通过），触发完整庭审流水线
+- **Golden Output**: 独立复现输出 JSON+CSV 归档 references/，claimed vs actual 逐条标注——有代码且数值匹配→CLOSE，reviewer 独立阅读原文无跨轮次泄漏，需新实验的问题标 OPEN 移交作者，单轮 ≤10k tokens
+- **Golden Error**: 指标在 `03-code/` 下无对应脚本/输出 → 直接标 FABRICATED 禁止放行（PAPE-002）；有代码但复现数值不匹配 → 标 MISMATCH；多轮累计 >50k tokens → 自动终止并输出未决问题清单
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

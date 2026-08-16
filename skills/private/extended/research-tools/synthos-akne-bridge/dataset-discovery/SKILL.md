@@ -114,9 +114,9 @@ The UCI repository moved to SPA at `archive.ics.uci.edu`. Direct file links (e.g
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 医学关键词 "breast cancer" + OpenML 查询参数 `limit=50, offset=0`（Workflow 第 1-2 步 / 示例 1）
+- **Golden Output**: 响应 JSON 无截断，从 `data.dataset` 数组按 `did` 提取候选数据集，质量指标以 `float()` 转换（如 `"684.0"` → 684.0），并与 `outputs/papers/` 交叉去重
+- **Golden Error**: UCI stroke 数据集全源 404（UCI/GitHub 镜像/HF/Kaggle 均确认失效）时 → 按 DATA-005 报错提示数据源不可用，并给出恢复建议：以 `random.seed(42)` 按已知 schema（12 特征, 5179 行）生成合成数据集且明示合成身份；镜像验证报错须以 `head -1` 首行内容（"404: Not Found"/html）为准，不得仅凭 HTTP 200 判定
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

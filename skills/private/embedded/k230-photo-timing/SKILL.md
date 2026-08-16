@@ -180,9 +180,9 @@ When the K230 main loop floods the serial port (print statements, no throttling)
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
 
 ## Golden 集合 · GOLDEN SET
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: `photo_interval_ms=100` 节流拍照测试（主循环约 209,595 次迭代）→ 验证 throttle 门控在任意主循环速度下限制为 `1000/millis` 次 snapshot
+- **Golden Output**: 约 20 次 snapshot 调用、20/20 save 成功、有效 FPS=10.0（精确等于 1/0.1）；Display 绑定走 chn0(YUV420SP) 而 snapshot+save 走 chn2(RGB565)
+- **Golden Error**: 对 chn0 的 YUV420SP 帧直接 `img.save()` → `OSError: current format not support save function!`（YUV420SP 仅可用于 Display.bind_layer）
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 > 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。

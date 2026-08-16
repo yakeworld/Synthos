@@ -93,9 +93,9 @@ git push --no-verify
 
 ## Golden 集合 · GOLDEN SET
 
-- Golden Input: 标准输入样本（覆盖正常路径）
-- Golden Output: 预期输出（精确匹配或格式校验）
-- Golden Error: 预期错误信息（覆盖失败路径）
+- Golden Input: `git push` 触发 `~/.git-templates/hooks/pre-push` 钩子，仓库中含疑似 GitHub Token / API Key 的文件（PRIV-001）
+- Golden Output: 钩子扫描通过且无命中；`git ls-tree` 二次验证敏感文件未被追踪，`skills/private/` 下无私有技能文件被误追踪（PRIV-004/006）
+- Golden Error: 扫描命中已知泄露凭证 → 推送被拦截，凭证加入 `~/.hermes/scripts/privacy-scan.sh` 的 `KNOWN_SECRETS` 数组（PRIV-002）；历史提交已泄露 → `git-filter-repo` 重写清除（267 commits 先例）+ `~/.secrets` 凭证轮换（PRIV-005）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 > 违反规则的操作视为不安全，必须拒绝或隔离。

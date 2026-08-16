@@ -71,9 +71,9 @@ metadata:
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: 请求 "将 Codex CLI v0.139+ 路由到本地 LLM 的 Responses API 代理" —— 命中子域路由正常路径
+- **Golden Output**: 路由结果 `codex-llm-routing`，依据可追溯至请求描述（VERIFICATION 第 1 条）；若路由到 ellipse-3d-anatomy-constrained，则输出必须满足解剖约束 R=2r、d=√3r 且方位角模糊已消除（VERIFICATION 第 2 条）
+- **Golden Error**: 请求描述无法映射到任一子域（codex-llm-routing / ellipse-3d-anatomy-constrained / evaluation / inference / models / research / training）时，拒绝执行并返回含上下文背景与恢复建议的错误信息（MLOP-003/MLOP-005）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 

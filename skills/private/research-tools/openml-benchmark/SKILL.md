@@ -91,9 +91,9 @@ metadata:
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
+- **Golden Input**: PIDD 任务上 CatBoost (Helix) F1=0.7759 待报告；从 OpenML API 拉取该任务的 run 列表（50+ run，`limit=500` 分批，`--max-time 30`）
+- **Golden Output**: OpenML 基准对比表（WEKA RF F1=0.7648、最佳 WEKA 0.8026、50 有效样本均值 0.6745/0.6982，复算一致）+ 本方法在 OpenML 中的排名位置 + F1 差距归因排序（模型实现差异 > 不做 SMOTE/标准化 > 特征选择不可移植）
+- **Golden Error**: API 返回的 evaluation value 仍为 str 未做 `float()` 转换、accuracy/f1=0 的无效 run 混入均值计算、或未注明 Weka 特有方法（AttributeSelectedClassifier）不可移植即把 Top 排名当核心论点 → 任一命中即验证失败
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 
