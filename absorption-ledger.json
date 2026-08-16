@@ -489,20 +489,20 @@
   "tracked_but_not_absorbed": [
     "microsoft/RD-Agent (13k⭐, quant/Kaggle, 不兼容范型)",
     "SakanaAI/AI-Scientist (13.5k⭐, gap-fit 弱)",
-    "SakanaAI/AI-Scientist-v2 (8k⭐, BFTS 树搜索 P1 待评)",
+    "SakanaAI/AI-Scientist-v2 (8k⭐, BFTS 树搜索 P1 待评) → [deferred] BFTS 树搜索方法论有趣但实现复杂，与 Synthos 管线方向不同。追踪论文即可。",
     "ResearAI/DeepScientist (800⭐, Findings Memory P1 待评)",
     "Future-House/paper-qa / PaperQA2 (10k⭐, 科学RAG 追踪中)",
-    "assafelovic/gpt-researcher (27k⭐, 追踪中)",
-    "kaixindelele/ChatPaper (13k⭐, 追踪中)",
+    "assafelovic/gpt-researcher (27k⭐, 追踪中) → [deferred] 深度研究代理，但聚焦于报告生成而非科学假设生成。与 Synthos ACQ→HYP 管线有重叠但深度不同。",
+    "kaixindelele/ChatPaper (13k⭐, 追踪中) → [deferred] 论文总结+翻译+润色工具，不涉及假设生成或验证。与 Synthos 管线不重叠。",
     "dwzhu-pku/PaperBanana (200⭐, 多Agent图表生成 P2 待评)",
     "crshdn/mission-control (2130⭐, Autonomous Product Engine, MIT, 2026-01-31) — 产品工程方向，不直接适用",
-    "VoltAgent/awesome-ai-agent-papers (1683⭐, 363+ papers 2026, MIT, 2026-02-10) — 论文索引，持续追踪",
+    "VoltAgent/awesome-ai-agent-papers (1683⭐, 363+ papers 2026, MIT, 2026-02-10) — 论文索引，持续追踪 → [evaluating] 363+ 2026 AI agent 论文索引。持续追踪新论文，作为 ACQ 补充源。",
     "iflytek/skillhub (4916⭐, 企业技能注册表, Apache-2.0, 2026-03-11) — 基础设施方向，追踪",
     "agentscope-ai/QwenPaw (33776⭐, 个人AI助手, Apache-2.0, 2026-02-24) — 产品方向，追踪",
     "tigicion/dao-code (1254⭐, DeepSeek-V4 终端编码代理, MIT, 2026-06-08) — 编码方向，追踪",
     "keli-wen/agentic-harness-patterns-skill (301⭐, 代理 Harness 模式, MIT, 2026-04-01) — Harness 工程，追踪",
     "kennethlaw325/awesome-llm-knowledge-systems (89⭐, LLM 知识工程, MIT, 2026-04-06) — 知识系统，追踪",
-    "AaronCIH/Awesome-AutoSkill-AutoRubric (7⭐, 自动技能论文集, MIT, 2026-06-01) — 直接相关，持续追踪"
+    "AaronCIH/Awesome-AutoSkill-AutoRubric (7⭐, 自动技能论文集, MIT, 2026-06-01) — 直接相关，持续追踪 → [evaluating] 直接相关：Auto-Skill (自进化代理) + Auto-Rubric (从偏好学习评分)。7⭐但内容精准。待深度评估。"
   ],
   "last_scan": {
     "date": "2026-08-17",
@@ -520,6 +520,25 @@
     ],
     "new_absorbed": 3,
     "new_tracked": 8,
-    "notes": "DSH 发布后首轮外部扫描。重点发现: EvoMap/Evolver (Gene 策略基因, 4590次实验) 和 SkillClaw (集体技能进化, 保守验证门)。"
+    "notes": "DSH 发布后首轮外部扫描。重点发现: EvoMap/Evolver (Gene 策略基因, 4590次实验) 和 SkillClaw (集体技能进化, 保守验证门)。",
+    "round2": {
+      "date": "2026-08-16T14:48:50Z",
+      "evaluated": [
+        "SakanaAI/AI-Scientist-v2",
+        "assafelovic/gpt-researcher",
+        "kaixindelele/ChatPaper",
+        "AaronCIH/Awesome-AutoSkill-AutoRubric",
+        "VoltAgent/awesome-ai-agent-papers"
+      ],
+      "results": {
+        "SakanaAI/AI-Scientist-v2": "deferred",
+        "assafelovic/gpt-researcher": "deferred",
+        "kaixindelele/ChatPaper": "deferred",
+        "AaronCIH/Awesome-AutoSkill-AutoRubric": "evaluating",
+        "VoltAgent/awesome-ai-agent-papers": "evaluating"
+      },
+      "new_absorbed": 0,
+      "notes": "Round 2: 5 projects evaluated. 0 absorbed (all deferred/evaluating). gpt-researcher (29k) and ChatPaper (19.7k) are product-level tools, not methodology sources. AI-Scientist-v2 BFTS tree search interesting but different paradigm. AutoSkill-AutoRubric most relevant, pending deep eval."
+    }
   }
 }
