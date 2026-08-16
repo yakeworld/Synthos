@@ -176,32 +176,7 @@ AKNE 源文件路径中可能包含特殊字符（空格、中文、连字符）
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
+
 # Kg Bridge---
-
-
-
-
-
-|
-| quick（simple） | <1s | 日常查询、5-20 节点 | terminal + 快速脚本 |
-| graph（BFS） | <2s | 知识域探索、3 跳边界 | terminal + 快速脚本 |
-| deep（full） | 10s~min | 全文检索、多词查询 | terminal + 重型脚本 |
-| bridge（audit） | <1s | 图谱健康检查、连接报告 | terminal + 统计脚本 |
-
-### 3. 语义搜索增强
-
-QueryEngine 的 `_graph_search` 通常使用词袋匹配，对多词/中英混合查询无效。增强策略：
-
-- **jieba 分词**（中文）+ 多 token 加权：边界 ×2，子串 ×1，阈值 ≥2
-- **TF-IDF**（scikit-learn）：对源文件全文建立倒排索引，40916 词汇量
-- **fuzzy_node_search**：5 级评分（精确→子串→分词→反向→模糊），回退到所有节点名
-- **combined search**：图结果 + 文本结果融合，graph 结果权重更高
-
-## 实施步骤
-
-### Step 1: 诊断图谱状态
-
-```bash
-
 > (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # Kg Bridge

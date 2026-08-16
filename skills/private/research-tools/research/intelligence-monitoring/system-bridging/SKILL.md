@@ -233,42 +233,7 @@ Bridge v2 修复了 v1 的三个致命问题：
 
 > 每个示例必须可独立运行、有明确输入输出、包含错误处理。
 
+
 # System Bridging---
-
-
-
-
-
---|
-| system_a_root | string | ✅ | 系统A的根目录路径 |
-| system_b_root | string | ✅ | 系统B的根目录路径 |
-| sync_direction | string | ❌ | "a_to_b" | "b_to_a" | "bidirectional"（默认） |
-| domain_keywords | dict | ❌ | 领域关键词映射 {"领域名": ["关键词1", "关键词2"]} |
-| known_mappings | list | ❌ | 已知的同名/关联映射 [ ("a_name", "b_name"), ... ] |
-
-## 输出契约
-
-```
-创建文件:
-  - <system_b>/scripts/<a>-to-<b>-bridge.py    # 主桥接脚本
-  - <system_b>/scripts/<b>-query-<a>.py        # 反向查询脚本
-  - <system_b>/scripts/generate-<a>-index.py   # 索引生成脚本
-  - <system_a>/scripts/sync-<a>-to-<b>.sh      # 同步守护脚本
-  - <system_b>/.knowledge/wiki/projects/<a>.md # 项目条目
-  - <system_b>/.knowledge/sources/<a>/index.md # 自动生成索引
-  - <system_b>/.knowledge/wiki/projects/<a>-bridge-protocol.md # 协议文档
-
-执行操作:
-  - 将系统A的实体注入系统B的图谱/索引
-  - 基于领域关键词创建跨系统边
-  - 生成连接报告
-```
-
-## 执行步骤
-
-### 0. 摸清系统结构
-
-```bash
-
 > (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # System Bridging
