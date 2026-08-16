@@ -264,4 +264,3 @@ This pattern is most common in papers where:
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-# Prose Cluster Hybrid Citation Fix

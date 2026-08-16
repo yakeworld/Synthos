@@ -508,4 +508,3 @@ gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -d
 5. 若不存在 → `search_files(pattern='*文件名*', target='files')` 找正确路径
 6. 修正路径后重发
 
-# Feishu Gateway Debug
