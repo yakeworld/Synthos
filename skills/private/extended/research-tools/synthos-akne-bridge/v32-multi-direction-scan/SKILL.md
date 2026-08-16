@@ -1,8 +1,7 @@
 ---
 name: v32-multi-direction-scan
 description: '**边界**：技能功能边界。'
-signature: 'v32-multi-direction-scan -> synthos-akne-bridge: synthetic skill for v32
-  multi direction scan'
+signature: 'v32-multi-direction-scan -> synthos-akne-bridge: synthetic skill for v32 multi direction scan'
 allowed-tools:
 - terminal
 - read_file
@@ -14,14 +13,12 @@ metadata:
   synthos:
     atom_type: mechanical
     description: '**边界**：技能功能边界。'
-    signature: 'v32-multi-direction-scan -> synthos-akne-bridge: synthetic skill for
-      v32 multi direction scan'
+    signature: 'v32-multi-direction-scan -> synthos-akne-bridge: synthetic skill for v32 multi direction scan'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
-category: private
 ---
 
 --|
@@ -59,4 +56,15 @@ category: private
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-# V32 Multi Direction Scan
+# V32 Multi Direction Scan---
+
+## Genes (策略基因)
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+- **[SK-001]** 执行任何扫描任务前 → 必须执行 Step 0 模式决策以对齐 paper-pipeline 9 核心约束
+- **[SK-002]** 遇到输入参数、文件或路径缺失/无效时 → 立即触发输入验证并阻断后续流程
+- **[SK-003]** 处理空输入、极大值或异常场景时 → 必须执行边界验证以确保系统稳定性
+- **[SK-004]** 中间步骤、转换或计算出现偏差时 → 执行过程验证以确认逻辑正确性
+- **[SK-005]** 生成最终结果时 → 执行输出验证以确认格式与内容符合预期
+- **[SK-006]** 任务执行失败时 → 提供明确的错误信息并启动恢复指引
+- **[SK-007]** 进行技能改进或迭代时 → 必须通过 Golden 集合（Input/Output/Error）测试作为单一真理来源
+- **[SK-008]** 验证失败发生时 → 记录具体原因和修复措施以确保可复现性

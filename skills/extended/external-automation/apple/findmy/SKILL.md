@@ -1,22 +1,8 @@
 ---
 name: findmy
-description: findmy
+description: "findmy"
 version: 1.0.0
-category: apple
-signature: 'findmy -> apple: Track Apple devices and AirTags via the FindMy.app on
-  macOS. Since Apple doesn''t'
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: 'task_desc: str, params: dict -> result: dict'
-    atom_type: skill
-    priority: P2
-    related_skills:
-    - apple
-    - macos-computer-use
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -36,6 +22,19 @@ metadata:
 1. 
 2. 
 3. 
+category: apple
+signature: "findmy -> apple: Track Apple devices and AirTags via the FindMy.app on macOS. Since Apple doesn't"
+description: "Track Apple devices and AirTags via the FindMy.app on macOS. Since Apple doesn't"
+version: 1.0.0
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: ['apple', 'macos-computer-use']
+
 
 ## IO_CONTRACT
 
@@ -192,6 +191,7 @@ Analyze each screenshot with vision to extract coordinates, then compile a route
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Findmy
+
 
 ## Genes (策略基因)
 

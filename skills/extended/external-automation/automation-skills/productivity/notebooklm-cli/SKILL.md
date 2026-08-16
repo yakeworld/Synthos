@@ -1,24 +1,8 @@
 ---
 name: notebooklm-cli
-description: notebooklm-cli
+description: "notebooklm-cli"
 version: 1.0.0
-category: productivity
-signature: 'notebooklm-cli -> productivity: 子skill | NotebookLM CLI全功能指南 — Q&A知识提取、内容生成(报告/视频/音频/信息图/幻灯片)、文献检索。响应paper-pipel'
-related_skills:
-- knowledge-extraction
-allowed-tools:
-- terminal
-- file
-- web
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    version: 3.5.0
-    author: Synthos
-    signature: 'action: str, params: dict -> result: dict'
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -38,6 +22,23 @@ metadata:
 1. 
 2. 
 3. 
+category: productivity
+signature: "notebooklm-cli -> productivity: 子skill | NotebookLM CLI全功能指南 — Q&A知识提取、内容生成(报告/视频/音频/信息图/幻灯片)、文献检索。响应paper-pipel"
+related_skills: ["knowledge-extraction"]
+description: 子skill | NotebookLM CLI全功能指南 — Q&A知识提取、内容生成(报告/视频/音频/信息图/幻灯片)、文献检索。响应paper-pipeline的P1阶段调用。
+version: 1.0.0
+allowed-tools:
+- terminal
+- file
+- web
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    version: 3.5.0
+    author: Synthos
+    signature: 'action: str, params: dict -> result: dict'
+
 
 ## IO_CONTRACT
 
@@ -61,4 +62,116 @@ metadata:
 ## 快速参考
 
 | 功能 | 命令 | 参考 |
-|:
+|:-----|:-----|:------|
+| 登录 | `notebooklm login` | `references/cli-cheatsheet.md` |
+| 列表 | `notebooklm list` | — |
+| 切换 | `notebooklm use <partial_id>` | — |
+| 问答 | `notebooklm ask "问题"` | 逐问法见下。**注意：回答需30-60s**，超时设为≥90s |
+| 搜索 | `notebooklm source add-research "query"` | 导入网页源(非PDF) |
+| 上传 | `notebooklm source add file.pdf` | v0.4.1+自动类型检测 |
+| PDF上传 | `source add "https://arxiv.org/pdf/{id}"` | arXiv URL直传 |
+| 清理 | `notebooklm source clean -n <id> -y` | 自动去重清理 |
+| 删除 | `notebooklm source delete <id> -y` | Owner项目有效 |
+| 生成 | `notebooklm generate <type>` | report/video/audio/slide-deck/infographic |
+| 下载 | `notebooklm download <type> <id>` | 语法因类型而异 |
+| 状态 | `notebooklm artifact list` | 监控生成任务 |
+
+### 逐问法（核心方法）
+
+每轮一个问题，答案决定下一个。标准序列：Q1领域地图→Q2共同盲区→Q3形式化Gap→Q4科学假设→Q5技术方案→Q6实验设计。
+
+详见 `references/iterative-literature-first-paper-protocol.md`。
+
+### 三步确权法
+
+1. 问状态 → 2. 问数值 → 3. 问来源
+
+## 关键陷阱
+
+- ⚠️ **.ipynb文件上传400错误**: NotebookLM不支持ipynb格式上传，返回400 Bad Request。解决方法：提取代码cell为文本文件后再上传或转markdown后用`--type text`模式
+- ⚠️ **symlink文件被拒绝**: 默认拒绝symlink路径，需加 `--follow-symlinks` 参数
+- ⚠️ ask超时: NotebookLM回答需30-60s，timeout至少设90s（默认可不够）
+- ⚠️ 传入Markdown: `source add "$(cat file.md)" --type text`（非 `file.md`）
+- ⚠️ YAML frontmatter导致`---`被click解析错误: 上传前剥离
+- ⚠️ 无文本层PDF: 用 `pdftotext pdf - | wc -c` 检查，≈0则用arXiv URL直传
+- ⚠️ 同一项目禁止并行`ask`(串话)
+- ⚠️ Slide-deck下载认证失败: Gemini描述→python-pptx重建
+- ⚠️ Shell参数限制: `$(cat bigfile)` 超80KB报错, 用Python subprocess
+- ⚠️ `source delete`在Shared项目伪成功(仅Owner有效)
+- ⚠️ PDF索引超时: 无可提取文本层, 预先`pdftotext`检查
+- ⚠️ **PDF源静默失败**: `notebooklm source add file.pdf` 可能返回 `status: error` 且无stderr提示。检测方式: 立即 `notebooklm source list`，若状态为error则回退到 `pdftotext file.pdf -` 提取文本后以 `--type text` 上传
+- ⚠️ **Storage state path limitation**: The CLI reads from `~/.notebooklm/storage-state.json` by default. Environment variables `NOTEBOOKLM_STORAGE_STATE` and `PLAYWRIGHT_STORAGE_STATE` do NOT work for custom paths. `--storage-state` and `-s` flags are not supported. Profile path `~/.notebooklm/profiles/<name>/storage_state.json` is NOT read. Use `notebooklm login` to re-authenticate.
+- ⚠️ **Security Scan拦截混合语言Prompt**: `notebooklm ask` 在Prompt含中文字符时可能触发confusable Unicode安全扫描（HIGH级别，`tirith:confusable_text`）。解决方式: 使用纯英文ASCII Prompt发送
+- ⚠️ **Source状态不一致**: 刚上传的source可能 `list` 返回空列表（API缓存未刷新），重试2-3次后通常会恢复
+- ⚠️ **Google服务网络不可达**: 在受限网络环境下（如无外网代理的服务器），`notebooklm list` 等命令会在 CSRF token 获取阶段抛出 `httpx.ConnectTimeout`。诊断方法：
+  1. `curl --connect-timeout 10 -s -o /dev/null -w "%{http_code}" https://notebooklm.google.com` — 返回 000 说明不可达
+  2. `curl --connect-timeout 10 -s -o /dev/null -w "%{http_code}" https://httpbin.org/ip` — 返回 200 说明其他互联网可达但 Google 被阻断
+  3. 此时使用 Manual Fallback 方案代替 NotebookLM 执行 Layer B
+
+完整陷阱列表见 `references/notebooklm-cli-pitfalls.md`。
+
+**Layer B 项目污染案例**：`references/project-isolation-case.md` — 旧项目 source 残留导致审计报告错误的完整案例和验证清单。
+
+**Layer B 报告模板**：`references/layer-b-audit-template.md` — 标准化 Layer B 审计报告格式。
+
+## Layer B 质检流程
+
+Layer B 论文质量审计的完整工作流见 `references/layer-b-audit-workflow.md`。涵盖：项目创建→源上传（PDF/引用/质量报告）→纯英文ASCII Prompt发送→评分阈值判定→**pipeline state cross-validation（检测false positive）**→报告归档。
+
+## 约束规则 · RULES
+
+1. **输入约束**: 参数类型、范围、格式必须校验
+2. **输出约束**: 返回值结构、编码、命名必须一致
+3. **异常约束**: 错误信息必须包含上下文和恢复建议
+4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: 标准输入样本（覆盖正常路径）
+- **Golden Output**: 预期输出（精确匹配或格式校验）
+- **Golden Error**: 预期错误信息（覆盖失败路径）
+
+## 示例 · EXAMPLES
+
+1. **基本用法**: 标准输入 → 标准输出
+2. **边界用例**: 空输入、特殊字符、异常路径
+3. **错误场景**: 缺失依赖、权限不足、网络异常
+
+> 每个示例必须可独立运行、有明确输入输出、包含错误处理。
+
+> Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
+
+> 违反规则的操作视为不安全，必须拒绝或隔离。
+
+### Fallback: Manual Layer B (当 NotebookLM 不可达时)
+
+当 `notebooklm list` 或 `notebooklm doctor` 显示网络连通性故障（如 `httpx.ConnectTimeout`，`curl` 返回 000），且无法通过代理恢复对 `notebooklm.google.com` 的访问时：
+
+1. **不要放弃 Layer B** — 使用 paper 的全文进行人工质量评估
+2. **获取文本**：`pdftotext <paper-dir>/paper.pdf - | head -c 50000` — 提取全部可读文本
+3. **评估五个维度**：
+   - 原创性/重要性 — 检查 gap claim（ABSOLUTE WHITE 是否可信）、临床相关性
+   - 方法学严谨性 — 检查 ODE/PINN 公式完整性、指标适当性、消融实验设计
+   - 结果可信性/可复现性 — 检查是否提供完整参数、有无代码链接、有无置信区间
+   - 文献引用质量 — 依赖 D8/D10a 扫描数据（非 NotebookLM 评估）
+   - 写作/结构 — IMRaD 完整性、清晰度
+4. **按 `references/layer-b-audit-template.md` 编写报告**
+5. **保存到 `<paper-dir>/07-quality/layer-b-report.md`**
+6. **阈值不变**：≥0.85=T1, 0.75-0.84=T2, <0.75=不通过
+
+详见 `references/layer-b-manual-fallback.md`。
+
+# Notebooklm Cli
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[NOTE-001]** 执行知识提取或文献调研时 → 采用“一问一收”逐问法，每轮仅发送一个问题，依据答案动态决定下一个问题，严禁并行提问以防串话
+- **[NOTE-002]** 调用 `notebooklm ask` 接口时 → 将超时阈值设置为至少 90 秒，以适配后端 30-60 秒的正常响应延迟
+- **[NOTE-003]** 上传 PDF 文件前 → 使用 `pdftotext` 检查文本层，若字符数接近 0 则改用 arXiv URL 直传或提取文本后以 `--type text` 模式上传
+- **[NOTE-004]** 发送包含中文的 Prompt 时 → 转换为纯英文 ASCII 字符发送，以规避 confusable Unicode 安全扫描拦截
+- **[NOTE-005]** 上传 Markdown 或大文件时 → 剥离 YAML frontmatter 防止解析错误，且当内容超过 80KB 时改用 Python subprocess 而非 Shell 参数传递
+- **[NOTE-006]** 检测到 Google 服务网络不可达（如 `httpx.ConnectTimeout`）时 → 启动 Manual Fallback 方案，利用 `pdftotext` 提取全文进行人工五维质量评估
+- **[NOTE-007]** 上传 PDF 后状态异常或静默失败时 → 立即执行 `source list` 验证状态，若为 error 则回退至文本提取上传，若列表为空则重试 2-3 次以刷新 API 缓存

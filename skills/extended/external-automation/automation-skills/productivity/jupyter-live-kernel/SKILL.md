@@ -1,10 +1,31 @@
 ---
 name: jupyter-live-kernel
-description: jupyter-live-kernel
+description: "jupyter-live-kernel"
 version: 1.0.0
+---
+
+## Operational Steps
+1. 确认输入参数完整
+2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
+3. 验证输出符合契约
+4. 保存结果并报告
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
 category: productivity
-signature: 'jupyter-live-kernel -> productivity: Iterative Python via live Jupyter
-  kernel (hamelnb).'
+signature: "jupyter-live-kernel -> productivity: Iterative Python via live Jupyter kernel (hamelnb)."
+description: Iterative Python via live Jupyter kernel (hamelnb).
+version: 1.0.0
 allowed-tools:
 - terminal
 - read_file
@@ -36,27 +57,7 @@ metadata:
     - linear
     - maps
     version: 1.0.0
----
 
-
-## Operational Steps
-1. 确认输入参数完整
-2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
-3. 验证输出符合契约
-4. 保存结果并报告
-
-## Pitfalls
-- 
-- 
-
-## Verification
-- 
-- 
-- 
-- 
-1. 
-2. 
-3. 
 
 ## IO_CONTRACT
 
@@ -74,4 +75,191 @@ state incrementally, explore APIs, inspect DataFrames, or iterate on complex cod
 ## When to Use This vs Other Tools
 
 | Tool | Use When |
-|
+|------|----------|
+| **This skill** | Iterative exploration, state across steps, data science, ML, "let me try this and check" |
+| `execute_code` | One-shot scripts needing hermes tool access (web_search, file ops). Stateless. |
+| `terminal` | Shell commands, builds, installs, git, process management |
+
+**Rule of thumb:** If you'd want a Jupyter notebook for the task, use this skill.
+
+## Prerequisites
+
+1. **uv** must be installed (check: `which uv`)
+2. **JupyterLab** must be installed: `uv tool install jupyterlab`
+3. A Jupyter server must be running (see Setup below)
+
+## Setup
+
+The hamelnb script location:
+```
+SCRIPT="$HOME/.agent-skills/hamelnb/skills/jupyter-live-kernel/scripts/jupyter_live_kernel.py"
+```
+
+If not cloned yet:
+```
+git clone https://github.com/hamelsmu/hamelnb.git ~/.agent-skills/hamelnb
+```
+
+### Starting JupyterLab
+
+Check if a server is already running:
+```
+uv run "$SCRIPT" servers
+```
+
+If no servers found, start one:
+```
+jupyter-lab --no-browser --port=8888 --notebook-dir=$HOME/notebooks \
+  --IdentityProvider.token='' --ServerApp.password='' > /tmp/jupyter.log 2>&1 &
+sleep 3
+```
+
+Note: Token/password disabled for local agent access. The server runs headless.
+
+### Creating a Notebook for REPL Use
+
+If you just need a REPL (no existing notebook), create a minimal notebook file:
+```
+mkdir -p ~/notebooks
+```
+Write a minimal .ipynb JSON file with one empty code cell, then start a kernel
+session via the Jupyter REST API:
+```
+curl -s -X POST http://127.0.0.1:8888/api/sessions \
+  -H "Content-Type: application/json" \
+  -d '{"path":"scratch.ipynb","type":"notebook","name":"scratch.ipynb","kernel":{"name":"python3"}}'
+```
+
+## Core Workflow
+
+All commands return structured JSON. Always use `--compact` to save tokens.
+
+### 1. Discover servers and notebooks
+
+```
+uv run "$SCRIPT" servers --compact
+uv run "$SCRIPT" notebooks --compact
+```
+
+### 2. Execute code (primary operation)
+
+```
+uv run "$SCRIPT" execute --path <notebook.ipynb> --code '<python code>' --compact
+```
+
+State persists across execute calls. Variables, imports, objects all survive.
+
+Multi-line code works with $'...' quoting:
+```
+uv run "$SCRIPT" execute --path scratch.ipynb --code $'import os\nfiles = os.listdir(".")\nprint(f"Found {len(files)} files")' --compact
+```
+
+### 3. Inspect live variables
+
+```
+uv run "$SCRIPT" variables --path <notebook.ipynb> list --compact
+uv run "$SCRIPT" variables --path <notebook.ipynb> preview --name <varname> --compact
+```
+
+### 4. Edit notebook cells
+
+```
+# View current cells
+uv run "$SCRIPT" contents --path <notebook.ipynb> --compact
+
+# Insert a new cell
+uv run "$SCRIPT" edit --path <notebook.ipynb> insert \
+  --at-index <N> --cell-type code --source '<code>' --compact
+
+# Replace cell source (use cell-id from contents output)
+uv run "$SCRIPT" edit --path <notebook.ipynb> replace-source \
+  --cell-id <id> --source '<new code>' --compact
+
+# Delete a cell
+uv run "$SCRIPT" edit --path <notebook.ipynb> delete --cell-id <id> --compact
+```
+
+### 5. Verification (restart + run all)
+
+Only use when the user asks for a clean verification or you need to confirm
+the notebook runs top-to-bottom:
+
+```
+uv run "$SCRIPT" restart-run-all --path <notebook.ipynb> --save-outputs --compact
+```
+
+## Practical Tips from Experience
+
+1. **First execution after server start may timeout** — the kernel needs a moment
+   to initialize. If you get a timeout, just retry.
+
+2. **The kernel Python is JupyterLab's Python** — packages must be installed in
+   that environment. If you need additional packages, install them into the
+   JupyterLab tool environment first.
+
+3. **--compact flag saves significant tokens** — always use it. JSON output can
+   be very verbose without it.
+
+4. **For pure REPL use**, create a scratch.ipynb and don't bother with cell editing.
+   Just use `execute` repeatedly.
+
+5. **Argument order matters** — subcommand flags like `--path` go BEFORE the
+   sub-subcommand. E.g.: `variables --path nb.ipynb list` not `variables list --path nb.ipynb`.
+
+6. **If a session doesn't exist yet**, you need to start one via the REST API
+   (see Setup section). The tool can't execute without a live kernel session.
+
+7. **Errors are returned as JSON** with traceback — read the `ename` and `evalue`
+   fields to understand what went wrong.
+
+8. **Occasional websocket timeouts** — some operations may timeout on first try,
+   especially after a kernel restart. Retry once before escalating.
+
+## Timeout Defaults
+
+The script has a 30-second default timeout per execution. For long-running
+operations, pass `--timeout 120`. Use generous timeouts (60+) for initial
+setup or heavy computation.
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: 输入参数/文件/路径是否完整且有效
+2. **过程验证**: 中间步骤/转换/计算是否正确
+3. **输出验证**: 输出格式/内容是否符合预期
+4. **边界验证**: 空输入、极大值、异常场景是否处理
+5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+
+## 约束规则 · RULES
+
+1. **输入约束**: 参数类型、范围、格式必须校验
+2. **输出约束**: 返回值结构、编码、命名必须一致
+3. **异常约束**: 错误信息必须包含上下文和恢复建议
+4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: 标准输入样本（覆盖正常路径）
+- **Golden Output**: 预期输出（精确匹配或格式校验）
+- **Golden Error**: 预期错误信息（覆盖失败路径）
+
+> Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
+
+> 违反规则的操作视为不安全，必须拒绝或隔离。
+
+> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+# Jupyter Live Kernel
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[JUPY-001]** 需要跨步骤保持变量状态或进行迭代探索 → 使用 Jupyter Live Kernel 替代无状态的 execute_code
+- **[JUPY-002]** 执行任何脚本命令以获取输出 → 始终添加 --compact 标志以节省 token 并简化 JSON 结构
+- **[JUPY-003]** 服务器启动后首次执行代码或内核重启后 → 预期可能超时，直接重试一次而非立即报错
+- **[JUPY-004]** 需要安装额外的 Python 包 → 必须安装到 JupyterLab 的工具环境中，而非系统全局环境
+- **[JUPY-005]** 仅用于纯 REPL 交互且无需保存笔记结构 → 创建 scratch.ipynb 并仅使用 execute 命令，跳过单元格编辑
+- **[JUPY-006]** 执行包含子命令的脚本参数 → 确保 --path 等全局标志位于子子命令之前（如 variables --path nb.ipynb list）
+- **[JUPY-007]** 遇到执行错误 → 解析返回 JSON 中的 ename 和 evalue 字段以定位具体异常原因
+- **[JUPY-008]** 执行长耗时计算或初始设置 → 显式传递 --timeout 参数（如 60 或 120 秒）以覆盖默认的 30 秒限制

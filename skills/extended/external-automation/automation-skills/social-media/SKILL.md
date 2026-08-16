@@ -1,23 +1,8 @@
 ---
 name: social-media
-description: social-media
+description: "social-media"
 version: 1.0.0
-category: social-media
-signature: 'social-media -> social-media: 社交媒体 — X/Twitter发帖、搜索、DM；小红书（XHS）内容生成与发布。'
-author: Synthos
-license: MIT
-triggers:
-- 需要执行social-media下的子技能
-metadata:
-  synthos:
-    priority: P2
-    atom_type: parent-skill
-    description: 父级技能 — 社交媒体 — X/Twitter发帖、搜索、DM；小红书内容生成与发布。
-    signature: 'social-media -> sub-skills: [xurl, xhs-content]'
-    related_skills:
-    - xurl
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -37,6 +22,22 @@ metadata:
 1. 
 2. 
 3. 
+category: social-media
+signature: "social-media -> social-media: 社交媒体 — X/Twitter发帖、搜索、DM；小红书（XHS）内容生成与发布。"
+description: 社交媒体 — X/Twitter发帖、搜索、DM；小红书（XHS）内容生成与发布。
+author: Synthos
+license: MIT
+version: 1.1.0
+triggers:
+  - 需要执行social-media下的子技能
+metadata:
+  synthos:
+    priority: P2
+    atom_type: parent-skill
+    description: "父级技能 — 社交媒体 — X/Twitter发帖、搜索、DM；小红书内容生成与发布。"
+    signature: 'social-media -> sub-skills: [xurl, xhs-content]'
+    related_skills: ["xurl"]
+
 
 ## IO_CONTRACT
 
@@ -124,6 +125,7 @@ social-media/
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Social Media
+
 
 ## Genes (策略基因)
 

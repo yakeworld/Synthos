@@ -1,32 +1,6 @@
 ---
 name: hcs-3wt-breast-cancer-diagnosis
 description: 1. 确认输入参数完整
-signature: 'hcs-3wt-breast-cancer-diagnosis -> research-methodology: synthetic skill
-  for hcs 3wt breast cancer diagnosis'
-allowed-tools:
-- terminal
-- read_file
-- write_file
-- session_search
-version: 1.0.0
-license: MIT
-metadata:
-  synthos:
-    atom_type: mechanical
-    description: 1. 确认输入参数完整
-    signature: 'hcs-3wt-breast-cancer-diagnosis -> research-methodology: synthetic
-      skill for hcs 3wt breast cancer diagnosis'
-    priority: P2
-    synthos_version: 1.0.0
-    synthos_skill_md_hash: auto
-    synthos_asserted_compliance: P2,P3
-    synthos_mechanical_atoms: ''
-category: research-tools
-author: Synthos
----
----
-name: hcs-3wt-breast-cancer-diagnosis
-description: 1. 确认输入参数完整
 signature: 'hcs-3wt-breast-cancer-diagnosis -> research-methodology: synthetic skill for hcs 3wt breast cancer diagnosis'
 allowed-tools:
 - terminal
@@ -65,6 +39,21 @@ metadata:
 1. 
 2. 
 3. 
+category: research-tools
+signature: "hcs-3wt-breast-cancer-diagnosis -> research-tools: HCS-3WT (Hybrid Cascade-Stacking Three-Way Triage) breast cancer diagnostic"
+description: HCS-3WT (Hybrid Cascade-Stacking Three-Way Triage) breast cancer diagnostic
+author: Synthos
+license: MIT
+version: 1.1.0
+
+- search_files
+    signature: 'data_path: str -> diagnosis_report: dict'
+    related_skills:
+    - academic-paper-completion
+    - adhd-eye-tracking-review
+    - arxiv
+    - biorxiv
+    - blogwatcher
 ## IO_CONTRACT
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
 - **output**: `result: dict — 技能执行结果（结构因技能而异）`

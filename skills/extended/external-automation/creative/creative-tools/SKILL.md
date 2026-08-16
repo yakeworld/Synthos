@@ -1,23 +1,8 @@
 ---
 name: creative-tools
-description: creative-tools
+description: "creative-tools"
 version: 1.0.0
-category: creative
-signature: 'creative-tools -> creative: Creative tools suite: images, diagrams, comics,
-  videos, music, designs, presenta'
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    atom_type: composite
-    priority: P1
-    signature: 'task_desc: str, context: dict -> result: dict'
-    related_skills:
-    - creative
-    - design-md
-    - popular-web-designs
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -37,6 +22,19 @@ metadata:
 1. 
 2. 
 3. 
+category: creative
+signature: "creative-tools -> creative: Creative tools suite: images, diagrams, comics, videos, music, designs, presenta"
+description: "Creative tools suite: images, diagrams, comics, videos, music, designs, presentations."
+version: 1.0.0
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    atom_type: composite
+    priority: P1
+    signature: "task_desc: str, context: dict -> result: dict"
+    related_skills: ['creative', 'design-md', 'popular-web-designs']
+
 
 # creative-tools
 
@@ -107,6 +105,7 @@ Composite skill that merges 25 overlapping skills into a unified interface.
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Creative Tools
+
 
 ## Genes (策略基因)
 

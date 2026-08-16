@@ -1,8 +1,7 @@
 ---
 name: healthcare-dataset-discovery
 description: 1. 确认输入参数完整
-signature: 'healthcare-dataset-discovery -> external-automation: synthetic skill for
-  healthcare dataset discovery'
+signature: 'healthcare-dataset-discovery -> external-automation: synthetic skill for healthcare dataset discovery'
 allowed-tools:
 - terminal
 - read_file
@@ -14,14 +13,12 @@ metadata:
   synthos:
     atom_type: mechanical
     description: 1. 确认输入参数完整
-    signature: 'healthcare-dataset-discovery -> external-automation: synthetic skill
-      for healthcare dataset discovery'
+    signature: 'healthcare-dataset-discovery -> external-automation: synthetic skill for healthcare dataset discovery'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
-category: private
 ---
 
 ## Operational Steps

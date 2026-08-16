@@ -1,22 +1,8 @@
 ---
 name: openhue
-description: openhue
+description: "openhue"
 version: 1.0.0
-category: devops
-signature: 'openhue -> devops: Control Philips Hue lights and scenes via a Hue Bridge
-  from the terminal.'
-related_skills:
-- smart-home
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: 'task_desc: str, params: dict -> result: dict'
-    atom_type: skill
-    priority: P2
-    related_skills: []
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -36,6 +22,20 @@ metadata:
 1. 
 2. 
 3. 
+category: devops
+signature: "openhue -> devops: Control Philips Hue lights and scenes via a Hue Bridge from the terminal."
+related_skills: ['smart-home']
+description: "Control Philips Hue lights and scenes via a Hue Bridge from the terminal."
+version: 1.0.0
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 
 ## IO_CONTRACT
 
@@ -167,6 +167,7 @@ openhue set room "Living Room" --off
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Openhue
+
 
 ## Genes (策略基因)
 

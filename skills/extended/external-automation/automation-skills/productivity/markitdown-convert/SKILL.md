@@ -1,31 +1,8 @@
 ---
 name: markitdown-convert
-description: markitdown-convert
+description: "markitdown-convert"
 version: 1.0.0
-category: productivity
-signature: 'markitdown-convert -> productivity: Convert PDF/Office files to Markdown
-  using Microsoft MarkItDown'
-author: Synthos
-license: MIT
-allowed-tools:
-- terminal
-- read_file
-- write_file
-- search_files
-platforms:
-- linux
-- macos
-metadata:
-  synthos:
-    signature: 'file_path: str -> md_path: str'
-    related_skills:
-    - airtable
-    - chinese-form-automation
-    - google-workspace
-    - jupyter-live-kernel
-    - linear
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -45,6 +22,30 @@ metadata:
 1. 
 2. 
 3. 
+category: productivity
+signature: "markitdown-convert -> productivity: Convert PDF/Office files to Markdown using Microsoft MarkItDown"
+description: Convert PDF/Office files to Markdown using Microsoft MarkItDown
+author: Synthos
+license: MIT
+version: 1.0.0
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
+platforms:
+- linux
+- macos
+metadata:
+  synthos:
+    signature: 'file_path: str -> md_path: str'
+    related_skills:
+    - airtable
+    - chinese-form-automation
+    - google-workspace
+    - jupyter-live-kernel
+    - linear
+
 
 ## IO_CONTRACT
 
@@ -122,4 +123,161 @@ uvx markitdown input.pdf > output.md
 ## 实战成功率
 
 | 类型 | 比例 | 说明 |
-|:
+|:-----|:----:|:-----|
+| 正常学术PDF | ~35/40 (87.5%) | MarkItDown 直转成功 ✅ |
+| 无文本层/损坏PDF | ~5/40 (12.5%) | 需手动补摘要或走 OCR |
+| arXiv PDF (旧版) | 多数 OK | 少数 2016前 PDF 无文本层 |
+
+## 损坏PDF检测
+
+部分下载PDF虽报告 %PDF- 头，但 xref 表破损/catalog 缺失，所有工具均无法提取文本：
+
+```bash
+# 检测方法
+python3 -c "
+import re
+with open('file.pdf', 'rb') as f:
+    content = f.read()
+text_chars = sum(1 for b in content if 32 <= b < 127)
+strings = re.findall(rb'[ -~]{10,}', content)
+print(f'Readable chars: {text_chars}/{len(content)} ({text_chars/len(content)*100:.1f}%)')
+for s in strings[:5]: print(s.decode(errors='ignore')[:80])
+"
+
+# 损坏PDF典型表现：
+# - pdftotext 返回 0 字符
+# - pymupdf.get_text() 返回 0 字符
+# - mutool 报 "cannot find page tree"
+# - file 命令报 "PDF document" 但 ImageMagick 报 "Catalog dictionary not located"
+```
+
+**处理策略**：
+1. 寻找 arXiv/PMC 替代版本（多数经典论文有线上全文）
+2. 手动写摘要（知名论文如 SMOTE、LIME、CRISP-DM）
+3. 走 OCR 管线（marker-pdf，见下方）
+
+## OCR 替代（MarkItDown 不做 OCR）
+
+扫描版/纯图像 PDF 需使用 marker-pdf（见下方）：
+
+```bash
+# Tesseract OCR（英文）
+pdftoppm -png -r 200 input.pdf /tmp/page
+for f in /tmp/page-*.png; do
+    tesseract "$f" "${f%.png}" -l eng
+done
+cat /tmp/page-*.txt > full_text.txt
+```
+
+## 论文批量转换（含引用PDF过滤）
+
+科学论文目录常混有**自己的论文**与**参考文献PDF**。转换时必须过滤引用，否则会转错目标。
+
+### 找主论文 PDF 的策略
+
+按优先级：
+1. **最大 PDF**（排除明显引用：`*reference*`, `*template*`, `*graphical*`）
+2. **最新修改的 PDF**（revision 日期最新的）
+3. **与目录名匹配的 PDF**
+
+```bash
+OUTPUTS="outputs/papers"
+for paper_dir in "$OUTPUTS"/*/; do
+    main_pdf=$(find "$paper_dir" -maxdepth 2 -name "*.pdf" \
+        -not -iname "*graphical*" -not -iname "*template*" \
+        -printf '%s\t%p\n' 2>/dev/null | sort -rn | head -1 | cut -f2)
+    if [ -n "$main_pdf" ]; then
+        uvx markitdown "$main_pdf" > "$paper_dir/paper.md" 2>/dev/null
+    fi
+done
+```
+
+**陷阱**：引用PDF命名为 `hooge2021pupil.pdf` 等作者年格式，容易被当作主论文。始终用 `-not -name` 排除已知引用模式。
+
+### TeX 替代方案（无可用 PDF 时）
+
+```bash
+cd "$tex_source_dir"
+pandoc paper.tex -f latex -t markdown --wrap=none --mathjax -o paper.md
+```
+
+⚠️ 从源文件目录执行 pandoc，否则 `.bib` 引用解析失败。
+
+## 依赖
+
+- Python 3.10+, uv
+- `uv tool install markitdown --with markitdown[pdf]`
+- 不加 `[pdf]` extra 会报 `MissingDependencyException`
+
+## 转换后处理：添加 Obsidian frontmatter
+
+生成的 `paper.md` 缺少 YAML frontmatter，Obsidian 无法识别标签/别名。转换完成后补充：
+
+```bash
+python3 -c "
+import os
+path = 'paper.md'
+with open(path) as f: content = f.read()
+if not content.startswith('---'):
+    fm = '''---
+tags: [paper, your-tags-here]
+aliases: [Paper Title]
+---
+
+'''
+    with open(path, 'w') as f: f.write(fm + content)
+"
+```
+
+## 已知限制
+
+- 数学公式 → LaTeX 内联文本，非渲染格式
+- 表格可能展平
+- 多栏 PDF 需额外处理
+- **MarkItDown 无 OCR** — 扫描版 PDF 使用 marker-pdf（见下方）
+
+## 相关文件
+
+- `references/synthos-paper-conversion-2026-05-27.md` — 本会话的 8 篇论文转换记录
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: 输入参数/文件/路径是否完整且有效
+2. **过程验证**: 中间步骤/转换/计算是否正确
+3. **输出验证**: 输出格式/内容是否符合预期
+4. **边界验证**: 空输入、极大值、异常场景是否处理
+5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+
+## 约束规则 · RULES
+
+1. **输入约束**: 参数类型、范围、格式必须校验
+2. **输出约束**: 返回值结构、编码、命名必须一致
+3. **异常约束**: 错误信息必须包含上下文和恢复建议
+4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: 标准输入样本（覆盖正常路径）
+- **Golden Output**: 预期输出（精确匹配或格式校验）
+- **Golden Error**: 预期错误信息（覆盖失败路径）
+
+> Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
+
+> 违反规则的操作视为不安全，必须拒绝或隔离。
+
+> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+# Markitdown Convert
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[MARK-001]** 处理学术 PDF 管线 → 必须将 PDF 转换为 Markdown 作为下载后的强制步骤，以确保全文文本可被可靠索引和质检
+- **[MARK-002]** 执行批量 PDF 转换 → 优先使用 `markitdown` 工具，若失败或输出过短则自动回退至 `pdftotext`，并跳过已存在且大小有效的缓存文件
+- **[MARK-003]** 遇到无文本层或损坏的 PDF → 依次尝试寻找 arXiv/PMC 替代版本、手动补写摘要或启动 OCR 管线（如 marker-pdf），而非直接报错终止
+- **[MARK-004]** 在混合目录中识别主论文 PDF → 优先选择体积最大且排除引用/模板特征的 PDF，其次考虑最新修改时间或文件名匹配度
+- **[MARK-005]** 转换结果需用于 Obsidian 笔记系统 → 检查生成的 Markdown 是否包含 YAML frontmatter，若缺失则自动注入 tags 和 aliases 字段
+- **[MARK-006]** 安装 MarkItDown 依赖 → 必须使用 `uv tool install markitdown --with markitdown[pdf]` 命令，缺少 `[pdf]` extra 会导致依赖缺失异常
+- **[MARK-007]** 处理扫描版或纯图像 PDF → 识别 MarkItDown 无 OCR 能力的限制，转而使用 Tesseract 或 marker-pdf 等专用 OCR 工具进行文本提取

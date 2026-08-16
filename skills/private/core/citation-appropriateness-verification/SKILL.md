@@ -1,8 +1,7 @@
 ---
 name: citation-appropriateness-verification
 description: 引用适当性验证 — 6 类功能分类、DOI 回源验证、三级回退、专项报告输出
-signature: 'citation-appropriateness-verification -> core: 按6类功能审查引用适当性，DOI 回源验证，SS→Crossref→PubMed
-  三级回退'
+signature: 'citation-appropriateness-verification -> core: 按6类功能审查引用适当性，DOI 回源验证，SS→Crossref→PubMed 三级回退'
 allowed-tools:
 - terminal
 - read_file
@@ -17,7 +16,6 @@ metadata:
     synthos_version: 3.2.0
     synthos_asserted_compliance: P0,P2,P3
     synthos_mechanical_atoms: ''
-category: private
 ---
 
 # Citation Appropriateness Verification — 引用适当性验证
@@ -92,4 +90,14 @@ category: private
 ## Pitfalls
 
 | 问题 | 解决 |
-|
+|------|------|
+| bib DOI 本身有误 | 回源验证（L5），不可只信条目 |
+| 单一 API 失效 | SS→Crossref→PubMed 三级回退 |
+| Crossref 查询超长 | 截断至 ≤100 字符 |
+| Crossref format=bibtex 废弃 | 用 JSON 输出 |
+| PDF 命名不匹配 | 扫描时按 DOI 精确匹配 |
+| JAMA 403 封锁 | 换源或延时重试 |
+
+## 参考文件
+
+- `references/bib-doi-validation-2026-07-06.md` — DOI 真实性验证完整记录

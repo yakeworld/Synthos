@@ -13,20 +13,13 @@ metadata:
   synthos:
     atom_type: mechanical
     description: 1. 确认输入参数完整
-    signature: 'feishu-gateway-debug -> devops: synthetic skill for feishu gateway
-      debug'
+    signature: 'feishu-gateway-debug -> devops: synthetic skill for feishu gateway debug'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
-category: devops
-related_skills:
-- hermes-agent
-- github
-author: Synthos
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -46,6 +39,25 @@ author: Synthos
 1. 
 2. 
 3. 
+category: devops
+signature: "feishu-gateway-debug -> devops: 飞书 Gateway 消息流诊断与排障 — 从用户消息到 agent 响应的全链路追踪。覆盖 404 根因、消息流路径、agent session 分离、日志定"
+related_skills: ['safe-file-operations', 'privacy-scan']
+related_skills:
+- hermes-agent
+- github
+description: 飞书 Gateway 消息流诊断与排障 — 从用户消息到 agent 响应的全链路追踪。覆盖 404 根因、消息流路径、agent session 分离、日志定位。
+version: 1.0.0
+allowed-tools:
+- terminal
+- file
+- web
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    version: 2.1.0
+    author: Synthos
+    signature: 'query: str -> debug_trace: dict'
 
 ## IO_CONTRACT
 
@@ -251,4 +263,22 @@ gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -d
 5. 若不存在 → `search_files(pattern='*文件名*', target='files')` 找正确路径
 6. 修正路径后重发
 
-# Feishu Gateway Debug
+# Feishu Gateway Debug---
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[FEIS-001]** 用户报告 API 调用失败或 404 错误 → 优先检查 `base_url` 指向的服务（vLLM/DeepSeek/飞书），区分是模型节点问题还是飞书网关问题
+- **[FEIS-002]** 诊断消息流中断或无响应 → 按时间顺序追踪 Gateway 日志（接收→解析→提交→响应→发送）以定位具体断点
+- **[FEIS-003]** 遇到 vLLM 节点返回 404 Not Found → 验证模型是否存在于该节点（`curl /v1/models`），若不存在则移除节点或修正模型名
+- **[FEIS-004]** 飞书 MEDIA 附件发送后用户未收到且无报错 → 检查文件大小是否超过 10MB，若超限则使用 Ghostscript 压缩至 10MB 以下后重发
+- **[FEIS-005]** 发送文件附件前 → 必须执行 `ls -la` 验证文件路径真实存在，避免路径错误导致静默失败
+- **[FEIS-006]** 处理 CLI 与飞书平台的并发问题 → 识别 session ID 前缀（`cli:` vs `feishu:`），利用两者完全隔离的特性排除跨平台干扰
+- **[FEIS-007]** 遇到 Stream 断开或 180s 超时错误 → 判定为 vLLM 服务超时或负载过高，需检查节点状态或调整超时配置
+
+## 示例 · EXAMPLES
+
+1. 用户报告飞书消息 "API call failed (404 Not Found)" → 按 FEIS-001 检查 agent.log 中的 `base_url`：指向 `http://<node_ip>:8000` 即 vLLM 节点 404（非飞书）；`curl -s http://<ip>:8000/v1/models` 确认模型名存在（FEIS-003），不存在则从轮询配置移除该节点或修正模型名 → 验证：重发消息后 gateway.log 出现 `response ready` + `Sending response`，错误不再复现。
+2. 用户反馈"发 PDF 后没收到附件、无报错" → 按 FEIS-005 先 `ls -la` 确认文件存在且路径不在 /tmp/；发现 33MB 超限（FEIS-004），用 Ghostscript `/screen` 压缩至 2.4MB 后以 `MEDIA:<稳定路径>` 重发 → 验证：附件在飞书正常显示且 ≤10MB，排障清单第 1-8 项全部通过。
+3. CLI 会话 execute_code 超时（300s）后，用户问飞书会话为何"卡住" → 按 FEIS-006 检查 session 前缀 `cli:` vs `feishu:dm:<chat_id>`，确认两平台 session 完全隔离 → 验证：gateway.log 中 `agent:main:feishu:dm:*` 的消息时间线（Received raw → Flushing text batch → response ready → Sending response）完整无断点，CLI 超时未影响飞书会话。

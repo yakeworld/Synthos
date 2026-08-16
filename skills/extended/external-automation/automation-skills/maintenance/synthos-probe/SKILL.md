@@ -1,22 +1,8 @@
 ---
 name: synthos-probe
-description: synthos-probe
+description: "synthos-probe"
 version: 1.0.0
-category: meta
-signature: 'synthos-probe -> meta: Class: maintenance / audit'
-related_skills:
-- layer-index
-- cognitive-atom-architecture
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: 'task_desc: str, params: dict -> result: dict'
-    atom_type: skill
-    priority: P2
-    related_skills: []
 ---
-
 # Synthos Probe — 7-Atom Structural Check
 
 Class: maintenance / audit
@@ -115,10 +101,25 @@ SYNTHOS PROBE: structural=X.X, benchmark=X.X, drift=green | cycle=N, score=X.XX
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
 3. 验证输出符合契约
 4. 保存结果并报告
+category: meta
+signature: "synthos-probe -> meta: Class: maintenance / audit"
+related_skills: ['maintenance']
+related_skills: ['layer-index', 'cognitive-atom-architecture']
+description: "Class: maintenance / audit"
+version: 1.0.0
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
 ## IO_CONTRACT
 - **input**: `probe_target: str` — 用户请求描述、上下文信息
 - **output**: `probe_result: dict — Probe探测结果`
 > 对应原则：P2（机械原子暴露输入输出规范）
+
 
 ## Genes (策略基因)
 

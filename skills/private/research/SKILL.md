@@ -19,7 +19,6 @@ metadata:
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
-category: private
 ---
 
 ### multi-direction-literature-monitor
@@ -96,4 +95,13 @@ category: private
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-# Research — 研究辅助
+# Research — 研究辅助---
+
+## Genes (策略基因)
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+- **[RESE-001]** 多方向文献监控 → 为每个方向定义 2-5 个关键词变体，并行调用 PubMed 和 arXiv API 以最大化召回率
+- **[RESE-002]** 时间范围筛选 → 从 API 获取宽范围结果后，在本地解析日期字段进行过滤，避免依赖不可靠的 API 端点参数（如 reldate）
+- **[RESE-003]** 高噪声源查询（如 arXiv） → 使用精确的布尔表达式（如 `all:keyword1+AND+all:keyword2`）替代宽泛匹配，以减少无关结果
+- **[RESE-004]** 标准工具不可用或被安全拦截 → 采用回退策略，如直接 curl API、将数据写入文件后单独处理，或使用 RSS 替代慢速接口
+- **[RESE-005]** 研究结论输出 → 必须遵循“准确 > 证据 > 可复现”原则，确保每个结论可追溯到具体数据源且操作可重复验证
+- **[RESE-006]** 异常与错误处理 → 错误信息必须包含上下文和恢复建议，且所有验证步骤（输入/过程/输出/边界）必须可执行、可记录

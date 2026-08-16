@@ -1,9 +1,7 @@
 ---
 name: cognitive-atom-architecture
-description: All original reference files, templates, and scripts should be intact
-  at `~/.hermes/skills/cognitive
-signature: 'cognitive-atom-architecture -> meta: synthetic skill for cognitive atom
-  architecture'
+description: All original reference files, templates, and scripts should be intact at `~/.hermes/skills/cognitive
+signature: 'cognitive-atom-architecture -> meta: synthetic skill for cognitive atom architecture'
 allowed-tools:
 - terminal
 - read_file
@@ -14,16 +12,13 @@ license: MIT
 metadata:
   synthos:
     atom_type: mechanical
-    description: All original reference files, templates, and scripts should be intact
-      at `~/.hermes/skills/cognitive
-    signature: 'cognitive-atom-architecture -> meta: synthetic skill for cognitive
-      atom architecture'
+    description: All original reference files, templates, and scripts should be intact at `~/.hermes/skills/cognitive
+    signature: 'cognitive-atom-architecture -> meta: synthetic skill for cognitive atom architecture'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
-category: private
 ---
 
 ## Reference Files (intact — see linked_files)
@@ -83,4 +78,17 @@ Key reference files added in v4.0.0:
 - `references/philosophy-engineering-verification-pattern.md` — methodology for tracing philosophical constraints through atomic skills (2026-05-23)
 - `references/east-west-syncretism-pattern.md` — pattern for merging Eastern and Western philosophical concepts into unified engineering constraints
 
-# Cognitive Atom Architecture
+# Cognitive Atom Architecture---
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: `philosophical_framework: references/philosophical-foundations.md`（7+1 框架）, `target_skill: skills/core/knowledge-extraction/SKILL.md`
+- **Golden Output**: 按 extract→trace→classify→fix→verify 五步产出 `engineering_constraints`——每条哲学约束映射到目标技能的 1 条可执行工程约束（含位置与措辞）
+- **Golden Error**: 7+1 框架缺一维（无定义/无度量法/无原子映射）→ 框架失整，追溯中止；references/ 四件套缺件 → "原件无损"不成立，拒绝产出
+
+> (P032 去重: 保留另一份 5 行独有内容)
+## 验证清单 (Verification)
+- [ ] `~/.hermes/skills/cognitive-atom-architecture/references/` 下原始参考文件、模板、脚本完整无损（v4.0.0 四件套齐全）
+- [ ] 哲学框架按 5 步流程（extract→trace→classify→fix→verify）在原子技能中追溯出可执行的工程约束
+- [ ] 每个示例可独立运行、输入输出明确、含错误处理（边界/错误场景各一）
+- [ ] 违反约束规则的操作被拒绝或隔离，未暴露内部状态

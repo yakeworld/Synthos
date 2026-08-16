@@ -1,20 +1,8 @@
 ---
 name: spotify
-description: spotify
+description: "spotify"
 version: 1.0.0
-category: creative
-signature: 'spotify -> creative: Control the user''s Spotify account via the Hermes
-  Spotify toolset (7 tools). Set'
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: 'task_desc: str, params: dict -> result: dict'
-    atom_type: skill
-    priority: P2
-    related_skills: []
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -34,6 +22,19 @@ metadata:
 1. 
 2. 
 3. 
+category: creative
+signature: "spotify -> creative: Control the user's Spotify account via the Hermes Spotify toolset (7 tools). Set"
+description: "Control the user's Spotify account via the Hermes Spotify toolset (7 tools). Setup guide: https://hermes-agent.nousresearch.com/docs/user-guide/features/spotify"
+version: 1.0.0
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 
 ## IO_CONTRACT
 
@@ -189,6 +190,8 @@ Entity types: `track`, `album`, `artist`, `playlist`, `show`, `episode`. Use the
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+
 
 ## Genes (策略基因)
 

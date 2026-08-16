@@ -1,8 +1,7 @@
 ---
 name: research-output-evaluation
 description: '**关键洞察**：98篇论文中，真正接近可发表水平的（T1+T2且D10a≥95%）约10-15篇。其中使用真实临床数据的可能不到5篇。其余80+篇需要大量修订或归档。'
-signature: 'research-output-evaluation -> research: synthetic skill for research output
-  evaluation'
+signature: 'research-output-evaluation -> research: synthetic skill for research output evaluation'
 allowed-tools:
 - terminal
 - read_file
@@ -14,14 +13,12 @@ metadata:
   synthos:
     atom_type: mechanical
     description: '**关键洞察**：98篇论文中，真正接近可发表水平的（T1+T2且D10a≥95%）约10-15篇。其中使用真实临床数据的可能不到5篇。其余80+篇需要大量修订或归档。'
-    signature: 'research-output-evaluation -> research: synthetic skill for research
-      output evaluation'
+    signature: 'research-output-evaluation -> research: synthetic skill for research output evaluation'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
-category: private
 ---
 
 -|
@@ -93,4 +90,32 @@ category: private
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-# Research Output Evaluation
+# Research Output Evaluation---
+
+## Genes (策略基因)
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+- **[RESE-001]** 评估研究产出整体质量时 → 采用多维指标（如质量门状态、D10a覆盖率、T1/T2等级）交叉验证，而非依赖单一分数
+- **[RESE-002]** 识别可发表潜力论文时 → 设定严格复合阈值（如 T1+T2 且 D10a≥95%），以过滤出真正接近发表水平的少数核心资产
+- **[RESE-003]** 处理大量低质量或僵尸产出时 → 明确区分“需大量修订”与“直接归档”的界限，避免资源浪费在不可救回的样本上
+- **[RESE-004]** 生成评估结论时 → 确保每个判断可追溯至具体数据源或证据，严禁编造或推测未验证的数据
+- **[RESE-005]** 执行评估流程时 → 保证每一步操作的可复现性，使结果可被独立验证和重复执行
+- **[RESE-006]** 面对输入参数或文件缺失时 → 执行严格的输入校验（类型、范围、格式），并在异常时提供包含上下文和恢复建议的错误信息
+
+## 示例 · EXAMPLES
+
+> 基于本技能 Genes / VERIFICATION / 关键洞察真实数据构造的语义化示例。
+
+1. **多维交叉验证质量**（RESE-001 / VERIFICATION #1）
+   输入：98 篇论文目录，含 .tex 71 篇、有 PDF 59 篇、有 quality_score 88 篇。
+   操作：对每篇交叉验证质量门状态 × T1/T2 等级 × D10a 覆盖率，不依赖单一分数；缺失 .tex/PDF/quality_score 者显式识别并单独统计（如 98−71=27 无 .tex）。
+   验证：缺失项单独计数、不混入主分布；质量门分布可复算 PASS 19 (21.6%) / CONDITIONAL 49 (55.7%) / FAIL 21 (23.9%)，与数据源一致（RESE-004）。
+
+2. **严格复合阈值过滤可发表潜力**（RESE-002 / VERIFICATION #2 / 关键洞察）
+   输入：T1(≥90) 32 篇 + T2(70–89) 94 篇候选池，D10a≥95% 占 91.6%。
+   操作：施加复合阈值「T1+T2 且 D10a≥95%」，过滤出真正接近发表水平的核心资产清单并计算占比。
+   验证：核心资产约 10–15 篇（占 98 篇的少数）；「其中使用真实临床数据的可能不到 5 篇」标注为推断并附不确定性（VERIFICATION #8：区分事实与推断）。
+
+3. **低质量/僵尸产出处置分类**（RESE-003 / VERIFICATION #3、#7）
+   输入：质量门 FAIL 21 篇 + 僵尸引用总数 1063 例。
+   操作：对每篇低质量产出明确分类为「需大量修订」或「直接归档」；僵尸引用单独计数并归属到具体论文，不折叠进质量分均值。
+   验证：1063 例僵尸引用逐一归属到论文、无折叠；21 篇 FAIL 论文各带处置标签、无模糊地带；结论数字可追溯到具体数据源（RESE-004）。

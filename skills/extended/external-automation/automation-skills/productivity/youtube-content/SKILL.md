@@ -1,32 +1,8 @@
 ---
 name: youtube-content
-description: youtube-content
+description: "youtube-content"
 version: 1.0.0
-category: productivity
-signature: 'youtube-content -> productivity: YouTube transcripts to summaries, threads,
-  blogs.'
-author: Synthos
-license: MIT
-allowed-tools:
-- terminal
-- read_file
-- write_file
-- search_files
-platforms:
-- linux
-- macos
-- windows
-metadata:
-  synthos:
-    signature: 'url: str -> transcript: str, summary: str'
-    related_skills:
-    - airtable
-    - chinese-form-automation
-    - google-workspace
-    - jupyter-live-kernel
-    - linear
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -46,6 +22,31 @@ metadata:
 1. 
 2. 
 3. 
+category: productivity
+signature: "youtube-content -> productivity: YouTube transcripts to summaries, threads, blogs."
+description: YouTube transcripts to summaries, threads, blogs.
+author: Synthos
+license: MIT
+version: 1.0.0
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
+platforms:
+- linux
+- macos
+- windows
+metadata:
+  synthos:
+    signature: 'url: str -> transcript: str, summary: str'
+    related_skills:
+    - airtable
+    - chinese-form-automation
+    - google-workspace
+    - jupyter-live-kernel
+    - linear
+
 
 ## IO_CONTRACT
 
@@ -150,6 +151,7 @@ After fetching the transcript, format it based on what the user asks for:
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Youtube Content
+
 
 ## Genes (策略基因)
 

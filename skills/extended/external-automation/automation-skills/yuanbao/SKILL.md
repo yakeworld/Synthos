@@ -1,20 +1,8 @@
 ---
 name: yuanbao
-description: yuanbao
+description: "yuanbao"
 version: 1.0.0
-category: social-media
-signature: 'yuanbao -> social-media: **Your text reply IS the message sent to the
-  group/user.** The gateway automatic'
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: 'task_desc: str, params: dict -> result: dict'
-    atom_type: skill
-    priority: P2
-    related_skills: []
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -34,6 +22,19 @@ metadata:
 1. 
 2. 
 3. 
+category: social-media
+signature: "yuanbao -> social-media: **Your text reply IS the message sent to the group/user.** The gateway automatic"
+description: "**Your text reply IS the message sent to the group/user.** The gateway automatically delivers your response text to the chat. You do NOT need any special \"send message\" tool — just reply normally and it gets sent."
+version: 1.0.0
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 
 ## IO_CONTRACT
 
@@ -49,6 +50,7 @@ metadata:
 > 群者，众之聚也。管群者，理众之器也。
 > 艾特其人，问其所知；查其信息，答其所问。
 > 不扰不滥，有问必应。
+
 
 ## Genes (策略基因)
 
@@ -73,4 +75,116 @@ When you include `@nickname` in your reply text, the gateway automatically conve
 ## Available Tools
 
 | Tool | When to use |
-|
+|------|------------|
+| `yb_query_group_info` | Query group name, owner, member count |
+| `yb_query_group_members` | Find a user, list bots, list all members, or get nickname for @mention |
+| `yb_send_dm` | Send a private/direct message (DM / 私信) to a user, with optional media files |
+
+## @Mention Workflow
+
+When you need to @mention / 艾特 someone:
+
+1. Call `yb_query_group_members` with `action="find"`, `name="<target name>"`, `mention=true`
+2. Get the exact nickname from the response
+3. Include `@nickname` in your reply text — the gateway handles the rest
+
+Example: user says "帮我艾特元宝"
+
+Step 1 — tool call:
+```json
+{ "group_code": "328306697", "action": "find", "name": "元宝", "mention": true }
+```
+
+Step 2 — your reply (this gets sent to the group with a working @mention):
+```
+@元宝 你好，有人找你！
+```
+
+**That's it.** No extra explanation needed. Keep it short and natural.
+
+**Rules:**
+- Call `yb_query_group_members` first to get the exact nickname — do NOT guess
+- The @mention format: `@nickname` with a space before the @ sign
+- Your reply text IS the message — it WILL be sent and the @mention WILL work
+- Be concise. Do NOT explain how @mention works to the user.
+
+## Send DM (Private Message) Workflow
+
+When someone asks to send a private message / 私信 / DM to a user:
+
+1. Call `yb_send_dm` with `group_code`, `name` (target user's name), and `message`
+2. The tool automatically finds the user and sends the DM
+3. Report the result to the user
+
+Example: user says "给 @用户aea3 私信发一个 hello"
+
+```json
+yb_send_dm({ "group_code": "535168412", "name": "用户aea3", "message": "hello" })
+```
+
+Example with media: user says "给 @用户aea3 私信发一张图片"
+
+```json
+yb_send_dm({
+  "group_code": "535168412",
+  "name": "用户aea3",
+  "message": "Here is the image",
+  "media_files": [{"path": "/tmp/photo.jpg"}]
+})
+```
+
+**Rules:**
+- Extract `group_code` from the current chat_id (e.g. `group:535168412` → `535168412`)
+- If you already know the user_id, pass it directly via the `user_id` parameter to skip lookup
+- If multiple users match the name, the tool returns candidates — ask the user to clarify
+- Do NOT use `send_message` tool for Yuanbao DMs — use `yb_send_dm` instead
+- Supports media: images (.jpg/.png/.gif/.webp/.bmp) sent as image messages, other files as documents
+
+## Query Group Info
+
+```json
+yb_query_group_info({ "group_code": "328306697" })
+```
+
+## Query Members
+
+| Action | Description |
+|--------|-------------|
+| `find` | Search by name (partial match, case-insensitive) |
+| `list_bots` | List bots and Yuanbao AI assistants |
+| `list_all` | List all members |
+
+## Notes
+
+- `group_code` comes from chat_id: `group:328306697` → `328306697`
+- Groups are called "派 (Pai)" in the Yuanbao app
+- Member roles: `user`, `yuanbao_ai`, `bot`
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: 输入参数/文件/路径是否完整且有效
+2. **过程验证**: 中间步骤/转换/计算是否正确
+3. **输出验证**: 输出格式/内容是否符合预期
+4. **边界验证**: 空输入、极大值、异常场景是否处理
+5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+
+## 约束规则 · RULES
+
+1. **输入约束**: 参数类型、范围、格式必须校验
+2. **输出约束**: 返回值结构、编码、命名必须一致
+3. **异常约束**: 错误信息必须包含上下文和恢复建议
+4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: 标准输入样本（覆盖正常路径）
+- **Golden Output**: 预期输出（精确匹配或格式校验）
+- **Golden Error**: 预期错误信息（覆盖失败路径）
+
+> Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
+
+> 违反规则的操作视为不安全，必须拒绝或隔离。
+
+> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+# Yuanbao

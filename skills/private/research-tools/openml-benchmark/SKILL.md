@@ -19,7 +19,6 @@ metadata:
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
-category: private
 ---
 
 |
@@ -102,4 +101,20 @@ category: private
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-# Openml Benchmark
+# Openml Benchmark---
+
+## Genes (策略基因)
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+- **[OPEN-001]** 报告分类任务结果时 → 必须同时提供 OpenML 数据库基准对比，明确说明方法框架差异（如 Weka vs sklearn）及排名位置
+- **[OPEN-002]** 处理 OpenML API 返回的评估指标时 → 需将字符串类型的 value 转换为浮点数，并过滤掉 accuracy 或 f1 为 0 的无效 runs
+- **[OPEN-003]** 面对大量 OpenML run 详情查询需求时 → 采用批量获取列表后过滤再逐个查询详情的策略，以避免因逐个查询导致的速率限制和超时
+- **[OPEN-004]** 分析 F1 分数差距且涉及不同框架（如 Weka vs sklearn）时 → 优先归因于模型实现差异（超参、剪枝、分裂规则）而非数据预处理，避免错误归因
+- **[OPEN-005]** 处理不平衡数据且不平衡程度不严重（如 268:500）时 → 避免使用 SMOTE 等过采样技术，以防引入噪声抵消潜在收益
+- **[OPEN-006]** 使用树模型或贝叶斯模型进行预测时 → 跳过特征标准化步骤，因为此类模型对特征尺度不敏感且标准化可能无益
+- **[OPEN-007]** 调用 OpenML API 获取大量数据（如 >500 条）时 → 设置 limit 分批处理（如 limit=500）并配置超时控制（--max-time 30）以防止请求超时
+
+## 示例 · EXAMPLES
+
+1. **输入**：PIDD 数据集上 CatBoost F1=0.7759 待报告 → **操作**：按 OPEN-001/OPEN-004 拉取 OpenML 基准（WEKA RF F1=0.7648、最佳 WEKA 0.8026），归因排序：模型实现差异 > 不做 SMOTE/标准化 > 特征选择不可移植 → **验证**：通过 VERIFICATION 清单第 1/5 项——基准对比表已附、差距归因未指向预处理（OPEN-004 优先级）。
+2. **输入**：OpenML 任务 500+ 个 run 的 F1 均值计算 → **操作**：按 OPEN-002/OPEN-003/OPEN-007 以 `limit=500` 分批 + `--max-time 30` 拉取 run 列表，`float()` 转换 value，过滤 accuracy/f1=0 的无效 runs 后再逐个查询详情 → **验证**：50 个有效样本均值 0.6745 与 0.6982 复算一致（数必重算），无速率限制报错。
+3. **输入**：PIDD 268:500 轻度不平衡 + GBC 树模型 → **操作**：按 OPEN-005/OPEN-006 跳过 SMOTE 与特征标准化，仅保留 0→NaN 预处理并做消融（ΔF1=+0.018）→ **验证**：对照陷阱第 10 条确认 ZeroReplacer 影响 < 0.007，消融数字可复现（P1 原子可复现性）。

@@ -1,25 +1,8 @@
 ---
 name: smart-home
-description: smart-home
+description: "smart-home"
 version: 1.0.0
-category: devops
-signature: 'smart-home -> devops: 智能家居 — Philips Hue灯光控制。'
-related_skills:
-- openhue
-author: Synthos
-license: MIT
-triggers:
-- 需要执行smart-home下的子技能
-metadata:
-  synthos:
-    priority: P2
-    atom_type: parent-skill
-    description: 父级技能 — 智能家居 — Philips Hue灯光控制。
-    signature: 'smart-home -> sub-skills: [openhue]'
-    related_skills:
-    - openhue
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -39,6 +22,23 @@ metadata:
 1. 
 2. 
 3. 
+category: devops
+signature: "smart-home -> devops: 智能家居 — Philips Hue灯光控制。"
+related_skills: ['openhue']
+description: 智能家居 — Philips Hue灯光控制。
+author: Synthos
+license: MIT
+version: 1.0.0
+triggers:
+  - 需要执行smart-home下的子技能
+metadata:
+  synthos:
+    priority: P2
+    atom_type: parent-skill
+    description: "父级技能 — 智能家居 — Philips Hue灯光控制。"
+    signature: 'smart-home -> sub-skills: [openhue]'
+    related_skills: ["openhue"]
+
 
 ## IO_CONTRACT
 
@@ -94,6 +94,7 @@ skill_view(name='openhue')  # 加载第一个子技能
 父级SKILL.md仅作为目录索引，实际执行由子技能完成。
 
 # Smart Home
+
 
 ## Genes (策略基因)
 

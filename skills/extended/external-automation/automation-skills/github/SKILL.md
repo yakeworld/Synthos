@@ -1,24 +1,8 @@
 ---
 name: github
-description: github
+description: "github"
 version: 1.0.0
-category: automation
-signature: 'github -> automation: GitHub工作流 — PR审查、Issue管理、仓库管理、CI/CD。'
-author: Synthos
-license: MIT
-triggers:
-- 需要执行github下的子技能
-metadata:
-  synthos:
-    priority: P2
-    atom_type: parent-skill
-    description: 父级技能 — GitHub工作流 — PR审查、Issue管理、仓库管理、CI/CD。
-    signature: 'github -> sub-skills: [codebase-inspection, github-auth, github-code-review]'
-    related_skills:
-    - codebase-inspection
-    - github-discussions
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -38,6 +22,22 @@ metadata:
 1. 
 2. 
 3. 
+category: automation
+signature: "github -> automation: GitHub工作流 — PR审查、Issue管理、仓库管理、CI/CD。"
+description: GitHub工作流 — PR审查、Issue管理、仓库管理、CI/CD。
+author: Synthos
+license: MIT
+version: 1.0.0
+triggers:
+  - 需要执行github下的子技能
+metadata:
+  synthos:
+    priority: P2
+    atom_type: parent-skill
+    description: "父级技能 — GitHub工作流 — PR审查、Issue管理、仓库管理、CI/CD。"
+    signature: 'github -> sub-skills: [codebase-inspection, github-auth, github-code-review]'
+    related_skills: ["codebase-inspection", "github-discussions"]
+
 
 ## IO_CONTRACT
 
@@ -99,6 +99,7 @@ skill_view(name='codebase-inspection')  # 加载第一个子技能
 父级SKILL.md仅作为目录索引，实际执行由子技能完成。
 
 # Github
+
 
 ## Genes (策略基因)
 

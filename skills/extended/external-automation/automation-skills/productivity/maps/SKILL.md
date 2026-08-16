@@ -1,9 +1,7 @@
 ---
 name: maps
-description: maps
+description: "maps"
 version: 1.0.0
-license: MIT
-category: extended
 ---
 
 ## Operational Steps

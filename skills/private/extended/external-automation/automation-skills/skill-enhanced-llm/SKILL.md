@@ -1,8 +1,7 @@
 ---
 name: skill-enhanced-llm
 description: Skill Enhanced Llm
-signature: 'skill-enhanced-llm -> automation-skills: synthetic skill for skill enhanced
-  llm'
+signature: 'skill-enhanced-llm -> automation-skills: synthetic skill for skill enhanced llm'
 allowed-tools:
 - terminal
 - read_file
@@ -14,14 +13,12 @@ metadata:
   synthos:
     atom_type: mechanical
     description: Skill Enhanced Llm
-    signature: 'skill-enhanced-llm -> automation-skills: synthetic skill for skill
-      enhanced llm'
+    signature: 'skill-enhanced-llm -> automation-skills: synthetic skill for skill enhanced llm'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
-category: private
 ---
 
 
@@ -76,4 +73,9 @@ category: private
 - `references/skill-usage-data-v2.md` — 更新版：含已归档任务、技能库统计、evolution-state.json摘要
 
 
-# Skill Enhanced Llm
+# Skill Enhanced Llm---
+> (P032 去重: 保留另一份 4 行独有内容)
+## 验证清单 (Verification)
+- [ ] 技能使用率数据已采集且与 v2 更新版一致（含已归档任务、技能库统计、evolution-state.json 摘要）
+- [ ] 21 个 cron 任务的运行统计命令已验证（1352 次运行口径一致）
+- [ ] 未映射目录已清理，且未误删在用的技能/脚本目录

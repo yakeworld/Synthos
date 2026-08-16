@@ -1,24 +1,8 @@
 ---
 name: metacognition
-description: metacognition
+description: "metacognition"
 version: 1.0.0
-category: meta
-signature: 'metacognition -> meta: 元认知 — 自主执行阈值、记忆优化系统。'
-author: Synthos
-license: MIT
-triggers:
-- 需要执行metacognition下的子技能
-metadata:
-  synthos:
-    priority: P2
-    atom_type: parent-skill
-    description: 父级技能 — 元认知 — 自主执行阈值、记忆优化系统。
-    signature: 'metacognition -> sub-skills: [autonomous-execution-threshold, memory-optimization-system]'
-    related_skills:
-    - autonomous-execution-threshold
-    - memory-optimization-system
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -38,6 +22,22 @@ metadata:
 1. 
 2. 
 3. 
+category: meta
+signature: "metacognition -> meta: 元认知 — 自主执行阈值、记忆优化系统。"
+description: 元认知 — 自主执行阈值、记忆优化系统。
+author: Synthos
+license: MIT
+version: 1.0.0
+triggers:
+  - 需要执行metacognition下的子技能
+metadata:
+  synthos:
+    priority: P2
+    atom_type: parent-skill
+    description: "父级技能 — 元认知 — 自主执行阈值、记忆优化系统。"
+    signature: 'metacognition -> sub-skills: [autonomous-execution-threshold, memory-optimization-system]'
+    related_skills: ["autonomous-execution-threshold", "memory-optimization-system"]
+
 
 ## IO_CONTRACT
 
@@ -94,6 +94,7 @@ skill_view(name='autonomous-execution-threshold')  # 加载第一个子技能
 父级SKILL.md仅作为目录索引，实际执行由子技能完成。
 
 # Metacognition
+
 
 ## Genes (策略基因)
 

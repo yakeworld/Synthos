@@ -1,8 +1,7 @@
 ---
 name: reproducibility-audit
 description: '**边界**：技能功能边界。'
-signature: 'reproducibility-audit -> private: synthetic skill for reproducibility
-  audit'
+signature: 'reproducibility-audit -> private: synthetic skill for reproducibility audit'
 allowed-tools:
 - terminal
 - read_file
@@ -14,14 +13,12 @@ metadata:
   synthos:
     atom_type: mechanical
     description: '**边界**：技能功能边界。'
-    signature: 'reproducibility-audit -> private: synthetic skill for reproducibility
-      audit'
+    signature: 'reproducibility-audit -> private: synthetic skill for reproducibility audit'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
-category: private
 ---
 
 

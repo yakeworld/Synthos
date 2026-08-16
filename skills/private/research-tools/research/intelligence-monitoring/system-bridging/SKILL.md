@@ -1,8 +1,7 @@
 ---
 name: system-bridging
 description: ls <system_a_root>/
-signature: 'system-bridging -> intelligence-monitoring: synthetic skill for system
-  bridging'
+signature: 'system-bridging -> intelligence-monitoring: synthetic skill for system bridging'
 allowed-tools:
 - terminal
 - read_file
@@ -14,14 +13,12 @@ metadata:
   synthos:
     atom_type: mechanical
     description: ls <system_a_root>/
-    signature: 'system-bridging -> intelligence-monitoring: synthetic skill for system
-      bridging'
+    signature: 'system-bridging -> intelligence-monitoring: synthetic skill for system bridging'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
-category: private
 ---
 
 
@@ -237,4 +234,6 @@ Bridge v2 修复了 v1 的三个致命问题：
 > 每个示例必须可独立运行、有明确输入输出、包含错误处理。
 
 
+# System Bridging---
+> (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # System Bridging

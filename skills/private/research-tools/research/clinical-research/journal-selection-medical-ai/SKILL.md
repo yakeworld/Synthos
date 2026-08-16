@@ -1,8 +1,7 @@
 ---
 name: journal-selection-medical-ai
 description: '*详细内容已移至 references/ 目录。*'
-signature: 'journal-selection-medical-ai -> clinical-research: synthetic skill for
-  journal selection medical ai'
+signature: 'journal-selection-medical-ai -> clinical-research: synthetic skill for journal selection medical ai'
 allowed-tools:
 - terminal
 - read_file
@@ -14,14 +13,12 @@ metadata:
   synthos:
     atom_type: mechanical
     description: '*详细内容已移至 references/ 目录。*'
-    signature: 'journal-selection-medical-ai -> clinical-research: synthetic skill
-      for journal selection medical ai'
+    signature: 'journal-selection-medical-ai -> clinical-research: synthetic skill for journal selection medical ai'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
-category: private
 ---
 
 
@@ -84,4 +81,11 @@ category: private
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-# Journal Selection Medical Ai
+# Journal Selection Medical Ai---
+
+
+
+
+
+*详细内容已移至 references/ 目录。*
+

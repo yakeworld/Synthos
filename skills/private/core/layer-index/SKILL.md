@@ -19,10 +19,7 @@ metadata:
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
-category: core
-author: Synthos
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -42,6 +39,18 @@ author: Synthos
 1. 
 2. 
 3. 
+category: core
+signature: "layer-index -> core: Navigation index for the core research stack — 7 cognitive atoms, paper pipeline"
+description: "Navigation index for the core research stack — 7 cognitive atoms, paper pipeline, research methodology, and AI/ML tools."
+version: 1.0.0
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    priority: P3
+    atom_type: layer-index
+    signature: "layer: str, query: str, context: dict -> skill_list: list[dict]"
+    related_skills: []
 
 # Core Research Stack — 核心科研栈
 
@@ -168,4 +177,16 @@ Navigation index for the core research stack: 7 cognitive atoms, paper pipeline,
 
 > 对应原则：P3（人机分层 — 路由器负责路由，原子负责执行）
 
+# Layer Index---
+
+> (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # Layer Index
+## Genes (策略基因)
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+- **[LAYE-001]** 当系统包含大量技能（如88个）时 → 建立分层导航索引（Layer Index）以映射认知原子、论文流水线及工具链，实现快速检索与定位。
+- **[LAYE-002]** 当执行核心操作前 → 必须确认输入参数完整，并参考目录下的 scripts/ 或 references/ 以确保操作依据准确。
+- **[LAYE-003]** 当操作执行完毕后 → 验证输出是否符合契约（Contract），并保存结果进行报告，以闭环质量保障。
+- **[LAYE-004]** 当构建认知原子架构时 → 采用严格 DAG 依赖关系及输入/输出契约，融合东西方认识论（如格物通理与墨证求真）以确立方法论基础。
+- **[LAYE-005]** 当置信度达到 ≥80% 时 → 执行“闭嘴执行”策略，直接输出执行结果而非推测文案或选项，避免干扰用户决策。
+- **[LAYE-006]** 当进行记忆提取与管理时 → 在字符限制内最大化记忆 ROI，通过标注生长方向和发酵潜力来防止记忆膨胀并保留高信号事实。
+- **[LAYE-007]** 当处理大型知识图谱接入 Agent 时 → 实施查询分层、环境隔离及语义搜索增强，通过脚本化接口实现 KG-bridge 的高效记忆层集成。

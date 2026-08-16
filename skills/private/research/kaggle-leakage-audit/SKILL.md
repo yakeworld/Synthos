@@ -13,14 +13,12 @@ metadata:
   synthos:
     atom_type: mechanical
     description: 1. 不平衡度越高 → 泄漏杀伤越大
-    signature: 'kaggle-leakage-audit -> research: synthetic skill for kaggle leakage
-      audit'
+    signature: 'kaggle-leakage-audit -> research: synthetic skill for kaggle leakage audit'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
-category: private
 ---
 
 ## IO_CONTRACT
@@ -85,4 +83,14 @@ category: private
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-# Kaggle Leakage Audit
+# Kaggle Leakage Audit---
+
+## Genes (策略基因)
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+- **[KAGG-001]** 数据集存在类别不平衡 → 优先审计全局 SMOTE 操作，因其是主要泄漏源
+- **[KAGG-002]** 预处理步骤（Impute/Scale）位于数据分割之前 → 检查是否引入全局信息泄漏，但通常影响较小
+- **[KAGG-003]** 使用高复杂度模型（如 XGB/RF） → 预期泄漏导致的性能偏差更显著，需重点监控
+- **[KAGG-004]** 数据极度不平衡（如正样本 <1%） → 即使存在泄漏，模型 F1 可能仍接近 0，需结合其他指标评估
+- **[KAGG-005]** 数据集类别平衡或多类分布均匀 → 可跳过针对不平衡泄漏的深度审计，因不受此类泄漏影响
+- **[KAGG-006]** 需要验证预处理安全性 → 确保所有预处理（Impute/Scale/SMOTE）严格在 CV 折内部执行
+- **[KAGG-007]** 审计结论输出 → 必须基于基线与泄漏变体（ImputeLeak/SMOTELeak/SevereLeak）的 F1 对比数据

@@ -1,26 +1,8 @@
 ---
 name: media
-description: media
+description: "media"
 version: 1.0.0
-category: creative
-signature: 'media -> creative: 媒体内容 — GIF搜索、音乐生成、音谱分析、Spotify控制。'
-author: Synthos
-license: MIT
-triggers:
-- 需要执行media下的子技能
-metadata:
-  synthos:
-    priority: P2
-    atom_type: parent-skill
-    description: 父级技能 — 媒体内容 — GIF搜索、音乐生成、音谱分析、Spotify控制。
-    signature: 'media -> sub-skills: [gif-search, heartmula, songsee]'
-    related_skills:
-    - gif-search
-    - heartmula
-    - songsee
-    - spotify
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -40,6 +22,22 @@ metadata:
 1. 
 2. 
 3. 
+category: creative
+signature: "media -> creative: 媒体内容 — GIF搜索、音乐生成、音谱分析、Spotify控制。"
+description: 媒体内容 — GIF搜索、音乐生成、音谱分析、Spotify控制。
+author: Synthos
+license: MIT
+version: 1.0.0
+triggers:
+  - 需要执行media下的子技能
+metadata:
+  synthos:
+    priority: P2
+    atom_type: parent-skill
+    description: "父级技能 — 媒体内容 — GIF搜索、音乐生成、音谱分析、Spotify控制。"
+    signature: 'media -> sub-skills: [gif-search, heartmula, songsee]'
+    related_skills: ["gif-search", "heartmula", "songsee", "spotify"]
+
 
 ## IO_CONTRACT
 
@@ -98,6 +96,7 @@ skill_view(name='gif-search')  # 加载第一个子技能
 父级SKILL.md仅作为目录索引，实际执行由子技能完成。
 
 # Media
+
 
 ## Genes (策略基因)
 

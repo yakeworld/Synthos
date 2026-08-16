@@ -19,7 +19,6 @@ metadata:
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
-category: private
 ---
 
 
@@ -181,4 +180,6 @@ AKNE 源文件路径中可能包含特殊字符（空格、中文、连字符）
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 
+# Kg Bridge---
+> (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # Kg Bridge

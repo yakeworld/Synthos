@@ -1,26 +1,27 @@
 ---
 name: kanban-worker
-description: kanban-worker
+description: "kanban-worker"
 version: 1.0.0
-category: devops
-signature: 'kanban-worker -> devops: Your workspace kind determines how you should
-  behave inside `$HERMES_KANBAN_WORK'
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: 'task_desc: str, params: dict -> result: dict'
-    atom_type: skill
-    priority: P2
-    related_skills: []
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
 3. 验证输出符合契约
 4. 保存结果并报告
+category: devops
+signature: "kanban-worker -> devops: Your workspace kind determines how you should behave inside `$HERMES_KANBAN_WORK"
+description: "Your workspace kind determines how you should behave inside `$HERMES_KANBAN_WORKSPACE`:"
+version: 1.0.0
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 
 ## IO_CONTRACT
 
@@ -34,4 +35,215 @@ metadata:
 Your workspace kind determines how you should behave inside `$HERMES_KANBAN_WORKSPACE`:
 
 | Kind | What it is | How to work |
-|
+|---|---|---|
+| `scratch` | Fresh tmp dir, yours alone | Read/write freely; it gets GC'd when the task is archived. |
+| `dir:<path>` | Shared persistent directory | Other runs will read what you write. Treat it like long-lived state. Path is guaranteed absolute (the kernel rejects relative paths). |
+| `worktree` | Git worktree at the resolved path | If `.git` doesn't exist, run `git worktree add <path> <branch>` from the main repo first, then cd and work normally. Commit work here. |
+
+## Tenant isolation
+
+If `$HERMES_TENANT` is set, the task belongs to a tenant namespace. When reading or writing persistent memory, prefix memory entries with the tenant so context doesn't leak across tenants:
+
+- Good: `business-a: Acme is our biggest customer`
+- Bad (leaks): `Acme is our biggest customer`
+
+## Good summary + metadata shapes
+
+The `kanban_complete(summary=..., metadata=...)` handoff is how downstream workers read what you did. Patterns that work:
+
+**Coding task:**
+```python
+kanban_complete(
+    summary="shipped rate limiter — token bucket, keys on user_id with IP fallback, 14 tests pass",
+    metadata={
+        "changed_files": ["rate_limiter.py", "tests/test_rate_limiter.py"],
+        "tests_run": 14,
+        "tests_passed": 14,
+        "decisions": ["user_id primary, IP fallback for unauthenticated requests"],
+    },
+)
+```
+
+**Coding task that needs human review (review-required):**
+
+For most code-changing tasks, the work isn't truly *done* until a human reviewer has eyes on it. Block instead of complete, with `reason` prefixed `review-required: ` so the dashboard surfaces the row as needing review. Drop the structured metadata (changed files, test counts, diff/PR url) into a comment first, since `kanban_block` only carries the human-readable reason — comments are the durable annotation channel. Reviewer either approves and runs `hermes kanban unblock <id>` (which re-spawns you with the comment thread for any follow-ups) or asks for changes via another comment.
+
+```python
+import json
+
+kanban_comment(
+    body="review-required handoff:\n" + json.dumps({
+        "changed_files": ["rate_limiter.py", "tests/test_rate_limiter.py"],
+        "tests_run": 14,
+        "tests_passed": 14,
+        "diff_path": "/path/to/worktree",  # or PR url if pushed
+        "decisions": ["user_id primary, IP fallback for unauthenticated requests"],
+    }, indent=2),
+)
+kanban_block(
+    reason="review-required: rate limiter shipped, 14/14 tests pass — needs eyes on the user_id/IP fallback choice before merging",
+)
+```
+
+Use `kanban_complete` only when the task is genuinely terminal — e.g. a one-line typo fix, a docs change with no functional consequences, or a research task where the artifact IS the writeup itself.
+
+**Research task:**
+```python
+kanban_complete(
+    summary="3 competing libraries reviewed; vLLM wins on throughput, SGLang on latency, Tensorrt-LLM on memory efficiency",
+    metadata={
+        "sources_read": 12,
+        "recommendation": "vLLM",
+        "benchmarks": {"vllm": 1.0, "sglang": 0.87, "trtllm": 0.72},
+    },
+)
+```
+
+**Review task:**
+```python
+kanban_complete(
+    summary="reviewed PR #123; 2 blocking issues found (SQL injection in /search, missing CSRF on /settings)",
+    metadata={
+        "pr_number": 123,
+        "findings": [
+            {"severity": "critical", "file": "api/search.py", "line": 42, "issue": "raw SQL concat"},
+            {"severity": "high", "file": "api/settings.py", "issue": "missing CSRF middleware"},
+        ],
+        "approved": False,
+    },
+)
+```
+
+Shape `metadata` so downstream parsers (reviewers, aggregators, schedulers) can use it without re-reading your prose.
+
+## Claiming cards you actually created
+
+If your run produced new kanban tasks (via `kanban_create`), pass the ids in `created_cards` on `kanban_complete`. The kernel verifies each id exists and was created by your profile; any phantom id blocks the completion with an error listing what went wrong, and the rejected attempt is permanently recorded on the task's event log. **Only list ids you captured from a successful `kanban_create` return value — never invent ids from prose, never paste ids from earlier runs, never claim cards another worker created.**
+
+```python
+# GOOD — capture return values, then claim them.
+c1 = kanban_create(title="remediate SQL injection", assignee="security-worker")
+c2 = kanban_create(title="fix CSRF middleware", assignee="web-worker")
+
+kanban_complete(
+    summary="Review done; spawned remediations for both findings.",
+    metadata={"pr_number": 123, "approved": False},
+    created_cards=[c1["task_id"], c2["task_id"]],
+)
+```
+
+```python
+# BAD — claiming ids you don't have captured return values for.
+kanban_complete(
+    summary="Created remediation cards t_a1b2c3d4, t_deadbeef",  # hallucinated
+    created_cards=["t_a1b2c3d4", "t_deadbeef"],                   # → gate rejects
+)
+```
+
+If a `kanban_create` call fails (exception, tool_error), the card was NOT created — do not include a phantom id for it. Retry the create, or omit the id and mention the failure in your summary. The prose-scan pass also catches `t_<hex>` references in your free-form summary that don't resolve; these don't block the completion but show up as advisory warnings on the task in the dashboard.
+
+## Block reasons that get answered fast
+
+Bad: `"stuck"` — the human has no context.
+
+Good: one sentence naming the specific decision you need. Leave longer context as a comment instead.
+
+```python
+kanban_comment(
+    task_id=os.environ["HERMES_KANBAN_TASK"],
+    body="Full context: I have user IPs from Cloudflare headers but some users are behind NATs with thousands of peers. Keying on IP alone causes false positives.",
+)
+kanban_block(reason="Rate limit key choice: IP (simple, NAT-unsafe) or user_id (requires auth, skips anonymous endpoints)?")
+```
+
+The block message is what appears in the dashboard / gateway notifier. The comment is the deeper context a human reads when they open the task.
+
+## Heartbeats worth sending
+
+Good heartbeats name progress: `"epoch 12/50, loss 0.31"`, `"scanned 1.2M/2.4M rows"`, `"uploaded 47/120 videos"`.
+
+Bad heartbeats: `"still working"`, empty notes, sub-second intervals. Every few minutes max; skip entirely for tasks under ~2 minutes.
+
+## Retry scenarios
+
+If you open the task and `kanban_show` returns `runs: [...]` with one or more closed runs, you're a retry. The prior runs' `outcome` / `summary` / `error` tell you what didn't work. Don't repeat that path. Typical retry diagnostics:
+
+- `outcome: "timed_out"` — the previous attempt hit `max_runtime_seconds`. You may need to chunk the work or shorten it.
+- `outcome: "crashed"` — OOM or segfault. Reduce memory footprint.
+- `outcome: "spawn_failed"` + `error: "..."` — usually a profile config issue (missing credential, bad PATH). Ask the human via `kanban_block` instead of retrying blindly.
+- `outcome: "reclaimed"` + `summary: "task archived..."` — operator archived the task out from under the previous run; you probably shouldn't be running at all, check status carefully.
+- `outcome: "blocked"` — a previous attempt blocked; the unblock comment should be in the thread by now.
+
+## Do NOT
+
+- Call `delegate_task` as a substitute for `kanban_create`. `delegate_task` is for short reasoning subtasks inside YOUR run; `kanban_create` is for cross-agent handoffs that outlive one API loop.
+- Modify files outside `$HERMES_KANBAN_WORKSPACE` unless the task body says to.
+- Create follow-up tasks assigned to yourself — assign to the right specialist.
+- Complete a task you didn't actually finish. Block it instead.
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+
+**Task state can change between dispatch and your startup.** Between when the dispatcher claimed and when your process actually booted, the task may have been blocked, reassigned, or archived. Always `kanban_show` first. If it reports `blocked` or `archived`, stop — you shouldn't be running.
+
+**Workspace may have stale artifacts.** Especially `dir:` and `worktree` workspaces can have files from previous runs. Read the comment thread — it usually explains why you're running again and what state the workspace is in.
+
+**Don't rely on the CLI when the guidance is available.** The `kanban_*` tools work across all terminal backends (Docker, Modal, SSH). `hermes kanban <verb>` from your terminal tool will fail in containerized backends because the CLI isn't installed there. When in doubt, use the tool.
+
+## CLI fallback (for scripting)
+
+Every tool has a CLI equivalent for human operators and scripts:
+- `kanban_show` ↔ `hermes kanban show <id> --json`
+- `kanban_complete` ↔ `hermes kanban complete <id> --summary "..." --metadata '{...}'`
+- `kanban_block` ↔ `hermes kanban block <id> "reason"`
+- `kanban_create` ↔ `hermes kanban create "title" --assignee <profile> [--parent <id>]`
+- etc.
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: 输入参数/文件/路径是否完整且有效
+2. **过程验证**: 中间步骤/转换/计算是否正确
+3. **输出验证**: 输出格式/内容是否符合预期
+4. **边界验证**: 空输入、极大值、异常场景是否处理
+5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+
+## 约束规则 · RULES
+
+1. **输入约束**: 参数类型、范围、格式必须校验
+2. **输出约束**: 返回值结构、编码、命名必须一致
+3. **异常约束**: 错误信息必须包含上下文和恢复建议
+4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: 标准输入样本（覆盖正常路径）
+- **Golden Output**: 预期输出（精确匹配或格式校验）
+- **Golden Error**: 预期错误信息（覆盖失败路径）
+
+> Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
+
+> 违反规则的操作视为不安全，必须拒绝或隔离。
+
+> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+Use the tools from inside an agent; the CLI exists for the human at the terminal.
+
+# Kanban Worker
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[KANB-001]** 工作区类型为 `worktree` 且 `.git` 不存在 → 先从主仓库执行 `git worktree add` 初始化，再进入目录工作并提交
+- **[KANB-002]** 存在 `$HERMES_TENANT` 环境变量 → 读写持久化记忆时必须添加租户前缀以防止上下文跨租户泄漏
+- **[KANB-003]** 任务涉及代码变更且需人工审查 → 使用 `kanban_block` 并添加 `review-required:` 前缀，同时将结构化元数据写入评论而非直接完成
+- **[KANB-004]** 任务真正终结（如文档修改、无功能影响的修复） → 使用 `kanban_complete` 并附带结构化 metadata 供下游解析器使用
+- **[KANB-005]** 运行中创建了新的看板任务 → 仅将成功捕获的 `kanban_create` 返回 ID 传入 `created_cards`，严禁虚构或引用失败创建的 ID
+- **[KANB-006]** 需要阻塞任务等待人工决策 → 在 `kanban_block` 中用一句话明确具体决策点，并将详细背景上下文写入 `kanban_comment`
+- **[KANB-007]** 检测到历史运行记录（Retry 场景） → 分析前次运行的 `outcome` 和 `error` 以诊断失败原因（如超时、OOM），避免重复相同路径

@@ -1,22 +1,8 @@
 ---
 name: popular-web-designs
-description: popular-web-designs
+description: "popular-web-designs"
 version: 1.0.0
-category: creative
-signature: 'popular-web-designs -> creative: 54 real-world design systems ready for
-  use when generating HTML/CSS. Each templa'
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: 'task_desc: str, params: dict -> result: dict'
-    atom_type: skill
-    priority: P2
-    related_skills:
-    - creative-tools
-    - design-md
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -36,6 +22,19 @@ metadata:
 1. 
 2. 
 3. 
+category: creative
+signature: "popular-web-designs -> creative: 54 real-world design systems ready for use when generating HTML/CSS. Each templa"
+description: "54 real-world design systems ready for use when generating HTML/CSS. Each template captures a"
+version: 1.0.0
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: ['creative-tools', 'design-md']
+
 
 ## IO_CONTRACT
 
@@ -117,4 +116,164 @@ Most sites use proprietary fonts unavailable via CDN. Each template maps to a Go
 substitute that preserves the design's character. Common mappings:
 
 | Proprietary Font | CDN Substitute | Character |
-|
+|---|---|---|
+| Geist / Geist Sans | Geist (on Google Fonts) | Geometric, compressed tracking |
+| Geist Mono | Geist Mono (on Google Fonts) | Clean monospace, ligatures |
+| sohne-var (Stripe) | Source Sans 3 | Light weight elegance |
+| Berkeley Mono | JetBrains Mono | Technical monospace |
+| Airbnb Cereal VF | DM Sans | Rounded, friendly geometric |
+| Circular (Spotify) | DM Sans | Geometric, warm |
+| figmaSans | Inter | Clean humanist |
+| Pin Sans (Pinterest) | DM Sans | Friendly, rounded |
+| NVIDIA-EMEA | Inter (or Arial system) | Industrial, clean |
+| CoinbaseDisplay/Sans | DM Sans | Geometric, trustworthy |
+| UberMove | DM Sans | Bold, tight |
+| HashiCorp Sans | Inter | Enterprise, neutral |
+| waldenburgNormal (Sanity) | Space Grotesk | Geometric, slightly condensed |
+| IBM Plex Sans/Mono | IBM Plex Sans/Mono | Available on Google Fonts |
+| Rubik (Sentry) | Rubik | Available on Google Fonts |
+
+When a template's CDN font matches the original (Inter, IBM Plex, Rubik, Geist), no
+substitution loss occurs. When a substitute is used (DM Sans for Circular, Source Sans 3
+for sohne-var), follow the template's weight, size, and letter-spacing values closely —
+those carry more visual identity than the specific font face.
+
+## Design Catalog
+
+### AI & Machine Learning
+
+| Template | Site | Style |
+|---|---|---|
+| `claude.md` | Anthropic Claude | Warm terracotta accent, clean editorial layout |
+| `cohere.md` | Cohere | Vibrant gradients, data-rich dashboard aesthetic |
+| `elevenlabs.md` | ElevenLabs | Dark cinematic UI, audio-waveform aesthetics |
+| `minimax.md` | Minimax | Bold dark interface with neon accents |
+| `mistral.ai.md` | Mistral AI | French-engineered minimalism, purple-toned |
+| `ollama.md` | Ollama | Terminal-first, monochrome simplicity |
+| `opencode.ai.md` | OpenCode AI | Developer-centric dark theme, full monospace |
+| `replicate.md` | Replicate | Clean white canvas, code-forward |
+| `runwayml.md` | RunwayML | Cinematic dark UI, media-rich layout |
+| `together.ai.md` | Together AI | Technical, blueprint-style design |
+| `voltagent.md` | VoltAgent | Void-black canvas, emerald accent, terminal-native |
+| `x.ai.md` | xAI | Stark monochrome, futuristic minimalism, full monospace |
+
+### Developer Tools & Platforms
+
+| Template | Site | Style |
+|---|---|---|
+| `cursor.md` | Cursor | Sleek dark interface, gradient accents |
+| `expo.md` | Expo | Dark theme, tight letter-spacing, code-centric |
+| `linear.app.md` | Linear | Ultra-minimal dark-mode, precise, purple accent |
+| `lovable.md` | Lovable | Playful gradients, friendly dev aesthetic |
+| `mintlify.md` | Mintlify | Clean, green-accented, reading-optimized |
+| `posthog.md` | PostHog | Playful branding, developer-friendly dark UI |
+| `raycast.md` | Raycast | Sleek dark chrome, vibrant gradient accents |
+| `resend.md` | Resend | Minimal dark theme, monospace accents |
+| `sentry.md` | Sentry | Dark dashboard, data-dense, pink-purple accent |
+| `supabase.md` | Supabase | Dark emerald theme, code-first developer tool |
+| `superhuman.md` | Superhuman | Premium dark UI, keyboard-first, purple glow |
+| `vercel.md` | Vercel | Black and white precision, Geist font system |
+| `warp.md` | Warp | Dark IDE-like interface, block-based command UI |
+| `zapier.md` | Zapier | Warm orange, friendly illustration-driven |
+
+### Infrastructure & Cloud
+
+| Template | Site | Style |
+|---|---|---|
+| `clickhouse.md` | ClickHouse | Yellow-accented, technical documentation style |
+| `composio.md` | Composio | Modern dark with colorful integration icons |
+| `hashicorp.md` | HashiCorp | Enterprise-clean, black and white |
+| `mongodb.md` | MongoDB | Green leaf branding, developer documentation focus |
+| `sanity.md` | Sanity | Red accent, content-first editorial layout |
+| `stripe.md` | Stripe | Signature purple gradients, weight-300 elegance |
+
+### Design & Productivity
+
+| Template | Site | Style |
+|---|---|---|
+| `airtable.md` | Airtable | Colorful, friendly, structured data aesthetic |
+| `cal.md` | Cal.com | Clean neutral UI, developer-oriented simplicity |
+| `clay.md` | Clay | Organic shapes, soft gradients, art-directed layout |
+| `figma.md` | Figma | Vibrant multi-color, playful yet professional |
+| `framer.md` | Framer | Bold black and blue, motion-first, design-forward |
+| `intercom.md` | Intercom | Friendly blue palette, conversational UI patterns |
+| `miro.md` | Miro | Bright yellow accent, infinite canvas aesthetic |
+| `notion.md` | Notion | Warm minimalism, serif headings, soft surfaces |
+| `pinterest.md` | Pinterest | Red accent, masonry grid, image-first layout |
+| `webflow.md` | Webflow | Blue-accented, polished marketing site aesthetic |
+
+### Fintech & Crypto
+
+| Template | Site | Style |
+|---|---|---|
+| `coinbase.md` | Coinbase | Clean blue identity, trust-focused, institutional feel |
+| `kraken.md` | Kraken | Purple-accented dark UI, data-dense dashboards |
+| `revolut.md` | Revolut | Sleek dark interface, gradient cards, fintech precision |
+| `wise.md` | Wise | Bright green accent, friendly and clear |
+
+### Enterprise & Consumer
+
+| Template | Site | Style |
+|---|---|---|
+| `airbnb.md` | Airbnb | Warm coral accent, photography-driven, rounded UI |
+| `apple.md` | Apple | Premium white space, SF Pro, cinematic imagery |
+| `bmw.md` | BMW | Dark premium surfaces, precise engineering aesthetic |
+| `ibm.md` | IBM | Carbon design system, structured blue palette |
+| `nvidia.md` | NVIDIA | Green-black energy, technical power aesthetic |
+| `spacex.md` | SpaceX | Stark black and white, full-bleed imagery, futuristic |
+| `spotify.md` | Spotify | Vibrant green on dark, bold type, album-art-driven |
+| `uber.md` | Uber | Bold black and white, tight type, urban energy |
+
+## Choosing a Design
+
+Match the design to the content:
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: 输入参数/文件/路径是否完整且有效
+2. **过程验证**: 中间步骤/转换/计算是否正确
+3. **输出验证**: 输出格式/内容是否符合预期
+4. **边界验证**: 空输入、极大值、异常场景是否处理
+5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+
+## 约束规则 · RULES
+
+1. **输入约束**: 参数类型、范围、格式必须校验
+2. **输出约束**: 返回值结构、编码、命名必须一致
+3. **异常约束**: 错误信息必须包含上下文和恢复建议
+4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: 标准输入样本（覆盖正常路径）
+- **Golden Output**: 预期输出（精确匹配或格式校验）
+- **Golden Error**: 预期错误信息（覆盖失败路径）
+
+> Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
+
+> 违反规则的操作视为不安全，必须拒绝或隔离。
+
+> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+- **Developer tools / dashboards:** Linear, Vercel, Supabase, Raycast, Sentry
+- **Documentation / content sites:** Mintlify, Notion, Sanity, MongoDB
+- **Marketing / landing pages:** Stripe, Framer, Apple, SpaceX
+- **Dark mode UIs:** Linear, Cursor, ElevenLabs, Warp, Superhuman
+- **Light / clean UIs:** Vercel, Stripe, Notion, Cal.com, Replicate
+- **Playful / friendly:** PostHog, Figma, Lovable, Zapier, Miro
+- **Premium / luxury:** Apple, BMW, Stripe, Superhuman, Revolut
+- **Data-dense / dashboards:** Sentry, Kraken, Cohere, ClickHouse
+- **Monospace / terminal aesthetic:** Ollama, OpenCode, x.ai, VoltAgent
+
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[POPU-001]** 生成 HTML/CSS 时 → 从 54 个真实设计系统模板中选取匹配风格，加载其完整视觉语言（色彩、排版、组件、间距、阴影）
+- **[POPU-002]** 遇到专有字体无法通过 CDN 加载时 → 使用模板提供的 Google Fonts 替代字体，并严格遵循原模板的字号、字重和字间距以保留视觉特征
+- **[POPU-003]** 构建页面结构时 → 将模板中的色彩调色板定义为 CSS 自定义属性（:root variables），确保样式的一致性和可维护性
+- **[POPU-004]** 需要区分设计流程与视觉实现时 → 结合 `claude-design` 处理设计思维与验证，使用本技能提供具体的视觉词汇和代码实现
+- **[POPU-005]** 交付物为正式设计令牌规范而非渲染页面时 → 切换至 `design-md` 技能生成 DESIGN.md 文件，而非使用本技能的 HTML 生成模式
+- **[POPU-006]** 完成 HTML 文件编写后 → 使用 `write_file` 保存文件，并通过 `browser_vision` 验证视觉准确性，确保符合模板规范

@@ -19,13 +19,7 @@ metadata:
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
-category: meta
-related_skills:
-- layer-index
-- synthos
-author: Synthos
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -45,6 +39,19 @@ author: Synthos
 1. 
 2. 
 3. 
+category: meta
+signature: "layer-index-system -> meta: Navigation index for system infrastructure — devops, automation, tool integratio"
+related_skills: ['layer-index', 'synthos']
+description: "Navigation index for system infrastructure — devops, automation, tool integration, and monitoring."
+version: 1.0.0
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    priority: P3
+    atom_type: layer-index
+    signature: "layer: str, query: str, context: dict -> skill_list: list[dict]"
+    related_skills: []
 
 # System Infrastructure — 系统基础设施
 
@@ -141,4 +148,16 @@ Navigation index for system maintenance: devops, automation, tool integration, a
 
 > 对应原则：P3（人机分层 — 路由器负责路由，原子负责执行）
 
+# Layer Index System---
+
+> (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # Layer Index System
+## Genes (策略基因)
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+- **[LAYE-001]** 输入参数（layer, query, context）不完整或无效 → 立即执行输入验证并拒绝执行，确保参数类型、范围及格式符合契约
+- **[LAYE-002]** 执行核心操作前 → 必须确认输入参数完整，并参考目录下的 scripts/ 或 references/ 进行标准化处理
+- **[LAYE-003]** 生成输出结果时 → 严格校验输出结构（skill_list: list[dict]）是否符合 IO_CONTRACT 定义，确保命名与编码一致
+- **[LAYE-004]** 遇到空输入、极大值或异常场景 → 触发边界验证逻辑，提供包含上下文和恢复建议的明确错误信息
+- **[LAYE-005]** 涉及代码执行或状态变更 → 遵循安全约束，不执行未验证的任意代码，不暴露内部状态，违规操作必须拒绝或隔离
+- **[LAYE-006]** 进行系统改进或功能迭代 → 必须通过 Golden 集合（标准输入/预期输出/预期错误）测试，将其作为单一真理来源
+- **[LAYE-007]** 验证过程执行中 → 确保每项验证可执行、可记录、可复现，失败时详细记录原因及修复方案

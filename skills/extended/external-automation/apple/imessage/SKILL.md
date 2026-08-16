@@ -1,22 +1,8 @@
 ---
 name: imessage
-description: imessage
+description: "imessage"
 version: 1.0.0
-category: apple
-signature: 'imessage -> apple: Use `imsg` to read and send iMessage/SMS via macOS
-  Messages.app.'
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: 'task_desc: str, params: dict -> result: dict'
-    atom_type: skill
-    priority: P2
-    related_skills:
-    - apple
-    - macos-computer-use
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -36,6 +22,19 @@ metadata:
 1. 
 2. 
 3. 
+category: apple
+signature: "imessage -> apple: Use `imsg` to read and send iMessage/SMS via macOS Messages.app."
+description: "Use `imsg` to read and send iMessage/SMS via macOS Messages.app."
+version: 1.0.0
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: ['apple', 'macos-computer-use']
+
 
 ## IO_CONTRACT
 
@@ -161,6 +160,7 @@ imsg send --to "+1555123456" --text "I'll be late"
 ```
 
 # Imessage
+
 
 ## Genes (策略基因)
 

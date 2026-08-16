@@ -1,8 +1,7 @@
 ---
 name: paper-submission-priority
 description: 1. `pdflatex paper.tex` 确认编译干净（0 error, 0 undefined ref）
-signature: 'paper-submission-priority -> private: synthetic skill for paper submission
-  priority'
+signature: 'paper-submission-priority -> private: synthetic skill for paper submission priority'
 allowed-tools:
 - terminal
 - read_file
@@ -14,14 +13,12 @@ metadata:
   synthos:
     atom_type: mechanical
     description: 1. `pdflatex paper.tex` 确认编译干净（0 error, 0 undefined ref）
-    signature: 'paper-submission-priority -> private: synthetic skill for paper submission
-      priority'
+    signature: 'paper-submission-priority -> private: synthetic skill for paper submission priority'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
-category: private
 ---
 
 

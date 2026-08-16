@@ -1,20 +1,8 @@
 ---
 name: chinese-form-automation
-description: chinese-form-automation
+description: "chinese-form-automation"
 version: 1.0.0
-category: productivity
-signature: 'chinese-form-automation -> productivity: 中文表格自动化：自动化处理中文表格/表单的录入、导出和数据校验'
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: 'form_type: str, data: dict -> filled_form: dict (pdf, fields, completeness,
-      errors)'
-    atom_type: skill
-    priority: P1
-    related_skills: []
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -34,6 +22,18 @@ metadata:
 1. 
 2. 
 3. 
+category: productivity
+signature: "chinese-form-automation -> productivity: 中文表格自动化：自动化处理中文表格/表单的录入、导出和数据校验"
+description: 中文表格自动化：自动化处理中文表格/表单的录入、导出和数据校验
+version: 1.0.0
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: "form_type: str, data: dict -> filled_form: dict (pdf, fields, completeness, errors)"
+    atom_type: skill
+    priority: P1
+    related_skills: []
 
 ## IO_CONTRACT
 
@@ -93,6 +93,8 @@ metadata:
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+
 
 ## Genes (策略基因)
 

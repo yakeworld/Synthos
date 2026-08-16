@@ -1,26 +1,27 @@
 ---
 name: pokemon-player
-description: pokemon-player
+description: "pokemon-player"
 version: 1.0.0
-category: gaming
-signature: 'pokemon-player -> gaming: Play Pokemon games via headless emulation using
-  the `pokemon-agent` package.'
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: 'task_desc: str, params: dict -> result: dict'
-    atom_type: skill
-    priority: P2
-    related_skills: []
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
 3. 验证输出符合契约
 4. 保存结果并报告
+category: gaming
+signature: "pokemon-player -> gaming: Play Pokemon games via headless emulation using the `pokemon-agent` package."
+description: "Play Pokemon games via headless emulation using the `pokemon-agent` package."
+version: 1.0.0
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: "task_desc: str, params: dict -> result: dict"
+    atom_type: skill
+    priority: P2
+    related_skills: []
+
 
 ## IO_CONTRACT
 
@@ -204,4 +205,86 @@ Then hold B to speed through attack animations and text.
 
 ## Memory Conventions
 | Prefix | Purpose | Example |
-|
+|--------|---------|---------|
+| PKM:OBJECTIVE | Current goal | Get Parcel from Viridian Mart |
+| PKM:MAP | Navigation knowledge | Viridian: mart is northeast |
+| PKM:STRATEGY | Battle/team plans | Need Grass type before Misty |
+| PKM:PROGRESS | Milestone tracker | Beat rival, heading to Viridian |
+| PKM:STUCK | Stuck situations | Ledge at y=28 go right to bypass |
+| PKM:TEAM | Team notes | Squirtle Lv6, Tackle + Tail Whip |
+
+## Progression Milestones
+- Choose starter
+- Deliver Parcel from Viridian Mart, receive Pokedex
+- Boulder Badge — Brock (Rock) → use Water/Grass
+- Cascade Badge — Misty (Water) → use Grass/Electric
+- Thunder Badge — Lt. Surge (Electric) → use Ground
+- Rainbow Badge — Erika (Grass) → use Fire/Ice/Flying
+- Soul Badge — Koga (Poison) → use Ground/Psychic
+- Marsh Badge — Sabrina (Psychic) → hardest gym
+- Volcano Badge — Blaine (Fire) → use Water/Ground
+- Earth Badge — Giovanni (Ground) → use Water/Grass/Ice
+- Elite Four → Champion!
+
+## Stopping Play
+1. Save the game with a descriptive name via POST /save
+2. Update memory with PKM:PROGRESS
+3. Tell user: "Game saved as [name]! Say 'play pokemon' to resume."
+4. Kill the server and tunnel background processes
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- NEVER download or provide ROM files
+- Do NOT send more than 4-5 actions without checking vision
+- Always sidestep after exiting buildings before going north
+- Always add wait_60 x2-3 after door/stair warps
+- Dialog detection via RAM is unreliable — verify with screenshots
+- Save BEFORE risky encounters
+- The tunnel URL changes each time you restart it
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: 输入参数/文件/路径是否完整且有效
+2. **过程验证**: 中间步骤/转换/计算是否正确
+3. **输出验证**: 输出格式/内容是否符合预期
+4. **边界验证**: 空输入、极大值、异常场景是否处理
+5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+
+## 约束规则 · RULES
+
+1. **输入约束**: 参数类型、范围、格式必须校验
+2. **输出约束**: 返回值结构、编码、命名必须一致
+3. **异常约束**: 错误信息必须包含上下文和恢复建议
+4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: 标准输入样本（覆盖正常路径）
+- **Golden Output**: 预期输出（精确匹配或格式校验）
+- **Golden Error**: 预期错误信息（覆盖失败路径）
+
+> Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
+
+> 违反规则的操作视为不安全，必须拒绝或隔离。
+
+> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[POKE-001]** 执行移动或导航操作 → 每 2-4 步必须截图并使用视觉分析验证位置，严禁仅依赖 RAM 状态数据
+- **[POKE-002]** 遭遇对话框或文本滚动 → 使用 `hold_b` 加速文本显示后按 `a` 推进，若卡住则手动组合按键并截图验证
+- **[POKE-003]** 通过门或楼梯进行地图切换 → 在动作序列末尾添加 2-3 个 `wait_60` 以等待过渡完成，防止读取到过时的位置信息
+- **[POKE-004]** 从建筑物出口走出 → 先向左或右横向移动 2 格避开门口，再执行预定方向的移动，防止立即走回室内
+- **[POKE-005]** 遇到向北被悬崖（Ledge）阻挡 → 利用视觉模型识别缺口方向，仅允许向南跳跃，需横向寻找绕行路径
+- **[POKE-006]** 面临战斗决策且无类型优势 → 优先使用最强 STAB（本系）招式，若 HP 过低则切换宝可梦或使用药水
+- **[POKE-007]** 执行高风险操作（道馆战、新区域、不确定动作）前 → 必须使用描述性名称（如 `before_brock`）保存游戏状态
+- **[POKE-008]** 连续 3 次尝试移动失败或陷入僵局 → 立即停止随机尝试，截图重新评估环境并更新记忆中的 `PKM:STUCK` 记录

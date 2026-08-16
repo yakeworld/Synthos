@@ -1,21 +1,8 @@
 ---
 name: citation-verification
-description: citation-verification
+description: "citation-verification"
 version: 1.0.0
-category: quality
-signature: 'citation-verification -> quality: 引用三验 — 参考文献是否存在(L1) + 引用是否得当(L2) + 引用是否全面(L3)。三位一体验证管线。'
-author: Synthos
-license: MIT
-metadata:
-  synthos:
-    priority: P0
-    atom_type: quality
-    signature: 'paper_dir: str -> citation_report: dict (phase1, phase2, phase3, overall)'
-    related_skills:
-    - paper-pipeline
-    - quality-gate
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -35,6 +22,18 @@ metadata:
 1. 
 2. 
 3. 
+category: quality
+signature: "citation-verification -> quality: 引用三验 — 参考文献是否存在(L1) + 引用是否得当(L2) + 引用是否全面(L3)。三位一体验证管线。"
+description: "引用三验 — 参考文献是否存在(L1) + 引用是否得当(L2) + 引用是否全面(L3)。三位一体验证管线。"
+version: 3.0.0
+author: Synthos
+license: MIT
+metadata:
+  synthos:
+    priority: P0
+    atom_type: quality
+    signature: "paper_dir: str -> citation_report: dict (phase1, phase2, phase3, overall)"
+    related_skills: ["paper-pipeline", "quality-gate"]
 
 # 引用三验 — 参考文献验证
 
@@ -93,4 +92,214 @@ assert os.environ.get("SEMANTIC_SCHOLAR_API_KEY", ""), (
 ### 假DOI检测
 
 | 信号 | 含义 | 行动 |
-|:
+|:-----|:-----|:-----|
+| doi.org 404 + Crossref 404 + SS无匹配 | 几乎确定伪造 | 标记FABRICATED，找替代 |
+| doi.org 404 + SS找到不同DOI | DOI篡改，论文真实 | 修复DOI+元数据 |
+| 无PDF + DOI 404 | 先验假DOI（67%概率） | 不解释为付费墙，验证 |
+
+**三验铁律**：DOI 404 + Crossref 404 + SS搜不到 = 完全虚构；DOI 404 + SS搜到不同DOI = 篡改。前者需找替代，后者修复。
+
+### 替代文献决策树
+
+```
+假DOI → 论文不存在
+  ├→ 论文主题是否被其他已有文献覆盖？
+  │   ├→ 是 → 已有条目可直接引用，删除本条
+  │   └→ 否 → 需要找替代（同主题高引 + 有公开PDF）
+  └→ 是否为核心/被审计论文？
+      ├→ 核心 → 替代必须严谨，可能需要多篇
+      └→ 非核心 → 可删除不影响论证
+```
+
+### PDF Triage 分诊
+
+| PDF状态 | 引用重要性 | 行动 |
+|:--------|:----------|:-----|
+| ✅ 有PDF | 任何 | 进入Phase 2 |
+| ❌ 无PDF | 经典/核心 | 多级下载（Tor+Sci-Hub→OA直连→PMC） |
+
+**铁律**：Agent自行判断重要性，不问用户。依据：①与核心论题的关系；②领域地位；③替代成本。
+
+### D10a回归检查
+
+Phase 1修改bib后必须交叉验证tex引用与bib键的一致性。`comm -23`检查tex引用但bib不存在的键。删除假DOI后，tex中`\\cite{deleted_key}`变成孤儿引用，D10a骤降。
+
+## Phase 2: 是否得当
+
+### 核心理念
+
+API仅验证"文献存在且标题匹配"，无法验证"文献是否支持论文论断"。必须全文阅读PDF。
+
+### Step 1: 提取引用语境
+
+```bash
+grep -n -B2 -A2 '\\\\cite' <paper>.tex > cite_contexts.txt
+```
+
+引用语境是语义审查的核心——必须知道论文"说了什么"，才能判断文献是否支持。
+
+### Step 2: 逐篇阅读PDF
+
+对每篇参考文献PDF：
+1. 使用 `pymupdf` (fitz) 或 `pdfplumber` 提取全文
+2. 记录：标题、作者、年份、摘要、关键段落
+3. 图片/图表较多的PDF，记录主要方法的文字描述
+
+### Step 3: 语义比对
+
+| 维度 | 检查内容 | 标准 |
+|------|----------|------|
+| 标题匹配 | PDF标题 vs bib title | ✅ 一致 |
+| 作者匹配 | PDF第一作者 vs bib author | ✅ 一致 |
+| 年份匹配 | PDF年份 vs bib year | ✅ 一致 |
+| 内容验证 | PDF核心内容支撑论文论断？ | ✅ 支撑 |
+| 主题一致性 | PDF主题 vs 引用语境 | ✅ 一致 |
+| 方法一致性 | PDF方法 vs 引用方法 | ✅ 一致 |
+
+**判断级别**：
+- ✅ 完全恰当：所有维度一致
+- ⚠️ 恰当但有技术问题
+- ❌ 不恰当：标题/作者/年份/内容不匹配
+
+### 错误检测
+
+```bash
+# WITHDRAWN检测
+strings ref.pdf | head -100 | grep -qi "withdrawn\|retracted\|this article has been withdrawn"
+
+# PDF标题验证（防Nature/Springer串流）
+pdfinfo ref.pdf | grep "Title:"
+```
+
+### ⚡ 必须验证的陷阱
+
+1. **WITHDRAWN论文** — PDF存在且DOI真实，但全文以WITHDRAWN开头。有PDF≠该被引用。对每篇PDF做withdrawn检测。
+2. **arXiv ID不防伪** — 真实arXiv ID可能指向不同论文。必须验证arXiv论文的标题/作者是否匹配预期。
+3. **作者名编造** — DOI真实、标题/年份正确，但作者名被LLM编造。Phase 1"DOI存在"验证通过，Phase 2的PDF第一作者比对才能发现。
+4. **DOI存在但内容无关** — 跨领域DOI。Balloccu2020SMOTE的DOI指向金融论文。Phase 1通过但Phase 2读PDF发现标题无关。
+5. **Nature/Springer串流** — 相邻文章容易串流。SS OA链接和MedData下载均可能串流。**必须用pdfinfo验证PDF标题匹配bib标题**。
+6. **SS API不带key静默失败** — 必须设置环境变量。
+7. **速率限制** — Crossref和SS有速率限制，加 `time.sleep()`。
+
+### ⚡ API版本陷阱（2026-06-30确认）
+
+- **Crossref `format=bibtex` 已废弃** — 请求返回 `400 Bad Request`，消息: "Parameter format specified but there is no such parameter available on any route"。**不能使用** `?format=bibtex` 参数。
+- **正确做法** — Crossref JSON响应（不指定format）包含完整bib数据：`title`、`author`（含given/family）、`container-title`、`volume`、`issue`、`page`、`DOI`、`published-*`日期。必须手动构建BibTeX。
+- **Semantic Scholar** — 需要 `X-API-Key` header，不带key静默返回空。SS搜索后若找到DOI，用Crossref JSON获取metadata再构建BibTeX。
+- **BibTeX key解析** — BibTeX key（如`Begoli2018Need`）是人为命名，Crossref中不存在对应条目。必须通过author+title搜索SS获取DOI。
+
+### ⚡ 论文目录操作安全规则
+
+任何破坏性操作（移动、重命名、标准化目录结构）前：
+1. **必须完整备份整个目录树**（至少备份到独立位置如`_archive/`）
+2. 验证备份可读取后再执行操作
+3. 保留旧目录作为`_knowledge_only/`或`_archive/`下的副本
+4. 符号链接失效是最常见的隐蔽错误（`ln -s`后路径断裂但无报错）
+5. 修改后必须逐一验证`paper.tex`中的`\bibliography{}`引用路径存在且可读取
+6. 验证`state.json`中的`checksum.compile_status`和`checksum.bibitems`一致性
+
+参考：`ref/pdf-reference-extraction.md` — 2026-06-30论文目录标准化导致29篇论文references.bib完全丢失的事故记录。
+
+## Phase 3: 是否全面
+
+### 核心
+
+引用不仅要"存在"和"得当"，还要**完整**——该领域高引/经典/最新文献是否都被覆盖？
+
+### 引用质量五维评分
+
+| 维度 | 权重 | 标准 |
+|------|------|------|
+| 权威性 | 30% | 影响因子、被引次数、作者声誉 |
+| 相关性 | 25% | 与论题的直接关联度 |
+| 时效性 | 20% | 最近3年文献 |
+| 多样性 | 15% | 多个学派/方法/观点 |
+| **完整性** | **10%** | **重要文献未引用 ← 核心** |
+
+### 完整性检测流程
+
+1. 从摘要/引言/关键词提取主题词
+2. 用SS/PubMed检索同主题高引文献（按citationCount排序）
+3. 对比论文引用列表
+4. 遗漏分类：
+   - 🔴 关键：被引>1000 + 主题>80%匹配 + 发表>3年 → 必须补充
+   - 🟡 建议：被引>100 + 主题>60%匹配 → 推荐补充
+   - 🔵 可选项：其他
+5. 生成补充建议
+
+### CRISP-DM系列论文遗漏检测
+
+CRISP-DM方法论论文常只引用原始文献(Shearer 2000, Wirth 2000)，忽略20年后的综述。必须检查：
+- Martinez-Plumed 2021 "CRISP-DM Twenty Years Later" (IEEE TKDE, 332 cit)
+- Schroer 2021 "A Systematic Literature Review on Applying CRISP-DM" (Procedia CS, 555 cit)
+
+## 与quality-gate的关系
+
+本技能对应 **quality-gate G5 的三层检查**：
+- G5形式检查（D10a、DOI、孤儿、僵尸）→ Phase 1输出
+- G5实质检查（引用是否得当）→ Phase 2输出
+- G5完整性检查（是否遗漏）→ Phase 3输出
+- G5最终判定 → 本技能整体输出
+
+## 使用场景
+
+- 论文投稿前引用质量终审
+- 论文修改后的引用重新验证
+- 批量引用检查
+- 引用质量年度/季度审计
+
+## 参考文件
+
+- `references/pima-crispdm-phase2-review-2026-06-23.md` — Phase 2完整审计实例（PIMA bib实战）
+- `ref/pima-bib-fabrication-analysis.md` — 假DOI模式统计与检测规则
+
+## 版本历史
+
+| 版本 | 日期 | 变更 |
+|:-----|:-----|:-----|
+| 3.0.0 | 2026-06-27 | 重构为"原理-流程-三阶段"结构，从29KB压缩至~15KB。真实案例和详细陷阱移至ref/目录。 |
+| 2.4.0 | 2026-06-23 | 新增Phase 2完整审计参考文件 |
+| 2.2.0 | 2026-06-23 | 新增WITHDRAWN检测/arXiv不防伪/DOI跨域/作者编造 |
+| 2.0.0 | 2026-06-23 | 合并三技能：reference-verification + citation-appropriateness + 全面性评估 |
+
+## 契约层 · BOUNDARY
+
+**边界**：技能功能边界。
+
+## 契约层 · IO_CONTRACT
+
+**输入**：请求描述、上下文信息。
+**输出**：执行结果、状态反馈。
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: 输入参数/文件/路径是否完整且有效
+2. **过程验证**: 中间步骤/转换/计算是否正确
+3. **输出验证**: 输出格式/内容是否符合预期
+4. **边界验证**: 空输入、极大值、异常场景是否处理
+5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: 标准输入样本（覆盖正常路径）
+- **Golden Output**: 预期输出（精确匹配或格式校验）
+- **Golden Error**: 预期错误信息（覆盖失败路径）
+
+> Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
+
+> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+# Citation Verification
+
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+
+- **[CITA-001]** 当DOI验证返回404且Crossref与Semantic Scholar均无匹配时 → 判定为完全虚构文献，必须寻找替代文献而非尝试修复
+- **[CITA-002]** 当DOI验证返回404但Semantic Scholar找到不同DOI时 → 判定为DOI篡改，需修复DOI及元数据以匹配真实文献
+- **[CITA-003]** 当参考文献为`@misc`类型的数据集条目时 → 应替换为引入或描述该数据集的正式论文（`@article`/`@inproceedings`）以提升规范性
+- **[CITA-004]** 当进入Phase 2语义比对阶段时 → 必须提取引用语境并阅读PDF全文，通过比对标题、作者、年份及内容支撑度来验证引用得当性
+- **[CITA-005]** 当PDF存在且DOI真实时 → 必须执行WITHDRAWN检测及PDF标题与BibTeX标题的一致性校验，以排除撤稿论文或下载串流错误
+- **[CITA-006]** 当执行Phase 3全面性检查时 → 需基于主题词独立检索高引文献，对比现有引用列表以识别并补充关键遗漏文献
+- **[CITA-007]** 当修改Bib文件或删除虚假引用后 → 必须执行D10a回归检查，确保Tex文件中的引用键与Bib条目一致，防止产生孤儿引用

@@ -1,9 +1,7 @@
 ---
 name: k230-development-lessons
-description: '**核心发现**：K230 的 `ampy run`（raw REPL）不可用，但可以直接通过 Python 调用 `ampy.pyboard.Pyboard`
-  实现所有功能。'
-signature: 'k230-development-lessons -> private: synthetic skill for k230 development
-  lessons'
+description: '**核心发现**：K230 的 `ampy run`（raw REPL）不可用，但可以直接通过 Python 调用 `ampy.pyboard.Pyboard` 实现所有功能。'
+signature: 'k230-development-lessons -> private: synthetic skill for k230 development lessons'
 allowed-tools:
 - terminal
 - read_file
@@ -14,16 +12,13 @@ license: MIT
 metadata:
   synthos:
     atom_type: mechanical
-    description: '**核心发现**：K230 的 `ampy run`（raw REPL）不可用，但可以直接通过 Python 调用 `ampy.pyboard.Pyboard`
-      实现所有功能。'
-    signature: 'k230-development-lessons -> private: synthetic skill for k230 development
-      lessons'
+    description: '**核心发现**：K230 的 `ampy run`（raw REPL）不可用，但可以直接通过 Python 调用 `ampy.pyboard.Pyboard` 实现所有功能。'
+    signature: 'k230-development-lessons -> private: synthetic skill for k230 development lessons'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
-category: private
 ---
 
 

@@ -1,8 +1,7 @@
 ---
 name: prose-cluster-hybrid-citation-fix
 description: '**Python batch for section-grouped anchors**:'
-signature: 'prose-cluster-hybrid-citation-fix -> private: synthetic skill for prose
-  cluster hybrid citation fix'
+signature: 'prose-cluster-hybrid-citation-fix -> private: synthetic skill for prose cluster hybrid citation fix'
 allowed-tools:
 - terminal
 - read_file
@@ -14,14 +13,12 @@ metadata:
   synthos:
     atom_type: mechanical
     description: '**Python batch for section-grouped anchors**:'
-    signature: 'prose-cluster-hybrid-citation-fix -> private: synthetic skill for
-      prose cluster hybrid citation fix'
+    signature: 'prose-cluster-hybrid-citation-fix -> private: synthetic skill for prose cluster hybrid citation fix'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
-category: private
 ---
 
 |

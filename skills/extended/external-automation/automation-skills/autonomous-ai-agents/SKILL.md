@@ -1,27 +1,8 @@
 ---
 name: autonomous-ai-agents
-description: autonomous-ai-agents
+description: "autonomous-ai-agents"
 version: 1.0.0
-category: automation
-signature: 'autonomous-ai-agents -> automation: 自主AI智能体编排 — 多Agent协作、委托任务、跨Agent通信。'
-author: Synthos
-license: MIT
-triggers:
-- 需要执行autonomous-ai-agents下的子技能
-metadata:
-  synthos:
-    priority: P2
-    atom_type: parent-skill
-    description: 父级技能 — 自主AI智能体编排 — 多Agent协作、委托任务、跨Agent通信。
-    signature: 'autonomous-ai-agents -> sub-skills: [ai-outreach, claude-code, codex]'
-    related_skills:
-    - ai-outreach
-    - claude-code
-    - codex
-    - hermes-agent
-    - moltbook-connector
 ---
-
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -41,6 +22,22 @@ metadata:
 1. 
 2. 
 3. 
+category: automation
+signature: "autonomous-ai-agents -> automation: 自主AI智能体编排 — 多Agent协作、委托任务、跨Agent通信。"
+description: 自主AI智能体编排 — 多Agent协作、委托任务、跨Agent通信。
+author: Synthos
+license: MIT
+version: 1.0.0
+triggers:
+  - 需要执行autonomous-ai-agents下的子技能
+metadata:
+  synthos:
+    priority: P2
+    atom_type: parent-skill
+    description: "父级技能 — 自主AI智能体编排 — 多Agent协作、委托任务、跨Agent通信。"
+    signature: 'autonomous-ai-agents -> sub-skills: [ai-outreach, claude-code, codex]'
+    related_skills: ["ai-outreach", "claude-code", "codex", "hermes-agent", "moltbook-connector"]
+
 
 ## IO_CONTRACT
 
@@ -101,6 +98,7 @@ skill_view(name='ai-outreach')  # 加载第一个子技能
 父级SKILL.md仅作为目录索引，实际执行由子技能完成。
 
 # Autonomous Ai Agents
+
 
 ## Genes (策略基因)
 

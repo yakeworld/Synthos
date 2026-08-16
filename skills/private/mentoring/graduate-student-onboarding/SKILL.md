@@ -1,8 +1,7 @@
 ---
 name: graduate-student-onboarding
 description: 'Scope tiers:'
-signature: 'graduate-student-onboarding -> mentoring: synthetic skill for graduate
-  student onboarding'
+signature: 'graduate-student-onboarding -> mentoring: synthetic skill for graduate student onboarding'
 allowed-tools:
 - terminal
 - read_file
@@ -14,14 +13,12 @@ metadata:
   synthos:
     atom_type: mechanical
     description: 'Scope tiers:'
-    signature: 'graduate-student-onboarding -> mentoring: synthetic skill for graduate
-      student onboarding'
+    signature: 'graduate-student-onboarding -> mentoring: synthetic skill for graduate student onboarding'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
-category: private
 ---
 
 |
@@ -81,4 +78,27 @@ Scope tiers:
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-# Graduate Student Onboarding
+# Graduate Student Onboarding---
+
+## Genes (策略基因)
+> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
+- **[GRAD-001]** 研究范围界定 → 将方向划分为核心（全流程）与外围（仅空白+假设）层级，并据此分配不同的处理深度
+- **[GRAD-002]** 自动化任务配置 → 在 Cron 任务中显式列出允许与禁止的方向，确保执行边界清晰
+- **[GRAD-003]** 论文处理流程 → 对范围外的论文执行跳过或仅修复范围内内容的约束，避免资源浪费
+- **[GRAD-004]** 文献监控输出 → 核心方向生成完整报告，外围方向仅作为附录处理，以区分信息优先级
+- **[GRAD-005]** 关键决策记录 → 将收敛决策作为持久化事实写入记忆，确保后续操作基于一致的状态
+- **[GRAD-006]** 输出质量保障 → 遵循准确 > 证据 > 可复现的优先级，确保所有结论可追溯且操作可重复
+
+## 示例 · EXAMPLES
+
+1. **输入**: 学生研究方向清单含"5 pillars 公开数据集分析"与"泪膜生物力学"两个方向。
+   **操作**: 按 GRAD-001 将前者划为 Core（全流程），后者划为 Peripheral（仅空白+假设），并据此分配处理深度。
+   **验证**: 核对验证清单第 1 条——方向已正确分为 Core/Peripheral 两层。
+
+2. **输入**: 配置 `paper-repair` 与 `paper-quality-review` 两个 Cron 任务。
+   **操作**: 按 GRAD-002 在 prompt 中显式列出允许/禁止的方向，并对范围外（out-of-scope）论文执行跳过（GRAD-003）。
+   **验证**: 核对验证清单第 2、3 条——prompt 边界清晰，paper-quality-review 对范围外论文执行跳过。
+
+3. **输入**: 文献监控周期触发，同时涉及核心方向与外围方向的新文献。
+   **操作**: 按 GRAD-004 核心方向生成完整报告，外围方向仅写入附录。
+   **验证**: 核对验证清单第 4 条——输出分级正确；并将收敛决策写入 Memory（GRAD-005），后续 cron 基于同一持久化状态。
