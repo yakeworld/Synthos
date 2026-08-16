@@ -1,0 +1,12 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "route": "parallel",
+    "note": "拆为 2 个独立子任务（各 ACQ→EXT→ASC），并行执行后汇总关联对比"
+  },
+  "verification": [
+    "route == 'parallel'",
+    "每子任务论文数 ≤ 10",
+    "子任务独立执行不互相阻塞"
+  ]
+}

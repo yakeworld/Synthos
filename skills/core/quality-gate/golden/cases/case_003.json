@@ -1,0 +1,18 @@
+{
+  "case_id": "case_003",
+  "description": "G5 引用质量形式检查",
+  "input": {
+    "bib_entries": 33,
+    "orphans": 0,
+    "zombies": 0,
+    "doi_count": 31
+  },
+  "expected": {
+    "d10a": 1.0,
+    "orphan_count": 0,
+    "zombie_count": 0,
+    "doi_coverage": 0.939,
+    "passed": true
+  },
+  "weight": "critical"
+}

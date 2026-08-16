@@ -1,0 +1,13 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "route": "standard",
+    "atom_chain": ["knowledge-acquisition", "knowledge-extraction"],
+    "note": "delegate_task 仅传 goal（用户原话）+ 空 context，不写微操指令"
+  },
+  "verification": [
+    "route == 'standard'",
+    "'knowledge-acquisition' in atom_chain",
+    "pipeline_trace.json 创建且含 session_id/mode/chain/atoms"
+  ]
+}

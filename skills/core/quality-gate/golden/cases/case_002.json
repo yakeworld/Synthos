@@ -1,0 +1,15 @@
+{
+  "case_id": "case_002",
+  "description": "L0.5 数据诚实门（凡数必源）",
+  "input": {
+    "data_claims": [
+      {"claim": "准确率 99.3%", "source_file": "results/experiment1.json"},
+      {"claim": "F1=0.92", "source_file": null}
+    ]
+  },
+  "expected": {
+    "unsupported_claims": ["F1=0.92"],
+    "each_claim_has_source": false
+  },
+  "weight": "critical"
+}

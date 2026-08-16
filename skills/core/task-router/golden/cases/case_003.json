@@ -1,0 +1,16 @@
+{
+  "case_id": "case_003",
+  "description": "批量任务拆分（>10 篇论文）",
+  "input": {
+    "query": "同时搜索VOR和BPPV两个方向的文献并分析矛盾",
+    "paper_count": 15,
+    "context": {"executed_atoms": []}
+  },
+  "expected": {
+    "route": "parallel",
+    "split_required": true,
+    "max_papers_per_agent": 10,
+    "subtasks": ["ACQ→EXT→ASC for VOR", "ACQ→EXT→ASC for BPPV"]
+  },
+  "weight": "high"
+}

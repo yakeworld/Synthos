@@ -1,0 +1,14 @@
+{
+  "case_id": "case_001",
+  "description": "标准文献搜索路由",
+  "input": {
+    "query": "搜索3D nystagmus文献",
+    "context": {"executed_atoms": []}
+  },
+  "expected": {
+    "route": "standard",
+    "atom_chain": ["knowledge-acquisition", "knowledge-extraction"],
+    "pipeline_trace_required": true
+  },
+  "weight": "critical"
+}

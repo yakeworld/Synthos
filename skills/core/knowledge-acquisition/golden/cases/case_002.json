@@ -1,0 +1,15 @@
+{
+  "case_id": "case_002",
+  "description": "doi-fetch 下载验证（Golden 正常路径）",
+  "input": {
+    "command": "doi-fetch 10.1167/iovs.1.1.1 -o paper.pdf",
+    "magic_bytes_check": "head -c 5 paper.pdf",
+    "title_check": "pdfinfo paper.pdf | grep Title"
+  },
+  "expected": {
+    "magic_5_bytes": "%PDF-",
+    "title_matches_doi": true,
+    "not_streaming": true
+  },
+  "weight": "critical"
+}

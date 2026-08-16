@@ -1,0 +1,14 @@
+{
+  "case_id": "case_002",
+  "description": "微操 context 反模式（应拒绝）",
+  "input": {
+    "query": "搜索BPPV文献",
+    "context": "先加载knowledge-acquisition技能，会redirect到literature，然后调literature.py成熟脚本，不要自己写API..."
+  },
+  "expected": {
+    "should_reject": true,
+    "reason": "Golden Error: delegate_task context 写微操指令 → 子 Agent 实测中断",
+    "correct_behavior": "context 应为空串，goal 传用户原话"
+  },
+  "weight": "critical"
+}

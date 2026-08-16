@@ -1,0 +1,12 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "unsupported_claims": ["F1=0.92"],
+    "note": "无源文件的声明标记为需删除或理论推算"
+  },
+  "verification": [
+    "每个有数字/实验结果的声明都有源文件路径",
+    "无源文件的声明被标记",
+    "输出含 unsupported_claims 列表"
+  ]
+}

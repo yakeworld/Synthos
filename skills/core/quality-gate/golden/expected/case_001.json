@@ -1,0 +1,11 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "aligned": true
+  },
+  "verification": [
+    "输出含 aligned 字段",
+    "aligned=false 时必须说明方向不一致原因",
+    "方向不对的交付物不进入技术检查"
+  ]
+}

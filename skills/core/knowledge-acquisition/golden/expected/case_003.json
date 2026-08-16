@@ -1,0 +1,11 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "note": "Golden Error 路径：误用 Java jabkit 挂起无输出（实测 261s）；魔数校验读 4 字节失败 → 该 DOI 标为下载失败，不得入库"
+  },
+  "verification": [
+    "误用 Java jabkit 时识别并切换 jabkit-rs",
+    "魔数校验必须读 5 字节（%PDF-）",
+    "失败 DOI 标为下载失败，不入库"
+  ]
+}

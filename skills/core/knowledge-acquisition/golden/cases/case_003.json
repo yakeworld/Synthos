@@ -1,0 +1,15 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径（Golden Error）",
+  "input": {
+    "wrong_tool": "jabkit（Java wrapper）",
+    "magic_read_bytes": 4
+  },
+  "expected": {
+    "java_jabkit_hangs": true,
+    "hang_timeout_seconds": 261,
+    "4_byte_magic_fails": true,
+    "failed_download_not_imported": true
+  },
+  "weight": "high"
+}

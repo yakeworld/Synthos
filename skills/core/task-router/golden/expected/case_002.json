@@ -1,0 +1,12 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "should_reject": true,
+    "note": "微操 context 是已知反模式（本会话实测：微操版 interrupted，信任版 5 篇 PDF 成功）"
+  },
+  "verification": [
+    "detect_micro_instructions(context) == true",
+    "context 应被清空或拒绝",
+    "不将微操指令传给子代理"
+  ]
+}

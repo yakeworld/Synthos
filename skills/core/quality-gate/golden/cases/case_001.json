@@ -1,0 +1,14 @@
+{
+  "case_id": "case_001",
+  "description": "L0 动灵方向检查",
+  "input": {
+    "growth_direction": "自进化循环",
+    "deliverable_direction": "技能质量提升",
+    "aligned_expected": true
+  },
+  "expected": {
+    "aligned": true,
+    "reason_required_if_misaligned": true
+  },
+  "weight": "critical"
+}

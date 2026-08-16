@@ -1,0 +1,17 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "d10a": 1.0,
+    "orphan_count": 0,
+    "zombie_count": 0,
+    "doi_coverage": 0.939,
+    "passed": true
+  },
+  "verification": [
+    "D10a ≥ 95%",
+    "孤儿引用 = 0",
+    "僵尸引用 = 0",
+    "DOI ≥ 90%",
+    "全部通过才记 passed=true"
+  ]
+}

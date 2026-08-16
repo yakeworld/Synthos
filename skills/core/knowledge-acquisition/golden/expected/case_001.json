@@ -1,0 +1,12 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "produces_bibtex": true,
+    "note": "工具契约见 tools/jabkit-rs.md；弃用 Java jabkit（实测 261s 无结果）"
+  },
+  "verification": [
+    "25s 内产出 BibTeX",
+    "未误用弃用 Java jabkit",
+    "输出格式为 BibTeX"
+  ]
+}

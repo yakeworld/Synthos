@@ -1,0 +1,14 @@
+{
+  "case_id": "case_001",
+  "description": "jabkit-rs 检索（Golden 正常路径）",
+  "input": {
+    "command": "jabkit-rs fetch --provider=SemanticScholar --query=\"iris recognition\" --porcelain",
+    "timeout_seconds": 25
+  },
+  "expected": {
+    "produces_bibtex": true,
+    "within_25s": true,
+    "uses_jabkit_rs_not_java": true
+  },
+  "weight": "critical"
+}

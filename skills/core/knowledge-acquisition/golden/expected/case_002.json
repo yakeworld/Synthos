@@ -1,0 +1,12 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "magic_5_bytes": "%PDF-",
+    "title_matches_doi": true
+  },
+  "verification": [
+    "head -c 5 等于 %PDF-（5 字节，不是 4）",
+    "pdfinfo 标题与 DOI 论文一致（防串流）",
+    "四层降级（bban→Sci-Hub→LibGen→Anna's）契约见 tools/doi-fetch.md"
+  ]
+}
