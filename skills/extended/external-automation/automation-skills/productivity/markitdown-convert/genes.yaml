@@ -1,0 +1,40 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: markitdown-convert
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: markitdown-convert
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: MARK-001
+  condition: 处理学术 PDF 管线
+  strategy: 必须将 PDF 转换为 Markdown 作为下载后的强制步骤，以确保全文文本可被可靠索引和质检
+  weight: 1.0
+- id: MARK-002
+  condition: 执行批量 PDF 转换
+  strategy: 优先使用 `markitdown` 工具，若失败或输出过短则自动回退至 `pdftotext`，并跳过已存在且大小有效的缓存文件
+  weight: 1.0
+- id: MARK-003
+  condition: 遇到无文本层或损坏的 PDF
+  strategy: 依次尝试寻找 arXiv/PMC 替代版本、手动补写摘要或启动 OCR 管线（如 marker-pdf），而非直接报错终止
+  weight: 1.0
+- id: MARK-004
+  condition: 在混合目录中识别主论文 PDF
+  strategy: 优先选择体积最大且排除引用/模板特征的 PDF，其次考虑最新修改时间或文件名匹配度
+  weight: 1.0
+- id: MARK-005
+  condition: 转换结果需用于 Obsidian 笔记系统
+  strategy: 检查生成的 Markdown 是否包含 YAML frontmatter，若缺失则自动注入 tags 和 aliases 字段
+  weight: 1.0
+- id: MARK-006
+  condition: 安装 MarkItDown 依赖
+  strategy: 必须使用 `uv tool install markitdown --with markitdown[pdf]` 命令，缺少 `[pdf]`
+    extra 会导致依赖缺失异常
+  weight: 1.0
+- id: MARK-007
+  condition: 处理扫描版或纯图像 PDF
+  strategy: 识别 MarkItDown 无 OCR 能力的限制，转而使用 Tesseract 或 marker-pdf 等专用 OCR 工具进行文本提取
+  weight: 1.0

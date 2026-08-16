@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: paper-literature-supplement
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: paper-literature-supplement
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: PAPE-001
+  condition: 当论文数量庞大（如80篇）且需补充文献时
+  strategy: 按主题聚类为5个方向，每方向仅执行1次检索并分发结果，避免逐篇检索导致的超时
+  weight: 1.0
+- id: PAPE-002
+  condition: 当解析论文引用列表时
+  strategy: 优先读取 `.bbl` 文件，若不存在则解析 `paper.tex` 中的内联 `\bibitem` 格式
+  weight: 1.0
+- id: PAPE-003
+  condition: 当获取到 Crossref 自动匹配的 DOI 时
+  strategy: 必须人工核对标题与年份以验证准确性，因自动匹配常返回无关论文
+  weight: 1.0
+- id: PAPE-004
+  condition: 当引用对应的 PDF 文件未通过 `%PDF-` 魔数验证时
+  strategy: 直接删除该引用，确保保留的有效引用数不低于 20 篇
+  weight: 1.0
+- id: PAPE-005
+  condition: 当执行文献检索任务时
+  strategy: 仅使用 `literature.py` 单一入口，禁止编写第二套检索逻辑或跨论文批量脚本
+  weight: 1.0
+- id: PAPE-006
+  condition: 当通过 MedData 获取无 DOI 论文的全文时
+  strategy: 必须使用搜索接口返回的真实 PMID，严禁使用 `pmid=1` 等占位符
+  weight: 1.0
+- id: PAPE-007
+  condition: 当通过 delegate_task 委派子 Agent 执行任务时
+  strategy: 仅传递 goal（用户原话），禁止添加 context 微操指令
+  weight: 1.0

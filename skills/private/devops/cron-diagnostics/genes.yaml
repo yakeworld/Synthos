@@ -1,0 +1,35 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: cron-diagnostics
+# 日期: 2026-08-17
+# 数量: 6
+
+skill: cron-diagnostics
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 6
+genes:
+- id: CRON-001
+  condition: 任务处于已暂停或错误状态
+  strategy: 优先执行删除操作以清理无效配额，而非尝试修复
+  weight: 1.0
+- id: CRON-002
+  condition: 多个任务功能重叠（如相同关键词分组）
+  strategy: 合并为单一任务以减少 API 消耗并消除冗余
+  weight: 1.0
+- id: CRON-003
+  condition: 批量 no_agent 任务同时超时
+  strategy: 立即检查 codex profile 完整性，修复环境后再执行批量操作
+  weight: 1.0
+- id: CRON-004
+  condition: 付费模型（DeepSeek）任务数量超过 4-6 个
+  strategy: 将低价值任务降级为免费模型或合并，以控制成本
+  weight: 1.0
+- id: CRON-005
+  condition: 任务配置为 no_agent 但指定了 model 或 deliver 为 local
+  strategy: 修正配置错误，确保非代理任务不依赖模型且结果正确投递
+  weight: 1.0
+- id: CRON-006
+  condition: 任务执行频率过高（间隔 < 1h）且非心跳类
+  strategy: 降低执行频率（扫描类 ≤4h，论文类 daily）以优化资源使用
+  weight: 1.0

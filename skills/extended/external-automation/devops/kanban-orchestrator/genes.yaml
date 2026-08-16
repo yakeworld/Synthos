@@ -1,0 +1,35 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: kanban-orchestrator
+# 日期: 2026-08-17
+# 数量: 6
+
+skill: kanban-orchestrator
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 6
+genes:
+- id: KANB-001
+  condition: 当任务涉及多专家协作、需持久化、需人工介入、可并行或需审计时
+  strategy: 创建 Kanban 任务而非直接执行或简单委托
+  weight: 1.0
+- id: KANB-002
+  condition: 当角色定位为编排者 (Orchestrator) 时
+  strategy: 严格遵循“只路由不执行”原则，禁止自行处理具体工作
+  weight: 1.0
+- id: KANB-003
+  condition: 当目标模糊或存在歧义时
+  strategy: 先向用户提出澄清问题，避免生成错误的任务舰队
+  weight: 1.0
+- id: KANB-004
+  condition: 在创建具体任务前
+  strategy: 先向用户展示任务依赖图 (Task Graph) 草案，获得确认后再执行创建
+  weight: 1.0
+- id: KANB-005
+  condition: 当子任务存在依赖关系时
+  strategy: 使用 `parents` 参数建立依赖链，利用自动晋升机制替代手动协调
+  weight: 1.0
+- id: KANB-006
+  condition: 当进行大规模架构重构时
+  strategy: 先定义唯一权威的目标状态文档，再以 3-4 个独立子任务为批次并行启动
+  weight: 1.0

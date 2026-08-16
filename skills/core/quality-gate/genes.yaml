@@ -1,0 +1,31 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: quality-gate
+# 日期: 2026-08-17
+# 数量: 5
+
+skill: quality-gate
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 5
+genes:
+- id: QG-001
+  condition: '质量检查 → 四层: L0动灵→L0.5数据诚实→G1-G7管线'
+  strategy: L4内容。固定流程零自由发挥
+  weight: 1.0
+- id: QG-002
+  condition: 一票否决 → L0.5 数据诚实 + G4 宪法合规 = 一票否决。余门全过此门失
+  strategy: 整体不通过
+  weight: 1.0
+- id: QG-003
+  condition: 修复循环 → 不达标→P0→P1→P2 逐档修复。连续三次未过
+  strategy: 人工介入。门不松标准不让
+  weight: 1.0
+- id: QG-004
+  condition: 实测为准
+  strategy: 凡检必跑，不假手记。state.json 自报不可信。runner 实测是唯一真理
+  weight: 1.0
+- id: QG-005
+  condition: 通过标准
+  strategy: overall≥0.85 且 0 undefined citation 且 D8≥80% 且 D10a≥90%
+  weight: 1.0

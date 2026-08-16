@@ -1,0 +1,35 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: paperjury
+# 日期: 2026-08-17
+# 数量: 6
+
+skill: paperjury
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 6
+genes:
+- id: PAPE-001
+  condition: 论文包含实验指标
+  strategy: 必须运行独立代码复现并归档 JSON/CSV，仅信任独立运行输出而非文档数值
+  weight: 1.0
+- id: PAPE-002
+  condition: 指标无对应代码脚本或输出
+  strategy: 直接标记为 FABRICATED，禁止标注 CLOSE 或放行
+  weight: 1.0
+- id: PAPE-003
+  condition: 执行多轮审查时
+  strategy: 每个 reviewer 必须独立阅读原文，严禁跨轮次共享笔记或结论以防评分污染
+  weight: 1.0
+- id: PAPE-004
+  condition: 遇到需新实验才能验证的问题
+  strategy: 标记为 OPEN 并移交作者，禁止自行补数据或声称已验证
+  weight: 1.0
+- id: PAPE-005
+  condition: 审查流程启动时 → 遵循“结构检查(L1-L2) → 语义审查 → 修复 → 深度庭审(auto loop)
+  strategy: 合规检查(L5-L7)”的典型流水线
+  weight: 1.0
+- id: PAPE-006
+  condition: 单轮庭审或累计多轮审查
+  strategy: 严格控制在 10k/50k tokens 预算内，超限自动终止并输出未决问题清单
+  weight: 1.0

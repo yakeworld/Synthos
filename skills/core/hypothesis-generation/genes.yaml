@@ -1,0 +1,31 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: hypothesis-generation
+# 日期: 2026-08-17
+# 数量: 5
+
+skill: hypothesis-generation
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 5
+genes:
+- id: HG-001
+  condition: '生成假说 → 每假说必含: 预测+检验方法+反证路径。不可证伪'
+  strategy: 立即丢弃
+  weight: 1.0
+- id: HG-002
+  condition: 假说评分 → 创新(0-1)×可行(0-1)×重要(0-1)。基于文献不凭直觉。高创新低可行
+  strategy: feasibility_warning
+  weight: 1.0
+- id: HG-003
+  condition: 避免重复
+  strategy: 检查 prior_hypotheses，已有不再生成
+  weight: 1.0
+- id: HG-004
+  condition: 证据矩阵
+  strategy: 支持+反对都列，每条标 source+role+confidence(1-5星)。只列支持=确认偏误
+  weight: 1.0
+- id: HG-005
+  condition: 输出排序
+  strategy: 按综合评分排序，Top-3 标 recommended
+  weight: 1.0

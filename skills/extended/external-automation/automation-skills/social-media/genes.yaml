@@ -1,0 +1,35 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: social-media
+# 日期: 2026-08-17
+# 数量: 6
+
+skill: social-media
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 6
+genes:
+- id: SOCI-001
+  condition: 当需要执行社交媒体操作时
+  strategy: 通过 Hermes 机制自动发现并加载对应的子技能（如 xurl 或 xhs-content），而非直接操作父级目录
+  weight: 1.0
+- id: SOCI-002
+  condition: 当处理小红书（XHS）内容发布时
+  strategy: 由于缺乏官方 API，采用手动复制粘贴或浏览器自动化作为发布通道，并生成包含正文、标签及排版建议的内容包
+  weight: 1.0
+- id: SOCI-003
+  condition: 当执行任何技能操作前
+  strategy: 必须校验输入参数、文件及路径的完整性与有效性，确保符合 IO 契约规范
+  weight: 1.0
+- id: SOCI-004
+  condition: 当技能执行失败或遇到异常时
+  strategy: 错误信息必须包含具体的上下文背景及明确的恢复指引，以便快速定位问题
+  weight: 1.0
+- id: SOCI-005
+  condition: 当进行输出验证时
+  strategy: 确保返回值的结构、编码及命名保持一致，并覆盖空输入、极大值及异常场景的边界验证
+  weight: 1.0
+- id: SOCI-006
+  condition: 当涉及代码执行或状态暴露时
+  strategy: 严格遵循安全约束，拒绝执行未验证的任意代码，且不暴露内部系统状态
+  weight: 1.0

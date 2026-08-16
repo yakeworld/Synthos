@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: p5js
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: p5js
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: PJS-001
+  condition: 输出初帧缺乏视觉冲击力或呈现默认配置
+  strategy: 必须在前几帧实现视觉震撼，确保所有元素服从统一的视觉语言与审美一致性
+  weight: 1.0
+- id: PJS-002
+  condition: 用户请求基础功能但作品显得平庸
+  strategy: 主动添加一个用户未要求但能提升作品质量的视觉细节或交互机制
+  weight: 1.0
+- id: PJS-003
+  condition: 画面呈现平面化或背景单调
+  strategy: 构建构图层级与微观细节，使用纹理/渐变/分层背景替代纯色，确保每一帧奖励细看
+  weight: 1.0
+- id: PJS-004
+  condition: 参数设计仅改变外观而非算法逻辑
+  strategy: 参数应源于算法本身（如改变噪声八度或力场），而非仅调整几何尺寸（如粒子半径）
+  weight: 1.0
+- id: PJS-005
+  condition: 编码前缺乏明确创作方向
+  strategy: 先定义情绪、色彩世界、形状语言、运动词汇及独特之处，再进入技术设计与编码阶段
+  weight: 1.0
+- id: PJS-006
+  condition: 处理海量粒子或高性能渲染需求
+  strategy: 禁用帧事件系统、使用 Math.* 替代 p5 封装、采用 beginShape() 批量绘制或 pixelBuffer 直接写入以优化性能
+  weight: 1.0
+- id: PJS-007
+  condition: 需要无头渲染或生产环境集成
+  strategy: 使用 noLoop() 配合外部脚本控制帧前进，并采用实例模式避免全局变量污染
+  weight: 1.0

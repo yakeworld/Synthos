@@ -116,17 +116,19 @@ python3 quality-gate-runner.py \
 
 
 
-### Gene 验证 (G8 门)
+### Gene 验证 (G8 门) — v5.1 核心门
 
-> **验基因，不验长文。** Gene 是策略的紧凑表示，验证 Gene 即验证策略。
+> **验基因，不验长文。** Gene 是独立进化单位 (宪法 P7)，验证 Gene 即验证策略。
+> 存储: `skills/{name}/genes.yaml` (独立 YAML，非 SKILL.md 内小节)
 
-- **G8a**: Gene 覆盖率 — 有 Genes 小节的技能占比 (目标: 核心原子 100%)
-- **G8b**: Gene 一致性 — Gene 策略与完整文档不矛盾
-- **G8c**: Gene 独立性 — 每条 Gene 可独立理解，不依赖完整文档上下文
+- **G8a**: genes.yaml 存在性 — 每技能必须有 genes.yaml (目标: 157/157 = 100%)
+- **G8b**: Gene 一致性 — genes.yaml 策略与 SKILL.md 完整文档不矛盾
+- **G8c**: Gene 可进化性 — 每条 Gene 可独立变异 + 独立验证 (P1 可复现性)
 - **G8d**: Gene 数量 — 每技能 4-8 条 (太少=覆盖不足，太多=失去压缩)
+- **G8e**: 表观遗传激活 — pipeline_trace 记录 gene_activation (activated/suppressed)
 
-Gene 验证在 G1-G7 之后执行，作为 G8 门。G8 不通过不影响整体评分 (权重 0.05)，
-但连续 3 轮 G8 不通过触发 OPTIMIZE 维度的 Gene 蒸馏任务。
+G8 是核心门 (v5.1)，权重 0.10。G8 不通过 → 整体不通过 (一票否决)。
+连续 2 轮 G8 不通过 → 触发 OPTIMIZE 维度的 Gene 修复任务。
 
 ## Genes (策略基因)
 

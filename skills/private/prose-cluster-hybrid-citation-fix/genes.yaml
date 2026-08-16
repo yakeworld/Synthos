@@ -1,0 +1,35 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: prose-cluster-hybrid-citation-fix
+# 日期: 2026-08-17
+# 数量: 6
+
+skill: prose-cluster-hybrid-citation-fix
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 6
+genes:
+- id: PROS-001
+  condition: 当存在未引用的参考文献 (bibitems) 时
+  strategy: 建立“引用键-主题-章节-文本锚点”映射表以定位插入位置
+  weight: 1.0
+- id: PROS-002
+  condition: 当多个参考文献属于同一主题或方法簇时
+  strategy: 在单一文本锚点处合并插入多个 `\cite` 键以减少冗余
+  weight: 1.0
+- id: PROS-003
+  condition: 当需要在密集散文段落中插入引用时
+  strategy: 使用精确的短语匹配 (anchor) 进行字符串替换以保留上下文完整性
+  weight: 1.0
+- id: PROS-004
+  condition: 当引用涉及方法论框架时
+  strategy: 在对应的 `\subsection` 标题后插入解释性句子并附带引用以增强逻辑连贯性
+  weight: 1.0
+- id: PROS-005
+  condition: 当执行批量引用修复后
+  strategy: 运行脚本验证 `\cite` 键与 `\bibitem` 键的集合交集以检测孤儿引用
+  weight: 1.0
+- id: PROS-006
+  condition: 当验证引用完整性时
+  strategy: 执行双次 `pdflatex` 编译并检查日志中无 "undefined" 错误以确保交叉引用解析正确
+  weight: 1.0

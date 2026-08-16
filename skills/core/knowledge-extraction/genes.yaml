@@ -1,0 +1,31 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: knowledge-extraction
+# 日期: 2026-08-17
+# 数量: 5
+
+skill: knowledge-extraction
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 5
+genes:
+- id: KE-001
+  condition: 提取论文知识
+  strategy: '四域拆解: 实体(谁/什么)+关系(如何关联)+主张(说了什么)+证据(凭什么)。凡文必拆，四域为纲'
+  weight: 1.0
+- id: KE-002
+  condition: 知识项来源标注
+  strategy: 每项知识必须有原文句子+section/figure/table标注。无源不录，无据不传
+  weight: 1.0
+- id: KE-003
+  condition: 置信度分级
+  strategy: stated/suggested/speculated 三级。作者推测不得当作文献事实。主客分离
+  weight: 1.0
+- id: KE-004
+  condition: 原子边界 → 只做单篇提取。跨论文比较→ASC，假说→HYP，论证
+  strategy: ARG。越界即失原子边界
+  weight: 1.0
+- id: KE-005
+  condition: 两模式选择
+  strategy: standard=知识消费(4域JSON); pwbench=逆向工程(Idea+实验日志)。不可混淆
+  weight: 1.0

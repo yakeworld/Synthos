@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: autonomous-ai-agents
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: autonomous-ai-agents
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: AUTO-001
+  condition: 当需要执行复杂自动化任务时
+  strategy: 采用多Agent协作模式，通过委托任务实现分工与并行处理
+  weight: 1.0
+- id: AUTO-002
+  condition: 当涉及多个智能体交互时
+  strategy: 建立跨Agent通信机制，确保信息在子技能间有效流转
+  weight: 1.0
+- id: AUTO-003
+  condition: 当调用子技能时
+  strategy: 利用Hermes技能加载机制自动发现并直接调用子技能名称，无需显式配置
+  weight: 1.0
+- id: AUTO-004
+  condition: 当执行核心操作前
+  strategy: 严格校验输入参数的类型、范围及格式，确保符合IO契约规范
+  weight: 1.0
+- id: AUTO-005
+  condition: 当处理异常或失败场景时
+  strategy: 提供包含上下文和恢复建议的明确错误信息，并执行隔离或拒绝操作
+  weight: 1.0
+- id: AUTO-006
+  condition: 当验证技能执行结果时
+  strategy: 基于Golden集合（标准输入/预期输出/预期错误）进行单一真理来源的精确匹配或格式校验
+  weight: 1.0
+- id: AUTO-007
+  condition: 当执行安全敏感操作时
+  strategy: 拒绝执行未验证的任意代码，并严格保护内部状态不对外暴露
+  weight: 1.0

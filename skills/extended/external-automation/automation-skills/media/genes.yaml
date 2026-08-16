@@ -1,0 +1,35 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: media
+# 日期: 2026-08-17
+# 数量: 6
+
+skill: media
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 6
+genes:
+- id: MEDI-001
+  condition: 用户请求涉及媒体内容（GIF/音乐/音谱/Spotify）
+  strategy: 识别为父级技能，通过 Hermes 机制自动发现并路由至对应子技能
+  weight: 1.0
+- id: MEDI-002
+  condition: 执行核心操作前
+  strategy: 必须确认输入参数（request/context）完整且符合 IO_CONTRACT 规范
+  weight: 1.0
+- id: MEDI-003
+  condition: 处理输入数据时
+  strategy: 严格校验参数类型、范围及格式，拒绝未验证的任意代码执行
+  weight: 1.0
+- id: MEDI-004
+  condition: 生成输出结果时
+  strategy: 确保返回值结构、编码及命名与契约一致，并验证内容符合预期
+  weight: 1.0
+- id: MEDI-005
+  condition: 遇到空输入、极大值或异常场景
+  strategy: 执行边界验证，确保系统具备明确的错误信息和恢复指引
+  weight: 1.0
+- id: MEDI-006
+  condition: 技能执行过程中
+  strategy: 遵循“可执行、可记录、可复现”原则，对中间步骤和最终结果进行全链路验证
+  weight: 1.0

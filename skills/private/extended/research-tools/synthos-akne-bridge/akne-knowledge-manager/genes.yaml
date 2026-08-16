@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: akne-knowledge-manager
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: akne-knowledge-manager
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: AKNE-001
+  condition: 输出包含事实性陈述
+  strategy: 必须经过事实核查，严禁编造数据
+  weight: 1.0
+- id: AKNE-002
+  condition: 得出任何结论
+  strategy: 必须确保其可追溯到具体的证据或数据源
+  weight: 1.0
+- id: AKNE-003
+  condition: 执行操作步骤
+  strategy: 必须保证过程可重复且结果可验证
+  weight: 1.0
+- id: AKNE-004
+  condition: 面对多重原则冲突
+  strategy: 严格遵循“准确 > 证据 > 可复现”的优先级顺序
+  weight: 1.0
+- id: AKNE-005
+  condition: 进行系统改进或变更
+  strategy: 必须通过 Golden 集合（输入/输出/错误）的测试验证
+  weight: 1.0
+- id: AKNE-006
+  condition: 执行验证流程
+  strategy: 确保每项验证可执行、可记录、可复现，失败时记录原因及修复方案
+  weight: 1.0
+- id: AKNE-007
+  condition: 处理边界情况（空输入/极大值/异常）
+  strategy: 必须包含明确的错误信息和恢复指引
+  weight: 1.0

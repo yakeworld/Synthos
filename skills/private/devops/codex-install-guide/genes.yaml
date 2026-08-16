@@ -1,0 +1,35 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: codex-install-guide
+# 日期: 2026-08-17
+# 数量: 6
+
+skill: codex-install-guide
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 6
+genes:
+- id: CODE-001
+  condition: 安装 Codex CLI 时
+  strategy: 必须使用官方包 `@openai/codex`，严禁使用已移除的旧包名 `@openai/codexec`
+  weight: 1.0
+- id: CODE-002
+  condition: 遇到第三方打包器（如 `@codexapi/codexclaude`）时
+  strategy: 拒绝安装，防止其覆盖 vLLM 配置或修改指向付费端点
+  weight: 1.0
+- id: CODE-003
+  condition: 需要与 `opencode` 共存时
+  strategy: 利用二进制名及配置路径（`~/.codex` vs `~/.local/share/opencode`）的天然隔离实现互不干扰
+  weight: 1.0
+- id: CODE-004
+  condition: 安装完成后
+  strategy: 执行 `which codex` 和 `codex --version` 以验证二进制路径有效且版本无报错
+  weight: 1.0
+- id: CODE-005
+  condition: 配置多节点 Profile 时
+  strategy: 确保 `~/.codex/profiles/` 下存在所有 cron 脚本引用的 profile 文件，避免批量超时
+  weight: 1.0
+- id: CODE-006
+  condition: 调试 `codex exec` 超时问题时
+  strategy: 优先检查对应 profile 文件是否存在，因为缺失 profile 会导致无具体错误信息的静默超时
+  weight: 1.0

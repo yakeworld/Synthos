@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: synthos-akne-bridge
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: synthos-akne-bridge
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: SYNT-001
+  condition: 执行桥接修复前
+  strategy: 必须运行 `akne-query.sh bridge` 诊断连接状态，确立“先诊后治”且以孤立节点归零为最终目标
+  weight: 1.0
+- id: SYNT-002
+  condition: 构建知识图谱边时
+  strategy: 必须显式创建 `source_category` 等逆向边，确保知识流双向可达，避免单向依赖
+  weight: 1.0
+- id: SYNT-003
+  condition: 执行语义检索与数据注入时
+  strategy: 必须同步推进 source 节点、content_summary 摘要、vectors.db 向量三条线，任一线断裂即导致检索残缺
+  weight: 1.0
+- id: SYNT-004
+  condition: 调用 Python 环境时
+  strategy: 严格隔离边界，逻辑处理走 venv 3.11，AKNE 查询走系统 3.12，禁止跨环境 import
+  weight: 1.0
+- id: SYNT-005
+  condition: 处理 Synthos 论文目录时
+  strategy: 必须规范化为 `01-manuscript`/`06-references`/`07-quality` 子目录结构，以便后续图谱映射
+  weight: 1.0
+- id: SYNT-006
+  condition: 连接孤立论文或技能时
+  strategy: 依据领域关键词（如 BPPV、眼动、科研）手动映射至对应的 AKNE 分类及 Wiki 概念节点
+  weight: 1.0
+- id: SYNT-007
+  condition: 注入源节点元数据时
+  strategy: 提取前 3KB 内容生成 `content_summary`、`content_hash` 及标题层级，以支持图内内容语义搜索
+  weight: 1.0

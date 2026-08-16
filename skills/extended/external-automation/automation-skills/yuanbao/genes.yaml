@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: yuanbao
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: yuanbao
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: YUAN-001
+  condition: 回复文本即消息
+  strategy: 直接输出目标内容，无需调用发送工具或添加权限免责声明
+  weight: 1.0
+- id: YUAN-002
+  condition: 需要艾特用户
+  strategy: 先调用 `yb_query_group_members` 获取精确昵称，再在回复中插入 `@nickname`
+  weight: 1.0
+- id: YUAN-003
+  condition: 需要发送私信
+  strategy: 使用 `yb_send_dm` 工具并传入 `group_code` 和目标用户信息，禁止使用通用发送工具
+  weight: 1.0
+- id: YUAN-004
+  condition: 获取群组标识
+  strategy: 从 `chat_id` 中提取 `group_code`（如 `group:123` 提取为 `123`）
+  weight: 1.0
+- id: YUAN-005
+  condition: 用户名称匹配不唯一
+  strategy: 返回候选列表并要求用户澄清，禁止猜测或随机选择
+  weight: 1.0
+- id: YUAN-006
+  condition: 执行核心操作前
+  strategy: 确认输入参数完整且有效，确保符合 IO 契约规范
+  weight: 1.0
+- id: YUAN-007
+  condition: 操作完成后
+  strategy: 验证输出格式与内容符合预期，并保存结果进行报告
+  weight: 1.0

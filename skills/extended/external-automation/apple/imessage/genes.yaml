@@ -1,0 +1,35 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: imessage
+# 日期: 2026-08-17
+# 数量: 6
+
+skill: imessage
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 6
+genes:
+- id: IMES-001
+  condition: 发送消息前
+  strategy: 必须向用户确认收件人身份及消息内容
+  weight: 1.0
+- id: IMES-002
+  condition: 目标号码未知或未经明确批准
+  strategy: 禁止发送消息
+  weight: 1.0
+- id: IMES-003
+  condition: 执行批量或大规模群发操作
+  strategy: 必须先获得用户明确确认
+  weight: 1.0
+- id: IMES-004
+  condition: 发送包含附件的消息
+  strategy: 需预先验证文件路径存在且有效
+  weight: 1.0
+- id: IMES-005
+  condition: 需要区分消息通道（iMessage/SMS）
+  strategy: 使用 `--service` 参数显式指定服务类型
+  weight: 1.0
+- id: IMES-006
+  condition: 处理非 Apple 生态消息（如 Telegram/WhatsApp）
+  strategy: 拒绝使用 imsg 并引导至对应网关
+  weight: 1.0

@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: xhs-content
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: xhs-content
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: XHS-001
+  condition: 撰写正文时
+  strategy: 严格执行“讲多即错”原则，删除所有叙事性评论与互动收尾，确保字数不超过目标字数的 1/3
+  weight: 1.0
+- id: XHS-002
+  condition: 生成事实性内容时
+  strategy: 必须基于真实代码或数据源（先读源文件再写），禁止凭记忆或推测生成知识点
+  weight: 1.0
+- id: XHS-003
+  condition: 设计配图时
+  strategy: '遵循 1080×1440 (3:4) 规格，使用 #0F172A 底色与 Noto Sans CJK SC 字体，每图仅展示一个知识点且文字≤10词'
+  weight: 1.0
+- id: XHS-004
+  condition: 展示代码内容时
+  strategy: 因平台不支持代码高亮，一律使用截图展示，禁止直接粘贴代码块
+  weight: 1.0
+- id: XHS-005
+  condition: 选择配图方式时
+  strategy: 信息对比/步骤说明采用 Pillow 卡片式生成，真实网站/数据源展示采用浏览器截图，两者可混搭
+  weight: 1.0
+- id: XHS-006
+  condition: 评估发布通道时
+  strategy: 对医疗/敏感领域内容需评估账号权限与合规性，不确定通道标注 UNVERIFIED 并禁止发布
+  weight: 1.0
+- id: XHS-007
+  condition: 处理字体渲染时
+  strategy: 优先加载 Noto Sans CJK SC 字体，若不存在则回退至 `load_default()` 以避免方块/乱码
+  weight: 1.0

@@ -1,0 +1,31 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: viewpoint-verification
+# 日期: 2026-08-17
+# 数量: 5
+
+skill: viewpoint-verification
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 5
+genes:
+- id: VP-001
+  condition: 验证任何假设
+  strategy: 先找≥3条反例/替代解释，再谈支持。确认偏误是最大敌人
+  weight: 1.0
+- id: VP-002
+  condition: '可证伪性检验 → 三问: 什么证据推翻? 反例可测吗? 现有数据支持还是反对? 不可证伪'
+  strategy: speculative
+  weight: 1.0
+- id: VP-003
+  condition: Bayesian 更新 → 先验→证据
+  strategy: 后验。LR 分级(强/中/弱)，不凭感觉
+  weight: 1.0
+- id: VP-004
+  condition: 鲁棒性测试 → 排除某研究后置信度变化>20%
+  strategy: fragile
+  weight: 1.0
+- id: VP-005
+  condition: 最终判定
+  strategy: '五档: 强支持/支持/存疑/反对/强反对。模糊即不达标'
+  weight: 1.0

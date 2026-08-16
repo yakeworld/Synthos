@@ -1,0 +1,36 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: healthcare-dataset-discovery
+# 日期: 2026-08-17
+# 数量: 6
+
+skill: healthcare-dataset-discovery
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 6
+genes:
+- id: HEAL-001
+  condition: 当需要获取 OpenML 数据集列表时
+  strategy: 使用 `/api/v1/json/data/list` 端点获取全量数据并在本地过滤，避免使用 `limit/500` 等可能导致空结果的参数
+  weight: 1.0
+- id: HEAL-002
+  condition: 当解析 OpenML API 响应时
+  strategy: '区分列表接口（`{"data": {"dataset": [...]}}`）与详情接口（`{"data_set_description":
+    {...}}`）的不同 JSON 结构'
+  weight: 1.0
+- id: HEAL-003
+  condition: 当搜索 UCI Archive 中的经典医疗数据集时
+  strategy: 预期大量数据集已移除或返回 404，需优先验证 GitHub 镜像或 HuggingFace 的可用性
+  weight: 1.0
+- id: HEAL-004
+  condition: 当调用 Crossref 或 PubMed API 进行文献/数据检索时
+  strategy: 使用 `+` 符号或 `quote_plus()` 处理空格，而非标准 URL 编码，以确保查询参数正确解析
+  weight: 1.0
+- id: HEAL-005
+  condition: 当评估数据集来源的可靠性时
+  strategy: 优先选择 OpenML 等提供稳定 API 和明确元数据（如 DID、特征数）的来源，规避需要认证或存在付费墙的平台（如 Kaggle）
+  weight: 1.0
+- id: HEAL-006
+  condition: 当执行数据集发现任务时
+  strategy: 首先确认输入参数完整性，并在执行核心操作前验证目标源点的可达性（如检查已知死链）
+  weight: 1.0

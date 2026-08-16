@@ -1,0 +1,35 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: findmy
+# 日期: 2026-08-17
+# 数量: 6
+
+skill: findmy
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 6
+genes:
+- id: FIND-001
+  condition: 当需要获取 FindMy 设备位置且无 CLI/API 可用时
+  strategy: 使用 AppleScript 激活应用并结合屏幕截图与视觉分析 (vision_analyze) 提取数据
+  weight: 1.0
+- id: FIND-002
+  condition: 当需要更可靠的 UI 交互或元素定位时
+  strategy: 优先使用 `peekaboo` 工具进行标注、点击和截图，而非纯 AppleScript
+  weight: 1.0
+- id: FIND-003
+  condition: 当追踪 AirTag 实时位置时
+  strategy: 必须保持 FindMy 应用处于前台激活状态，因为最小化或后台运行会停止位置更新
+  weight: 1.0
+- id: FIND-004
+  condition: 当需要长期监控物品移动轨迹（如宠物巡逻路线）时
+  strategy: 建立周期性循环（如每 5 分钟）捕获屏幕并记录坐标，以编译完整路径
+  weight: 1.0
+- id: FIND-005
+  condition: 当解析截图中的位置信息时
+  strategy: 始终使用 `vision_analyze` 读取文本内容，禁止尝试直接解析像素数据
+  weight: 1.0
+- id: FIND-006
+  condition: 当执行屏幕捕获操作前
+  strategy: 必须确认终端已授予“屏幕录制”权限，否则截图将失败或为黑屏
+  weight: 1.0

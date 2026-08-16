@@ -1,0 +1,35 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: songsee
+# 日期: 2026-08-17
+# 数量: 6
+
+skill: songsee
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 6
+genes:
+- id: SONG-001
+  condition: 需要对比音频特征或调试合成时
+  strategy: 使用 `--viz` 指定多种可视化类型（如 spectrogram, mel, chroma）以生成多面板网格图
+  weight: 1.0
+- id: SONG-002
+  condition: 仅需分析音频特定片段时
+  strategy: 使用 `--start` 和 `--duration` 参数截取时间切片进行局部可视化
+  weight: 1.0
+- id: SONG-003
+  condition: 处理 WAV/MP3 以外的音频格式时
+  strategy: 确保系统已安装 `ffmpeg` 以支持原生解码之外的格式转换
+  weight: 1.0
+- id: SONG-004
+  condition: 需要自动化分析音频内容时
+  strategy: 将生成的可视化图像作为输入传递给 `vision_analyze` 进行视觉特征提取
+  weight: 1.0
+- id: SONG-005
+  condition: 需要调整频谱显示细节时
+  strategy: 通过 `--window`、`--hop` 及 `--min-freq`/`--max-freq` 参数精细控制 FFT 窗口与频率范围
+  weight: 1.0
+- id: SONG-006
+  condition: 需要标准化输出图像外观时
+  strategy: 使用 `--style` 选择特定色板（如 magma, viridis）并指定 `--width`/`--height` 统一尺寸
+  weight: 1.0

@@ -1,0 +1,31 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: workstation-onboarding
+# 日期: 2026-08-17
+# 数量: 5
+
+skill: workstation-onboarding
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 5
+genes:
+- id: WORK-001
+  condition: SSH 连通性验证未通过
+  strategy: 拒绝搭建任何环境文件，严格执行“道不通，则礼不行”的硬前置约束
+  weight: 1.0
+- id: WORK-002
+  condition: 配置 codex 运行环境
+  strategy: 将所有环境变量与默认参数收敛至 `~/codex-vllm.sh` 单一脚本，实现一键启动且不分散配置
+  weight: 1.0
+- id: WORK-003
+  condition: 学生首次登录引导
+  strategy: 必须同时提供 `START_HERE.md`（入门步骤）与 `*培养方案.md`（研究方向/里程碑），确保入门与进路缺一不可
+  weight: 1.0
+- id: WORK-004
+  condition: 环境验收确认
+  strategy: 必须生成 `WORK_CHECK_REPORT.md` 作为书面凭据，禁止仅凭口头声称环境就绪
+  weight: 1.0
+- id: WORK-005
+  condition: 分发 Windows 软件
+  strategy: 必须使用零依赖的绿色便携软件，严禁要求学生安装任何运行库或依赖项
+  weight: 1.0

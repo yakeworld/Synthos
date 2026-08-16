@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: codex-cli
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: codex-cli
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: CODE-001
+  condition: 协议未选定
+  strategy: 先行确定 OpenAI Responses / Anthropic Messages / Chat Completions 之一，再调度代理
+  weight: 1.0
+- id: CODE-002
+  condition: 输入参数/文件/路径不完整或无效
+  strategy: 拒绝启动 codex CLI，直至输入验证通过
+  weight: 1.0
+- id: CODE-003
+  condition: 五项验证（输入/过程/输出/边界/错误）未齐备
+  strategy: 禁止交付代码修改结果
+  weight: 1.0
+- id: CODE-004
+  condition: 代码未经过验证
+  strategy: 严禁执行任意代码，防止暴露内部状态
+  weight: 1.0
+- id: CODE-005
+  condition: 发生执行失败
+  strategy: 错误信息必须包含上下文和明确的恢复指引
+  weight: 1.0
+- id: CODE-006
+  condition: 进行功能改进或变更
+  strategy: 必须通过 Golden 集合（Input/Output/Error）测试作为单一真理来源
+  weight: 1.0
+- id: CODE-007
+  condition: 验证过程执行
+  strategy: 确保每项验证可执行、可记录、可复现，失败时记录原因和修复
+  weight: 1.0

@@ -1,0 +1,35 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: sketch
+# 日期: 2026-08-17
+# 数量: 6
+
+skill: sketch
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 6
+genes:
+- id: SKET-001
+  condition: 用户意图为探索设计方向而非生产代码
+  strategy: 生成 2-3 个独立的交互式 HTML 变体供对比，严禁生成单一方案或可交付的生产级代码
+  weight: 1.0
+- id: SKET-002
+  condition: 开始设计前需明确设计基调
+  strategy: 依次询问“感觉（Feel）”、“参考对象（References）”和“核心动作（Core Action）”，若用户已提供则跳过
+  weight: 1.0
+- id: SKET-003
+  condition: 生成多个设计变体时
+  strategy: 必须基于不同的设计立场（如密度、强调点、美学风格）进行差异化，禁止仅通过改变颜色或像素值来区分变体
+  weight: 1.0
+- id: SKET-004
+  condition: 构建 HTML 原型时
+  strategy: 使用内联样式和 CDN 资源确保单文件自包含，填充真实模拟内容并实现至少一个可见的状态交互（如点击、悬停、切换）
+  weight: 1.0
+- id: SKET-005
+  condition: 展示变体给用户之前
+  strategy: 必须使用浏览器工具加载页面并进行视觉验证，修复布局错误或渲染问题后再交付
+  weight: 1.0
+- id: SKET-006
+  condition: 呈现最终对比结果时
+  strategy: 采用表格形式多维度对比各变体，并给出明确的主观推荐意见（Opinionate），指出各方案的优劣及适用场景
+  weight: 1.0

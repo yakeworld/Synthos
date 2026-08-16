@@ -1,0 +1,43 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: jupyter-live-kernel
+# 日期: 2026-08-17
+# 数量: 8
+
+skill: jupyter-live-kernel
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 8
+genes:
+- id: JUPY-001
+  condition: 需要跨步骤保持变量状态或进行迭代探索
+  strategy: 使用 Jupyter Live Kernel 替代无状态的 execute_code
+  weight: 1.0
+- id: JUPY-002
+  condition: 执行任何脚本命令以获取输出
+  strategy: 始终添加 --compact 标志以节省 token 并简化 JSON 结构
+  weight: 1.0
+- id: JUPY-003
+  condition: 服务器启动后首次执行代码或内核重启后
+  strategy: 预期可能超时，直接重试一次而非立即报错
+  weight: 1.0
+- id: JUPY-004
+  condition: 需要安装额外的 Python 包
+  strategy: 必须安装到 JupyterLab 的工具环境中，而非系统全局环境
+  weight: 1.0
+- id: JUPY-005
+  condition: 仅用于纯 REPL 交互且无需保存笔记结构
+  strategy: 创建 scratch.ipynb 并仅使用 execute 命令，跳过单元格编辑
+  weight: 1.0
+- id: JUPY-006
+  condition: 执行包含子命令的脚本参数
+  strategy: 确保 --path 等全局标志位于子子命令之前（如 variables --path nb.ipynb list）
+  weight: 1.0
+- id: JUPY-007
+  condition: 遇到执行错误
+  strategy: 解析返回 JSON 中的 ename 和 evalue 字段以定位具体异常原因
+  weight: 1.0
+- id: JUPY-008
+  condition: 执行长耗时计算或初始设置
+  strategy: 显式传递 --timeout 参数（如 60 或 120 秒）以覆盖默认的 30 秒限制
+  weight: 1.0

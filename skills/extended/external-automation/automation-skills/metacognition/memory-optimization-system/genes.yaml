@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: memory-optimization-system
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: memory-optimization-system
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: MEMO-001
+  condition: 工具输出超过 10KB 或 50 行
+  strategy: 自动保存原文至 context_refs 并替换为 Mermaid 摘要以卸载上下文
+  weight: 1.0
+- id: MEMO-002
+  condition: 记忆条目从未访问且年龄超过 14 天
+  strategy: 标记为可移除以释放记忆空间
+  weight: 1.0
+- id: MEMO-003
+  condition: 记忆空间使用率超过 85%
+  strategy: 触发主动清理机制，若超过 95% 则强制压缩至 70% 以下
+  weight: 1.0
+- id: MEMO-004
+  condition: 记忆条目包含明确实体且跨会话有效
+  strategy: 提升至 fact_store 以优化记忆分层存储
+  weight: 1.0
+- id: MEMO-005
+  condition: Memory 与 Fact Store 内容相似度超过 80%
+  strategy: 以 Fact Store 版本为准并压缩 Memory 中的冗余条目
+  weight: 1.0
+- id: MEMO-006
+  condition: 执行记忆删除或替换操作时
+  strategy: 仅使用短且唯一的 ASCII 前缀作为匹配键以避免隐藏 Unicode 字符导致静默失败
+  weight: 1.0
+- id: MEMO-007
+  condition: 复杂任务（5+ 工具调用）结束后
+  strategy: 执行记忆管理检查清单以确认空间、偏好保存及过期条目清理
+  weight: 1.0

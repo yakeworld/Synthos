@@ -1,0 +1,35 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: project-experience-distillation
+# 日期: 2026-08-17
+# 数量: 6
+
+skill: project-experience-distillation
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 6
+genes:
+- id: PROJ-001
+  condition: 记录项目实践时
+  strategy: 必须追问“为什么有效”以提炼思想灵魂，而非仅记录步骤
+  weight: 1.0
+- id: PROJ-002
+  condition: 进行经验抽象时
+  strategy: 需识别并上升到“约束类型”级别，而非仅去除实体名保留模板
+  weight: 1.0
+- id: PROJ-003
+  condition: 区分经验来源时
+  strategy: 严格区分内部反思（自身实践，P0）与外部吸收（外部项目，P1），避免源流混淆
+  weight: 1.0
+- id: PROJ-004
+  condition: 发现普遍规律时
+  strategy: 优先扩展现有技能，仅在规则高度个性化时才新建 Skill
+  weight: 1.0
+- id: PROJ-005
+  condition: 新建 Skill 后
+  strategy: 必须至少通过 L1 格式质量门验证，确保基础合规
+  weight: 1.0
+- id: PROJ-006
+  condition: 文档出现累积 Patch 导致重复时
+  strategy: 执行大重构并整文件重写，禁止继续累积 Patch
+  weight: 1.0

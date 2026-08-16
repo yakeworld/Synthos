@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: humanizer
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: humanizer
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: HUMA-001
+  condition: 文本呈现均匀句长、中性语调或完美结构
+  strategy: 引入句子长短交替、语气波动及适度“混乱”，打破算法性的过度平滑
+  weight: 1.0
+- id: HUMA-002
+  condition: 文本仅陈述事实且缺乏情感色彩
+  strategy: 注入个人观点、矛盾情绪及具体感受，确保文字背后有“人”的存在
+  weight: 1.0
+- id: HUMA-003
+  condition: 文本包含“delve”、“crucial”等高频AI词汇或“serves as”等回避系动词结构
+  strategy: 替换为简单直接的自然表达（如“is”、“has”）并删除填充短语
+  weight: 1.0
+- id: HUMA-004
+  condition: 用户提供特定写作样本作为参考
+  strategy: 优先分析并匹配样本中的句长、用词水平及标点习惯，而非使用默认自然声音
+  weight: 1.0
+- id: HUMA-005
+  condition: 文本存在模糊归因（如“Experts say”）或通用积极结论（如“future looks bright”）
+  strategy: 替换为具体来源、具体细节或直接陈述问题，消除模糊性
+  weight: 1.0
+- id: HUMA-006
+  condition: 改写完成后需进行最终质量检查
+  strategy: 执行自问自答循环，识别剩余AI特征并针对性修订，直至文本不再明显像AI生成
+  weight: 1.0
+- id: HUMA-007
+  condition: 处理过程中涉及核心语义转换
+  strategy: 严格保留原始信息完整性，仅改变表达方式与语调，确保语义保真
+  weight: 1.0

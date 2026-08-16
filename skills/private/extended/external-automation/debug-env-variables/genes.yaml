@@ -1,0 +1,35 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: debug-env-variables
+# 日期: 2026-08-17
+# 数量: 6
+
+skill: debug-env-variables
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 6
+genes:
+- id: DEBU-001
+  condition: 变量在交互 shell 存在但在 `bash -c` 或子进程中丢失
+  strategy: 优先检查 `.bashrc` 中的 `case $- in *i*)` 守卫，确认 export 是否位于守卫之前
+  weight: 1.0
+- id: DEBU-002
+  condition: 需要在非交互 shell 中加载环境变量
+  strategy: 设置 `BASH_ENV` 指向配置文件，或将 export 语句移至 `.bashrc` 守卫块之前
+  weight: 1.0
+- id: DEBU-003
+  condition: 自动化场景（CI/cron/subprocess）中环境变量不可靠
+  strategy: 禁止依赖 `.bashrc`，改用 `/etc/environment` 或应用层文件回退机制
+  weight: 1.0
+- id: DEBU-004
+  condition: 敏感凭证（API Key）在子进程中读取为空
+  strategy: 实现文件回退策略（如读取 `.api_key` 文件），避免将密钥硬编码在 shell 配置中
+  weight: 1.0
+- id: DEBU-005
+  condition: 嵌套 `subprocess.run(shell=True)` 导致引号解析错误
+  strategy: 使用 `&&` 链接命令或 heredoc 结构，避免在双引号内嵌套单引号导致变量被外层 shell 消费
+  weight: 1.0
+- id: DEBU-006
+  condition: 诊断变量消失点时缺乏定位依据 → 执行逐层验证（父进程 → `bash -c`
+  strategy: Python 子层），通过 `os.environ` 和 `echo` 对比定位具体失效层级
+  weight: 1.0

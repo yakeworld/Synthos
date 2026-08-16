@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: spotify
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: spotify
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: SPOT-001
+  condition: 用户请求播放特定内容
+  strategy: 执行单次搜索获取 URI 后立即播放，禁止循环描述搜索结果或进行预检状态查询
+  weight: 1.0
+- id: SPOT-002
+  condition: 用户请求模糊播放（如“播放某艺术家”）
+  strategy: '优先使用 `types: ["artist"]` 搜索并播放艺术家上下文 URI，利用 Spotify 智能洗牌而非手动选曲'
+  weight: 1.0
+- id: SPOT-003
+  condition: 执行播放、暂停或音量调整等变更操作
+  strategy: 直接调用对应动作接口，无需先调用 `get_state` 进行预检
+  weight: 1.0
+- id: SPOT-004
+  condition: 遇到 `403 No active device` 或 `403 Premium required` 错误
+  strategy: 立即停止重试，明确告知用户需启动 Spotify 客户端或升级 Premium 套餐
+  weight: 1.0
+- id: SPOT-005
+  condition: '查询当前播放状态返回 `204 No Content` 或 `is_playing: false`'
+  strategy: 直接报告“无内容播放”，视为正常状态而非错误，禁止重试
+  weight: 1.0
+- id: SPOT-006
+  condition: 需要查找用户私有播放列表
+  strategy: 必须使用 `spotify_playlists list` 接口，严禁使用 `spotify_search` 搜索公共目录
+  weight: 1.0
+- id: SPOT-007
+  condition: 操作用户库（Library）保存或移除项目
+  strategy: 严格匹配 `kind` 参数（tracks/albums）与 URI 类型，禁止混用导致 API 端点错误
+  weight: 1.0

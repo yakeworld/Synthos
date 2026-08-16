@@ -1,0 +1,35 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: shared
+# 日期: 2026-08-17
+# 数量: 6
+
+skill: shared
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 6
+genes:
+- id: SHAR-001
+  condition: 执行核心操作前
+  strategy: 必须确认输入参数完整且符合类型/范围/格式约束
+  weight: 1.0
+- id: SHAR-002
+  condition: 处理异常或失败场景
+  strategy: 错误信息必须包含上下文和明确的恢复指引
+  weight: 1.0
+- id: SHAR-003
+  condition: 验证输出结果
+  strategy: 确保返回值结构、编码及命名与契约保持一致
+  weight: 1.0
+- id: SHAR-004
+  condition: 面对未验证的代码或外部输入
+  strategy: 拒绝执行或隔离，严禁暴露内部状态
+  weight: 1.0
+- id: SHAR-005
+  condition: 进行技能改进或测试
+  strategy: 以 Golden 集合（输入/输出/错误）作为单一真理来源进行校验
+  weight: 1.0
+- id: SHAR-006
+  condition: 执行验证流程
+  strategy: 确保每项验证可执行、可记录且可复现，失败时记录原因
+  weight: 1.0

@@ -1,0 +1,35 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: reproducibility-audit
+# 日期: 2026-08-17
+# 数量: 6
+
+skill: reproducibility-audit
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 6
+genes:
+- id: REPR-001
+  condition: 数据集版本未锁定
+  strategy: 必须核对并锁定数据集版本以确保复现依据
+  weight: 1.0
+- id: REPR-002
+  condition: '`thebibliography` 与 `.bib` 双源并存'
+  strategy: 必须同步更新两者，禁止仅修改其一
+  weight: 1.0
+- id: REPR-003
+  condition: 执行任何代码或流程改进
+  strategy: 必须通过 Golden 集合测试以验证单一真理来源
+  weight: 1.0
+- id: REPR-004
+  condition: 执行验证步骤
+  strategy: 必须确保验证过程可执行、可记录且可复现
+  weight: 1.0
+- id: REPR-005
+  condition: 验证失败发生
+  strategy: 必须记录具体失败原因及对应的修复措施
+  weight: 1.0
+- id: REPR-006
+  condition: 处理输入/输出/边界场景
+  strategy: 必须覆盖空输入、极大值及异常场景的错误处理与恢复指引
+  weight: 1.0

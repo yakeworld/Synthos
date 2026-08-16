@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: dogfood
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: dogfood
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: DOGF-001
+  condition: 执行自测任务
+  strategy: 必须使用覆盖有效/无效输入、多步导航及边界空态的真实用例集，禁止仅测试单一正常路径
+  weight: 1.0
+- id: DOGF-002
+  condition: 完成页面导航或关键交互后
+  strategy: 立即调用 `browser_console()` 检查 JS 静默错误，将其视为高价值缺陷发现
+  weight: 1.0
+- id: DOGF-003
+  condition: 发现缺陷或需要记录观察结果时
+  strategy: 必须使用 `browser_vision annotate=true` 生成带标注的截图，并以 `MEDIA:<path>` 格式内联至报告作为证据
+  weight: 1.0
+- id: DOGF-004
+  condition: 面对长页面内容
+  strategy: 必须执行滚动操作直至页面底部，以检测折叠线以下可能存在的渲染或布局问题
+  weight: 1.0
+- id: DOGF-005
+  condition: 测试多步业务流程
+  strategy: 必须端到端完整走通所有导航步骤，确保流程连贯性并验证中间状态转换
+  weight: 1.0
+- id: DOGF-006
+  condition: 处理表单输入场景
+  strategy: 必须同时测试有效数据和无效数据（如特殊字符、超长文本），以暴露表单验证逻辑缺陷
+  weight: 1.0
+- id: DOGF-007
+  condition: 遇到快照引用不清或需分析元素位置时
+  strategy: 使用 `browser_vision` 配合 `annotate=true` 获取元素标签辅助定位，而非盲目点击
+  weight: 1.0

@@ -1,0 +1,40 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: paper-submission-priority
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: paper-submission-priority
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: PAPE-001
+  condition: 解析 `state.json` 质量分数时
+  strategy: 必须从顶层字段读取 `quality_score`，避免误查嵌套字段导致分数错误
+  weight: 1.0
+- id: PAPE-002
+  condition: 处理 `D10a` 指标数据时
+  strategy: 需兼容数字（如 100.0）和字符串（如 "100%"）两种格式，防止解析失败
+  weight: 1.0
+- id: PAPE-003
+  condition: 评估论文引用健康度时
+  strategy: 若 `D10a` 为 0 或 `Gates_result` 格式不一致（字符串/字典），需单独检查 `orphans_count` 和 `zombies_count`
+    以确认异常
+  weight: 1.0
+- id: PAPE-004
+  condition: 检查代码可复现性时
+  strategy: 不能仅依赖 `code/` 目录是否存在，需全局搜索论文目录以定位实际代码位置
+  weight: 1.0
+- id: PAPE-005
+  condition: 执行投稿前最终检查时
+  strategy: 必须运行 `pdflatex` 确保编译干净（0 error, 0 undefined ref）并生成最终 PDF
+  weight: 1.0
+- id: PAPE-006
+  condition: 准备投稿包时
+  strategy: 必须创建 GitHub 仓库并推送代码，以满足 G7 可复现性要求
+  weight: 1.0
+- id: PAPE-007
+  condition: 核验作者信息时
+  strategy: 必须确认署名为 "Department of Neurology, Wenzhou People's Hospital" 且邮箱匹配指定用户邮箱
+  weight: 1.0

@@ -1,0 +1,36 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: knowledge-acquisition
+# 日期: 2026-08-17
+# 数量: 6
+
+skill: knowledge-acquisition
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 6
+genes:
+- id: KA-001
+  condition: 需要检索学术文献
+  strategy: jabkit-rs fetch --provider=<源> --query=<关键词> --porcelain。不用 jabkit(Java,已弃用会挂起)。Crossref
+    最快无 key; S2 已修复; arXiv 最新
+  weight: 1.0
+- id: KA-002
+  condition: PDF 下载验证
+  strategy: head -c 5 (5字节不是4) 必须=%PDF-，再 pdfinfo 核标题防串流
+  weight: 1.0
+- id: KA-003
+  condition: 'PDF 下载失败 → 四层降级: bban.top→Sci-Hub→LibGen→Anna''s。7次后429'
+  strategy: rproxy轮换。Anna's需TOR,下载端被封锁
+  weight: 1.0
+- id: KA-004
+  condition: Medline/PubMed 检索 → 需 NCBI key + 先 curl esearch DOI
+  strategy: PMID
+  weight: 1.0
+- id: KA-005
+  condition: 批量下载 → grep DOI from .bib → xargs doi-fetch。429
+  strategy: 间隔或rproxy
+  weight: 1.0
+- id: KA-006
+  condition: 多源合并
+  strategy: lit-import 去重入库，BibTeX 无重复
+  weight: 1.0

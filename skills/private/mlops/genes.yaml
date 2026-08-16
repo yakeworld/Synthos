@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: mlops
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: mlops
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: MLOP-001
+  condition: 输出涉及数据或结论时
+  strategy: 必须经过事实核查且可追溯到具体证据源，严禁编造
+  weight: 1.0
+- id: MLOP-002
+  condition: 执行任何操作步骤时
+  strategy: 必须确保过程可重复且结果可验证，以保障可复现性
+  weight: 1.0
+- id: MLOP-003
+  condition: 接收输入参数时
+  strategy: 必须严格校验类型、范围及格式，拒绝无效输入
+  weight: 1.0
+- id: MLOP-004
+  condition: 生成返回值时
+  strategy: 必须保持结构、编码及命名的一致性
+  weight: 1.0
+- id: MLOP-005
+  condition: 发生异常或错误时
+  strategy: 错误信息必须包含上下文背景及明确的恢复建议
+  weight: 1.0
+- id: MLOP-006
+  condition: 处理代码执行请求时
+  strategy: 禁止执行未验证的任意代码且不暴露内部状态
+  weight: 1.0
+- id: MLOP-007
+  condition: 进行功能改进或测试时
+  strategy: 必须以 Golden 集合（输入/输出/错误）为单一真理来源进行验证
+  weight: 1.0

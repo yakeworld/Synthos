@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: training-pipeline-audit
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: training-pipeline-audit
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: TRAI-001
+  condition: 当审计训练管线时
+  strategy: 必须全量扫描项目文件并拆解管线步骤为方法论，确保所有数值指标可追溯至原始日志
+  weight: 1.0
+- id: TRAI-002
+  condition: 当识别研究空白时
+  strategy: 需精确定位到文献矛盾或方法缺口，且至少识别出3个独立的研究空白
+  weight: 1.0
+- id: TRAI-003
+  condition: 当生成科学假设时
+  strategy: 必须包含明确的检验条件与反证路径，且格式严格符合 hypothesis-generation 的 IO_CONTRACT
+  weight: 1.0
+- id: TRAI-004
+  condition: 当规划论文结构时
+  strategy: 采用 IMRaD 框架，其中 Results 部分需优先展示主结果（如 Val Dice/CErr）及消融/对比实验
+  weight: 1.0
+- id: TRAI-005
+  condition: 当确定论文类型时
+  strategy: 根据管线完整性与实证结果匹配目标期刊层级（如完整管线+实证结果对应 Q1-Q2 方法学论文）
+  weight: 1.0
+- id: TRAI-006
+  condition: 当构建文献基础时
+  strategy: 需补充15-30篇涵盖方法学、临床及算法领域的相关文献以支撑论证
+  weight: 1.0
+- id: TRAI-007
+  condition: 当输出最终计划时
+  strategy: 生成包含 IMRaD 结构、文献列表及时间表的 paper_plan.json 文件
+  weight: 1.0

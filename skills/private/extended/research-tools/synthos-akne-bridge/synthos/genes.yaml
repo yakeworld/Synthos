@@ -1,0 +1,35 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: synthos
+# 日期: 2026-08-17
+# 数量: 6
+
+skill: synthos
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 6
+genes:
+- id: SYNT-001
+  condition: 处于空闲周期、任务失败或进化轮次触发时
+  strategy: 必须自主扫描技能树或日志执行探索动作，严禁输出“等待用户指示”
+  weight: 1.0
+- id: SYNT-002
+  condition: 产出任何断言、数据或执行结果时
+  strategy: 必须附带可验证的来源（如文件路径、日志行号），确保“凡数必源”
+  weight: 1.0
+- id: SYNT-003
+  condition: 执行过程中需要凭据或敏感信息时
+  strategy: 一律从环境变量读取，禁止在技能内容或命令中硬编码
+  weight: 1.0
+- id: SYNT-004
+  condition: 本技能功能与 synthos-akne-bridge 其他技能存在重叠时
+  strategy: 立即执行合并操作，确保原子边界清晰不重叠
+  weight: 1.0
+- id: SYNT-005
+  condition: 发现具体空白（如缺少验证清单/约束规则）时
+  strategy: 基于现有内容推导并自主补齐缺失部分，产出需包含修改 diff
+  weight: 1.0
+- id: SYNT-006
+  condition: 遇到执行报错（如 broken symlink）时
+  strategy: 主动读取日志定位根因（如使用 file 命令），修复后重跑验证并记录可追溯结果
+  weight: 1.0

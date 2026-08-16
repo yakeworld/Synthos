@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: feishu-gateway-debug
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: feishu-gateway-debug
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: FEIS-001
+  condition: 用户报告 API 调用失败或 404 错误
+  strategy: 优先检查 `base_url` 指向的服务（vLLM/DeepSeek/飞书），区分是模型节点问题还是飞书网关问题
+  weight: 1.0
+- id: FEIS-002
+  condition: 诊断消息流中断或无响应 → 按时间顺序追踪 Gateway 日志（接收→解析→提交→响应
+  strategy: 发送）以定位具体断点
+  weight: 1.0
+- id: FEIS-003
+  condition: 遇到 vLLM 节点返回 404 Not Found
+  strategy: 验证模型是否存在于该节点（`curl /v1/models`），若不存在则移除节点或修正模型名
+  weight: 1.0
+- id: FEIS-004
+  condition: 飞书 MEDIA 附件发送后用户未收到且无报错
+  strategy: 检查文件大小是否超过 10MB，若超限则使用 Ghostscript 压缩至 10MB 以下后重发
+  weight: 1.0
+- id: FEIS-005
+  condition: 发送文件附件前
+  strategy: 必须执行 `ls -la` 验证文件路径真实存在，避免路径错误导致静默失败
+  weight: 1.0
+- id: FEIS-006
+  condition: 处理 CLI 与飞书平台的并发问题
+  strategy: 识别 session ID 前缀（`cli:` vs `feishu:`），利用两者完全隔离的特性排除跨平台干扰
+  weight: 1.0
+- id: FEIS-007
+  condition: 遇到 Stream 断开或 180s 超时错误
+  strategy: 判定为 vLLM 服务超时或负载过高，需检查节点状态或调整超时配置
+  weight: 1.0

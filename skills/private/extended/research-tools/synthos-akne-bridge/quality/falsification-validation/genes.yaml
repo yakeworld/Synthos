@@ -1,0 +1,35 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: falsification-validation
+# 日期: 2026-08-17
+# 数量: 6
+
+skill: falsification-validation
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 6
+genes:
+- id: FALS-001
+  condition: 执行证伪测试时
+  strategy: 必须使用真实任务输入，严禁使用 mock 或合成数据
+  weight: 1.0
+- id: FALS-002
+  condition: 设计测试用例时
+  strategy: 必须包含期望失败的反证测试，避免仅运行预期通过的自欺式验证
+  weight: 1.0
+- id: FALS-003
+  condition: 记录测试结果时
+  strategy: 必须将输入、过程日志、输出及度量完整归档至 `test-results/` 以确保可复现性
+  weight: 1.0
+- id: FALS-004
+  condition: 评估技能信任度时
+  strategy: 必须基于屡次累积的证据动态调整分级，禁止依据单点数据定论
+  weight: 1.0
+- id: FALS-005
+  condition: 判定测试有效性时
+  strategy: 必须采用量化指标对比期望与实际输出，拒绝主观的“看起来不错”评估
+  weight: 1.0
+- id: FALS-006
+  condition: 处理验证失败时
+  strategy: 必须记录具体原因、上下文及修复建议，确保错误信息具备恢复指引
+  weight: 1.0

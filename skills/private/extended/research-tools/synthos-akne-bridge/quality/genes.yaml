@@ -1,0 +1,43 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: quality
+# 日期: 2026-08-17
+# 数量: 8
+
+skill: quality
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 8
+genes:
+- id: QUAL-001
+  condition: 输入参数/文件/路径不完整或无效
+  strategy: 必须执行输入验证并拒绝执行
+  weight: 1.0
+- id: QUAL-002
+  condition: 中间步骤/转换/计算过程
+  strategy: 必须验证其正确性以确保过程合规
+  weight: 1.0
+- id: QUAL-003
+  condition: 输出格式/内容不符合预期契约
+  strategy: 必须执行输出验证以符合 IO_CONTRACT
+  weight: 1.0
+- id: QUAL-004
+  condition: 遇到空输入、极大值或异常场景
+  strategy: 必须执行边界验证以处理极端情况
+  weight: 1.0
+- id: QUAL-005
+  condition: 操作失败或出现错误
+  strategy: 必须提供包含上下文和恢复建议的明确错误信息
+  weight: 1.0
+- id: QUAL-006
+  condition: 参数类型、范围或格式校验
+  strategy: 必须严格执行输入约束规则
+  weight: 1.0
+- id: QUAL-007
+  condition: 返回值结构、编码或命名不一致
+  strategy: 必须严格执行输出约束规则
+  weight: 1.0
+- id: QUAL-008
+  condition: 涉及未验证代码或内部状态暴露
+  strategy: 必须拒绝执行或隔离以遵守安全约束
+  weight: 1.0

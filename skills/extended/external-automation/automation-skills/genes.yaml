@@ -1,0 +1,35 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: automation-skills
+# 日期: 2026-08-17
+# 数量: 6
+
+skill: automation-skills
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 6
+genes:
+- id: AUTO-001
+  condition: 解析含 LaTeX 转义的 JSON 数据
+  strategy: 在 `json.loads()` 前执行自定义清理逻辑，移除非法 `\X` 转义以保留合法 JSON 结构
+  weight: 1.0
+- id: AUTO-002
+  condition: 处理多种分数格式变体
+  strategy: 根据字段类型（number/dict/text）映射到统一 0-100 范围，纯文本合格标记默认赋高值（如 95）
+  weight: 1.0
+- id: AUTO-003
+  condition: 目标文件位置不固定
+  strategy: 使用 `os.walk()` 递归遍历目录查找文件，而非依赖固定路径
+  weight: 1.0
+- id: AUTO-004
+  condition: 论文目录命名不一致
+  strategy: 尝试多种命名变体（如 `name`, `name.replace('_','-')`, `f'paper-{name}'`）以匹配实际目录
+  weight: 1.0
+- id: AUTO-005
+  condition: 批量处理任务量较大（>10 项）
+  strategy: 分批次执行（每批 10-15 项）以避免超时，每批作为独立队列项
+  weight: 1.0
+- id: AUTO-006
+  condition: 重复处理同一对象
+  strategy: 检查状态文件（如 `state.json`）中是否已存在结果字段，若存在则跳过以避免重复写入
+  weight: 1.0

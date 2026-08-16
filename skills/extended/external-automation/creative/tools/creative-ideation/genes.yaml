@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: creative-ideation
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: creative-ideation
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: CREA-001
+  condition: 用户缺乏方向或灵感
+  strategy: 引入随机或匹配的约束条件，利用“约束+方向”激发创造力
+  weight: 1.0
+- id: CREA-002
+  condition: 面对特定约束提示
+  strategy: 进行最广泛的跨领域解读（如代码变硬件、艺术变CLI），打破领域边界
+  weight: 1.0
+- id: CREA-003
+  condition: 生成创意方案时
+  strategy: 必须产出3个具体且可执行的项目想法，而非抽象概念
+  weight: 1.0
+- id: CREA-004
+  condition: 用户表达“有用/实用”需求
+  strategy: 优先选择解决个人痛点、自动化繁琐流程或填补工具空白的约束
+  weight: 1.0
+- id: CREA-005
+  condition: 用户表达“无聊/倦怠”需求
+  strategy: 优先选择低努力高概念、允许失败或具有消亡属性的轻量级约束
+  weight: 1.0
+- id: CREA-006
+  condition: 用户表达“挑战/学习”需求
+  strategy: 优先选择大规模数据、极简主义重构或复刻经典项目的约束
+  weight: 1.0
+- id: CREA-007
+  condition: 用户选定具体创意后
+  strategy: 立即进入构建阶段，创建项目、编写代码并迭代交付
+  weight: 1.0

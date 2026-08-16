@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: maps
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: maps
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: MAPS-001
+  condition: 用户发送包含经纬度的定位信息
+  strategy: 直接提取坐标并调用 `nearby` 命令，避免二次地理编码
+  weight: 1.0
+- id: MAPS-002
+  condition: 需要查询特定区域内的 POI 而非单点周边
+  strategy: 先使用 `area` 获取边界框，再结合 `bbox` 进行矩形区域搜索
+  weight: 1.0
+- id: MAPS-003
+  condition: 查询地点名称存在全球歧义（如仅邮编或通用名）
+  strategy: 在输入中显式包含国家或州名以消除歧义
+  weight: 1.0
+- id: MAPS-004
+  condition: 需要计算两点间的路径距离或时间
+  strategy: 使用 `distance` 命令并明确指定 `--to` 标志及出行模式（驾车/步行/骑行）
+  weight: 1.0
+- id: MAPS-005
+  condition: 用户询问附近设施是否“现在营业”
+  strategy: 优先检查 OSM 返回的 `hours` 字段，若缺失或模糊则通过 `web_search` 验证
+  weight: 1.0
+- id: MAPS-006
+  condition: 需要获取从起点到终点的详细导航步骤
+  strategy: 使用 `directions` 命令获取包含转向指令、距离和道路名称的分步列表
+  weight: 1.0
+- id: MAPS-007
+  condition: 需要确定某坐标点所属时区及当前时间
+  strategy: 使用 `timezone` 命令获取时区名称、UTC 偏移量及本地时间
+  weight: 1.0

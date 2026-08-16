@@ -1,0 +1,43 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: creative-tools
+# 日期: 2026-08-17
+# 数量: 8
+
+skill: creative-tools
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 8
+genes:
+- id: CREA-001
+  condition: 面对多模态创作需求（图像/视频/音频等）
+  strategy: 将任务路由至对应的原子子技能（如 ascii-art, manim-video, heartmula）而非直接执行
+  weight: 1.0
+- id: CREA-002
+  condition: 用户处于“有工具无方向”或寻求灵感状态
+  strategy: 调用 creative-ideation 策略生成项目创意或构建方向
+  weight: 1.0
+- id: CREA-003
+  condition: 需要探索 UI/UX 设计方向但未最终定稿
+  strategy: 生成 2-3 个可交互的 HTML 原型变体供用户对比选择，而非直接产出可交付代码
+  weight: 1.0
+- id: CREA-004
+  condition: 生成科研图表或学术 Figure → 遵循“结论Claim→证据层级
+  strategy: 面板映射”契约，并应用 Nature 语义色板（蓝主-绿正-红基）
+  weight: 1.0
+- id: CREA-005
+  condition: 处理 TouchDesigner 参数或复杂工具配置
+  strategy: 严禁猜测参数名，必须先调用 `td_get_par_info` 获取准确元数据后再操作
+  weight: 1.0
+- id: CREA-006
+  condition: 生成或优化文本内容
+  strategy: 应用 humanizer 策略识别并移除 AI 生成痕迹，确保文本呈现自然的人类写作风格
+  weight: 1.0
+- id: CREA-007
+  condition: 执行任何创作任务前
+  strategy: 严格校验输入参数完整性与有效性，确保符合 IO_CONTRACT 定义
+  weight: 1.0
+- id: CREA-008
+  condition: 任务执行失败或遇到异常
+  strategy: 提供包含上下文信息和明确恢复建议的错误报告，而非仅抛出异常
+  weight: 1.0

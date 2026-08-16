@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: pretext
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: pretext
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: PRET-001
+  condition: 需要非矩形区域（如环绕移动物体）的文本布局
+  strategy: 使用 `layoutNextLineRange` 配合每行动态宽度函数实现流式排版
+  weight: 1.0
+- id: PRET-002
+  condition: 需要精确的字符级物理效果（如破碎、粒子化）
+  strategy: 使用 `prepareWithSegments` 获取每个字素（grapheme）的位置坐标
+  weight: 1.0
+- id: PRET-003
+  condition: 需要计算多行文本的最小容器宽度（Shrink-wrap）
+  strategy: 使用 `measureLineStats` 获取最大行宽而非逐行渲染
+  weight: 1.0
+- id: PRET-004
+  condition: 需要高性能遍历文本统计或物理模拟且无需字符串分配
+  strategy: 使用 `walkLineRanges` 进行无字符串分配的迭代
+  weight: 1.0
+- id: PRET-005
+  condition: 处理包含 Emoji、CJK 或组合标记的文本
+  strategy: 使用 `Intl.Segmenter` 进行字素分割以确保测量准确性
+  weight: 1.0
+- id: PRET-006
+  condition: 需要避免 DOM 重排（Reflow）导致的布局抖动
+  strategy: 使用 Canvas 测量 API 在渲染前获取精确高度和换行信息
+  weight: 1.0
+- id: PRET-007
+  condition: 构建单文件创意演示且无构建步骤
+  strategy: 通过 `esm.sh` CDN 引入固定版本的 `@chenglou/pretext` 模块
+  weight: 1.0

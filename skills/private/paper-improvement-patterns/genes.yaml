@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: paper-improvement-patterns
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: paper-improvement-patterns
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: PAPE-001
+  condition: 论文缺少2024-2026年最新文献
+  strategy: 从训练管线分析文档提取前沿文献，按“近期进展-本方法优势-未来工作”结构整合至Discussion，确保引用与方法直接相关
+  weight: 1.0
+- id: PAPE-002
+  condition: 多组件方法需证明各部分贡献
+  strategy: 构建V1至V4的消融实验表格，确保每个组件增量为正，并在分析中解释每个增量背后的具体原因
+  weight: 1.0
+- id: PAPE-003
+  condition: 声称性能显著优于基线但缺乏统计证据
+  strategy: 执行配对t检验和Wilcoxon符号秩检验，报告科学计数法p-value、Cohen's d效应量及基于1000次重采样的95%置信区间
+  weight: 1.0
+- id: PAPE-004
+  condition: 论文包含可公开的数据或代码
+  strategy: 添加Data/Code Availability声明，明确列出Kaggle/GitHub具体URL、MIT许可证及复现所需的所有组件清单
+  weight: 1.0
+- id: PAPE-005
+  condition: 临床模型评估需区分筛查与诊断场景
+  strategy: 筛查场景优先优化召回率并降低阈值（0.35-0.48），诊断场景优先优化精确率并提高阈值（0.50-0.65），同时分析模型间FN/FP互补性
+  weight: 1.0
+- id: PAPE-006
+  condition: 检测到数值伪造或数据泄露导致指标异常
+  strategy: 重构叙事逻辑以匹配修正后的数值（如从“性能提升”改为“选择性扭曲”），同步更新Abstract、Discussion及图表描述以保持一致性
+  weight: 1.0
+- id: PAPE-007
+  condition: 引用健康度D10a低于100%存在孤儿引用
+  strategy: 识别未引用bibitem的语义域，将其分组插入正文合适锚点（避免机械追加），并将注释行中的引用移至正文以确保被BibTeX识别
+  weight: 1.0

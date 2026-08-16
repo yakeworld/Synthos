@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: songwriting-and-ai-music
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: songwriting-and-ai-music
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: SONG-001
+  condition: 当需要构建歌曲结构时
+  strategy: 根据情感需求选择骨架（如 ABABCB），让结构服务于情绪而非反之
+  weight: 1.0
+- id: SONG-002
+  condition: 当处理韵律与节奏时
+  strategy: 混合使用完美押韵与近韵，并优先确保重音音节匹配以保障可唱性
+  weight: 1.0
+- id: SONG-003
+  condition: 当设计动态变化时
+  strategy: 利用对比原则（如先低后高、先静后动）来增强情感冲击力，将沉默视为乐器
+  weight: 1.0
+- id: SONG-004
+  condition: 当撰写歌词意象时
+  strategy: 遵循“展示而非告知”原则，用具体细节代替抽象情感，除非平实陈述本身具有力量
+  weight: 1.0
+- id: SONG-005
+  condition: 当进行改编或戏仿时
+  strategy: 先映射原曲的音节数、重音及韵脚骨架，再填入新词并保留部分原句以维持辨识度
+  weight: 1.0
+- id: SONG-006
+  condition: 当编写 AI 音乐风格提示词时
+  strategy: 使用“流派+情绪+时代+乐器+人声+制作”公式，描述声音旅程而非仅指定流派
+  weight: 1.0
+- id: SONG-007
+  condition: 当使用元标签控制生成时
+  strategy: 在歌词中嵌入 5-8 个不冲突的结构/动态/氛围标签，并在风格字段中同步强化
+  weight: 1.0

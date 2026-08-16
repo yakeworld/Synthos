@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: cognitive-atom-architecture
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: cognitive-atom-architecture
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: COGN-001
+  condition: 哲学框架需转化为工程约束 → 执行 extract→trace→classify→fix
+  strategy: verify 五步追溯流程，确保每条哲学约束映射为原子技能中可执行的具体约束
+  weight: 1.0
+- id: COGN-002
+  condition: 构建 7+1 融合哲学框架
+  strategy: 确保每一维度均具备明确定义、度量方法及原子映射，缺一维则判定框架失整并中止追溯
+  weight: 1.0
+- id: COGN-003
+  condition: 设计技能示例
+  strategy: 保证每个示例可独立运行，明确输入输出，并强制包含边界用例与错误处理场景以证其法
+  weight: 1.0
+- id: COGN-004
+  condition: 管理参考文件资产
+  strategy: 保持 `references/` 下四件套（哲学基础、维度指南、验证模式、融合模式）完整无损，原件缺失则拒绝产出
+  weight: 1.0
+- id: COGN-005
+  condition: 处理输入参数
+  strategy: 严格校验参数类型、范围及格式，不符合约束的操作视为不安全并予以拒绝或隔离
+  weight: 1.0
+- id: COGN-006
+  condition: 定义输出规范
+  strategy: 确保返回值结构、编码及命名保持一致，且错误信息必须包含上下文与恢复建议
+  weight: 1.0
+- id: COGN-007
+  condition: 执行安全边界控制
+  strategy: 禁止执行未验证的任意代码，严禁暴露内部状态，违反规则的操作必须被隔离
+  weight: 1.0

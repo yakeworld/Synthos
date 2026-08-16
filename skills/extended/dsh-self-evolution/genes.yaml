@@ -1,0 +1,40 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: dsh-self-evolution
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: dsh-self-evolution
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: DSH-001
+  condition: 当需要执行依赖 LLM 推理的改进任务（如语义化 IO_CONTRACT 生成、引用审计）时
+  strategy: 通过 dsh headless agent 隔离执行，而非使用本地脚本批量注入
+  weight: 1.0
+- id: DSH-002
+  condition: 当诊断出多个待改进维度时
+  strategy: 选择分数最低且 ROI 最高的单一维度作为本轮任务目标，避免跨维度大杂烩
+  weight: 1.0
+- id: DSH-003
+  condition: 当构造 dsh 任务 Prompt 时
+  strategy: 仅传递“做什么”及明确的输出契约（JSON 格式、文件范围），禁止传递“怎么做”的微操步骤
+  weight: 1.0
+- id: DSH-004
+  condition: 当 dsh 任务执行完毕进入验证阶段时
+  strategy: 必须独立重跑诊断脚本计算实测分数，严禁复用 dsh 报告中的声称值（防止自欺）
+  weight: 1.0
+- id: DSH-005
+  condition: 当 dsh 声称的改进与实测结果存在偏差或验证失败时
+  strategy: 标记 `self_deception_risk` 并基于 `git diff --name-only` 精确回滚本轮改动，禁止全量回滚
+  weight: 1.0
+- id: DSH-006
+  condition: 当更新 `evolution-state.json` 等结构化状态文件时
+  strategy: 必须使用 Python 进行结构化读写（json.load/dump），严禁使用字符串替换（patch）方式
+  weight: 1.0
+- id: DSH-007
+  condition: 当执行 git 提交操作时
+  strategy: 由父 Agent 负责选择性 `git add` 具体文件列表，严禁 dsh 内部提交或父 Agent 使用 `git add -A`，以维持
+    commit-scope-check 纪律
+  weight: 1.0

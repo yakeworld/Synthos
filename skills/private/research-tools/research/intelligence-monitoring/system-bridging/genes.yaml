@@ -1,0 +1,27 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: system-bridging
+# 日期: 2026-08-17
+# 数量: 4
+
+skill: system-bridging
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 4
+genes:
+- id: SYST-001
+  condition: 桥接前
+  strategy: 必须先摸底两系统结构、统计实体数量并检查同名/同域重叠，禁止盲建
+  weight: 1.0
+- id: SYST-002
+  condition: 同步执行时
+  strategy: 必须保证增量幂等，同名节点不重复创建，已有边不修改，确保可重跑且不破坏旧图
+  weight: 1.0
+- id: SYST-003
+  condition: 建立跨系统边时
+  strategy: 必须设置最小权重阈值（如0.3）与邻接上限，防止宽泛关键词匹配导致图谱爆炸
+  weight: 1.0
+- id: SYST-004
+  condition: 数据流向设计时 → 采用单向注入（A
+  strategy: B）模式，B侧变更由B自管，避免双向同步引发死循环
+  weight: 1.0

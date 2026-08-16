@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: chinese-form-automation
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: chinese-form-automation
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: CHIN-001
+  condition: 处理中文表格/表单自动化任务
+  strategy: 优先使用 `python-docx` 库直接操作以确保可靠性，避免依赖 `markitdown` 转换
+  weight: 1.0
+- id: CHIN-002
+  condition: 在 Python 3.12 沙箱环境安装 `python-docx`
+  strategy: 必须添加 `--break-system-packages` 标志以绕过 PEP 668 限制
+  weight: 1.0
+- id: CHIN-003
+  condition: 用户请求介绍 Synthos 或研究能力
+  strategy: 聚焦“特色介绍”（独特能力展示）而非“平台架构”，且默认输出 docx 文档而非 PPT
+  weight: 1.0
+- id: CHIN-004
+  condition: 接收 NJJK（神经网络科技/脑机接口）摸底模板
+  strategy: 直接按科技局标准框架逐项填充数据，不额外创建 PPT
+  weight: 1.0
+- id: CHIN-005
+  condition: 通过飞书发送文件
+  strategy: 必须使用 `feishu:oc_<id>` 格式的 chat_id 进行私聊发送，禁止使用裸 `feishu` 标识
+  weight: 1.0
+- id: CHIN-006
+  condition: 执行核心操作前
+  strategy: 严格校验输入参数、文件路径及上下文的完整性与有效性
+  weight: 1.0
+- id: CHIN-007
+  condition: 处理异常或失败场景
+  strategy: 错误信息必须包含具体上下文和明确的恢复指引，确保可复现和可记录
+  weight: 1.0

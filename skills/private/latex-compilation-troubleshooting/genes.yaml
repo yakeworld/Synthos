@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: latex-compilation-troubleshooting
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: latex-compilation-troubleshooting
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: LATE-001
+  condition: 遇到 `Citation undefined` 警告 → 执行 `pdflatex → bibtex → pdflatex
+  strategy: pdflatex` 完整编译链并检查 `.bbl` 文件非空
+  weight: 1.0
+- id: LATE-002
+  condition: 执行任何批量修改或 `rm` 操作前
+  strategy: 必须创建带时间戳的 `.bak` 备份，且严禁使用 `paper.*` 通配符删除以防误删源文件
+  weight: 1.0
+- id: LATE-003
+  condition: 出现 `Misplaced \noalign` 或大量 `Missing \cr` 级联错误
+  strategy: 检查表格 `\bottomrule` 前一行是否缺失行尾 `\\` 并补全
+  weight: 1.0
+- id: LATE-004
+  condition: BibTeX 报告特定条目 "didn't find database entry" 但条目存在
+  strategy: 优先排查 `.bib` 文件早期位置的花括号不匹配或格式错误，而非怀疑条目本身
+  weight: 1.0
+- id: LATE-005
+  condition: 使用外部 `.bib` 文件时 bibtex 执行失败
+  strategy: 确保 `.bib` 与 `.tex` 同目录，且在 `\bibliography{}` 前添加 `\bibliographystyle{plain}`
+  weight: 1.0
+- id: LATE-006
+  condition: 遇到 `algorithmic undefined` 或 `enumitem` 选项报错
+  strategy: 直接删除不兼容环境/选项，或改用 `algorithm2e` 包/添加 `\usepackage{enumitem}`
+  weight: 1.0
+- id: LATE-007
+  condition: 验证引用完整性时
+  strategy: 以 `.bbl` 文件中解析出的 `\bibitem` keys 为权威来源，而非直接扫描 `.bib` 文件
+  weight: 1.0

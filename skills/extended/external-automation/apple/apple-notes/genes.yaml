@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: apple-notes
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: apple-notes
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: APPL-001
+  condition: 用户需要跨设备（iPhone/iPad/Mac）同步笔记
+  strategy: 优先使用 Apple Notes (`memo`) 而非本地存储或 Obsidian
+  weight: 1.0
+- id: APPL-002
+  condition: 笔记内容包含图片或附件
+  strategy: 拒绝直接编辑操作，提示限制并建议手动处理或仅查看
+  weight: 1.0
+- id: APPL-003
+  condition: 需要快速创建或查看笔记
+  strategy: 使用 `memo notes -a "Title"` 或 `memo notes -s "query"` 进行非交互式操作
+  weight: 1.0
+- id: APPL-004
+  condition: 执行删除、移动或复杂编辑操作
+  strategy: 启用交互式模式（`-d`, `-m`, `-e`）并确保终端支持 pty 以处理用户选择
+  weight: 1.0
+- id: APPL-005
+  condition: 用户请求仅用于 Agent 内部记忆且无需同步
+  strategy: 使用 `memory` 工具而非 Apple Notes
+  weight: 1.0
+- id: APPL-006
+  condition: 需要导出笔记内容用于其他工具处理
+  strategy: 使用 `memo notes -ex` 导出为 Markdown 或 HTML 格式
+  weight: 1.0
+- id: APPL-007
+  condition: 首次运行或权限缺失 → 检查 macOS 自动化权限（System Settings → Privacy
+  strategy: Automation）并引导用户授权
+  weight: 1.0

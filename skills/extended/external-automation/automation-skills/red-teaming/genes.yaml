@@ -1,0 +1,39 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: red-teaming
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: red-teaming
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: RED-001
+  condition: 执行红队测试前
+  strategy: 必须确认输入参数（request, context）完整且符合 IO 契约
+  weight: 1.0
+- id: RED-002
+  condition: 处理用户请求时
+  strategy: 需针对 LLM 越狱攻击（如 Parseltongue、GODMODE、ULTRAPLINIAN）进行特定防御或模拟
+  weight: 1.0
+- id: RED-003
+  condition: 执行核心操作时
+  strategy: 必须参考本目录下的 scripts/ 或 references/ 以确保操作规范
+  weight: 1.0
+- id: RED-004
+  condition: 生成输出结果时
+  strategy: 需验证输出格式与内容是否符合预期契约
+  weight: 1.0
+- id: RED-005
+  condition: 遇到异常或边界场景（空输入、极大值）时
+  strategy: 必须提供包含上下文和恢复建议的明确错误信息
+  weight: 1.0
+- id: RED-006
+  condition: 执行未验证代码或暴露内部状态时
+  strategy: 视为不安全操作，必须拒绝或隔离
+  weight: 1.0
+- id: RED-007
+  condition: 进行技能改进或验证时
+  strategy: 必须通过 Golden 集合（标准输入/输出/错误）作为单一真理来源进行复现
+  weight: 1.0

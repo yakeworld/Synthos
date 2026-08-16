@@ -1,0 +1,35 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: citation-bib-crossref
+# 日期: 2026-08-17
+# 数量: 6
+
+skill: citation-bib-crossref
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 6
+genes:
+- id: CITA-001
+  condition: 当执行引用完整性审计时
+  strategy: 必须同时验证 \cite 与 \bib 的双向匹配，确保无孤儿引用（有引无条）且无僵尸条目（有条无引）
+  weight: 1.0
+- id: CITA-002
+  condition: 当发现 D8（bib条目数）为 0 时
+  strategy: 将其标记为重症问题，优先处理缺失或为空的 .bib 文件
+  weight: 1.0
+- id: CITA-003
+  condition: 当 D10a（\cite↔\bib 匹配率）低于 100% 时
+  strategy: 将其标记为中等问题，定位并修复未匹配的引用标签
+  weight: 1.0
+- id: CITA-004
+  condition: 当论文 bib 条目数 D8 少于 30 时
+  strategy: 将其标记为轻症问题，提示文献支撑可能不足
+  weight: 1.0
+- id: CITA-005
+  condition: 当准备进行批量编译或质量门审查前
+  strategy: 必须先执行本审计并将 D8/D10a 指标喂入 L0.5 数据诚实门，未通过验证则禁止编译
+  weight: 1.0
+- id: CITA-006
+  condition: 当审计结果包含多种问题类型时
+  strategy: 按重症（D8=0）、中等（D10a<100%）、轻症（D8<30）及混合问题分级报告，以便对症下药
+  weight: 1.0

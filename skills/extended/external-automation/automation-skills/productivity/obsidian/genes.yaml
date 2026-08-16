@@ -1,0 +1,40 @@
+# Gene 策略基因 — 独立进化单位
+# 技能: obsidian
+# 日期: 2026-08-17
+# 数量: 7
+
+skill: obsidian
+version: 1.0.0
+source: distilled from SKILL.md
+date: '2026-08-17'
+count: 7
+genes:
+- id: OBSI-001
+  condition: 当需要访问 Obsidian 笔记文件时
+  strategy: 优先使用 `read_file`、`write_file` 等原生文件工具而非 Shell 命令，以避免路径空格和引号转义问题
+  weight: 1.0
+- id: OBSI-002
+  condition: 当 Vault 路径包含环境变量（如 `$OBSIDIAN_VAULT_PATH`）时
+  strategy: 必须先通过 `terminal` 解析为具体的绝对路径，再传递给文件工具，因为文件工具不支持变量展开
+  weight: 1.0
+- id: OBSI-003
+  condition: 当需要搜索笔记文件名或内容时
+  strategy: '统一使用 `search_files` 工具（分别指定 `target: "files"` 或 `target: "content"`），替代
+    `grep`、`find` 或 `ls`'
+  weight: 1.0
+- id: OBSI-004
+  condition: 当需要对笔记进行局部修改且存在稳定上下文锚点时
+  strategy: 使用 `patch` 工具进行锚定追加或替换，仅在重写整个笔记更清晰时才使用 `write_file`
+  weight: 1.0
+- id: OBSI-005
+  condition: 当初始化项目知识库（Vault Init）时
+  strategy: 在每个子目录创建以 `_` 开头的 `_INDEX.md` 作为 MOC（内容地图），利用前缀使其在文件浏览器中置顶以实现快速导航
+  weight: 1.0
+- id: OBSI-006
+  condition: 当需要将外部源文件（如 PDF、TeX）纳入 Vault 时
+  strategy: 使用符号链接（symlink）映射源文件而非直接复制，以保持源目录整洁并避免 Git 跟踪冗余数据
+  weight: 1.0
+- id: OBSI-007
+  condition: 当编写笔记的 YAML frontmatter 标签时
+  strategy: '使用数组格式 `tags: [a, b, c]` 而非逗号分隔字符串，以确保更好的兼容性'
+  weight: 1.0
