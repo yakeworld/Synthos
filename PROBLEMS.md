@@ -1,6 +1,6 @@
 # Synthos 问题跟踪 (PROBLEMS.md)
 
-更新时间: 2026-08-16 08:50 (evolution: P031 关闭; P034 dsh 自动发现仅认 ~/.dsh/skills 已验证; IO_CONTRACT 157/157; P032/P033 登记)
+更新时间: 2026-08-16 (cycle-213 dsh-headless 全链路跑通: PRECHECK→DIAGNOSE→DISPATCH→VERIFY→RECORD; 捕捉 dsh 自欺 1 文件; 脏文件陷阱实测; P035 登记; P034 dsh-self-evolution 链接已补; P033 边界待用户裁决)
 
 ## 已解决 (Resolved)
 
@@ -33,15 +33,16 @@
 | 编号 | 问题 | 严重度 | 状态 |
 |------|------|--------|------|
 | P030 | dsh 与并行 cron 同库编辑竞态: cycle-211 期间 11 个 private 技能被并行 cron 同时修改, dsh 报告 (15 changed) 与实际 diff (4) 不一致 | 🟡 P1 | 已缓解: 独立 VERIFY 捕获并归因 (cycle-211 记录); 后续 dsh 周期派发前检查并行 cron 状态, 或 commit 时按 diff 归属拆分 |
-| P034 | dsh 技能自动发现仅认 ~/.dsh/skills 目录 (用户实测指正); customSkillDirs (skills-flat) 未被自动发现消费 | 🟡 P1 | 文档已修正 (dsh-self-evolution 投影链路章节, commit bf153d4); 11 个缺失链接清单待与 dsh 侧技能目录核对后补齐 |
-| P032 | 9 个 SKILL.md 正文为重复两段式结构 (同一内容出现两次, 疑似历史合并事故; dsh cycle-212 发现) | 🟡 P1 | 待修复: 独立文档去重轮 (批量 Python 去重 + 语义核对后 commit) |
-| P033 | skills/private/ 被 .gitignore 忽略且 0 文件入库: 13+ 个 private 技能仅存在于工作区与 symlink 链路, git 无备份; 隐私策略与文档缺口 | 🟡 P1 | 待决策: 纳入 git (含隐私扫描) 或保持 ignore + 文档说明; 需用户裁决隐私边界 |
+| P034 | dsh 技能自动发现仅认 ~/.dsh/skills 目录 (用户实测指正); customSkillDirs (skills-flat) 未被自动发现消费 | 🟡 P1 | 文档已修正 (commit bf153d4); **cycle-213 已补 dsh-self-evolution 缺失链接 (1/11, 实测进 dsh 目录可见)**; 其余 10 个缺失链接待核对补齐 |
+| P032 | 9 个 SKILL.md 正文为重复两段式结构 (同一内容出现两次, 疑似历史合并事故; dsh cycle-212 发现) | 🟡 P1 | **cycle-213 dsh 执行体再次独立确认 10 个目标文件存在重复块** (citation-appropriateness-verification/knowledge-base-audit/ode-simulation-tuning/synthos-akne-bridge/dataset-discovery/kg-bridge/citation-bib-crossref/skill-absorption/system-bridging/literature); dsh 只在首个块插入原则, 未触碰重复块; 待独立去重轮 (批量 Python 去重 + 语义核对后 commit) |
+| P033 | skills/private/ 被 .gitignore 忽略且 0 文件入库: 13+ 个 private 技能仅存在于工作区与 symlink 链路, git 无备份; 隐私策略与文档缺口 | 🟡 P1 | **cycle-213 实测发现 skills/private/ 有 9 个技能仍在 git index 中 (未被 12cf791 清除); cycle-213 commit 6bee73a 把这 9 个的修改也提交了 (原则小节, 方法论内容, 非敏感)**; 待用户裁决隐私边界 (纳入 git 含隐私扫描 / 保持 ignore); **裁决前 dsh 周期 RECORD 只提交 public 技能, private 原则改进留在磁盘**; **cycle-214 实测后果: 14 个 private 原则改进未提交 => 计为 dirty => structural/absorption 被拉低, OVERALL 0.9892->0.9660 (非质量回归, 是 P033 测量假象; 原则改进真实, optimize 0.9408->0.9599 上升); 裁决选项: (a) 纳入 git 含隐私扫描 => 可提交 => 测量恢复; (b) 保持 ignore => 需 diagnose.py 的 dirty 计数排除 skills/private/ (评分策略, 归宪法/用户, 引擎不自改)** |
 | P010 | BPPV 论文 03-code/ 空目录 — 仿真代码缺失 | 🔴 P0 | 投稿阻塞项; 需从来源恢复或补写可复现脚本 |
 | P011 | BPPV 论文正式投稿 (Elsevier EES 手动上传) | 🔴 P0 | 14项材料齐, 待人工操作 |
 | P012 | state.json 管线 239/241 篇 phase=unknown | 🟡 P1 | 47天停滞, 需批量重扫描 |
 | P013 | 28 篇 harvest 论文 NOT_STARTED 无评分 | 🟡 P1 | 参考论文(非产出), 可按需 quality-gate |
 | P014 | 省级人才申报通道确认 | 🟡 P1 | 领军/青年/医坛新秀 待选 |
 | P015 | 根分区 79% (62G 剩余) | 🟢 P2 | 持续增长需监控 |
+| P035 | dsh 自进化周期两个实测陷阱 (cycle-213): (a) 脏文件陷阱 — commit 前跑 diagnose 读到 0.958 (未提交改动计为 dirty 拉低 structural/absorption), commit 后读到 0.9892; (b) dsh 自欺 — headless 声称 15/15 但 knowledge-acquisition 未写入 (独立重算 14/15 捕获, 父 Agent 修复) | 🟡 P1 | 已缓解并固化: RECORD 纪律改为 **commit-first-then-measure**; VERIFY 独立重算 (禁复用 dsh 报告) 已实际捕捉自欺; dsh 任务 prompt 加入"逐文件 grep 自检, 勿假设成功报 true" (cycle-214 起) |
 
 ## 误报澄清 (2026-08-07 简报)
 

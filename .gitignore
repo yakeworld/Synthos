@@ -186,9 +186,10 @@ outputs/competitions/
 projects/competition-synthos/
 
 # ============================================
-# 18. 私有技能（凭证/论文审计/系统运维，不入库）
+# 18. 私有技能（2026-08-16 P033 用户裁决: 纳入 git, 已 privacy-scan 脱敏）
 # ============================================
-skills/private/
+# skills/private/  已取消 ignore（原"不入库"；2026-08-16 用户裁决纳入 git,
+#   已脱敏 34 处: SS API keys/PubScholar SALT/2手机号/用户+学生邮箱/全部 T1 IP）
 
 
 # ============================================
@@ -223,9 +224,8 @@ paper-queue.json
 # ============================================
 # 22. 敏感参考文件（含实际凭证/密钥）
 # ============================================
-skills/private/extended/external-automation/debug-env-variables/references/ss-dual-key-failover.md
-skills/private/core/citation-appropriateness-verification/references/ss-api-key-management.md
-skills/private/extended/external-automation/debug-env-variables/references/api-key-fallback-pattern.md
+# skills/private/ 下 3 个 SS-API-key 文档 (ss-dual-key-failover / ss-api-key-management /
+#   api-key-fallback-pattern) 已脱敏 (YOUR_API_KEY_HERE 占位) -> 2026-08-16 起随 skills/private/ 纳入 git
 skills/extended/external-automation/automation-skills/github/references/git-credential-sanitization.md
 tools/paper-manager/src/sources/pubscholar.py
 
