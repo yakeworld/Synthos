@@ -109,7 +109,7 @@ Details: [references/partial-workflows.md](references/partial-workflows.md)
 
   Full rules at `references/presets/<preset>.md` — load the file when a preset is picked.
 
-- **Compatibility matrix** and **content-signal → preset** table live in [references/auto-selection.md](references/auto-selection.md Read it before recommending combinations in Step 2.
+- **Compatibility matrix** and **content-signal → preset** table live in [references/auto-selection.md](references/auto-selection.md). Read it before recommending combinations in Step 2.
 
 ## File Structure
 
@@ -223,7 +223,7 @@ Use Hermes' built-in `image_generate` tool for all image rendering. Its schema a
 
 **Backup rule**: existing `prompts/…md` and `…png` files → rename with `-backup-YYYYMMDD-HHMMSS` suffix before regenerating.
 
-Full step-by-step workflow (analysis, storyboard, review gates, regeneration variants): [references/workflow.md](references/workflow.md
+Full step-by-step workflow (analysis, storyboard, review gates, regeneration variants): [references/workflow.md](references/workflow.md)
 
 ## References
 
