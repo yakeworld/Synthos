@@ -21,7 +21,6 @@ metadata:
     synthos_mechanical_atoms: ''
 ---
 
-
 |
 | A     | 0.66    | 0.71      | +7%   |
 | B     | 0.48    | 0.70      | +45%  |
@@ -106,10 +105,6 @@ metadata:
 
 # Pima Audit---
 
-
-
-
-
 |
 | A     | 0.66    | 0.71      | +7%   |
 | B     | 0.48    | 0.70      | +45%  |
@@ -155,16 +150,6 @@ metadata:
 **输入**：请求描述、上下文信息。
 **输出**：执行结果、状态反馈。
 
-## 验证清单 · VERIFICATION
-
-- [ ] 跨数据集对比实验条件一致：ZeroReplacer、Pipeline 结构、CV 设置、评估指标均相同，否则标注"对比无效"
-- [ ] 实验代码为独立 `.py` 脚本且 cell 有输出，无输出记录的 Notebook 视为设计草稿、拒绝作为可复现记录
-- [ ] 基线数量与声称一致（如 helix_benchmark 27/32），缺失模型逐一点名（DummyClassifier/GaussianProcessClassifier/StackingClassifier/TunedThresholdClassifierCV/FixedThresholdClassifier）
-- [ ] 文献验证用 Semantic Scholar + CrossRef/PubMed 多源互补搜索，过滤 Acc>90% 或 F1>0.70 论文并标注数据泄露风险
-- [ ] 高准确率论文交叉参考 OpenML 公开实验（PIDD ID:292）作为第三方验证
-- [ ] 泄漏后 F1 趋同 ~0.70 标注为经验观察而非理论保证，并说明需更多数据集持续验证
-- [ ] 严格区分 Pima（方法论审计 32 基线）与 HCS-3WT（新架构验证 7 模型）范式，未混同结论
-
 ## 核心原则 · PRINCIPLES
 
 1. **准确为先**: 所有输出必须经过事实核查，不编造数据
@@ -191,8 +176,6 @@ metadata:
 > 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
-
-
 
 ## Genes (策略基因)
 

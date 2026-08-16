@@ -63,11 +63,13 @@ metadata:
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] state.json 顶层读取：从顶层字段读取 quality_score，未误查嵌套字段导致分数错误
+- [ ] D10a 格式兼容：D10a 已兼容数字（100.0）与字符串（"100%"）两种格式，未解析失败
+- [ ] 引用异常单独核查：D10a=0 或 Gates_result 格式不一致（字符串/字典）的论文已单独检查 orphans_count 与 zombies_count
+- [ ] 代码位置全局搜索：未仅依赖 code/ 目录存在与否，已全局搜索论文目录定位实际代码位置
+- [ ] pdflatex 编译干净：已运行 pdflatex 确认 0 error、0 undefined ref 并生成最终 PDF
+- [ ] GitHub 仓库已推送：已创建 GitHub 仓库并推送代码，满足 G7 可复现性要求
+- [ ] 署名邮箱已核验：署名确认为 "Department of Neurology, Wenzhou People's Hospital" 且邮箱匹配指定用户邮箱
 
 ## 核心原则 · PRINCIPLES
 
