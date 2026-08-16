@@ -267,11 +267,13 @@ python3 scripts/web_search.py "query" --engine googler --max 10
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 三级降级链已按优先级执行：SerpAPI → Brave → SearXNG → Startpage/Tor，未跳过可用层级
+- [ ] 每条搜索结果均符合统一输出契约 `{title, url, snippet, position, engine}`，engine 字段正确标记实际来源
+- [ ] API key 已从环境变量读取（`SERPAPI_KEY` / `BRAVE_SEARCH_API_KEY` / `SERPER_API_KEY`），未硬编码
+- [ ] SearXNG 2026+ 部署使用 `settings.yml`（非 `.yaml`），`limiter.toml` 已移除或 `server.limiter: false` 已设置
+- [ ] 若所有引擎集体 ConnectTimeout：已先 curl 宿主机外网排除网络故障，再切换 Tailscale Exit Node 或 Tor SOCKS5 代理
+- [ ] Semantic Scholar API 访问返回 TCP RST（非 429）时，已识别为 Tor 出口 IP 被封锁并切换出口，未无效重试
+- [ ] 学术搜索未依赖 SearXNG 的 `google_scholar` 专用引擎（易被反爬拦截），改用 Google 引擎间接获取 Scholar 链接
 
 ## 核心原则 · PRINCIPLES
 

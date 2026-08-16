@@ -128,11 +128,13 @@ grep -c 'undefined' paper.log
 
 ## 验证清单 · VERIFICATION
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 任何批量 `replace`/`patch` 或 `rm` 操作前已创建带时间戳的 `.bak` 备份，未使用 `paper.*` 通配符删除
+- [ ] `Citation undefined` 已执行完整编译链 `pdflatex → bibtex → pdflatex → pdflatex`，且 `paper.bbl` 非空、`paper.blg` 显示 0 warnings
+- [ ] 外部 `.bib` 场景：`\bibliography{}` 前已添加 `\bibliographystyle{plain}`，且 `.bib` 与 `.tex` 在同一目录
+- [ ] 表格 `\bottomrule` 前一行以 `\\` 结尾，未出现 `Misplaced \noalign` 或级联 `Missing \cr` 错误
+- [ ] 修复验证：`pdflatex -interaction=nonstopmode` 编译后 `! LaTeX Error` 计数为 0，`grep -c 'undefined' paper.log` 为 0
+- [ ] 不兼容环境已处理：`algorithmic undefined` → 删除环境或改用 `algorithm2e`；`enumerate[nosep]` → 添加 `\usepackage{enumitem}` 或去掉选项
+- [ ] D10a 引用完整性以 `.bbl` 中 `\bibitem` keys 为权威来源验证，而非扫描 `.bib`
 
 ## 核心原则 · PRINCIPLES
 

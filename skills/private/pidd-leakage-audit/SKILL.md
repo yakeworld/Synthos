@@ -77,11 +77,13 @@ metadata:
 - **工具择用**：SMOTE 用 `imblearn.Pipeline`，勿用 `sklearn.Pipeline`（不支持 SMOTE）；SHAP 用独立 venv（numpy≥2.0）。
 
 
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+- [ ] 交叉验证中预处理（含 SMOTE、imputation）已隔离在 fold 内部，无折外预处理
+- [ ] 已使用 `imblearn.Pipeline` 而非 `sklearn.Pipeline` 执行 SMOTE
+- [ ] 若报告 F1 > 0.90，已视为异常并立即排查数据泄漏（PIDD 768 样本最佳 F1≈0.71）
+- [ ] SHAP 分析已在独立 venv（numpy≥2.0）中执行，未使用系统 Python（Debian numpy 1.x 编译包冲突）
+- [ ] 引用 CRISP-DM 方法论时已并引 Shearer (2000) 或 Wirth & Hipp (2000) 原始文献
+- [ ] 缺失值处理已禁止全局 imputation，填充值在验证折内独立计算
+- [ ] 输出契约完整：`cv_results.csv`（10-fold CV metrics）、`comprehensive_results.json`、`run_shap.py`、`report.py` 均已生成
 
 
 ## Genes (策略基因)
