@@ -72,22 +72,8 @@ metadata:
 - `references/skill-usage-data.md` — 首次完整采集的技能使用率数据(27个技能、21个cron任务、1352次运行)
 - `references/skill-usage-data-v2.md` — 更新版：含已归档任务、技能库统计、evolution-state.json摘要
 
+
 # Skill Enhanced Llm---
-
-
-
-
-
-|
-| 1.0.1 | 2026-06-29 | 补充实际运行数据、cron统计命令、未映射目录清理pitfall、层级化关键词检测规则 |
-| 1.0.0 | 2026-06-29 | 初始版本: 基于Auto-Skill/SkillWeaver/Skill-MAS/OpenClaw-Skill论文的方法论吸收 |
-
-## 十、参考文件
-
-- `references/skill-usage-data.md` — 首次完整采集的技能使用率数据(27个技能、21个cron任务、1352次运行)
-- `references/skill-usage-data-v2.md` — 更新版：含已归档任务、技能库统计、evolution-state.json摘要
-
-
 > (P032 去重: 保留另一份 4 行独有内容)
 ## 验证清单 (Verification)
 - [ ] 技能使用率数据已采集且与 v2 更新版一致（含已归档任务、技能库统计、evolution-state.json 摘要）
