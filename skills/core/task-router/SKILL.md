@@ -259,7 +259,7 @@ delegate_task(
 7. **循环模式不适用一次性查询** — 搜索/提取类查询用标准链
 8. **子Agent context 陷阱** — 不要在 delegate_task 的 context 里写详细步骤。子Agent有自己的SOUL.md。context 写越多，子Agent越倾向于"理解后再实现"而非"直接调用成熟脚本"
 9. **批量任务陷阱** — 不要试图让一个子Agent处理大量论文（>10篇）。每个子Agent有超时限制。大任务应拆成多个并行子任务
-10. **文献检索：jabkit-rs 优先，literature.py 仅下载** — 搜索学术文献用 `jabkit-rs fetch`（26 源，S2 已修复），`literature.py` 仅用于 PDF 下载和管线编排
+10. **文献检索：jabkit-rs 优先，literature.py 仅下载** — 搜索学术文献用 `jabkit-rs fetch`（契约见 knowledge-acquisition/tools/jabkit-rs.md），`literature.py` 仅用于 PDF 下载和管线编排（注册表见 tools/tool-registry.md）
 
 ---
 
@@ -322,18 +322,18 @@ delegate_task(goal="...", context="先加载skill A, 再调脚本B, 然后...")
 - 子 Agent 找不到 ACQ skill 时，会 fallback 到 `literature search` CLI 命令
 - 本会话实测：微操版 interrupted，信任版 5 篇 PDF ✅
 
-执行任何任务前，按优先级检查：
+执行任何任务前，按优先级检查（**工具契约细节见 [`tools/tool-registry.md`](tools/tool-registry.md)**）：
 
 ### L0：不重新造轮子
 - **先查 skill 库** — skills_list 看有没有现成技能
-- **再查成熟脚本** — literature.py、paper-manager/download_one.py 等
+- **再查成熟脚本** — 见 tool-registry 工具清单（literature.py、paper-manager/download_one.py 等）
 - **最后查成功案例** — 之前怎么做的（如 dual-ellipse 处理流程）
 - **只有以上都不存在时**，才自己写实现
 
 ### L1：能调用
 - skill_view(name) 能加载 → 内容非空
 - 不是 redirect stub（knowledge-acquisition 指向 literature，必须跟下去）
-- 脚本路径存在、CLI 参数正确
+- 脚本路径存在、CLI 参数正确（注册表契约）
 
 ### L2：执行稳定
 - 步骤可复现，参数已验证
@@ -344,11 +344,10 @@ delegate_task(goal="...", context="先加载skill A, 再调脚本B, 然后...")
 - 调成熟脚本 > 读代码后再实现 > 自己从头写
 - 先调通一个最小用例 → 再扩展
 
-### 常见违规模式（此会话发现）
+### 常见违规模式（此会话发现，完整清单见 tool-registry）
 - ❌ 写了 batch_pipeline_v1~v5 系列，每次都在重新实现下载逻辑。应有：直接调 literature.py
 - ❌ 子任务读了现有脚本但没调用，自己写 wget。应：直接 python3 existing_script.py
 - ❌ 7 源检索写成自定义 API 调用。应：直接用 literature.py --sources ...
-- ❌ 只查 .bbl 不查内联 thebibliography。应：同时处理两种引用格式
 
 ### 用户风格偏好
 - 简短直接，数据优先
