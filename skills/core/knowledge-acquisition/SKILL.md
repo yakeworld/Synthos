@@ -50,6 +50,18 @@ allowed-tools:
 - 弃用即弃用：jabkit（Java）挂起无输出，只用 jabkit-rs（Rust 编译版）；工具变更以实测为准。
 - 凡数必源：DOI 可溯、串流必除、去重经 lit-import。
 
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考上方完整文档。
+
+- **[KA-001]** 需要检索学术文献 → jabkit-rs fetch --provider=<源> --query=<关键词> --porcelain。不用 jabkit(Java,已弃用会挂起)。Crossref 最快无 key; S2 已修复; arXiv 最新
+- **[KA-002]** PDF 下载验证 → head -c 5 (5字节不是4) 必须=%PDF-，再 pdfinfo 核标题防串流
+- **[KA-003]** PDF 下载失败 → 四层降级: bban.top→Sci-Hub→LibGen→Anna's。7次后429→rproxy轮换。Anna's需TOR,下载端被封锁
+- **[KA-004]** Medline/PubMed 检索 → 需 NCBI key + 先 curl esearch DOI→PMID
+- **[KA-005]** 批量下载 → grep DOI from .bib → xargs doi-fetch。429→间隔或rproxy
+- **[KA-006]** 多源合并 → lit-import 去重入库，BibTeX 无重复
+
 ## 1. 检索（jabkit-rs 统一入口）
 
 ```bash

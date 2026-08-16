@@ -55,6 +55,17 @@ metadata:
 >
 > **三步成文：** 一曰结构（Toulmin骨架），二曰修辞（Hyland润色），三曰验证（IMRAD检校）。
 
+
+## Genes (策略基因)
+
+> 紧凑策略表示。条件→策略。需要深度时参考上方完整文档。
+
+- **[AE-001]** 构建论证 → Toulmin 骨架: claim→data→warrant→backing→qualifier→rebuttal。四步不可缺: claim→evidence→inference→conclusion
+- **[AE-002]** 论据来源 → 不自行发明论据。必须来自 EXT/HYP。无据之言如无根之木
+- **[AE-003]** 修辞策略 → Hyland 框架选学科适切修辞。CARS 模型建引言叙事。不过度论证(只论证核心假设)
+- **[AE-004]** IMRAD 验证 → Introduction 建空白, Methods 可复现, Results 客观, Discussion 解释+局限。结构完整性检查
+- **[AE-005]** 引用功能 → 标注引文论证角色: motivation/constraint/precedent/contrast。引用功能分类
+
 ## 方法层·白话
 
 论证表达是认知管道第 5 步（ACQ→EXT→ASC→HYP→**ARG**→VER）。

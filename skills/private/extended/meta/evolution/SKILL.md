@@ -95,6 +95,50 @@ metadata:
 | 724-office (3.8) | absorbed_methodology | Nudge Registry + Trigger Functions + Auto-Inject Hints | evolution + quality-gate | 2026-06-05 |
 | Claude Code (4.5) | absorbed_methodology | Hooks + Confidence Scoring + Parallel Agents + Session Start Context | evolution + quality-gate + task-router | 2026-06-05 |
 
+
+## Gene 层 (策略基因) — v2.24 新增
+
+> **基因胜于长文，压缩方得真传。** (EvoMap 吸收, 2026-08-17)
+
+### 架构
+
+```
+SKILL.md (容器)
+├── Frontmatter (元数据)
+├── 原则 (Principles)
+├── Genes (策略基因) ← 紧凑层，优先加载
+│   - [ID] 条件 → 策略
+│   - 表观遗传: task-router 按任务特征选择激活 Gene
+├── 方法层 (完整文档) ← 深度参考
+├── 验证清单
+└── Golden Set
+```
+
+### 进化循环中的 Gene
+
+| 步骤 | Gene 角色 |
+|:-----|:---------|
+| DIAGNOSE | 检查 Gene 覆盖率 (有 Genes 小节的技能占比) |
+| OPTIMIZE | 为缺失 Gene 的技能蒸馏策略基因 (从完整文档提取) |
+| VERIFY | Gene 独立验证: 用 Gene-only 条件执行任务，对比完整文档 |
+| CRYSTALLIZE | 新发现的模式→Gene 候选→验证后正式录入 |
+
+### Gene 蒸馏规则
+
+1. 从 SKILL.md 的 原则 + 方法层 提取核心策略
+2. 每条 Gene = 条件 + 策略 (一句话)
+3. 每个技能 4-8 条 Gene (太少=覆盖不足，太多=失去压缩意义)
+4. Gene 必须可独立理解 (不依赖完整文档上下文)
+5. 表观遗传激活: task-router 根据任务类型选择激活哪些 Gene
+
+### Gene 质量检查
+
+- [ ] 每条 Gene 有明确条件 (when)
+- [ ] 每条 Gene 有明确策略 (what to do)
+- [ ] Gene 不重复 (同技能内无重叠)
+- [ ] Gene 与完整文档一致 (不矛盾)
+- [ ] 4-8 条/技能
+
 ## 核心流程
 
 ```
