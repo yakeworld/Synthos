@@ -65,6 +65,22 @@ author: Synthos
 - **Golden Output**: 生成 `~/codex-vllm.sh`（环境变量与默认参数封装）、`~/workspace/START_HERE.md` + `*培养方案.md`、`~/workspace/WORK_CHECK_REPORT.md`（环境验收证明）
 - **Golden Error**: SSH 连通性验证未通过 → 拒绝搭建环境（"道不通，则礼不行"）；WORK_CHECK_REPORT.md 未生成 → 验收不成立，不得声称环境就绪
 
+## 示例 · EXAMPLES
+
+**输入**：`remote_host: "ssh student@10.0.0.5:2222"`（SSH 连通验证通过），`software_list: ["codex", "obsidian"]`
+**输出**：`~/codex-vllm.sh`（含 VLLM_API_KEY、DEFAULT_MODEL 等环境变量）+ `~/workspace/START_HERE.md`（首次登录 5 步引导）+ `~/workspace/培养方案.md`（3 年里程碑）+ `~/workspace/WORK_CHECK_REPORT.md`（SSH 连通 ✅, codex 启动 ✅, 软件清单就位 ✅）
+
+**输入**：`remote_host: "ssh student@10.0.0.99:2222"`（SSH 超时）
+**输出**：拒绝搭建，输出 "道不通，则礼不行" — SSH 连通性未通过，不生成任何环境文件
+
+## 约束规则 · RULES
+
+- SSH 连通性验证是硬前置，未通过则不搭建任何环境
+- codex 环境收敛于 `~/codex-vllm.sh` 单脚本，不分散配置
+- START_HERE 与培养方案缺一不可：先入门引导，后研究方向
+- 验收以 `WORK_CHECK_REPORT.md` 为凭，不凭口头声称环境就绪
+- Windows 便携包必须零依赖（绿色软件），不要求学生安装运行库
+
 ## 验证清单 (Verification)
 
 - [ ] `~/codex-vllm.sh` 一键脚本可用（环境变量与默认参数封装生效）

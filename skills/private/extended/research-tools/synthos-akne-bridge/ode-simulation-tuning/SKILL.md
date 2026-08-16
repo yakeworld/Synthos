@@ -76,6 +76,25 @@ For tension/curvature systems, the variable roles differ from biochemical system
 ### Success Criteria
 All 9 metrics pass simultaneously. If any fail, go back to the step where it first started failing and adjust from there.
 
+## 示例 · EXAMPLES
+
+**输入**：Retinal Shear P140 v2 — alpha=0.65, beta=0.12, mu=0.04, eps=0.35, kappa=0.14, A_hp=0.42, E_hp=0.55 + D(t) 刺激信号
+**输出**：9 项指标全过 — R²=0.997, AUC=0.93, ablation=5.81x, MAPE_R=0.7%（曲线拟合残差法）；Sobol: R↔D feedback 26.5% 排 #2
+
+**输入**：P141 新域初扫 — alpha=0.65 基线直接应用，发现 max(A)=0.97（冲顶），ablation=1.2x
+**输出**：诊断：耦合项 `+kappa*V*(A-A_hp)` 为正反馈 → 改为加性 `eps*(A-A_hp)` 且 kappa 0.14→0.08 → 重跑 max(A)=0.84, ablation=3.1x ✅
+
+## 约束规则 · RULES
+
+- D=0 下必须运行 1000+ 步均衡后方可测基线，未衡而测参数皆妄
+- 无耦合消融须移除全部耦合机制（flow-stress / E→tau / 产生项），留残则 ablation 失真
+- 新域从 P140 已验证基线出发，一次只调一个参数，不盲扫八维
+- 耦合项必须加性且基线锚定（`eps*(X-X_hp)`），禁止乘性正反馈
+- 9 项指标须同时达标，任一项失则退回首个失守步骤重调
+
+### Success Criteria
+All 9 metrics pass simultaneously. If any fail, go back to the step where it first started failing and adjust from there.
+
 # Ode Simulation Tuning---
 
 

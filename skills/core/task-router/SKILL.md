@@ -294,6 +294,14 @@ delegate_task(goal="...", context="先加载skill A, 再调脚本B, 然后...")
 - 做错了直接说错在哪
 - 每次执行后给可验证的结果，不是描述
 
+## 示例 · EXAMPLES
+
+**输入**：`query: "搜索3D nystagmus文献"`, `context: {已执行原子: []}`
+**输出**：`route: "standard"`, `atom_chain: ["knowledge-acquisition", "knowledge-extraction"]`；创建 `pipeline_trace.json`；delegate_task(goal="搜索3D nystagmus文献", context="")
+
+**输入**：`query: "同时搜索VOR和BPPV两个方向的文献并分析矛盾"`
+**输出**：`route: "parallel"`，拆为 2 个独立子任务（各 ACQ→EXT→ASC），并行执行后汇总关联对比
+
 ## Verification
 
 - [ ] 查询已分析：模式确定 + 原子链确定

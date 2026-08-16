@@ -263,6 +263,22 @@ commit `d18616e` 是最后完整包含 literature 代码的提交。恢复后需
 - ~~**literature.py 脚本缺失**~~: ✅ 脚本存在。
 - ~~**PDF 魔数验证用 `startswith` 而非切片**~~: ✅ 已修复。
 
+## 示例 · EXAMPLES
+
+**输入**：`jabkit-rs fetch --provider=Crossref --query="pupil light reflex ODE" --porcelain`
+**输出**：~2s 返回 BibTeX 条目（title/authors/DOI/year 齐备），`--max 100` 默认返回 100 篇候选
+
+**输入**：`python3 literature.py pipeline "iris recognition" --sources crossref pubmed --output-dir ./pdfs`
+**输出**：`./pdfs/` 下落盘 12 篇 PDF，每篇 `%PDF-` 魔数 + pdfinfo 标题验证通过；diagnose 报告 7 源检索 + 12 通道下载测试全绿
+
+## 约束规则 · RULES
+
+- 检索统一走 `jabkit-rs fetch`（26 源），本 skill 仅负责 PDF 下载与管线编排
+- S2 请求 fields 不得含 `pdfUrls`/`urls`（已移除，否则 400）
+- CrossRef 请求不带 `mail` 参数，`order` 仅 `desc`/`asc`
+- 下载 PDF 必须通过 `%PDF-` 魔数验证 + pdfinfo 标题核对，排除串流
+- PubScholar API 已关闭，无凭证时静默返回空列表，须降级其余 4 源
+
 ## 验证清单 (Verification)
 
 - [ ] 检索用 `jabkit-rs fetch`（26 源统一入口）；PDF 下载已迁移至 doi-fetch/knowledge-acquisition

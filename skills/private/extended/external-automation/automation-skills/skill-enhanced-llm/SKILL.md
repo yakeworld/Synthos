@@ -47,6 +47,14 @@ metadata:
 - **Golden Output**: `references/skill-usage-data-v2.md`（运行 1352 次、已归档任务、技能库统计，与 v1 同口径）；`unmapped_dirs: []` 清理判定（仅清理未在用目录）
 - **Golden Error**: 未映射目录清理误删在用技能/脚本目录 → 先核后清违反原则，回滚；或 21 个 cron 统计命令不可复现 → 数据无源，报告拒发
 
+## 示例 · EXAMPLES
+
+**输入**：`skills/`（27 技能）+ cron 任务目录（21 任务）+ `evolution-state.json` 摘要
+**输出**：`references/skill-usage-data-v2.md` — 运行 1352 次、已归档任务 3 个、技能库 27 条目（含使用率排序）；`unmapped_dirs: []`（无清理需求）
+
+**输入**：扫描发现 `skills/old-experiment/` 无 cron 引用、无 skill_view 调用记录
+**输出**：`unmapped_dirs: ["skills/old-experiment/"]` → 核验不在用后清理，报告更新为 26 技能
+
 ## 十、参考文件
 
 - `references/skill-usage-data.md` — 首次完整采集的技能使用率数据(27个技能、21个cron任务、1352次运行)

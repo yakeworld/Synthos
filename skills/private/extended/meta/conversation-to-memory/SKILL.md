@@ -64,6 +64,22 @@ author: Hermes Agent
 7. **超过80%容量**：必须主动清理，否则整批操作被拒
 8. **记忆膨胀**：每条记忆标注"生长方向"和"发酵潜力"，不能回答这两问的暂存而非删除
 
+## 验证清单 · VERIFICATION
+
+1. **输入**: 会话满足 ≥5 次工具调用且有明确产出；current_memory 使用率已检查（<80%）
+2. **过程**: 三问过滤（生长方向/框架维度/发酵潜力）已逐条执行；宪法护栏检查通过
+3. **输出**: 记忆条目均为陈述式；操作按 remove→replace→add 顺序执行；使用率回落至 60-75%
+4. **边界**: 容量 >80% 时已主动清理；空会话（无高价值信息）时输出空 entries 不强行写入
+5. **错误**: 整批操作失败时 all-or-nothing 回滚；Unicode 匹配失败时改用短关键字符串重试
+
+## 示例 · EXAMPLES
+
+**输入**：`session_transcript: <12 次工具调用，完成 lit-import 去重入库>` + `current_memory: 1800/2200 chars（82%）`
+**输出**：remove 1 条过期路径 → add 2 条（"lit-import 去重经 BibTeX key 排序，重复条目 0" 标注：生长方向=工具链稳定/维度=P1 原子可复现/发酵=可沉淀为独立 skill）→ 使用率 71%
+
+**输入**：`session_transcript: <8 次调用，PR#42 merged>`
+**输出**：memory_entries: []（已完成任务 7 天后是噪音，归 session_search，不写入记忆）
+
 ## Verification
 
 1. 所有记忆是否为陈述式而非指令式？

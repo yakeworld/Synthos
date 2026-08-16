@@ -205,6 +205,14 @@ jabkit-rs fetch --provider=SemanticScholar --query="iris" --porcelain |
 - **Golden Output**: 25s 内产出 BibTeX；PDF 通过 `head -c 5 = %PDF-`（5 字节）且 `pdfinfo | grep Title` 标题与 DOI 论文一致；多源合并经 lit-import 入库无重复条目
 - **Golden Error**: 误用已弃用的 Java `jabkit` → 挂起无输出（实测 261s 无结果）；或 PDF 魔数校验读 4 字节失败 → 该 DOI 标为下载失败，不得入库
 
+## 示例 · EXAMPLES
+
+**输入**：`jabkit-rs fetch --provider=SemanticScholar --query="iris recognition" --porcelain` + `doi-fetch 10.1167/iovs.1.1.1 -o paper.pdf`
+**输出**：~25s 内产出 BibTeX 条目；`paper.pdf` 通过 `head -c 5` = `%PDF-` 且 `pdfinfo | grep Title` 显示 "Iris recognition in ..." 与 DOI 论文一致
+
+**输入**：`grep -ohP 'doi\s*=\s*\{([^}]+)\}' references.bib` → `xargs -I{} doi-fetch {} -o pdfs/{}.pdf`（50 篇批量）
+**输出**：48 篇成功（`%PDF-` 验证通过），2 篇 429 → rproxy 代理轮换后重试成功
+
 ## 相关技能
 
 - `knowledge-extraction` — 从 PDF 提取结构化知识

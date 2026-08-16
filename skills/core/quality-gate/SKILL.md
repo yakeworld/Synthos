@@ -189,6 +189,22 @@ python3 quality-gate-runner.py \
 - [ ] 报告保存为 quality-report.md
 - [ ] state.json 已更新
 
+## 示例 · EXAMPLES
+
+**输入**：`paper_dir: "outputs/papers/pima-crispdm"`, `mode: "full"`
+**输出**：`overall_score=0.92, overall_pass=true`；G3 orphan citations=0, L0.5 score=0.8；quality-report.md 按固定模板生成并更新 state.json
+
+**输入**：`paper_dir: "outputs/papers/bppv-nystagmus"`, `mode: "fast"`（预检）
+**输出**：`overall_score=0.71, overall_pass=false`；G4 发现 1 处硬编码 API key（P0）→ 修复循环触发 → 重跑后 overall_score=0.87 通过
+
+## 约束规则 · RULES
+
+- 全部检查走 `quality-gate-runner.py`，不执行自行编写的检查逻辑
+- L0.5 数据诚实门与 G4 宪法合规为一票否决：此门失则整体不通过
+- 不达标不退出：按 P0→P1→P2 逐档修复，连续 3 次未过方请人工介入
+- state.json 自报值不可信，一律以 runner 实测输出为准
+- 报告必须按 `references/comprehensive-quality-report-template.md` 固定模板生成
+
 ## 边界声明
 
 - 不保证论文质量高（只保证检查流程完整）

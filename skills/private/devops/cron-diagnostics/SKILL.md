@@ -159,6 +159,22 @@ cronjob action=update job_id="<id>" model="..." provider="..."
 | 功能重叠 | 3 组 | 0 |
 | 配置错误 | 1 | 0 |
 
+## 示例 · EXAMPLES
+
+**输入**：直接触发（`cronjob action=list` 采集 15 个任务）
+**输出**：诊断报告 JSON — 总任务 15（付费 6, 已暂停 2, 错误 1）；功能重叠 3 组（D8 扫描 + bib 标准化）；优化建议 5 条（remove×2, update×2, merge×1）→ 执行后 10 任务、付费 4
+
+**输入**：批量 no_agent 任务同时 timeout + `ls ~/.codex/profiles/` 缺失
+**输出**：HIGH 级配置错误判定 → 先修复 codex profile 完整性，再执行批量操作
+
+## 约束规则 · RULES
+
+- 先删后加：删除无效/冗余任务优先于修复配置
+- 付费（DeepSeek）任务控制在 4-6 个，其余用免费模型
+- 心跳类 30m 可接受，扫描类 ≤4h，论文任务 daily 足够
+- 批量 no_agent 任务同时 timeout 时必须先检查 codex profile 完整性
+- 每个优化建议必须对应一个可执行 action（update/remove/create）
+
 ## 参考
 
 - `references/cron-diagnostics-pattern.md` — 诊断模式详细步骤

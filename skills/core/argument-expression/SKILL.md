@@ -294,6 +294,14 @@ EOF
 - [ ] 包含反方观点及回应
 - [ ] 已保存：arguments.json + introduction_draft.md + imrad_report.md
 
+## 约束规则 · RULES
+
+- 只论证 HYP 标记 priority=H 的核心假设，不对非核心假设展开完整 Toulmin
+- 每个核心主张至少引用 2 篇独立来源，禁止单源依赖
+- 全篇统一一种修辞策略（数据驱动/解释式/展示式），不跨段切换
+- CARS Move1-3 严格分离，方法细节与结果不得混入引言
+- IMRAD 各节内容不得跨界：Results 不含解释，Discussion 不含新结果
+
 ## 边界声明
 
 - 本原子只做**论证构建**，不做假设生成（那是HYP）

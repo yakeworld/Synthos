@@ -55,6 +55,21 @@ category: research
 - **Golden Output**: `routing: "research/daily-intelligence-briefing"` 分流；同类：cron 请求 → `devops/cron-system-maintenance`，健康检查 → `devops/project-health-audit`；本技能不产出执行结果
 - **Golden Error**: 在本技能文件内直接实现日常自动化逻辑（未分流即执行）→ 违反 REDIRECT 边界，验证清单第 2 条不通过
 
+## 示例 · EXAMPLES
+
+**输入**：`routine_request: "生成今日 arXiv/PubMed 情报"`
+**输出**：`routing: "research/daily-intelligence-briefing"` → 加载该技能执行三源情报采集
+
+**输入**：`routine_request: "检查 cron 任务健康度"`
+**输出**：`routing: "devops/cron-system-maintenance"` → 加载 cron 运维技能执行诊断
+
+## 约束规则 · RULES
+
+- 本技能仅做分流判断，不在此文件内实现任何日常自动化逻辑
+- 分流目标仅限三个：daily-intelligence-briefing / cron-system-maintenance / project-health-audit
+- 未匹配到三个目标之一的请求，提示用户明确意图而非猜测执行
+- 不修改目标技能的内容，只做 `skill_view` 重定向
+
 ## 验证清单 (Verification)
 
 - [ ] 已按 REDIRECT 分流至 `research/daily-intelligence-briefing`（每日智报）与 `devops/cron-system-maintenance`（Cron运维）

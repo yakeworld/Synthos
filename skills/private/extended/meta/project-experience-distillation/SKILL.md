@@ -50,6 +50,14 @@ metadata:
 - `ref/project-absorption-pattern.md` — 内部反思 vs 外部吸收对比方法论。两者是双向进化引擎：内部反思从自身实践学（P0），外部吸收从外部项目学（P1）。
 - `references/batch-loop-pattern.md` — 批量循环执行模式。
 
+## 示例 · EXAMPLES
+
+**输入**：`project_practice: "P141 视网膜剪切 ODE 调优：从 P140 基线出发，alpha 0.65→0.55，发现正反馈耦合致 A 冲顶，改加性 eps*(A-A_hp) 后 ablation 5.81x"`
+**输出**：`reusable_patterns: ["正反馈耦合（乘性）必然导致变量冲顶 → 约束类型: 耦合必须加性且基线锚定", "新域参数搜索从已验证基线出发单参步进，不盲扫多维"]`；扩展 ode-simulation-tuning 技能 Pitfalls 第 15 条
+
+**输入**：`project_practice: "batch_fix_all.py 修复 88 篇论文 DOI 覆盖率 0%→82%"`
+**输出**：`reusable_patterns: ["聚类检索（按主题 5 方向 × 1 次）替代逐篇 80 次检索，40min→2.5min"]` → 扩展现有 paper-literature-supplement 技能，不新建 skill
+
 ## Golden 集合 · GOLDEN SET
 
 - **Golden Input**: 标准输入样本（覆盖正常路径）

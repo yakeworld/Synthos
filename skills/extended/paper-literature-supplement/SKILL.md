@@ -155,6 +155,22 @@ url = f"http://www.meddata.com.cn/api/result/search?current=1&size=10&token={tok
 - `pmid=1` 不工作（占位 PDF）。必须用真实 PMID
 - 搜索接口返回的 DOI 可能带 HTML 高亮标签 `<span style='color:#F2A620'>`
 
+## 示例 · EXAMPLES
+
+**输入**：`paper_dir: "outputs/papers/pima-crispdm"`（.bbl 解析出 22 篇引用），`topic_queries: ["corneal biomechanics ODE", "vestibular VOR nystagmus BPPV"]`
+**输出**：聚类检索 2 次各返回候选 → 补齐至 32 篇引用，29 篇 PDF 过 `%PDF-` 魔数，3 篇无 PDF 引用已删除；quality-gate: D8=0.94, D10a=0.97, 无 undefined citation
+
+**输入**：`paper_dir: "outputs/papers/bppv-nystagmus"`（内联 `\bibitem` 格式，15 篇引用）
+**输出**：5 方向聚类检索 → 补齐至 30 篇；Crossref 匹配 3 篇标题不符 → 人工修正 DOI；最终 quality-gate 全过
+
+## 约束规则 · RULES
+
+- 检索走聚类（每方向 1 次 × 5 聚类），不逐篇 80 次检索
+- 无 PDF（`%PDF-` 魔数不验）的引用一律删除，保留数 ≥ 20 篇
+- DOI 必须人工核对标题+年份，Crossref 自动匹配不可信
+- 每篇论文单独处理，不写跨论文批量脚本
+- delegate_task 只传 goal（用户原话），不加 context 微操
+
 ## 陷阱
 
 1. **不要写批量脚本** — 每篇论文单独处理。83 篇批量被证实不可行。
