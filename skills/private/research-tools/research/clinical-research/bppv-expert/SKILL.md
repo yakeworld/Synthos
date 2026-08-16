@@ -21,7 +21,6 @@ metadata:
     synthos_mechanical_atoms: ''
 ---
 
-
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
@@ -80,7 +79,6 @@ metadata:
     - repositioning
     - medical-expert
 
-
 ## IO_CONTRACT
 
 - **input**: `patient_data: dict, symptoms: str` — 用户请求描述、上下文信息
@@ -93,7 +91,6 @@ metadata:
 ## 原理层·文言
 
 『眩晕之道，定位为先。BPPV虽常见，误诊亦频。手法复位，精准则效。复位手法有七，辨认路径有图。』
-
 
 ## Genes (策略基因)
 
@@ -258,77 +255,6 @@ When asked "BPPV有哪几篇比较成熟的？" or "our BPPV papers review":
 - `research/scc-bppv-kinematics` — Computational SCC morphometry + kinematic simulation from centerline data (complementary: this skill provides clinical knowledge, scc-bppv-kinematics provides the computational pipeline)
 
 # Bppv Expert---
-
-
-
-
-
-## Operational Steps
-1. 确认输入参数完整
-2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
-3. 验证输出符合契约
-4. 保存结果并报告
-
-## Pitfalls
-- 
-- 
-
-## Verification
-- 
-- 
-- 
-- 
-1. 
-2. 
-3. 
-category: research-tools
-signature: "bppv-expert -> research-tools: 'Structured BPPV (Benign Paroxysmal Positional Vertigo) medical knowledge"
-version: 1.0.0
-license: MIT
-author: Synthos
-allowed-tools: file_read
-description: 'Structured BPPV (Benign Paroxysmal Positional Vertigo) medical knowledge
-version: 1.0.0
-  extracted from AKNE knowledge graph. Covers diagnosis techniques (Dix-Hallpike,
-  supine head flexion test), repositioning maneuvers (Epley, Gufoni, Semont, Barbecue,
-  roll-over), canalith conversion mechanisms, 3D biomechanical simulation, and clinical
-  decision workflows. Source: AKNE wiki (126 nodes, 137 edges, proven correctness
-  via falsification testing).'
-metadata:
-  synthos_atom_type: extended
-  synthos_skill_md_hash: bppv-expert-v1.0.0
-  synthos_model_tested_on: '2026-05-15T00:00:00Z'
-  synthos_author: Synthos Agent
-  synthos_absorbed_from: AKNE wiki (proven correctness via falsification testing)
-  synthos_absorbed_date: '2026-05-15'
-  synthos_data_access_level: verified_only
-  synthos_depends_on: knowledge-acquisition
-  synthos:
-    author: Synthos Agent
-    signature: 'topic: str -> treatment_plan: dict, clinical_guidance: str'
-    related_skills:
-    - academic-paper-completion
-    - adhd-eye-tracking-review
-    - arxiv
-    - biorxiv
-    - blogwatcher
-    version: 1.0.0
-    tags:
-    - bppv
-    - vestibular
-    - vertigo
-    - diagnosis
-    - repositioning
-    - medical-expert
-
-
-## IO_CONTRACT
-
-- **input**: `patient_data: dict, symptoms: str` — 用户请求描述、上下文信息
-- **output**: `treatment_plan: dict — BPPV专家系统`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
 
 > (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # Bppv Expert

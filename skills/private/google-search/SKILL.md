@@ -21,9 +21,6 @@ metadata:
     synthos_mechanical_atoms: ''
 ---
 
-
-
-
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
@@ -68,7 +65,6 @@ metadata:
     signature: 'query: str -> results: list'
     atom_type: skill
     priority: P1
-
 
 ## IO_CONTRACT
 
@@ -297,153 +293,8 @@ python3 scripts/web_search.py "query" --engine googler --max 10
 
 # Google Search---
 
-
-
-
-
-## Operational Steps
-1. 确认输入参数完整
-2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
-3. 验证输出符合契约
-4. 保存结果并报告
-
-## Pitfalls
-
-- **Tor 出口 IP 被 Semantic Scholar 直接封锁（RST，不是 429）**：
-  Semantic Scholar 的 API 对 Tor exit IP 返回 TCP RST（Connection reset by peer），而非 HTTP 429。这意味着封锁在 TCP 层，不是速率限制层。即使 Tor 电路成功建立（100% bootstrapped）、SOCKS5 能连通外网，访问 S2 仍被 RST。
-  **诊断方法**：用 `python3 -c "import socks, socket; socks.set_default_proxy(socks.SOCKS5,'127.0.0.1',9050); socket.socket=socks.socksocket; urllib.request.urlopen('https://api.semanticscholar.org...')"` 对比 `curl` 直连。如果直连返回 429（限流）但 Tor 返回 RST（封锁），说明 S2 检测到了 Tor 出口 IP。
-  **注意**：Docker Tor 容器的出口流量默认走宿主机网络（不走 Tor），除非用 `proxychains` 或设置环境变量显式代理。容器 `curl httpbin.org` 返回宿主机出口 IP 就是证据。
-
-- **SearXNG 全部引擎返回空结果时的排查路径**：
-  1. 先检查 API key 是否设置（SerpAPI/Brave/Serper 全部未设置是常见原因）
-  2. SearXNG 容器 healthy 但引擎全部超时/封禁 → 检查出口 IP 是否被 Google/Bing/Startpage/DuckDuckGo 识别为数据中心 IP 并封锁
-  3. 本机 `curl` S2 返回 429（速率限制）说明网络本身正常，429 是 IP 级别的频率限制，不是连接问题
-  4. 所有 Tailscale 节点如果在同一内网，出口 IP 通常相同，无法通过换节点解决 
-
-## Verification
-- 
-- 
-- 
-- 
-1. 
-2. 
-3. 
-category: research
-signature: "google-search -> research: 网页搜索引擎封装 — SerpAPI/Brave API → 自建 SearXNG → DDG/Google fallback 三级降级链。所有路径共享统一输出"
-related_skills: ['academic-literature-search', 'proactive-discovery']
-description: 网页搜索引擎封装 — SerpAPI/Brave API → 自建 SearXNG → DDG/Google fallback 三级降级链。所有路径共享统一输出契约 {title, url, snippet, position}。
-version: 4.1.0
-allowed-tools:
-- terminal
-- file
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    version: 2.1.0
-    author: Synthos
-    signature: 'query: str -> results: list'
-    atom_type: skill
-    priority: P1
-
-
-## IO_CONTRACT
-
-- **input**: `query: str, max_results: int, advanced_search: dict`
-- **output**: `list[dict]` — 每项 {title, url, snippet, position, engine}
-
-## 触发条件
-
-通用网页搜索、实时信息检索、替代 `web` 工具做结构化搜索提取。
-
-## 三级降级链（严格按优先级）
-
-### 第一级：API 搜索引擎（零 CAPTCHA）
-
-优先级：SerpAPI > Brave Search > Serper
-
-```bash
-python3 scripts/web_search.py "query" --engine serpapi --max 10
-python3 scripts/web_search.py "query" --engine brave --max 10
-python3 scripts/web_search.py "query" --engine serper --max 10
-```
-
-API key 从环境变量读取：`SERPAPI_KEY`, `BRAVE_SEARCH_API_KEY`, `SERPER_API_KEY`
-
-### 第二级：自建 SearXNG 实例
-
-**关键配置规则（SearXNG 2026+）**：
-### 第二级：自建 SearXNG 实例
-
-**关键配置规则（SearXNG 2026+）**：
-1. **必须用 `settings.yml`**（不是 `.yaml`）— SearXNG 2026+ 版本优先读 `.yml`，`.yaml` 挂载被忽略，搜索 API 无法正常工作
-2. **`limiter.toml` 必须有 `[limiter]` section** — 新版 schema 校验严格，错误格式会触发 `TypeError` 导致容器重启
-3. **`docker compose up` 用 `background=true`** — Hermes 将容器启动识别为长服务进程，前台会报 "long-lived server" 错误
-
-**SearXNG Docker 陷阱（2026-06-21 实战确认）：**
-
-- **陷阱 1 — `settings.yaml` vs `settings.yml`**：容器 volume 挂载 `/etc/searxng` 为 named volume，bind mount 的 `settings.yaml` 被 volume 覆盖，导致容器用默认模板（无 engines 配置）启动 → 搜索返回 403。修复：用 bind mount 直接挂载 `settings.yml` 到 volume 之上，或在 volume 内创建该文件。
-- **陷阱 2 — 启动时外部 fetch 阻塞**：SearXNG 2026.6.19 启动时同步请求 `clearurls.xyz`（tracker patterns）和 `wikidata`（infobox），网络不通直接 crash worker。修复：在 `settings.yml` 中添加 `outgoing.request_timeout` 和 `outgoing.max_timeout`，或确保容器可访问这些域。
-- **陷阱 3 — `msgspec` 缺失**：SearXNG 2026+ 内嵌 Python 环境缺少 `msgspec`。修复：启动命令中先 `pip install msgspec` 再执行 entrypoint。
-- **陷阱 4 — 容器不监听端口但 `docker ps` 显示 running**：worker crash 后 granian 进程退出，容器状态可能短暂为 running 但端口 000。排查：`docker logs --tail 50` 看 granian 是否有 "Unexpected exit from worker-1"。
-
-```bash
-cd ~/searxng && docker compose up -d
-python3 scripts/web_search.py "query" --engine searxng --max 10 \
-    --searxng-url http://127.0.0.1:8080
-```
-
-**推荐 settings.yml 模板**（含修复）：
-```yaml
-use_default_settings: true
-
-outgoing:
-  request_timeout: 10
-  max_timeout: 10
-
-server:
-  secret_key: "your-secret"
-  image_proxy: true
-  limiter: false
-
-search:
-  auto_locale: true
-  safe_search: 0
-  default_lang: zh-CN
-  languages:
-    - "zh-CN"
-    - "zh"
-    - "en"
-  formats:
-    - html
-    - json
-
-engines:
-  - name: bing
-    engine: bing
-    shortcut: b
-    disabled: false
-  - name: duckduckgo
-    engine: duckduckgo
-    shortcut: ddg
-    disabled: false
-  - name: wikipedia
-    engine: wikipedia
-    shortcut: wp
-    disabled: false
-```
-
-**SearXNG 引擎超时修复——通过 Tailscale Exit Node（2026-06-25 新增）**：
-
-当 SearXNG 所有引擎全部返回 `ConnectTimeout`（不是个别超时，是集体超时），首先排查宿主机本身是否无外网：
-
-```bash
-
-
 ## Genes (策略基因)
-
 > 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-
 - **[GOOG-001]** 搜索请求触发 → 严格执行 SerpAPI/Brave API → 自建 SearXNG → Startpage/Tor 的三级降级链，确保服务可用性
 - **[GOOG-002]** 所有搜索路径执行完毕 → 统一输出契约为 `{title, url, snippet, position, engine}` 列表，屏蔽底层引擎差异
 - **[GOOG-003]** 部署 SearXNG 2026+ 版本 → 必须使用 `settings.yml` 而非 `.yaml`，并移除 `limiter.toml` 挂载以避免 schema 校验错误导致容器崩溃

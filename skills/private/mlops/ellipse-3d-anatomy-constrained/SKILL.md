@@ -21,7 +21,6 @@ metadata:
     synthos_mechanical_atoms: ''
 ---
 
-
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
@@ -125,30 +124,10 @@ M = I + [v]_x + [v]_x^2 / (1 + O·O')
 
 # Ellipse 3D Anatomy Constrained---
 
-
-
-
-
-## Operational Steps
-1. 确认输入参数完整
-2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
-3. 验证输出符合契约
-4. 保存结果并报告
-category: mlops
-related_skills: ['ellipse-to-3d-circle', 'llm-model-selection']
-description: 用户特异性推导：椭圆→3D圆通过解剖约束（R=2r, d=√3r）消除方位角模糊。覆盖法向量公式、光轴平面、Rodrigues旋转、多帧眼球中心求解。源自AKNE眼动研究笔记。
-signature: "ellipse-3d-anatomy-constrained -> processed_result"
-version: 1.0.0
-
-
 > (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # Ellipse 3D Anatomy Constrained
-
-
 ## Genes (策略基因)
-
 > 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-
 - **[ELLI-001]** 单帧椭圆参数存在方位角模糊 → 引入解剖约束（R_eyeball=2R_iris, d=√3R_iris）将自由度从2压缩至0以消除歧义
 - **[ELLI-002]** 需要确定眼球中心位置 → 利用至少两帧椭圆数据，通过光轴投影直线的交点求解眼球中心
 - **[ELLI-003]** 计算虹膜中心深度坐标 z1 出现虚数 → 判定椭圆参数与解剖约束矛盾，需检查输入数据有效性

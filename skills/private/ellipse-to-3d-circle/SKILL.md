@@ -21,7 +21,6 @@ metadata:
     synthos_mechanical_atoms: ''
 ---
 
-
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
@@ -236,43 +235,10 @@ $$R_{\text{mm}} = \frac{R_{\text{px}} \cdot d_{\text{mm}}}{f_{\text{px}}}$$
 
 # Ellipse To 3D Circle---
 
-
-
-
-
-## Operational Steps
-1. 确认输入参数完整
-2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
-3. 验证输出符合契约
-4. 保存结果并报告
-
-## Pitfalls
-- 
-- 
-
-## Verification
-- 
-- 
-- 
-- 
-1. 
-2. 
-3. 
-category: mlops
-related_skills: ['ellipse-3d-anatomy-constrained', 'llm-model-selection']
-description: 椭圆逆投影为三维空间圆 — 核心为眼动追踪中瞳孔椭圆→3D角膜面法向量反推。覆盖正交/透视投影、法向量参数化、深度歧义消除、正交基构建。
-signature: "ellipse-to-3d-circle -> processed_result"
-version: 2.0.0
-
-
 > (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # Ellipse To 3D Circle
-
-
 ## Genes (策略基因)
-
 > 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-
 - **[ELLI-001]** 输入椭圆参数 → 校验长半轴 a 与短半轴 b 满足 b/a ∈ (0, 1]，否则判定输入无效
 - **[ELLI-002]** 计算倾斜角 → 利用公式 alpha = arccos(b/a) 确定法向量与光轴的夹角，并限制 alpha ∈ [0, π/2]
 - **[ELLI-003]** 求解方位角 → 结合椭圆长轴方向与右手定则，通过 phi = theta ± π/2 消除法向量在圆锥面上的旋转歧义

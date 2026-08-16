@@ -21,7 +21,6 @@ metadata:
     synthos_mechanical_atoms: ''
 ---
 
-
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
@@ -55,7 +54,6 @@ metadata:
     description: "父级技能 — 质量保障 — 伪证验证、黄金测试。"
     signature: 'quality -> sub-skills: [falsification-validation, golden-test-methodology]'
     related_skills: ["falsification-validation", "golden-test-methodology"]
-
 
 ## IO_CONTRACT
 
@@ -105,61 +103,10 @@ skill_view(name='falsification-validation')  # 加载第一个子技能
 
 # Quality---
 
-
-
-
-
-## Operational Steps
-1. 确认输入参数完整
-2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
-3. 验证输出符合契约
-4. 保存结果并报告
-
-## Pitfalls
-- 
-- 
-
-## Verification
-- 
-- 
-- 
-- 
-1. 
-2. 
-3. 
-category: research-tools
-signature: "quality -> research-tools: 质量保障 — 伪证验证、黄金测试。"
-description: 质量保障 — 伪证验证、黄金测试。
-author: Synthos
-license: MIT
-version: 1.0.0
-triggers:
-  - 需要执行quality下的子技能
-metadata:
-  synthos:
-    priority: P2
-    atom_type: parent-skill
-    description: "父级技能 — 质量保障 — 伪证验证、黄金测试。"
-    signature: 'quality -> sub-skills: [falsification-validation, golden-test-methodology]'
-    related_skills: ["falsification-validation", "golden-test-methodology"]
-
-
-## IO_CONTRACT
-
-- **input**: `skill_path: str` — 用户请求描述、上下文信息
-- **output**: `quality_report: dict — 质量报告`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-
 > (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # Quality
-
-
 ## Genes (策略基因)
-
 > 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-
 - **[QUAL-001]** 输入参数/文件/路径不完整或无效 → 必须执行输入验证并拒绝执行
 - **[QUAL-002]** 中间步骤/转换/计算过程 → 必须验证其正确性以确保过程合规
 - **[QUAL-003]** 输出格式/内容不符合预期契约 → 必须执行输出验证以符合 IO_CONTRACT

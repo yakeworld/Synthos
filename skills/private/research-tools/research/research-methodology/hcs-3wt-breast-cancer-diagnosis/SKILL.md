@@ -21,7 +21,6 @@ metadata:
     synthos_mechanical_atoms: ''
 ---
 
-
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
@@ -60,7 +59,6 @@ metadata:
     - arxiv
     - biorxiv
     - blogwatcher
-
 
 ## IO_CONTRACT
 
@@ -189,66 +187,10 @@ The system has been rigorously evaluated with leakage-free 10x5 stratified CV, a
 
 # Hcs 3Wt Breast Cancer Diagnosis---
 
-
-
-
-
-## Operational Steps
-1. 确认输入参数完整
-2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
-3. 验证输出符合契约
-4. 保存结果并报告
-
-## Pitfalls
-- 
-- 
-
-## Verification
-- 
-- 
-- 
-- 
-1. 
-2. 
-3. 
-category: research-tools
-signature: "hcs-3wt-breast-cancer-diagnosis -> research-tools: HCS-3WT (Hybrid Cascade-Stacking Three-Way Triage) breast cancer diagnostic"
-description: HCS-3WT (Hybrid Cascade-Stacking Three-Way Triage) breast cancer diagnostic
-author: Synthos
-license: MIT
-version: 1.1.0
-allowed-tools:
-- terminal
-- read_file
-- write_file
-- search_files
-metadata:
-  synthos:
-    signature: 'data_path: str -> diagnosis_report: dict'
-    related_skills:
-    - academic-paper-completion
-    - adhd-eye-tracking-review
-    - arxiv
-    - biorxiv
-    - blogwatcher
-
-
-## IO_CONTRACT
-
-- **input**: `request: str, context: dict` — 用户请求描述、上下文信息
-- **output**: `result: dict — 技能执行结果（结构因技能而异）`
-
-> 对应原则：P2（机械原子暴露输入输出规范）
-
-
 > (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # Hcs 3Wt Breast Cancer Diagnosis
-
-
 ## Genes (策略基因)
-
 > 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-
 - **[HCS-001]** 训练数据仅包含单一类别 → 跳过 SMOTE 和 SVC 训练步骤，直接跳过该折以避免崩溃
 - **[HCS-002]** 自动化率低于 10% 且概率分布集中在 [0.03, 0.95] → 判定特征空间分离度不足，需调整阈值或记录为诚实信号
 - **[HCS-003]** 构建 Expert C 的元特征 (P_A, P_B) → 必须使用 cross_val_predict 生成特征以防止数据泄漏

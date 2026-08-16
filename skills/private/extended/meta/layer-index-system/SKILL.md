@@ -21,7 +21,6 @@ metadata:
     synthos_mechanical_atoms: ''
 ---
 
-
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
@@ -149,51 +148,10 @@ Navigation index for system maintenance: devops, automation, tool integration, a
 
 # Layer Index System---
 
-
-
-
-
-## Operational Steps
-1. 确认输入参数完整
-2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
-3. 验证输出符合契约
-4. 保存结果并报告
-
-## Pitfalls
-- 
-- 
-
-## Verification
-- 
-- 
-- 
-- 
-1. 
-2. 
-3. 
-category: meta
-signature: "layer-index-system -> meta: Navigation index for system infrastructure — devops, automation, tool integratio"
-related_skills: ['layer-index', 'synthos']
-description: "Navigation index for system infrastructure — devops, automation, tool integration, and monitoring."
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    priority: P3
-    atom_type: layer-index
-    signature: "layer: str, query: str, context: dict -> skill_list: list[dict]"
-    related_skills: []
-
-
 > (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # Layer Index System
-
-
 ## Genes (策略基因)
-
 > 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-
 - **[LAYE-001]** 输入参数（layer, query, context）不完整或无效 → 立即执行输入验证并拒绝执行，确保参数类型、范围及格式符合契约
 - **[LAYE-002]** 执行核心操作前 → 必须确认输入参数完整，并参考目录下的 scripts/ 或 references/ 进行标准化处理
 - **[LAYE-003]** 生成输出结果时 → 严格校验输出结构（skill_list: list[dict]）是否符合 IO_CONTRACT 定义，确保命名与编码一致

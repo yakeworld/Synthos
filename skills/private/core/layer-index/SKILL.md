@@ -21,7 +21,6 @@ metadata:
     synthos_mechanical_atoms: ''
 ---
 
-
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
@@ -178,50 +177,10 @@ Navigation index for the core research stack: 7 cognitive atoms, paper pipeline,
 
 # Layer Index---
 
-
-
-
-
-## Operational Steps
-1. 确认输入参数完整
-2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
-3. 验证输出符合契约
-4. 保存结果并报告
-
-## Pitfalls
-- 
-- 
-
-## Verification
-- 
-- 
-- 
-- 
-1. 
-2. 
-3. 
-category: core
-signature: "layer-index -> core: Navigation index for the core research stack — 7 cognitive atoms, paper pipeline"
-description: "Navigation index for the core research stack — 7 cognitive atoms, paper pipeline, research methodology, and AI/ML tools."
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    priority: P3
-    atom_type: layer-index
-    signature: "layer: str, query: str, context: dict -> skill_list: list[dict]"
-    related_skills: []
-
-
 > (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # Layer Index
-
-
 ## Genes (策略基因)
-
 > 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-
 - **[LAYE-001]** 当系统包含大量技能（如88个）时 → 建立分层导航索引（Layer Index）以映射认知原子、论文流水线及工具链，实现快速检索与定位。
 - **[LAYE-002]** 当执行核心操作前 → 必须确认输入参数完整，并参考目录下的 scripts/ 或 references/ 以确保操作依据准确。
 - **[LAYE-003]** 当操作执行完毕后 → 验证输出是否符合契约（Contract），并保存结果进行报告，以闭环质量保障。

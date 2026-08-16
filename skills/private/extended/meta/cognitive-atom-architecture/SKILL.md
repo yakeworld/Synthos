@@ -21,7 +21,6 @@ metadata:
     synthos_mechanical_atoms: ''
 ---
 
-
 ## Reference Files (intact — see linked_files)
 
 All original reference files, templates, and scripts should be intact at `~/.hermes/skills/cognitive-atom-architecture/references/`. See `skill_view('cognitive-atom-architecture', file_path=...)` to access individual references.
@@ -39,7 +38,6 @@ All original reference files, templates, and scripts should be intact at `~/.her
 - **七维一体**：7+1 框架各维须有定义、有度量法、有原子映射，缺一维则框架失其整。
 - **示例独立**：每一示例必可独立运行、输入输出明确、含边界与错误处理，否则不足以证其法。
 - **原件无损**：`references/` 四件套（philosophical-foundations / dimension-guide / 验证 pattern / 融合 pattern）须完整无损，原件失则法无据。
-
 
 ## Genes (策略基因)
 
@@ -82,44 +80,11 @@ Key reference files added in v4.0.0:
 
 # Cognitive Atom Architecture---
 
-
 ## Golden 集合 · GOLDEN SET
 
 - **Golden Input**: `philosophical_framework: references/philosophical-foundations.md`（7+1 框架）, `target_skill: skills/core/knowledge-extraction/SKILL.md`
 - **Golden Output**: 按 extract→trace→classify→fix→verify 五步产出 `engineering_constraints`——每条哲学约束映射到目标技能的 1 条可执行工程约束（含位置与措辞）
 - **Golden Error**: 7+1 框架缺一维（无定义/无度量法/无原子映射）→ 框架失整，追溯中止；references/ 四件套缺件 → "原件无损"不成立，拒绝产出
-
-## Reference Files (intact — see linked_files)
-
-All original reference files, templates, and scripts should be intact at `~/.hermes/skills/cognitive-atom-architecture/references/`. See `skill_view('cognitive-atom-architecture', file_path=...)` to access individual references.
-
-## 示例 · EXAMPLES
-
-1. **基本用法**: 标准输入 → 标准输出
-2. **边界用例**: 空输入、特殊字符、异常路径
-3. **错误场景**: 缺失依赖、权限不足、网络异常
-
-## 约束规则 · RULES
-
-1. **输入约束**: 参数类型、范围、格式必须校验
-2. **输出约束**: 返回值结构、编码、命名必须一致
-3. **异常约束**: 错误信息必须包含上下文和恢复建议
-4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
-> 违反规则的操作视为不安全，必须拒绝或隔离。
-
-> 每个示例必须可独立运行、有明确输入输出、包含错误处理。
-
-**Session additions (2026-05-23):**
-- `east-west-syncretism-pattern.md` — Methodology for merging Eastern ontology with Western epistemology into a single 7+1 framework. 4-step synthesis, per-dimension mapping table, known pitfalls.
-- `philosophy-engineering-verification-pattern.md` — Methodology for verifying that a philosophical framework produces actionable engineering constraints in atomic skills. 5-step flow: extract→trace→classify→fix→verify.
-
-Key reference files added in v4.0.0:
-- `references/philosophical-foundations.md` — full 7+1 Syncretic Framework with per-dimension definitions and engineering constraints
-- `references/synthos-dimension-guide.md` — per-dimension evaluation methods and atomic mappings
-- `references/philosophy-engineering-verification-pattern.md` — methodology for tracing philosophical constraints through atomic skills (2026-05-23)
-- `references/east-west-syncretism-pattern.md` — pattern for merging Eastern and Western philosophical concepts into unified engineering constraints
-
 
 > (P032 去重: 保留另一份 5 行独有内容)
 ## 验证清单 (Verification)

@@ -21,9 +21,6 @@ metadata:
     synthos_mechanical_atoms: ''
 ---
 
-
-
-
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
@@ -319,32 +316,8 @@ cat /etc/X11/xinit/xinput.d/fcitx 2>/dev/null && echo "警告：仍有 fcitx 残
 
 # Linux Ime---
 
-
-
-
-
-## Operational Steps
-1. 确认输入参数完整
-2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
-3. 验证输出符合契约
-4. 保存结果并报告
-category: devops
-related_skills: ['linux-environment-troubleshoot', 'safe-file-operations']
-description: Linux 输入法（IME）诊断与修复 — fcitx/fcitx5 配置不匹配、GTK_IM_MODULE/QT_IM_MODULE/XMODIFIERS 三环境变量修复、X11/Wayland 差异、pty 环境 IME 不可用的根因分析与修复。
-metadata:
-  synthos:
-    priority: P2
-    atom_type: class-level
-    description: "Linux 输入法（IME）诊断与修复 — 覆盖 fcitx/fcitx5 配置检查、GTK_IM_MODULE/QT_IM_MODULE/XMODIFIERS 三环境变量修复、X11/Wayland 差异、pty 环境限制。"
-signature: "linux-ime -> processed_result"
-version: 1.0.0
-
-
-
 ## Genes (策略基因)
-
 > 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-
 - **[LINU-001]** 环境变量配置冲突 → 按 `/etc/X11/xinit/xinput.d/` > `/etc/environment.d/` > `~/.bashrc` 的优先级顺序排查，优先修正高优先级文件中的旧值
 - **[LINU-002]** 系统安装 fcitx5 但应用无法输入 → 将 `GTK_IM_MODULE`、`QT_IM_MODULE` 和 `XMODIFIERS` 统一修正为 `fcitx5`，并删除指向 fcitx4 的残留配置
 - **[LINU-003]** 使用 Snap 版 Firefox/Chromium 且环境变量无效 → 识别 Snap 硬编码 ibus 特性，通过安装 deb 版本或修改应用内部配置（如 `about:config`）绕过环境变量限制
