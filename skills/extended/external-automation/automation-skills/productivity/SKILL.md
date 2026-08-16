@@ -1,8 +1,30 @@
 ---
 name: productivity
-description: "productivity"
+description: productivity
 version: 1.0.0
+category: productivity
+signature: 'productivity -> productivity: 生产力工具 — 表单自动化、Jupyter、地图、PPT、Notion等。'
+author: Synthos
+license: MIT
+triggers:
+- 需要执行productivity下的子技能
+metadata:
+  synthos:
+    priority: P2
+    atom_type: parent-skill
+    description: 父级技能 — 生产力工具 — 表单自动化、Jupyter、地图、PPT、Notion等。
+    signature: 'productivity -> sub-skills: [chinese-form-automation, jupyter-live-kernel,
+      maps, markitdown-convert, notebooklm-cli, notion, obsidian, powerpoint, webhook-subscriptions,
+      youtube-content]'
+    related_skills:
+    - chinese-form-automation
+    - jupyter-live-kernel
+    - maps
+    - notebooklm-cli
+    - notion
+    - powerpoint
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,22 +44,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: productivity
-signature: "productivity -> productivity: 生产力工具 — 表单自动化、Jupyter、地图、PPT、Notion等。"
-description: 生产力工具 — 表单自动化、Jupyter、地图、PPT、Notion等。
-author: Synthos
-license: MIT
-version: 1.0.0
-triggers:
-  - 需要执行productivity下的子技能
-metadata:
-  synthos:
-    priority: P2
-    atom_type: parent-skill
-    description: "父级技能 — 生产力工具 — 表单自动化、Jupyter、地图、PPT、Notion等。"
-    signature: 'productivity -> sub-skills: [chinese-form-automation, jupyter-live-kernel, maps, markitdown-convert, notebooklm-cli, notion, obsidian, powerpoint, webhook-subscriptions, youtube-content]'
-    related_skills: ["chinese-form-automation", "jupyter-live-kernel", "maps", "notebooklm-cli", "notion", "powerpoint"]
-
 
 ## IO_CONTRACT
 
@@ -102,7 +108,6 @@ skill_view(name='chinese-form-automation')  # 加载第一个子技能
 父级SKILL.md仅作为目录索引，实际执行由子技能完成。
 
 # Productivity
-
 
 ## Genes (策略基因)
 

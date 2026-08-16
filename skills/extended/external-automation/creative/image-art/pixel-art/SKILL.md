@@ -1,27 +1,26 @@
 ---
 name: pixel-art
-description: "pixel-art"
+description: pixel-art
 version: 1.0.0
+category: creative
+signature: 'pixel-art -> creative: Convert any image into retro pixel art, then optionally
+  animate it into a short'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills: []
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
 3. 验证输出符合契约
 4. 保存结果并报告
-category: creative
-signature: "pixel-art -> creative: Convert any image into retro pixel art, then optionally animate it into a short"
-description: "Convert any image into retro pixel art, then optionally animate it into a short"
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: []
-
 
 ## IO_CONTRACT
 
@@ -107,170 +106,4 @@ Run `pixel_art()` first; if animation was requested, chain into
 ## Preset Catalog
 
 | Preset | Era | Palette | Block | Best for |
-|--------|-----|---------|-------|----------|
-| `arcade` | 80s arcade | adaptive 16 | 8px | Bold posters, hero art |
-| `snes` | 16-bit | adaptive 32 | 4px | Characters, detailed scenes |
-| `nes` | 8-bit | NES (54) | 8px | True NES look |
-| `gameboy` | DMG handheld | 4 green shades | 8px | Monochrome Game Boy |
-| `gameboy_pocket` | Pocket handheld | 4 grey shades | 8px | Mono GB Pocket |
-| `pico8` | PICO-8 | 16 fixed | 6px | Fantasy-console look |
-| `c64` | Commodore 64 | 16 fixed | 8px | 8-bit home computer |
-| `apple2` | Apple II hi-res | 6 fixed | 10px | Extreme retro, 6 colors |
-| `teletext` | BBC Teletext | 8 pure | 10px | Chunky primary colors |
-| `mspaint` | Windows MS Paint | 24 fixed | 8px | Nostalgic desktop |
-| `mono_green` | CRT phosphor | 2 green | 6px | Terminal/CRT aesthetic |
-| `mono_amber` | CRT amber | 2 amber | 6px | Amber monitor look |
-| `neon` | Cyberpunk | 10 neons | 6px | Vaporwave/cyber |
-| `pastel` | Soft pastel | 10 pastels | 6px | Kawaii / gentle |
-
-Named palettes live in `scripts/palettes.py` (see `references/palettes.md` for
-the complete list — 28 named palettes total). Any preset can be overridden:
-
-```python
-pixel_art("in.png", "out.png", preset="snes", palette="PICO_8", block=6)
-```
-
-## Scene Catalog (for video)
-
-| Scene | Effects |
-|-------|---------|
-| `night` | Twinkling stars + fireflies + drifting leaves |
-| `dusk` | Fireflies + sparkles |
-| `tavern` | Dust motes + warm sparkles |
-| `indoor` | Dust motes |
-| `urban` | Rain + neon pulse |
-| `nature` | Leaves + fireflies |
-| `magic` | Sparkles + fireflies |
-| `storm` | Rain + lightning |
-| `underwater` | Bubbles + light sparkles |
-| `fire` | Embers + sparkles |
-| `snow` | Snowflakes + sparkles |
-| `desert` | Heat shimmer + dust |
-
-## Invocation Patterns
-
-### Python (import)
-
-```python
-import sys
-sys.path.insert(0, "/home/teknium/.hermes/skills/creative/pixel-art/scripts")
-from pixel_art import pixel_art
-from pixel_art_video import pixel_art_video
-
-# 1. Convert to pixel art
-pixel_art("/path/to/photo.jpg", "/tmp/pixel.png", preset="nes")
-
-# 2. Animate (optional)
-pixel_art_video(
-    "/tmp/pixel.png",
-    "/tmp/pixel.mp4",
-    scene="night",
-    duration=6,
-    fps=15,
-    seed=42,
-    export_gif=True,
-)
-```
-
-### CLI
-
-```bash
-cd /home/teknium/.hermes/skills/creative/pixel-art/scripts
-
-python pixel_art.py in.jpg out.png --preset gameboy
-python pixel_art.py in.jpg out.png --preset snes --palette PICO_8 --block 6
-
-python pixel_art_video.py out.png out.mp4 --scene night --duration 6 --gif
-```
-
-## Pipeline Rationale
-
-**Pixel conversion:**
-1. Boost contrast/color/sharpness (stronger for smaller palettes)
-2. Posterize to simplify tonal regions before quantization
-3. Downscale by `block` with `Image.NEAREST` (hard pixels, no interpolation)
-4. Quantize with Floyd-Steinberg dithering — against either an adaptive
-   N-color palette OR a named hardware palette
-5. Upscale back with `Image.NEAREST`
-
-Quantizing AFTER downscale keeps dithering aligned with the final pixel grid.
-Quantizing before would waste error-diffusion on detail that disappears.
-
-**Video overlay:**
-- Copies the base frame each tick (static background)
-- Overlays stateless-per-frame particle draws (one function per effect)
-- Encodes via ffmpeg `libx264 -pix_fmt yuv420p -crf 18`
-- Optional GIF via `palettegen` + `paletteuse`
-
-## Dependencies
-
-- Python 3.9+
-- Pillow (`pip install Pillow`)
-- ffmpeg on PATH (only needed for video — Hermes installs package this)
-
-## Pitfalls
-
-- Pallet keys are case-sensitive (`"NES"`, `"PICO_8"`, `"GAMEBOY_ORIGINAL"`).
-- Very small sources (<100px wide) collapse under 8-10px blocks. Upscale the
-  source first if it's tiny.
-- Fractional `block` or `palette` will break quantization — keep them positive ints.
-- Animation particle counts are tuned for ~640x480 canvases. On very large
-  images you may want a second pass with a different seed for density.
-- `mono_green` / `mono_amber` force `color=0.0` (desaturate). If you override
-  and keep chroma, the 2-color palette can produce stripes on smooth regions.
-- `clarify` loop: call it at most twice per turn (style, then scene). Don't
-  pepper the user with more picks.
-
-## Verification
-
-- PNG is created at the output path
-- Clear square pixel blocks visible at the preset's block size
-- Color count matches preset (eyeball the image or run `Image.open(p).getcolors()`)
-- Video is a valid MP4 (`ffprobe` can open it) with non-zero size
-
-## Attribution
-
-Named hardware palettes and the procedural animation loops in `pixel_art_video.py`
-are ported from [pixel-art-studio](https://github.com/Synero/pixel-art-studio)
-(MIT). See `ATTRIBUTION.md` in this skill directory for details.
-
-## 验证清单 · VERIFICATION
-
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
-
-## 约束规则 · RULES
-
-1. **输入约束**: 参数类型、范围、格式必须校验
-2. **输出约束**: 返回值结构、编码、命名必须一致
-3. **异常约束**: 错误信息必须包含上下文和恢复建议
-4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
-## Golden 集合 · GOLDEN SET
-
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
-
-> Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
-
-> 违反规则的操作视为不安全，必须拒绝或隔离。
-
-> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
-
-
-
-## Genes (策略基因)
-
-> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-
-- **[PIXE-001]** 用户意图模糊时 → 提供 4 个代表性预设选项进行澄清，避免一次性展示所有 14 种风格
-- **[PIXE-002]** 用户已明确指定特定时代或风格时 → 跳过澄清步骤，直接匹配对应的预设参数
-- **[PIXE-003]** 需要生成动画效果时 → 在风格确认后单独询问场景类型，且每轮对话中澄清调用不超过两次
-- **[PIXE-004]** 执行像素化转换时 → 先降采样再量化，确保抖动算法与最终像素网格对齐以保留细节
-- **[PIXE-005]** 源图像尺寸过小（<100px）时 → 先对源图像进行放大处理，防止在大块像素块下细节完全丢失
-- **[PIXE-006]** 使用单色或双色调色板（如 mono_green）时 → 强制去饱和（color=0.0），避免平滑区域出现条纹伪影
-- **[PIXE-007]** 处理高分辨率或大尺寸图像动画时 → 调整粒子密度或更换随机种子，以适配非标准 640x480 画布的视觉效果
+|

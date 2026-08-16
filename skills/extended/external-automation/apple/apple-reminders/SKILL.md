@@ -1,8 +1,22 @@
 ---
 name: apple-reminders
-description: "apple-reminders"
+description: apple-reminders
 version: 1.0.0
+category: apple
+signature: 'apple-reminders -> apple: Use `remindctl` to manage Apple Reminders directly
+  from the terminal. Tasks sync'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills:
+    - apple
+    - apple-notes
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,19 +36,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: apple
-signature: "apple-reminders -> apple: Use `remindctl` to manage Apple Reminders directly from the terminal. Tasks sync"
-description: "Use `remindctl` to manage Apple Reminders directly from the terminal. Tasks sync across all Apple devices via iCloud."
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: ['apple', 'apple-notes']
-
 
 ## IO_CONTRACT
 
@@ -154,8 +155,6 @@ Accepted by `--due` and date filters:
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
-
-
 
 ## Genes (策略基因)
 

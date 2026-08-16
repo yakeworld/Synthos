@@ -1,6 +1,7 @@
 ---
 name: k230-photo-timing
-description: '**Result**: With Display binding, total `snapshot + save` should be ~35-40ms → **25-28 FPS** vs curr'
+description: '**Result**: With Display binding, total `snapshot + save` should be
+  ~35-40ms → **25-28 FPS** vs curr'
 signature: 'k230-photo-timing -> embedded: synthetic skill for k230 photo timing'
 allowed-tools:
 - terminal
@@ -12,13 +13,15 @@ license: MIT
 metadata:
   synthos:
     atom_type: mechanical
-    description: '**Result**: With Display binding, total `snapshot + save` should be ~35-40ms → **25-28 FPS** vs curr'
+    description: '**Result**: With Display binding, total `snapshot + save` should
+      be ~35-40ms → **25-28 FPS** vs curr'
     signature: 'k230-photo-timing -> embedded: synthetic skill for k230 photo timing'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 |
@@ -187,15 +190,4 @@ When the K230 main loop floods the serial port (print statements, no throttling)
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 > 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
-# K230 Photo Timing---
-> (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # K230 Photo Timing
-## Genes (策略基因)
-> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-- **[SK-001]** 需要绑定 Display 层时 → 必须使用 YUV420SP 格式，因为这是 `bind_layer` 唯一支持的格式
-- **[SK-002]** 需要保存图像文件时 → 必须使用 RGB565 或 RGB888 通道（chn1/chn2），因为 YUV420SP 不支持 `img.save()`
-- **[SK-003]** 使用 `Sensor(id=N, ...)` 构造函数时 → 仅初始化 chn0 通道，禁止设置 chn1/chn2，否则会导致设备立即挂起
-- **[SK-004]** 多传感器场景下 → 仅需调用一次 `sensor.run()` 启动所有传感器，但必须逐个调用 `sensor.stop()` 或统一调用 `Sensor.deinit()`
-- **[SK-005]** 发现照片目录存在但为空时 → 检查 `photo_sequence.txt` 并清理空目录，以识别因串口阻塞导致的静默初始化失败
-- **[SK-006]** 串口完全无响应（ampy 挂起）时 → 执行 `rmmod ftdi_sio` 和 `modprobe ftdi_sio` 重载内核驱动，而非仅发送软复位指令
-- **[SK-007]** 驱动重载后进入 REPL 时 → 连续发送多次 Ctrl+C 和 Ctrl+D 以中断主循环并清除缓冲区，等待 0.5s 后再发送有效命令

@@ -1,27 +1,26 @@
 ---
 name: codebase-inspection
-description: "codebase-inspection"
+description: codebase-inspection
 version: 1.0.0
+category: mlops
+signature: 'codebase-inspection -> mlops: Analyze repositories for lines of code,
+  language breakdown, file counts, and cod'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills: []
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
 3. 验证输出符合契约
 4. 保存结果并报告
-category: mlops
-signature: "codebase-inspection -> mlops: Analyze repositories for lines of code, language breakdown, file counts, and cod"
-description: "Analyze repositories for lines of code, language breakdown, file counts, and code-vs-comment ratios using `pygount`."
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: []
-
 
 ## IO_CONTRACT
 
@@ -182,7 +181,6 @@ Before considering the codebase inspection task complete:
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Codebase Inspection
-
 
 ## Genes (策略基因)
 

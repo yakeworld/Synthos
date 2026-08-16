@@ -1,8 +1,26 @@
 ---
 name: devops
-description: "devops"
+description: devops
 version: 1.0.0
+category: devops
+signature: 'devops -> devops: DevOps运维 — Cron任务管理、看板编排、worker管理。'
+author: Synthos
+license: MIT
+triggers:
+- 需要执行devops下的子技能
+metadata:
+  synthos:
+    priority: P2
+    atom_type: parent-skill
+    description: 父级技能 — DevOps运维 — Cron任务管理、看板编排、worker管理。
+    signature: 'devops -> sub-skills: [cron-system-maintenance, kanban-orchestrator,
+      kanban-worker]'
+    related_skills:
+    - cron-system-maintenance
+    - kanban-orchestrator
+    - kanban-worker
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,22 +40,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: devops
-signature: "devops -> devops: DevOps运维 — Cron任务管理、看板编排、worker管理。"
-description: DevOps运维 — Cron任务管理、看板编排、worker管理。
-author: Synthos
-license: MIT
-version: 1.0.0
-triggers:
-  - 需要执行devops下的子技能
-metadata:
-  synthos:
-    priority: P2
-    atom_type: parent-skill
-    description: "父级技能 — DevOps运维 — Cron任务管理、看板编排、worker管理。"
-    signature: 'devops -> sub-skills: [cron-system-maintenance, kanban-orchestrator, kanban-worker]'
-    related_skills: ["cron-system-maintenance", "kanban-orchestrator", "kanban-worker"]
-
 
 ## IO_CONTRACT
 
@@ -95,7 +97,6 @@ skill_view(name='cron-system-maintenance')  # 加载第一个子技能
 父级SKILL.md仅作为目录索引，实际执行由子技能完成。
 
 # Devops
-
 
 ## Genes (策略基因)
 

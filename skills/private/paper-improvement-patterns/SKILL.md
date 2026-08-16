@@ -1,7 +1,8 @@
 ---
 name: paper-improvement-patterns
 description: 1. 确认输入参数完整
-signature: 'paper-improvement-patterns -> private: synthetic skill for paper improvement patterns'
+signature: 'paper-improvement-patterns -> private: synthetic skill for paper improvement
+  patterns'
 allowed-tools:
 - terminal
 - read_file
@@ -13,13 +14,17 @@ metadata:
   synthos:
     atom_type: mechanical
     description: 1. 确认输入参数完整
-    signature: 'paper-improvement-patterns -> private: synthetic skill for paper improvement patterns'
+    signature: 'paper-improvement-patterns -> private: synthetic skill for paper improvement
+      patterns'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: paper-tools
+author: Synthos
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -39,20 +44,6 @@ metadata:
 1. 
 2. 
 3. 
-category: paper-tools
-description: "论文质量改进的标准化模式库 — 消融实验、统计显著性、前沿文献补充、Data/Code声明的添加模式"
-version: 1.2.0
-author: "Synthos"
-license: MIT
-metadata:
-  synthos:
-    priority: P2
-    atom_type: skill
-    description: "论文质量改进模式库 — 前沿文献、消融实验、统计显著性、数据声明、数值伪造修复等标准化改进模式"
-    related_skills: ["paper-improvement", "reproducibility-audit", "prose-cluster-hybrid-citation-fix"]
-    change_log:
-      "1.1.0": "2026-06-24 新增外部引用到quality-gate的消融布尔开关实现和Notebook-Script统一工作流"
-signature: "paper-improvement-patterns -> processed_result"
 
 ## 核心场景
 
@@ -330,14 +321,4 @@ echo "total: $(wc -l < /tmp/bibitems.txt)"
 
 > 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。
 
-# Paper Improvement Patterns---
-
-## Genes (策略基因)
-> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-- **[PAPE-001]** 论文缺少2024-2026年最新文献 → 从训练管线分析文档提取前沿文献，按“近期进展-本方法优势-未来工作”结构整合至Discussion，确保引用与方法直接相关
-- **[PAPE-002]** 多组件方法需证明各部分贡献 → 构建V1至V4的消融实验表格，确保每个组件增量为正，并在分析中解释每个增量背后的具体原因
-- **[PAPE-003]** 声称性能显著优于基线但缺乏统计证据 → 执行配对t检验和Wilcoxon符号秩检验，报告科学计数法p-value、Cohen's d效应量及基于1000次重采样的95%置信区间
-- **[PAPE-004]** 论文包含可公开的数据或代码 → 添加Data/Code Availability声明，明确列出Kaggle/GitHub具体URL、MIT许可证及复现所需的所有组件清单
-- **[PAPE-005]** 临床模型评估需区分筛查与诊断场景 → 筛查场景优先优化召回率并降低阈值（0.35-0.48），诊断场景优先优化精确率并提高阈值（0.50-0.65），同时分析模型间FN/FP互补性
-- **[PAPE-006]** 检测到数值伪造或数据泄露导致指标异常 → 重构叙事逻辑以匹配修正后的数值（如从“性能提升”改为“选择性扭曲”），同步更新Abstract、Discussion及图表描述以保持一致性
-- **[PAPE-007]** 引用健康度D10a低于100%存在孤儿引用 → 识别未引用bibitem的语义域，将其分组插入正文合适锚点（避免机械追加），并将注释行中的引用移至正文以确保被BibTeX识别
+# Paper Improvement Patterns

@@ -19,7 +19,13 @@ metadata:
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: research
+related_skills:
+- academic-literature-search
+- proactive-discovery
+author: Synthos
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -48,23 +54,6 @@ metadata:
 1. 
 2. 
 3. 
-category: research
-signature: "google-search -> research: 网页搜索引擎封装 — SerpAPI/Brave API → 自建 SearXNG → DDG/Google fallback 三级降级链。所有路径共享统一输出"
-related_skills: ['academic-literature-search', 'proactive-discovery']
-description: 网页搜索引擎封装 — SerpAPI/Brave API → 自建 SearXNG → DDG/Google fallback 三级降级链。所有路径共享统一输出契约 {title, url, snippet, position}。
-version: 4.1.0
-allowed-tools:
-- terminal
-- file
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    version: 2.1.0
-    author: Synthos
-    signature: 'query: str -> results: list'
-    atom_type: skill
-    priority: P1
 
 ## IO_CONTRACT
 
@@ -293,28 +282,4 @@ python3 scripts/web_search.py "query" --engine googler --max 10
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-# Google Search---
-
-## Genes (策略基因)
-> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-- **[GOOG-001]** 搜索请求触发 → 严格执行 SerpAPI/Brave API → 自建 SearXNG → Startpage/Tor 的三级降级链，确保服务可用性
-- **[GOOG-002]** 所有搜索路径执行完毕 → 统一输出契约为 `{title, url, snippet, position, engine}` 列表，屏蔽底层引擎差异
-- **[GOOG-003]** 部署 SearXNG 2026+ 版本 → 必须使用 `settings.yml` 而非 `.yaml`，并移除 `limiter.toml` 挂载以避免 schema 校验错误导致容器崩溃
-- **[GOOG-004]** SearXNG 引擎集体超时（ConnectTimeout） → 优先排查宿主机外网连通性，若正常则通过 Tailscale Exit Node 或 Tor SOCKS5 代理切换出口 IP 以绕过数据中心 IP 封锁
-- **[GOOG-005]** 访问 Semantic Scholar API 返回 TCP RST → 识别为 Tor 出口 IP 被 TCP 层封锁（非 429 限流），需切换非 Tor 出口或直连，避免无效重试
-- **[GOOG-006]** 执行学术文献搜索 → 禁用 SearXNG 的 `google_scholar` 专用引擎（易被反爬拦截），改用常规 Google 引擎间接获取 Scholar 链接或直连浏览器
-- **[GOOG-007]** 配置 SearXNG 引擎优先级 → 优先启用 Google 引擎以覆盖学术/临床内容，Bing 仅作为 Google 不可用时的降级备选
-
-## 示例 · EXAMPLES
-
-1. **输入**: 查询 "S2 API 论文检索"，SerpAPI/Brave 无 key，SearXNG 引擎集体 ConnectTimeout。
-   **操作**: 按 GOOG-004 先 `curl` 宿主机外网排除网络故障，确认正常后经 Tailscale Exit Node / Tor SOCKS5 切换出口 IP 重试 SearXNG。
-   **验证**: 重跑 `curl "http://127.0.0.1:8080/search?q=test&format=json"` 返回非空，输出逐项满足 `{title, url, snippet, position, engine}` 契约。
-
-2. **输入**: 学术文献搜索请求，SearXNG `google_scholar` 引擎返回 0 条 / access denied。
-   **操作**: 按 GOOG-006 禁用专用 `google_scholar` 引擎，改用常规 Google 引擎间接获取 Scholar 链接（或浏览器直连）。
-   **验证**: Google 引擎结果中含 scholar.google.com 链接，且 engine 字段标记为 google（见验证清单第 7 条）。
-
-3. **输入**: 访问 Semantic Scholar API 返回 TCP RST（Connection reset），而非 HTTP 429。
-   **操作**: 按 GOOG-005 识别为 Tor 出口 IP 被 TCP 层封锁，停止无效重试，切换非 Tor 出口或直连。
-   **验证**: 直连 S2 返回正常响应（非 RST），对照 `curl` 直连 429 vs Tor RST 的诊断差异（Pitfalls 第 1 条）。
+# Google Search

@@ -19,7 +19,12 @@ metadata:
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: research-tools
+author: Synthos
+triggers:
+- 需要执行quality下的子技能
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -39,21 +44,6 @@ metadata:
 1. 
 2. 
 3. 
-category: research-tools
-signature: "quality -> research-tools: 质量保障 — 伪证验证、黄金测试。"
-description: 质量保障 — 伪证验证、黄金测试。
-author: Synthos
-license: MIT
-version: 1.0.0
-triggers:
-  - 需要执行quality下的子技能
-metadata:
-  synthos:
-    priority: P2
-    atom_type: parent-skill
-    description: "父级技能 — 质量保障 — 伪证验证、黄金测试。"
-    signature: 'quality -> sub-skills: [falsification-validation, golden-test-methodology]'
-    related_skills: ["falsification-validation", "golden-test-methodology"]
 
 ## IO_CONTRACT
 
@@ -104,17 +94,4 @@ skill_view(name='falsification-validation')  # 加载第一个子技能
 
 父级SKILL.md仅作为目录索引，实际执行由子技能完成。
 
-# Quality---
-
-> (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # Quality
-## Genes (策略基因)
-> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-- **[QUAL-001]** 输入参数/文件/路径不完整或无效 → 必须执行输入验证并拒绝执行
-- **[QUAL-002]** 中间步骤/转换/计算过程 → 必须验证其正确性以确保过程合规
-- **[QUAL-003]** 输出格式/内容不符合预期契约 → 必须执行输出验证以符合 IO_CONTRACT
-- **[QUAL-004]** 遇到空输入、极大值或异常场景 → 必须执行边界验证以处理极端情况
-- **[QUAL-005]** 操作失败或出现错误 → 必须提供包含上下文和恢复建议的明确错误信息
-- **[QUAL-006]** 参数类型、范围或格式校验 → 必须严格执行输入约束规则
-- **[QUAL-007]** 返回值结构、编码或命名不一致 → 必须严格执行输出约束规则
-- **[QUAL-008]** 涉及未验证代码或内部状态暴露 → 必须拒绝执行或隔离以遵守安全约束

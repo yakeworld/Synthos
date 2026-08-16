@@ -1,8 +1,20 @@
 ---
 name: opencode
-description: "opencode"
+description: opencode
 version: 1.0.0
+category: mlops
+signature: 'opencode -> mlops: 1. **非常驻服务** — OpenCode 不是 daemon，按需启动、用完即关。`ps aux
+  | grep opencode` 无进程是正常状态，不是'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills: []
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,19 +34,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: mlops
-signature: "opencode -> mlops: 1. **非常驻服务** — OpenCode 不是 daemon，按需启动、用完即关。`ps aux | grep opencode` 无进程是正常状态，不是"
-description: "1. **非常驻服务** — OpenCode 不是 daemon，按需启动、用完即关。`ps aux | grep opencode` 无进程是正常状态，不是故障。"
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: []
-
 
 ## IO_CONTRACT
 
@@ -125,66 +124,4 @@ ls -lt ~/.local/state/opencode/locks/                 # 锁文件（空=无正�
 ## 故障排查
 
 | 症状 | 原因 | 修复 |
-|------|------|------|
-| `command not found` | 未安装或 PATH 缺失 | 检查 `~/.nvm/versions/node/v22.22.2/bin/opencode` |
-| 端口不可达 | 后端服务宕机或 Tailscale 断开 | 检查 Tailscale 状态，确认 vLLM 容器运行 |
-| 模型返回错误 | API key 过期或模型未就绪 | 检查 config.json 中 `apiKey`，确认 vLLM 加载模型 |
-| 技能目录为空 | 未初始化或清理过 | 重新运行 `opencode` 会自初始化 |
-
-## 与 Codex CLI 的关系
-
-| 维度 | OpenCode | Codex CLI |
-|------|----------|-----------|
-| 角色 | 轻量替代 | 主力编码代理 |
-| API | chat/completions | responses |
-| 提供商 | DeepSeek/本地 vLLM | 仅本地 vLLM |
-| 使用场景 | 一次性简单脚本 | 复杂编码任务 |
-| 部署 | 本地 Node.js | 多节点 profile + .env |
-
-详细 Codex 部署见 `codex-cli` 技能。
-
-## 参考文件
-
-- `references/diagnostic-log-2026-06-19.md` — 2026-06-19 完整诊断实录：后端连通性、进程状态、配置结构
-委托OpenCode CLI编码 — 仅限一次性简单脚本。
-
-## 验证清单 · VERIFICATION
-
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
-
-## 约束规则 · RULES
-
-1. **输入约束**: 参数类型、范围、格式必须校验
-2. **输出约束**: 返回值结构、编码、命名必须一致
-3. **异常约束**: 错误信息必须包含上下文和恢复建议
-4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
-## Golden 集合 · GOLDEN SET
-
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
-
-> Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
-
-> 违反规则的操作视为不安全，必须拒绝或隔离。
-
-> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
-
-# Opencode
-
-
-## Genes (策略基因)
-
-> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-
-- **[OPEN-001]** 检查 OpenCode 进程状态 → 无进程运行是正常状态（非常驻服务），不应视为故障
-- **[OPEN-002]** 执行复杂编码任务 → 优先使用 Codex CLI，仅将 OpenCode 用于极轻量的一次性脚本
-- **[OPEN-003]** 集成或调用 API 接口 → 严格区分 OpenCode 的 `chat/completions` 与 Codex 的 `responses` API，不可互换
-- **[OPEN-004]** 执行未知子命令（如 doctor/health） → 避免输入，因为会被误解析为路径切换导致报错，仅使用 `models`/`run` 等有效子命令
-- **[OPEN-005]** 检查软件版本或升级 → 使用 `npm update -g opencode-ai` 而非 `npm search`，因该包不在公开索引中
-- **[OPEN-006]** 诊断后端连通性故障 → 按顺序检查 Tailscale 状态及 vLLM 容器运行状态，确认主备节点端口可达
+|

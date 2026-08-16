@@ -13,12 +13,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: 覆盖率 = 有完整golden的技能数 / 总技能数
-    signature: 'golden-test-methodology -> quality: synthetic skill for golden test methodology'
+    signature: 'golden-test-methodology -> quality: synthetic skill for golden test
+      methodology'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 
@@ -94,11 +96,4 @@ metadata:
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
 
-# Golden Test Methodology---
-> (P032 去重: 保留另一份 6 行独有内容)
-## 验证清单 (Verification)
-- [ ] 覆盖率统计时：`golden/GOLDEN_SET.md` + `cases/` + `expected/` 三者均存在且非空才计数
-- [ ] expected 文件与 cases 数量、命名一一对应
-- [ ] 权重未全部设为 critical（保留区分度）
-- [ ] 技能 signature/输出格式变更后，golden 已同步更新
-- [ ] 补 golden 顺序正确：新吸收技能 → 高频技能 → 核心原子 → 扩展技能（按 DIAGNOSE 分）
+# Golden Test Methodology

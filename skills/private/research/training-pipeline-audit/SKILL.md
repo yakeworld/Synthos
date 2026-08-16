@@ -1,7 +1,8 @@
 ---
 name: training-pipeline-audit
 description: '**IMRaD结构规划**:'
-signature: 'training-pipeline-audit -> research: synthetic skill for training pipeline audit'
+signature: 'training-pipeline-audit -> research: synthetic skill for training pipeline
+  audit'
 allowed-tools:
 - terminal
 - read_file
@@ -13,12 +14,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: '**IMRaD结构规划**:'
-    signature: 'training-pipeline-audit -> research: synthetic skill for training pipeline audit'
+    signature: 'training-pipeline-audit -> research: synthetic skill for training
+      pipeline audit'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 |
@@ -112,24 +115,4 @@ metadata:
 
 > 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。
 
-# Training Pipeline Audit---
-
-> (P032 去重: 保留合并前第二份的 6 行独有内容)
-## 验证清单 (Verification)
-- [ ] 项目文件已全量扫描统计，管线步骤已拆解为方法论
-- [ ] 识别 ≥3 个研究空白（精确定位到文献矛盾/方法缺口）
-- [ ] 生成 ≥3 个可检验假设（含检验条件与反证路径），格式符合 hypothesis-generation 的 IO_CONTRACT
-- [ ] 已输出 paper_plan.json（IMRaD 结构 + 15-30 篇文献列表 + 时间表）
-- [ ] 所有数值（Val Dice/CErr 等）可追溯到训练日志/代码输出，未编造
-## 示例 · EXAMPLES
-- **示例一（K230 训练管线）**：输入：901帧 K230 图像 + 976帧 OpenEDS 数据 + 训练日志（MobileNetV2+T3EM，4阶段 30+20+20+20 epoch）→ 输出：5 个研究空白（如单目 3D 精度极限未验证）、5 个可检验假设（H1: 分割误差主导总误差 ≥60%）、2 篇 SCI 论文计划（方法学 Q1 论文 A + 实证分析 Q2 论文 B），含 IMRaD 结构与 15-30 篇文献列表。来源：`references/k230-pipeline-audit-2026-06-13.md`，Val Dice=0.8955 / CErr=1.63px 可追溯至训练日志。
-- **示例二（算法-only 管线）**：输入：纯数学推导 + 1 个 demo 脚本 + 训练日志 → 输出：1 个方法学论文计划（Q2-Q3），IMRaD 结构含推导+demo 结果，假设 ≥3 个（含反证路径），文献 15-20 篇。判定标准：管线完整 + 有实证结果。
-## Genes (策略基因)
-> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-- **[TRAI-001]** 当审计训练管线时 → 必须全量扫描项目文件并拆解管线步骤为方法论，确保所有数值指标可追溯至原始日志
-- **[TRAI-002]** 当识别研究空白时 → 需精确定位到文献矛盾或方法缺口，且至少识别出3个独立的研究空白
-- **[TRAI-003]** 当生成科学假设时 → 必须包含明确的检验条件与反证路径，且格式严格符合 hypothesis-generation 的 IO_CONTRACT
-- **[TRAI-004]** 当规划论文结构时 → 采用 IMRaD 框架，其中 Results 部分需优先展示主结果（如 Val Dice/CErr）及消融/对比实验
-- **[TRAI-005]** 当确定论文类型时 → 根据管线完整性与实证结果匹配目标期刊层级（如完整管线+实证结果对应 Q1-Q2 方法学论文）
-- **[TRAI-006]** 当构建文献基础时 → 需补充15-30篇涵盖方法学、临床及算法领域的相关文献以支撑论证
-- **[TRAI-007]** 当输出最终计划时 → 生成包含 IMRaD 结构、文献列表及时间表的 paper_plan.json 文件
+# Training Pipeline Audit

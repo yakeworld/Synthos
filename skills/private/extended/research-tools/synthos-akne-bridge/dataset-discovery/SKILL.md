@@ -1,7 +1,9 @@
 ---
 name: dataset-discovery
-description: '1. **Pagination limit**: `limit > 200` often produces truncated JSON. Use `limit=50` with `offset` p'
-signature: 'dataset-discovery -> synthos-akne-bridge: synthetic skill for dataset discovery'
+description: '1. **Pagination limit**: `limit > 200` often produces truncated JSON.
+  Use `limit=50` with `offset` p'
+signature: 'dataset-discovery -> synthos-akne-bridge: synthetic skill for dataset
+  discovery'
 allowed-tools:
 - terminal
 - read_file
@@ -12,13 +14,16 @@ license: MIT
 metadata:
   synthos:
     atom_type: mechanical
-    description: '1. **Pagination limit**: `limit > 200` often produces truncated JSON. Use `limit=50` with `offset` p'
-    signature: 'dataset-discovery -> synthos-akne-bridge: synthetic skill for dataset discovery'
+    description: '1. **Pagination limit**: `limit > 200` often produces truncated
+      JSON. Use `limit=50` with `offset` p'
+    signature: 'dataset-discovery -> synthos-akne-bridge: synthetic skill for dataset
+      discovery'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 

@@ -13,12 +13,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: 确认赛道后，在申报书表格中标记"√已选：XXX"。
-    signature: 'competition-application -> writing: synthetic skill for competition application'
+    signature: 'competition-application -> writing: synthetic skill for competition
+      application'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 -|
@@ -138,22 +140,4 @@ version = state['version']      # 当前版本
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 > 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
-# Competition Application---
-> (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # Competition Application
-## Genes (策略基因)
-> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-- **[COMP-001]** 申报主体为医院/临床/科研实验室或高校/科研院所 → 避免选择“数据基础设施”赛道，因该赛道需填写营收/融资/Token消耗等财务数据
-- **[COMP-002]** 确认赛道选择后 → 在申报书表格对应位置标记“√已选：XXX”
-- **[COMP-003]** 构建项目叙事结构时 → 采用“痛点（Pains）- 方案（Solution）- 成效（Results）”三层通用模板
-- **[COMP-004]** 填充 DOCX 表格遇到合并单元格（merged cells） → 仅写入一个非合并单元格或写入后清空传播内容，防止内容错误扩散
-- **[COMP-005]** 处理长文本写入或 Python 编码问题 → 先将文本写入 JSON 文件，再由脚本读取 JSON 填充至对应段落索引
-- **[COMP-006]** 引用轮次、评分、技能数等关键数据 → 必须从 evolution-state.json 实时提取，严禁凭记忆或旧材料填写
-- **[COMP-007]** 定位申报书长文本段落 → 先打印所有段落确认索引，确保内容紧跟在标题段落之后
-- **[COMP-008]** 完成内容填充后 → 清除模板中残留的“（介绍参赛项目的背景...）”等说明性文字
-
-## 示例 · EXAMPLES
-
-1. **输入**：申报主体为公立医院临床科研实验室，面对"医疗健康/科技创新/数据基础设施"三赛道 → **操作**：按 COMP-001 排除"数据基础设施"（需填营收/融资/Token消耗财务数据），选定赛道后按 COMP-002 在申报书表格标记"√已选：XXX" → **验证**：VERIFICATION 第 1/2 项通过——无财务字段待填、赛道标记唯一。
-2. **输入**：项目背景等长文本需填入申报书 DOCX 模板，且表格含大量合并单元格 → **操作**：按 COMP-004/005/007 先打印所有段落确认索引（内容紧跟标题段落），长文本先写入 JSON 再由脚本按段落索引填充，合并单元格只写一个非合并单元格并清空传播内容；数据（轮次/评分/技能数）按 COMP-006 从 `evolution-state.json` 实时提取 → **验证**：重开 DOCX 核对合并单元格无错误扩散、无"（介绍参赛项目的背景...）"残留（COMP-008）、数据与 state 文件一致（数必重算，P0 凡数必源）。
-3. **输入**：叙事需体现项目价值，模板要求三层结构 → **操作**：按 COMP-003 用"痛点-方案-成效"三层模板，痛点层引用具体数据（70% AI论文数据泄露、PIDD 近 50% Insulin=0），成效层量化指标取自实时提取的 cycle/overall_score → **验证**：各层均有可追溯数据来源，无凭记忆填写的数字（P0 证据可溯性；VERIFICATION 第 3/4 项）。

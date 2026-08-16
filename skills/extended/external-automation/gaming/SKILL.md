@@ -1,8 +1,24 @@
 ---
 name: gaming
-description: "gaming"
+description: gaming
 version: 1.0.0
+category: gaming
+signature: 'gaming -> gaming: 游戏服务器 — Minecraft模组服务器、宝可梦模拟器。'
+author: Synthos
+license: MIT
+triggers:
+- 需要执行gaming下的子技能
+metadata:
+  synthos:
+    priority: P2
+    atom_type: parent-skill
+    description: 父级技能 — 游戏服务器 — Minecraft模组服务器、宝可梦模拟器。
+    signature: 'gaming -> sub-skills: [minecraft-modpack-server, pokemon-player]'
+    related_skills:
+    - minecraft-modpack-server
+    - pokemon-player
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,22 +38,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: gaming
-signature: "gaming -> gaming: 游戏服务器 — Minecraft模组服务器、宝可梦模拟器。"
-description: 游戏服务器 — Minecraft模组服务器、宝可梦模拟器。
-author: Synthos
-license: MIT
-version: 1.0.0
-triggers:
-  - 需要执行gaming下的子技能
-metadata:
-  synthos:
-    priority: P2
-    atom_type: parent-skill
-    description: "父级技能 — 游戏服务器 — Minecraft模组服务器、宝可梦模拟器。"
-    signature: 'gaming -> sub-skills: [minecraft-modpack-server, pokemon-player]'
-    related_skills: ["minecraft-modpack-server", "pokemon-player"]
-
 
 ## IO_CONTRACT
 
@@ -94,7 +94,6 @@ skill_view(name='minecraft-modpack-server')  # 加载第一个子技能
 父级SKILL.md仅作为目录索引，实际执行由子技能完成。
 
 # Gaming
-
 
 ## Genes (策略基因)
 

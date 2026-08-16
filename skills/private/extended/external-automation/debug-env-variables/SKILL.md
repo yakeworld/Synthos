@@ -1,7 +1,8 @@
 ---
 name: debug-env-variables
 description: Debug Environment Variables
-signature: 'debug-env-variables -> external-automation: synthetic skill for debug env variables'
+signature: 'debug-env-variables -> external-automation: synthetic skill for debug
+  env variables'
 allowed-tools:
 - terminal
 - read_file
@@ -13,12 +14,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: Debug Environment Variables
-    signature: 'debug-env-variables -> external-automation: synthetic skill for debug env variables'
+    signature: 'debug-env-variables -> external-automation: synthetic skill for debug
+      env variables'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 
@@ -191,12 +194,4 @@ Even when `.bashrc` exports are placed **before** the `case $- in ... esac` guar
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-# Debug Env Variables---
-
-
-
-
-
-
-> (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # Debug Env Variables

@@ -1,6 +1,7 @@
 ---
 name: paperjury
-description: '**典型流程**: 论文完成 → quality-gate L1-L2 → paperjury review → 修复 → quality-gate L3-L4 → paperjury auto lo'
+description: '**典型流程**: 论文完成 → quality-gate L1-L2 → paperjury review → 修复 → quality-gate
+  L3-L4 → paperjury auto lo'
 signature: 'paperjury -> private: synthetic skill for paperjury'
 allowed-tools:
 - terminal
@@ -12,13 +13,15 @@ license: MIT
 metadata:
   synthos:
     atom_type: mechanical
-    description: '**典型流程**: 论文完成 → quality-gate L1-L2 → paperjury review → 修复 → quality-gate L3-L4 → paperjury auto lo'
+    description: '**典型流程**: 论文完成 → quality-gate L1-L2 → paperjury review → 修复 → quality-gate
+      L3-L4 → paperjury auto lo'
     signature: 'paperjury -> private: synthetic skill for paperjury'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 |
@@ -98,18 +101,4 @@ metadata:
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-# Paperjury---
-## 约束规则 · RULES
-1. **数值不信任文档**：论文数值 claim 只信任独立运行代码的输出；`paper.tex`、`state.json`、notebook cell output 中的数字一律视为待验证，不直接引用。
-2. **无代码即 FABRICATED**：指标无对应 `03-code/` 下脚本与输出 → 标记 FABRICATED，禁止标注 CLOSE 或放行。
-3. **reviewer 独立**：每个 reviewer 必须独立阅读原文，禁止跨轮次共享笔记/结论，防泄漏污染评分。
-4. **不编造实验**：遇到需新实验才能验证的问题，标记 OPEN 交给作者，禁止 paperjury 自行补数据或声称已验证。
-5. **token 预算**：完整庭审单轮 ≤10k tokens，多轮 auto 累计 ≤50k tokens；超限自动终止并输出未决问题清单。
-## Genes (策略基因)
-> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-- **[PAPE-001]** 论文包含实验指标 → 必须运行独立代码复现并归档 JSON/CSV，仅信任独立运行输出而非文档数值
-- **[PAPE-002]** 指标无对应代码脚本或输出 → 直接标记为 FABRICATED，禁止标注 CLOSE 或放行
-- **[PAPE-003]** 执行多轮审查时 → 每个 reviewer 必须独立阅读原文，严禁跨轮次共享笔记或结论以防评分污染
-- **[PAPE-004]** 遇到需新实验才能验证的问题 → 标记为 OPEN 并移交作者，禁止自行补数据或声称已验证
-- **[PAPE-005]** 审查流程启动时 → 遵循“结构检查(L1-L2) → 语义审查 → 修复 → 深度庭审(auto loop) → 合规检查(L5-L7)”的典型流水线
-- **[PAPE-006]** 单轮庭审或累计多轮审查 → 严格控制在 10k/50k tokens 预算内，超限自动终止并输出未决问题清单
+# Paperjury

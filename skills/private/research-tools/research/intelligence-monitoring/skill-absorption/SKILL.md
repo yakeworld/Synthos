@@ -1,7 +1,8 @@
 ---
 name: skill-absorption
 description: 完整关键词轮转策略见 `references/keyword-rotation.md`。
-signature: 'skill-absorption -> intelligence-monitoring: synthetic skill for skill absorption'
+signature: 'skill-absorption -> intelligence-monitoring: synthetic skill for skill
+  absorption'
 allowed-tools:
 - terminal
 - read_file
@@ -13,12 +14,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: 完整关键词轮转策略见 `references/keyword-rotation.md`。
-    signature: 'skill-absorption -> intelligence-monitoring: synthetic skill for skill absorption'
+    signature: 'skill-absorption -> intelligence-monitoring: synthetic skill for skill
+      absorption'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 
@@ -119,69 +122,4 @@ tracking（已扫描/候选）
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-# Skill Absorption---
-
-
-
-
-
---|
-| GitHub Topics | `curl -s "https://api.github.com/search/repositories?q=topic:..."` | 每进化轮次 |
-| Hermes Skills | `find skills/ -name 'SKILL.md'` | 每轮 |
-| arXiv | `arxiv.search(query, max_results=10)` | 每2轮 |
-
-完整关键词轮转策略见 `references/keyword-rotation.md`。
-
-## 项目追踪
-
-所有发现的项目存储在仓库根目录的 `absorption-ledger.json`。当前台账包含 **17 个吸收项目 + 2 个自我反射**，含来源、stars、吸收能力、目标技能、待完成项。
-
-**记录分布**（三层结构）:
-- `absorption-ledger.json`（根目录）— **统一台账**，每次吸收后追加
-- `skills/.../evolution/absorption-*.md` — 各项目的详细五层吸收记录（13份）
-- `references/*.md`（本技能下）— 分析级案例研究
-
-新增吸收后的操作流程:
-1. 详细记录 → 写入 `evolution/absorption-{project}.md`
-2. 汇总 → 追加到 `absorption-ledger.json`
-3. 格式归一化 → 按 OpenClaw merge pattern 处理
-
-状态生命周期：
-```
-tracking（已扫描/候选）
-  → evaluating（五维评分中）
-    → absorbed（已吸收，有记录文件）
-    → deferred（延后，有原因）
-  → archived（关闭，有原因）
-
-## 吸收报告模板
-
-每次深度吸收后保留吸收报告（见 `references/absorption-report-template.md`）。
-
-## 参考文件
-
-- `../../../../../../absorption-ledger.json` — **统一台账**（17个吸收项目+2个自我反射）
-- `references/absorption-gates-protocol.md` — L+0到L+3详细协议
-- `references/keyword-rotation.md` — 关键词轮转策略和分类
-- `references/absorption-report-template.md` — 吸收报告模板
-- `references/multi-project-comparison.md` — 多项目哲学对比矩阵
-
-## 约束规则 · RULES
-
-1. **输入约束**: 参数类型、范围、格式必须校验
-2. **输出约束**: 返回值结构、编码、命名必须一致
-3. **异常约束**: 错误信息必须包含上下文和恢复建议
-4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
-## Golden 集合 · GOLDEN SET
-
-- **Golden Input**: 一个真实外部项目扫描结果 — 例如 GitHub Topics API 返回的某仓库（含 stars、README、skills/ 目录），经关键词轮转策略命中吸收目标（源: 本文件 IO_CONTRACT + 状态生命周期）
-- **Golden Output**: 三层记录全部落盘 — `evolution/absorption-{project}.md` 五层吸收记录 + `absorption-ledger.json` 追加条目（状态 ∈ tracking→evaluating→absorbed/deferred/archived）+ 吸收报告符合 `references/absorption-report-template.md`（源: 项目追踪/参考文件小节）
-- **Golden Error**: 输入含未验证的可执行代码片段时 → 按安全约束拒绝执行并记录上下文；台账状态非法跳转（如 tracking 直接到 absorbed 而无五层记录）→ 标记"未留痕不视为有效吸收"并回退状态（源: 约束规则 + SKIL-004/SKIL-006）
-
-> Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
-
-> 违反规则的操作视为不安全，必须拒绝或隔离。
-
-> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
-
+# Skill Absorption

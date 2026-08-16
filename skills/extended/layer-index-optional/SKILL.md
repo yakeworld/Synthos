@@ -1,8 +1,22 @@
 ---
 name: layer-index-optional
-description: "layer-index-optional"
+description: layer-index-optional
 version: 1.0.0
+category: meta
+signature: 'layer-index-optional -> meta: Navigation index for optional skills — creative
+  tools, productivity, social moni'
+related_skills:
+- layer-index
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    priority: P3
+    atom_type: layer-index
+    signature: 'layer: str, query: str, context: dict -> skill_list: list[dict]'
+    related_skills: []
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,19 +36,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: meta
-signature: "layer-index-optional -> meta: Navigation index for optional skills — creative tools, productivity, social moni"
-related_skills: ['layer-index']
-description: "Navigation index for optional skills — creative tools, productivity, social monitoring, gaming, and platform-specific integrations."
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    priority: P3
-    atom_type: layer-index
-    signature: "layer: str, query: str, context: dict -> skill_list: list[dict]"
-    related_skills: []
 
 # Optional Skills — 可选技能
 
@@ -143,7 +144,6 @@ Navigation index for optional skills: creative tools, productivity, social monit
 > 对应原则：P3（人机分层 — 路由器负责路由，原子负责执行）
 
 # Layer Index Optional
-
 
 ## Genes (策略基因)
 

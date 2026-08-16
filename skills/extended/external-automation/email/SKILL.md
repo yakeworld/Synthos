@@ -1,8 +1,23 @@
 ---
 name: email
-description: "email"
+description: email
 version: 1.0.0
+category: email
+signature: 'email -> email: 电子邮件管理 — Himalaya CLI邮件收发、搜索。'
+author: Synthos
+license: MIT
+triggers:
+- 需要执行email下的子技能
+metadata:
+  synthos:
+    priority: P2
+    atom_type: parent-skill
+    description: 父级技能 — 电子邮件管理 — Himalaya CLI邮件收发、搜索。
+    signature: 'email -> sub-skills: [himalaya]'
+    related_skills:
+    - himalaya
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,22 +37,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: email
-signature: "email -> email: 电子邮件管理 — Himalaya CLI邮件收发、搜索。"
-description: 电子邮件管理 — Himalaya CLI邮件收发、搜索。
-author: Synthos
-license: MIT
-version: 1.0.0
-triggers:
-  - 需要执行email下的子技能
-metadata:
-  synthos:
-    priority: P2
-    atom_type: parent-skill
-    description: "父级技能 — 电子邮件管理 — Himalaya CLI邮件收发、搜索。"
-    signature: 'email -> sub-skills: [himalaya]'
-    related_skills: ["himalaya"]
-
 
 ## IO_CONTRACT
 
@@ -93,7 +92,6 @@ skill_view(name='himalaya')  # 加载第一个子技能
 父级SKILL.md仅作为目录索引，实际执行由子技能完成。
 
 # Email
-
 
 ## Genes (策略基因)
 

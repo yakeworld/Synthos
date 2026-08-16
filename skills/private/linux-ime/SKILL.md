@@ -19,23 +19,18 @@ metadata:
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: devops
+related_skills:
+- linux-environment-troubleshoot
+- safe-file-operations
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
 3. 验证输出符合契约
 4. 保存结果并报告
-category: devops
-related_skills: ['linux-environment-troubleshoot', 'safe-file-operations']
-description: Linux 输入法（IME）诊断与修复 — fcitx/fcitx5 配置不匹配、GTK_IM_MODULE/QT_IM_MODULE/XMODIFIERS 三环境变量修复、X11/Wayland 差异、pty 环境 IME 不可用的根因分析与修复。
-metadata:
-  synthos:
-    priority: P2
-    atom_type: class-level
-    description: "Linux 输入法（IME）诊断与修复 — 覆盖 fcitx/fcitx5 配置检查、GTK_IM_MODULE/QT_IM_MODULE/XMODIFIERS 三环境变量修复、X11/Wayland 差异、pty 环境限制。"
-signature: "linux-ime -> processed_result"
-version: 1.0.0
 
 # Linux IME 诊断与修复
 
@@ -314,14 +309,4 @@ cat /etc/X11/xinit/xinput.d/fcitx 2>/dev/null && echo "警告：仍有 fcitx 残
 
 > 每个示例必须可独立运行、有明确输入输出、包含错误处理。
 
-# Linux Ime---
-
-## Genes (策略基因)
-> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-- **[LINU-001]** 环境变量配置冲突 → 按 `/etc/X11/xinit/xinput.d/` > `/etc/environment.d/` > `~/.bashrc` 的优先级顺序排查，优先修正高优先级文件中的旧值
-- **[LINU-002]** 系统安装 fcitx5 但应用无法输入 → 将 `GTK_IM_MODULE`、`QT_IM_MODULE` 和 `XMODIFIERS` 统一修正为 `fcitx5`，并删除指向 fcitx4 的残留配置
-- **[LINU-003]** 使用 Snap 版 Firefox/Chromium 且环境变量无效 → 识别 Snap 硬编码 ibus 特性，通过安装 deb 版本或修改应用内部配置（如 `about:config`）绕过环境变量限制
-- **[LINU-004]** 在 pty/Tmux 虚拟终端中 IME 失效 → 识别无 X11/Wayland 会话的设计限制，改用 GUI 终端输入或通过文件写入方式处理中文内容
-- **[LINU-005]** 切换输入法框架（fcitx5 ↔ ibus）后配置不生效 → 必须删除 `/etc/X11/xinit/xinput.d/` 下旧框架的配置文件，创建新框架配置并注销/重启会话
-- **[LINU-006]** ibus-libpinyin 候选延迟高 → 禁用网络候选功能并删除云端词频数据文件（`network.bin`/`opengram.dbin`），重启 ibus-daemon 以恢复性能
-- **[LINU-007]** 修改环境变量后运行中的应用无响应 → 识别 GTK/Qt 应用启动时加载 IM 模块的特性，完全关闭并重启应用进程以应用新配置
+# Linux Ime

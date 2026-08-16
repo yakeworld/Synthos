@@ -1,8 +1,20 @@
 ---
 name: himalaya
-description: "himalaya"
+description: himalaya
 version: 1.0.0
+category: email
+signature: 'himalaya -> email: Himalaya is a CLI email client that lets you manage
+  emails from the terminal usi'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills: []
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,19 +34,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: email
-signature: "himalaya -> email: Himalaya is a CLI email client that lets you manage emails from the terminal usi"
-description: "Himalaya is a CLI email client that lets you manage emails from the terminal using IMAP, SMTP, Notmuch, or Sendmail backends."
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: []
-
 
 ## IO_CONTRACT
 
@@ -356,7 +355,6 @@ RUST_LOG=trace RUST_BACKTRACE=1 himalaya envelope list
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Himalaya
-
 
 ## Genes (策略基因)
 

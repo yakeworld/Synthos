@@ -1,8 +1,23 @@
 ---
 name: red-teaming
-description: "red-teaming"
+description: red-teaming
 version: 1.0.0
+category: devops
+signature: 'red-teaming -> devops: 红队测试 — LLM越狱攻击（Parseltongue、GODMODE、ULTRAPLINIAN）。'
+author: Synthos
+license: MIT
+triggers:
+- 需要执行red-teaming下的子技能
+metadata:
+  synthos:
+    priority: P2
+    atom_type: parent-skill
+    description: 父级技能 — 红队测试 — LLM越狱攻击（Parseltongue、GODMODE、ULTRAPLINIAN）。
+    signature: 'red-teaming -> sub-skills: [godmode]'
+    related_skills:
+    - godmode
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,22 +37,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: devops
-signature: "red-teaming -> devops: 红队测试 — LLM越狱攻击（Parseltongue、GODMODE、ULTRAPLINIAN）。"
-description: 红队测试 — LLM越狱攻击（Parseltongue、GODMODE、ULTRAPLINIAN）。
-author: Synthos
-license: MIT
-version: 1.0.0
-triggers:
-  - 需要执行red-teaming下的子技能
-metadata:
-  synthos:
-    priority: P2
-    atom_type: parent-skill
-    description: "父级技能 — 红队测试 — LLM越狱攻击（Parseltongue、GODMODE、ULTRAPLINIAN）。"
-    signature: 'red-teaming -> sub-skills: [godmode]'
-    related_skills: ["godmode"]
-
 
 ## IO_CONTRACT
 
@@ -93,7 +92,6 @@ skill_view(name='godmode')  # 加载第一个子技能
 父级SKILL.md仅作为目录索引，实际执行由子技能完成。
 
 # Red Teaming
-
 
 ## Genes (策略基因)
 

@@ -1,8 +1,23 @@
 ---
 name: claude-code
-description: "claude-code"
+description: claude-code
 version: 1.0.0
+category: mlops
+signature: 'claude-code -> mlops: Delegate coding to Claude Code CLI — features, PRs,
+  refactoring, review.'
+related_skills: []
+allowed-tools:
+- terminal
+- file
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    version: 1.0.0
+    author: Synthos
+    signature: 'task: str -> result: dict'
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,22 +37,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: mlops
-signature: "claude-code -> mlops: Delegate coding to Claude Code CLI — features, PRs, refactoring, review."
-related_skills: []
-description: Delegate coding to Claude Code CLI — features, PRs, refactoring, review.
-version: 1.0.0
-allowed-tools:
-- terminal
-- file
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    version: 1.0.0
-    author: Synthos
-    signature: 'task: str -> result: dict'
-
 
 ## IO_CONTRACT
 
@@ -80,64 +79,4 @@ terminal(command="claude 'Task description'", background=true, pty=true, notify_
 ## 模式
 
 | 模式 | 场景 | 命令 |
-|:-----|:-----|:------|
-| REPL | 交互式编码 | `claude` (pty=true) |
-| 单次 | 特定任务 | `claude "task"` |
-| 审查 | 代码评审 | `claude "review PR"` |
-| 批量 | 批量修改 | delegate_task + claude |
-
-## 注意事项
-
-- 需要 `pty=true`（PTY模式），否则挂起
-- 长任务用 `background=true + notify_on_complete`
-- 确认claude CLI已安装: `which claude`
-
-## Reference
-## Reference
-- `references/setup-guide.md` — 安装和配置
-- `references/best-practices.md` — 任务拆分和上下文管理
-
-## 相关技能
-- `codex-cli` — Codex CLI 配置与远程部署（主力编码代理，Responses API）
-- `opencode` — OpenCode CLI（轻量替代，Chat Completions API）
-
-## 验证清单 · VERIFICATION
-
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
-
-## 约束规则 · RULES
-
-1. **输入约束**: 参数类型、范围、格式必须校验
-2. **输出约束**: 返回值结构、编码、命名必须一致
-3. **异常约束**: 错误信息必须包含上下文和恢复建议
-4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
-## Golden 集合 · GOLDEN SET
-
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
-
-> Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
-
-> 违反规则的操作视为不安全，必须拒绝或隔离。
-
-> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
-
-# Claude Code
-
-
-## Genes (策略基因)
-
-> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-
-- **[CLAU-001]** 执行 Claude Code CLI 命令 → 必须启用 `pty=true` 模式以防止进程挂起
-- **[CLAU-002]** 处理长耗时编码任务 → 使用 `background=true` 并设置 `notify_on_complete` 实现异步通知
-- **[CLAU-003]** 执行特定功能开发或重构 → 采用单次任务模式 `claude "task"` 并附带明确的项目上下文
-- **[CLAU-004]** 进行代码审查或安全扫描 → 使用专门的审查指令 `claude "review PR"` 聚焦于 Bug 和安全问题
-- **[CLAU-005]** 开始执行前 → 必须通过 `which claude` 验证 CLI 工具已正确安装
-- **[CLAU-006]** 处理复杂或批量修改需求 → 结合 `delegate_task` 机制进行任务拆分与上下文管理
+|:

@@ -1,7 +1,8 @@
 ---
 name: project-experience-distillation
 description: 'Synthos skill: project-experience-distillation'
-signature: 'project-experience-distillation -> meta: synthetic skill for project experience distillation'
+signature: 'project-experience-distillation -> meta: synthetic skill for project experience
+  distillation'
 allowed-tools:
 - terminal
 - read_file
@@ -13,12 +14,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: 'Synthos skill: project-experience-distillation'
-    signature: 'project-experience-distillation -> meta: synthetic skill for project experience distillation'
+    signature: 'project-experience-distillation -> meta: synthetic skill for project
+      experience distillation'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 
@@ -74,27 +77,4 @@ metadata:
 
 - **Golden Input**: `project_practice: "P141 视网膜剪切 ODE 调优：从 P140 基线出发，alpha 0.65→0.55，发现正反馈耦合致 A 冲顶，改加性 eps*(A-A_hp) 后 ablation 5.81x"`（取自 EXAMPLES 真实项目实践，覆盖正常路径）
 - **Golden Output**: `reusable_patterns: ["正反馈耦合（乘性）必然导致变量冲顶 → 约束类型: 耦合必须加性且基线锚定", "新域参数搜索从已验证基线出发单参步进，不盲扫多维"]` — 已去除项目名/路径/日期并上升到约束类型级别（PROJ-002），且 `skill_update` 为扩展 ode-simulation-tuning 的 SKILL.md diff（PROJ-004 优先扩展不新建）
-- **Golden Error**: 实践记录未回答反思问题"为什么有效"（PROJ-001），或提炼结果仍含项目实体名/未升型到约束类型（PROJ-002）时 → 拒绝产出 `reusable_patterns`，报"只记录不反思/抽象未升型"并要求补充反思后再提炼---
-
-
-
-
-
-|
-| 1 | **抽象不够** — 只在项目级别描述而不提升到通用级别 | 去掉项目名/路径/日期，保留可跨复用的模式 |
-| 2 | **只记录不反思** — 记录了步骤没问"为什么有效" | 思想提升是灵魂，不是可选的 |
-| 3 | **和 project-absorption 混淆** — 本技能是内部反思，project-absorption 是外部吸收 | 内部反思 = 从自身实践学；外部吸收 = 从外部项目学 |
-| 4 | **轻易创建新 skill** | 普遍规律优先扩展现有技能，只有个性化规则才新开 |
-| 5 | **建完 skill 不跑质量门** | 新建 skill 至少通过 L1 格式门 |
-| 6 | **文档退化** — 累积 patch 操作导致同一节重复出现 | 大重构时重写整个文件，不累积 patch |
-| 7 | **抽象级别不够深** — 只去掉实体名没上升到约束类型级别 | 真正的抽象是识别出**约束类型**，不是去掉名字保留模板 |
-
-
-- **Golden Error**: 预期错误信息（覆盖失败路径）
-## 验证清单 (Verification)
-- [ ] 提炼已去掉项目名/路径/日期，上升到可跨项目复用的模式
-- [ ] 已问"为什么有效"并提炼出约束类型（而非仅去掉实体名保留模板）
-- [ ] 区分内部反思（本技能）与外部吸收（project-absorption），未混淆
-- [ ] 普遍规律优先扩展现有技能，未轻易新建 skill
-- [ ] 新建 skill 已至少通过 L1 格式质量门
-- [ ] 无累积 patch 导致的同节重复，大重构时整文件重写
+- **Golden Error**: 实践记录未回答反思问题"为什么有效"（PROJ-001），或提炼结果仍含项目实体名/未升型到约束类型（PROJ-002）时 → 拒绝产出 `reusable_patterns`，报"只记录不反思/抽象未升型"并要求补充反思后再提炼

@@ -1,7 +1,8 @@
 ---
 name: repo-path-sanity
 description: git config --list --show-origin | grep credential
-signature: 'repo-path-sanity -> external-automation: synthetic skill for repo path sanity'
+signature: 'repo-path-sanity -> external-automation: synthetic skill for repo path
+  sanity'
 allowed-tools:
 - terminal
 - read_file
@@ -13,12 +14,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: git config --list --show-origin | grep credential
-    signature: 'repo-path-sanity -> external-automation: synthetic skill for repo path sanity'
+    signature: 'repo-path-sanity -> external-automation: synthetic skill for repo
+      path sanity'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 

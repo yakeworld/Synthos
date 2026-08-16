@@ -1,8 +1,20 @@
 ---
 name: sketch
-description: "sketch"
+description: sketch
 version: 1.0.0
+category: creative
+signature: 'sketch -> creative: Use this skill when the user wants to **see a design
+  direction before committing'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills: []
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,18 +34,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: creative
-signature: "sketch -> creative: Use this skill when the user wants to **see a design direction before committing"
-description: "Use this skill when the user wants to **see a design direction before committing** to one — exploring a UI/UX idea as disposable HTML mockups. The point is to generate 2-3 interactive variants so the user can compare visual directions side-by-side, not to produce shippable code."
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: []
 
 version: 1.0.0
 
@@ -175,117 +175,4 @@ After all variants are built, present them as a comparison. Don't just list — 
 ## Three takes on the home screen
 
 | Dimension | Calm editorial | Utilitarian dense | Playful split |
-|-----------|----------------|-------------------|---------------|
-| Density   | Low            | High              | Medium        |
-| Primary action visibility | Low | High | Medium |
-| Scan-ability | High | Medium | Low |
-| Feel | Calm, trusted | Sharp, tool-like | Inviting, energetic |
-
-**My take:** Utilitarian dense for power users, calm editorial for content-forward audiences. Playful split is weakest — tries to do both and commits to neither.
-```
-
-Let the user pick a winner, or combine two into a hybrid, or ask for another round.
-
-## Theming (when the project has a visual identity)
-
-If the user has an existing theme (colors, fonts, tokens), put shared tokens in `sketches/themes/tokens.css` and `@import` them in each variant. Keep tokens minimal:
-
-```css
-/* sketches/themes/tokens.css */
-:root {
-  --color-bg: #fafafa;
-  --color-fg: #1a1a1a;
-  --color-accent: #0066ff;
-  --color-muted: #666;
-  --radius: 8px;
-  --font-display: "Inter", sans-serif;
-  --font-body: -apple-system, BlinkMacSystemFont, sans-serif;
-}
-```
-
-Don't over-tokenize a throwaway sketch — three colors and one font is usually enough.
-
-## Interactivity bar
-
-A sketch is interactive enough when the user can:
-
-1. **Click a primary action** and something visible happens (state change, modal, toast, navigation feint)
-2. **See one meaningful state transition** (filter a list, toggle a mode, open/close a panel)
-3. **Hover recognizable affordances** (buttons, rows, tabs)
-
-More than that is over-engineering a throwaway. Less than that is a screenshot.
-
-## Frontier mode (picking what to sketch next)
-
-If sketches already exist and the user says "what should I sketch next?":
-
-- **Consistency gaps** — two winning variants from different sketches made independent choices that haven't been composed together yet
-- **Unsketched screens** — referenced but never explored
-- **State coverage** — happy path sketched, but not empty / loading / error / 1000-items
-- **Responsive gaps** — validated at one viewport; does it hold at mobile / ultrawide?
-- **Interaction patterns** — static layouts exist; transitions, drag, scroll behavior don't
-
-Propose 2-4 named candidates. Let the user pick.
-
-## Output
-
-- Create `sketches/` (or `.planning/sketches/` if the user is using GSD conventions) in the repo root
-- One subdir per variant: `NNN-stance-name/index.html` + `README.md`
-- Tell the user how to open them: `open sketches/001-calm-editorial/index.html` on macOS, `xdg-open` on Linux, `start` on Windows
-- Keep variants disposable — a sketch that you felt the need to preserve should be promoted into real project code, not curated as an asset
-
-**Typical tool sequence for one variant:**
-
-```
-terminal("mkdir -p sketches/001-calm-editorial")
-write_file("sketches/001-calm-editorial/index.html", "<!doctype html>...")
-write_file("sketches/001-calm-editorial/README.md", "## Variant: Calm editorial\n...")
-browser_navigate(url="file://$(pwd)/sketches/001-calm-editorial/index.html")
-browser_vision(question="How does this look? Any obvious layout issues?")
-```
-
-Repeat for each variant, then present the comparison table.
-
-## Attribution
-
-Adapted from the GSD (Get Shit Done) project's `/gsd-sketch` workflow — MIT © 2025 Lex Christopherson ([gsd-build/get-shit-done](https://github.com/gsd-build/get-shit-done)). The full GSD system ships persistent sketch state, theme/variant pattern references, and consistency-audit workflows; install with `npx get-shit-done-cc --hermes --global`.
-
-## 验证清单 · VERIFICATION
-
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
-
-## 约束规则 · RULES
-
-1. **输入约束**: 参数类型、范围、格式必须校验
-2. **输出约束**: 返回值结构、编码、命名必须一致
-3. **异常约束**: 错误信息必须包含上下文和恢复建议
-4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
-## Golden 集合 · GOLDEN SET
-
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
-
-> Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
-
-> 违反规则的操作视为不安全，必须拒绝或隔离。
-
-> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
-
-
-
-## Genes (策略基因)
-
-> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-
-- **[SKET-001]** 用户意图为探索设计方向而非生产代码 → 生成 2-3 个独立的交互式 HTML 变体供对比，严禁生成单一方案或可交付的生产级代码
-- **[SKET-002]** 开始设计前需明确设计基调 → 依次询问“感觉（Feel）”、“参考对象（References）”和“核心动作（Core Action）”，若用户已提供则跳过
-- **[SKET-003]** 生成多个设计变体时 → 必须基于不同的设计立场（如密度、强调点、美学风格）进行差异化，禁止仅通过改变颜色或像素值来区分变体
-- **[SKET-004]** 构建 HTML 原型时 → 使用内联样式和 CDN 资源确保单文件自包含，填充真实模拟内容并实现至少一个可见的状态交互（如点击、悬停、切换）
-- **[SKET-005]** 展示变体给用户之前 → 必须使用浏览器工具加载页面并进行视觉验证，修复布局错误或渲染问题后再交付
-- **[SKET-006]** 呈现最终对比结果时 → 采用表格形式多维度对比各变体，并给出明确的主观推荐意见（Opinionate），指出各方案的优劣及适用场景
+|

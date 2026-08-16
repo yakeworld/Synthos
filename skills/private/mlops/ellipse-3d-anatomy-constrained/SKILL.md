@@ -1,7 +1,8 @@
 ---
 name: ellipse-3d-anatomy-constrained
 description: 1. 确认输入参数完整
-signature: 'ellipse-3d-anatomy-constrained -> mlops: synthetic skill for ellipse 3d anatomy constrained'
+signature: 'ellipse-3d-anatomy-constrained -> mlops: synthetic skill for ellipse 3d
+  anatomy constrained'
 allowed-tools:
 - terminal
 - read_file
@@ -13,27 +14,25 @@ metadata:
   synthos:
     atom_type: mechanical
     description: 1. 确认输入参数完整
-    signature: 'ellipse-3d-anatomy-constrained -> mlops: synthetic skill for ellipse 3d anatomy constrained'
+    signature: 'ellipse-3d-anatomy-constrained -> mlops: synthetic skill for ellipse
+      3d anatomy constrained'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: mlops
+related_skills:
+- ellipse-to-3d-circle
+- llm-model-selection
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
 3. 验证输出符合契约
 4. 保存结果并报告
-category: mlops
-related_skills: ['ellipse-to-3d-circle', 'llm-model-selection']
-description: 用户特异性推导：椭圆→3D圆通过解剖约束（R=2r, d=√3r）消除方位角模糊。覆盖法向量公式、光轴平面、Rodrigues旋转、多帧眼球中心求解。源自AKNE眼动研究笔记。
-signature: "ellipse-3d-anatomy-constrained -> processed_result"
-version: 1.0.0
-
-# ellipse-3d-anatomy-constrained: 椭圆→3D圆解剖约束法
-
 ## 边界
 
 将二维椭圆参数反推为三维空间圆几何参数，通过解剖约束消除方位角模糊。
@@ -124,29 +123,4 @@ M = I + [v]_x + [v]_x^2 / (1 + O·O')
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-# Ellipse 3D Anatomy Constrained---
-
-> (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # Ellipse 3D Anatomy Constrained
-## Genes (策略基因)
-> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-- **[ELLI-001]** 单帧椭圆参数存在方位角模糊 → 引入解剖约束（R_eyeball=2R_iris, d=√3R_iris）将自由度从2压缩至0以消除歧义
-- **[ELLI-002]** 需要确定眼球中心位置 → 利用至少两帧椭圆数据，通过光轴投影直线的交点求解眼球中心
-- **[ELLI-003]** 计算虹膜中心深度坐标 z1 出现虚数 → 判定椭圆参数与解剖约束矛盾，需检查输入数据有效性
-- **[ELLI-004]** 多帧数据求解眼球中心存在初始值依赖 → 采用迭代策略（先估计→计算→收敛）以获取稳定解
-- **[ELLI-005]** 需要构建三维空间旋转关系 → 应用 Rodrigues 旋转公式 M = I + [v]_x + [v]_x^2 / (1 + O·O') 进行矩阵推导
-- **[ELLI-006]** 输入参数完整性未知 → 在执行核心操作前必须校验参数类型、范围及格式，确保符合输入约束
-
-## 示例 · EXAMPLES
-
-1. **输入**: 单帧椭圆参数 a=8, b=5, 旋转角 beta。
-   **操作**: 按 ELI-001 引入解剖约束（R_eyeball=2R_iris, d=√3R_iris）将自由度从 2 压缩到 0，计算 `cos(alpha)=b/a` 与单位化法向量 n。
-   **验证**: 核对验证清单第 1、2 条——a≥b 且 cos(alpha)∈[-1,1]，法向量单位化且方向正确。
-
-2. **输入**: 计算 z1 = sqrt(3R_iris²-(x1-x0)²-(y1-y0)²) 时根号内为负。
-   **操作**: 按 ELI-003 判定椭圆参数与解剖约束矛盾，不输出虚数结果，检查输入数据有效性并给出恢复建议。
-   **验证**: 触发验证清单第 4 条——3R_iris²-(x1-x0)²-(y1-y0)² < 0，返回带上下文的错误信息（RULES 第 3 条）。
-
-3. **输入**: 至少两帧椭圆数据，需求解眼球中心。
-   **操作**: 按 ELI-002 取两帧光轴投影直线交点得眼球中心，按 ELI-004 用迭代策略（先估计→计算→收敛）消除初始值依赖。
-   **验证**: 核对验证清单第 5、6 条——单帧无法确定已排除，多帧迭代收敛后眼球中心稳定。

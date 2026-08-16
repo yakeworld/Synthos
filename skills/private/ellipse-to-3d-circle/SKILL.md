@@ -13,13 +13,19 @@ metadata:
   synthos:
     atom_type: mechanical
     description: 1. 确认输入参数完整
-    signature: 'ellipse-to-3d-circle -> private: synthetic skill for ellipse to 3d circle'
+    signature: 'ellipse-to-3d-circle -> private: synthetic skill for ellipse to 3d
+      circle'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: mlops
+related_skills:
+- ellipse-3d-anatomy-constrained
+- llm-model-selection
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -39,14 +45,6 @@ metadata:
 1. 
 2. 
 3. 
-category: mlops
-related_skills: ['ellipse-3d-anatomy-constrained', 'llm-model-selection']
-description: 椭圆逆投影为三维空间圆 — 核心为眼动追踪中瞳孔椭圆→3D角膜面法向量反推。覆盖正交/透视投影、法向量参数化、深度歧义消除、正交基构建。
-signature: "ellipse-to-3d-circle -> processed_result"
-version: 2.0.0
-
-# ellipse-to-3d-circle: 椭圆逆投影为三维空间圆
-
 ## 边界 (Boundary)
 
 将二维图像平面上的椭圆参数反推为三维空间圆的几何参数（圆心、半径、法向量）。
@@ -236,17 +234,4 @@ $$R_{\text{mm}} = \frac{R_{\text{px}} \cdot d_{\text{mm}}}{f_{\text{px}}}$$
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
-# Ellipse To 3D Circle---
-
-> (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # Ellipse To 3D Circle
-## Genes (策略基因)
-> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-- **[ELLI-001]** 输入椭圆参数 → 校验长半轴 a 与短半轴 b 满足 b/a ∈ (0, 1]，否则判定输入无效
-- **[ELLI-002]** 计算倾斜角 → 利用公式 alpha = arccos(b/a) 确定法向量与光轴的夹角，并限制 alpha ∈ [0, π/2]
-- **[ELLI-003]** 求解方位角 → 结合椭圆长轴方向与右手定则，通过 phi = theta ± π/2 消除法向量在圆锥面上的旋转歧义
-- **[ELLI-004]** 处理深度模糊 → 引入眼球模型、双目视角或深度传感器等先验约束，以唯一确定圆心深度 z_c
-- **[ELLI-005]** 构建正交基 → 选取不与法向量平行的参考向量，通过叉积生成 u, v 向量，确保 u, v, n 构成右手坐标系
-- **[ELLI-006]** 区分投影模型 → 若为透视投影且深度未知，禁止直接使用 a=R，需采用完整相机投影模型 K[R|t] 进行反推
-- **[ELLI-007]** 处理奇异情况 → 当 a=b（正对相机）时，识别无法从单帧确定旋转状态，需依赖纹理特征点或第二视角
-- **[ELLI-008]** 统一物理单位 → 利用相机焦距 f 和距离 d，将像素单位的椭圆参数转换为物理单位（mm）的 3D 几何参数

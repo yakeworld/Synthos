@@ -1,27 +1,26 @@
 ---
 name: heartmula
-description: "heartmula"
+description: heartmula
 version: 1.0.0
+category: creative
+signature: 'heartmula -> creative: HeartMuLa is a family of open-source music foundation
+  models (Apache-2.0) that g'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills: []
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
 3. 验证输出符合契约
 4. 保存结果并报告
-category: creative
-signature: "heartmula -> creative: HeartMuLa is a family of open-source music foundation models (Apache-2.0) that g"
-description: "HeartMuLa is a family of open-source music foundation models (Apache-2.0) that generates music conditioned on lyrics and tags, with multilingual support. Generates full songs from lyrics + tags. Comparable to Suno for open-source. Includes:"
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: []
-
 
 ## IO_CONTRACT
 
@@ -165,75 +164,4 @@ Bridge lyrics...
 
 ### Key Parameters
 | Parameter | Default | Description |
-|-----------|---------|-------------|
-| `--max_audio_length_ms` | 240000 | Max length in ms (240s = 4 min) |
-| `--topk` | 50 | Top-k sampling |
-| `--temperature` | 1.0 | Sampling temperature |
-| `--cfg_scale` | 1.5 | Classifier-free guidance scale |
-| `--lazy_load` | false | Load/unload models on demand (saves VRAM) |
-| `--mula_dtype` | bfloat16 | Dtype for HeartMuLa (bf16 recommended) |
-| `--codec_dtype` | float32 | Dtype for HeartCodec (fp32 recommended for quality) |
-
-### Performance
-- RTF (Real-Time Factor) ≈ 1.0 — a 4-minute song takes ~4 minutes to generate
-- Output: MP3, 48kHz stereo, 128kbps
-
-## Pitfalls
-- 
-- 
-
-## Verification
-- 
-- 
-1. **Do NOT use bf16 for HeartCodec** — degrades audio quality. Use fp32 (default).
-2. **Tags may be ignored** — known issue (#90). Lyrics tend to dominate; experiment with tag ordering.
-3. **Triton not available on macOS** — Linux/CUDA only for GPU acceleration.
-4. **RTX 5080 incompatibility** reported in upstream issues.
-5. The dependency pin conflicts require the manual upgrades and patches described above.
-
-## Links
-- Repo: https://github.com/HeartMuLa/heartlib
-- Models: https://huggingface.co/HeartMuLa
-- Paper: https://arxiv.org/abs/2601.10547
-- License: Apache-2.0
-
-## 验证清单 · VERIFICATION
-
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
-
-## 约束规则 · RULES
-
-1. **输入约束**: 参数类型、范围、格式必须校验
-2. **输出约束**: 返回值结构、编码、命名必须一致
-3. **异常约束**: 错误信息必须包含上下文和恢复建议
-4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
-## Golden 集合 · GOLDEN SET
-
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
-
-> Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
-
-> 违反规则的操作视为不安全，必须拒绝或隔离。
-
-> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
-
-# Heartmula
-
-
-## Genes (策略基因)
-
-> 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-
-- **[HEAR-001]** 当 VRAM 低于 16GB 或需单卡运行大模型时 → 启用 `--lazy_load true` 以按需加载/卸载模型，将峰值显存控制在 ~6.2GB
-- **[HEAR-002]** 当使用 transformers 5.x 且模型在 meta-device 初始化时 → 手动修补 RoPE 缓存，在权重加载后重新初始化 `Llama3ScaledRoPE` 以修复位置编码
-- **[HEAR-003]** 当加载 HeartCodec 遇到 VQ codebook 形状不匹配（scalar vs 0-d tensor）时 → 在 `from_pretrained` 中设置 `ignore_mismatched_sizes=True` 以安全忽略缓冲区差异
-- **[HEAR-004]** 当需要保证高保真音频重建质量时 → 强制 HeartCodec 使用 `float32` 精度，严禁使用 `bfloat16` 以避免音质退化
-- **[HEAR-005]** 当用户无 NVIDIA GPU 或处于 macOS 环境时 → 推荐云端 GPU 服务或在线 Demo，避免本地 CPU 运行导致的 30-60 分钟极慢生成速度
-- **[HEAR-006]** 当输入包含歌词和风格标签时 → 采用括号结构标签（如 [Verse], [Chorus]）格式化歌词，并使用无空格逗号分隔标签，同时注意标签可能被歌词主导的问题
+|

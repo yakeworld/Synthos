@@ -1,27 +1,26 @@
 ---
 name: minecraft-modpack-server
-description: "minecraft-modpack-server"
+description: minecraft-modpack-server
 version: 1.0.0
+category: gaming
+signature: 'minecraft-modpack-server -> gaming: Before starting setup, ask the user
+  for:'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills: []
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
 3. 验证输出符合契约
 4. 保存结果并报告
-category: gaming
-signature: "minecraft-modpack-server -> gaming: Before starting setup, ask the user for:"
-description: "Before starting setup, ask the user for:"
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: []
-
 
 ## IO_CONTRACT
 
@@ -239,7 +238,6 @@ Add hourly cron:
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Minecraft Modpack Server
-
 
 ## Genes (策略基因)
 
