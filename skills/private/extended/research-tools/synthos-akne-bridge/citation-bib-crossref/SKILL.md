@@ -1,7 +1,8 @@
 ---
 name: citation-bib-crossref
 description: pima-crispdm           33   100%    0     0    ✅
-signature: 'citation-bib-crossref -> synthos-akne-bridge: synthetic skill for citation bib crossref'
+signature: 'citation-bib-crossref -> synthos-akne-bridge: synthetic skill for citation
+  bib crossref'
 allowed-tools:
 - terminal
 - read_file
@@ -13,12 +14,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: pima-crispdm           33   100%    0     0    ✅
-    signature: 'citation-bib-crossref -> synthos-akne-bridge: synthetic skill for citation bib crossref'
+    signature: 'citation-bib-crossref -> synthos-akne-bridge: synthetic skill for
+      citation bib crossref'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 

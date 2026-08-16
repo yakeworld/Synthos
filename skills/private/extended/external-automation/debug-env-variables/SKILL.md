@@ -1,7 +1,8 @@
 ---
 name: debug-env-variables
 description: Debug Environment Variables
-signature: 'debug-env-variables -> external-automation: synthetic skill for debug env variables'
+signature: 'debug-env-variables -> external-automation: synthetic skill for debug
+  env variables'
 allowed-tools:
 - terminal
 - read_file
@@ -13,12 +14,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: Debug Environment Variables
-    signature: 'debug-env-variables -> external-automation: synthetic skill for debug env variables'
+    signature: 'debug-env-variables -> external-automation: synthetic skill for debug
+      env variables'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 

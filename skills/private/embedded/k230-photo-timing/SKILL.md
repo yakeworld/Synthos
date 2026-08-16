@@ -1,6 +1,7 @@
 ---
 name: k230-photo-timing
-description: '**Result**: With Display binding, total `snapshot + save` should be ~35-40ms → **25-28 FPS** vs curr'
+description: '**Result**: With Display binding, total `snapshot + save` should be
+  ~35-40ms → **25-28 FPS** vs curr'
 signature: 'k230-photo-timing -> embedded: synthetic skill for k230 photo timing'
 allowed-tools:
 - terminal
@@ -12,13 +13,15 @@ license: MIT
 metadata:
   synthos:
     atom_type: mechanical
-    description: '**Result**: With Display binding, total `snapshot + save` should be ~35-40ms → **25-28 FPS** vs curr'
+    description: '**Result**: With Display binding, total `snapshot + save` should
+      be ~35-40ms → **25-28 FPS** vs curr'
     signature: 'k230-photo-timing -> embedded: synthetic skill for k230 photo timing'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 |

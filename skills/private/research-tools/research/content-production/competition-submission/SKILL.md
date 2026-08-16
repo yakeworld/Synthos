@@ -1,7 +1,8 @@
 ---
 name: competition-submission
 description: zip -r submission.zip submission/ -x "*/.*"
-signature: 'competition-submission -> content-production: synthetic skill for competition submission'
+signature: 'competition-submission -> content-production: synthetic skill for competition
+  submission'
 allowed-tools:
 - terminal
 - read_file
@@ -13,12 +14,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: zip -r submission.zip submission/ -x "*/.*"
-    signature: 'competition-submission -> content-production: synthetic skill for competition submission'
+    signature: 'competition-submission -> content-production: synthetic skill for
+      competition submission'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 ## IO_CONTRACT

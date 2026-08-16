@@ -1,7 +1,8 @@
 ---
 name: graduate-student-onboarding
 description: 'Scope tiers:'
-signature: 'graduate-student-onboarding -> mentoring: synthetic skill for graduate student onboarding'
+signature: 'graduate-student-onboarding -> mentoring: synthetic skill for graduate
+  student onboarding'
 allowed-tools:
 - terminal
 - read_file
@@ -13,12 +14,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: 'Scope tiers:'
-    signature: 'graduate-student-onboarding -> mentoring: synthetic skill for graduate student onboarding'
+    signature: 'graduate-student-onboarding -> mentoring: synthetic skill for graduate
+      student onboarding'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 |

@@ -19,7 +19,13 @@ metadata:
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: research
+related_skills:
+- academic-literature-search
+- proactive-discovery
+author: Synthos
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -48,24 +54,6 @@ metadata:
 1. 
 2. 
 3. 
-category: research
-signature: "google-search -> research: 网页搜索引擎封装 — SerpAPI/Brave API → 自建 SearXNG → DDG/Google fallback 三级降级链。所有路径共享统一输出"
-related_skills: ['academic-literature-search', 'proactive-discovery']
-description: 网页搜索引擎封装 — SerpAPI/Brave API → 自建 SearXNG → DDG/Google fallback 三级降级链。所有路径共享统一输出契约 {title, url, snippet, position}。
-version: 4.1.0
-allowed-tools:
-- terminal
-- file
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    version: 2.1.0
-    author: Synthos
-    signature: 'query: str -> results: list'
-    atom_type: skill
-    priority: P1
-
 ## IO_CONTRACT
 
 - **input**: `query: str, max_results: int, advanced_search: dict`

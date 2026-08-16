@@ -1,6 +1,7 @@
 ---
 name: pidd-leakage-audit
-description: '1. Never cite CRISP-DM without citing Shearer (2000) or Wirth & Hipp (2000). These are the original '
+description: '1. Never cite CRISP-DM without citing Shearer (2000) or Wirth & Hipp
+  (2000). These are the original '
 signature: 'pidd-leakage-audit -> private: synthetic skill for pidd leakage audit'
 allowed-tools:
 - terminal
@@ -12,13 +13,15 @@ license: MIT
 metadata:
   synthos:
     atom_type: mechanical
-    description: '1. Never cite CRISP-DM without citing Shearer (2000) or Wirth & Hipp (2000). These are the original '
+    description: '1. Never cite CRISP-DM without citing Shearer (2000) or Wirth &
+      Hipp (2000). These are the original '
     signature: 'pidd-leakage-audit -> private: synthetic skill for pidd leakage audit'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 

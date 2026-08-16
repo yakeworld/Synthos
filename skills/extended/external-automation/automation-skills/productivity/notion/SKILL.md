@@ -1,31 +1,10 @@
 ---
 name: notion
-description: "notion"
+description: notion
 version: 1.0.0
----
-
-## Operational Steps
-1. 确认输入参数完整
-2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
-3. 验证输出符合契约
-4. 保存结果并报告
-
-## Pitfalls
-- 
-- 
-
-## Verification
-- 
-- 
-- 
-- 
-1. 
-2. 
-3. 
 category: productivity
-signature: "notion -> productivity: 'Notion API via curl: pages, databases, blocks, search.'"
-description: 'Notion API via curl: pages, databases, blocks, search.'
-version: 1.0.0
+signature: 'notion -> productivity: ''Notion API via curl: pages, databases, blocks,
+  search.'''
 allowed-tools:
 - terminal
 - read_file
@@ -56,10 +35,30 @@ metadata:
     - jupyter-live-kernel
     - linear
     version: 1.0.0
+---
+
+
+## Operational Steps
+1. 确认输入参数完整
+2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
+3. 验证输出符合契约
+4. 保存结果并报告
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
 prerequisites:
   env_vars:
   - NOTION_API_KEY
-
 
 ## IO_CONTRACT
 
@@ -254,7 +253,6 @@ Common property formats for database items:
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Notion
-
 
 ## Genes (策略基因)
 

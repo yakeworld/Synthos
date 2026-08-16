@@ -1,7 +1,8 @@
 ---
 name: synthos-akne-bridge
 description: Synthos-AKNE Bridge — 双向桥接
-signature: 'synthos-akne-bridge -> research-tools: synthetic skill for synthos akne bridge'
+signature: 'synthos-akne-bridge -> research-tools: synthetic skill for synthos akne
+  bridge'
 allowed-tools:
 - terminal
 - read_file
@@ -13,12 +14,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: Synthos-AKNE Bridge — 双向桥接
-    signature: 'synthos-akne-bridge -> research-tools: synthetic skill for synthos akne bridge'
+    signature: 'synthos-akne-bridge -> research-tools: synthetic skill for synthos
+      akne bridge'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 

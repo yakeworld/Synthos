@@ -1,8 +1,21 @@
 ---
 name: shared
-description: "shared"
+description: shared
 version: 1.0.0
+category: productivity
+signature: 'shared -> productivity: 共享资源 — 跨技能引用的通用资源。'
+author: Synthos
+license: MIT
+triggers:
+- 需要执行shared下的子技能
+metadata:
+  synthos:
+    priority: P2
+    atom_type: parent-skill
+    description: 父级技能 — 共享资源 — 跨技能引用的通用资源。
+    signature: 'shared -> sub-skills: [references]'
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,22 +35,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: productivity
-signature: "shared -> productivity: 共享资源 — 跨技能引用的通用资源。"
-description: 共享资源 — 跨技能引用的通用资源。
-author: Synthos
-license: MIT
-version: 1.0.0
-triggers:
-  - 需要执行shared下的子技能
-metadata:
-  synthos:
-    priority: P2
-    atom_type: parent-skill
-    description: "父级技能 — 共享资源 — 跨技能引用的通用资源。"
-    signature: 'shared -> sub-skills: [references]'
-    
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
@@ -92,7 +89,6 @@ skill_view(name='references')  # 加载第一个子技能
 父级SKILL.md仅作为目录索引，实际执行由子技能完成。
 
 # Shared
-
 
 ## Genes (策略基因)
 

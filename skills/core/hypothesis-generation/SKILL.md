@@ -1,11 +1,29 @@
 ---
 name: hypothesis-generation
-description: "假说生成。输入: gaps, 输出: hypotheses"
+description: '假说生成。输入: gaps, 输出: hypotheses'
 version: 1.1.0
 entrypoint_type: cognitive
-entrypoint_cmd: "从研究空白生成可证伪假说，含验证方法"
-entrypoint_desc: "假说生成。输入: gaps, 输出: hypotheses"
+entrypoint_cmd: 从研究空白生成可证伪假说，含验证方法
+entrypoint_desc: '假说生成。输入: gaps, 输出: hypotheses'
+category: core
+signature: 'hypothesis-generation -> core: Generate falsifiable, prioritised research
+  hypotheses from gap analysis — with f'
+license: MIT
+author: Synthos
+priority: P1
+atom_type: cognitive-atom
+metadata:
+  synthos:
+    signature: 'research_gap: str, domain_knowledge: str, constraints: dict -> hypotheses:
+      list[Hypothesis]'
+    related_skills:
+    - knowledge-acquisition
+    - knowledge-extraction
+    - association-discovery
+    - argument-expression
+    - viewpoint-verification
 ---
+
 
 ## Operational Steps
 1. 从ASC的输出获取研究空白/矛盾点
@@ -26,24 +44,6 @@ entrypoint_desc: "假说生成。输入: gaps, 输出: hypotheses"
 1. 
 2. 
 3. 
-category: core
-signature: "hypothesis-generation -> core: Generate falsifiable, prioritised research hypotheses from gap analysis — with f"
-description: "Generate falsifiable, prioritised research hypotheses from gap analysis — with falsifiability tests, evidence matrices, clinical translation assessment, and composite scoring."
-version: 1.1.0
-license: MIT
-author: Synthos
-priority: P1
-atom_type: cognitive-atom
-metadata:
-  synthos:
-    signature: "research_gap: str, domain_knowledge: str, constraints: dict -> hypotheses: list[Hypothesis]"
-    related_skills:
-      - knowledge-acquisition
-      - knowledge-extraction
-      - association-discovery
-      - argument-expression
-      - viewpoint-verification
-
 # Hypothesis Generation
 
 > 假说生于空白，立于可证伪，强于可检验。
@@ -53,7 +53,6 @@ metadata:
 > 「假说者，探理之始也。无证则悬，有证则立。」
 > 「可证伪者存，不可证伪者废。无检验之假设，犹无砭之弓矢。」
 > 立意高远，证伪分明，验之有法，废之有理。
-
 
 ## Genes (策略基因)
 

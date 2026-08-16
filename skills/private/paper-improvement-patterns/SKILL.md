@@ -1,7 +1,8 @@
 ---
 name: paper-improvement-patterns
 description: 1. 确认输入参数完整
-signature: 'paper-improvement-patterns -> private: synthetic skill for paper improvement patterns'
+signature: 'paper-improvement-patterns -> private: synthetic skill for paper improvement
+  patterns'
 allowed-tools:
 - terminal
 - read_file
@@ -13,13 +14,17 @@ metadata:
   synthos:
     atom_type: mechanical
     description: 1. 确认输入参数完整
-    signature: 'paper-improvement-patterns -> private: synthetic skill for paper improvement patterns'
+    signature: 'paper-improvement-patterns -> private: synthetic skill for paper improvement
+      patterns'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: paper-tools
+author: Synthos
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -39,19 +44,6 @@ metadata:
 1. 
 2. 
 3. 
-category: paper-tools
-description: "论文质量改进的标准化模式库 — 消融实验、统计显著性、前沿文献补充、Data/Code声明的添加模式"
-version: 1.2.0
-author: "Synthos"
-license: MIT
-metadata:
-  synthos:
-    priority: P2
-    atom_type: skill
-    description: "论文质量改进模式库 — 前沿文献、消融实验、统计显著性、数据声明、数值伪造修复等标准化改进模式"
-    related_skills: ["paper-improvement", "reproducibility-audit", "prose-cluster-hybrid-citation-fix"]
-    change_log:
-      "1.1.0": "2026-06-24 新增外部引用到quality-gate的消融布尔开关实现和Notebook-Script统一工作流"
 signature: "paper-improvement-patterns -> processed_result"
 
 ## 核心场景

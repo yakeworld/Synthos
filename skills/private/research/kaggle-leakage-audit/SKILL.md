@@ -13,12 +13,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: 1. 不平衡度越高 → 泄漏杀伤越大
-    signature: 'kaggle-leakage-audit -> research: synthetic skill for kaggle leakage audit'
+    signature: 'kaggle-leakage-audit -> research: synthetic skill for kaggle leakage
+      audit'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 ## IO_CONTRACT

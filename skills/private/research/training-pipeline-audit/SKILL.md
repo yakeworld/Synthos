@@ -1,7 +1,8 @@
 ---
 name: training-pipeline-audit
 description: '**IMRaD结构规划**:'
-signature: 'training-pipeline-audit -> research: synthetic skill for training pipeline audit'
+signature: 'training-pipeline-audit -> research: synthetic skill for training pipeline
+  audit'
 allowed-tools:
 - terminal
 - read_file
@@ -13,12 +14,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: '**IMRaD结构规划**:'
-    signature: 'training-pipeline-audit -> research: synthetic skill for training pipeline audit'
+    signature: 'training-pipeline-audit -> research: synthetic skill for training
+      pipeline audit'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 |

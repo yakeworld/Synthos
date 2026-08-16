@@ -13,12 +13,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: 1. 确认输入参数完整
-    signature: 'ellipse-to-3d-circle -> private: synthetic skill for ellipse to 3d circle'
+    signature: 'ellipse-to-3d-circle -> private: synthetic skill for ellipse to 3d
+      circle'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 ## Operational Steps

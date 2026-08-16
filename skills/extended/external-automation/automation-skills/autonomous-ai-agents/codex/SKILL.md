@@ -1,18 +1,9 @@
 ---
 name: codex
-description: "codex"
+description: codex
 version: 1.0.0
----
-
-## Operational Steps
-1. 确认输入参数完整
-2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
-3. 验证输出符合契约
-4. 保存结果并报告
 category: mlops
-signature: "codex -> mlops: Delegate coding to OpenAI Codex CLI — 主力编码代理。覆盖多节点profile配置、无PTY执行、Cron集成、多模型并行。"
-description: "Delegate coding to OpenAI Codex CLI — 主力编码代理。覆盖多节点profile配置、无PTY执行、Cron集成、多模型并行。"
-version: 1.1.0
+signature: 'codex -> mlops: Delegate coding to OpenAI Codex CLI — 主力编码代理。覆盖多节点profile配置、无PTY执行、Cron集成、多模型并行。'
 allowed-tools:
 - terminal
 - file
@@ -46,8 +37,14 @@ metadata:
     version: 1.1.0
     last_updated: 2026-06-19
     update_reason: Multi-node profile architecture + cron script conversion
+---
 
 
+## Operational Steps
+1. 确认输入参数完整
+2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
+3. 验证输出符合契约
+4. 保存结果并报告
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
@@ -327,7 +324,6 @@ codex $PROFILE exec "
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Codex
-
 
 ## Genes (策略基因)
 

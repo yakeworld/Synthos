@@ -1,8 +1,20 @@
 ---
 name: yuanbao
-description: "yuanbao"
+description: yuanbao
 version: 1.0.0
+category: social-media
+signature: 'yuanbao -> social-media: **Your text reply IS the message sent to the
+  group/user.** The gateway automatic'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills: []
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,20 +34,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: social-media
-signature: "yuanbao -> social-media: **Your text reply IS the message sent to the group/user.** The gateway automatic"
-description: "**Your text reply IS the message sent to the group/user.** The gateway automatically delivers your response text to the chat. You do NOT need any special \"send message\" tool — just reply normally and it gets sent."
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: []
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
@@ -50,7 +48,6 @@ metadata:
 > 群者，众之聚也。管群者，理众之器也。
 > 艾特其人，问其所知；查其信息，答其所问。
 > 不扰不滥，有问必应。
-
 
 ## Genes (策略基因)
 

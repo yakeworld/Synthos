@@ -1,8 +1,23 @@
 ---
 name: maintenance
-description: "maintenance"
+description: maintenance
 version: 1.0.0
+category: meta
+signature: 'maintenance -> meta: Synthos维护 — 认知原子结构完整性验证。'
+author: Synthos
+license: MIT
+triggers:
+- 需要执行maintenance下的子技能
+metadata:
+  synthos:
+    priority: P2
+    atom_type: parent-skill
+    description: 父级技能 — Synthos维护 — 认知原子结构完整性验证。
+    signature: 'maintenance -> sub-skills: [synthos-probe]'
+    related_skills:
+    - synthos-probe
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,23 +37,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: meta
-signature: "maintenance -> meta: Synthos维护 — 认知原子结构完整性验证。"
-description: Synthos维护 — 认知原子结构完整性验证。
-author: Synthos
-license: MIT
-version: 1.0.0
-triggers:
-  - 需要执行maintenance下的子技能
-metadata:
-  synthos:
-    priority: P2
-    atom_type: parent-skill
-    description: "父级技能 — Synthos维护 — 认知原子结构完整性验证。"
-    signature: 'maintenance -> sub-skills: [synthos-probe]'
-    related_skills: ["synthos-probe"]
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
@@ -93,7 +91,6 @@ skill_view(name='synthos-probe')  # 加载第一个子技能
 父级SKILL.md仅作为目录索引，实际执行由子技能完成。
 
 # Maintenance
-
 
 ## Genes (策略基因)
 

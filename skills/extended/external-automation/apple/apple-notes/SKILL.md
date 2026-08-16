@@ -1,8 +1,22 @@
 ---
 name: apple-notes
-description: "apple-notes"
+description: apple-notes
 version: 1.0.0
+category: apple
+signature: 'apple-notes -> apple: Use `memo` to manage Apple Notes directly from the
+  terminal. Notes sync across a'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills:
+    - apple
+    - apple-reminders
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,20 +36,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: apple
-signature: "apple-notes -> apple: Use `memo` to manage Apple Notes directly from the terminal. Notes sync across a"
-description: "Use `memo` to manage Apple Notes directly from the terminal. Notes sync across all Apple devices via iCloud."
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: ['apple', 'apple-reminders']
-
-
 ## IO_CONTRACT
 
 - **input**: `note_action: str, content: str` — 用户请求描述、上下文信息
@@ -145,8 +145,6 @@ memo notes -ex                    # Export to HTML/Markdown
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
-
-
 
 ## Genes (策略基因)
 

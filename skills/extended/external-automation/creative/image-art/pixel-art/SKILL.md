@@ -1,28 +1,26 @@
 ---
 name: pixel-art
-description: "pixel-art"
+description: pixel-art
 version: 1.0.0
+category: creative
+signature: 'pixel-art -> creative: Convert any image into retro pixel art, then optionally
+  animate it into a short'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills: []
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
 3. 验证输出符合契约
 4. 保存结果并报告
-category: creative
-signature: "pixel-art -> creative: Convert any image into retro pixel art, then optionally animate it into a short"
-description: "Convert any image into retro pixel art, then optionally animate it into a short"
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: []
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
@@ -260,8 +258,6 @@ are ported from [pixel-art-studio](https://github.com/Synero/pixel-art-studio)
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
-
-
 
 ## Genes (策略基因)
 

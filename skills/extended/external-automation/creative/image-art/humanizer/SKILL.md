@@ -1,8 +1,19 @@
 ---
 name: humanizer
-description: "humanizer"
+description: humanizer
 version: 1.0.0
+category: creative
+signature: 'humanizer -> creative: AI文本检测规避方法论 — 识别并消除AI生成文本的29种模式特征，注入人类写作个性与声音，使文本听起来自然、有观点、有灵魂。'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills: []
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,20 +33,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: creative
-signature: "humanizer -> creative: AI文本检测规避方法论 — 识别并消除AI生成文本的29种模式特征，注入人类写作个性与声音，使文本听起来自然、有观点、有灵魂。"
-description: "AI文本检测规避方法论 — 识别并消除AI生成文本的29种模式特征，注入人类写作个性与声音，使文本听起来自然、有观点、有灵魂。"
-version: 1.2.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: []
-
-
 ## IO_CONTRACT
 
 - **input**: `text: str, target_tone: str` — 待处理文本、目标语调
@@ -265,7 +262,6 @@ Hermes 在撰写用户端散文时也应应用此技能——发布说明、PR�
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Humanizer
-
 
 ## Genes (策略基因)
 

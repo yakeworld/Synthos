@@ -1,28 +1,26 @@
 ---
 name: baoyu-infographic
-description: "baoyu-infographic"
+description: baoyu-infographic
 version: 1.0.0
+category: creative
+signature: 'baoyu-infographic -> creative: Adapted from [baoyu-infographic](https://github.com/JimLiu/baoyu-skills)
+  for Her'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills: []
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
 3. 验证输出符合契约
 4. 保存结果并报告
-category: creative
-signature: "baoyu-infographic -> creative: Adapted from [baoyu-infographic](https://github.com/JimLiu/baoyu-skills) for Her"
-description: "Adapted from [baoyu-infographic](https://github.com/JimLiu/baoyu-skills) for Hermes Agent's tool ecosystem."
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: []
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
@@ -289,7 +287,6 @@ Report: topic, layout, style, aspect, language, output path, files created.
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Baoyu Infographic
-
 
 ## Genes (策略基因)
 

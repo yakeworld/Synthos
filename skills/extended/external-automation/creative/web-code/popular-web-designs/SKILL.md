@@ -1,8 +1,22 @@
 ---
 name: popular-web-designs
-description: "popular-web-designs"
+description: popular-web-designs
 version: 1.0.0
+category: creative
+signature: 'popular-web-designs -> creative: 54 real-world design systems ready for
+  use when generating HTML/CSS. Each templa'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills:
+    - creative-tools
+    - design-md
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,20 +36,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: creative
-signature: "popular-web-designs -> creative: 54 real-world design systems ready for use when generating HTML/CSS. Each templa"
-description: "54 real-world design systems ready for use when generating HTML/CSS. Each template captures a"
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: ['creative-tools', 'design-md']
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
@@ -264,8 +264,6 @@ Match the design to the content:
 - **Premium / luxury:** Apple, BMW, Stripe, Superhuman, Revolut
 - **Data-dense / dashboards:** Sentry, Kraken, Cohere, ClickHouse
 - **Monospace / terminal aesthetic:** Ollama, OpenCode, x.ai, VoltAgent
-
-
 
 ## Genes (策略基因)
 

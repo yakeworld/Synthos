@@ -19,7 +19,12 @@ metadata:
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: research-tools
+author: Synthos
+triggers:
+- 需要执行quality下的子技能
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -39,22 +44,6 @@ metadata:
 1. 
 2. 
 3. 
-category: research-tools
-signature: "quality -> research-tools: 质量保障 — 伪证验证、黄金测试。"
-description: 质量保障 — 伪证验证、黄金测试。
-author: Synthos
-license: MIT
-version: 1.0.0
-triggers:
-  - 需要执行quality下的子技能
-metadata:
-  synthos:
-    priority: P2
-    atom_type: parent-skill
-    description: "父级技能 — 质量保障 — 伪证验证、黄金测试。"
-    signature: 'quality -> sub-skills: [falsification-validation, golden-test-methodology]'
-    related_skills: ["falsification-validation", "golden-test-methodology"]
-
 ## IO_CONTRACT
 
 - **input**: `skill_path: str` — 用户请求描述、上下文信息

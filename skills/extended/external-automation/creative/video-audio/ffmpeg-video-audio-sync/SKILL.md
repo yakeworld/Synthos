@@ -1,8 +1,28 @@
 ---
 name: ffmpeg-video-audio-sync
-description: "ffmpeg-video-audio-sync"
+description: ffmpeg-video-audio-sync
 version: 1.0.0
+category: creative
+signature: 'ffmpeg-video-audio-sync -> creative: Debug and fix FFmpeg video-audio
+  synchronization issues including duration'
+author: Synthos
+license: MIT
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
+metadata:
+  synthos:
+    signature: 'video_path: str -> synced_path: str'
+    related_skills:
+    - academic-diagram
+    - architecture-diagram
+    - comfyui
+    - excalidraw
+    - figure-generation
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,30 +42,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: creative
-signature: "ffmpeg-video-audio-sync -> creative: Debug and fix FFmpeg video-audio synchronization issues including duration"
-description: Debug and fix FFmpeg video-audio synchronization issues including duration
-author: Synthos
-license: MIT
-version: 1.2
-  mismatches, sample rate problems, and MP4 concatenation pitfalls. Covers ffprobe
-  diagnostics, stream trimming, audio conversion, and verification of synced output.
-allowed-tools:
-- terminal
-- read_file
-- write_file
-- search_files
-metadata:
-  synthos:
-    signature: 'video_path: str -> synced_path: str'
-    related_skills:
-    - academic-diagram
-    - architecture-diagram
-    - comfyui
-    - excalidraw
-    - figure-generation
-
-
 ## IO_CONTRACT
 
 - **input**: `video_file: str, audio_file: str` — 用户请求描述、上下文信息
@@ -241,7 +237,6 @@ For creating professional demo videos from PPTX slides (competition demos, prese
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Ffmpeg Video Audio Sync
-
 
 ## Genes (策略基因)
 

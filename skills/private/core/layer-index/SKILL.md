@@ -19,7 +19,10 @@ metadata:
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: core
+author: Synthos
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -39,19 +42,6 @@ metadata:
 1. 
 2. 
 3. 
-category: core
-signature: "layer-index -> core: Navigation index for the core research stack — 7 cognitive atoms, paper pipeline"
-description: "Navigation index for the core research stack — 7 cognitive atoms, paper pipeline, research methodology, and AI/ML tools."
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    priority: P3
-    atom_type: layer-index
-    signature: "layer: str, query: str, context: dict -> skill_list: list[dict]"
-    related_skills: []
-
 # Core Research Stack — 核心科研栈
 
 ## Purpose

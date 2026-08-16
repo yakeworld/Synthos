@@ -1,8 +1,27 @@
 ---
 name: figure-generation
-description: "figure-generation"
+description: figure-generation
 version: 1.0.0
+category: creative
+signature: 'figure-generation -> creative: 作图技能体系 — 科学数据图、架构图、流程图、宣传封面、论文转PPT、PDF逆向工程、QA自动化。所有作图请求的统一入口。'
+license: MIT
+author: Synthos
+allowed-tools:
+- terminal (Python, shell, PDF tools)
+- file_read
+- file_search
+- file_write
+metadata:
+  synthos:
+    signature: 'user_request: str -> skill_mode: str -> output: image/pdf/pptx/code'
+    atom_type: extended
+    priority: P0
+    related_skills:
+    - image_generate
+    - manim-video
+    - sketch
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -28,27 +47,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: creative
-signature: "figure-generation -> creative: 作图技能体系 — 科学数据图、架构图、流程图、宣传封面、论文转PPT、PDF逆向工程、QA自动化。所有作图请求的统一入口。"
-description: 作图技能体系 — 科学数据图、架构图、流程图、宣传封面、论文转PPT、PDF逆向工程、QA自动化。所有作图请求的统一入口。
-version: 2.2.0
-license: MIT
-author: Synthos
-allowed-tools:
-- terminal (Python, shell, PDF tools)
-- file_read
-- file_search
-- file_write
-metadata:
-  synthos:
-    signature: "user_request: str -> skill_mode: str -> output: image/pdf/pptx/code"
-    atom_type: extended
-    priority: P0
-    related_skills:
-    - image_generate
-    - manim-video
-    - sketch
-
 ## 技能体系架构（v2.0 — 单一入口）
 
 ```
@@ -501,7 +499,6 @@ fig.savefig(f"{name}.pdf", bbox_inches='tight', pad_inches=0.1)  # 出版级PDF
 **输出**：执行结果、状态反馈。
 
 # Figure Generation
-
 
 ## Genes (策略基因)
 

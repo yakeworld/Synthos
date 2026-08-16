@@ -1,7 +1,8 @@
 ---
 name: research-output-evaluation
 description: '**关键洞察**：98篇论文中，真正接近可发表水平的（T1+T2且D10a≥95%）约10-15篇。其中使用真实临床数据的可能不到5篇。其余80+篇需要大量修订或归档。'
-signature: 'research-output-evaluation -> research: synthetic skill for research output evaluation'
+signature: 'research-output-evaluation -> research: synthetic skill for research output
+  evaluation'
 allowed-tools:
 - terminal
 - read_file
@@ -13,12 +14,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: '**关键洞察**：98篇论文中，真正接近可发表水平的（T1+T2且D10a≥95%）约10-15篇。其中使用真实临床数据的可能不到5篇。其余80+篇需要大量修订或归档。'
-    signature: 'research-output-evaluation -> research: synthetic skill for research output evaluation'
+    signature: 'research-output-evaluation -> research: synthetic skill for research
+      output evaluation'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 -|

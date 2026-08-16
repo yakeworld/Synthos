@@ -1,8 +1,21 @@
 ---
 name: powerpoint
-description: "powerpoint"
+description: powerpoint
 version: 1.0.0
+category: creative
+signature: 'powerpoint -> creative: >-'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    version: 1.4.0
+    author: Synthos
+    signature: 'skill_set: pptx_files -> presentation: bytes'
+    related_skills:
+    - nature-paper2ppt
+    - pil-image-generation
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,24 +35,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: creative
-signature: "powerpoint -> creative: >-"
-version: 1.0.0
-license: MIT
-author: Synthos
-description: >-
-  创建/读取/编辑.pptx — python-pptx: 幻灯片/表格/模板。
-  覆盖环境陷阱（sandbox venv无包→系统Python）、复杂表格、
-  多页模板化PPTX生成。关联 skill: nature-paper2ppt。
-metadata:
-  synthos:
-    version: 1.4.0
-    author: Synthos
-    signature: 'skill_set: pptx_files -> presentation: bytes'
-    related_skills:
-    - nature-paper2ppt
-    - pil-image-generation
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息

@@ -1,7 +1,8 @@
 ---
 name: latex-compilation-troubleshooting
 description: '` (em-dash)'
-signature: 'latex-compilation-troubleshooting -> private: synthetic skill for latex compilation troubleshooting'
+signature: 'latex-compilation-troubleshooting -> private: synthetic skill for latex
+  compilation troubleshooting'
 allowed-tools:
 - terminal
 - read_file
@@ -13,12 +14,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: '` (em-dash)'
-    signature: 'latex-compilation-troubleshooting -> private: synthetic skill for latex compilation troubleshooting'
+    signature: 'latex-compilation-troubleshooting -> private: synthetic skill for
+      latex compilation troubleshooting'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 ` (em-dash)

@@ -1,8 +1,20 @@
 ---
 name: automation-skills
-description: "automation-skills"
+description: automation-skills
 version: 1.0.0
+category: automation
+signature: 'automation-skills -> automation: **触发条件**: 对一批论文（10-34 篇）批量处理 `step_quality_check.md`
+  中的 quality_score 并写入 `state'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills: []
 ---
+
 
 # Automation Skills
 
@@ -24,20 +36,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: automation
-signature: "automation-skills -> automation: **触发条件**: 对一批论文（10-34 篇）批量处理 `step_quality_check.md` 中的 quality_score 并写入 `state"
-description: "**触发条件**: 对一批论文（10-34 篇）批量处理 `step_quality_check.md` 中的 quality_score 并写入 `state.json`。"
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: []
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
@@ -154,7 +152,6 @@ def clean_json_for_latex(content):
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
-
 
 ## Genes (策略基因)
 

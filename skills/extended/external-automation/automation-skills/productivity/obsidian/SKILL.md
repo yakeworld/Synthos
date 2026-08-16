@@ -1,8 +1,32 @@
 ---
 name: obsidian
-description: "obsidian"
+description: obsidian
 version: 1.0.0
+category: productivity
+signature: 'obsidian -> productivity: Read, search, create, and edit notes in the
+  Obsidian vault.'
+author: Synthos
+license: MIT
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
+platforms:
+- linux
+- macos
+- windows
+metadata:
+  synthos:
+    signature: 'action: str, params: dict -> result: dict'
+    related_skills:
+    - airtable
+    - chinese-form-automation
+    - google-workspace
+    - jupyter-live-kernel
+    - linear
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,32 +46,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: productivity
-signature: "obsidian -> productivity: Read, search, create, and edit notes in the Obsidian vault."
-description: Read, search, create, and edit notes in the Obsidian vault.
-author: Synthos
-license: MIT
-version: 1.0.0
-allowed-tools:
-- terminal
-- read_file
-- write_file
-- search_files
-platforms:
-- linux
-- macos
-- windows
-metadata:
-  synthos:
-    signature: 'action: str, params: dict -> result: dict'
-    related_skills:
-    - airtable
-    - chinese-form-automation
-    - google-workspace
-    - jupyter-live-kernel
-    - linear
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
@@ -233,7 +231,6 @@ ln -s /path/to/source/dir outputs/papers/paper-name/
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Obsidian
-
 
 ## Genes (策略基因)
 

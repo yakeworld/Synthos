@@ -1,6 +1,7 @@
 ---
 name: paperjury
-description: '**典型流程**: 论文完成 → quality-gate L1-L2 → paperjury review → 修复 → quality-gate L3-L4 → paperjury auto lo'
+description: '**典型流程**: 论文完成 → quality-gate L1-L2 → paperjury review → 修复 → quality-gate
+  L3-L4 → paperjury auto lo'
 signature: 'paperjury -> private: synthetic skill for paperjury'
 allowed-tools:
 - terminal
@@ -12,13 +13,15 @@ license: MIT
 metadata:
   synthos:
     atom_type: mechanical
-    description: '**典型流程**: 论文完成 → quality-gate L1-L2 → paperjury review → 修复 → quality-gate L3-L4 → paperjury auto lo'
+    description: '**典型流程**: 论文完成 → quality-gate L1-L2 → paperjury review → 修复 → quality-gate
+      L3-L4 → paperjury auto lo'
     signature: 'paperjury -> private: synthetic skill for paperjury'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 |

@@ -1,8 +1,22 @@
 ---
 name: creative
-description: "creative"
+description: creative
 version: 1.0.0
+category: creative
+signature: 'creative -> creative: 直接调用子技能名称即可：`academic-diagram`、`manim-video`、`comfyui`、`p5js`
+  等。'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills:
+    - creative-tools
+    - creative-ideation
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,20 +36,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: creative
-signature: "creative -> creative: 直接调用子技能名称即可：`academic-diagram`、`manim-video`、`comfyui`、`p5js` 等。"
-description: "直接调用子技能名称即可：`academic-diagram`、`manim-video`、`comfyui`、`p5js` 等。"
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: ['creative-tools', 'creative-ideation']
-
-
 ## IO_CONTRACT
 
 - **input**: `creative_request: str, style: str, output_format: str` — 创意请求、风格偏好、输出格式
@@ -87,7 +87,6 @@ metadata:
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Creative
-
 
 ## Genes (策略基因)
 

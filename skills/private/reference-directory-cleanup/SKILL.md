@@ -1,7 +1,8 @@
 ---
 name: reference-directory-cleanup
 description: 1. **不要假设子目录PDF都与当前Bib对应** — 旧管线PDF可能完全不相关
-signature: 'reference-directory-cleanup -> private: synthetic skill for reference directory cleanup'
+signature: 'reference-directory-cleanup -> private: synthetic skill for reference
+  directory cleanup'
 allowed-tools:
 - terminal
 - read_file
@@ -13,12 +14,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: 1. **不要假设子目录PDF都与当前Bib对应** — 旧管线PDF可能完全不相关
-    signature: 'reference-directory-cleanup -> private: synthetic skill for reference directory cleanup'
+    signature: 'reference-directory-cleanup -> private: synthetic skill for reference
+      directory cleanup'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 |

@@ -1,8 +1,20 @@
 ---
 name: ascii-video
-description: "ascii-video"
+description: ascii-video
 version: 1.0.0
+category: creative
+signature: 'ascii-video -> creative: Use when users request: ASCII video, text art
+  video, terminal-style video, chara'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills: []
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,20 +34,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: creative
-signature: "ascii-video -> creative: Use when users request: ASCII video, text art video, terminal-style video, chara"
-description: "Use when users request: ASCII video, text art video, terminal-style video, character art animation, retro text visualization, audio visualizer in ASCII, converting video to ASCII art, matrix-style effects, or any animated ASCII output."
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: []
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
@@ -307,7 +305,6 @@ If the user asks for creative, experimental, surprising, or unconventional outpu
 3. Apply the lateral insight to the visual design before writing code
 
 # Ascii Video
-
 
 ## Genes (策略基因)
 

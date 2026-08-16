@@ -1,28 +1,28 @@
 ---
 name: design-md
-description: "design-md"
+description: design-md
 version: 1.0.0
+category: creative
+signature: 'design-md -> creative: DESIGN.md is Google''s open spec (Apache-2.0, `google-labs-code/design.md`)
+  for'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills:
+    - creative-tools
+    - popular-web-designs
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
 3. 验证输出符合契约
 4. 保存结果并报告
-category: creative
-signature: "design-md -> creative: DESIGN.md is Google's open spec (Apache-2.0, `google-labs-code/design.md`) for"
-description: "DESIGN.md is Google's open spec (Apache-2.0, `google-labs-code/design.md`) for"
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: ['creative-tools', 'popular-web-designs']
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
@@ -251,7 +251,6 @@ summary — WCAG findings are the most load-bearing reason to use the CLI.
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Design Md
-
 
 ## Genes (策略基因)
 

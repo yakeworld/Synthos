@@ -13,12 +13,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: 覆盖率 = 有完整golden的技能数 / 总技能数
-    signature: 'golden-test-methodology -> quality: synthetic skill for golden test methodology'
+    signature: 'golden-test-methodology -> quality: synthetic skill for golden test
+      methodology'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 

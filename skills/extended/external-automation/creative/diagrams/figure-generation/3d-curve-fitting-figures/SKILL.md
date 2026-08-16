@@ -1,8 +1,31 @@
 ---
 name: 3d-curve-fitting-figures
-description: "3d-curve-fitting-figures"
+description: 3d-curve-fitting-figures
 version: 1.0.0
+category: creative
+signature: '3d-curve-fitting-figures -> creative: 3D曲线拟合图的生成规范：从点云到拟合曲线到出版级Figure。
+  覆盖拟合重建陷阱、多标本复合布局、分段数据合并、argsort路径错乱。'
+license: MIT
+author: Synthos 配合figure-generation skill使用。
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
+metadata:
+  synthos:
+    author: Synthos
+    signature: 'input: dict -> output: dict'
+    related_skills:
+    - figure-generation
+    version: 1.2.0
+    tags:
+    - figure-generation
+    - 3d-fitting
+    - curve-fitting
+    - scientific-figures
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,32 +45,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: creative
-signature: "3d-curve-fitting-figures -> creative: 3D曲线拟合图的生成规范：从点云到拟合曲线到出版级Figure。 覆盖拟合重建陷阱、多标本复合布局、分段数据合并、argsort路径错乱。"
-description: 3D曲线拟合图的生成规范：从点云到拟合曲线到出版级Figure。 覆盖拟合重建陷阱、多标本复合布局、分段数据合并、argsort路径错乱。
-version: 1.0.0
-license: MIT
-author: Synthos
-  配合figure-generation skill使用。
-allowed-tools:
-- terminal
-- read_file
-- write_file
-- search_files
-metadata:
-  synthos:
-    author: Synthos
-    signature: 'input: dict -> output: dict'
-    related_skills:
-    - figure-generation
-    version: 1.2.0
-    tags:
-    - figure-generation
-    - 3d-fitting
-    - curve-fitting
-    - scientific-figures
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
@@ -279,7 +276,6 @@ if abs(abs(correct_b) - abs(figure_b)) > 0.001:
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # 3D Curve Fitting Figures
-
 
 ## Genes (策略基因)
 

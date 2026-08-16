@@ -1,8 +1,31 @@
 ---
 name: markitdown-convert
-description: "markitdown-convert"
+description: markitdown-convert
 version: 1.0.0
+category: productivity
+signature: 'markitdown-convert -> productivity: Convert PDF/Office files to Markdown
+  using Microsoft MarkItDown'
+author: Synthos
+license: MIT
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- search_files
+platforms:
+- linux
+- macos
+metadata:
+  synthos:
+    signature: 'file_path: str -> md_path: str'
+    related_skills:
+    - airtable
+    - chinese-form-automation
+    - google-workspace
+    - jupyter-live-kernel
+    - linear
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,31 +45,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: productivity
-signature: "markitdown-convert -> productivity: Convert PDF/Office files to Markdown using Microsoft MarkItDown"
-description: Convert PDF/Office files to Markdown using Microsoft MarkItDown
-author: Synthos
-license: MIT
-version: 1.0.0
-allowed-tools:
-- terminal
-- read_file
-- write_file
-- search_files
-platforms:
-- linux
-- macos
-metadata:
-  synthos:
-    signature: 'file_path: str -> md_path: str'
-    related_skills:
-    - airtable
-    - chinese-form-automation
-    - google-workspace
-    - jupyter-live-kernel
-    - linear
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
@@ -268,7 +266,6 @@ aliases: [Paper Title]
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Markitdown Convert
-
 
 ## Genes (策略基因)
 

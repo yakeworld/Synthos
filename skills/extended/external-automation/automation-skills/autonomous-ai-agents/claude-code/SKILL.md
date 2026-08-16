@@ -1,8 +1,23 @@
 ---
 name: claude-code
-description: "claude-code"
+description: claude-code
 version: 1.0.0
+category: mlops
+signature: 'claude-code -> mlops: Delegate coding to Claude Code CLI — features, PRs,
+  refactoring, review.'
+related_skills: []
+allowed-tools:
+- terminal
+- file
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    version: 1.0.0
+    author: Synthos
+    signature: 'task: str -> result: dict'
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,23 +37,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: mlops
-signature: "claude-code -> mlops: Delegate coding to Claude Code CLI — features, PRs, refactoring, review."
-related_skills: []
-description: Delegate coding to Claude Code CLI — features, PRs, refactoring, review.
-version: 1.0.0
-allowed-tools:
-- terminal
-- file
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    version: 1.0.0
-    author: Synthos
-    signature: 'task: str -> result: dict'
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
@@ -129,7 +127,6 @@ terminal(command="claude 'Task description'", background=true, pty=true, notify_
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Claude Code
-
 
 ## Genes (策略基因)
 

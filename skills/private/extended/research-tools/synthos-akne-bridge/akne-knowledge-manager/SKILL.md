@@ -1,7 +1,8 @@
 ---
 name: akne-knowledge-manager
 description: '**边界**：技能功能边界。'
-signature: 'akne-knowledge-manager -> synthos-akne-bridge: synthetic skill for akne knowledge manager'
+signature: 'akne-knowledge-manager -> synthos-akne-bridge: synthetic skill for akne
+  knowledge manager'
 allowed-tools:
 - terminal
 - read_file
@@ -13,12 +14,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: '**边界**：技能功能边界。'
-    signature: 'akne-knowledge-manager -> synthos-akne-bridge: synthetic skill for akne knowledge manager'
+    signature: 'akne-knowledge-manager -> synthos-akne-bridge: synthetic skill for
+      akne knowledge manager'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 |

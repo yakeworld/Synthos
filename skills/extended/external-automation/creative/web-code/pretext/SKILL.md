@@ -1,8 +1,20 @@
 ---
 name: pretext
-description: "pretext"
+description: pretext
 version: 1.0.0
+category: creative
+signature: 'pretext -> creative: [`@chenglou/pretext`](https://github.com/chenglou/pretext)
+  is a 15KB zero-depend'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills: []
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -16,19 +28,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: creative
-signature: "pretext -> creative: [`@chenglou/pretext`](https://github.com/chenglou/pretext) is a 15KB zero-depend"
-description: "[`@chenglou/pretext`](https://github.com/chenglou/pretext) is a 15KB zero-dependency TypeScript library by Cheng Lou (React core, ReasonML, Midjourney) for **DOM-free multiline text measurement and layout**. It does one thing: given `(text, font, width)`, return the line breaks, per-line widths, per-grapheme positions, and total height — all via canvas measurement, no reflow."
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: []
-
 version: 1.0.0
 
 ## IO_CONTRACT
@@ -274,7 +273,6 @@ Clone these for inspiration / patterns (all MIT-ish, linked from [pretext.cool](
 Official playground: [chenglou.me/pretext](https://chenglou.me/pretext/) — accordion, bubbles, dynamic-layout, editorial-engine, justification-comparison, masonry, markdown-chat, rich-note.
 
 # Pretext
-
 
 ## Genes (策略基因)
 

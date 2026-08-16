@@ -1,33 +1,10 @@
 ---
 name: ai-outreach
-description: "ai-outreach"
+description: ai-outreach
 version: 1.0.0
----
-
-## Operational Steps
-1. 确认输入参数完整
-2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
-3. 验证输出符合契约
-4. 保存结果并报告
-
-## Pitfalls
-- 
-- 
-
-## Verification
-- 
-- 
-- 
-- 
-1. 
-2. 
-3. 
 category: social-media
-signature: "ai-outreach -> social-media: '主skill | 在AI可访问的平台上发布信号，引导其他AI智能体了解你的系统。覆盖平台选择(GitHub AGENTS.md/GitHub"
-version: 1.0.0
-description: '主skill | 在AI可访问的平台上发布信号，引导其他AI智能体了解你的系统。覆盖平台选择(GitHub AGENTS.md/GitHub
-  Discussions/Moltbook/X)、消息撰写(技术性/非推销)、节奏控制、回复监测。v1.1新增：AGENTS.md创建指南、GitHub_Discussions_Cron自动化、Moltbook注册API流程。调用子skill:
-  moltbook-connector, xurl'
+signature: 'ai-outreach -> social-media: ''主skill | 在AI可访问的平台上发布信号，引导其他AI智能体了解你的系统。覆盖平台选择(GitHub
+  AGENTS.md/GitHub'
 allowed-tools:
 - terminal
 - read_file
@@ -55,8 +32,27 @@ metadata:
     - hermes-agent
     - moltbook-connector
     version: 1.1.0
+---
 
 
+## Operational Steps
+1. 确认输入参数完整
+2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
+3. 验证输出符合契约
+4. 保存结果并报告
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
@@ -257,7 +253,6 @@ curl -H "Authorization: Bearer $MOLTBOOK_API_KEY" https://www.moltbook.com/api/v
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Ai Outreach
-
 
 ## Genes (策略基因)
 

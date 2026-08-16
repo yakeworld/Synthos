@@ -13,13 +13,20 @@ metadata:
   synthos:
     atom_type: mechanical
     description: 1. 确认输入参数完整
-    signature: 'feishu-gateway-debug -> devops: synthetic skill for feishu gateway debug'
+    signature: 'feishu-gateway-debug -> devops: synthetic skill for feishu gateway
+      debug'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: devops
+related_skills:
+- hermes-agent
+- github
+author: Synthos
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -39,26 +46,6 @@ metadata:
 1. 
 2. 
 3. 
-category: devops
-signature: "feishu-gateway-debug -> devops: 飞书 Gateway 消息流诊断与排障 — 从用户消息到 agent 响应的全链路追踪。覆盖 404 根因、消息流路径、agent session 分离、日志定"
-related_skills: ['safe-file-operations', 'privacy-scan']
-related_skills:
-- hermes-agent
-- github
-description: 飞书 Gateway 消息流诊断与排障 — 从用户消息到 agent 响应的全链路追踪。覆盖 404 根因、消息流路径、agent session 分离、日志定位。
-version: 1.0.0
-allowed-tools:
-- terminal
-- file
-- web
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    version: 2.1.0
-    author: Synthos
-    signature: 'query: str -> debug_trace: dict'
-
 ## IO_CONTRACT
 
 - **input**: `error_msg: str, session_id: str, platform: str` — 用户报告的错误、会话ID、平台

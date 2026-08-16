@@ -1,7 +1,8 @@
 ---
 name: skill-absorption
 description: 完整关键词轮转策略见 `references/keyword-rotation.md`。
-signature: 'skill-absorption -> intelligence-monitoring: synthetic skill for skill absorption'
+signature: 'skill-absorption -> intelligence-monitoring: synthetic skill for skill
+  absorption'
 allowed-tools:
 - terminal
 - read_file
@@ -13,12 +14,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: 完整关键词轮转策略见 `references/keyword-rotation.md`。
-    signature: 'skill-absorption -> intelligence-monitoring: synthetic skill for skill absorption'
+    signature: 'skill-absorption -> intelligence-monitoring: synthetic skill for skill
+      absorption'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 

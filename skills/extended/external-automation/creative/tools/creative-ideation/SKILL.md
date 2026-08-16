@@ -1,8 +1,22 @@
 ---
 name: creative-ideation
-description: "creative-ideation"
+description: creative-ideation
 version: 1.0.0
+category: creative
+signature: 'creative-ideation -> creative: Use when the user says ''I want to build
+  something'', ''give me a project idea'', ''I'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills:
+    - creative
+    - creative-tools
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,19 +36,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: creative
-signature: "creative-ideation -> creative: Use when the user says 'I want to build something', 'give me a project idea', 'I"
-description: "Use when the user says 'I want to build something', 'give me a project idea', 'I'm bored', 'what should I make', 'inspire me', or any variant of 'I have tools but no direction'. Works for code, art, hardware, writing, tools, and anything that can be made."
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: ['creative', 'creative-tools']
-
 version: 1.0.0
 
 ## IO_CONTRACT
@@ -208,8 +209,6 @@ Constraint approach inspired by [wttdotm.com/prompts.html](https://wttdotm.com/p
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
-
-
 
 ## Genes (策略基因)
 

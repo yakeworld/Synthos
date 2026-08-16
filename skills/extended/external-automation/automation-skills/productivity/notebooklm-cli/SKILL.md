@@ -1,8 +1,24 @@
 ---
 name: notebooklm-cli
-description: "notebooklm-cli"
+description: notebooklm-cli
 version: 1.0.0
+category: productivity
+signature: 'notebooklm-cli -> productivity: 子skill | NotebookLM CLI全功能指南 — Q&A知识提取、内容生成(报告/视频/音频/信息图/幻灯片)、文献检索。响应paper-pipel'
+related_skills:
+- knowledge-extraction
+allowed-tools:
+- terminal
+- file
+- web
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    version: 3.5.0
+    author: Synthos
+    signature: 'action: str, params: dict -> result: dict'
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,24 +38,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: productivity
-signature: "notebooklm-cli -> productivity: 子skill | NotebookLM CLI全功能指南 — Q&A知识提取、内容生成(报告/视频/音频/信息图/幻灯片)、文献检索。响应paper-pipel"
-related_skills: ["knowledge-extraction"]
-description: 子skill | NotebookLM CLI全功能指南 — Q&A知识提取、内容生成(报告/视频/音频/信息图/幻灯片)、文献检索。响应paper-pipeline的P1阶段调用。
-version: 1.0.0
-allowed-tools:
-- terminal
-- file
-- web
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    version: 3.5.0
-    author: Synthos
-    signature: 'action: str, params: dict -> result: dict'
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
@@ -162,7 +160,6 @@ Layer B 论文质量审计的完整工作流见 `references/layer-b-audit-workfl
 详见 `references/layer-b-manual-fallback.md`。
 
 # Notebooklm Cli
-
 
 ## Genes (策略基因)
 

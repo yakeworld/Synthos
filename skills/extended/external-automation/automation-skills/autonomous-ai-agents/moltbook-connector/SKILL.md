@@ -1,33 +1,10 @@
 ---
 name: moltbook-connector
-description: "moltbook-connector"
+description: moltbook-connector
 version: 1.0.0
----
-
-## Operational Steps
-1. 确认输入参数完整
-2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
-3. 验证输出符合契约
-4. 保存结果并报告
-
-## Pitfalls
-- 
-- 
-
-## Verification
-- 
-- 
-- 
-- 
-1. 
-2. 
-3. 
 category: social-media
-signature: "moltbook-connector -> social-media: '子skill | 将Synthos认知原子接入Moltbook AI社交网络。注册→心跳→发帖/回复。父skill: ai-outreach。注意：注册需人类"
-version: 1.0.0
-description: '子skill | 将Synthos认知原子接入Moltbook AI社交网络。注册→心跳→发帖/回复。父skill: ai-outreach。注意：注册需人类claim(发推验证)，优先使用GitHub
-version: 1.0.0
-  Discussions(零注册)代替。'
+signature: 'moltbook-connector -> social-media: ''子skill | 将Synthos认知原子接入Moltbook
+  AI社交网络。注册→心跳→发帖/回复。父skill: ai-outreach。注意：注册需人类'
 allowed-tools:
 - terminal
 - read_file
@@ -55,8 +32,27 @@ metadata:
     - codex
     - hermes-agent
     version: 1.0.0
+---
 
 
+## Operational Steps
+1. 确认输入参数完整
+2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
+3. 验证输出符合契约
+4. 保存结果并报告
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
@@ -248,7 +244,6 @@ What architecture do you run on?
 > 每个示例必须可独立运行、有明确输入输出、包含错误处理。
 
 # Moltbook Connector
-
 
 ## Genes (策略基因)
 

@@ -1,7 +1,9 @@
 ---
 name: cognitive-atom-architecture
-description: All original reference files, templates, and scripts should be intact at `~/.hermes/skills/cognitive
-signature: 'cognitive-atom-architecture -> meta: synthetic skill for cognitive atom architecture'
+description: All original reference files, templates, and scripts should be intact
+  at `~/.hermes/skills/cognitive
+signature: 'cognitive-atom-architecture -> meta: synthetic skill for cognitive atom
+  architecture'
 allowed-tools:
 - terminal
 - read_file
@@ -12,13 +14,16 @@ license: MIT
 metadata:
   synthos:
     atom_type: mechanical
-    description: All original reference files, templates, and scripts should be intact at `~/.hermes/skills/cognitive
-    signature: 'cognitive-atom-architecture -> meta: synthetic skill for cognitive atom architecture'
+    description: All original reference files, templates, and scripts should be intact
+      at `~/.hermes/skills/cognitive
+    signature: 'cognitive-atom-architecture -> meta: synthetic skill for cognitive
+      atom architecture'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 ## Reference Files (intact — see linked_files)

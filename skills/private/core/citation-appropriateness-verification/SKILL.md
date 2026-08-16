@@ -1,7 +1,8 @@
 ---
 name: citation-appropriateness-verification
 description: 引用适当性验证 — 6 类功能分类、DOI 回源验证、三级回退、专项报告输出
-signature: 'citation-appropriateness-verification -> core: 按6类功能审查引用适当性，DOI 回源验证，SS→Crossref→PubMed 三级回退'
+signature: 'citation-appropriateness-verification -> core: 按6类功能审查引用适当性，DOI 回源验证，SS→Crossref→PubMed
+  三级回退'
 allowed-tools:
 - terminal
 - read_file
@@ -16,6 +17,7 @@ metadata:
     synthos_version: 3.2.0
     synthos_asserted_compliance: P0,P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 # Citation Appropriateness Verification — 引用适当性验证

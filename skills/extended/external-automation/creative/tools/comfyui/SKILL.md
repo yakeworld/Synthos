@@ -1,8 +1,20 @@
 ---
 name: comfyui
-description: "comfyui"
+description: comfyui
 version: 1.0.0
+category: creative
+signature: 'comfyui -> creative: ComfyUI 节点式图像生成：通过 API 管理 ComfyUI 工作流，生成图像和视觉内容'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'prompt: str, model: str, parameters: dict -> image_results: list[Image]
+      (url, dimensions, seed, model_version)'
+    atom_type: skill
+    priority: P1
+    related_skills: []
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,19 +34,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: creative
-signature: "comfyui -> creative: ComfyUI 节点式图像生成：通过 API 管理 ComfyUI 工作流，生成图像和视觉内容"
-description: "ComfyUI 节点式图像生成：通过 API 管理 ComfyUI 工作流，生成图像和视觉内容"
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "prompt: str, model: str, parameters: dict -> image_results: list[Image] (url, dimensions, seed, model_version)"
-    atom_type: skill
-    priority: P1
-    related_skills: []
-
 ## IO_CONTRACT
 
 - **input**: `workflow_desc: str` — 用户请求描述、上下文信息
@@ -77,8 +76,6 @@ This skill has been compressed. Full content is available in references/.
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
-
-
 
 ## Genes (策略基因)
 

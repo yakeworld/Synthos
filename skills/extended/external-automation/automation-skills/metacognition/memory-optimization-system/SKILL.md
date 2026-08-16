@@ -1,8 +1,23 @@
 ---
 name: memory-optimization-system
-description: "memory-optimization-system"
+description: memory-optimization-system
 version: 1.0.0
+category: meta
+signature: 'memory-optimization-system -> meta: 记忆系统全面优化：上下文卸载(Mermaid压缩)、FSRS巩固cron(凌晨3点)、memory↔fact_store桥接、去重与清理、hidden
+  Unic'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    atom_type: skill
+    description: 记忆系统全面优化：上下文卸载、FSRS巩固、记忆清理、去重处理
+    signature: 'task_desc: str, context: dict -> result: dict'
+    related_skills:
+    - conversation-to-memory
+    - quality-gate
+    priority: P2
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,22 +37,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: meta
-signature: "memory-optimization-system -> meta: 记忆系统全面优化：上下文卸载(Mermaid压缩)、FSRS巩固cron(凌晨3点)、memory↔fact_store桥接、去重与清理、hidden Unic"
-description: 记忆系统全面优化：上下文卸载(Mermaid压缩)、FSRS巩固cron(凌晨3点)、memory↔fact_store桥接、去重与清理、hidden Unicode字符处理。覆盖TencentDB
-version: 1.1.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    atom_type: skill
-    description: "记忆系统全面优化：上下文卸载、FSRS巩固、记忆清理、去重处理"
-    signature: "task_desc: str, context: dict -> result: dict"
-    related_skills:
-    - conversation-to-memory
-    - quality-gate
-    priority: P2
-
 > **注意**: 本技能是记忆管理的唯一入口。`memory-enhancement` 已合并至此。
 
 ---
@@ -209,7 +208,6 @@ memory 和 fact_store 中内容相似度 > 80% 的条目：
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Memory Optimization System
-
 
 ## Genes (策略基因)
 

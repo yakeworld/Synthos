@@ -1,28 +1,26 @@
 ---
 name: claude-design
-description: "claude-design"
+description: claude-design
 version: 1.0.0
+category: creative
+signature: 'claude-design -> creative: Use this skill when the user asks for design
+  work that would normally fit Claude'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills: []
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
 3. 验证输出符合契约
 4. 保存结果并报告
-category: creative
-signature: "claude-design -> creative: Use this skill when the user asks for design work that would normally fit Claude"
-description: "Use this skill when the user asks for design work that would normally fit Claude Design, but the agent is running in a CLI/API environment instead of the hosted Claude Design web UI."
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: []
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
@@ -637,7 +635,6 @@ You are running in CLI/API mode, not hosted Claude Design. Ignore references to 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Claude Design
-
 
 ## Genes (策略基因)
 

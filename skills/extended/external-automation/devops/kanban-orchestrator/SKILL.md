@@ -1,28 +1,26 @@
 ---
 name: kanban-orchestrator
-description: "kanban-orchestrator"
+description: kanban-orchestrator
 version: 1.0.0
+category: devops
+signature: 'kanban-orchestrator -> devops: Create Kanban tasks when any of these are
+  true:'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills: []
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
 3. 验证输出符合契约
 4. 保存结果并报告
-category: devops
-signature: "kanban-orchestrator -> devops: Create Kanban tasks when any of these are true:"
-description: "Create Kanban tasks when any of these are true:"
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: []
-
-
 ## IO_CONTRACT
 
 - **input**: `task_batch: list[str], priorities: dict` — 用户请求描述、上下文信息
@@ -253,7 +251,6 @@ When a worker profile keeps crashing, hallucinating, or getting blocked by its o
 Hallucination warnings appear on tasks where a worker's `kanban_complete(created_cards=[...])` claim included card ids that don't exist or weren't created by the worker's profile (the gate blocks the completion), or where the free-form summary references `t_<hex>` ids that don't resolve (advisory prose scan, non-blocking). Both produce audit events that persist even after recovery actions — the trail stays for debugging.
 
 # Kanban Orchestrator
-
 
 ## Genes (策略基因)
 

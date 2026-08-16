@@ -1,33 +1,12 @@
 ---
 name: webhook-subscriptions
-description: "webhook-subscriptions"
+description: webhook-subscriptions
 version: 1.0.0
----
-
-## Operational Steps
-1. 确认输入参数完整
-2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
-3. 验证输出符合契约
-4. 保存结果并报告
-
-## Pitfalls
-- 
-- 
-
-## Verification
-- 
-- 
-- 
-- 
-1. 
-2. 
-3. 
 category: productivity
-signature: "webhook-subscriptions -> productivity: 'Webhook subscriptions: event-driven agent runs.'"
-description: 'Webhook subscriptions: event-driven agent runs.'
+signature: 'webhook-subscriptions -> productivity: ''Webhook subscriptions: event-driven
+  agent runs.'''
 author: Synthos
 license: MIT
-version: 1.0.0
 allowed-tools:
 - terminal
 - read_file
@@ -55,8 +34,27 @@ metadata:
     - jupyter-live-kernel
     - linear
     version: 1.1.0
+---
 
 
+## Operational Steps
+1. 确认输入参数完整
+2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
+3. 验证输出符合契约
+4. 保存结果并报告
+
+## Pitfalls
+- 
+- 
+
+## Verification
+- 
+- 
+- 
+- 
+1. 
+2. 
+3. 
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
@@ -285,8 +283,6 @@ If webhooks aren't working:
 4. **Signature mismatch?** Verify the secret in your service matches the one from `hermes webhook list`. GitHub sends `X-Hub-Signature-256`, GitLab sends `X-Gitlab-Token`.
 5. **Firewall/NAT?** The webhook URL must be reachable from the service. For local development, use a tunnel (ngrok, cloudflared).
 6. **Wrong event type?** Check `--events` filter matches what the service sends. Use `hermes webhook test <name>` to verify the route works.
-
-
 
 ## Genes (策略基因)
 

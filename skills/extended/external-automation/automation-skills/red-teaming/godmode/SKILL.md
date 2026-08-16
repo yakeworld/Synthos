@@ -1,8 +1,19 @@
 ---
 name: godmode
-description: "godmode"
+description: godmode
 version: 1.0.0
+category: mlops
+signature: 'godmode -> mlops: LLM安全边界测试方法论 — 通过系统提示注入、输入混淆与多模型竞跑，测试/评估LLM安全过滤机制的有效性与脆弱性。'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills: []
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,20 +33,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: mlops
-signature: "godmode -> mlops: LLM安全边界测试方法论 — 通过系统提示注入、输入混淆与多模型竞跑，测试/评估LLM安全过滤机制的有效性与脆弱性。"
-description: "LLM安全边界测试方法论 — 通过系统提示注入、输入混淆与多模型竞跑，测试/评估LLM安全过滤机制的有效性与脆弱性。"
-version: 1.2.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: []
-
-
 ## IO_CONTRACT
 
 - **input**: `model_family: str, query: str, attack_mode: str` — 模型家族、测试查询、攻击模式
@@ -247,7 +244,6 @@ Plain → Leetspeak → Bubble → Braille → Morse
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Godmode
-
 
 ## Genes (策略基因)
 

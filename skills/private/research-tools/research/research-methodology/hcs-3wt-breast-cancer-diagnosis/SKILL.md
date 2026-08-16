@@ -1,7 +1,8 @@
 ---
 name: hcs-3wt-breast-cancer-diagnosis
 description: 1. 确认输入参数完整
-signature: 'hcs-3wt-breast-cancer-diagnosis -> research-methodology: synthetic skill for hcs 3wt breast cancer diagnosis'
+signature: 'hcs-3wt-breast-cancer-diagnosis -> research-methodology: synthetic skill
+  for hcs 3wt breast cancer diagnosis'
 allowed-tools:
 - terminal
 - read_file
@@ -13,12 +14,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: 1. 确认输入参数完整
-    signature: 'hcs-3wt-breast-cancer-diagnosis -> research-methodology: synthetic skill for hcs 3wt breast cancer diagnosis'
+    signature: 'hcs-3wt-breast-cancer-diagnosis -> research-methodology: synthetic
+      skill for hcs 3wt breast cancer diagnosis'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 ## Operational Steps

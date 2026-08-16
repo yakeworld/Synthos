@@ -1,28 +1,26 @@
 ---
 name: kanban-worker
-description: "kanban-worker"
+description: kanban-worker
 version: 1.0.0
+category: devops
+signature: 'kanban-worker -> devops: Your workspace kind determines how you should
+  behave inside `$HERMES_KANBAN_WORK'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills: []
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
 3. 验证输出符合契约
 4. 保存结果并报告
-category: devops
-signature: "kanban-worker -> devops: Your workspace kind determines how you should behave inside `$HERMES_KANBAN_WORK"
-description: "Your workspace kind determines how you should behave inside `$HERMES_KANBAN_WORKSPACE`:"
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: []
-
-
 ## IO_CONTRACT
 
 - **input**: `task_list: list[Task], board_state: dict` — 任务描述、参数配置
@@ -234,7 +232,6 @@ Every tool has a CLI equivalent for human operators and scripts:
 Use the tools from inside an agent; the CLI exists for the human at the terminal.
 
 # Kanban Worker
-
 
 ## Genes (策略基因)
 

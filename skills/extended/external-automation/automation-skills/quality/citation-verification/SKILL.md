@@ -1,8 +1,21 @@
 ---
 name: citation-verification
-description: "citation-verification"
+description: citation-verification
 version: 1.0.0
+category: quality
+signature: 'citation-verification -> quality: 引用三验 — 参考文献是否存在(L1) + 引用是否得当(L2) + 引用是否全面(L3)。三位一体验证管线。'
+author: Synthos
+license: MIT
+metadata:
+  synthos:
+    priority: P0
+    atom_type: quality
+    signature: 'paper_dir: str -> citation_report: dict (phase1, phase2, phase3, overall)'
+    related_skills:
+    - paper-pipeline
+    - quality-gate
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,19 +35,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: quality
-signature: "citation-verification -> quality: 引用三验 — 参考文献是否存在(L1) + 引用是否得当(L2) + 引用是否全面(L3)。三位一体验证管线。"
-description: "引用三验 — 参考文献是否存在(L1) + 引用是否得当(L2) + 引用是否全面(L3)。三位一体验证管线。"
-version: 3.0.0
-author: Synthos
-license: MIT
-metadata:
-  synthos:
-    priority: P0
-    atom_type: quality
-    signature: "paper_dir: str -> citation_report: dict (phase1, phase2, phase3, overall)"
-    related_skills: ["paper-pipeline", "quality-gate"]
-
 # 引用三验 — 参考文献验证
 
 ## 原理
@@ -290,7 +290,6 @@ CRISP-DM方法论论文常只引用原始文献(Shearer 2000, Wirth 2000)，忽�
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Citation Verification
-
 
 ## Genes (策略基因)
 

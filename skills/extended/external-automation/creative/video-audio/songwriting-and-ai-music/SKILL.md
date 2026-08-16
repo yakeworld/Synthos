@@ -1,8 +1,20 @@
 ---
 name: songwriting-and-ai-music
-description: "songwriting-and-ai-music"
+description: songwriting-and-ai-music
 version: 1.0.0
+category: creative
+signature: 'songwriting-and-ai-music -> creative: Everything here is a GUIDELINE,
+  not a rule. Art breaks rules on purpose.'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills: []
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,20 +34,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: creative
-signature: "songwriting-and-ai-music -> creative: Everything here is a GUIDELINE, not a rule. Art breaks rules on purpose."
-description: "Everything here is a GUIDELINE, not a rule. Art breaks rules on purpose."
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: []
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
@@ -344,7 +342,6 @@ Style can drift in extensions — restate genre/mood when extending.
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Songwriting And Ai Music
-
 
 ## Genes (策略基因)
 

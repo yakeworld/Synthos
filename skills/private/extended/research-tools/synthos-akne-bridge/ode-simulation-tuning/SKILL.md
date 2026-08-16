@@ -1,7 +1,9 @@
 ---
 name: ode-simulation-tuning
-description: '1. **S_pre too high** (e.g., 0.70+ when baseline should be ~0.45): Homeostasis setpoint too high or '
-signature: 'ode-simulation-tuning -> synthos-akne-bridge: synthetic skill for ode simulation tuning'
+description: '1. **S_pre too high** (e.g., 0.70+ when baseline should be ~0.45): Homeostasis
+  setpoint too high or '
+signature: 'ode-simulation-tuning -> synthos-akne-bridge: synthetic skill for ode
+  simulation tuning'
 allowed-tools:
 - terminal
 - read_file
@@ -12,13 +14,16 @@ license: MIT
 metadata:
   synthos:
     atom_type: mechanical
-    description: '1. **S_pre too high** (e.g., 0.70+ when baseline should be ~0.45): Homeostasis setpoint too high or '
-    signature: 'ode-simulation-tuning -> synthos-akne-bridge: synthetic skill for ode simulation tuning'
+    description: '1. **S_pre too high** (e.g., 0.70+ when baseline should be ~0.45):
+      Homeostasis setpoint too high or '
+    signature: 'ode-simulation-tuning -> synthos-akne-bridge: synthetic skill for
+      ode simulation tuning'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 

@@ -1,19 +1,12 @@
 ---
 name: maps
-description: "maps"
+description: maps
 version: 1.0.0
----
-
-## Operational Steps
-1. 确认输入参数完整
-2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
-3. 验证输出符合契约
-4. 保存结果并报告
 category: productivity
-signature: "maps -> productivity: Geocode, POIs, routes, timezones via OpenStreetMap/OSRM."
-related_skills: ['google-workspace', 'airtable']
-description: Geocode, POIs, routes, timezones via OpenStreetMap/OSRM.
-version: 1.0.0
+signature: 'maps -> productivity: Geocode, POIs, routes, timezones via OpenStreetMap/OSRM.'
+related_skills:
+- google-workspace
+- airtable
 allowed-tools:
 - terminal
 - read_file
@@ -41,6 +34,14 @@ metadata:
     - overpass
     - osrm
     category: productivity
+---
+
+
+## Operational Steps
+1. 确认输入参数完整
+2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
+3. 验证输出符合契约
+4. 保存结果并报告
 related_skills: ['google-workspace', 'airtable']
     requires_toolsets:
     - terminal
@@ -56,7 +57,6 @@ related_skills: ['google-workspace', 'airtable']
     - jupyter-live-kernel
     - linear
     version: 1.2.0
-
 
 ## IO_CONTRACT
 
@@ -274,7 +274,6 @@ python3 ~/.hermes/skills/maps/scripts/maps_client.py nearby --near "Times Square
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Maps
-
 
 ## Genes (策略基因)
 

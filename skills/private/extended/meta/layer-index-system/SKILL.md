@@ -19,7 +19,13 @@ metadata:
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: meta
+related_skills:
+- layer-index
+- synthos
+author: Synthos
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -39,20 +45,6 @@ metadata:
 1. 
 2. 
 3. 
-category: meta
-signature: "layer-index-system -> meta: Navigation index for system infrastructure — devops, automation, tool integratio"
-related_skills: ['layer-index', 'synthos']
-description: "Navigation index for system infrastructure — devops, automation, tool integration, and monitoring."
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    priority: P3
-    atom_type: layer-index
-    signature: "layer: str, query: str, context: dict -> skill_list: list[dict]"
-    related_skills: []
-
 # System Infrastructure — 系统基础设施
 
 ## Purpose

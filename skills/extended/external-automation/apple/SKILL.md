@@ -1,8 +1,27 @@
 ---
 name: apple
-description: "apple"
+description: apple
 version: 1.0.0
+category: apple
+signature: 'apple -> apple: Apple生态工具链 — macOS/iOS设备管理、提醒事项、备忘录、查找设备。'
+author: Synthos
+license: MIT
+triggers:
+- 需要执行apple下的子技能
+metadata:
+  synthos:
+    priority: P2
+    atom_type: parent-skill
+    description: 父级技能 — Apple生态工具链 — macOS/iOS设备管理、提醒事项、备忘录、查找设备。
+    signature: 'apple -> sub-skills: [apple-notes, apple-reminders, findmy]'
+    related_skills:
+    - apple-notes
+    - apple-reminders
+    - findmy
+    - imessage
+    - macos-computer-use
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,23 +41,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: apple
-signature: "apple -> apple: Apple生态工具链 — macOS/iOS设备管理、提醒事项、备忘录、查找设备。"
-description: Apple生态工具链 — macOS/iOS设备管理、提醒事项、备忘录、查找设备。
-author: Synthos
-license: MIT
-version: 1.0.0
-triggers:
-  - 需要执行apple下的子技能
-metadata:
-  synthos:
-    priority: P2
-    atom_type: parent-skill
-    description: "父级技能 — Apple生态工具链 — macOS/iOS设备管理、提醒事项、备忘录、查找设备。"
-    signature: 'apple -> sub-skills: [apple-notes, apple-reminders, findmy]'
-    related_skills: ['apple-notes', 'apple-reminders', 'findmy', 'imessage', 'macos-computer-use']
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
@@ -97,7 +99,6 @@ skill_view(name='apple-notes')  # 加载第一个子技能
 父级SKILL.md仅作为目录索引，实际执行由子技能完成。
 
 # Apple
-
 
 ## Genes (策略基因)
 

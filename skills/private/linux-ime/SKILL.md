@@ -19,21 +19,18 @@ metadata:
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: devops
+related_skills:
+- linux-environment-troubleshoot
+- safe-file-operations
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
 3. 验证输出符合契约
 4. 保存结果并报告
-category: devops
-related_skills: ['linux-environment-troubleshoot', 'safe-file-operations']
-description: Linux 输入法（IME）诊断与修复 — fcitx/fcitx5 配置不匹配、GTK_IM_MODULE/QT_IM_MODULE/XMODIFIERS 三环境变量修复、X11/Wayland 差异、pty 环境 IME 不可用的根因分析与修复。
-metadata:
-  synthos:
-    priority: P2
-    atom_type: class-level
-    description: "Linux 输入法（IME）诊断与修复 — 覆盖 fcitx/fcitx5 配置检查、GTK_IM_MODULE/QT_IM_MODULE/XMODIFIERS 三环境变量修复、X11/Wayland 差异、pty 环境限制。"
 signature: "linux-ime -> processed_result"
 version: 1.0.0
 

@@ -1,7 +1,8 @@
 ---
 name: project-experience-distillation
 description: 'Synthos skill: project-experience-distillation'
-signature: 'project-experience-distillation -> meta: synthetic skill for project experience distillation'
+signature: 'project-experience-distillation -> meta: synthetic skill for project experience
+  distillation'
 allowed-tools:
 - terminal
 - read_file
@@ -13,12 +14,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: 'Synthos skill: project-experience-distillation'
-    signature: 'project-experience-distillation -> meta: synthetic skill for project experience distillation'
+    signature: 'project-experience-distillation -> meta: synthetic skill for project
+      experience distillation'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 

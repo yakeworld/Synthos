@@ -1,8 +1,20 @@
 ---
 name: touchdesigner-mcp
-description: "touchdesigner-mcp"
+description: touchdesigner-mcp
 version: 1.0.0
+category: creative
+signature: 'touchdesigner-mcp -> creative: 1. **NEVER guess parameter names.** Call
+  `td_get_par_info` for the op type FIRST'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills: []
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,20 +34,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: creative
-signature: "touchdesigner-mcp -> creative: 1. **NEVER guess parameter names.** Call `td_get_par_info` for the op type FIRST"
-description: "1. **NEVER guess parameter names.** Call `td_get_par_info` for the op type FIRST. Your training data is wrong for TD 2025.32."
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: []
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户请求描述、上下文信息
@@ -414,7 +412,6 @@ See `references/network-patterns.md` for complete build scripts + shader code.
 > You're not writing code. You're conducting light.
 
 # Touchdesigner Mcp
-
 
 ## Genes (策略基因)
 

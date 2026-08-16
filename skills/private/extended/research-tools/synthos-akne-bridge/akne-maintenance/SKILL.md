@@ -13,12 +13,14 @@ metadata:
   synthos:
     atom_type: mechanical
     description: '1. **输入验证**: 输入参数/文件/路径是否完整且有效'
-    signature: 'akne-maintenance -> synthos-akne-bridge: synthetic skill for akne maintenance'
+    signature: 'akne-maintenance -> synthos-akne-bridge: synthetic skill for akne
+      maintenance'
     priority: P2
     synthos_version: 1.0.0
     synthos_skill_md_hash: auto
     synthos_asserted_compliance: P2,P3
     synthos_mechanical_atoms: ''
+category: private
 ---
 
 

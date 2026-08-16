@@ -1,8 +1,23 @@
 ---
 name: macos-computer-use
-description: "macos-computer-use"
+description: macos-computer-use
 version: 1.0.0
+category: apple
+signature: 'macos-computer-use -> apple: You have a `computer_use` tool that drives
+  the Mac in the **background**.'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills:
+    - apple
+    - findmy
+    - imessage
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,20 +37,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: apple
-signature: "macos-computer-use -> apple: You have a `computer_use` tool that drives the Mac in the **background**."
-description: "You have a `computer_use` tool that drives the Mac in the **background**."
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: ['apple', 'findmy', 'imessage']
-
-
 ## IO_CONTRACT
 
 - **input**: `task: str, app: str` — 用户请求描述、上下文信息
@@ -257,7 +258,6 @@ your conversation context.
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Macos Computer Use
-
 
 ## Genes (策略基因)
 

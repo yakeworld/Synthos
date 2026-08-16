@@ -1,8 +1,20 @@
 ---
 name: opencode
-description: "opencode"
+description: opencode
 version: 1.0.0
+category: mlops
+signature: 'opencode -> mlops: 1. **非常驻服务** — OpenCode 不是 daemon，按需启动、用完即关。`ps aux
+  | grep opencode` 无进程是正常状态，不是'
+license: MIT
+author: Synthos
+metadata:
+  synthos:
+    signature: 'task_desc: str, params: dict -> result: dict'
+    atom_type: skill
+    priority: P2
+    related_skills: []
 ---
+
 
 ## Operational Steps
 1. 确认输入参数完整
@@ -22,20 +34,6 @@ version: 1.0.0
 1. 
 2. 
 3. 
-category: mlops
-signature: "opencode -> mlops: 1. **非常驻服务** — OpenCode 不是 daemon，按需启动、用完即关。`ps aux | grep opencode` 无进程是正常状态，不是"
-description: "1. **非常驻服务** — OpenCode 不是 daemon，按需启动、用完即关。`ps aux | grep opencode` 无进程是正常状态，不是故障。"
-version: 1.0.0
-license: MIT
-author: Synthos
-metadata:
-  synthos:
-    signature: "task_desc: str, params: dict -> result: dict"
-    atom_type: skill
-    priority: P2
-    related_skills: []
-
-
 ## IO_CONTRACT
 
 - **input**: `request: str, context: dict` — 用户描述、上下文信息
@@ -176,7 +174,6 @@ ls -lt ~/.local/state/opencode/locks/                 # 锁文件（空=无正�
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
 # Opencode
-
 
 ## Genes (策略基因)
 
