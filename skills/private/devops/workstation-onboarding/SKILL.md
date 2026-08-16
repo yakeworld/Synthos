@@ -39,6 +39,13 @@ author: Synthos
 - **output**: `~/workspace/START_HERE.md` + `*培养方案.md` — 学生首次登录引导与研究方向/里程碑
 - **output**: `~/workspace/WORK_CHECK_REPORT.md` — 环境验收证明（generated，登录/SSH 连通性验证通过）
 
+## 原则 (Principles)
+
+1. **「道不通，则礼不行。」** — SSH 连通性验证是硬前置；未通则不建环境。
+2. **「一钮启之，不假手学生。」** — codex 环境收敛于 `~/codex-vllm.sh` 一键脚本，封装变量与参数。
+3. **「入门有阶，进路有方。」** — START_HERE 与培养方案缺一不可：先入门引导，后研究方向与里程碑。
+4. **「验有凭据，不凭口诺。」** — 环境验收必以 `WORK_CHECK_REPORT.md` 为凭，不凭口头声称。
+
 ---
 
 

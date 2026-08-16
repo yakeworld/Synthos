@@ -35,6 +35,13 @@ metadata:
 - **output**: `code_changes` — codex CLI 生成的代码修改/补丁结果
 - **output**: `agent_status: str` — 执行状态与验证清单结论（输入/过程/输出/边界/错误处理五项）
 
+## 原则 (Principles)
+
+1. **「三议先定，方授以役。」** — 协议三选一（OpenAI Responses / Anthropic Messages / Chat Completions）须先行选定，再行调度。
+2. **「输入未验，不役代理。」** — 任务描述与后端配置完整有效之前，不启动 codex CLI 执行。
+3. **「五验皆毕，乃陈其果。」** — 输入/过程/输出/边界/错误五项验证齐备，方可交付代码修改结果。
+4. **「未验之码，虽生勿行。」** — 不执行未验证的任意代码，不暴露内部状态。
+
 ## 验证清单 · VERIFICATION
 
 1. **输入验证**: 输入参数/文件/路径是否完整且有效

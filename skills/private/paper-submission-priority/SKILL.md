@@ -58,7 +58,7 @@ metadata:
 2. 检查 `state.json` 的 `stage` 字段
 3. 创建 GitHub 仓库并推送代码
 4. 检查作者署名：Department of Neurology, Wenzhou People's Hospital
-5. 检查邮箱：yakeworld@wmu.edu.cn
+5. 检查邮箱：[USER_EMAIL]
 6. 生成最终 PDF
 
 ## 验证清单 · VERIFICATION
@@ -131,7 +131,7 @@ metadata:
 2. 检查 `state.json` 的 `stage` 字段
 3. 创建 GitHub 仓库并推送代码
 4. 检查作者署名：Department of Neurology, Wenzhou People's Hospital
-5. 检查邮箱：yakeworld@wmu.edu.cn
+5. 检查邮箱：[USER_EMAIL]
 6. 生成最终 PDF
 
 ## 验证清单 · VERIFICATION

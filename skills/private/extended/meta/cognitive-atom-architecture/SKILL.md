@@ -33,6 +33,13 @@ All original reference files, templates, and scripts should be intact at `~/.her
 - **output**: `engineering_constraints` — 按 5 步流程（extract→trace→classify→fix→verify）从哲学约束追溯到原子技能的可执行约束
 - **output**: `references/` — 完整参考文件集（philosophical-foundations / synthos-dimension-guide / 验证与融合 pattern，v4.0.0 四件套）
 
+## 原则 (Principles)
+
+- **哲必可溯**：哲学框架须经 extract→trace→classify→fix→verify 五步，追溯为原子技能可执行之工程约束；仅悬于理而无迹可寻者，为形不为例。
+- **七维一体**：7+1 框架各维须有定义、有度量法、有原子映射，缺一维则框架失其整。
+- **示例独立**：每一示例必可独立运行、输入输出明确、含边界与错误处理，否则不足以证其法。
+- **原件无损**：`references/` 四件套（philosophical-foundations / dimension-guide / 验证 pattern / 融合 pattern）须完整无损，原件失则法无据。
+
 ## 示例 · EXAMPLES
 
 1. **基本用法**: 标准输入 → 标准输出

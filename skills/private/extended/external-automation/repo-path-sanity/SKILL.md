@@ -35,6 +35,13 @@ metadata:
 - **output**: `sanity_report: table` — 问题 → 根因 → 修复命令对照（insteadOf / credential.helper / PAT scope / SSH key 注册）
 - **output**: `fix_commands: list[str]` — `git config --unset`、新建 Classic PAT（repo + write:repository）、SSH key 添加等
 
+## 原则 (Principles)
+
+1. **「先查配置，后断故障。」** — 先以 `git config --list --show-origin` 溯源 insteadOf / credential.helper，再下结论。
+2. **「全局覆仓，慎去其弊。」** — 全局 `~/.gitconfig` 会覆盖 repo 级 `gh auth git-credential`，查源须含全局层。
+3. **「登录非凭据，权限乃凭据。」** — `gh auth status` 已登录不代表可写：PAT scope 须含 repo + write:repository。
+4. **「深巡慢道，浅探为先。」** — NFS 极慢，`os.walk`/`du` 全遍历超时 300s；用 `timeout` + 浅层命令，勿全盘扫描。
+
 ### 调试命令
 
 ```bash

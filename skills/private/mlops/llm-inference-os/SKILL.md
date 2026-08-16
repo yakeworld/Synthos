@@ -1,0 +1,165 @@
+---
+name: llm-inference-os
+description: '**陷阱：Qwen3.5 是纯文本模型，Qwen3-VL 才是多模态。中间差一个字母（5 vs V），能力天壤之别。**'
+signature: 'llm-inference-os -> mlops: synthetic skill for llm inference os'
+allowed-tools:
+- terminal
+- read_file
+- write_file
+- session_search
+version: 1.0.0
+license: MIT
+metadata:
+  synthos:
+    atom_type: mechanical
+    description: '**陷阱：Qwen3.5 是纯文本模型，Qwen3-VL 才是多模态。中间差一个字母（5 vs V），能力天壤之别。**'
+    signature: 'llm-inference-os -> mlops: synthetic skill for llm inference os'
+    priority: P2
+    synthos_version: 1.0.0
+    synthos_skill_md_hash: auto
+    synthos_asserted_compliance: P2,P3
+    synthos_mechanical_atoms: ''
+---
+
+
+|
+| 1 | Linux (Ubuntu/Debian) | ⭐⭐⭐⭐⭐ |
+| 2 | Linux (RHEL/CentOS) | ⭐⭐⭐⭐ |
+| 3 | Windows (WSL2) | ⭐⭐ |
+| 4 | Windows (原生) | ⭐ |
+| 5 | macOS | ⭐ |
+
+## 引用研究
+
+- **LLM-Pilot** (SC24, IBM/ETH): OS context switch/interrupt 对延迟有显著影响
+- **Evaluating Containerization Overhead in MCP Servers** (AIxSE 2025): Linux container overhead 远小于 WSL2
+- **Optimizing LLM Inference Clusters** (2025): Linux kernel tuning 对高并发吞吐影响 20-30%
+
+## 陷阱 · 模型命名混淆
+
+> **陷阱：Qwen3.5 是纯文本模型，Qwen3-VL 才是多模态。中间差一个字母（5 vs V），能力天壤之别。**
+>
+> 常见错误：用户说"用 Qwen3.5 跑图片"→ Qwen3.5 不支持图片
+>
+> **修复规则**:
+> 1. 收到多模态需求时，首先确认模型名称是否含 "VL" 后缀
+> 2. 如果用户说 Qwen3/3.5/3.6 而没有 VL/Coder 后缀 → 纯文本
+> 3. 需要图片能力 → 推荐 Qwen2.5-VL 或 Qwen3-VL 系列
+> 4. 参考完整型号辨析：`llm-model-selection` → `ref/qwen-model-variants.md`
+>
+> 文言：一字之差，天壤之别。先辨型号，再论部署。
+
+## 关联
+
+- `references/anonymous-networks-comparison.md` — 类 Tor 匿名网络项目对比
+- `llm-model-selection` — Qwen 型号辨析、vLLM 多模态部署、显存估算
+
+## 契约层 · BOUNDARY
+
+**边界**：技能功能边界。
+
+## 契约层 · IO_CONTRACT
+
+**输入**：请求描述、上下文信息。
+**输出**：执行结果、状态反馈。
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: 输入参数/文件/路径是否完整且有效
+2. **过程验证**: 中间步骤/转换/计算是否正确
+3. **输出验证**: 输出格式/内容是否符合预期
+4. **边界验证**: 空输入、极大值、异常场景是否处理
+5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+
+## 核心原则 · PRINCIPLES
+
+1. **准确为先**: 所有输出必须经过事实核查，不编造数据
+2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
+3. **可复现性**: 每一步操作必须可重复，结果可验证
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: 标准输入样本（覆盖正常路径）
+- **Golden Output**: 预期输出（精确匹配或格式校验）
+- **Golden Error**: 预期错误信息（覆盖失败路径）
+
+> Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
+
+> 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。
+
+> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+# Llm Inference Os---
+
+
+
+
+
+|
+| 1 | Linux (Ubuntu/Debian) | ⭐⭐⭐⭐⭐ |
+| 2 | Linux (RHEL/CentOS) | ⭐⭐⭐⭐ |
+| 3 | Windows (WSL2) | ⭐⭐ |
+| 4 | Windows (原生) | ⭐ |
+| 5 | macOS | ⭐ |
+
+## 引用研究
+
+- **LLM-Pilot** (SC24, IBM/ETH): OS context switch/interrupt 对延迟有显著影响
+- **Evaluating Containerization Overhead in MCP Servers** (AIxSE 2025): Linux container overhead 远小于 WSL2
+- **Optimizing LLM Inference Clusters** (2025): Linux kernel tuning 对高并发吞吐影响 20-30%
+
+## 陷阱 · 模型命名混淆
+
+> **陷阱：Qwen3.5 是纯文本模型，Qwen3-VL 才是多模态。中间差一个字母（5 vs V），能力天壤之别。**
+>
+> 常见错误：用户说"用 Qwen3.5 跑图片"→ Qwen3.5 不支持图片
+>
+> **修复规则**:
+> 1. 收到多模态需求时，首先确认模型名称是否含 "VL" 后缀
+> 2. 如果用户说 Qwen3/3.5/3.6 而没有 VL/Coder 后缀 → 纯文本
+> 3. 需要图片能力 → 推荐 Qwen2.5-VL 或 Qwen3-VL 系列
+> 4. 参考完整型号辨析：`llm-model-selection` → `ref/qwen-model-variants.md`
+>
+> 文言：一字之差，天壤之别。先辨型号，再论部署。
+
+## 关联
+
+- `references/anonymous-networks-comparison.md` — 类 Tor 匿名网络项目对比
+- `llm-model-selection` — Qwen 型号辨析、vLLM 多模态部署、显存估算
+
+## 契约层 · BOUNDARY
+
+**边界**：技能功能边界。
+
+## 契约层 · IO_CONTRACT
+
+**输入**：请求描述、上下文信息。
+**输出**：执行结果、状态反馈。
+
+## 验证清单 · VERIFICATION
+
+1. **输入验证**: 输入参数/文件/路径是否完整且有效
+2. **过程验证**: 中间步骤/转换/计算是否正确
+3. **输出验证**: 输出格式/内容是否符合预期
+4. **边界验证**: 空输入、极大值、异常场景是否处理
+5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
+
+## 核心原则 · PRINCIPLES
+
+1. **准确为先**: 所有输出必须经过事实核查，不编造数据
+2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
+3. **可复现性**: 每一步操作必须可重复，结果可验证
+
+## Golden 集合 · GOLDEN SET
+
+- **Golden Input**: 标准输入样本（覆盖正常路径）
+- **Golden Output**: 预期输出（精确匹配或格式校验）
+- **Golden Error**: 预期错误信息（覆盖失败路径）
+
+> Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
+
+> 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。
+
+> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+# Llm Inference Os

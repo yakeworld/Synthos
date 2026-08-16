@@ -29,6 +29,13 @@ metadata:
 - **output**: submission.zip — 技术规格书/路线图(Mermaid)/视频脚本/申报表(docx)/答辩PPT(pptx) 打包件
 - **output**: 完整性检查结论 — 是否涵盖所有评分维度/格式要求/截止时间
 
+## 原则 (Principles)
+
+- **循式而作**：规格书、路线图、脚本、申报表、答辩 PPT 各有既定模板，循式而作方可保证齐备。
+- **以评为纲**：材料取舍以评分维度与格式要求为纲，不循纲则完备性无从谈起。
+- **打包必核**：`zip -r submission.zip submission/ -x "*/.*"` 之末必查评分维度、格式与时限俱齐，勿留遗漏。
+- **素材先于格式**：技术方案、代码、演示数据为纲，格式为末；纲不正则格式愈工愈谬。
+
 --|
 | 技术规格书 | `references/tech-spec-template.md` | Markdown |
 | 路线图 | `references/roadmap-template.md` | Mermaid timeline |

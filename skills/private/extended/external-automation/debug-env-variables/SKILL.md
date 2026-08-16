@@ -31,6 +31,13 @@ metadata:
 - **output**: `diagnosis: str` — 变量消失点定位（`.bashrc` 守卫 / 引号与 subprocess 边界 / 从未设置）
 - **output**: `fix: config` — 按可靠性排序的修复：export 前移守卫之前 / `BASH_ENV` / `.api_key` 文件回退 / `/etc/environment`
 
+## 原则 (Principles)
+
+- **界生惑**：壳有界而境无边，子不知父之所有；变量之失，多在层界交接之处，先明其界再究其源。
+- **逐层而验**：从父进程、`bash -c` 至 Python 子层逐层验证变量所在，定位消失点，不凭臆断。
+- **修复有序**：export 前移 → `BASH_ENV` → 文件回退（`.api_key`）→ `/etc/environment`，依可靠性为序，勿倒置。
+- **自动化不倚 `.bashrc`**：CI、cron、子进程之环境变量，不倚 `.bashrc` 之 export，须用 `/etc/environment` 或文件回退；秘钥更不置 `.bashrc`。
+
 ## 原理层·文言
 
 > 环境之变，变量之惑。

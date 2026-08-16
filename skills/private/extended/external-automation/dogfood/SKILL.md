@@ -40,6 +40,13 @@ metadata:
 - **output**: `browser_findings: list` — 缺陷与观察记录（JS console 静默错误、表单验证 bug、布局问题、渲染异常）
 - **output**: `screenshot_evidence: MEDIA:<path>` — 证据截图（`browser_vision annotate=true`，报告中以 MEDIA 引用内联）
 
+## 原则 (Principles)
+
+- **以己器测己**：自测（dogfood）必用真实用例（有效+无效输入、多步导航、长页、边界空态），不试真实流程者，验不得真缺陷。
+- **静默即警**：每次导航与关键交互后必查 `browser_console()`，JS 静默错误乃最贵之发现，勿待界面崩坏方见。
+- **所见必证**：缺陷必附 `browser_vision annotate=true` 之截图，以 `MEDIA:<path>` 内联入报告；无图之断言，不取信于人。
+- **尽览无余**：长页必滚动尽览、多步必全程走通、边缘（空态/长文/特殊字符/快速点击）必试；略其一，则验有隙。
+
 ## Tips
 
 - **Always check `browser_console()` after navigating and after significant interactions.** Silent JS errors are among the most valuable findings.
