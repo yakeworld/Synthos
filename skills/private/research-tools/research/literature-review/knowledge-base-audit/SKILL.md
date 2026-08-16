@@ -29,6 +29,12 @@ metadata:
 - **output**: 分级审计结果 — P0 缺失核心文献 / P1 非标准命名 source / P2 notebook 分类与重复问题
 - **output**: 修复操作执行结果 — source add/rename/delete（12-char UUID 前缀）、notebook 重命名归档记录
 
+## 原则 (Principles)
+
+> **分级而治，急者先行。** P0 核心文献缺失立即补，P1 命名非标准限期改，P2 分类与重复缓图，轻重有序。
+> **库不可迁，分而新立。** NotebookLM 无跨库迁移，"拆分"实为新立主题库、旧库改名归档，不搬旧源。
+> **以图代链，映射互植。** 跨笔记本关系以映射文档同时植入两库为联，无原生链接则以文档为桥。
+
 |
 | P0 (immediate) | Add critical missing sources | ≤2 sources in core project notebooks |
 | P1 (pre-deadline) | Rename non-standard source titles | PDFs named "201806596.pdf" or with number prefixes |

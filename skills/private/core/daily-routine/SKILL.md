@@ -39,6 +39,11 @@ category: research
 - **output**: `routing: str` — REDIRECT 分流决策：`research/daily-intelligence-briefing`（每日智报）/ `devops/cron-system-maintenance`（Cron运维）/ `devops/project-health-audit`（Self-check）
 - **output**: `本技能不产出日常自动化执行结果` — 仅作为重定向入口，不实现具体逻辑
 
+## 原则 (Principles)
+
+> **入口无实，只指不代。** 本技能是重定向之门，不在此内实现自动化逻辑——守门者不越权代劳。
+> **分流有据，一事一门。** 每日智报归 daily-intelligence-briefing，定时任务归 cron-system-maintenance，各归其位，不杂糅。
+
 - **每日智报：** `skill_view(name='research/daily-intelligence-briefing')` — arXiv/HN/PubMed 三源情报
 - **Cron运维：** `skill_view(name='devops/cron-system-maintenance')` — 定时任务管理
 - **Self-check：** `skill_view(name='devops/project-health-audit')` — 系统健康检查

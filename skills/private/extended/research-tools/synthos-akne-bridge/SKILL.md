@@ -38,6 +38,13 @@ metadata:
 - **output**: `graph.json` — 更新后的图谱（连接孤立论文/技能、创建 `source_category` 等逆向边、注入 content_summary metadata）
 - **output**: `akne-query.sh <mode> output` — 结构化查询结果（entity/neighbors/BFS 节点/QueryEngine 结果/stats/bridge 审计：papers+skills connected, orphans=0）
 
+## 原则 (Principles)
+
+> **先诊后治，孤儿必零。** 动手前以 `akne-query.sh bridge` 诊断连接状态，目标是孤立论文/技能归零。
+> **双向成流，逆边必建。** 只造正向边则知识单向——source_category 等逆向边须显式补齐，方有回流。
+> **三线并行，缺一即残。** source 节点、content_summary 摘要、vectors.db 向量三线并进，任一线断则语义检索残缺。
+> **环境各守其界。** execute_code 走 venv 3.11 处理逻辑，AKNE 查询走 terminal 系统 3.12，不越界 import。
+
 ## 当前状态（2026-06-13 全面修复后）
 
 - Synthos 论文: 148/148 连接 (0 孤立), 116 有出边

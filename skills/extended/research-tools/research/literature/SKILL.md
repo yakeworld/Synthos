@@ -61,6 +61,12 @@ allowed-tools:
 - **output**: `output_dir/*.pdf` — `literature.py pipeline` 下载并 `%PDF-` 魔数验证的全文 PDF
 - **output**: `diagnose_report: json` — `literature diagnose` 三阶段诊断（7 源检索 + DOI 解析 + 12 通道下载测试）
 
+## 原则 (Principles)
+
+> **多源求索，博观约取。** 默认 5 源聚合，交叉印证去偏；单源结论易失之偏，博观而后约取。
+> **凡下必验，魔数为准。** PDF 落盘必验 `%PDF-` 魔数与 pdfinfo 标题，排除串流与伪件，下载以验证为准绳。
+> **源常变易，以诊为凭。** API 屡有更易（S2 字段、Crossref mail 参数、PMC 直链失效），以 `literature diagnose` 三阶段实测判定源之可用性，不凭记忆行事。
+
 ## 2026-07-20 清理说明
 
 **scripts/ 已删除**。旧检索脚本代码已迁移到独立 pip 包：

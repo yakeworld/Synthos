@@ -42,6 +42,14 @@ allowed-tools:
 
 两步闭环：**检索** → **下载**
 
+## 原则 (Principles)
+
+- 检索先行，下载次之：两步闭环不可倒置，无检索不下载。
+- 凡 PDF 必验魔数：`head -c 5` = `%PDF-`（5 字节），再 `pdfinfo` 核标题防串流——验物验文。
+- 四层降级，源亡则转：bban 直连→Sci-Hub→LibGen→Anna's，单一源不可信。
+- 弃用即弃用：jabkit（Java）挂起无输出，只用 jabkit-rs（Rust 编译版）；工具变更以实测为准。
+- 凡数必源：DOI 可溯、串流必除、去重经 lit-import。
+
 ## 1. 检索（jabkit-rs 统一入口）
 
 ```bash

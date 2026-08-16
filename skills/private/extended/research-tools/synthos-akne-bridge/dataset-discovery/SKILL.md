@@ -29,6 +29,12 @@ metadata:
 - **output**: 候选数据集列表 — OpenML `data.dataset` 数组（did、名称、指标）
 - **output**: 数据源可用性结论 — OpenML/UCI Archive 可得性判定与替代数据源指引
 
+## 原则 (Principles)
+
+> **分页而取，不贪多截。** OpenML `limit>200` 常致 JSON 截断，以 limit=50 + offset 分页为则，求全不贪多。
+> **验物验文，不信状态码。** GitHub 镜像 404 仍返 HTTP 200——必验文件首行内容，状态码不可恃，文件内容为准。
+> **源亡则明，合成备案。** 数据源俱 404 时，按已知 schema 以固定种子生成合成数据集，并明示其为合成，不冒真数据之实。
+
 |
 | **OpenML** | ✅ JSON API | N/A | No | `/api/v1/json/data/list` — response is `data.dataset` array, not `data.data`. `did` not `id`. No stroke datasets found. See `references/openml-api-behavior.md` for full details. |
 | **UCI Archive** | ❌ Removed | ❌ | No | Healthcare Dataset (stroke) and Breast Cancer datasets removed from UCI. All mirrors dead. For alternatives see skill `healthcare-dataset-discovery`. |

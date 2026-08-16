@@ -29,6 +29,12 @@ metadata:
 - **output**: 吸收记录 — evolution/absorption-{project}.md 五层吸收记录（13份）
 - **output**: absorption-ledger.json 台账更新 — tracking→evaluating→absorbed/deferred/archived 状态生命周期追加
 
+## 原则 (Principles)
+
+> **轮转而扫，常扫常新。** GitHub Topics 每轮、Hermes skills 每轮、arXiv 每 2 轮，按关键词轮转策略常扫，源不枯竭。
+> **台账统一，状态可溯。** 一切发现归 absorption-ledger.json 单一台账，tracking→evaluating→absorbed/deferred/archived 状态皆有记录可追。
+> **五层而录，不录不吸。** 吸收必留五层记录与报告，未录者不视为吸收——留痕者方算得进系统。
+
 --|
 | GitHub Topics | `curl -s "https://api.github.com/search/repositories?q=topic:..."` | 每进化轮次 |
 | Hermes Skills | `find skills/ -name 'SKILL.md'` | 每轮 |
