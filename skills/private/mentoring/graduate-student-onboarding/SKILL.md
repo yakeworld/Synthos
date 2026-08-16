@@ -21,7 +21,6 @@ metadata:
     synthos_mechanical_atoms: ''
 ---
 
-
 |
 | **Memory** | Write the convergence decision as a durable fact |
 | **Cron: autonomous-core-researcher** | Update prompt: list allowed + prohibited directions explicitly |
@@ -80,72 +79,8 @@ Scope tiers:
 
 # Graduate Student Onboarding---
 
-
-
-
-
-|
-| **Memory** | Write the convergence decision as a durable fact |
-| **Cron: autonomous-core-researcher** | Update prompt: list allowed + prohibited directions explicitly |
-| **Cron: paper-repair** | Add scope constraint — only repair in-scope papers |
-| **Cron: paper-quality-review** | Skip out-of-scope papers |
-| **Cron: paper-layer-b-review** | Skip out-of-scope papers |
-| **Cron: literature-monitor** | Core directions → full report; peripheral → appendix only |
-
-Scope tiers:
-- **Core** (全流程): 5 pillars + Synthos + teaching + algorithm components + public dataset analysis
-- **Peripheral** (仅空白+假设): cornea/lens/vitreous/tear film/tinnitus/concussion biomechanics
-
-## 契约层 · BOUNDARY
-
-**边界**：技能功能边界。
-
-## 契约层 · IO_CONTRACT
-
-**输入**：请求描述、上下文信息。
-**输出**：执行结果、状态反馈。
-
-## 验证清单 · VERIFICATION
-
-1. **输入验证**: 输入参数/文件/路径是否完整且有效
-2. **过程验证**: 中间步骤/转换/计算是否正确
-3. **输出验证**: 输出格式/内容是否符合预期
-4. **边界验证**: 空输入、极大值、异常场景是否处理
-5. **错误处理**: 失败时是否有明确的错误信息和恢复指引
-
-## 核心原则 · PRINCIPLES
-
-1. **准确为先**: 所有输出必须经过事实核查，不编造数据
-2. **证据驱动**: 每个结论必须可追溯到具体证据或数据源
-3. **可复现性**: 每一步操作必须可重复，结果可验证
-
-## 约束规则 · RULES
-
-1. **输入约束**: 参数类型、范围、格式必须校验
-2. **输出约束**: 返回值结构、编码、命名必须一致
-3. **异常约束**: 错误信息必须包含上下文和恢复建议
-4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
-## Golden 集合 · GOLDEN SET
-
-- **Golden Input**: 标准输入样本（覆盖正常路径）
-- **Golden Output**: 预期输出（精确匹配或格式校验）
-- **Golden Error**: 预期错误信息（覆盖失败路径）
-
-> Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
-
-> 违反规则的操作视为不安全，必须拒绝或隔离。
-
-> 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。
-
-> 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
-
-
-
 ## Genes (策略基因)
-
 > 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-
 - **[GRAD-001]** 研究范围界定 → 将方向划分为核心（全流程）与外围（仅空白+假设）层级，并据此分配不同的处理深度
 - **[GRAD-002]** 自动化任务配置 → 在 Cron 任务中显式列出允许与禁止的方向，确保执行边界清晰
 - **[GRAD-003]** 论文处理流程 → 对范围外的论文执行跳过或仅修复范围内内容的约束，避免资源浪费

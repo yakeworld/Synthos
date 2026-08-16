@@ -21,7 +21,6 @@ metadata:
     synthos_mechanical_atoms: ''
 ---
 
-
 |
 | Constructor | `Sensor()` default | `Sensor(id=0, w, h, fps)` |
 | chn0 format | YUV420SP (Display) | RGB565 (save) |
@@ -179,99 +178,18 @@ When the K230 main loop floods the serial port (print statements, no throttling)
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
 
 ## Golden 集合 · GOLDEN SET
-
 - **Golden Input**: 标准输入样本（覆盖正常路径）
 - **Golden Output**: 预期输出（精确匹配或格式校验）
 - **Golden Error**: 预期错误信息（覆盖失败路径）
-
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
-
 > 违反规则的操作视为不安全，必须拒绝或隔离。
-
 > 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。
-
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
-
 # K230 Photo Timing---
-
-
-
-
-
-|
-| Constructor | `Sensor()` default | `Sensor(id=0, w, h, fps)` |
-| chn0 format | YUV420SP (Display) | RGB565 (save) |
-| Display binding | bind chn0 to LAYER_VIDEO1 | No Display binding |
-| chn1/chn2 | Set to RGB888/RGB565 | Not configured |
-| snapshot() target | chn0 (YUV420SP) or chn2 (RGB565) | Default chn0 (RGB565) |
-| Pipeline | Hardware (GDMA/DSP) | Pure software |
-| snapshot time | **21ms** | **26-33ms** |
-
-**Result**: With Display binding, total `snapshot + save` should be ~35-40ms → **25-28 FPS** vs current 20 FPS.
-
-### YUV420SP Constraint
-
-**YUV420SP is the ONLY format supported by Display.bind_layer.** Assert error:
-```
-AssertionError: bind video layer only support format PIXEL_FORMAT_YUV_SEMIPLANAR_420
-```
-
-YUV420SP cannot be saved via `img.save()` — `OSError: current format not support save function!`
-
-The workaround is using chn1 (RGB888) or chn2 (RGB565/RGBP888) for snapshot+save operations.
-
-## Multi-Sensor Rules
-
-From `examples/17-Sensor/camera_dual_bind_hdmi.py`:
-
-- Multiple sensors only need ONE `sensor.run()` call (any sensor's run() starts all)
-- Multiple sensors all need `sensor.stop()` calls (each sensor must be stopped individually)
-- Or call `Sensor.deinit()` once to stop all
-- Comment warns: "当使用多个 Sensor 时，分辨率建议均设置为 1920 × 1080, 且 fps 设置为 30" — using other resolutions may cause display artifacts
-
-## Throttle Timing Verification
-
-Test with `photo_interval_ms = 10`:
-- 209,595 main loop iterations → only 21 actual snapshot calls
-- 21/21 save successful → throttle works correctly
-- Effective FPS = 20.1 (limited by snapshot+save time, not by 1/0.01 = 100)
-
-Test with `photo_interval_ms = 100`:
-- 209,595 main loop iterations → 20 actual snapshot calls
-- 20/20 save successful
-- Effective FPS = 10.0 (exactly 1/0.1)
-
-**Conclusion**: The throttle gate correctly limits to `1000/millis` calls regardless of main loop speed. Main loop runs at ~100,000 iterations/second, but only the gated calls execute snapshot.
-
-## Empty Photo Directory Diagnosis
-
-When `/data/320p_photos/` has multiple numbered directories but only one has files (e.g., 024 has 542 files, 025-034 are empty):
-
-1. Check `/sdcard/photo_sequence.txt` — if it shows 34, then 34 sessions were initiated
-2. Check if `photo_mode_start()` creates directory before sensor init — yes it does
-3. Failed sessions still create directories but produce no files
-4. Only sessions where ALL sensors initialize AND `current_mode == "photo"` AND `is_running == True` produce files
-
-## New Pitfall: Directory Lifecycle After Serial Flood
-
-**Root cause discovered 2026-06-18**: When main loop floods the serial port, `photo_mode_start()` may succeed in creating the directory (`ensure_dir()`) but the subsequent sensor init or camera run() call gets lost in the serial flood. The directory remains on SD card as an empty stub. This produces a cascade of empty directories (e.g., 025-034) with only the final successful run (024) containing actual photo files.
-
-**Diagnosis pattern**:
-- Directories exist but are empty → `ensure_dir()` ran, but sensor init failed (silently) or was interrupted
-- Only one directory has files → all intermediate sessions failed to complete photo_mode_start()
-- Directory with few files only on one camera → the other camera's init hung and triggered early stop
-
-**Prevention**: Add a post-stop cleanup in `photo_mode_stop()` or a startup check that removes empty photo session directories older than N minutes. Consider:
-```python
-
 > (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # K230 Photo Timing
-
-
 ## Genes (策略基因)
-
 > 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-
 - **[SK-001]** 需要绑定 Display 层时 → 必须使用 YUV420SP 格式，因为这是 `bind_layer` 唯一支持的格式
 - **[SK-002]** 需要保存图像文件时 → 必须使用 RGB565 或 RGB888 通道（chn1/chn2），因为 YUV420SP 不支持 `img.save()`
 - **[SK-003]** 使用 `Sensor(id=N, ...)` 构造函数时 → 仅初始化 chn0 通道，禁止设置 chn1/chn2，否则会导致设备立即挂起
