@@ -183,15 +183,15 @@ for root, dirs, files in os.walk('skills'):
             # Find reference links like [file](path/to/file.md)
             # Strip inline code (backtick) to avoid matching markdown syntax examples like ![alt](url)
             import re
-            # Remove code blocks and inline code
-            clean = re.sub(r'```[^`]*```', '', content)
-            clean = re.sub(r'`[^`]+`', '', clean)
+            # Remove code blocks (multiline) and inline code
+            clean = re.sub(r'```.*?```', '', content, flags=re.DOTALL)
+            clean = re.sub(r'`[^`]*`', '', clean)
             ref_links = re.findall(r'\[.*?\]\(([^)]+)\)', clean)
             for ref in ref_links:
-                total_refs += 1
-                # Skip external URLs and anchors
+                # Skip external URLs and anchors (don't count in total)
                 if ref.startswith('http') or ref.startswith('#') or ref.startswith('mailto'):
                     continue
+                total_refs += 1
                 # Check if relative path exists
                 ref_path = os.path.join(os.path.dirname(path), ref)
                 if not os.path.exists(ref_path):
