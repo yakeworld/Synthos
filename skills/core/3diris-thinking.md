@@ -6825,3 +6825,108 @@ PD-EEG 多库族 (第 42 档扩展, 2026-08-16 确立):
 - **figshare 核验通道**: API 403 → 文章页 HTML grep figshare DOI 等效可用
 - **web_search**: 未进关键路径 (SearXNG 容器 Up 2 天, 但本轮零依赖完成)
 
+
+## 第 34 轮 (2026-08-17, 文献监控 cron): EMS 精神分裂症眼动数据集 (P0.5) ⭐ — 净新增 5 数据集 + 2 方法信号 (查重后)
+
+### 34.1 通道统计
+
+| 通道 | 状态 | 产出 |
+|------|------|------|
+| PubMed esearch/esummary (无 key, 16 查询面) | ✅ 180 唯一 PMID 0 失败 | EMS 39178070 P0.5 ⭐ + 5 候选 |
+| PubMed 第二轮精确查询 (10 查询面, quote_plus 修复) | ✅ 129 唯一 PMID (101 新) | 5 Sci Data 候选 + 2 方法信号 |
+| efetch XML (14+6 候选) | ✅ 20 条摘要提取 0 失败 | 数据可用性信号扫描完成 |
+| PhysioNet latest | ✅ 10 项抓取 | 0 净新增 (全为已收录旧库, 双周维持, 下次 08-27) |
+| PhysioNet topic 页 (eye/balance) | ⚠️ 0 项 (页面结构变化) | 降级, latest 通道已覆盖 |
+| arXiv API (8 组, https 修复) | ✅ 8/8 组 | 0 净新增 (LAIA/DeepGaze3.5-VL/GenEyePose 全为已收录或信号) |
+| OpenNeuro nemarDatasets | ⛔ raw.githubusercontent 404 + GraphQL 405 + 页面 JS 壳 | 通道失效, 降级 (Pitfall 待补) |
+| Kaggle | ⛔ 无凭证 + 网页 JS 壳 (5.7KB) | 跳过 (Pitfall #49 延续) |
+| GitHub API (EMS 核验) | ✅ 官方仓库 YingjieSong1/EMS 确认 | EMS 数据落地核验完成 |
+| web_search | ⛔ SearXNG timeout (连续第 10+ 轮宕机) | 未进关键路径 |
+
+### 34.2 净新增数据集 (查重后 5 项)
+
+1. **EMS — Eye Movement for Schizophrenia (39178070, IEEE TNNLS, doi 10.1109/TNNLS.2024.3441928)** **P0.5** ⭐ — 精神分裂症眼动识别大规模数据集 + 首个基准: 104 SZ + 104 HC = 208 受试者, 自由观看范式, 100 刺激 (社交/自然/合成/操纵 4 类, 1024×768), 原始 .xlsx 保留 FIX_PUPIL (瞳孔直径); 字段: FIX_X/Y/DURATION/FIX_PUPIL/FIX_INDEX + ResNet50 视觉特征 (2048-dim)。**数据落地**: GitHub YingjieSong1/EMS (2023-10 创建, 2024-12 最后推送, 含 Train_Valid/Test 划分 + UsageAgreement); 摘要明确 "we release a large-scale and publicly available eye movement dataset"。**原始分析**: 13 种精神病识别方法基准 + 提出 MSNet (mean-shift + 卷积) SOTA (ACC 81.25%, AUC 88.54%)。**未做**: 3D 凝视轨迹动力学 / 瞳孔-刺激类别交互 (社交 vs 自然条件瞳孔响应) / 注视-扫视微结构时序 / 跨任务泛化 (EMS 特征 → 其他精神障碍) / 眼动亚型聚类。**Synthos 定位**: 模式 A (注视特征) + 模式 D (多模态动力学) — 与第 33 轮 BALLADEER ADHD 构成神经精神障碍眼动族双 P0.5 落地, 精神分裂症域首个公共眼动数据。
+2. **CCM 角膜共聚焦神经分割 (42103758, Sci Data, doi 10.1038/s41597-026-07418-6)** P1 — 角膜共聚焦显微镜 (CCM) 亚基底神经丛像素级分割数据集, 覆盖多成像条件/多参与人群, 含人口学信息 + 一个子集含临床/实验室详细数据; 手工精标神经纤维。**未做**: 图像衍生指标×临床特征关联 / 泛化性跨成像条件评估 (作者列为目标但未做)。**Synthos 定位**: 眼科影像分割方法学, 非 3diris 核心域, P1 参考。
+3. **Apple Watch vGRF 多模态步态 (41963371, Sci Data, doi 10.1038/s41597-026-07183-6)** P1 — 10 健康成人 5 种活动 (走/慢跑/跑/足跟下落/台阶下落), 双 Apple Watch (腕+腰) + 实验室力板 ground truth, 492 有效试验, 时域数据 ~100Hz; CC BY 4.0 全开放 + 分析脚本 GitHub 镜像。**未做**: 传感器放置效应系统研究 (作者列为目标) / PD 人群迁移。**Synthos 定位**: 可穿戴步态方法学, PD 步态族 (WearGait-PD 等) 的消费级传感基准参考。
+4. **结膜杯状细胞分割 (42106364, Sci Data, doi 10.1038/s41597-026-07309-w)** P1.5 — 干眼病结膜杯状细胞检测分割, 数千实例, 含多 CV 模型兼容版本 + 训练源码; "publicly available" 信号确认。**未做**: 跨数据集迁移 / 临床分级关联。**Synthos 定位**: 眼科细胞影像, P1.5。
+5. **MIGS 青光眼手术视频 (42230642, Sci Data, doi 10.1038/s41597-026-07535-2)** P1.5 — 首个多中心大规模青光眼微创手术 (MIGS) 精细标注视频数据集, 数百万帧, 双任务: 手术阶段识别 + 器械/解剖语义分割。**未做**: 手术阶段×眼动/注视预测 (术者凝视) 耦合。**Synthos 定位**: 手术视频 AI, 眼动耦合空白 P1.5。
+
+### 34.3 可扩展模式 (第 46 档扩展, 2026-08-17 确立): 精神分裂症眼动公共数据落地 — 神经精神障碍眼动族双数据
+
+```
+触发条件: 精神疾病队列 + 眼动 + 公开基准/数据 = P0.5 起步 (BALLADEER 模式复制)
+家族 (神经精神障碍眼动族, 从信号到数据落地):
++-- SZ EMS (39178070, IEEE TNNLS, GitHub YingjieSong1/EMS): 208 人自由观看 P0.5 ⭐ ← 本轮新增
++-- ADHD BALLADEER (41680221, Sci Data, figshare 28676042): 同步 EEG+眼动+EDA P0.5 ⭐ (第 33 轮)
++-- ASD 眼动生物标志物 (42265619, BMC Psychiatry): GNN 多数据集
++-- 精神病倾向 RDK EEG (on008083): 知觉决策信号
++-- OCD 扫视分类 (marinikik 仓库): 扫视级分类方法学
+空白: SZ 瞳孔-刺激类别交互 (社交 vs 自然); ADHD×SZ 跨诊断眼动判别; 微扫视×精神症状维度
+产出: 模式 D 跨模态动力学短文 — "Pupil Dynamics in Free-Viewing Differentiate Schizophrenia and ADHD"
+```
+
+### 34.4 信号 (无公开数据, 论文背景引用)
+
+- 41755290 (Sensors, doi 10.3390/s26041352): FoG 检测实验室 vs 真实世界性能差距量化 (TCN, 两个公共数据集: 日常生活 Fi… + 实验室) — PD 步态域方法学信号, figshare 辅助材料
+- 41922360 (Sci Data, doi 10.1038/s41597-026-07093-7): UWF 眼底 DR 数据集 1,630 图/809 患者, 3 位高级眼科医师标注 — DR 影像 P1.5 (域内已有大量类似, 不单列)
+- 42104150 (Behav Res Methods): iCatcher+/OWLET/Rekognition 婴儿注视分类器环境鲁棒性基准 (N=47 新数据集但未明确公开) — 方法学信号
+- 42029861 (Behav Res Methods): FaceTrack-AOI 开源动态 AOI 工具 — 自然场景注视分析工具信号
+- 42014634 (Behav Res Methods): 户外行走移动眼动注视转移检测, 手动标注数据集 (公开性未明) — 生态效度方法学
+- 42594120 (PLoS One, doi 10.1371/journal.pone.0355969): 前节 OCT 白内障分级 1,802 图/901 眼, 数据在 Supporting Information — 弱公开信号
+- 41970943 (IEEE J Transl Eng Health): 前庭实验室检测回归预测听神经瘤患侧 — 前庭方法学信号
+- 42568415 (Front Neurol): vHIT 扫视参数诊断中枢前庭障碍 — 前庭临床信号
+
+### 34.5 负向确认
+
+- **OpenEDS**: esearch 仅 2 旧记录 (34300511 + 36044495) — 维持季度检查, 2024 仍最新
+- **BPPV/眩晕**: 连续第八轮零新公开数据集 (vertigo/nystagmus/vestibular 查询全为临床/方法, 无一公开数据)
+- **PhysioNet**: latest 10 项全为已收录旧库 (script-carpediem/mimic-br/bidmc-metabolomic-masld/minute-level-step-count/kingston-icu-af/BRSET/argo/insulin4rl/inspire/dreamt) — 双周维持, 下次 08-27
+- **arXiv**: 8 组查询全部为已收录项或方法学信号, 0 净新增 — 发布低谷期持续 (Pitfall #52)
+- **Kaggle**: 无凭证 + 网页 JS 壳 (5.7KB 空壳) — Pitfall #49 延续
+- **OpenNeuro nemarDatasets**: raw.githubusercontent 404 + GraphQL 405 + 页面 JS 壳 — 第 33 轮通道本轮失效, 降级观察
+
+### 34.6 工具/管道状态
+
+- **PubMed 无 key 直连**: 16 查询面 180 唯一 PMID 0 失败 (连续第 6 轮) — 无 key 模式完全固化
+- **第二轮精确查询修复**: 括号/引号/字段标签需 quote_plus 编码 (原始裸传全 FAIL, 修复后 10/10 成功) — 新增 Pitfall
+- **efetch XML**: 20 候选 0 失败 (可用性信号扫描正常)
+- **GitHub API 核验通道**: 新增 — EMS 官方仓库确认 (YingjieSong1/EMS), 未来数据集落地核验可复用
+- **web_search**: SearXNG 连续多轮宕机, 未进关键路径
+
+## 第 34 轮 (2026-08-17, 战略回顾 cron 00:30): MobilityAPP 立项完成 + BALLADEER 注册 + G24 推进中
+
+### 34.1 在研状态快照
+
+- **3diris-01**: G24 训练运行中 (ep58+, 4h+, PCA-r≈0.986/pose-r≈0.999, chain+watchdog 健康), 预计 1-2h 内收束 → 自动 analyze → Fig24 → 3diris-04 论文刷新
+- **3diris-04**: g23_complete (47页 0 errors), 等 G24 结果并入
+- **3diris-02/03**: 维持合并/延迟决策 (无变化)
+- **G14 OpenEDS**: 仍阻塞 (Meta 认证墙, 需用户凭证) — P0 投稿核心证据缺口
+- **归档**: 2026-08-16 21:02 空壳论文归档 186 篇 (含 PD 步态族 weargait/mmu-pd/bbbd/fogstar/cwchoi4105 等 — 无 paper.tex 半成品, 去形留神)
+
+### 34.2 新项目: MobilityAPP (P1 → 本轮启动, H01 已完成)
+
+- 来源: 2026-08-16 机会扫描确认 (Zenodo 19819191, npj PD 伴生, CC-BY-4.0)
+- 数据: 84 例 (PD 41 / MSA 23 / PSP 20), 3 中心, Clinical+IGA+PAM+TUG 5 CSV
+- **H01 跨诊断移动性 SUPPORTED (STRONG)**: 10/10 指标 Kruskal-Wallis 显著, 7/10 Bonferroni 显著
+  - gait_velocity PD 1.241 > MSA 0.901/PSP 0.913 (H=28.78, p<0.0001)
+  - TUG 单调梯度 PD 9.32s < MSA 13.36s < PSP 15.68s (H=23.25)
+  - 解读: PD 最轻, PSP 双支撑时相最长 (姿势不稳表型) — 客观数字生物标志物
+- **H02 TUG×严重度 SUPPORTED** (同日): TUG×UPDRS rho=+0.588 (n=83, p<0.0001), TUG×HY rho=+0.506, TUG×PSPRS rho=+0.529 (n=20); UMSARS 不显著 (n=16 功效不足) — 仪器化 TUG 是临床量表连续代理
+- 路径: `outputs/papers/mobilityapp-atypical-pd-mobility/` (03-code/h01_cross_diagnosis.py + 07-quality/h01-report.md)
+- 下一步: H02 TUG×PSPRS/UMSARS 关联, H03 WB×严重度, 年龄校正+三分类 AUC → 论文
+
+### 34.3 新项目: BALLADEER ADHD (P0.5 ⭐ 注册, 下载阻塞)
+
+- 2026-08-16 第33轮发现: Sci Data, 同步 EEG+眼动+EDA, ADHD 儿童/青少年 + 神经典型对照
+- 本轮实测: figshare API 直连 403 (DC IP Cloudflare 拦截), Tor 出口 API 可达; 文件 13.6GB (md5 c7e7b5d57855ada4a380f667d1a5cf85)
+- **下载阻塞**: 直连 ~20KB/s / Tor ~11KB/s → 13.6GB 需 ~190h, 当前网络不可行
+- 处置: 项目目录 + state.json 已建 (`outputs/papers/balladeer-adhd-multimodal/`), 下载待高速代理/镜像或分段; 假设 H01-H04 已预注册
+- 触发: 网络改善或代理池高速出口可用时启动下载
+
+### 34.4 待办/方向
+
+1. G24 收束 (自动链) → G24b 组合部署验证 (若 FAIL) → 3diris-01/04 投稿就绪
+2. MobilityAPP H02/H03 + 论文 (新 P1 轨道, 数据零摩擦已完成)
+3. G14 OpenEDS — 等用户凭证 (唯一 P0 阻塞)
+4. BALLADEER — 下载通道解决后启动 (监控中)
+5. 下次 PhysioNet 双周扫描 08-27
