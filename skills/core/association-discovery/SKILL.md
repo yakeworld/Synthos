@@ -40,7 +40,6 @@ metadata:
     synthos_pass_threshold: '0.85'
 ---
 
-
 # Association Discovery — 关联发现
 
 > 跨论文识别知识项之间的关联，输出结构化关联报告与研究空白。
@@ -55,7 +54,6 @@ metadata:
 >
 > **三不原则：** 不比无关项（知识不在同一粒度不比较）、不跨域自洽检查（那是VER的职责）、
 > 不编造关联（无证据则标 confidence=0，不沉默忽略）。
-
 
 ## Genes (策略基因)
 
@@ -216,65 +214,46 @@ A论文的方法/数据是B论文方法的前提或基础。
 ## Step 4: 跨领域关联
 
 > 不要只找同领域关联。跨领域关联更有价值。
-
 强制检查 **3类跨域关联**：
 1. **方法迁移** — 领域 A 的方法能否用于领域 B 的问题（如 PINN 从力学→眼动）
 2. **现象类比** — 领域 A 的已知现象是否在领域 B 有类似表现
 3. **数据复用** — 领域 A 的数据集是否可用于回答领域 B 的问题
-
----
-
 ## Step 5: 研究空白 → HYP 输入
-
 将识别到的研究空白标记为 `gap` 类型，包含：
 - `gap_statement`: 一句话描述空白
 - `evidence`: 为什么判定为空白（哪些论文覆盖了什么，缺什么）
 - `filled_by?:` 可能的填补方向（输出给 HYP 作为起点）
 - `priority`: H/M/L 优先级
-
 保存至 `outputs/{session}/gaps.json`，作为 HYP 的输入。
-
----
-
 ## 输入契约
-
 | 字段 | 类型 | 必需 | 默认 | 说明 |
 |------|------|:----:|------|------|
 | `knowledge_base` | list[KnowledgeItem] | ✅ | — | 多篇论文的结构化知识（EXT输出） |
 | `query` | str | ❌ | 全量 | 分析焦点（缩小关联范围） |
 | `min_confidence` | float | ❌ | 0.0 | 最低confidence过滤 |
 | `cross_domain` | bool | ❌ | true | 是否检查跨领域关联 |
-
 ## 输出契约
-
-```json
-{
   "meta": {
     "source_count": 5,
     "pair_count": 10,
     "analyzed_at": "ISO时间戳"
   },
   "associations": [
-    {
       "id": "asc-001",
       "type": "contradiction|complement|evolution|gap|causation|parallel|dependency",
       "sources": ["ext/001", "ext/003"],
       "papers": [{"doi": "10.xxx1"}, {"doi": "10.xxx2"}],
       "aspect": "关联的具体方面",
-      "confidence": 0.85,
       "evidence": "证据引用",
       "resolvable": true,
       "cross_domain": false
-    }
   ],
   "gaps": [
-    {
       "gap_statement": "...",
       "evidence": "...",
       "filled_by": "可能填补方向",
       "priority": "H|M|L",
       "related_papers": ["doi:xxx", "doi:yyy"]
-    }
   ],
   "summary": {
     "total_associations": 10,
@@ -285,13 +264,7 @@ A论文的方法/数据是B论文方法的前提或基础。
   "evidence_chain": [
     {"source_type": "atom_output", "source_ref": "extracted_knowledge", "note": "引用 KnowledgeItem.id=ext/001, ext/003"}
   ]
-}
-```
-
----
-
 ## 陷阱（Pitfalls）
-
 | # | 陷阱 | 正确做法 |
 |:-:|:-----|:---------|
 | 1 | **跳过低 confidence 关联** — 只报告高置信度，丢弃低分关联 | 低分关联往往是创新发现的前兆——输出但标记"需验证" |
@@ -301,11 +274,7 @@ A论文的方法/数据是B论文方法的前提或基础。
 | 5 | **空白无证据** — 说"存在空白"但不说明为何是空白 | 空白必须标注：哪些论文覆盖了X、缺了什么Y |
 | 6 | **实体未对齐直接比较** — "瞳孔" vs "pupil" 直接比较 | 必须先归一化实体名（同义词/缩写/层级） |
 | 7 | **忽略论文本身的局限性** — 未利用 EXT 提取的局限性信息 | 局限性是发现空白最有价值的输入之一 |
-
----
-
 ## 验证清单
-
 - [ ] 7类关系均已检查（contradiction/complement/evolution/gap/causation/parallel/dependency）
 - [ ] 实体已对齐：同义词/缩写/层级归一化
 - [ ] 跨领域关联已检查（方法迁移/现象类比/数据复用）
@@ -316,32 +285,23 @@ A论文的方法/数据是B论文方法的前提或基础。
 - [ ] 低 confidence 关联已保留（标记为"需验证"）
 - [ ] 已保存：associations.json + gaps.json
 - [ ] 空白已标记为 HYP 输入
-
 ## 约束规则 · RULES
-
 - 7 类关系必须逐一检查，不可只查矛盾/补充/演进就跳过其余
 - 无证据的关联不编造——标 confidence=0 仍输出，不沉默丢弃
 - 空白（gap）必须附具体证据：哪些论文覆盖了什么、缺了什么
 - 实体未对齐（同义词/缩写/层级）前不得直接比较
 - 强制检查跨领域关联（方法迁移/现象类比/数据复用）后方可输出
-
 ## 边界声明
-
 - 本原子只做 **跨论文** 关联发现，不做单论文提取（那是 EXT）
 - 不做假设生成（那是 HYP）
 - 不做观点验证（那是 VER）
 - 不评估关联的价值/可靠性（那是 VER 在需要时的扩展职责）
 - PW-Bench 逆向工程不在本原子范围内
-
-
 ## Golden 集合 · GOLDEN SET
-
 - **Golden Input**: `knowledge_base: [5 篇 KnowledgeItem]`, `query: "瞳孔对光反射 ODE"`, `min_confidence: 0.0`, `cross_domain: true`
 - **Golden Output**: `meta.pair_count=10`，`summary.by_type` 含 7 类（contradiction/complement/evolution/gap/causation/parallel/dependency）且每条关联含双向引用、confidence(0-1) 与 evidence；gaps.json 每条含 `priority: H/M/L` 并标记为 HYP 输入
 - **Golden Error**: 实体未归一化（"pupil" vs "瞳孔"）直接比较，或无证据断言 gap → 该关联 confidence=0 标记"需验证"，输出不静默丢弃，gaps 条目缺失 evidence 字段即拒写
-
 ## 相关文件
-
 - `references/BOUNDARY.md` — 边界声明
 - `references/EVIDENCE_SCHEMA.md` — 证据链结构
 - `references/IO_CONTRACT.md` — 输入输出契约

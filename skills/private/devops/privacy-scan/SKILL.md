@@ -96,20 +96,11 @@ git push --no-verify
 - Golden Error: 预期错误信息（覆盖失败路径）
 
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
-
 > 违反规则的操作视为不安全，必须拒绝或隔离。
-
 > 违反任何原则的输出视为失败。原则优先级：准确 > 证据 > 可复现。
-
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。---
-
-` 边界 bug 已记录 — SKILL.md 文件需要 `git ls-tree` 二次验证
-- 2026-07-06: .gitignore 注释与规则可能矛盾 — 注释写"私有技能纳入git"但实际规则只排除 pycache/pyc/Dotstore 等缓存文件，导致 776 个 private skill 文件被追踪。修复：`git rm --cached` 逐个移除 + `.gitignore` 中用 `skills/private/` 直接排除整个目录。
-
 ## Genes (策略基因)
-
 > 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-
 - **[PRIV-001]** 执行 Git 推送操作前 → 必须触发 pre-push 钩子进行敏感信息（API Key、Token、密码等）扫描
 - **[PRIV-002]** 发现已知泄露凭证或新敏感数据 → 将其加入 `KNOWN_SECRETS` 黑名单数组以增强后续拦截能力
 - **[PRIV-003]** 确认代码库中绝对不含敏感信息且需紧急推送 → 使用 `git push --no-verify` 跳过扫描，但需承担泄露风险

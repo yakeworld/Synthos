@@ -176,13 +176,7 @@ Absorbed from AKNE knowledge graph (yakeworld → .knowledge/wiki/):
 - Map research gaps via PubMed/OpenAlex white space verification
 - Propose 3-5 testable scientific hypotheses based on publication portfolio
 
-### 5. Domain Portfolio Analysis
-- Audit all BPPV papers across `outputs/papers/` (25+) and `_archive/` (36+) directories
-- Identify mature papers (≥80 quality score, VERIFIED/PASS gate)
-- Map research gaps via PubMed/OpenAlex white space verification
-- Propose 3-5 testable scientific hypotheses based on publication portfolio
 - Prioritized paper action list: P0 (move archive papers), P1 (fix broken refs), P2 (long-term direction)
-
 ## Input/Output Contract
 ```yaml
 input_contract:
@@ -194,18 +188,14 @@ input_contract:
     - confidence: float  # 0.0-1.0 confidence score
     - sources: list[str]  # AKNE wiki file paths
 ```
-
 ## Constraints
 - Do NOT give medical advice — always state: "This is educational knowledge. Clinical decisions require in-person evaluation."
 - Cite specific AKNE wiki pages for every claim
 - Distinguish between evidence-based fact (from papers) and hypothesized mechanism
 - Maneuver descriptions must include: patient position, head rotation direction/angle, timing, expected nystagmus response
-
 ## Origin
 Absorbed from AKNE knowledge graph (yakeworld/.knowledge/) — 2026-05-12
-
 ## 命令层·English
-
 ### Quick Start
 - **Load**: Activate on BPPV diagnosis, treatment, or canalith repositioning queries.
 - **Trigger Keywords**: BPPV, vertigo, nystagmus, Dix-Hallpike, Epley, Gufoni, Semont, Barbecue, canalith, otoconia.
@@ -216,13 +206,10 @@ Absorbed from AKNE knowledge graph (yakeworld/.knowledge/) — 2026-05-12
 - **Constraints**: Always add educational-use disclaimer; cite AKNE wiki sources; distinguish evidence vs hypothesis.
 - **Checklist**: Run all 6 verification items after activation.
 - **Output**: Structured answer with confidence score and source references.
-
 ## 示例 · EXAMPLES
-
 1. **基本用法**: 标准输入 → 标准输出
 2. **边界用例**: 空输入、特殊字符、异常路径
 3. **错误场景**: 缺失依赖、权限不足、网络异常
-
 ### Domain Analysis Example
 When asked "BPPV有哪几篇比较成熟的？" or "our BPPV papers review":
 1. Scan all state.json files in `outputs/papers/` and `_archive/`
@@ -231,30 +218,20 @@ When asked "BPPV有哪几篇比较成熟的？" or "our BPPV papers review":
 4. Map research gaps (white_space → PubMed/OpenAlex verification)
 5. Propose testable hypotheses (最小刺激阈值假说, BPPV慢动力学探针假说, etc.)
 6. Produce prioritized action list (P0/P1/P2)
-
 ## 约束规则 · RULES
-
 1. **输入约束**: 参数类型、范围、格式必须校验
 2. **输出约束**: 返回值结构、编码、命名必须一致
 3. **异常约束**: 错误信息必须包含上下文和恢复建议
 4. **安全约束**: 不执行未验证的任意代码，不暴露内部状态
-
 ## Golden 集合 · GOLDEN SET
-
 - **Golden Input**: 标准输入样本（覆盖正常路径）
 - **Golden Output**: 预期输出（精确匹配或格式校验）
 - **Golden Error**: 预期错误信息（覆盖失败路径）
-
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
-
 > 违反规则的操作视为不安全，必须拒绝或隔离。
-
 > 每个示例必须可独立运行、有明确输入输出、包含错误处理。
-
 ### Related Skills
 - `research/scc-bppv-kinematics` — Computational SCC morphometry + kinematic simulation from centerline data (complementary: this skill provides clinical knowledge, scc-bppv-kinematics provides the computational pipeline)
-
 # Bppv Expert---
-
 > (P032 去重: 以下为合并前第二份中的 1 行独有内容, 保留以防丢失)
 # Bppv Expert
