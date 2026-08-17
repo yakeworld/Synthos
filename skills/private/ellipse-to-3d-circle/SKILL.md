@@ -42,7 +42,7 @@ category: private
 2. 
 3. 
 category: mlops
-related_skills: ['ellipse-3d-anatomy-constrained', 'llm-model-selection']
+related_skills: ['ellipse-3d-anatomy-constrained']
 description: 椭圆逆投影为三维空间圆 — 核心为眼动追踪中瞳孔椭圆→3D角膜面法向量反推。覆盖正交/透视投影、法向量参数化、深度歧义消除、正交基构建。
 signature: "ellipse-to-3d-circle -> processed_result"
 version: 2.0.0

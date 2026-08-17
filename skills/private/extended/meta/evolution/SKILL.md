@@ -13,7 +13,7 @@ metadata:
     atom_type: meta-evolution
     description: "⚡ P0 自进化引擎。Synthos evolution engine v2.23 — 四态决策+硬收敛+GEPA反射分析+自动基准+Pareto优化+外部吸收+教训学习+黄金验证+自扩关键词+漂移检测+渐进披露+Git即记忆。v2.23: diagnose.py独立计算optimize/coverage（2024-06-28）、知识质量权重模型、P0技能验证清单注入、批量验证注入方法论（2026-06-28 Cycle 186-187）。"
     signature: "cycle: int, prev_state: dict, lessons: dict, skill_inventory: list[Skill] -> evolution_report: dict -> evolution_report: dict, new_state: evolution-state.json, log_entry: evolution-log.md, new_state: evolution-state.json"
-    related_skills: ["project-experience-distillation", "quality-gate", "self-deception-risk"]
+    related_skills: ["project-experience-distillation", "quality-gate"]
 
 ---
 

@@ -30,7 +30,7 @@ category: private
 3. 验证输出符合契约
 4. 保存结果并报告
 category: mlops
-related_skills: ['ellipse-to-3d-circle', 'llm-model-selection']
+related_skills: ['ellipse-to-3d-circle']
 description: 用户特异性推导：椭圆→3D圆通过解剖约束（R=2r, d=√3r）消除方位角模糊。覆盖法向量公式、光轴平面、Rodrigues旋转、多帧眼球中心求解。源自AKNE眼动研究笔记。
 signature: "ellipse-3d-anatomy-constrained -> processed_result"
 version: 1.0.0

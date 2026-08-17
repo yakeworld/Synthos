@@ -2,7 +2,7 @@
 name: cron-diagnostics
 category: devops
 signature: "cron-diagnostics -> devops: Cron 任务健康诊断与优化 — 分析 15 个 cron 任务的健康度、频率、调度冲突、deliver 配置、付费任务成本，输出优化方案。"
-related_skills: ['cron-system-maintenance']
+related_skills: []
 description: "Cron 任务健康诊断与优化 — 分析 15 个 cron 任务的健康度、频率、调度冲突、deliver 配置、付费任务成本，输出优化方案。"
 version: 1.0.0
 allowed-tools:

@@ -4,9 +4,7 @@ description: maps
 version: 1.0.0
 category: productivity
 signature: 'maps -> productivity: Geocode, POIs, routes, timezones via OpenStreetMap/OSRM.'
-related_skills:
-- google-workspace
-- airtable
+related_skills: []
 allowed-tools:
 - terminal
 - read_file
@@ -42,7 +40,7 @@ metadata:
 2. 执行核心操作（参考本目录下的 scripts/ 或 references/）
 3. 验证输出符合契约
 4. 保存结果并报告
-related_skills: ['google-workspace', 'airtable']
+related_skills: []
     requires_toolsets:
     - terminal
     supersedes:
