@@ -1,0 +1,23 @@
+{
+  "case_id": "case_003",
+  "skill": "graduate-student-mentoring",
+  "description": "期望输出：锚定五大支柱，砍 3 个末节分支，聚焦 1 主线并写下书面边界，下周自检仅围绕主线",
+  "direction_action": {
+    "anchored_to_five_pillars": true,
+    "scope_constraints_reviewed": true,
+    "subdirections_cut": 3,
+    "focused_mainline_count": 1,
+    "written_boundary_recorded": true,
+    "gene": "GRAD-001"
+  },
+  "verification": {
+    "next_week_self_check_scope": "仅围绕聚焦主线记录",
+    "weekly_report_recheckable": true,
+    "no_further_drift": true
+  },
+  "self_check_items_passed": [
+    "方向发散已锚定五大支柱",
+    "范围约束定期回顾，未陷入末节细节"
+  ],
+  "error": null
+}

@@ -1,0 +1,12 @@
+{
+  "case_id": "case_003",
+  "reusable_patterns": null,
+  "skill_update": null,
+  "error": {
+    "rejected": true,
+    "rule": "PROJ-001",
+    "message": "只记录不反思：实践记录仅含操作步骤，未回答反思问题「为什么有效」",
+    "detail": "输入 reflection_q 为空，且 project_practice 中无因果分析（为何 pip install --force 解决了冲突？根因是什么？何条件下此模式可复用？）",
+    "recovery_suggestion": "补充反思：1) 为什么此步骤序列有效（根因）？2) 该模式在何种约束条件下可跨项目复用？3) 是否存在更一般的约束类型？然后重新提交提炼。"
+  }
+}

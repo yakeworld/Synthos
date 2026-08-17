@@ -1,0 +1,11 @@
+{
+  "case_id": "case_002",
+  "description": "正常路径：同一批次两类请求——cron 任务健康度检查与系统 Self-check——分别重定向至白名单内正确目标",
+  "input": {
+    "routine_requests": [
+      {"routine_request": "检查 cron 任务健康度", "context": {"trigger": "cron"}},
+      {"routine_request": "运行系统健康检查 self-check", "context": {"trigger": "manual"}}
+    ]
+  },
+  "weight": "critical"
+}

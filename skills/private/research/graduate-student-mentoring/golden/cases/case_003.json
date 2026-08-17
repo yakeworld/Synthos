@@ -1,0 +1,26 @@
+{
+  "case_id": "case_003",
+  "skill": "graduate-student-mentoring",
+  "description": "示例路径（EXAMPLES #1）：学生提出 5 个并行新子方向，已偏离核心课题两周 → 锚定五大支柱并砍掉末节分支",
+  "input": {
+    "incident": {
+      "proposed_parallel_subdirections": 5,
+      "weeks_off_core_topic": 2
+    },
+    "research_direction": {
+      "drifted_off_core": true
+    }
+  },
+  "expected_checks": {
+    "critical": [
+      "方向发散 → 锚定五大支柱，与导师回顾范围约束（GRAD-001）"
+    ],
+    "high": [
+      "砍掉 3 个末节分支，聚焦 1 个主线",
+      "为聚焦主线写下书面边界"
+    ],
+    "medium": [
+      "下一周自检表仅围绕该主线记录，范围约束在周报中可复查，未再发散"
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径：paper_dir 不存在 → 拒绝执行，错误含上下文与恢复指引",
+  "type": "error",
+  "input": {
+    "paper_dir": "outputs/papers/not-exist",
+    "citation_source": "unknown",
+    "initial_citations": null,
+    "topic_queries": ["corneal biomechanics ODE"],
+    "search_mode": "clustered"
+  },
+  "expected": {
+    "pipeline_started": false,
+    "rejected": true,
+    "error_contains_context": true,
+    "error_contains_recovery_hint": true,
+    "partial_output": false
+  },
+  "weight": "critical"
+}

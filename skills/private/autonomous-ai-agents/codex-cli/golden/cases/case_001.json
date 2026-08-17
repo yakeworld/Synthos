@@ -1,0 +1,24 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：协议已选定 + 输入验证通过 → 交付 code_changes + 五项验证齐备",
+  "type": "normal",
+  "input": {
+    "coding_task": "为 pima 数据集补写 F1 评估脚本",
+    "protocol": "OpenAI Responses",
+    "dataset_path": "data/pima.csv",
+    "backend_config_complete": true
+  },
+  "expected": {
+    "codex_cli_started": true,
+    "code_changes_delivered": true,
+    "five_verifications": {
+      "input": "pass",
+      "process": "pass",
+      "output": "pass",
+      "boundary": "pass",
+      "error_handling": "pass"
+    },
+    "agent_status": "五项验证齐备"
+  },
+  "weight": "critical"
+}

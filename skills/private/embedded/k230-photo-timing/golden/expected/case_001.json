@@ -1,0 +1,29 @@
+{
+  "case_id": "case_001",
+  "results": [
+    {
+      "photo_interval_ms": 10,
+      "snapshot_calls": 21,
+      "save_ok": 21,
+      "effective_fps": 20.1,
+      "fps_tolerance": 0.5,
+      "snapshot_calls_tolerance": 2,
+      "note": "limited by snapshot+save time, not by 1/0.01 = 100"
+    },
+    {
+      "photo_interval_ms": 100,
+      "snapshot_calls": 20,
+      "save_ok": 20,
+      "effective_fps": 10.0,
+      "fps_tolerance": 0.5,
+      "snapshot_calls_tolerance": 2,
+      "note": "exactly 1/0.1"
+    }
+  ],
+  "invariants": [
+    "save_ok == snapshot_calls for every interval",
+    "effective_fps <= 1000/photo_interval_ms"
+  ],
+  "conclusion": "throttle gate correctly limits to 1000/millis calls regardless of main loop speed (~100,000 iterations/s)",
+  "genes_applied": ["SK-001", "SK-002", "SK-003"]
+}

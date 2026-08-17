@@ -1,0 +1,23 @@
+{
+  "case_id": "case_002",
+  "name": "credential_hit_push_blocked",
+  "type": "error",
+  "input": {
+    "operation": "git push",
+    "repo_files": [
+      {"path": ".env", "content_excerpt": "GITHUB_TOKEN=ghp_xY9vQ2mPn8LkR4tW6zA1cB3dE5fG7hJ9"},
+      {"path": "scripts/deploy.sh", "content_excerpt": "curl -X POST https://api.example.com -d phone=13812345678"},
+      {"path": "config/settings.json", "content_excerpt": "\"ss_api_key\": \"s2k-HT-EXAMPLE-KEY-0000\""}
+    ],
+    "gitignore": {
+      "comment": "缓存与私有目录排除",
+      "rules": ["__pycache__/", "*.pyc", "skills/private/"]
+    },
+    "known_secrets_blacklist": ["s2k-HT-EXAMPLE-KEY-0000"]
+  },
+  "expected_checks": [
+    "PRIV-001 pre-push hook fired",
+    "PRIV-002 leaked credential added to KNOWN_SECRETS",
+    "PRIV-006 git ls-tree secondary verification"
+  ]
+}

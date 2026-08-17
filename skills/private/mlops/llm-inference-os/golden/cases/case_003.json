@@ -1,0 +1,22 @@
+{
+  "case_id": "case_003",
+  "skill": "llm-inference-os",
+  "description": "示例路径（EXAMPLES #2）：在 Windows 原生 + macOS 各部署一套 vLLM 推理节点 → 按平台评级迁移至 Linux (Ubuntu/Debian)，弃用低评级平台",
+  "input": {
+    "request": "在 Windows 原生 + macOS 各部署一套 vLLM 推理节点",
+    "current_platforms": ["windows_native", "macos"],
+    "workload": "vllm_inference_nodes"
+  },
+  "expected_checks": {
+    "critical": [
+      "按 LLM-003 弃用 Windows 原生（评级 ⭐）与 macOS（评级 ⭐）节点",
+      "迁移至 Linux (Ubuntu/Debian)（评级 ⭐⭐⭐⭐⭐）"
+    ],
+    "high": [
+      "迁移方案给出平台评级对照与选择依据（评级表可溯源）"
+    ],
+    "medium": [
+      "迁移步骤按 LLM-006 逐步重放一遍，结果一致"
+    ]
+  }
+}

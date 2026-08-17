@@ -1,0 +1,19 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径：输入路径不存在 → 拒绝启动，错误含上下文与恢复指引",
+  "type": "error",
+  "input": {
+    "coding_task": "为 pima 数据集补写 F1 评估脚本",
+    "protocol": "OpenAI Responses",
+    "dataset_path": "data/does-not-exist.csv",
+    "backend_config_complete": true
+  },
+  "expected": {
+    "codex_cli_started": false,
+    "rejected": true,
+    "agent_status": "输入未验，不役代理",
+    "error_contains_context": true,
+    "error_contains_recovery_hint": true
+  },
+  "weight": "critical"
+}

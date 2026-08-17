@@ -1,0 +1,17 @@
+{
+  "case_id": "case_002",
+  "type": "error_path",
+  "description": "无源数字陷阱：3 篇缺 quality_score 但上游报告声称均值 55.3；2 篇 D10a 为 null",
+  "input": {
+    "papers": [
+      {"id": "q01", "has_tex": true, "has_pdf": true, "quality_score": 88, "gate": "PASS", "tier": "T2", "d10a_coverage": 0.96, "zombie_citations": 1},
+      {"id": "q02", "has_tex": true, "has_pdf": true, "quality_score": 71, "gate": "CONDITIONAL", "tier": "T2", "d10a_coverage": 0.95, "zombie_citations": 0},
+      {"id": "q03", "has_tex": true, "has_pdf": false, "quality_score": 64, "gate": "CONDITIONAL", "tier": "T3", "d10a_coverage": 0.91, "zombie_citations": 2},
+      {"id": "q04", "has_tex": false, "has_pdf": true, "quality_score": null, "gate": "CONDITIONAL", "tier": "T2", "d10a_coverage": 0.95, "zombie_citations": 3},
+      {"id": "q05", "has_tex": true, "has_pdf": true, "quality_score": null, "gate": "FAIL", "tier": "T4", "d10a_coverage": null, "zombie_citations": 9},
+      {"id": "q06", "has_tex": false, "has_pdf": false, "quality_score": null, "gate": "FAIL", "tier": "T4", "d10a_coverage": null, "zombie_citations": 6}
+    ],
+    "upstream_claimed_mean": 55.3,
+    "upstream_claim_note": "上游报告声称全部 6 篇质量分均值 55.3（含 3 篇无 quality_score 的论文）"
+  }
+}

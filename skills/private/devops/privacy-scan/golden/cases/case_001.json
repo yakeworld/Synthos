@@ -1,0 +1,24 @@
+{
+  "case_id": "case_001",
+  "name": "clean_repo_push_pass",
+  "type": "normal",
+  "input": {
+    "operation": "git push",
+    "repo_files": [
+      {"path": "src/main.py", "content_excerpt": "print('hello')"},
+      {"path": "README.md", "content_excerpt": "# demo project"},
+      {"path": "requirements.txt", "content_excerpt": "requests==2.31.0"}
+    ],
+    "gitignore": {
+      "comment": "缓存与私有目录排除",
+      "rules": ["__pycache__/", "*.pyc", "skills/private/"]
+    },
+    "known_secrets_blacklist": ["s2k-HT-EXAMPLE-KEY-0000"],
+    "tracked_private_skill_files": 0
+  },
+  "expected_checks": [
+    "PRIV-001 pre-push hook fired",
+    "PRIV-004 gitignore comment consistent with rules",
+    "PRIV-006 git ls-tree secondary verification"
+  ]
+}

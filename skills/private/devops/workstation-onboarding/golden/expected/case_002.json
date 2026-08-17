@@ -1,0 +1,17 @@
+{
+  "case_id": "case_002",
+  "proceeded": false,
+  "files_generated": [],
+  "work_check_report": null,
+  "message": "道不通，则礼不行 — SSH 连通性验证未通过（ssh student@10.0.0.99:2222 超时），拒绝搭建任何环境文件，不生成 WORK_CHECK_REPORT.md，不得声称环境就绪。",
+  "recovery_suggestions": [
+    "检查网络可达性与端口 2222 是否开放",
+    "确认 SSH 凭据/密钥正确后重试连通性验证",
+    "连通验证通过后重新触发本技能"
+  ],
+  "assertions": {
+    "no_environment_files_created": true,
+    "no_environment_ready_claim": true
+  },
+  "genes_applied": ["WORK-001"]
+}

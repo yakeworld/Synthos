@@ -1,0 +1,27 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：含明确功能归属的 BibTeX 条目 + 真实 DOI，验证 6 类功能分类与 DOI 回源验证均成功，专项报告独立输出并标注 G5 集成点",
+  "input": {
+    "bibtex_entries": [
+      {
+        "key": "Smith2020Benchmark",
+        "title": "A benchmark suite for medical image classification",
+        "author": "Smith, A. and Brown, C.",
+        "year": "2020",
+        "doi": "10.1101/2020.01.15.900000",
+        "citation_context": "在实验设置中，我们在 Smith et al. 的基准数据集上与现有方法对比了分类性能。"
+      },
+      {
+        "key": "Zhang2019Method",
+        "title": "Residual attention networks for histopathology",
+        "author": "Zhang, L. et al.",
+        "year": "2019",
+        "doi": "10.1038/s41598-019-43924-0",
+        "citation_context": "本文方法借鉴了 Zhang 等人的残差注意力网络架构（方法节）。"
+      }
+    ],
+    "api_sources": {"semantic_scholar": "available", "crossref": "available", "pubmed": "available"},
+    "context": {"paper_section": "experiments", "g5_integration": true}
+  },
+  "weight": "critical"
+}

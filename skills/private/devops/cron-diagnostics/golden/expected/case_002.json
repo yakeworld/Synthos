@@ -1,0 +1,24 @@
+{
+  "id": "case_002",
+  "status": "success",
+  "result": {
+    "report": {"total_tasks": 3, "paid_tasks": 2, "free_tasks": 1, "paused_tasks": 0, "error_tasks": 0},
+    "configuration_issues": [
+      {"severity": "MEDIUM", "task": "script-daily-cleanup", "issue": "no_agent=True 但指定了 model=deepseek-chat，脚本任务不应依赖模型（且产生付费调用）"},
+      {"severity": "MEDIUM", "task": "scan-hourly", "issue": "非 no_agent 但 deliver=local，结果不投递到聊天，静默丢失"},
+      {"severity": "INFO", "task": "paper-scan", "issue": "every 30m 频率过高且非心跳类，扫描类应 <=4h，论文类 daily 足够"}
+    ],
+    "optimizations": [
+      {"task": "script-daily-cleanup", "action": "update", "changes": {"model": null, "provider": null}, "reason": "去除 no_agent 任务的 model 配置（CRON-005）"},
+      {"task": "scan-hourly", "action": "update", "changes": {"deliver": "origin"}, "reason": "修复 deliver 配置，确保结果投递（CRON-005）"},
+      {"task": "paper-scan", "action": "update", "changes": {"schedule": "0 */4 * * *"}, "reason": "降频至 4h（CRON-006）"}
+    ]
+  },
+  "checks": {
+    "medium_config_errors_flagged": true,
+    "each_optimization_has_action_update": true,
+    "no_agent_model_misconfig_detected": true,
+    "deliver_local_misconfig_detected": true,
+    "overfrequent_non_heartbeat_flagged": true
+  }
+}

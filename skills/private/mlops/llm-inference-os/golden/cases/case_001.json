@@ -1,0 +1,31 @@
+{
+  "case_id": "case_001",
+  "skill": "llm-inference-os",
+  "description": "Golden Input：用户请求「用 Qwen3-VL 在 Linux (Ubuntu/Debian) 高并发部署推理集群」——正常路径，模型名含 VL 后缀、平台评级最高、触发内核调优",
+  "input": {
+    "request": "用 Qwen3-VL 在 Linux (Ubuntu/Debian) 高并发部署推理集群",
+    "model_name": "Qwen3-VL",
+    "workload": "high_concurrency_inference_cluster",
+    "platform_candidates": ["linux_ubuntu_debian", "linux_rhel_centos", "windows_wsl2", "windows_native", "macos"],
+    "references_available": [
+      "LLM-Pilot (SC24, IBM/ETH)",
+      "Evaluating Containerization Overhead in MCP Servers (AIxSE 2025)",
+      "Optimizing LLM Inference Clusters (2025)"
+    ]
+  },
+  "expected_checks": {
+    "critical": [
+      "确认 Qwen3-VL 为多模态型号（名称含 VL 后缀），判定 LLM-001 通过",
+      "部署平台选定 Linux (Ubuntu/Debian)（评级 ⭐⭐⭐⭐⭐），弃用 Windows 原生与 macOS（LLM-003）"
+    ],
+    "high": [
+      "高并发场景实施 Linux 内核调优，实测吞吐提升落在 20-30% 区间（LLM-004）",
+      "OS 上下文切换/中断对延迟的影响已评估（对照 LLM-Pilot SC24）",
+      "容器化/推理结论可追溯到引用研究（AIxSE 2025 容器开销、2025 集群优化），无编造数据（LLM-005）"
+    ],
+    "medium": [
+      "部署步骤可逐步重放且结果一致（LLM-006）",
+      "吞吐提升数据源记录在案"
+    ]
+  }
+}

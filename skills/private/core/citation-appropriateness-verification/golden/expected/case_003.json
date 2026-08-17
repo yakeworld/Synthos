@@ -1,0 +1,34 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "report_type": "independent_specialized_report",
+    "citation_classification": [
+      {
+        "key": "Lee2022Survey",
+        "function": "背景",
+        "doi_validation": "UNVERIFIABLE",
+        "validation_chain": [
+          "semantic_scholar:unreachable(timeout)",
+          "crossref:unreachable(timeout)",
+          "pubmed:unreachable(timeout)"
+        ],
+        "verdict": "无法验证",
+        "recommendation": "网络恢复后重试三源回退；不编造验证结果",
+        "note": "凡数必源：验证失败时记录原因，不伪造 PASS"
+      }
+    ],
+    "fallback_log": [
+      "level1 semantic_scholar: unreachable (network fault)",
+      "level2 crossref: unreachable (network fault); query string 142 chars truncated to <=100 before attempt",
+      "level3 pubmed: unreachable (network fault)"
+    ],
+    "g5_integration_point": "已单独标注",
+    "status": "PASS"
+  },
+  "verification": [
+    "报告完整记录 SS→Crossref→PubMed 三源回退过程（每级尝试与失败原因）（CITA-003）",
+    "待验证条目标记为无法验证，未编造验证结果（凡数必源，P0）",
+    "Crossref 超 100 字符查询（142 chars）被截断至 ≤100 字符或明确拒绝，未使用 format=bibtex（CITA-004）",
+    "验证失败原因与修复指引（网络恢复后重试）已记录，可复现（CITA-006）"
+  ]
+}

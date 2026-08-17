@@ -1,0 +1,17 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：jabkit-rs Crossref 检索，BibTeX 元数据齐备",
+  "type": "normal",
+  "input": {
+    "command": "jabkit-rs fetch --provider=Crossref --query=\"pupil light reflex ODE\" --porcelain",
+    "provider": "Crossref",
+    "query": "pupil light reflex ODE",
+    "max": 100
+  },
+  "expected": {
+    "response_time_seconds": "~2",
+    "bibtex_fields_present": ["title", "authors", "doi", "year"],
+    "records_returned": 100
+  },
+  "weight": "normal"
+}

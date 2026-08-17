@@ -1,0 +1,25 @@
+{
+  "case_id": "case_003",
+  "skill": "kaggle-leakage-audit",
+  "description": "边界路径：平衡/多类分布均匀数据集 → 确认不受此类泄漏影响，跳过不平衡泄漏深度审计",
+  "input": {
+    "dataset": {
+      "name": "balanced_multiclass",
+      "class_imbalanced": false,
+      "distribution": "多类分布均匀",
+      "positive_ratio": 0.25
+    },
+    "request": "对该数据集做泄漏审计"
+  },
+  "expected_checks": {
+    "critical": [
+      "确认数据集类别平衡/多类分布均匀 → 不受此类（不平衡）泄漏影响（KAGG-005）"
+    ],
+    "high": [
+      "跳过针对不平衡泄漏的深度审计，并在输出中说明跳过原因"
+    ],
+    "medium": [
+      "仍保证预处理在 CV 折内执行（一般性正确性，KAGG-006）"
+    ]
+  }
+}

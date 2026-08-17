@@ -1,0 +1,19 @@
+{
+  "case_id": "case_002",
+  "skill": "v32-multi-direction-scan",
+  "type": "error",
+  "description": "错误路径：请求描述与上下文（目标方向集合）缺失/无效时，应触发输入验证（SK-002）并阻断后续流程，错误信息含上下文与恢复指引（SK-006）",
+  "input": {
+    "request": "执行扫描",
+    "context": {
+      "step0_mode_decision": {
+        "aligned_to_paper_pipeline_9_constraints": false,
+        "selected_mode": null,
+        "rationale": "未执行 Step 0 模式决策"
+      },
+      "directions": [],
+      "paper_pipeline_constraints_ref": "",
+      "note": "directions 为空且 Step 0 未完成 → 输入无效"
+    }
+  }
+}

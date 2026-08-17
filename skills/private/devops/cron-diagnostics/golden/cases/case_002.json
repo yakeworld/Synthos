@@ -1,0 +1,15 @@
+{
+  "id": "case_002",
+  "name": "no_agent_config_errors_and_local_deliver",
+  "category": "error",
+  "weight": "high",
+  "input": {
+    "trigger": "direct",
+    "tasks": [
+      {"id": "job_21", "name": "script-daily-cleanup", "enabled": true, "last_status": "ok", "no_agent": true, "model": "deepseek-chat", "provider": "deepseek", "deliver": "origin", "schedule": "0 5 * * *"},
+      {"id": "job_22", "name": "scan-hourly", "enabled": true, "last_status": "ok", "no_agent": false, "model": "qwen3.6-35b-nvfp4", "provider": "amax", "deliver": "local", "schedule": "0 * * * *"},
+      {"id": "job_23", "name": "paper-scan", "enabled": true, "last_status": "ok", "no_agent": false, "model": "qwen3.6-35b-nvfp4", "provider": "amax", "deliver": "origin", "schedule": "every 30m"}
+    ]
+  },
+  "genes": ["CRON-005", "CRON-006"]
+}

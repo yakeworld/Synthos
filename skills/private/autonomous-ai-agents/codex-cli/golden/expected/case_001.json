@@ -1,0 +1,19 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "codex_cli_started": true,
+    "code_changes_delivered": true,
+    "five_verifications": {
+      "input": "pass",
+      "process": "pass",
+      "output": "pass",
+      "boundary": "pass",
+      "error_handling": "pass"
+    },
+    "agent_status": "五项验证齐备"
+  },
+  "verification": {
+    "five_verifications_complete": "all five of input/process/output/boundary/error_handling recorded as pass before delivery",
+    "code_verified": "code_changes validated (executed/tested) before delivery; no unverified code run; internal state not exposed"
+  }
+}

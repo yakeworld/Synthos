@@ -1,0 +1,23 @@
+{
+  "case_id": "case_003",
+  "memory_entries": [],
+  "error": {
+    "rejected": true,
+    "reasons": [
+      "候选记忆含指令式语气：'always use /opt/venv/bin/python for Synthos tasks' → 需转换为陈述式 'Synthos tasks use /opt/venv/bin/python (venv isolation enforced)'",
+      "容量超限：current_memory 使用率 90% > 80% 阈值，触发 CONV-004 主动清理机制"
+    ],
+    "action": "batch_rejected",
+    "all_or_nothing": true,
+    "recovery_suggestion": "先执行容量清理（按价值排序删除低优先级条目至 <80%），将指令式条目转为陈述式后重新提交整批操作"
+  },
+  "consolidation_report": {
+    "usage_before": 0.90,
+    "usage_after": 0.90,
+    "usage_target_range": [0.60, 0.75],
+    "operations_order": [],
+    "constitutional_check": "pass",
+    "declarative_check": "fail",
+    "notes": "整批操作被拒。容量 90% 超出 80% 上限，且含指令式语气条目。需先清理再重试。"
+  }
+}

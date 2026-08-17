@@ -1,0 +1,50 @@
+{
+  "case_id": "case_001",
+  "expected_status": "success",
+  "expected_output": {
+    "scope_classification": [
+      {
+        "name": "5 pillars 公开数据集分析",
+        "tier": "Core",
+        "processing_depth": "全流程"
+      },
+      {
+        "name": "泪膜生物力学",
+        "tier": "Peripheral",
+        "processing_depth": "仅空白+假设"
+      }
+    ],
+    "cron_configs": {
+      "autonomous-core-researcher": {
+        "prompt_lists_allowed_and_prohibited_directions": true,
+        "allowed": ["Core 方向全集"],
+        "prohibited": ["Peripheral 方向（仅允许空白+假设深度）"]
+      },
+      "paper-repair": {
+        "only_repair_in_scope": true
+      },
+      "paper-quality-review": {
+        "skip_out_of_scope": true
+      },
+      "paper-layer-b-review": {
+        "skip_out_of_scope": true
+      },
+      "literature-monitor": {
+        "core_directions": "完整报告",
+        "peripheral_directions": "仅附录"
+      }
+    },
+    "memory_convergence_decision": {
+      "written_as_durable_fact": true,
+      "content": "收敛决策：5 pillars 公开数据集分析→Core；泪膜生物力学→Peripheral；5 个 cron 基于同一状态"
+    }
+  },
+  "verification_checks": [
+    "GRAD-001: 方向已按 Scope tiers 分为 Core/Peripheral 两层且处理深度不同",
+    "GRAD-002: 每个 cron prompt 显式列出允许与禁止的方向",
+    "GRAD-003: paper-repair 仅修复 in-scope 论文；paper-quality-review/paper-layer-b-review 跳过范围外论文",
+    "GRAD-004: literature-monitor 核心方向完整报告、外围仅附录",
+    "GRAD-005: 收敛决策作为持久化事实写入 Memory",
+    "GRAD-006: 输出无编造数据，结论可追溯"
+  ]
+}

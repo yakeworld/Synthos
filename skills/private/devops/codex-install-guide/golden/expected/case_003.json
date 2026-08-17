@@ -1,0 +1,20 @@
+{
+  "id": "case_003",
+  "status": "error",
+  "result": {
+    "diagnosis": "codex exec 批量超时的根因是 cron 引用的 profile amax 缺失：~/.codex/profiles/ 只有 hermes.config.toml，无 amax.config.toml。缺失 profile 会导致 codex exec 无具体错误信息的静默超时（CODE-005/006）。",
+    "severity": "HIGH",
+    "missing_profiles": ["amax"],
+    "repair": {
+      "action": "创建 ~/.codex/profiles/amax.config.toml",
+      "template": "model = \"qwen3.6-35b-nvfp4\"\nmodel_provider = \"amax\"\n\n[model_providers.amax]\nname = \"Amax vLLM\"\nenv_key = \"AMAX_API_KEY\"\nbase_url = \"http://<T1_NODE_IP_2>:8000/v1\"\nwire_api = \"chat_completions\"\n",
+      "verify": "codex -p amax exec \"echo test\" 返回 test 后超时消除"
+    }
+  },
+  "checks": {
+    "root_cause_is_missing_profile": true,
+    "priority_check_profiles_directory_first": true,
+    "provides_profile_file_template": true,
+    "verify_with_codex_profile_exec": true
+  }
+}

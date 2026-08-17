@@ -1,0 +1,26 @@
+{
+  "case_id": "case_002",
+  "blocked": true,
+  "hits": 3,
+  "hit_details": [
+    {"file": ".env", "type": "github_token", "line_excerpt": "GITHUB_TOKEN=ghp_****"},
+    {"file": "scripts/deploy.sh", "type": "phone_number", "line_excerpt": "phone=138****5678"},
+    {"file": "config/settings.json", "type": "known_secret", "matched_blacklist_entry": "s2k-HT-EXAMPLE-KEY-0000"}
+  ],
+  "actions": [
+    "拦截 git push，禁止推送",
+    "从工作区/暂存区移除 3 处凭证",
+    "将 s2k-HT-EXAMPLE-KEY-0000 确认留在 KNOWN_SECRETS 数组，并评估 ghp_ token 是否加入黑名单",
+    "轮换已暴露的 GitHub Token 与 API Key",
+    "如凭证已进入历史提交，用 git-filter-repo 重写并再次轮换",
+    "git ls-tree 二次验证凭证文件未再被追踪"
+  ],
+  "forbidden_actions": [
+    "git push --no-verify（未经人工确认不得跳过扫描）"
+  ],
+  "verification": {
+    "git_ls_tree_confirms_clean": true,
+    "credentials_rotated": true
+  },
+  "genes_applied": ["PRIV-001", "PRIV-002", "PRIV-005", "PRIV-006"]
+}

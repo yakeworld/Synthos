@@ -1,0 +1,26 @@
+{
+  "case_id": "001",
+  "expected_output": "桥接修复后 akne-query.sh bridge 输出：orphans=0, skill_connected=skill_total, synthos_paper_with_edges>0, bridge_path_source_category_paper=YES, bridge_path_concept_paper=YES；孤立论文已连接至正确 AKNE 分类，逆向边已显式创建",
+  "verification": [
+    {
+      "check": "先诊后治",
+      "expected": "修复前记录初始 orphans 数（如 N），修复后 orphans=0",
+      "method": "对比修复前后 akne-query.sh bridge 输出中 orphans 字段，确认从 N 降至 0"
+    },
+    {
+      "check": "逆向边创建",
+      "expected": "graph.json 中存在 source_category 和 category_paper 类型的边，方向正确",
+      "method": "在 graph.json edges 中 grep link_type=source_category 和 link_type=category_paper，确认存在且 src/tgt 方向正确（source_category: source→category）"
+    },
+    {
+      "check": "双向路径可达",
+      "expected": "source→category→paper 路径 2 跳可达",
+      "method": "对任一已连接论文，沿 category 边回溯至 source 节点，确认 2 跳内可达；或执行 akne-query.sh bridge 检查 bridge_path_source_category_paper=YES"
+    },
+    {
+      "check": "skill_connected=total",
+      "expected": "所有 Synthos 技能节点均有出边",
+      "method": "akne-query.sh bridge 输出中 skill_connected 等于 skill_total，无孤立技能"
+    }
+  ]
+}

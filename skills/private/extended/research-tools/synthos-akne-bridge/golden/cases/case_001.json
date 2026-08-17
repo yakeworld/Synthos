@@ -1,0 +1,26 @@
+{
+  "case_id": "001",
+  "description": "先诊后治：对含孤立论文的 AKNE graph.json 执行桥接修复，验证诊断→修复→逆向边→归零全流程",
+  "input": {
+    "graph_json": "含孤立论文（domain=其他，无出边）的 AKNE graph.json，关系值存于 link_type/key 字段，relation 为空字符串",
+    "papers_dir": "outputs/papers/*，含缺少 01-manuscript/06-references/07-quality 子目录的论文目录",
+    "query_mode": "bridge",
+    "diagnosis_first": true
+  },
+  "expected": {
+    "output_structure": {
+      "bridge_report": "dict: {synthos_paper_with_edges, skill_connected, skill_total, orphans, bridge_path_source_category_paper, bridge_path_concept_paper}",
+      "edges_created": "list: 新建的 paper_source_domain / source_category / category_paper 边",
+      "normalization": "dict: 规范化后的论文子目录结构"
+    },
+    "key_checks": [
+      "先诊后治（SYNT-001）：修复前运行 akne-query.sh bridge 诊断，记录初始 orphans 数",
+      "孤立论文按领域关键词手动映射（SYNT-006）：BPPV/眩晕→BPPV 分类，眼科/眼动→眼动研究",
+      "逆向边显式创建（SYNT-002）：source_category（source→category）、category_paper（category→paper）",
+      "source_category_membership 方向为 category→source，非 source→category（陷阱 5）",
+      "修复后 orphans=0、skill_connected=total、synthos_paper_with_edges>0",
+      "source→category→paper 双向路径可达（2 跳）"
+    ]
+  },
+  "weight": "critical"
+}

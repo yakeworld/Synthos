@@ -1,0 +1,32 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "report_type": "independent_specialized_report",
+    "citation_classification": [
+      {
+        "key": "Smith2020Benchmark",
+        "function": "基准",
+        "doi_validation": "verified",
+        "validation_chain": ["semantic_scholar:matched"],
+        "note": "正文中明确作为对比基准使用"
+      },
+      {
+        "key": "Zhang2019Method",
+        "function": "方法",
+        "doi_validation": "verified",
+        "validation_chain": ["semantic_scholar:matched"],
+        "note": "方法节引用其架构"
+      }
+    ],
+    "g5_integration_point": "已单独标注",
+    "inappropriate_citations": [],
+    "status": "PASS"
+  },
+  "verification": [
+    "每篇引文已归入 6 类功能（背景/基准/对比/方法/局限/支撑）之一，无无功能引用（CITA-001）",
+    "bib 中 DOI 已回源验证真实性（SS 命中即返回，未依赖条目数据）（CITA-002）",
+    "Crossref 查询字符串长度 ≤ 100 字符且未使用 format=bibtex（CITA-004）",
+    "验证报告独立于通用六域报告输出，G5 集成点单独标注（CITA-005）",
+    "每项验证记录执行结果、来源 API、失败原因与修复指引，可执行可记录可复现（CITA-006）"
+  ]
+}

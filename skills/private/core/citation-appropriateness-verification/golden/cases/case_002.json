@@ -1,0 +1,27 @@
+{
+  "case_id": "case_002",
+  "description": "错误路径：含无功能引用的 BibTeX 条目 + 含已知错误 DOI 的条目（Chakravarthy2021Deep 案例），验证失当引用标记与 DOI 回源修正",
+  "input": {
+    "bibtex_entries": [
+      {
+        "key": "random2019",
+        "title": "Miscellaneous notes on dataset construction",
+        "author": "Anonymous",
+        "year": "2019",
+        "doi": "10.5555/0000.00000",
+        "citation_context": "参考文献列表中保留，但正文未在任何段落中实际使用。"
+      },
+      {
+        "key": "Chakravarthy2021Deep",
+        "title": "Deep learning models for breast cancer classification from histopathological images",
+        "author": "Chakravarthy, B.L. et al.",
+        "year": "2021",
+        "doi": "10.1016/j.csbj.2021.05.025",
+        "citation_context": "在相关工作部分引用，用于说明乳腺癌深度学习分类背景。"
+      }
+    ],
+    "api_sources": {"semantic_scholar": "no_result", "crossref": "mismatch", "pubmed": "available"},
+    "context": {"known_case": "Chakravarthy2021Deep DOI 指向无关论文（Zhang et al., CDC48 segregase）"}
+  },
+  "weight": "critical"
+}

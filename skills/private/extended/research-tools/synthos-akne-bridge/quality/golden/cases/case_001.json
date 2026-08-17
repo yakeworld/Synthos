@@ -1,0 +1,15 @@
+{
+  "case_id": "quality_case_001",
+  "case_name": "valid_skill_path_routing",
+  "skill": "quality",
+  "path": "normal",
+  "genes": ["QUAL-001", "QUAL-003", "QUAL-006", "QUAL-007"],
+  "input": {
+    "skill_path": "skills/private/extended/research-tools/synthos-akne-bridge/kg-bridge",
+    "context": {
+      "requested_check": "golden_coverage",
+      "requested_by": "evolution_engine"
+    }
+  },
+  "notes": "有效技能路径 → 父级仅作目录索引，路由到 golden-test-methodology 子技能执行质量检查（验证清单第 8 项）。"
+}

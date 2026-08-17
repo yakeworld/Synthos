@@ -1,0 +1,21 @@
+{
+  "case_id": "case_002",
+  "description": "错误路径：query 无匹配（'量子纠缠退火'）+ 输入参数不完整（缺 query）——前者返回空列表附建议，后者返回错误状态码而非静默执行",
+  "input": {
+    "subcases": [
+      {
+        "id": "no_match",
+        "layer": "core",
+        "query": "量子纠缠退火",
+        "context": {"env": "synthos-core"}
+      },
+      {
+        "id": "missing_param",
+        "layer": "core",
+        "query": null,
+        "context": {}
+      }
+    ]
+  },
+  "weight": "critical"
+}

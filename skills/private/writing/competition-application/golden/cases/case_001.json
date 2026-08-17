@@ -1,0 +1,30 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：公立医院临床科研实验室三赛道待选，排除'数据基础设施'，标记'√已选'，三层叙事数据从 evolution-state.json 实时提取",
+  "input": {
+    "applicant_type": "公立医院临床科研实验室",
+    "tracks_available": ["医疗健康", "科技创新", "数据基础设施"],
+    "template": "template.docx",
+    "template_note": "含大量合并单元格表格；长文本段落（项目背景/解决方案等）紧跟标题段落；含模板说明文字'（介绍参赛项目的背景...）'",
+    "state_file": "/media/yakeworld/sda2/Synthos/evolution-state.json",
+    "narrative": {
+      "pains": "行业数据治理三大危机：质量危机（70% AI 论文有数据泄露）、可复现危机、选择困难（PIDD 近 50% Insulin=0）",
+      "solution": "Synthos 自主进化 AI 智能体架构，CRISP-DM Helix 可审计方法论 + G1-G7 质量门控",
+      "results": "量化指标须实时提取：cycle / score / version 来自 evolution-state.json"
+    }
+  },
+  "expected": {
+    "output_file": "申报书_已填写.docx",
+    "selected_track": "医疗健康",
+    "excluded_tracks": ["数据基础设施"],
+    "track_marker": "√已选：医疗健康",
+    "track_marker_count": 1,
+    "live_data_source": "evolution-state.json",
+    "live_fields": ["cycle", "score", "version"],
+    "merged_cell_spread": false,
+    "template_placeholders_cleared": true,
+    "long_text_vetted_via_json": true,
+    "paragraphs_follow_heading": true
+  },
+  "weight": "critical"
+}

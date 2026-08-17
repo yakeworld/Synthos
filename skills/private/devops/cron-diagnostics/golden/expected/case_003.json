@@ -1,0 +1,19 @@
+{
+  "id": "case_003",
+  "status": "error",
+  "result": {
+    "diagnosis": "3 个 no_agent 脚本任务同时 timeout（批量超时模式），且 ~/.codex/profiles/ 缺少脚本引用的 amax.config.toml → HIGH 级配置错误。根因是 codex profile 缺失（codex exec 引用缺失 profile 时静默超时），不是任务本身逻辑错误。",
+    "severity": "HIGH",
+    "affected_tasks": ["codex-exec-d8", "codex-exec-bib", "codex-exec-repair"],
+    "repair_order": [
+      {"step": 1, "action": "verify_codex_profiles", "detail": "ls ~/.codex/profiles/ 并补齐缺失的 amax.config.toml（模板：model_provider=amax, env_key=AMAX_API_KEY, base_url=http://<T1_NODE_IP_2>:8000/v1）"},
+      {"step": 2, "action": "verify_profile_connectivity", "detail": "codex -p amax exec \"echo test\" 返回 test 后再恢复任务"},
+      {"step": 3, "action": "batch_update", "detail": "profile 修复验证通过后，再对 3 个任务执行批量操作（恢复/重跑），禁止在未修复环境前批量操作"}
+    ]
+  },
+  "checks": {
+    "high_severity_flagged": true,
+    "root_cause_is_missing_codex_profile": true,
+    "fix_environment_before_batch_operation": true
+  }
+}

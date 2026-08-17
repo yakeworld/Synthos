@@ -1,0 +1,12 @@
+{
+  "case_id": "quality_case_002",
+  "case_name": "empty_skill_path_rejection",
+  "skill": "quality",
+  "path": "error",
+  "genes": ["QUAL-001", "QUAL-004", "QUAL-005", "QUAL-008"],
+  "input": {
+    "skill_path": "",
+    "context": {}
+  },
+  "notes": "空输入边界场景（QUAL-004）：必须按 QUAL-001 拒绝执行，错误信息含上下文与恢复建议（QUAL-005），不暴露内部状态（QUAL-008）。"
+}

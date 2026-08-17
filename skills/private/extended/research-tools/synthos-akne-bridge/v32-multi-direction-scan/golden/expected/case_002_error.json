@@ -1,0 +1,20 @@
+{
+  "case_id": "case_002",
+  "expected_status": "error",
+  "expected_output": {
+    "blocked": true,
+    "scan_executed": false,
+    "error": {
+      "code": "INPUT_VALIDATION_FAILED",
+      "violated_genes": ["SK-002", "SK-006"],
+      "message_must_include": [
+        "上下文：directions 为空且 Step 0 模式决策未完成（aligned_to_paper_pipeline_9_constraints=false）",
+        "恢复指引：先执行 Step 0 模式决策对齐 paper-pipeline 9 核心约束，再补全目标方向集合后重试"
+      ]
+    }
+  },
+  "verification_checks": [
+    "SK-002: 输入验证被触发且阻断后续扫描流程（scan_executed=false）",
+    "SK-006: 错误信息包含上下文与恢复指引"
+  ]
+}

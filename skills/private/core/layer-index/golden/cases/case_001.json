@@ -1,0 +1,10 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：layer=core, query='假设生成' 应命中 hypothesis-generation 及相关认知原子技能，输出符合 IO_CONTRACT 且条目与 SKILL.md 清单一致",
+  "input": {
+    "layer": "core",
+    "query": "假设生成",
+    "context": {"env": "synthos-core", "lang": "zh"}
+  },
+  "weight": "critical"
+}

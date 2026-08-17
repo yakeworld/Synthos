@@ -1,0 +1,48 @@
+{
+  "case_id": "case_001",
+  "output": {
+    "total_papers": 12,
+    "gate_distribution": {
+      "PASS": 3,
+      "CONDITIONAL": 5,
+      "FAIL": 4,
+      "PASS_pct": 25.0,
+      "CONDITIONAL_pct": 41.7,
+      "FAIL_pct": 33.3
+    },
+    "missing_stats": {
+      "no_tex": 3,
+      "no_pdf": 4,
+      "no_quality_score": 1,
+      "note": "缺失项单独统计，不混入主分布；p12 缺 quality_score 不计入质量分均值"
+    },
+    "quality_score_stats": {
+      "denominator": 11,
+      "mean": 61.8,
+      "median": 69
+    },
+    "core_assets": {
+      "criteria": "tier in (T1, T2) AND d10a_coverage >= 0.95",
+      "paper_ids": ["p01", "p02", "p03", "p04", "p12"],
+      "count": 5,
+      "pct_of_total": 41.7
+    },
+    "zombie_citations": {
+      "total": 47,
+      "by_paper": {
+        "p01": 2, "p02": 0, "p03": 5, "p04": 3, "p05": 1, "p06": 0,
+        "p07": 4, "p08": 18, "p09": 12, "p10": 2, "p11": 0, "p12": 0
+      },
+      "folded_into_quality_mean": false
+    },
+    "disposition": {
+      "need_major_revision": ["p08"],
+      "archive": ["p09", "p10", "p11"],
+      "note": "FAIL 论文逐篇带处置标签，无模糊地带；p08 有 .tex 可救，p09 无 .tex 无 PDF 质量分 31 直接归档"
+    },
+    "facts_vs_inferences": {
+      "factual": ["gate_distribution", "missing_stats", "core_assets", "zombie_citations"],
+      "inferred": []
+    }
+  }
+}

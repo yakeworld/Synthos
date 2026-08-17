@@ -1,0 +1,31 @@
+{
+  "case_id": "001",
+  "expected_output": "OpenML 响应 JSON 完整可解析；candidates 从 data.dataset 按 did 提取；quality_metrics 全为 float 类型（如 684.0 而非 '684.0'）；无 limit>200 请求；dedup_result 标记与现有论文重复的数据集",
+  "verification": [
+    {
+      "check": "分页安全（DATA-001）",
+      "expected": "请求参数 limit=50，未超过 200；响应 JSON 完整可解析",
+      "method": "检查实际请求 URL/参数含 limit=50（非 >200）；json.loads(response) 无异常"
+    },
+    {
+      "check": "端点正确（DATA-004）",
+      "expected": "使用 /api/v1/json/data/list/ 端点",
+      "method": "检查请求 URL 路径为 /api/v1/json/data/list/，非 /tag/ 或 /name/"
+    },
+    {
+      "check": "响应结构解析（DATA-006）",
+      "expected": "从 data.dataset 数组提取，以 did 字段为标识",
+      "method": "response['data']['dataset'] 存在且为 list；每个元素有 'did' 键（非 'id'）；提取的 did 值用于后续查询"
+    },
+    {
+      "check": "指标类型转换（DATA-002）",
+      "expected": "quality metrics 为 float 类型（如 684.0），非字符串 '684.0' 或 int",
+      "method": "对候选数据集的 quality 字段执行 isinstance(val, float) 检查；确认 float('684.0')==684.0 而非 int('684.0')==684"
+    },
+    {
+      "check": "交叉去重",
+      "expected": "候选数据集中已在 outputs/papers/ 使用的被标记",
+      "method": "将 candidates 中每个 did/name 与 outputs/papers/ 目录下的论文引用数据源做交集，标记重复项"
+    }
+  ]
+}

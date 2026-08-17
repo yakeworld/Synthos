@@ -1,0 +1,21 @@
+{
+  "case_id": "case_002",
+  "expected_status": "error",
+  "expected_output": {
+    "onboarding_plan_generated": false,
+    "memory_convergence_decision_written": false,
+    "error": {
+      "code": "UNCLASSIFIABLE_DIRECTION",
+      "violated_genes": ["GRAD-002"],
+      "message_must_include": [
+        "上下文：未分类方向名称「月球基地结构工程」无法按 Scope tiers（Core/Peripheral）归类",
+        "恢复指引：先补全/修正方向清单（将方向归入 Core 或 Peripheral，或移出研究范围）后重试"
+      ]
+    }
+  },
+  "verification_checks": [
+    "拒绝生成 onboarding 方案（onboarding_plan_generated=false）",
+    "报错中包含未分类方向的具体名称（准确优先，不模糊化）",
+    "未写入 Memory 收敛决策（避免把非法状态持久化）"
+  ]
+}

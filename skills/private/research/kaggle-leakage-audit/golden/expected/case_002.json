@@ -1,0 +1,35 @@
+{
+  "case_id": "case_002",
+  "skill": "kaggle-leakage-audit",
+  "description": "Golden Error 期望输出：检出跨分割泄漏（全局 SMOTE 先于分割），纠正「基线 F1」误报，补 precision/recall/AUC，多指标下结论",
+  "leakage_detection": {
+    "cross_split_leakage_detected": true,
+    "leak_source": "global_smote_before_split",
+    "misreported_as_baseline": true,
+    "correction": "该结果为泄漏变体 F1，非基线；基线须折内 SMOTE 重跑",
+    "gene": "KAGG-006"
+  },
+  "extreme_imbalance_handling": {
+    "positive_fraction": "0.17%",
+    "below_1_percent": true,
+    "f1_only_conclusion_forbidden": true,
+    "supplementary_metrics": ["precision", "recall", "AUC"],
+    "finding": "极度不平衡（0.17%）时所有模型 F1≈0，SMOTE 也无法挽救；结论由 precision/recall/AUC 支撑",
+    "gene": "KAGG-004"
+  },
+  "corrected_metrics_example": {
+    "f1_baseline": 0.0,
+    "precision": 0.15,
+    "recall": 0.05,
+    "auc": 0.55,
+    "note": "数值为示例口径，须由折内重跑复算得出"
+  },
+  "error": {
+    "type": "audit_conclusion_invalid",
+    "issues": [
+      "正样本 <1% 仅凭 F1≈0 下结论",
+      "全局 SMOTE 先于分割却报告为基线 F1"
+    ],
+    "genes_triggered": ["KAGG-004", "KAGG-006"]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "case_id": "case_001",
+  "blocked": false,
+  "hits": 0,
+  "hit_details": [],
+  "actions": [
+    "允许 git push 继续",
+    "git ls-tree HEAD -r --name-only 二次验证 skills/private/ 下无文件被追踪"
+  ],
+  "verification": {
+    "git_ls_tree_confirms_clean": true,
+    "tracked_private_skill_files": 0,
+    "gitignore_comment_consistent": true
+  },
+  "genes_applied": ["PRIV-001", "PRIV-004", "PRIV-006"]
+}

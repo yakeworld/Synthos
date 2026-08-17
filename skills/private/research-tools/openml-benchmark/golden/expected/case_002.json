@@ -1,0 +1,38 @@
+{
+  "case_id": "case_002",
+  "output": {
+    "processing": {
+      "raw_runs": 10,
+      "string_values_converted": true,
+      "invalid_runs_filtered": [
+        {"run_id": 1009, "reason": "f1=0.0 (accuracy=0.0)"},
+        {"run_id": 1010, "reason": "f1=0.0"}
+      ],
+      "valid_runs": 8,
+      "filter_reported_in_output": true,
+      "note": "必须显式报告 n=10 → 有效 n=8，不得静默丢弃"
+    },
+    "benchmark_table": {
+      "means_8_runs": {"accuracy": 0.7198, "f1_macro": 0.7206, "tolerance": 0.001},
+      "best_overall": {"classifier": "weka_rf", "f1_macro": 0.75, "rank": 1},
+      "ranking_method": "float() 转换后按数值降序，禁止字符串字典序"
+    },
+    "anti_patterns_rejected": [
+      {
+        "pattern": "字符串 value 未 float() 即参与均值/排序",
+        "consequence_if_uncaught": "字典序排序或拼接错误，均值不可复算",
+        "check": "所有 f1/accuracy 参与计算前为 float 类型"
+      },
+      {
+        "pattern": "f1=0 无效 run 混入均值",
+        "wrong_result_if_uncaught": {"mean_f1": 0.5765, "mean_acc": 0.6058, "n": 10},
+        "correct_result": {"mean_f1": 0.7206, "mean_acc": 0.7198, "n": 8},
+        "check": "有效 n=8 与 wrong n=10 的差异必须在报告中注明"
+      }
+    ],
+    "rejections": [
+      {"run_id": 1009, "action": "filtered from mean/ranking", "reason": "f1=0"},
+      {"run_id": 1010, "action": "filtered from mean/ranking", "reason": "f1=0"}
+    ]
+  }
+}

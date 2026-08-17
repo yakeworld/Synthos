@@ -1,0 +1,25 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "no_match": {
+      "output_type": "list[dict]",
+      "skill_list": [],
+      "suggestion": "core 层未找到与 '量子纠缠退火' 匹配的技能。建议：检查关键词拼写、换用英文关键词（如 'annealing'）或浏览完整 88 技能清单。",
+      "status": "PASS"
+    },
+    "missing_param": {
+      "status_code": "error",
+      "error": "输入参数不完整：query 缺失（IO_CONTRACT 要求 layer: str, query: str, context: dict 均必填）",
+      "context": "layer=core 已提供，query 为 null；执行核心操作前参数校验失败（LAYE-002）",
+      "recovery": "请补充 query 参数后重试；若意图为浏览全层清单，可使用空检索专用入口而非本接口",
+      "execution_attempted": false,
+      "status": "PASS"
+    }
+  },
+  "verification": [
+    "无匹配时 skill_list 为空列表（非报错、非编造条目），并附含上下文的检索建议（异常约束）",
+    "query 缺失时返回错误状态码与错误信息，未静默执行核心操作（RULES 输入约束 + LAYE-002）",
+    "错误信息包含上下文（缺失参数名）与恢复建议（如何补充/替代入口）",
+    "空结果与错误路径均记录执行日志，可复现（验证清单 LAYE-003）"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "id": "case_002",
+  "status": "success",
+  "result": {
+    "breakpoint": "发送阶段：MEDIA 附件上传被飞书静默丢弃（不显示附件、不报错）",
+    "root_cause": "PDF 文件 33MB 超过飞书 MEDIA 附件 10MB 上限，超限附件静默失败（FEIS-004）；路径 /media/... 为稳定路径且 ls -la 确认文件存在，排除路径错误（FEIS-005）",
+    "evidence": [
+      "ls -la: 文件存在，大小 34587648 字节 ≈ 33MB > 10MB 上限（FEIS-004/005）",
+      "路径在 /media/ 而非 /tmp/（避开 Hermes MEDIA 处理器不可访问目录）",
+      "无 API 报错 + 附件不显示 = 典型超限静默失败特征"
+    ],
+    "repair": [
+      "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile=/media/yakeworld/sda2/paper/report_v2_screen.pdf /media/yakeworld/sda2/paper/report_v2.pdf",
+      "确认压缩后文件 <=10MB（典型 33MB → ~2.4MB）",
+      "以 MEDIA:/media/yakeworld/sda2/paper/report_v2_screen.pdf（稳定路径）重新发送",
+      "用户确认附件在飞书正常显示"
+    ]
+  },
+  "checks": {
+    "path_verified_with_ls_la_first": true,
+    "size_over_10mb_detected": true,
+    "gs_screen_compression_prescribed": true,
+    "resend_with_stable_path": true,
+    "diagnosis_traceable_to_evidence": true
+  }
+}

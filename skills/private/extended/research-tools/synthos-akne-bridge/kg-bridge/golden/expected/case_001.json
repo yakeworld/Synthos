@@ -1,0 +1,27 @@
+{
+  "case_id": "kg-bridge_case_001",
+  "status": "success",
+  "resolved_entity": {
+    "name": "BPPV",
+    "method": "exact",
+    "score": 5.0,
+    "fallback_level": 0
+  },
+  "neighbors": [
+    {"name": "良性阵发性位置性眩晕", "relation": "zh_en_alias", "depth": 1},
+    {"name": "前庭康复", "relation": "treatment_of", "depth": 1},
+    {"name": "Dix-Hallpike 试验", "relation": "diagnosed_by", "depth": 1},
+    {"name": "Epley 手法", "relation": "treatment_of", "depth": 1},
+    {"name": "耳石复位", "relation": "mechanism", "depth": 1}
+  ],
+  "results_count": 5,
+  "results_limit": 20,
+  "bfs_layers": [1],
+  "bridge_audit": {
+    "papers_connected": 148,
+    "skills_connected": 25,
+    "orphans": 0,
+    "fully_connected": true
+  },
+  "latency_s": 0.4
+}

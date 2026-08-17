@@ -1,0 +1,14 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "pdfs_downloaded": 12,
+    "pdf_magic_verified": true,
+    "pdfinfo_title_verified": true,
+    "diagnose_stages": ["7_source_search", "doi_resolution", "12_channel_download_test"]
+  },
+  "verification": {
+    "pdf_magic": "each file in output_dir/*.pdf starts with b'%PDF-'",
+    "pdfinfo_title": "pdfinfo title matches the record metadata (no stream/placeholder)",
+    "diagnose": "literature diagnose emits structured JSON with all three stages"
+  }
+}

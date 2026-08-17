@@ -1,0 +1,27 @@
+{
+  "id": "case_001",
+  "name": "standard_diagnosis_15_tasks",
+  "category": "normal",
+  "weight": "critical",
+  "input": {
+    "trigger": "direct",
+    "tasks": [
+      {"id": "job_01", "name": "heartbeat-30m", "enabled": true, "last_status": "ok", "no_agent": false, "model": "qwen3.6-35b-nvfp4", "provider": "amax", "deliver": "origin", "schedule": "every 30m"},
+      {"id": "job_02", "name": "paper-d8-scan", "enabled": true, "last_status": "ok", "no_agent": false, "model": "deepseek-chat", "provider": "deepseek", "deliver": "origin", "schedule": "0 9 * * *"},
+      {"id": "job_03", "name": "bib-standardize", "enabled": true, "last_status": "ok", "no_agent": false, "model": "deepseek-chat", "provider": "deepseek", "deliver": "origin", "schedule": "0 10 * * *"},
+      {"id": "job_04", "name": "paper-quality-gate", "enabled": true, "last_status": "ok", "no_agent": false, "model": "deepseek-chat", "provider": "deepseek", "deliver": "origin", "schedule": "0 11 * * *"},
+      {"id": "job_05", "name": "evolution-cycle", "enabled": true, "last_status": "ok", "no_agent": false, "model": "deepseek-chat", "provider": "deepseek", "deliver": "origin", "schedule": "0 3 * * *"},
+      {"id": "job_06", "name": "d10a-repair", "enabled": true, "last_status": "ok", "no_agent": false, "model": "deepseek-chat", "provider": "deepseek", "deliver": "origin", "schedule": "0 14 * * *"},
+      {"id": "job_07", "name": "lit-monitor", "enabled": true, "last_status": "ok", "no_agent": false, "model": "deepseek-chat", "provider": "deepseek", "deliver": "origin", "schedule": "0 */4 * * *"},
+      {"id": "job_08", "name": "lit-harvest", "enabled": true, "last_status": "ok", "no_agent": false, "model": "deepseek-chat", "provider": "deepseek", "deliver": "origin", "schedule": "0 20 * * *"},
+      {"id": "job_09", "name": "one-shot-onboard", "enabled": true, "last_status": "ok", "no_agent": true, "model": null, "provider": null, "deliver": "origin", "schedule": "once"},
+      {"id": "job_10", "name": "legacy-sync", "enabled": false, "last_status": "ok", "no_agent": true, "model": null, "provider": null, "deliver": "origin", "schedule": "0 2 * * *"},
+      {"id": "job_11", "name": "legacy-audit", "enabled": false, "last_status": "ok", "no_agent": true, "model": null, "provider": null, "deliver": "origin", "schedule": "0 4 * * *"},
+      {"id": "job_12", "name": "probe-full", "enabled": true, "last_status": "error", "no_agent": false, "model": "deepseek-chat", "provider": "deepseek", "deliver": "local", "schedule": "0 6 * * *"},
+      {"id": "job_13", "name": "heartbeat-backup", "enabled": true, "last_status": "ok", "no_agent": false, "model": "qwen3.6-35b-nvfp4", "provider": "amax", "deliver": "origin", "schedule": "every 30m"},
+      {"id": "job_14", "name": "monthly-report", "enabled": true, "last_status": "ok", "no_agent": true, "model": null, "provider": null, "deliver": "origin", "schedule": "0 9 1 * *"},
+      {"id": "job_15", "name": "script-daily-cleanup", "enabled": true, "last_status": "ok", "no_agent": true, "model": null, "provider": null, "deliver": "origin", "schedule": "0 5 * * *"}
+    ]
+  },
+  "genes": ["CRON-001", "CRON-002", "CRON-004"]
+}

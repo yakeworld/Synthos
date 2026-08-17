@@ -1,0 +1,32 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "output_file": "申报书_已填写.docx",
+    "field_check_report": {
+      "track_selection": "√已选：医疗健康",
+      "track_marker_unique": true,
+      "excluded_track": "数据基础设施",
+      "financial_fields_required": false,
+      "live_data": {
+        "source": "evolution-state.json",
+        "cycle": "extracted_live",
+        "score": "extracted_live",
+        "version": "extracted_live"
+      },
+      "merged_cell_spread_detected": false,
+      "template_placeholders_remaining": 0,
+      "long_text_written_via_json": true,
+      "long_text_follows_heading": true
+    }
+  },
+  "verification": [
+    "赛道排除核验（COMP-001）：申报主体为公立医院临床科研实验室，'数据基础设施'被排除（需填营收/融资/Token 财务数据），最终选定'医疗健康'",
+    "赛道标记唯一（COMP-002）：填充后 DOCX 全文检索'√已选'命中数 == 1，无财务字段待填",
+    "三层叙事完整（COMP-003）：痛点→方案→成效三层结构齐备，各层均引用具体数据（70% 数据泄露、PIDD 近 50% Insulin=0 等）",
+    "凡数必源（COMP-006，P0）：cycle/score/version 三个关键数字与 evolution-state.json 实时提取值逐项一致（claimed == measured），无凭记忆或旧材料填写的数字",
+    "合并单元格无扩散（COMP-004）：写入合并单元格组后，组内非锚点单元格不携带相同长文本，错误扩散计数 == 0",
+    "长文本 JSON 中转（COMP-005）：长文本先写入 JSON 再由脚本按段落索引填充，规避 Python 编码问题",
+    "段落索引正确（COMP-007）：长文本段落紧跟标题段落，打印全部段落核对 idx 通过",
+    "模板残留已清除（COMP-008）：全文检索'（介绍参赛项目的背景'命中数 == 0"
+  ]
+}

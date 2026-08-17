@@ -1,0 +1,37 @@
+{
+  "case_id": "case_001",
+  "type": "normal",
+  "description": "K230 眼动追踪训练管线审计（实战案例重放）",
+  "input": {
+    "project": {
+      "name": "k230-eye-tracking",
+      "datasets": [
+        {"name": "K230", "frames": 901, "resolution": "800x480"},
+        {"name": "OpenEDS", "frames": 976, "resolution": "800x480"}
+      ],
+      "pipeline_steps": [
+        "瞳孔定位", "区域生长", "椭圆精修", "眼球中心标定", "3D能量蛇", "SAM眼裂", "Seg Mask"
+      ],
+      "model": {
+        "backbone": "MobileNetV2",
+        "head": "T3EM",
+        "training_schedule": [30, 20, 20, 20],
+        "total_epochs": 90
+      },
+      "training_log": {
+        "file": "references/k230-pipeline-audit-2026-06-13.md",
+        "metrics": {
+          "val_dice": {"value": 0.8955, "source": "training_log:epoch90/val"},
+          "centrality_error_px": {"value": 1.63, "source": "training_log:epoch90/val"}
+        }
+      },
+    "known_gaps_candidate": [
+      "单目3D眼球追踪精度理论极限未验证",
+      "SAM vs 传统CV性能边界未定义",
+      "不同人种解剖学参数泛化性未评估",
+      "时序信息增益未量化",
+      "混合训练泛化性增益未量化"
+    ]
+    }
+  }
+}

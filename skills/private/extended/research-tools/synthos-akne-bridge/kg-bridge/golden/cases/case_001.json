@@ -1,0 +1,24 @@
+{
+  "case_id": "kg-bridge_case_001",
+  "case_name": "known_entity_quick_query",
+  "skill": "kg-bridge",
+  "path": "normal",
+  "genes": ["KGB-001", "KGB-003", "KGB-004"],
+  "input": {
+    "query": "BPPV",
+    "mode": "quick",
+    "script": "akne-query.sh graph",
+    "depth": 1,
+    "max_results": 20,
+    "latency_budget_s": 1.0
+  },
+  "graph_state": {
+    "nodes": 1475,
+    "edges": 5868,
+    "types": 42,
+    "vectors": 0,
+    "papers_connected": 148,
+    "skills_connected": 25
+  },
+  "notes": "端到端验证场景 1 + 4（Step 5）：已知实体 BPPV 应返回恰好 5 个 depth=1 邻居；bridge 审计 0 孤儿全连接。"
+}

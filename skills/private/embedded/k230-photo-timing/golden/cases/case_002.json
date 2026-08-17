@@ -1,0 +1,14 @@
+{
+  "case_id": "case_002",
+  "name": "yuv420sp_frame_save_failure",
+  "type": "error",
+  "input": {
+    "display_binding": {"layer": "LAYER_VIDEO1", "channel": "chn0", "format": "YUV420SP"},
+    "snapshot_target_channel": "chn0",
+    "operation": "img.save('/sdcard/photo.jpg')"
+  },
+  "expected_checks": [
+    "SK-001 YUV420SP is the only format supported by bind_layer",
+    "SK-002 YUV420SP frames cannot be saved via img.save()"
+  ]
+}

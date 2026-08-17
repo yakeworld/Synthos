@@ -1,0 +1,21 @@
+{
+  "case_id": "case_003",
+  "skill": "kaggle-leakage-audit",
+  "description": "期望输出：确认平衡/多类数据集不受不平衡泄漏影响，跳过深度审计并说明原因",
+  "dataset_assessment": {
+    "class_imbalanced": false,
+    "distribution": "多类分布均匀",
+    "affected_by_imbalance_leakage": false,
+    "gene": "KAGG-005"
+  },
+  "audit_scope": {
+    "imbalance_leakage_deep_audit": "skipped",
+    "skip_reason": "数据集类别平衡/多类分布均匀，不受此类不平衡泄漏影响",
+    "general_correctness": "预处理仍严格在 CV 折内执行（KAGG-006）"
+  },
+  "output": {
+    "leakage_kill_table": "N/A（跳过）",
+    "conclusion": "无不平衡泄漏风险；保持折内预处理即可"
+  },
+  "error": null
+}

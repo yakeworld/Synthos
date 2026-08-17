@@ -1,0 +1,20 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "routing": null,
+    "user_prompt": "该请求（整理桌面文件）未匹配三个分流目标（每日智报 / Cron运维 / Self-check），请明确意图：若为定时任务管理请说明 cron 相关需求，若为系统检查请说明检查项。本技能不猜测执行。",
+    "audit": {
+      "boundary_violation": true,
+      "violation": "SKILL.md 内直接实现文件归档自动化逻辑（未分流即执行）",
+      "verdict": "FAIL — 违反 REDIRECT 边界（DAIL-001），验证清单第 2 条不通过",
+      "fix": "删除 SKILL.md 内的实现代码，保留纯重定向入口；归档需求应路由到相应技能或由用户另行处理"
+    },
+    "status": "PASS"
+  },
+  "verification": [
+    "未匹配三个目标的请求返回提示用户明确意图的文案，routing 为 null，未猜测执行（DAIL-005）",
+    "检测出 SKILL.md 内嵌实现逻辑的边界违反并标记 FAIL（验证清单第 2 条）",
+    "违反时给出修复指引（删除内嵌实现，保留重定向入口）",
+    "审计结论与 Golden Error 定义一致：在本技能文件内直接实现日常自动化逻辑 → 违反 REDIRECT 边界"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "case_002",
+  "status": "error",
+  "result": {
+    "install_package": "@openai/codex",
+    "install_command": "npm i -g @openai/codex",
+    "rejected_packages": ["@openai/codexec", "@codexapi/codexclaude"],
+    "rejection_reasons": {
+      "@openai/codexec": "旧包名，已从 npm registry 移除（CODE-001）",
+      "@codexapi/codexclaude": "第三方付费打包器，会覆盖 vLLM 配置/修改 ~/.codex/config.toml 指向付费端点，拒绝安装（CODE-002）"
+    },
+    "config_not_pointing_to_paid_endpoint": true
+  },
+  "checks": {
+    "corrected_to_official_package": true,
+    "rejects_removed_package_name": true,
+    "rejects_paid_packager": true,
+    "config_not_pointing_to_paid_endpoint": true
+  }
+}

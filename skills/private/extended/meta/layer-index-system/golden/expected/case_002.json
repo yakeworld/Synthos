@@ -1,0 +1,12 @@
+{
+  "case_id": "case_002",
+  "skill_list": null,
+  "error": {
+    "rejected": true,
+    "rule": "LAYE-001",
+    "message": "输入参数不完整：缺失必填字段 'layer'（类型应为 str）",
+    "context": "layer-index-system 查询调用，query='python', context={}",
+    "recovery_suggestion": "请提供有效的 layer 名称（如 'devops', 'mlops', 'research', 'meta'）。参考系统基础设施层目录获取有效 layer 列表。",
+    "missing_fields": ["layer"]
+  }
+}

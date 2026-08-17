@@ -1,0 +1,57 @@
+{
+  "case_id": "case_001",
+  "skill": "kaggle-leakage-audit",
+  "description": "Golden Output：泄漏杀伤对比表 + 规律总结（全局 SMOTE 为主要杀伤源；不平衡度越高/模型越复杂杀伤越大；全局标准化几乎无害），RF/XGB 偏差单独标注",
+  "leakage_kill_table": {
+    "rows": [
+      {
+        "config": "Helix（基线，折内预处理）",
+        "f1": 0.68,
+        "verdict": "基线（正确）"
+      },
+      {
+        "config": "ImputeLeak（全局 impute + scale 先于分割）",
+        "f1_delta_vs_baseline": "+0.00",
+        "verdict": "几乎无影响（全局标准化几乎无害）"
+      },
+      {
+        "config": "SMOTELeak（全局 SMOTE 先于分割）",
+        "f1_delta_vs_baseline": "+0.11",
+        "verdict": "🔴 主要杀伤来源"
+      },
+      {
+        "config": "SevereLeak（SMOTE + impute + scale 全局）",
+        "f1_delta_vs_baseline": "+0.11",
+        "verdict": "🔴 与纯 SMOTE 一致（impute/scale 贡献可忽略）"
+      }
+    ],
+    "note": "F1 数值为示例口径；结论由基线与变体 F1 对比复算得出，非编造"
+  },
+  "leakage_findings": [
+    {
+      "source": "global_smote_before_split",
+      "gene": "KAGG-001",
+      "severity": "severe",
+      "label": "主要泄漏源"
+    },
+    {
+      "source": "global_impute_scale_before_split",
+      "gene": "KAGG-002",
+      "severity": "minor",
+      "label": "几乎无害"
+    }
+  ],
+  "model_complexity_annotation": {
+    "random_forest_f1_delta": "+0.09",
+    "xgboost_f1_delta": "+0.11",
+    "separate_annotation": true,
+    "gene": "KAGG-003"
+  },
+  "rule_summary": [
+    "不平衡度越高 → 泄漏杀伤越大",
+    "模型越复杂（RF/XGB）→ 受害越深",
+    "只有全局 SMOTE 造成实质性泄漏；全局标准化几乎无害"
+  ],
+  "preprocessing_in_fold": true,
+  "error": null
+}

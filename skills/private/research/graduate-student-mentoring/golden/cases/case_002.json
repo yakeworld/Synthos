@@ -1,0 +1,30 @@
+{
+  "case_id": "case_002",
+  "skill": "graduate-student-mentoring",
+  "description": "Golden Error：学生卡数据清洗 bug 已 2.5 小时未上报，且提交 200 行未修改的 AI 生成代码 → 触发 GRAD-003（卡二时即问）与 GRAD-004（未修改记为未掌握）",
+  "input": {
+    "incident": {
+      "stuck_issue": "数据清洗 bug",
+      "stuck_hours": 2.5,
+      "reported_to_advisor": false
+    },
+    "ai_code_submission": {
+      "lines": 200,
+      "personally_modified": false,
+      "modification_count": 0
+    }
+  },
+  "expected_checks": {
+    "critical": [
+      "卡住 2.5h > 2h 且未上报 → 触发 GRAD-003（卡二时即问），必须立即上报导师",
+      "AI 生码未修改 → 记为「未掌握」，不算有效产出（GRAD-004）"
+    ],
+    "high": [
+      "导师用 Hermes 调用 Synthos 技能库现有代码模块修复，而非重写环境（GRAD-007）",
+      "要求学生逐行解释并亲自修改至少 1 处逻辑后重跑"
+    ],
+    "medium": [
+      "问题在上报后当日解决，无「独自死磕耗尽时间」记录"
+    ]
+  }
+}

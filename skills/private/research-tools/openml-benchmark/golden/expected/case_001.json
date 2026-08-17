@@ -1,0 +1,49 @@
+{
+  "case_id": "case_001",
+  "output": {
+    "processing": {
+      "raw_runs": 55,
+      "invalid_runs_filtered": [
+        {"run_id": 9099, "reason": "f1=0.0 (accuracy=0.0)"},
+        {"run_id": 9098, "reason": "f1=0.0 (accuracy>0)"},
+        {"run_id": 9097, "reason": "evaluation 缺失 (None)"}
+      ],
+      "valid_runs": 55,
+      "string_values_converted": true,
+      "note": "本 case 的 openml_runs 列表已为有效样本；3 个无效 run 单独列于 openml_runs_invalid，不参与均值/排序"
+    },
+    "benchmark_table": {
+      "means_55_runs": {"accuracy": 0.6745, "f1_macro": 0.6982, "tolerance": 0.001},
+      "best_overall": {"classifier": "Weka AttributeSelectedClassifier (CfsSubsetEval+BestFirst+Bagging_JRip)", "f1_macro": 0.8026, "accuracy": 0.7995, "not_portable_to_sklearn": true},
+      "weka_rf": {"classifier": "WEKA RandomForest I=200", "f1_macro": 0.7648, "accuracy": 0.7669},
+      "weka_bayesnet": {"classifier": "WEKA BayesNet K2", "f1_macro": 0.7507, "accuracy": 0.7526},
+      "our_methods": [
+        {"name": "CatBoost (Helix)", "accuracy": 0.7067, "f1_macro": 0.7759, "rank_among_openml_valid": 2},
+        {"name": "GBC (Helix)", "accuracy": 0.6868, "f1_macro": 0.7629, "rank_among_openml_valid": 3}
+      ],
+      "rank_rule": "rank = 有效样本中 f1_macro 严格大于本方法 f1 的 run 数 + 1（不含本方法自身）"
+    },
+    "attribution_order": [
+      "WEKA 模型实现差异（默认超参、剪枝策略、树分裂规则）",
+      "不做 SMOTE（PIDD 268:500 不平衡不严重，SMOTE 引入噪声）",
+      "不做特征标准化（树模型/贝叶斯模型对尺度不敏感）",
+      "0→NaN 预处理为正向（ΔF1=+0.018，已消融）",
+      "最佳模型使用特征选择（CfsSubsetEval+BestFirst），不可移植到 sklearn"
+    ],
+    "framework_caveat": {
+      "stated": true,
+      "content": "OpenML Top 方法为 Weka 特有组合，不可移植到 sklearn；Top 排名不得直接作为核心论点"
+    },
+    "preprocessing_notes": {
+      "smote_applied": false,
+      "standardization_applied": false,
+      "zero_replacer_delta_f1": 0.018,
+      "zero_replacer_f1_low_main_cause": false
+    },
+    "rejections": [
+      {"run_id": 9099, "action": "filtered from mean/ranking", "reason": "f1=0"},
+      {"run_id": 9098, "action": "filtered from mean/ranking", "reason": "f1=0"},
+      {"run_id": 9097, "action": "filtered from mean/ranking", "reason": "evaluation 缺失"}
+    ]
+  }
+}

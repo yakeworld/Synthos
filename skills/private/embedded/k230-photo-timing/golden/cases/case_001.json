@@ -1,0 +1,18 @@
+{
+  "case_id": "case_001",
+  "name": "throttle_gating_verification",
+  "type": "normal",
+  "input": {
+    "sensor": {"constructor": "Sensor(id=0, 320, 240, fps=30)", "channels_configured": ["chn0"]},
+    "display_binding": {"layer": "LAYER_VIDEO1", "channel": "chn0", "format": "YUV420SP"},
+    "snapshot_save_channel": {"channel": "chn2", "format": "RGB565"},
+    "photo_interval_ms": [10, 100],
+    "main_loop_iterations": 209595
+  },
+  "expected_checks": [
+    "SK-001 display binding uses YUV420SP",
+    "SK-002 save path uses RGB565 channel not YUV frame",
+    "SK-003 Sensor(id=N) constructor configures chn0 only",
+    "throttle gate limits snapshots to 1000/millis regardless of main loop speed"
+  ]
+}

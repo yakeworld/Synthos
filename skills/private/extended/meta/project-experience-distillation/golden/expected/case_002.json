@@ -1,0 +1,19 @@
+{
+  "case_id": "case_002",
+  "reusable_patterns": [
+    "聚类检索（按主题 N 方向 × 1 次）替代逐篇 M 次检索 → 约束类型: 批量操作必须维度聚合，检索次数与主题数成正比而非条目数"
+  ],
+  "reflection_answer": "逐篇检索的复杂度是 O(条目数×检索成本)，聚类后降为 O(主题数×检索成本)。当条目数 >> 主题数时（88 篇 / 5 主题 = 17.6:1），聚合带来数量级加速。本质约束：同质批量操作的瓶颈在维度数而非实例数。",
+  "skill_update": {
+    "action": "extend_existing",
+    "target_skill": "paper-literature-supplement",
+    "section": "Operational Steps",
+    "diff_summary": "新增批量模式：DOI 覆盖率修复时按主题聚类（5 方向 × 1 次检索），非逐篇 80 次"
+  },
+  "abstraction_check": {
+    "project_names_removed": true,
+    "paths_removed": true,
+    "dates_removed": true,
+    "constraint_type_identified": true
+  }
+}

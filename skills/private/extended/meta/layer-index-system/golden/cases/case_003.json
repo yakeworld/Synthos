@@ -1,0 +1,10 @@
+{
+  "case_id": "case_003",
+  "name": "边界：空 query",
+  "type": "error",
+  "input": {
+    "layer": "devops",
+    "query": "",
+    "context": {}
+  }
+}

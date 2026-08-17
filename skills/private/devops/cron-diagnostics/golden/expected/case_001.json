@@ -1,0 +1,38 @@
+{
+  "id": "case_001",
+  "status": "success",
+  "result": {
+    "report": {
+      "total_tasks": 15,
+      "agent_tasks": 9,
+      "script_tasks": 6,
+      "paid_tasks": 6,
+      "free_tasks": 3,
+      "paused_tasks": 2,
+      "error_tasks": 1
+    },
+    "overlap_groups": [
+      {"group": "论文管线", "tasks": ["paper-d8-scan", "bib-standardize", "paper-quality-gate", "d10a-repair"], "suggestion": "merge"},
+      {"group": "监控", "tasks": ["lit-monitor", "lit-harvest"], "suggestion": "merge"},
+      {"group": "心跳", "tasks": ["heartbeat-30m", "heartbeat-backup"], "suggestion": "remove_duplicate"}
+    ],
+    "configuration_issues": [
+      {"severity": "HIGH", "task": "probe-full", "issue": "last_status=error 且 deliver=local 不投递到聊天"},
+      {"severity": "MEDIUM", "task": "probe-full", "issue": "非 no_agent 但 deliver=local，结果静默丢失"}
+    ],
+    "optimizations": [
+      {"task": "one-shot-onboard", "action": "remove", "reason": "已完成的一次性任务"},
+      {"task": "legacy-sync", "action": "remove", "reason": "已暂停且无活跃使用"},
+      {"task": "legacy-audit", "action": "remove", "reason": "已暂停且无活跃使用"},
+      {"task": "heartbeat-backup", "action": "remove", "reason": "与 heartbeat-30m 功能重叠"},
+      {"task": "probe-full", "action": "update", "changes": {"deliver": "origin"}, "reason": "修复 deliver 配置并排查 error 状态"}
+    ],
+    "expected_after_optimization": {"total_tasks": 10, "paid_tasks": 4, "paused_tasks": 0}
+  },
+  "checks": {
+    "counts_cross_consistent_with_input": true,
+    "each_optimization_has_action": true,
+    "paid_tasks_after_optimization_in_4_6_range": true,
+    "overlap_groups_detected": true
+  }
+}

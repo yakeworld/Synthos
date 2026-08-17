@@ -1,0 +1,38 @@
+{
+  "case_id": "case_001",
+  "skill": "graduate-student-mentoring",
+  "description": "Golden Output：周进度达标，方向锚定未发散，AI 生码有可定位学生修改 → 判定为有效进展",
+  "progress_verdict": {
+    "is_effective_progress": true,
+    "measurement": "以代码计周",
+    "new_runnable_code_lines": 42,
+    "figures_produced": 2,
+    "tables_produced": 1,
+    "gene": "GRAD-002"
+  },
+  "direction_check": {
+    "anchored_to_five_pillars": true,
+    "drifted": false,
+    "gene": "GRAD-001"
+  },
+  "ai_code_check": {
+    "personally_modified": true,
+    "located_modification": true,
+    "modification_desc": "数据加载边界条件（空帧/越界）处理",
+    "mastery": "已掌握",
+    "gene": "GRAD-004"
+  },
+  "blocker_check": {
+    "stuck_over_2h": false,
+    "report_required": false,
+    "gene": "GRAD-003"
+  },
+  "self_check_items_passed": [
+    "本周新增可运行代码行数已记录",
+    "本周图/Table 产出已记录",
+    "理解代码每一行",
+    "无卡住超 2 小时未上报问题",
+    "AI 生成代码已亲自修改"
+  ],
+  "error": null
+}

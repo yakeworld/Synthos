@@ -1,0 +1,37 @@
+{
+  "case_id": "case_001",
+  "skill": "kaggle-leakage-audit",
+  "description": "Golden Input：类别不平衡数据集（记录正负比）+ 基线配置（所有预处理在 CV 折内）+ 三个泄漏变体（ImputeLeak/SMOTELeak/SevereLeak：全局 impute/scale/SMOTE 先于分割），RF 与 XGB 各一轮",
+  "input": {
+    "dataset": {
+      "name": "kaggle_binary_imbalanced",
+      "class_imbalanced": true,
+      "positive_ratio": 0.18,
+      "neg_pos_ratio_recorded": true
+    },
+    "configurations": {
+      "baseline": "所有预处理（Impute/Scale/SMOTE）在 CV 折内部执行",
+      "leak_variants": {
+        "ImputeLeak": "全局 impute + scale 先于分割",
+        "SMOTELeak": "全局 SMOTE 先于分割",
+        "SevereLeak": "SMOTE + impute + scale 全局先于分割"
+      }
+    },
+    "models": ["RandomForest", "XGBoost"],
+    "metrics_required": ["F1", "model_complexity_gradient"]
+  },
+  "expected_checks": {
+    "critical": [
+      "所有预处理严格在 CV 折内部执行（基线），无任何步骤跨越数据分割边界（KAGG-006）",
+      "输出泄漏杀伤对比表：基线 vs ImputeLeak/SMOTELeak/SevereLeak 各变体 F1 差异（KAGG-007）",
+      "审计结论标注全局 SMOTE 为主要杀伤来源（KAGG-001）"
+    ],
+    "high": [
+      "数据集类别不平衡度已记录（正负比）",
+      "高复杂度模型（RF/XGB）的泄漏偏差单独标注，与低复杂度模型结果区分（KAGG-003）"
+    ],
+    "medium": [
+      "规律总结：不平衡度越高/模型越复杂杀伤越大；全局标准化几乎无害（ImputeLeak 几乎无影响）"
+    ]
+  }
+}

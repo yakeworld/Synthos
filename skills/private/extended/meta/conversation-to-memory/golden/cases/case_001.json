@@ -1,0 +1,10 @@
+{
+  "case_id": "case_001",
+  "name": "正常提取：lit-import 去重入库",
+  "type": "normal",
+  "input": {
+    "session_transcript": "Tool calls (12): 1) read bibtex files 2) parse keys 3) deduplicate by sort order 4) remove 12 duplicate entries 5) write merged file 6) verify count 7) git status 8) commit 9) push 10) verify remote 11) update manifest 12) confirm 0 duplicates. Outcome: lit-import dedup complete, 0 duplicates remaining, pipeline stable.",
+    "current_memory": "lit-import path=/media/yakeworld/sda2/Synthos/tools/lit-import (OUTDATED: was /media/yakeworld/sda/Synthos/tools/lit-import). User prefers BibTeX key sorting for dedup. vLLM port 8000 on node3. Paper P141 ODE tuning baseline alpha=0.65. Cron job synthos-daily uses /usr/bin/python3.12 venv. Memory-optimization is sole entry for memory mgmt. Repo path: ~/Synthos is symlink to /media/yakeworld/sda2/Synthos. Task router entry point. Evolution cycle 72 active. DSH version 2.20. Qwen3.5 is text-only model (not VL). Pima CRISP-DM refs: Shearer 2000, Wirth-Hipp 2000. Feishu bot cli_abc123 configured. Kanban workspace at /tmp/kanban. ODE homeostasis S_pre baseline ~0.45. Playwright chromium at /opt/pw. MiKTeX pdflatex 2024. K230 ampy raw REPL unavailable, use Pyboard class.",
+    "memory_target_chars": 2200
+  }
+}

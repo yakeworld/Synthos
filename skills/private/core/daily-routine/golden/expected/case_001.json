@@ -1,0 +1,16 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "routing": "research/daily-intelligence-briefing",
+    "action": "skill_view(name='research/daily-intelligence-briefing')",
+    "execution_result": null,
+    "user_hint": "已分流至每日智报技能（arXiv/HN/PubMed 三源情报），由该技能执行采集",
+    "status": "PASS"
+  },
+  "verification": [
+    "routing 严格等于 research/daily-intelligence-briefing（DAIL-002）",
+    "本技能仅执行分流判断，不产出日常自动化执行结果（execution_result 为 null）（DAIL-001）",
+    "重定向仅通过 skill_view 加载目标技能，未修改目标技能内容（DAIL-006）",
+    "SKILL.md 文件保持重定向入口，未内嵌任何情报采集实现逻辑（验证清单第 2 条）"
+  ]
+}

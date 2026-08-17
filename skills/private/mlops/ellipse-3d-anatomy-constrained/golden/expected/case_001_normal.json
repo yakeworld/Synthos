@@ -1,0 +1,44 @@
+{
+  "case_id": "case_001",
+  "expected_status": "success",
+  "expected_output": {
+    "frame_1": {
+      "cos_alpha": 0.625,
+      "alpha_rad": 0.895385,
+      "normal_n": [0.23069, -0.745759, 0.625],
+      "normal_is_unit": true,
+      "optical_axis_line": "cos(0.3)*(x-1.0) + sin(0.3)*(y-2.0) = 0"
+    },
+    "frame_2": {
+      "cos_alpha": 0.5625,
+      "alpha_rad": 0.973359,
+      "normal_n": [0.593108, -0.576035, 0.5625],
+      "normal_is_unit": true,
+      "optical_axis_line": "cos(0.8)*(x+2.0) + sin(0.8)*(y+1.0) = 0"
+    },
+    "anatomical_constraints_applied": {
+      "R_eyeball": 10.0,
+      "d_reference": "sqrt(3)*R_iris",
+      "degrees_of_freedom": "2 -> 0"
+    },
+    "iris_center_3d": [1.0, 2.0, 4.658794],
+    "iris_center_note": "z1 = sqrt(R_eyeball^2 - d^2) = sqrt(100 - 78.29403) = 4.658794（实数，d=8.848482 为虹膜中心到眼球中心 XY 平面距离）",
+    "eye_center_2d": [3.614905, -6.453278],
+    "eye_center_3d": [3.614905, -6.453278, 0.0],
+    "convergence": {
+      "converged": true,
+      "iterations": "≤ max_iterations",
+      "residual": "< 1e-6"
+    },
+    "rodrigues_matrix_M": "3x3 正交矩阵，M = I + [v]_x + [v]_x^2 / (1 + O·O')，满足 M^T·M = I 且 det(M)=+1"
+  },
+  "verification_checks": [
+    "验证清单第1条: a≥b（8.0≥5.0, 8.0≥4.5）且 cos(alpha)=b/a ∈ [-1,1]（0.625, 0.5625）",
+    "验证清单第2条: 法向量 n=[sinα·sinβ, -sinα·cosβ, cosα] 单位化（‖n‖=1）且方向正确",
+    "验证清单第3条: 解剖约束 R_eyeball=2·R_iris=10.0、d=√3·R_iris 已代入，自由度 2→0",
+    "验证清单第4条: z1=4.658794 为实数（根号内 100-78.29403=21.70597 ≥ 0）",
+    "验证清单第5条: 眼球中心由两帧光轴投影直线交点求解 (3.614905, -6.453278)",
+    "验证清单第6条: 多帧迭代（先估计→计算→收敛）消除初始值依赖",
+    "验证清单第7条: Rodrigues 矩阵 M 正交（M^T·M=I, det=+1）"
+  ]
+}

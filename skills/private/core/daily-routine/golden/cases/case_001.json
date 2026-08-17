@@ -1,0 +1,9 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：每日智报请求（arXiv/PubMed 三源情报）应重定向至 research/daily-intelligence-briefing，且本技能不产出执行结果",
+  "input": {
+    "routine_request": "生成今日 arXiv/PubMed 情报",
+    "context": {"trigger": "manual", "sources_requested": ["arxiv", "pubmed"]}
+  },
+  "weight": "critical"
+}

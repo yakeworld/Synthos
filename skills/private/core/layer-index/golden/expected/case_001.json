@@ -1,0 +1,25 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "output_type": "list[dict]",
+    "skill_list": [
+      {
+        "name": "hypothesis-generation",
+        "description": "Directory index for hypothesis-generation: hypothesis-generation"
+      },
+      {
+        "name": "data-driven-hypothesis",
+        "description": "从公开数据出发→数据探索→文献调研→发现gap→提出可验证假设。与\"先有假设再找数据\"相反，适合公开数据集方向探索。"
+      }
+    ],
+    "reported": true,
+    "status": "PASS"
+  },
+  "verification": [
+    "首位命中 hypothesis-generation（query '假设生成' 精确匹配认知原子）",
+    "输出符合 IO_CONTRACT 签名: skill_list: list[dict]，每项含 name/description 字段",
+    "skill_list 中所有技能名与 SKILL.md 'Skills in this Layer (88 total)' 清单逐一对应，无失效条目、无混入其他层技能",
+    "结果已保存并报告，闭环质量保障（LAYE-003）",
+    "执行前已校验 layer/query/context 三参数完整（LAYE-002）"
+  ]
+}

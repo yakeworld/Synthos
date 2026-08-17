@@ -1,0 +1,31 @@
+{
+  "case_id": "002",
+  "expected_output": "审计结果：D8=0, D10a=0.0%, orphan_citations=[62个标签], zombie_entries=[], severity=severe；报错列出全部 62 个孤儿标签（Aw2013, Balatsouras2012, ...）并给出补齐 .bib 的恢复建议",
+  "verification": [
+    {
+      "check": "D8=0 重症标记（CITA-002）",
+      "expected": "D8=0，severity=severe，优先处理",
+      "method": "确认 paper_dir 下无 .bib 文件（ls *.bib 为空），审计输出 D8=0 且 severity=severe"
+    },
+    {
+      "check": "孤儿标签完整列出",
+      "expected": "orphan_citations 包含全部 62 个标签，无遗漏",
+      "method": "提取 main.tex 中所有 \\cite 标签（62 个），与 bib 条目集（空）做差集，确认 orphan_citations 长度=62 且包含 Aw2013, Balatsouras2012 等首尾标签"
+    },
+    {
+      "check": "D10a=0.0%",
+      "expected": "无 bib 条目时匹配率为 0.0%",
+      "method": "D10a = |C∩B| / |C| * 100 = 0/62 * 100 = 0.0%，验证输出一致"
+    },
+    {
+      "check": "恢复建议含上下文",
+      "expected": "错误信息含具体恢复步骤：创建 references.bib，添加 62 个缺失条目",
+      "method": "检查 recovery_suggestion 字段是否包含：(1) 缺失条目数 62；(2) 建议创建/补齐 .bib 文件；(3) 可参考的文献来源（Crossref DOI 检索等）"
+    },
+    {
+      "check": "分级报告格式（CITA-006）",
+      "expected": "输出按重症/中等/轻症/混合分级，本篇归入重症",
+      "method": "检查审计报告是否含 '严重问题 (D8=0)' 分类且本篇在其中，D8/D10a 数值明确"
+    }
+  ]
+}

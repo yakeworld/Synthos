@@ -1,0 +1,24 @@
+{
+  "case_id": "case_002",
+  "skill": "llm-inference-os",
+  "description": "Golden Error：用户请求「用 Qwen3.5 跑图片分类」——模型名无 VL 后缀 → 判定纯文本，必须拒绝图片任务并给出含上下文与恢复建议的错误信息",
+  "input": {
+    "request": "用 Qwen3.5 跑图片分类",
+    "model_name": "Qwen3.5",
+    "workload": "image_classification",
+    "requires_image_capability": true
+  },
+  "expected_checks": {
+    "critical": [
+      "按 LLM-001 检查模型名无 VL/Coder 后缀 → 判定 Qwen3.5 为纯文本模型，拒绝图片任务（不得执行）",
+      "按 LLM-002 推荐 Qwen2.5-VL 或 Qwen3-VL 系列以满足图片能力"
+    ],
+    "high": [
+      "错误信息包含上下文背景（为何拒绝：纯文本模型不支持图片输入）与恢复建议（换用 VL 系列）",
+      "拒绝理由与推荐型号记录在案且可溯源（LLM-005）"
+    ],
+    "medium": [
+      "引用 llm-model-selection 的 Qwen 型号辨析作为推荐依据"
+    ]
+  }
+}

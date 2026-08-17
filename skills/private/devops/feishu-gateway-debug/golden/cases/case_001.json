@@ -1,0 +1,22 @@
+{
+  "id": "case_001",
+  "name": "vllm_404_misattributed_to_feishu",
+  "category": "normal",
+  "weight": "critical",
+  "input": {
+    "error_msg": "API call failed (404 Not Found) — 用户在飞书报告消息无响应",
+    "session_id": "agent:main:feishu:dm:oc_a1b2c3d4e5f6",
+    "platform": "feishu",
+    "evidence": {
+      "agent_log_line": "API call #1 failed: HTTP 404 Not found, provider=custom base_url=http://192.168.64.21:8000/v1 model=qwen3.6-35b-nvfp4",
+      "gateway_log_timeline": [
+        "21:25:25 Received raw message",
+        "21:25:32 Flushing text batch agent:main:feishu:dm:oc_a1b2c3d4e5f6",
+        "21:25:37 inbound message: platform=feishu"
+      ],
+      "gateway_log_missing_lines": ["response ready", "Sending response"],
+      "curl_v1_models_output": "HTTP 404 empty body"
+    }
+  },
+  "genes": ["FEIS-001", "FEIS-002", "FEIS-003"]
+}

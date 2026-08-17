@@ -1,0 +1,16 @@
+{
+  "id": "case_002",
+  "name": "rejects_removed_package_and_paid_packager",
+  "category": "error",
+  "weight": "high",
+  "input": {
+    "request": "npm i -g @openai/codexec 安装 Codex；顺便把 @codexapi/codexclaude 也装上以获得付费端点",
+    "context": {
+      "os": "linux",
+      "has_codex": false,
+      "requested_packages": ["@openai/codexec", "@codexapi/codexclaude"],
+      "codex_config_path": "~/.codex/config.toml"
+    }
+  },
+  "genes": ["CODE-001", "CODE-002"]
+}

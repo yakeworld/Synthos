@@ -1,0 +1,19 @@
+{
+  "case_id": "case_001",
+  "skill_list": [
+    {
+      "name": "cron-system-maintenance",
+      "description": "Cron任务运维：诊断error状态、修复脚本缺陷、验证连接性。覆盖cron job list分析、错误分类、脚本语法验证、prompt更新、vLLM多节点负载均衡。"
+    },
+    {
+      "name": "devops",
+      "description": "DevOps运维 — Cron任务管理、看板编排、worker管理。"
+    }
+  ],
+  "meta": {
+    "layer": "devops",
+    "query": "cron",
+    "match_count": 2,
+    "io_contract_compliant": true
+  }
+}

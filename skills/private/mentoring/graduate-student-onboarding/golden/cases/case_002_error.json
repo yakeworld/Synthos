@@ -1,0 +1,28 @@
+{
+  "case_id": "case_002",
+  "skill": "graduate-student-onboarding",
+  "type": "error",
+  "description": "错误路径：研究方向清单含一个无法按 Scope tiers 归类的方向，应拒绝生成 onboarding 方案，报出未分类方向名称并要求先补全方向清单（GRAD-002 边界清晰前置）",
+  "input": {
+    "request": "为新研究生生成 onboarding 方案：研究方向分级 + 5 个 Cron 任务配置 + 收敛决策写入 Memory",
+    "context": {
+      "student_research_directions": [
+        {
+          "name": "5 pillars 公开数据集分析",
+          "description": "基于 5 pillars 公开数据集的研究分析"
+        },
+        {
+          "name": "月球基地结构工程",
+          "description": "无法按 Scope tiers（Core/Peripheral）归类的方向"
+        }
+      ],
+      "cron_tasks": [
+        "autonomous-core-researcher",
+        "paper-repair",
+        "paper-quality-review",
+        "paper-layer-b-review",
+        "literature-monitor"
+      ]
+    }
+  }
+}

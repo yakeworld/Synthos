@@ -1,0 +1,41 @@
+{
+  "case_id": "case_002",
+  "output": {
+    "status": "partial_pass_with_rejections",
+    "rejections": [
+      {
+        "rejected_value": 55.3,
+        "field": "quality_score_mean",
+        "reason": "无源数字：6 篇中 3 篇（q04/q05/q06）无 quality_score，均值 55.3 无法由任何可执行数据源复算（违反 RESE-004 凡数必源）",
+        "action": "拒绝该均值；改报有效分母=3 的实测均值 74.3，并显式注明分母排除 q04/q05/q06"
+      },
+      {
+        "rejected_value": null,
+        "field": "d10a_coverage (q05, q06)",
+        "reason": "D10a 为 null 不得计为 0 或计入 D10a≥95% 分母",
+        "action": "D10a≥95% 统计分母 = 4（q01/q02/q03/q04），其中 3 篇达标，占比 75.0%；分母单独注明"
+      }
+    ],
+    "measured_stats": {
+      "total_papers": 6,
+      "gate_distribution": {"PASS": 1, "CONDITIONAL": 3, "FAIL": 2},
+      "quality_score_mean": {"value": 74.3, "denominator": 3},
+      "d10a_ge_95": {"value_pct": 75.0, "denominator": 4, "met_ids": ["q01", "q02", "q04"]},
+      "core_assets": {"criteria": "tier in (T1, T2) AND d10a_coverage >= 0.95", "paper_ids": ["q01", "q02", "q04"], "count": 3}
+    },
+    "zombie_citations": {"total": 21, "folded_into_quality_mean": false},
+    "error_report": {
+      "includes_context": true,
+      "missing_context": ["q04: 无 quality_score", "q05: 无 quality_score 且 D10a 为 null", "q06: 无 .tex/PDF/quality_score 且 D10a 为 null"],
+      "recovery_suggestions": [
+        "对 q04/q05/q06 补跑 quality-gate 生成 quality_score",
+        "对 q05/q06 补做 D10a 引用覆盖率审计",
+        "上游报告 55.3 标记为 unverified，禁止引用"
+      ]
+    },
+    "facts_vs_inferences": {
+      "factual": ["measured_stats 全部字段"],
+      "inferred": []
+    }
+  }
+}

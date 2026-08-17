@@ -1,0 +1,28 @@
+{
+  "case_id": "case_002",
+  "type": "error_path",
+  "description": "无源指标陷阱：训练日志缺失 Dice/CErr，上游声称 Dice=0.91（违反 TRAI-001）",
+  "input": {
+    "project": {
+      "name": "demo-cv-pipeline",
+      "datasets": [
+        {"name": "synthetic", "frames": 500, "resolution": "640x480"}
+      ],
+      "pipeline_steps": ["阈值分割", "轮廓提取", "掩码生成"],
+      "model": {
+        "backbone": "none",
+        "head": "rule-based",
+        "training_schedule": [],
+        "total_epochs": 0
+      },
+      "training_log": {
+        "file": "logs/train_partial.log",
+        "available_fields": ["epoch", "loss"],
+        "metrics": {}
+      },
+      "upstream_claims": [
+        {"metric": "val_dice", "value": 0.91, "source": "口头汇报（无日志支持）"}
+      ]
+    }
+  }
+}

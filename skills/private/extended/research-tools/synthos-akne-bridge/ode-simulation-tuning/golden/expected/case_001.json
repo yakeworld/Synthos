@@ -1,0 +1,36 @@
+{
+  "case_id": "ode-tuning_case_001",
+  "status": "pass",
+  "equilibration": {
+    "D": 0.0,
+    "steps": 1000,
+    "baseline_valid": true
+  },
+  "ablation": {
+    "coupling_removed": ["flow-stress", "E->tau", "E production via flow"],
+    "kept": ["homeostatic decay", "direct loading"],
+    "ratio": 5.81,
+    "threshold": 2.0,
+    "passed": true
+  },
+  "metrics": {
+    "R2_A": 0.997,
+    "R2_E": 0.997,
+    "AUC": 0.93,
+    "ablation_ratio": 5.81,
+    "MAPE_R_pct": 0.7,
+    "MAPE_method": "curve_fit_residual",
+    "accuracy": 0.92,
+    "fit_function": "exponential_rise",
+    "bounds_check": "no_boundary_clamp"
+  },
+  "metrics_passed": 9,
+  "metrics_total": 9,
+  "all_pass": true,
+  "sobol_ranking": [
+    {"term": "D (driving stimulus)", "sensitivity": 0.41, "rank": 1},
+    {"term": "R<->D feedback", "sensitivity": 0.265, "rank": 2},
+    {"term": "eps (coupling strength)", "sensitivity": 0.18, "rank": 3}
+  ],
+  "reproducible": true
+}

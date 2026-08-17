@@ -1,0 +1,30 @@
+{
+  "case_id": "001",
+  "description": "全健康正常路径：pima-crispdm 论文库（.tex + .bib，33 个 bib 条目）引用完整性审计",
+  "input": {
+    "paper_dir": "outputs/papers/pima-crispdm/",
+    "tex_files": ["pima-crispdm.tex"],
+    "bib_files": ["references.bib"],
+    "bib_entry_count": 33,
+    "trigger": "质量门审查前（CITA-005：先审后编，门在编前）"
+  },
+  "expected": {
+    "output_structure": {
+      "d8": "int: bib 条目数",
+      "d10a": "float: \\cite↔\\bib 匹配率（百分比）",
+      "orphan_citations": "list[str]: 有 \\cite 无 bib 条目的标签",
+      "zombie_entries": "list[str]: 有 bib 条目未被任何 \\cite 引用的标签",
+      "severity": "enum[healthy, mild, moderate, severe]",
+      "health": "bool"
+    },
+    "key_checks": [
+      "D8=33（bib 条目数，CITA-001 双向匹配）",
+      "D10a=100%（所有 \\cite 标签均有对应 bib 条目）",
+      "孤儿引用=0（无有引无条）",
+      "僵尸条目=0（无有条无引）",
+      "severity=healthy，health=true",
+      "D8/D10a 已喂入 L0.5 数据诚实门（CITA-005）"
+    ]
+  },
+  "weight": "critical"
+}

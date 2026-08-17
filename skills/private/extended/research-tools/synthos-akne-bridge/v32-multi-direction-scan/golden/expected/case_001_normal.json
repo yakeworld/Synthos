@@ -1,0 +1,53 @@
+{
+  "case_id": "case_001",
+  "expected_status": "success",
+  "expected_output": {
+    "step0_mode_decision_passed": true,
+    "scan_results": [
+      {
+        "direction": "Periodic Alternating Nystagmus PINN",
+        "pubmed_targeted_query": "executed",
+        "openalex_broad_cited": "executed",
+        "status": "one_of[ABSOLUTE_WHITE, has_competition, in_progress]",
+        "score_range": [0, 1]
+      },
+      {
+        "direction": "Nystagmus Neutral Deviation PINN",
+        "pubmed_targeted_query": "executed",
+        "openalex_broad_cited": "executed",
+        "status": "one_of[ABSOLUTE_WHITE, has_competition, in_progress]",
+        "score_range": [0, 1]
+      },
+      {
+        "direction": "Smooth Pursuit PINN",
+        "pubmed_targeted_query": "executed",
+        "openalex_broad_cited": "executed",
+        "status": "one_of[ABSOLUTE_WHITE, has_competition, in_progress]",
+        "score_range": [0, 1]
+      },
+      {
+        "direction": "Vestibular Compensation ODE",
+        "pubmed_targeted_query": "executed",
+        "openalex_broad_cited": "executed",
+        "status": "one_of[ABSOLUTE_WHITE, has_competition, in_progress]",
+        "score_range": [0, 1]
+      },
+      {
+        "direction": "Cupula Deflection PINN",
+        "pubmed_targeted_query": "executed",
+        "openalex_broad_cited": "executed",
+        "status": "one_of[ABSOLUTE_WHITE, has_competition, in_progress]",
+        "score_range": [0, 1]
+      }
+    ],
+    "process_verification": {
+      "no_cycle245_vhit_drift": true,
+      "format_conforms_to_io_contract": true
+    }
+  },
+  "verification_checks": [
+    "SK-001: Step 0 模式决策已执行且对齐 paper-pipeline 9 核心约束",
+    "SK-004: 各方向中间步骤无 vhit 漂移（参照 Cycle 245 案例）",
+    "SK-005: 输出为各方向结果表，格式符合 IO_CONTRACT"
+  ]
+}

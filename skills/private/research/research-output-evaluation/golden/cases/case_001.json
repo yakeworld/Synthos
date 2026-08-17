@@ -1,0 +1,21 @@
+{
+  "case_id": "case_001",
+  "type": "normal",
+  "description": "12 篇论文目录的多维交叉验证评估（.tex 9 / PDF 8 / quality_score 11）",
+  "input": {
+    "papers": [
+      {"id": "p01", "has_tex": true, "has_pdf": true, "quality_score": 94, "gate": "PASS", "tier": "T1", "d10a_coverage": 0.97, "zombie_citations": 2},
+      {"id": "p02", "has_tex": true, "has_pdf": true, "quality_score": 91, "gate": "PASS", "tier": "T1", "d10a_coverage": 0.96, "zombie_citations": 0},
+      {"id": "p03", "has_tex": true, "has_pdf": true, "quality_score": 88, "gate": "PASS", "tier": "T2", "d10a_coverage": 0.95, "zombie_citations": 5},
+      {"id": "p04", "has_tex": true, "has_pdf": false, "quality_score": 82, "gate": "CONDITIONAL", "tier": "T2", "d10a_coverage": 0.95, "zombie_citations": 3},
+      {"id": "p05", "has_tex": true, "has_pdf": true, "quality_score": 75, "gate": "CONDITIONAL", "tier": "T2", "d10a_coverage": 0.93, "zombie_citations": 1},
+      {"id": "p06", "has_tex": false, "has_pdf": true, "quality_score": 69, "gate": "CONDITIONAL", "tier": "T3", "d10a_coverage": 0.95, "zombie_citations": 0},
+      {"id": "p07", "has_tex": true, "has_pdf": true, "quality_score": 55, "gate": "CONDITIONAL", "tier": "T3", "d10a_coverage": 0.90, "zombie_citations": 4},
+      {"id": "p08", "has_tex": true, "has_pdf": false, "quality_score": 42, "gate": "FAIL", "tier": "T4", "d10a_coverage": 0.80, "zombie_citations": 18},
+      {"id": "p09", "has_tex": false, "has_pdf": false, "quality_score": 31, "gate": "FAIL", "tier": "T4", "d10a_coverage": 0.70, "zombie_citations": 12},
+      {"id": "p10", "has_tex": true, "has_pdf": true, "quality_score": 28, "gate": "FAIL", "tier": "T4", "d10a_coverage": 0.65, "zombie_citations": 2},
+      {"id": "p11", "has_tex": false, "has_pdf": true, "quality_score": 25, "gate": "FAIL", "tier": "T4", "d10a_coverage": 0.60, "zombie_citations": 0},
+      {"id": "p12", "has_tex": true, "has_pdf": false, "quality_score": null, "gate": "CONDITIONAL", "tier": "T2", "d10a_coverage": 0.95, "zombie_citations": 0}
+    ]
+  }
+}

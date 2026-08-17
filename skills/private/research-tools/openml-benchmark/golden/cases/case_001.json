@@ -1,0 +1,444 @@
+{
+  "case_id": "case_001",
+  "type": "normal",
+  "description": "PIDD 任务 OpenML 基准对比：55 原始 run（3 无效、47 个 str value）+ Helix CatBoost/GBC",
+  "input": {
+    "task": "pidd",
+    "api_fetch": {
+      "limit": 500,
+      "max_time": 30
+    },
+    "our_methods": [
+      {
+        "name": "CatBoost (Helix)",
+        "accuracy": 0.7067,
+        "f1_macro": 0.7759,
+        "f1_weighted": 0.7756,
+        "framework": "sklearn"
+      },
+      {
+        "name": "GBC (Helix)",
+        "accuracy": 0.6868,
+        "f1_macro": 0.7629,
+        "f1_weighted": 0.7464,
+        "framework": "sklearn"
+      }
+    ],
+    "openml_runs": [
+      {
+        "run_id": 9001,
+        "classifier": "Weka AttributeSelectedClassifier (CfsSubsetEval+BestFirst+Bagging_JRip)",
+        "f1_macro": 0.8026,
+        "accuracy": 0.7804,
+        "valid": true,
+        "note": "Weka 特有特征选择组合"
+      },
+      {
+        "run_id": 9002,
+        "classifier": "WEKA RandomForest I=200",
+        "f1_macro": 0.7648,
+        "accuracy": 0.7478,
+        "valid": true
+      },
+      {
+        "run_id": 9003,
+        "classifier": "WEKA BayesNet K2",
+        "f1_macro": 0.7507,
+        "accuracy": 0.7335,
+        "valid": true
+      },
+      {
+        "run_id": 9004,
+        "classifier": "liblinear",
+        "f1_macro": 0.7211,
+        "accuracy": 0.6959,
+        "valid": true
+      },
+      {
+        "run_id": 9005,
+        "classifier": "xgboost",
+        "f1_macro": 0.7385,
+        "accuracy": 0.7111,
+        "valid": true
+      },
+      {
+        "run_id": 9006,
+        "classifier": "random_forest(sklearn)",
+        "f1_macro": 0.741,
+        "accuracy": 0.7197,
+        "valid": true
+      },
+      {
+        "run_id": 9007,
+        "classifier": "gradient_boosting(sklearn)",
+        "f1_macro": 0.7355,
+        "accuracy": 0.7129,
+        "valid": true
+      },
+      {
+        "run_id": 9008,
+        "classifier": "svm_rbf",
+        "f1_macro": 0.719,
+        "accuracy": 0.6929,
+        "valid": true
+      },
+      {
+        "run_id": 9009,
+        "classifier": "naive_bayes",
+        "f1_macro": 0.685,
+        "accuracy": 0.6714,
+        "valid": true
+      },
+      {
+        "run_id": 9010,
+        "classifier": "logistic_regression",
+        "f1_macro": 0.7022,
+        "accuracy": 0.6849,
+        "valid": true
+      },
+      {
+        "run_id": 9011,
+        "classifier": "adaboost",
+        "f1_macro": 0.715,
+        "accuracy": 0.6899,
+        "valid": true
+      },
+      {
+        "run_id": 9012,
+        "classifier": "knn_k5",
+        "f1_macro": 0.672,
+        "accuracy": 0.6619,
+        "valid": true
+      },
+      {
+        "run_id": 9013,
+        "classifier": "decision_tree",
+        "f1_macro": 0.665,
+        "accuracy": 0.6529,
+        "valid": true
+      },
+      {
+        "run_id": 9014,
+        "classifier": "mlp_hidden100",
+        "f1_macro": 0.6905,
+        "accuracy": 0.6759,
+        "valid": true
+      },
+      {
+        "run_id": 9015,
+        "classifier": "qda",
+        "f1_macro": 0.653,
+        "accuracy": 0.6419,
+        "valid": true
+      },
+      {
+        "run_id": 9016,
+        "classifier": "lda",
+        "f1_macro": 0.648,
+        "accuracy": 0.6369,
+        "valid": true
+      },
+      {
+        "run_id": 9017,
+        "classifier": "cart",
+        "f1_macro": 0.6595,
+        "accuracy": 0.6449,
+        "valid": true
+      },
+      {
+        "run_id": 9018,
+        "classifier": "extra_trees",
+        "f1_macro": 0.7422,
+        "accuracy": 0.721,
+        "valid": true
+      },
+      {
+        "run_id": 9019,
+        "classifier": "lightgbm",
+        "f1_macro": 0.745,
+        "accuracy": 0.7238,
+        "valid": true
+      },
+      {
+        "run_id": 9020,
+        "classifier": "catboost_baseline",
+        "f1_macro": 0.7398,
+        "accuracy": 0.7179,
+        "valid": true
+      },
+      {
+        "run_id": 9021,
+        "classifier": "random_forest(smote)",
+        "f1_macro": 0.728,
+        "accuracy": 0.7064,
+        "valid": true
+      },
+      {
+        "run_id": 9022,
+        "classifier": "gradient_boosting(smote)",
+        "f1_macro": 0.731,
+        "accuracy": 0.7094,
+        "valid": true
+      },
+      {
+        "run_id": 9023,
+        "classifier": "svm_rbf(std)",
+        "f1_macro": 0.708,
+        "accuracy": 0.6859,
+        "valid": true
+      },
+      {
+        "run_id": 9024,
+        "classifier": "naive_bayes_gaussian",
+        "f1_macro": 0.683,
+        "accuracy": 0.6699,
+        "valid": true
+      },
+      {
+        "run_id": 9025,
+        "classifier": "logistic(l2)",
+        "f1_macro": 0.701,
+        "accuracy": 0.6839,
+        "valid": true
+      },
+      {
+        "run_id": 9026,
+        "classifier": "adaboost(stumps50)",
+        "f1_macro": 0.713,
+        "accuracy": 0.6884,
+        "valid": true
+      },
+      {
+        "run_id": 9027,
+        "classifier": "knn_k10",
+        "f1_macro": 0.669,
+        "accuracy": 0.6569,
+        "valid": true
+      },
+      {
+        "run_id": 9028,
+        "classifier": "decision_tree(ccp0.01)",
+        "f1_macro": 0.662,
+        "accuracy": 0.6499,
+        "valid": true
+      },
+      {
+        "run_id": 9029,
+        "classifier": "mlp_hidden50",
+        "f1_macro": 0.688,
+        "accuracy": 0.6729,
+        "valid": true
+      },
+      {
+        "run_id": 9030,
+        "classifier": "qda_reg",
+        "f1_macro": 0.651,
+        "accuracy": 0.6389,
+        "valid": true
+      },
+      {
+        "run_id": 9031,
+        "classifier": "lda_reg",
+        "f1_macro": 0.646,
+        "accuracy": 0.6349,
+        "valid": true
+      },
+      {
+        "run_id": 9032,
+        "classifier": "cart_pruned",
+        "f1_macro": 0.657,
+        "accuracy": 0.6429,
+        "valid": true
+      },
+      {
+        "run_id": 9033,
+        "classifier": "extra_trees_n200",
+        "f1_macro": 0.74,
+        "accuracy": 0.7189,
+        "valid": true
+      },
+      {
+        "run_id": 9034,
+        "classifier": "lightgbm_tuned",
+        "f1_macro": 0.743,
+        "accuracy": 0.7219,
+        "valid": true
+      },
+      {
+        "run_id": 9035,
+        "classifier": "catboost_tuned",
+        "f1_macro": 0.746,
+        "accuracy": 0.7249,
+        "valid": true
+      },
+      {
+        "run_id": 9036,
+        "classifier": "random_forest(smote_std)",
+        "f1_macro": 0.725,
+        "accuracy": 0.7039,
+        "valid": true
+      },
+      {
+        "run_id": 9037,
+        "classifier": "gradient_boosting(smote_std)",
+        "f1_macro": 0.728,
+        "accuracy": 0.7069,
+        "valid": true
+      },
+      {
+        "run_id": 9038,
+        "classifier": "svm_rbf(std_smote)",
+        "f1_macro": 0.704,
+        "accuracy": 0.6819,
+        "valid": true
+      },
+      {
+        "run_id": 9039,
+        "classifier": "naive_bayes(std)",
+        "f1_macro": 0.681,
+        "accuracy": 0.6679,
+        "valid": true
+      },
+      {
+        "run_id": 9040,
+        "classifier": "logistic(l2_std)",
+        "f1_macro": 0.699,
+        "accuracy": 0.6819,
+        "valid": true
+      },
+      {
+        "run_id": 9041,
+        "classifier": "adaboost(std)",
+        "f1_macro": 0.637,
+        "accuracy": 0.5987,
+        "valid": true
+      },
+      {
+        "run_id": 9042,
+        "classifier": "knn_k5(std)",
+        "f1_macro": 0.624,
+        "accuracy": 0.5867,
+        "valid": true
+      },
+      {
+        "run_id": 9043,
+        "classifier": "decision_tree(std)",
+        "f1_macro": 0.626,
+        "accuracy": 0.5897,
+        "valid": true
+      },
+      {
+        "run_id": 9044,
+        "classifier": "mlp_hidden100(std)",
+        "f1_macro": 0.6605,
+        "accuracy": 0.6217,
+        "valid": true
+      },
+      {
+        "run_id": 9045,
+        "classifier": "qda(std)",
+        "f1_macro": 0.709,
+        "accuracy": 0.6692,
+        "valid": true
+      },
+      {
+        "run_id": 9046,
+        "classifier": "lda(std)",
+        "f1_macro": 0.6975,
+        "accuracy": 0.6577,
+        "valid": true
+      },
+      {
+        "run_id": 9047,
+        "classifier": "cart(std)",
+        "f1_macro": 0.6595,
+        "accuracy": 0.6222,
+        "valid": true
+      },
+      {
+        "run_id": 9048,
+        "classifier": "extra_trees(std_n200)",
+        "f1_macro": 0.654,
+        "accuracy": 0.6167,
+        "valid": true
+      },
+      {
+        "run_id": 9049,
+        "classifier": "lightgbm(std_tuned)",
+        "f1_macro": 0.6635,
+        "accuracy": 0.6257,
+        "valid": true
+      },
+      {
+        "run_id": 9050,
+        "classifier": "catboost(std_tuned)",
+        "f1_macro": 0.685,
+        "accuracy": 0.6462,
+        "valid": true
+      },
+      {
+        "run_id": 9051,
+        "classifier": "random_forest(std_smote2)",
+        "f1_macro": 0.689,
+        "accuracy": 0.6502,
+        "valid": true
+      },
+      {
+        "run_id": 9052,
+        "classifier": "gradient_boosting(std_smote2)",
+        "f1_macro": 0.693,
+        "accuracy": 0.6542,
+        "valid": true
+      },
+      {
+        "run_id": 9053,
+        "classifier": "svm_rbf(std_smote2)",
+        "f1_macro": 0.6985,
+        "accuracy": 0.6597,
+        "valid": true
+      },
+      {
+        "run_id": 9054,
+        "classifier": "naive_bayes(std_smote)",
+        "f1_macro": 0.703,
+        "accuracy": 0.6642,
+        "valid": true
+      },
+      {
+        "run_id": 9055,
+        "classifier": "liblinear(std_smote)",
+        "f1_macro": 0.7075,
+        "accuracy": 0.6687,
+        "valid": true
+      }
+    ],
+    "openml_runs_invalid": [
+      {
+        "run_id": 9099,
+        "classifier": "broken_config_1",
+        "f1_macro": "0.0",
+        "accuracy": "0.0",
+        "valid": false
+      },
+      {
+        "run_id": 9098,
+        "classifier": "broken_config_2",
+        "f1_macro": "0.0",
+        "accuracy": "0.35",
+        "valid": false
+      },
+      {
+        "run_id": 9097,
+        "classifier": "timeout_config",
+        "f1_macro": null,
+        "accuracy": null,
+        "valid": false
+      }
+    ],
+    "class_distribution": {
+      "negative": 268,
+      "positive": 500,
+      "imbalance": "mild"
+    }
+  }
+}

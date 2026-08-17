@@ -1,0 +1,18 @@
+{
+  "id": "case_001",
+  "name": "standard_install_with_opencode_coexistence",
+  "category": "normal",
+  "weight": "critical",
+  "input": {
+    "request": "在 Linux 工作站安装 Codex CLI，且与已有 opencode 共存",
+    "context": {
+      "os": "linux",
+      "has_codex": false,
+      "has_opencode": true,
+      "opencode_config_path": "~/.local/share/opencode/auth.json",
+      "codex_config_path": "~/.codex/config.toml",
+      "cron_profiles_referenced": ["amax"]
+    }
+  },
+  "genes": ["CODE-001", "CODE-003", "CODE-004"]
+}

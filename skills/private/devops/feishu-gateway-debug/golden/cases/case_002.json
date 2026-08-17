@@ -1,0 +1,18 @@
+{
+  "id": "case_002",
+  "name": "media_attachment_over_10mb_silent_failure",
+  "category": "error",
+  "weight": "high",
+  "input": {
+    "error_msg": "发送 PDF 后用户反馈没收到附件，且无任何报错",
+    "session_id": "agent:main:feishu:dm:oc_a1b2c3d4e5f6",
+    "platform": "feishu",
+    "evidence": {
+      "sent_media_line": "MEDIA:/media/yakeworld/sda2/paper/report_v2.pdf",
+      "ls_la_output": "-rw-rw-r-- 1 yakeworld yakeworld 34587648 Jun 20 21:10 /media/yakeworld/sda2/paper/report_v2.pdf",
+      "file_size_mb": 33.0,
+      "feishu_media_limit_mb": 10.0
+    }
+  },
+  "genes": ["FEIS-004", "FEIS-005"]
+}

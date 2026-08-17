@@ -1,0 +1,10 @@
+{
+  "case_id": "case_003",
+  "name": "错误路径：指令式语气 + 容量超限",
+  "type": "error",
+  "input": {
+    "session_transcript": "Tool calls (10): 1) debug venv conflict 2) pip install --force 3) verify isolation 4) update requirements 5) test import 6) fix path 7) rerun 8) verify 9) document fix 10) commit. Outcome: venv isolation fixed, always use /opt/venv/bin/python for Synthos tasks.",
+    "current_memory": "lit-import path=/media/yakeworld/sda2/Synthos/tools/lit-import. User prefers BibTeX key sorting for dedup. vLLM port 8000 on node3. Paper P141 ODE tuning baseline alpha=0.65. Cron job synthos-daily uses /usr/bin/python3.12 venv. Memory-optimization is sole entry for memory mgmt. Repo path: ~/Synthos is symlink to /media/yakeworld/sda2/Synthos. Task router entry point. Evolution cycle 72 active. DSH version 2.20. Qwen3.5 is text-only model (not VL). Pima CRISP-DM refs: Shearer 2000, Wirth-Hipp 2000. Feishu bot cli_abc123 configured. Kanban workspace at /tmp/kanban. ODE homeostasis S_pre baseline ~0.45. Playwright chromium at /opt/pw. MiKTeX pdflatex 2024. K230 ampy raw REPL unavailable, use Pyboard class. K230 snapshot+save ~35ms per frame. OpenML WEKA F1=0.75-0.76 higher than Helix F1=0.68-0.71. 98 papers in corpus, 10-15 near publishable. Citation threshold 30 refs minimum. Quality gate D1-D10 >= 0.85. Paper P142 started 2026-07-01. DSH sandbox mode: danger-full-access. Feishu chat oc_xyz789 default. Cron 15 tasks healthy. Synthebot bridge active. Paper jury L3-L4 gate config.",
+    "memory_target_chars": 2200
+  }
+}

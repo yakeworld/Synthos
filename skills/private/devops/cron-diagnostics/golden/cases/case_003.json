@@ -1,0 +1,19 @@
+{
+  "id": "case_003",
+  "name": "batch_no_agent_timeout_with_missing_codex_profiles",
+  "category": "error",
+  "weight": "high",
+  "input": {
+    "trigger": "direct",
+    "tasks": [
+      {"id": "job_31", "name": "codex-exec-d8", "enabled": true, "last_status": "timeout", "no_agent": true, "model": null, "provider": null, "deliver": "origin", "schedule": "0 9 * * *"},
+      {"id": "job_32", "name": "codex-exec-bib", "enabled": true, "last_status": "timeout", "no_agent": true, "model": null, "provider": null, "deliver": "origin", "schedule": "0 10 * * *"},
+      {"id": "job_33", "name": "codex-exec-repair", "enabled": true, "last_status": "timeout", "no_agent": true, "model": null, "provider": null, "deliver": "origin", "schedule": "0 11 * * *"}
+    ],
+    "environment": {
+      "profiles_directory_listing": ["hermes.config.toml"],
+      "profiles_referenced_by_scripts": ["amax", "hermes"]
+    }
+  },
+  "genes": ["CRON-003"]
+}

@@ -1,0 +1,38 @@
+{
+  "case_id": "case_002",
+  "output": {
+    "status": "partial_pass_with_rejections",
+    "rejections": [
+      {
+        "rejected_value": 0.91,
+        "field": "val_dice",
+        "reason": "无源数字：训练日志 logs/train_partial.log 仅含 epoch/loss，无 validation 指标；0.91 来自口头汇报，违反 TRAI-001 凡数必源数据诚实门",
+        "action": "paper_plan.json 的 results 中该指标标记 unverified + missing_source，禁止作为主结果"
+      }
+    ],
+    "metrics_traceability": {
+      "val_dice": {"value": null, "status": "missing_source", "expected_source": "validation 阶段日志（需重跑 val 补齐）"},
+      "loss_curve": {"value": "available", "source": "logs/train_partial.log:loss", "traceable": true}
+    },
+    "paper_plan_gate": {
+      "imrad_completable": true,
+      "imrad_note": "IMRaD 结构可输出，但 Results 节主结果位置留空并标注 unverified，不得回填 0.91",
+      "gaps_min_3": true,
+      "hypotheses_min_3": true,
+      "hypotheses_note": "假设生成不依赖缺失指标，仍须 ≥3 个且含 test_condition + falsification_path"
+    },
+    "error_report": {
+      "includes_context": true,
+      "context": "val_dice 缺失：项目 demo-cv-pipeline 的日志 logs/train_partial.log 无 validation 段",
+      "recovery_suggestions": [
+        "重跑 validation 并将 Dice/CErr 写入日志后再审计",
+        "或补做逐帧 ground-truth 对比脚本输出指标",
+        "在补齐前，论文计划中 Results 节不得引用 0.91"
+      ]
+    },
+    "facts_vs_inferences": {
+      "factual": ["loss_curve 可追溯", "val_dice 缺失状态"],
+      "inferred": ["0.91 标记为 unverified claim，不作为事实"]
+    }
+  }
+}

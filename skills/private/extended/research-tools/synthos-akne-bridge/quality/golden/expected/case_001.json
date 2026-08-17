@@ -1,0 +1,28 @@
+{
+  "case_id": "quality_case_001",
+  "status": "success",
+  "routed_to": "golden-test-methodology",
+  "quality_report": {
+    "skill": "kg-bridge",
+    "skill_path": "skills/private/extended/research-tools/synthos-akne-bridge/kg-bridge",
+    "checks": [
+      {
+        "name": "golden_set_exists",
+        "passed": true,
+        "evidence": "golden/GOLDEN_SET.md + cases/(2) + expected/(2) present"
+      },
+      {
+        "name": "io_contract_conformance",
+        "passed": true,
+        "evidence": "SKILL.md IO_CONTRACT 声明 input/query+output/kg_output，与 EVIDENCE_SCHEMA 一致"
+      },
+      {
+        "name": "gene_coverage",
+        "passed": true,
+        "evidence": "6 genes (KGB-001..006) 全部在验证清单中被引用"
+      }
+    ],
+    "overall_passed": true,
+    "generated_by": "quality -> golden-test-methodology"
+  }
+}

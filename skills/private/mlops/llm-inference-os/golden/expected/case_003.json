@@ -1,0 +1,22 @@
+{
+  "case_id": "case_003",
+  "skill": "llm-inference-os",
+  "description": "期望输出：弃用 Windows 原生/ macOS，迁移至 Ubuntu/Debian，迁移步骤可重放",
+  "platform_decision": {
+    "rejected": [
+      {"platform": "windows_native", "rating": "⭐"},
+      {"platform": "macos", "rating": "⭐"}
+    ],
+    "selected": "linux_ubuntu_debian",
+    "selected_rating": "⭐⭐⭐⭐⭐",
+    "gene": "LLM-003"
+  },
+  "migration": {
+    "target_platform": "linux_ubuntu_debian",
+    "steps_replayable": true,
+    "replay_result_consistent": true,
+    "gene": "LLM-006"
+  },
+  "verification_passes": ["LLM-003", "LLM-006"],
+  "error": null
+}

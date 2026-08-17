@@ -1,0 +1,16 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "codex_cli_started": false,
+    "rejected": true,
+    "agent_status": "输入未验，不役代理",
+    "error_contains_context": true,
+    "error_contains_recovery_hint": true
+  },
+  "verification": {
+    "no_execution": "codex CLI did not start; no code_changes produced",
+    "agent_status_flag": "explicitly marked 输入未验，不役代理 (input unverified, do not dispatch)",
+    "error_context": "error names the missing dataset_path",
+    "error_recovery": "error suggests pointing to a valid existing data file"
+  }
+}

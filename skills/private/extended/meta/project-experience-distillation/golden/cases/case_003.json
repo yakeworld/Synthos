@@ -1,0 +1,9 @@
+{
+  "case_id": "case_003",
+  "name": "错误路径：只记录不反思",
+  "type": "error",
+  "input": {
+    "project_practice": "2026-07-10 修复 venv 冲突：1) pip install --force 2) 更新 requirements.txt 3) 重跑 test_import 4) commit。完成。",
+    "reflection_q": ""
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "case_id": "case_001",
+  "output": {
+    "paper_plan": {
+      "format": "paper_plan.json",
+      "imrad": {
+        "introduction": "背景(眼动追踪临床价值) → 现状(单目3D追踪方法) → 缺口(5个研究空白) → 贡献(7步CV管线+MobileNetV2+T3EM)",
+        "methods": "7步CV管线步骤 → MobileNetV2+T3EM 算法 → 4阶段渐进训练设计(30+20+20+20) → 数据(901帧K230+976帧OpenEDS)",
+        "results": "主结果 Val Dice=0.8955 / CErr=1.63px 优先展示 → 消融实验(时序/混合训练) → 对比实验(SAM vs 传统CV)",
+        "discussion": "优势(纯CV无GPU依赖) → 局限(单人种/静态) → 与文献对比 → 未来方向(时序建模/多人群)",
+        "conclusion": "核心贡献总结"
+      },
+      "literature": {
+        "count_range": [15, 30],
+        "coverage": ["方法学(眼球追踪/分割)", "临床(IOVS/TBME 相关)", "算法(能量蛇/SAM)"]
+      },
+      "papers": [
+        {"id": "paper_A", "type": "方法学", "target": "Q1 (IEEE TBME/IOVS)", "timeline_weeks": 2, "criteria": "管线完整+有实证结果"},
+        {"id": "paper_B", "type": "实证分析", "target": "Q2 (Scientific Reports)", "timeline_weeks": 4, "criteria": "对比实验+统计检验"}
+      ]
+    },
+    "research_gaps": [
+      {"id": "G1", "gap": "单目3D眼球追踪精度理论极限未验证", "located_in": "方法缺口：现有单目3D追踪文献均未给出精度下界证明"},
+      {"id": "G2", "gap": "SAM vs 传统CV性能边界未定义", "located_in": "文献矛盾：SAM 宣称通用分割优势，但眼内小目标上无系统对比"},
+      {"id": "G3", "gap": "不同人种解剖学参数泛化性未评估", "located_in": "方法缺口：固定几何参数训练集单一人种，无跨人群验证"},
+      {"id": "G4", "gap": "时序信息增益未量化", "located_in": "方法缺口：现有管线逐帧独立处理，无时序消融"},
+      {"id": "G5", "gap": "混合训练泛化性增益未量化", "located_in": "文献矛盾：域适应文献主张混合收益，本管线 901+976 混合训练未消融"}
+    ],
+    "hypotheses": [
+      {"id": "H1", "text": "分割误差主导总误差", "claim_threshold": "≥60%", "test_condition": "逐管线步骤注入受控噪声，分解各步误差贡献", "falsification_path": "若分割步骤误差贡献 <60%，假设不成立"},
+      {"id": "H2", "text": "SAM在虹膜边缘优于能量蛇，在瞳孔定位不如区域生长", "claim_threshold": "边缘 Dice 差 ≥0.02 且瞳孔 CErr 差 ≥0.3px", "test_condition": "同数据集分别用 SAM/能量蛇(虹膜)与 SAM/区域生长(瞳孔)对比", "falsification_path": "任一方向差异 < 阈值即不成立"},
+      {"id": "H3", "text": "时序建模比单帧提升 Val Dice ≥0.03", "claim_threshold": "ΔDice ≥0.03", "test_condition": "单帧 vs 时序(LSTM/GRU)头对照实验", "falsification_path": "ΔDice <0.03 或为负"},
+      {"id": "H4", "text": "混合训练比单一数据集提升 Val Dice ≥0.05", "claim_threshold": "ΔDice ≥0.05", "test_condition": "K230-only / OpenEDS-only / 混合三组训练对照", "falsification_path": "混合组提升 <0.05"},
+      {"id": "H5", "text": "固定几何参数导致系统性偏差", "claim_threshold": "偏差方向一致性 >80%", "test_condition": "参数固定 vs 自适应几何，统计残差方向分布", "falsification_path": "残差方向随机(一致性 <80%)"}
+    ],
+    "metrics_traceability": {
+      "val_dice": {"value": 0.8955, "source": "training_log:epoch90/val", "traceable": true},
+      "centrality_error_px": {"value": 1.63, "source": "training_log:epoch90/val", "traceable": true}
+    },
+    "rejections": []
+  }
+}

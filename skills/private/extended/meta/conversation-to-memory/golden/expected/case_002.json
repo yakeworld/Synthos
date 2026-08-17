@@ -1,0 +1,13 @@
+{
+  "case_id": "case_002",
+  "memory_entries": [],
+  "consolidation_report": {
+    "usage_before": 0.62,
+    "usage_after": 0.62,
+    "usage_target_range": [0.60, 0.75],
+    "operations_order": [],
+    "constitutional_check": "pass",
+    "declarative_check": "pass",
+    "notes": "已完成任务（PR#42 merged）7天后是噪音，归 session_search 检索，不写入长期记忆。无高价值信息可提取。"
+  }
+}

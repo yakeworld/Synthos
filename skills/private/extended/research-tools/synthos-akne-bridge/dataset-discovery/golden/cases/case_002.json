@@ -1,0 +1,42 @@
+{
+  "case_id": "002",
+  "description": "UCI stroke 全源 404 错误路径：数据源俱失效（UCI/GitHub 镜像/HF/Kaggle 均 404）时合成数据集备案",
+  "input": {
+    "dataset": "healthcare-dataset-stroke-data.csv",
+    "source_status": {
+      "uci_archive": "404 (SPA moved, direct file links NOT FOUND)",
+      "github_mirrors": [
+        "dsrscientist/dataset1/master/healthcare-dataset-stroke-data.csv → 404",
+        "codeheroku/Stroke-Prediction/main/ → 404",
+        "srinivas/Stroke-Prediction/ → 404",
+        "krishnaik06/Stroke-Prediction/ → 404",
+        "anand8796/Stroke-prediction/ → 404",
+        "CodeWithEmil/UCI-Machine-Learning-Repository/main/healthcare/ → 404"
+      ],
+      "huggingface": "404",
+      "kaggle": "auth-required (no public download)"
+    },
+    "known_schema": {
+      "num_features": 12,
+      "num_rows": 5179,
+      "features": ["age", "gender", "hypertension", "heart_disease", "avg_glucose_level", "smoking_status", "stroke", "bmi", "residence_type", "ever_married", "work_type", ""]
+    },
+    "synthetic_seed": 42
+  },
+  "expected": {
+    "output_structure": {
+      "error_report": "dict: {source: 'all_sources_404', detail: str, recovery: str}",
+      "mirror_validation": "list[dict]: {url, http_status, first_line, verdict: 'dead'|'alive'}",
+      "synthetic_dataset": "dict: {is_synthetic: true, seed: 42, num_features: 12, num_rows: 5179, schema_source: 'UCI documentation'}"
+    },
+    "key_checks": [
+      "镜像验证以 head -1 首行内容为准（DATA-003）：首行含 '404: Not Found' 或 'html' → 判定 dead",
+      "不凭 HTTP 200 判定存活（404 页面仍返 200）",
+      "合成数据用 random.seed(42) 生成（P1 原子可复现性）",
+      "合成数据 schema 匹配：12 特征 × 5179 行",
+      "文档明确标注 is_synthetic=true 且注明 '合成，基于 UCI schema'",
+      "恢复建议含：生成合成数据 + 替代数据源指引（healthcare-dataset-discovery 技能）"
+    ]
+  },
+  "weight": "critical"
+}

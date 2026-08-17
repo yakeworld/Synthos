@@ -1,0 +1,17 @@
+{
+  "case_id": "case_001",
+  "name": "ssh_ok_full_onboarding",
+  "type": "normal",
+  "input": {
+    "remote_host": "ssh student@10.0.0.5:2222",
+    "ssh_connectivity": "ok",
+    "software_list": ["codex", "obsidian"]
+  },
+  "expected_checks": [
+    "WORK-001 ssh connectivity verified",
+    "WORK-002 codex env converged into ~/codex-vllm.sh",
+    "WORK-003 START_HERE.md + training plan both present",
+    "WORK-004 WORK_CHECK_REPORT.md generated",
+    "WORK-005 all listed software is zero-dependency portable"
+  ]
+}

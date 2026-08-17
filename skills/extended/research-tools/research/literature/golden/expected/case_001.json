@@ -1,0 +1,12 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "response_time_seconds": "~2",
+    "bibtex_fields_present": ["title", "authors", "doi", "year"],
+    "records_returned": 100
+  },
+  "verification": {
+    "bibtex_completeness": "every returned entry has non-empty title, authors, doi, year",
+    "crossref_compliance": "request has no 'mail' param; order in {desc, asc}"
+  }
+}

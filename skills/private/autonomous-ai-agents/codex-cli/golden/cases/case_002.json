@@ -1,0 +1,25 @@
+{
+  "case_id": "case_002",
+  "description": "正常路径（协议未指定）：CODE-001 先选定协议再调度",
+  "type": "normal",
+  "input": {
+    "coding_task": "为 pima 数据集补写 F1 评估脚本",
+    "protocol": null,
+    "dataset_path": "data/pima.csv",
+    "backend_config_complete": true
+  },
+  "expected": {
+    "protocol_selected": "OpenAI Responses",
+    "protocol_selection_recorded_in_agent_status": true,
+    "codex_cli_started": true,
+    "code_changes_delivered": true,
+    "five_verifications": {
+      "input": "pass",
+      "process": "pass",
+      "output": "pass",
+      "boundary": "pass",
+      "error_handling": "pass"
+    }
+  },
+  "weight": "normal"
+}

@@ -1,0 +1,20 @@
+{
+  "case_id": "case_001",
+  "reusable_patterns": [
+    "正反馈耦合（乘性）必然导致变量冲顶 → 约束类型: 耦合必须加性且基线锚定",
+    "新域参数搜索从已验证基线出发单参步进，不盲扫多维"
+  ],
+  "reflection_answer": "乘性耦合使偏差被指数放大（A 大→反馈强→A 更大），加性 eps*(A-A_hp) 将反馈锚定在设定点，偏差越大恢复力越强，形成稳定负反馈环。单参步进避免参数交互导致的多维搜索空间爆炸。",
+  "skill_update": {
+    "action": "extend_existing",
+    "target_skill": "ode-simulation-tuning",
+    "section": "Pitfalls",
+    "diff_summary": "新增第 15 条：正反馈耦合必须改为加性基线锚定形式；新域参数搜索从已验证基线单参步进"
+  },
+  "abstraction_check": {
+    "project_names_removed": true,
+    "paths_removed": true,
+    "dates_removed": true,
+    "constraint_type_identified": true
+  }
+}

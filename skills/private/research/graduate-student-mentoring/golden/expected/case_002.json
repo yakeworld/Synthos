@@ -1,0 +1,38 @@
+{
+  "case_id": "case_002",
+  "skill": "graduate-student-mentoring",
+  "description": "Golden Error 期望输出：触发卡二时即问，导师 Hermes 调 Synthos 技能库修复，AI 未修改生码记为未掌握",
+  "blocker_action": {
+    "stuck_hours": 2.5,
+    "threshold_hours": 2,
+    "threshold_exceeded": true,
+    "immediate_report_to_advisor": true,
+    "gene": "GRAD-003"
+  },
+  "repair_path": {
+    "method": "导师用 Hermes 调用 Synthos 技能库现有代码模块修复",
+    "environment_rewritten": false,
+    "resolved_same_day_after_report": true,
+    "gene": "GRAD-007"
+  },
+  "ai_code_verdict": {
+    "lines_submitted": 200,
+    "personally_modified": false,
+    "mastery": "未掌握",
+    "counts_as_effective_output": false,
+    "required_action": "逐行解释 + 亲自修改至少 1 处逻辑（如边界条件）后重跑",
+    "gene": "GRAD-004"
+  },
+  "progress_verdict": {
+    "is_effective_progress": false,
+    "reason": "卡超 2h 未上报 + AI 生码未修改，本周产出不可计为有效进展"
+  },
+  "self_check_items_failed": [
+    "卡住超 2 小时问题未立即上报",
+    "AI 生成代码未亲自修改（未掌握）"
+  ],
+  "error": {
+    "type": "process_violation",
+    "genes_triggered": ["GRAD-003", "GRAD-004", "GRAD-007"]
+  }
+}

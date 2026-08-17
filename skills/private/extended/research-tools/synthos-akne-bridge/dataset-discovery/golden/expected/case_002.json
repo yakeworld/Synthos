@@ -1,0 +1,36 @@
+{
+  "case_id": "002",
+  "expected_output": "错误报告：source=all_sources_404；mirror_validation 中所有 GitHub 镜像 verdict=dead（首行含 404/html）；synthetic_dataset 为 is_synthetic=true, seed=42, 12特征×5179行；文档明示合成身份",
+  "verification": [
+    {
+      "check": "镜像验证方法（DATA-003）",
+      "expected": "每个 GitHub 镜像 URL 的 verdict 基于 head -1 首行内容，非 HTTP 状态码",
+      "method": "对每个镜像 URL 执行 curl -s URL | head -1，检查首行是否含 '404: Not Found' 或 'html'；verdict=dead 当且仅当首行匹配；HTTP 200 但首行为 404 页面仍判 dead"
+    },
+    {
+      "check": "HTTP 200 陷阱识别",
+      "expected": "curl 返回 200 但首行为 '404: Not Found' 时，verdict 为 dead 而非 alive",
+      "method": "模拟场景：curl 某镜像返回 HTTP 200 + body 首行 '404: Not Found'，确认 verdict=dead（不凭状态码）"
+    },
+    {
+      "check": "合成数据可复现性（P1）",
+      "expected": "random.seed(42) 生成两次得到完全相同的数据",
+      "method": "执行两次 python3 -c 'import random; random.seed(42); ...' 生成合成数据，对比两次输出（如 md5 或逐行对比）确认一致"
+    },
+    {
+      "check": "Schema 匹配",
+      "expected": "合成数据集含 12 个特征列、5179 行数据",
+      "method": "len(df.columns)==12 且 len(df)==5179；列名与已知 UCI schema 一致"
+    },
+    {
+      "check": "合成身份标注",
+      "expected": "输出文档/元数据明确标注 is_synthetic=true，注明 '合成，基于 UCI schema'",
+      "method": "检查 synthetic_dataset 字段含 is_synthetic=true；文档文本含 '合成' 或 'synthetic' 标识；未冒充真实数据"
+    },
+    {
+      "check": "恢复建议完整",
+      "expected": "含替代数据源指引（healthcare-dataset-discovery 技能：Cardiovascular-Disease-dataset, DID=45547）",
+      "method": "检查 recovery 字段是否提及替代数据源及 healthcare-dataset-discovery 技能"
+    }
+  ]
+}

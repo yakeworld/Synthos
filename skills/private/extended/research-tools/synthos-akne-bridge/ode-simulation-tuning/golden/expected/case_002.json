@@ -1,0 +1,34 @@
+{
+  "case_id": "ode-tuning_case_002",
+  "status": "diagnose_then_fix",
+  "initial_run": {
+    "max_A": 0.97,
+    "ablation_ratio": 1.2,
+    "failed_metrics": ["ablation_ratio (< 2.0x)", "max_A (> 0.92 ceiling)"]
+  },
+  "diagnosis": {
+    "trap_id": 15,
+    "trap_name": "positive_feedback_coupling_ceiling",
+    "gene": "ODE-004",
+    "cause": "Eq1 耦合项 +kappa*V*(A-A_hp) 为乘性正反馈：A 上升→V 上升→V 放大 A→A 冲顶 0.97",
+    "evidence": "max(A)=0.97 > 0.92 且 abl_gap≈full_gap（耦合未主导）"
+  },
+  "fix": {
+    "coupling_form": "eps*(A-A_hp) (additive, baseline-anchored)",
+    "parameter_change": {"kappa": {"from": 0.14, "to": 0.08}},
+    "gene_applied": "ODE-004"
+  },
+  "rerun_metrics": {
+    "max_A": 0.84,
+    "R2_A": 0.991,
+    "R2_E": 0.989,
+    "AUC": 0.91,
+    "ablation_ratio": 3.1,
+    "MAPE_R_pct": 0.9,
+    "MAPE_method": "curve_fit_residual",
+    "accuracy": 0.90
+  },
+  "metrics_passed": 9,
+  "metrics_total": 9,
+  "all_pass": true
+}

@@ -1,0 +1,24 @@
+{
+  "case_id": "case_001",
+  "proceeded": true,
+  "files_generated": [
+    "~/codex-vllm.sh",
+    "~/workspace/START_HERE.md",
+    "~/workspace/培养方案.md",
+    "~/workspace/WORK_CHECK_REPORT.md"
+  ],
+  "codex_vllm_sh": {
+    "contains_env": ["VLLM_API_KEY", "DEFAULT_MODEL"],
+    "single_entry_script": true
+  },
+  "work_check_report": {
+    "checklist": [
+      {"item": "SSH 连通性", "status": "pass"},
+      {"item": "codex 一键脚本启动", "status": "pass"},
+      {"item": "软件清单就位（codex, obsidian）", "status": "pass"}
+    ],
+    "acceptance_basis": "~/workspace/WORK_CHECK_REPORT.md"
+  },
+  "message": "环境搭建完成，验收凭据见 WORK_CHECK_REPORT.md（全部检查项 pass）。",
+  "genes_applied": ["WORK-001", "WORK-002", "WORK-003", "WORK-004", "WORK-005"]
+}

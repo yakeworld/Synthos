@@ -1,0 +1,32 @@
+{
+  "case_id": "ode-tuning_case_001",
+  "case_name": "p140_v2_proven_baseline",
+  "skill": "ode-simulation-tuning",
+  "path": "normal",
+  "genes": ["ODE-001", "ODE-002", "ODE-003", "ODE-004", "ODE-005", "ODE-006"],
+  "input": {
+    "system": "Retinal Shear (P140 v2)",
+    "ode_system": {
+      "equations": [
+        "dA/dt = alpha*D*(1-A) - beta*(A-A_hp) + eps*(E-E_hp)",
+        "dE/dt = mu*A*(1-E) - beta*(E-E_hp) - kappa*A"
+      ],
+      "variables": {"A": "shear stress", "E": "adaptation", "D": "driving stimulus"}
+    },
+    "parameters": {
+      "alpha": 0.65,
+      "beta": 0.12,
+      "mu": 0.04,
+      "eps": 0.35,
+      "kappa": 0.14,
+      "A_hp": 0.42,
+      "E_hp": 0.55
+    },
+    "stimulus": {
+      "baseline": {"D": 0.0, "steps": 1000},
+      "treatment": {"D": 0.8, "steps": 500}
+    },
+    "integration": {"method": "euler", "dt": 0.1}
+  },
+  "notes": "Golden 集合（SKILL.md 示例 1）：P140 v2 已验证基线，含 flow-stress/E→tau/flow 产生项，无耦合消融须全部移除。"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "case_003",
+  "name": "cron_profile_missing_causes_batch_timeout",
+  "category": "error",
+  "weight": "high",
+  "input": {
+    "request": "多个 cron 脚本引用 profile amax 的 codex exec 批量超时，无具体错误信息，帮我排查",
+    "context": {
+      "os": "linux",
+      "has_codex": true,
+      "codex_version_ok": true,
+      "profiles_directory_listing": ["hermes.config.toml"],
+      "profiles_referenced_by_cron": ["amax", "hermes"],
+      "timeout_symptom": "codex exec 静默超时且无错误信息"
+    }
+  },
+  "genes": ["CODE-005", "CODE-006"]
+}

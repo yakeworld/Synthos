@@ -1,0 +1,30 @@
+{
+  "case_id": "case_002",
+  "description": "正常路径（含错误处理）：内联 bibitem 解析 + Crossref 误匹配 DOI 人工核对修正",
+  "type": "normal_with_error_handling",
+  "input": {
+    "paper_dir": "outputs/papers/bppv-nystagmus",
+    "citation_source": "inline_bibitem",
+    "initial_citations": 15,
+    "topic_queries": [
+      "corneal biomechanics ODE",
+      "vestibular VOR nystagmus BPPV",
+      "iris pupil segmentation",
+      "saccade eye movement fixation",
+      "clinical machine learning breast cancer"
+    ],
+    "search_mode": "clustered",
+    "crossref_mismatches_detected": 3
+  },
+  "expected": {
+    "final_citations": 30,
+    "crossref_dois_corrected": 3,
+    "doi_correction_method": "manual_title_year_check",
+    "quality_gate": {
+      "D8_citation_completeness": ">=0.80",
+      "D10a_bib_tex_match": ">=0.90",
+      "undefined_citations": 0
+    }
+  },
+  "weight": "normal"
+}

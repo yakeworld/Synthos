@@ -1,0 +1,10 @@
+{
+  "case_id": "case_001",
+  "name": "正常检索：devops 层 + cron",
+  "type": "normal",
+  "input": {
+    "layer": "devops",
+    "query": "cron",
+    "context": {}
+  }
+}

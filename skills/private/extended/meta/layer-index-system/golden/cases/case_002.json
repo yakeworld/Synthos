@@ -1,0 +1,10 @@
+{
+  "case_id": "case_002",
+  "name": "错误路径：缺失 layer 参数",
+  "type": "error",
+  "input": {
+    "layer": null,
+    "query": "python",
+    "context": {}
+  }
+}

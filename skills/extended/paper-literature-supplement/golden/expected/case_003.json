@@ -1,0 +1,15 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "pipeline_started": false,
+    "rejected": true,
+    "error_contains_context": true,
+    "error_contains_recovery_hint": true,
+    "partial_output": false
+  },
+  "verification": {
+    "no_execution": "pipeline did not start; no partial PDF/tex output produced",
+    "error_context": "error message names the missing paper_dir path",
+    "error_recovery": "error message suggests how to recover (point to an existing paper directory containing paper.tex)"
+  }
+}

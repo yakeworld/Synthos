@@ -1,0 +1,21 @@
+{
+  "case_id": "case_002",
+  "type": "error_path",
+  "description": "str 未转换 + 无效 run 混入陷阱：10 run 全为字符串 value，2 个 f1=0",
+  "input": {
+    "task": "pidd",
+    "api_fetch": {"limit": 500, "max_time": 30},
+    "openml_runs": [
+      {"run_id": 1001, "classifier": "weka_rf", "f1_macro": "0.7500", "accuracy": "0.7450", "valid": true},
+      {"run_id": 1002, "classifier": "weka_bayesnet", "f1_macro": "0.7300", "accuracy": "0.7320", "valid": true},
+      {"run_id": 1003, "classifier": "xgboost", "f1_macro": "0.7400", "accuracy": "0.7350", "valid": true},
+      {"run_id": 1004, "classifier": "sklearn_rf", "f1_macro": "0.7350", "accuracy": "0.7330", "valid": true},
+      {"run_id": 1005, "classifier": "gbc", "f1_macro": "0.7200", "accuracy": "0.7180", "valid": true},
+      {"run_id": 1006, "classifier": "naive_bayes", "f1_macro": "0.6800", "accuracy": "0.6850", "valid": true},
+      {"run_id": 1007, "classifier": "logistic", "f1_macro": "0.7000", "accuracy": "0.7020", "valid": true},
+      {"run_id": 1008, "classifier": "svm", "f1_macro": "0.7100", "accuracy": "0.7080", "valid": true},
+      {"run_id": 1009, "classifier": "broken_cfg_A", "f1_macro": "0.0", "accuracy": "0.0", "valid": false},
+      {"run_id": 1010, "classifier": "broken_cfg_B", "f1_macro": "0.0", "accuracy": "0.30", "valid": false}
+    ]
+  }
+}

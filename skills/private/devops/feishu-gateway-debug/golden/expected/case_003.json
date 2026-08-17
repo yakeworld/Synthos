@@ -1,0 +1,28 @@
+{
+  "id": "case_003",
+  "status": "error",
+  "result": {
+    "error_source": "vllm_node",
+    "error_source_not_feishu": true,
+    "breakpoint": "模型流式响应阶段：API call 建立连接后 180.07s 被对端关闭（bytes=0 chunks=0），gateway.log 缺失 response ready / Sending response",
+    "root_cause": "vLLM 节点默认 180s 超时触发：节点负载过高（load_avg=14.2, 并发请求多）或模型响应过长导致 stream 中断，属 vLLM 服务超时/负载问题，非飞书网关问题（FEIS-007）",
+    "evidence": [
+      "elapsed=180.07s 精确命中 vLLM 默认 180s 超时阈值（FEIS-007）",
+      "http_status=200 bytes=0 chunks=0 = 流被对端提前关闭的典型特征",
+      "base_url=http://192.168.64.21:8000/v1 → 指向 vLLM 节点而非飞书（FEIS-001）",
+      "节点 load_avg=14.2 / 并发高 → 负载过高佐证"
+    ],
+    "repair": [
+      "检查 vLLM 节点状态（load、显存、队列），等待负载回落或重启 vLLM 服务",
+      "降低节点并发负载或从轮询配置摘除该节点",
+      "必要时调整 vLLM/客户端超时配置，避免长响应被 180s 截断",
+      "重发消息后验证 gateway.log 出现 response ready + Sending response"
+    ]
+  },
+  "checks": {
+    "timeout_180s_attributed_to_vllm_node": true,
+    "not_misjudged_as_feishu_gateway": true,
+    "node_status_check_included": true,
+    "diagnosis_traceable_to_log_lines": true
+  }
+}

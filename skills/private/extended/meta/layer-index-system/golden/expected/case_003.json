@@ -1,0 +1,13 @@
+{
+  "case_id": "case_003",
+  "skill_list": [],
+  "error": {
+    "rejected": false,
+    "warning": true,
+    "rule": "LAYE-004",
+    "message": "边界验证触发：query 为空字符串，无法执行有效检索",
+    "context": "layer='devops', query=''",
+    "recovery_suggestion": "请提供非空检索关键词（如 'cron', 'kanban', 'gpu'），或使用 query='*' 获取该层全部技能列表。",
+    "match_count": 0
+  }
+}

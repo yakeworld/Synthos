@@ -1,0 +1,19 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "final_citations": 30,
+    "crossref_dois_corrected": 3,
+    "doi_correction_method": "manual_title_year_check",
+    "quality_gate": {
+      "D8_citation_completeness": ">=0.80",
+      "D10a_bib_tex_match": ">=0.90",
+      "undefined_citations": 0
+    }
+  },
+  "verification": {
+    "citation_count": "final_citations >= 30",
+    "crossref_mismatch": "each mismatched DOI re-checked against title+year; corrected or deleted",
+    "pdf_magic": "every kept citation's PDF passes head -c 5 == '%PDF-'",
+    "quality_gate": "D8 >= 0.80 AND D10a >= 0.90 AND undefined_citations == 0"
+  }
+}

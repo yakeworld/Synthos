@@ -1,0 +1,39 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "report_type": "independent_specialized_report",
+    "citation_classification": [
+      {
+        "key": "random2019",
+        "function": "none",
+        "doi_validation": "unverified",
+        "verdict": "失当引用",
+        "recommendation": "删除或补充功能语境（背景/基准/对比/方法/局限/支撑之一）",
+        "note": "正文未在任何段落中使用"
+      },
+      {
+        "key": "Chakravarthy2021Deep",
+        "function": "背景",
+        "doi_validation": "DOI_INVALID",
+        "validation_chain": [
+          "semantic_scholar:no_result",
+          "crossref:resolved_to_unrelated_paper(Zhang et al., CDC48 segregase)",
+          "pubmed:correct_doi_search_via_title"
+        ],
+        "verdict": "回源修正",
+        "recommendation": "用 Crossref 标题搜索找回正确 DOI，或将 DOI 字段标记为 UNKNOWN",
+        "note": "bib 条目数据自洽但 DOI 指向无关论文，不可只信条目（CITA-002）"
+      }
+    ],
+    "g5_integration_point": "已单独标注",
+    "inappropriate_citations": ["random2019"],
+    "status": "PASS"
+  },
+  "verification": [
+    "无功能引用 random2019 被标记为失当引用并附修复建议（删除或补充功能语境）（CITA-001）",
+    "Chakravarthy2021Deep 的 DOI 触发 SS→Crossref→PubMed 三级回退，Crossref 确认 DOI 指向无关论文（CITA-002/CITA-003）",
+    "未仅信任 bib 条目中的 DOI 数据，标注回源修正或 DOI_INVALID",
+    "错误 DOI 的验证链完整记录（每级 API 的查询与响应），可复现（CITA-006）",
+    "专项报告独立输出，G5 集成点单独标注（CITA-005）"
+  ]
+}

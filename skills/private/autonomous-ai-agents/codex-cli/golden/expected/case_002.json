@@ -1,0 +1,21 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "protocol_selected": "OpenAI Responses",
+    "protocol_selection_recorded_in_agent_status": true,
+    "codex_cli_started": true,
+    "code_changes_delivered": true,
+    "five_verifications": {
+      "input": "pass",
+      "process": "pass",
+      "output": "pass",
+      "boundary": "pass",
+      "error_handling": "pass"
+    }
+  },
+  "verification": {
+    "protocol_first": "a protocol is explicitly chosen before dispatch (CODE-001); default OpenAI Responses when unspecified",
+    "agent_status_records_selection": "agent_status notes the chosen protocol and input verification pass",
+    "five_verifications_complete": "all five verifications recorded pass before delivery"
+  }
+}

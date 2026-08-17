@@ -1,0 +1,19 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "error_raised": true,
+    "error_type": "data_source_unavailable",
+    "error_message": "数据源不可用：evolution-state.json 缺失 score 字段，禁止凭记忆/旧材料填写",
+    "missing_field": "score",
+    "filling_interrupted": true,
+    "stale_values_used": false,
+    "output_file_produced": false,
+    "recovery_suggestion": "修复 evolution-state.json 使其包含 score 字段，或确认评分数据源后重试"
+  },
+  "verification": [
+    "COMP-006 / Golden Error：关键数据（评分）无法从 evolution-state.json 实时提取时，必须显式报错'数据源不可用，禁止凭记忆/旧材料填写'并中断填充",
+    "静默回退检测：填充流程不得回退到 stale_memory_available 中的历史值（cycle=175/score=0.9647/version=2.20）；若产出文件使用了这些值即判失败",
+    "无部分产出：报错后不得生成'申报书_已填写.docx'（output_file_produced 必须为 false），避免半成品申报书流到提交环节",
+    "报错带上下文：错误信息必须指明缺失字段名（score）与数据源文件路径，便于定位修复"
+  ]
+}

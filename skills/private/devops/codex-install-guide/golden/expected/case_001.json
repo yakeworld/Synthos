@@ -1,0 +1,29 @@
+{
+  "id": "case_001",
+  "status": "success",
+  "result": {
+    "install_package": "@openai/codex",
+    "install_command": "npm i -g @openai/codex",
+    "rejected_packages": [],
+    "coexistence": {
+      "codex_config_path": "~/.codex/config.toml",
+      "opencode_config_path": "~/.local/share/opencode/auth.json",
+      "binary_names": ["codex", "opencode"],
+      "isolation_ok": true
+    },
+    "verification": [
+      "which codex 返回有效二进制路径",
+      "codex --version 无报错",
+      "ls ~/.codex/profiles/ 包含 amax.config.toml",
+      "codex -p amax exec \"echo test\" 返回 test"
+    ],
+    "config_not_pointing_to_paid_endpoint": true
+  },
+  "checks": {
+    "uses_official_package": true,
+    "rejects_removed_package_name": true,
+    "coexistence_isolation_verified": true,
+    "binary_version_verified": true,
+    "profile_amax_exists": true
+  }
+}

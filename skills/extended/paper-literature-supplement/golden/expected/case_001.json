@@ -1,0 +1,20 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "final_citations": 32,
+    "pdfs_verified": 29,
+    "citations_deleted_no_pdf": 3,
+    "quality_gate": {
+      "D8_citation_completeness": 0.94,
+      "D10a_bib_tex_match": 0.97,
+      "undefined_citations": 0
+    }
+  },
+  "verification": {
+    "citation_count": "final_citations >= 30",
+    "kept_citations_after_deletion": "final_citations - citations_deleted_no_pdf >= 20",
+    "pdf_magic": "every kept citation's PDF passes head -c 5 == '%PDF-'",
+    "quality_gate": "D8 >= 0.80 AND D10a >= 0.90 AND undefined_citations == 0",
+    "search_mode": "clustered (1 search per direction x 5 clusters), not per-paper"
+  }
+}

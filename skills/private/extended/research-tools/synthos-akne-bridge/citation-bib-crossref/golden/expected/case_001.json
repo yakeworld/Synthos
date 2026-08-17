@@ -1,0 +1,31 @@
+{
+  "case_id": "001",
+  "expected_output": "审计结果：D8=33, D10a=100.0%, orphan_citations=[], zombie_entries=[], severity=healthy, health=true；问题分级清单为空；D8/D10a 喂入 L0.5 数据诚实门通过",
+  "verification": [
+    {
+      "check": "D8 计数",
+      "expected": "D8=33，等于 references.bib 中 @entry 总数",
+      "method": "grep -c '^@' references.bib 确认等于 33；或解析 .bib 文件计数 entry 数"
+    },
+    {
+      "check": "D10a 匹配率",
+      "expected": "D10a=100.0%，所有 \\cite 标签均在 bib 条目集中",
+      "method": "提取 .tex 中所有 \\cite{label1,label2} 的 label 集 C，提取 .bib 中所有 entry key 集 B，验证 C ⊆ B 且 |C∩B|/|C|=1.0"
+    },
+    {
+      "check": "无孤儿引用",
+      "expected": "orphan_citations 为空列表",
+      "method": "orphan = C - B（cite 有引但 bib 无条），验证 orphan 集合为空"
+    },
+    {
+      "check": "无僵尸条目",
+      "expected": "zombie_entries 为空列表",
+      "method": "zombie = B - C（bib 有条但未被任何 cite 引用），验证 zombie 集合为空"
+    },
+    {
+      "check": "L0.5 门喂入（CITA-005）",
+      "expected": "D8/D10a 指标已记录并用于质量门判定",
+      "method": "确认审计输出含 D8=33, D10a=100.0% 且标记为可通过 L0.5 数据诚实门（D8≥30 且 D10a=100%）"
+    }
+  ]
+}

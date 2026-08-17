@@ -1,0 +1,25 @@
+{
+  "case_id": "case_001",
+  "skill": "v32-multi-direction-scan",
+  "type": "normal",
+  "description": "正常路径：Step 0 模式决策后对 5 个轮换方向执行多方向扫描（PubMed + OpenAlex）",
+  "input": {
+    "request": "执行 v32 多方向扫描：对以下 5 个轮换方向逐一执行 PubMed 定向查询 + OpenAlex broad/cited 查询，并输出各方向结果表",
+    "context": {
+      "step0_mode_decision": {
+        "aligned_to_paper_pipeline_9_constraints": true,
+        "selected_mode": "rotation_scan",
+        "rationale": "队列非空且 5 个轮换方向均未确认全白，选择 rotation_scan 模式"
+      },
+      "directions": [
+        "Periodic Alternating Nystagmus PINN",
+        "Nystagmus Neutral Deviation PINN",
+        "Smooth Pursuit PINN",
+        "Vestibular Compensation ODE",
+        "Cupula Deflection PINN"
+      ],
+      "paper_pipeline_constraints_ref": "SK-001 (paper-pipeline 9 core constraints)",
+      "api_note": "本地安全扫描器屏蔽 curl → 使用 scripts/pubmed_utils.py (Python urllib)"
+    }
+  }
+}

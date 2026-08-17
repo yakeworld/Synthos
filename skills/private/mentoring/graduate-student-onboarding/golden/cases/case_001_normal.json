@@ -1,0 +1,29 @@
+{
+  "case_id": "case_001",
+  "skill": "graduate-student-onboarding",
+  "type": "normal",
+  "description": "正常路径：学生研究方向清单含 Core 与 Peripheral 各一个方向，应正确分级并生成 5 个 Cron 任务配置与 Memory 收敛决策（取自 SKILL.md EXAMPLES 1）",
+  "input": {
+    "request": "为新研究生生成 onboarding 方案：研究方向分级 + 5 个 Cron 任务配置 + 收敛决策写入 Memory",
+    "context": {
+      "student_research_directions": [
+        {
+          "name": "5 pillars 公开数据集分析",
+          "description": "基于 5 pillars 公开数据集的研究分析"
+        },
+        {
+          "name": "泪膜生物力学",
+          "description": "tear film biomechanics 方向"
+        }
+      ],
+      "cron_tasks": [
+        "autonomous-core-researcher",
+        "paper-repair",
+        "paper-quality-review",
+        "paper-layer-b-review",
+        "literature-monitor"
+      ],
+      "scope_tiers_reference": "SKILL.md Scope tiers: Core=5 pillars+Synthos+教学+算法组件+公开数据集; Peripheral=角膜/晶状体/玻璃体/泪膜/耳鸣/脑震荡生物力学"
+    }
+  }
+}

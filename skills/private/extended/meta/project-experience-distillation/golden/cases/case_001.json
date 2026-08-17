@@ -1,0 +1,9 @@
+{
+  "case_id": "case_001",
+  "name": "正常提炼：ODE 正反馈耦合",
+  "type": "normal",
+  "input": {
+    "project_practice": "P141 视网膜剪切 ODE 调优：从 P140 基线出发，alpha 0.65→0.55，发现正反馈耦合致 A 冲顶，改加性 eps*(A-A_hp) 后 ablation 5.81x",
+    "reflection_q": "为什么有效"
+  }
+}

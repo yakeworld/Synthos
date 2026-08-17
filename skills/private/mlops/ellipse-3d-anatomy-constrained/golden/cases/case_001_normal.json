@@ -1,0 +1,39 @@
+{
+  "case_id": "case_001",
+  "skill": "ellipse-3d-anatomy-constrained",
+  "type": "normal",
+  "description": "正常路径：两帧椭圆参数（均满足 a≥b）+ 已知 R_iris，眼球中心在 XY 平面 (z=0)。触发解剖约束 R_eyeball=2R_iris、d=√3·R_iris，由两帧光轴投影直线交点迭代收敛求眼球中心（SKILL.md EXAMPLES 3 的真实场景）",
+  "input": {
+    "request": "由两帧椭圆参数求解：3D 法向量、虹膜中心 3D 坐标、眼球中心、Rodrigues 旋转矩阵",
+    "context": {
+      "frames": [
+        {
+          "frame_id": 1,
+          "a": 8.0,
+          "b": 5.0,
+          "beta_rad": 0.3,
+          "center_2d": [1.0, 2.0]
+        },
+        {
+          "frame_id": 2,
+          "a": 8.0,
+          "b": 4.5,
+          "beta_rad": 0.8,
+          "center_2d": [-2.0, -1.0]
+        }
+      ],
+      "R_iris": 5.0,
+      "anatomical_constraints": {
+        "R_eyeball": "2 * R_iris",
+        "d": "sqrt(3) * R_iris",
+        "note": "自由度从 2 压缩到 0"
+      },
+      "Center_eye_z": 0.0,
+      "multi_frame_iteration": {
+        "strategy": "先估计 → 计算 → 收敛",
+        "max_iterations": 50,
+        "tolerance": 1e-6
+      }
+    }
+  }
+}

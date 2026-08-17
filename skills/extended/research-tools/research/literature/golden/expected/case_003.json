@@ -1,0 +1,15 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "s2_response": "400 Unrecognized or unsupported fields",
+    "s2_fix": "fields exclude pdfUrls and urls",
+    "pubscholar_result": [],
+    "pubscholar_behavior": "silent empty list, no exception",
+    "fallback_sources": ["semantic_scholar", "pubmed", "crossref", "arxiv"]
+  },
+  "verification": {
+    "s2_400": "request containing pdfUrls/urls returns HTTP 400",
+    "s2_fields": "fixed request uses allowed fields only (title, authors, year, openAccessPdf, externalIds, venue, citationCount, tldr, abstract, publicationTypes)",
+    "pubscholar_no_crash": "no credentials -> returns [] silently, pipeline continues with remaining 4 sources"
+  }
+}

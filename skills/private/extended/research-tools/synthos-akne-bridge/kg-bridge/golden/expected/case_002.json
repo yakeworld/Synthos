@@ -1,0 +1,19 @@
+{
+  "case_id": "kg-bridge_case_002",
+  "status": "error",
+  "error": {
+    "type": "AttributeError",
+    "message": "'KnowledgeGraph' object has no attribute 'resolve_entity'",
+    "context": "resolve_entity 位于 QueryEngine 而非 KnowledgeGraph",
+    "related_unpack_risk": {
+      "type": "ValueError",
+      "message": "too many values to unpack (expected 4)",
+      "cause": "find_related 返回 3 元组 (neighbor, relation_chain, metadata)，4 元解包失败"
+    }
+  },
+  "recovery": {
+    "correct_api_call": "QueryEngine(graph_index=kg).resolve_entity(q)",
+    "correct_unpack": "for neighbor, relation_chain, metadata in kg.find_related(entity, depth=2):",
+    "gene": "KGB-006"
+  }
+}

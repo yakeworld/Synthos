@@ -1,0 +1,10 @@
+{
+  "case_id": "case_002",
+  "name": "空会话：PR 合并无高价值信息",
+  "type": "normal",
+  "input": {
+    "session_transcript": "Tool calls (8): 1) git checkout feature/fix-typo 2) edit README line 42 3) git add README.md 4) git commit 5) git push origin feature/fix-typo 6) create PR #42 7) merge PR #42 8) verify main branch updated. Outcome: PR#42 merged, typo fix in README.",
+    "current_memory": "lit-import path=/media/yakeworld/sda2/Synthos/tools/lit-import. vLLM port 8000 on node3. Paper P141 ODE tuning baseline alpha=0.65. Cron job synthos-daily uses /usr/bin/python3.12 venv. Repo path: ~/Synthos is symlink. Evolution cycle 72 active. DSH version 2.20. Pima CRISP-DM refs: Shearer 2000, Wirth-Hipp 2000.",
+    "memory_target_chars": 2200
+  }
+}

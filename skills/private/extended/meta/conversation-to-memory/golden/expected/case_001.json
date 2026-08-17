@@ -1,0 +1,33 @@
+{
+  "case_id": "case_001",
+  "memory_entries": [
+    {
+      "operation": "remove",
+      "target": "lit-import path=/media/yakeworld/sda/Synthos/tools/lit-import (OUTDATED)",
+      "reason": "旧路径已失效，会话确认新路径"
+    },
+    {
+      "operation": "add",
+      "content": "lit-import 去重经 BibTeX key 排序，重复条目 0；路径=/media/yakeworld/sda2/Synthos/tools/lit-import",
+      "growth_direction": "工具链稳定",
+      "framework_dimension": "P1 原子可复现性",
+      "fermentation_potential": "可沉淀为独立 skill：lit-import 去重管线"
+    },
+    {
+      "operation": "add",
+      "content": "用户偏好：BibTeX key 排序用于去重（非 alphabetical-first-occurrence）",
+      "growth_direction": "增强对用户偏好判断的准确性",
+      "framework_dimension": "P2 原子边界精确",
+      "fermentation_potential": "可沉淀为 skill：记住用户路径/排序偏好"
+    }
+  ],
+  "consolidation_report": {
+    "usage_before": 0.82,
+    "usage_after": 0.71,
+    "usage_target_range": [0.60, 0.75],
+    "operations_order": ["remove", "add"],
+    "constitutional_check": "pass",
+    "declarative_check": "pass",
+    "notes": "旧路径条目已移除，新增 2 条均标注三问，使用率回落至目标区间"
+  }
+}

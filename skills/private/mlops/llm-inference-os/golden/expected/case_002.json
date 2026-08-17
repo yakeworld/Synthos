@@ -1,0 +1,41 @@
+{
+  "case_id": "case_002",
+  "skill": "llm-inference-os",
+  "description": "Golden Error 期望输出：拒绝图片任务（不执行），返回含上下文背景与恢复建议的错误信息，推荐 VL 系列",
+  "model_check": {
+    "model_name": "Qwen3.5",
+    "has_vl_suffix": false,
+    "modality": "text_only",
+    "gene": "LLM-001",
+    "result": "pass"
+  },
+  "decision": {
+    "task_requested": "image_classification",
+    "task_executed": false,
+    "task_rejected": true,
+    "rejection_reason": "Qwen3.5 为纯文本模型（无 VL 后缀），不支持图片输入（一字之差，天壤之别）",
+    "gene": "LLM-001"
+  },
+  "recovery_recommendation": {
+    "recommended_models": ["Qwen2.5-VL", "Qwen3-VL 系列"],
+    "rationale": "需图片能力时应使用含 VL 后缀的多模态型号，而非 Qwen3.5",
+    "gene": "LLM-002"
+  },
+  "error_message_contract": {
+    "has_context": true,
+    "has_recovery_advice": true,
+    "context": "用户指定 Qwen3.5 执行图片分类，但 Qwen3.5 是纯文本模型，无图片处理能力",
+    "recovery_advice": "改用 Qwen2.5-VL 或 Qwen3-VL 系列重新提交图片分类请求"
+  },
+  "traceability": {
+    "recorded": true,
+    "gene": "LLM-005"
+  },
+  "verification_passes": ["LLM-001", "LLM-002"],
+  "error": {
+    "type": "invalid_model_for_modality",
+    "model": "Qwen3.5",
+    "required_capability": "vision",
+    "status": "rejected_with_recovery"
+  }
+}

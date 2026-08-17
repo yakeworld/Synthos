@@ -1,0 +1,27 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：.bbl 引用解析 + 聚类检索补齐至 30+ 篇",
+  "type": "normal",
+  "input": {
+    "paper_dir": "outputs/papers/pima-crispdm",
+    "citation_source": "bbl",
+    "initial_citations": 22,
+    "topic_queries": [
+      "corneal biomechanics ODE",
+      "vestibular VOR nystagmus BPPV"
+    ],
+    "search_mode": "clustered",
+    "max_per_query": 100
+  },
+  "expected": {
+    "final_citations": 32,
+    "pdfs_verified": 29,
+    "citations_deleted_no_pdf": 3,
+    "quality_gate": {
+      "D8_citation_completeness": 0.94,
+      "D10a_bib_tex_match": 0.97,
+      "undefined_citations": 0
+    }
+  },
+  "weight": "critical"
+}

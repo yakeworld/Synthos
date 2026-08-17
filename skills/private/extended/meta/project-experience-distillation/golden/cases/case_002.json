@@ -1,0 +1,9 @@
+{
+  "case_id": "case_002",
+  "name": "正常提炼：批量 DOI 修复",
+  "type": "normal",
+  "input": {
+    "project_practice": "batch_fix_all.py 修复 88 篇论文 DOI 覆盖率 0%→82%。按主题分 5 方向，每方向 1 次聚类检索（5 次总计），替代逐篇 80 次检索。总耗时 40min→2.5min。",
+    "reflection_q": "为什么有效"
+  }
+}

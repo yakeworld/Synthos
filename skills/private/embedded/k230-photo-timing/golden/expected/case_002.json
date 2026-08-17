@@ -1,0 +1,11 @@
+{
+  "case_id": "case_002",
+  "outcome": "error",
+  "error_type": "OSError",
+  "error_message": "current format not support save function!",
+  "error_message_substring_required": "not support save function",
+  "root_cause": "YUV420SP (PIXEL_FORMAT_YUV_SEMIPLANAR_420) is the only format supported by Display.bind_layer and cannot be saved via img.save()",
+  "workaround": "use chn1 (RGB888) or chn2 (RGB565/RGBP888) for snapshot+save operations",
+  "recovery": null,
+  "genes_applied": ["SK-001", "SK-002"]
+}

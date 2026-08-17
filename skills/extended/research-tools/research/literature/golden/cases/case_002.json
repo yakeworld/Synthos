@@ -1,0 +1,17 @@
+{
+  "case_id": "case_002",
+  "description": "正常路径：pipeline 落盘 PDF + 魔数验证 + diagnose 三阶段",
+  "type": "normal",
+  "input": {
+    "command": "python3 literature.py pipeline \"iris recognition\" --sources crossref pubmed --output-dir ./pdfs",
+    "sources": ["crossref", "pubmed"],
+    "output_dir": "./pdfs"
+  },
+  "expected": {
+    "pdfs_downloaded": 12,
+    "pdf_magic_verified": true,
+    "pdfinfo_title_verified": true,
+    "diagnose_stages": ["7_source_search", "doi_resolution", "12_channel_download_test"]
+  },
+  "weight": "critical"
+}

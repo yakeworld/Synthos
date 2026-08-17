@@ -1,0 +1,36 @@
+{
+  "case_id": "002",
+  "description": "环境隔离与 API 误用：在 venv 3.11 execute_code 中 import AKNE/QueryEngine，或按 4 值解包 find_related()/in_edges(data=True)",
+  "input": {
+    "scenario_a": {
+      "environment": "venv Python 3.11 (execute_code)",
+      "action": "import akne.query_engine / from akne import QueryEngine",
+      "context": "venv 3.11 无 sentence-transformers（torch 500MB+ 未安装）"
+    },
+    "scenario_b": {
+      "environment": "系统 Python 3.12 (terminal)",
+      "action": "for n, r, m, d in kg.find_related(entity): ...",
+      "context": "find_related() 返回 3 元组 (neighbor, relation_chain, metadata)，非 4 元组"
+    },
+    "scenario_c": {
+      "environment": "系统 Python 3.12 (terminal)",
+      "action": "for src, tgt, data, extra in kg.graph.in_edges(p, data=True): ...",
+      "context": "in_edges(data=True) 返回 3 元组 (src, tgt, data_dict)，非 4 元组"
+    }
+  },
+  "expected": {
+    "output_structure": {
+      "error_type": "str: ModuleNotFoundError 或 ValueError",
+      "error_message": "str: 含上下文（哪个环境/哪个 API）",
+      "recovery_suggestion": "str: 明确指向正确做法"
+    },
+    "key_checks": [
+      "Scenario A: venv 3.11 中 import AKNE → ModuleNotFoundError（无 sentence-transformers）",
+      "Scenario B: 4 值解包 find_related() → ValueError: too many values to unpack",
+      "Scenario C: 4 值解包 in_edges(data=True) → ValueError: too many values to unpack",
+      "错误信息含上下文：指明错误环境和 API 名称",
+      "恢复建议：Scenario A → 走 terminal 系统 3.12；Scenario B/C → 改为 3 元组解包"
+    ]
+  },
+  "weight": "critical"
+}

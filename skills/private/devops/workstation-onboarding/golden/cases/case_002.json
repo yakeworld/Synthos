@@ -1,0 +1,13 @@
+{
+  "case_id": "case_002",
+  "name": "ssh_timeout_refuse_onboarding",
+  "type": "error",
+  "input": {
+    "remote_host": "ssh student@10.0.0.99:2222",
+    "ssh_connectivity": "timeout",
+    "software_list": ["codex", "obsidian"]
+  },
+  "expected_checks": [
+    "WORK-001 ssh connectivity verification failed → hard pre-condition blocks setup"
+  ]
+}

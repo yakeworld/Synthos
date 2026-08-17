@@ -1,0 +1,26 @@
+{
+  "case_id": "002",
+  "expected_output": "三个场景均产生预期错误：A=ModuleNotFoundError（venv 3.11 无 sentence-transformers），B/C=ValueError: too many values to unpack（3 元组非 4 元组）；错误信息含上下文与恢复建议",
+  "verification": [
+    {
+      "check": "环境隔离（SYNT-004）",
+      "expected": "venv 3.11 execute_code 中 import AKNE 失败，报 ModuleNotFoundError",
+      "method": "在 venv 3.11 中执行 python3 -c 'from akne import QueryEngine'，确认抛出 ModuleNotFoundError 且 message 含 sentence_transformers 或 akne 模块名"
+    },
+    {
+      "check": "find_related 3 元组（陷阱 2）",
+      "expected": "4 值解包 kg.find_related(entity) 抛出 ValueError: too many values to unpack",
+      "method": "在系统 3.12 中执行 for n, r, m, d in kg.find_related('bppv'): pass，确认 ValueError；正确写法 for n, r, m in kg.find_related('bppv'): 不报错"
+    },
+    {
+      "check": "in_edges 3 元组（陷阱 3）",
+      "expected": "4 值解包 in_edges(p, data=True) 抛出 ValueError",
+      "method": "在系统 3.12 中执行 for src, tgt, data, extra in kg.graph.in_edges('bppv', data=True): pass，确认 ValueError；正确写法 for src, tgt, data in kg.graph.in_edges('bppv', data=True): 不报错"
+    },
+    {
+      "check": "错误信息含恢复建议",
+      "expected": "错误输出或文档指引明确给出正确做法",
+      "method": "检查错误信息/文档是否包含：A→'走 terminal 系统 3.12'；B/C→'按 3 元组解包，用 data=True（3 值）或 data=True, keys=True（4 值）'"
+    }
+  ]
+}

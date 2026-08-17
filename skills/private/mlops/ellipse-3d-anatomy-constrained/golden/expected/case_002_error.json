@@ -1,0 +1,23 @@
+{
+  "case_id": "case_002",
+  "expected_status": "error",
+  "expected_output": {
+    "eye_center_computed": false,
+    "error": {
+      "code": "SINGLE_FRAME_INDETERMINATE",
+      "violated_genes": ["ELLI-002", "ELLI-006"],
+      "message_must_include": [
+        "上下文：输入仅 1 帧椭圆参数，单帧存在方位角模糊，光轴投影直线唯一，无法确定眼球中心",
+        "恢复指引：提供至少两帧椭圆参数（不同 β 的光轴投影直线），取其交点迭代求解眼球中心"
+      ]
+    },
+    "allowed_partial_output": {
+      "note": "单帧的 3D 法向量 n 与 cos(alpha)=b/a 仍可计算并如实输出（可计算部分不隐瞒），但眼球中心字段必须为空/拒绝，不得编造"
+    }
+  },
+  "verification_checks": [
+    "拒绝求解眼球中心（eye_center_computed=false），不编造中心坐标（准确优先）",
+    "错误信息包含上下文与恢复指引（约束规则第3条）",
+    "输入完整性校验在核心操作前执行（ELLI-006）"
+  ]
+}

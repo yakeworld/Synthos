@@ -1,0 +1,44 @@
+{
+  "case_id": "002",
+  "description": "重症错误路径：3d-eye-bppv-diagnosis 无 .bib 文件（或 .bib 为空），审计须标记 D8=0 重症并列出全部孤儿标签",
+  "input": {
+    "paper_dir": "outputs/papers/3d-eye-bppv-diagnosis/",
+    "tex_files": ["main.tex"],
+    "bib_files": [],
+    "note": "无 .bib 文件 / .bib 为空（CITA-002 重症条件）",
+    "cite_labels_in_tex": [
+      "Aw2013", "Balatsouras2012", "Baloh2003", "Beyea2012", "Chang2004",
+      "Kim2012", "Lam2013", "Le2012", "McRae2012", "Perez2013",
+      "Strupp2009", "Tumlinson2012", "Wells2012", "Zhang2011", "Gresty2009",
+      "Cole2011", "Lempert2013", "McElroy2014", "Perez2014", "Solari2012",
+      "Strupp2014", "Telstad2010", "Wagner2013", "Wells2014", "Yuan2014",
+      "Zhang2014", "Aw2014", "Baloh2014", "Chang2014", "Kim2014",
+      "Lam2014", "Le2014", "McRae2014", "Perez2015", "Strupp2015",
+      "Tumlinson2015", "Wells2015", "Zhang2015", "Gresty2014", "Cole2014",
+      "Lempert2014", "McElroy2015", "Perez2016", "Solari2015", "Strupp2016",
+      "Telstad2014", "Wagner2015", "Wells2016", "Yuan2015", "Zhang2016",
+      "Aw2015", "Baloh2015", "Chang2015", "Kim2015", "Lam2015", "Le2015",
+      "McRae2015", "Perez2017"
+    ],
+    "cite_label_count": 62
+  },
+  "expected": {
+    "output_structure": {
+      "d8": "int: 0（无 bib 条目）",
+      "d10a": "float: 0.0%",
+      "orphan_citations": "list[str]: 全部 62 个孤儿标签",
+      "zombie_entries": "list[str]: 空（无 bib 即无僵尸）",
+      "severity": "str: 'severe'",
+      "recovery_suggestion": "str: 补齐 .bib 文件的建议"
+    },
+    "key_checks": [
+      "D8=0（CITA-002 重症：无 .bib 或 .bib 为空）",
+      "D10a=0.0%（无 bib 条目可匹配）",
+      "orphan_citations 包含全部 62 个标签（Aw2013, Balatsouras2012, ...）",
+      "severity=severe，优先处理",
+      "恢复建议：列出补齐 .bib 的具体步骤（创建 references.bib，添加 62 个条目）",
+      "分级报告含每篇 D8/D10a 数值（CITA-006）"
+    ]
+  },
+  "weight": "critical"
+}

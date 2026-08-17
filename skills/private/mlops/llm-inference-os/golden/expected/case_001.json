@@ -1,0 +1,41 @@
+{
+  "case_id": "case_001",
+  "skill": "llm-inference-os",
+  "description": "Golden Output：型号判定通过、平台选定 Ubuntu/Debian、内核调优实测 20-30% 且可溯源、步骤可重放",
+  "model_check": {
+    "model_name": "Qwen3-VL",
+    "has_vl_suffix": true,
+    "modality": "multimodal",
+    "gene": "LLM-001",
+    "result": "pass"
+  },
+  "platform_decision": {
+    "selected": "linux_ubuntu_debian",
+    "rating": "⭐⭐⭐⭐⭐",
+    "rejected": ["windows_native", "macos"],
+    "gene": "LLM-003"
+  },
+  "optimization": {
+    "kernel_tuning_applied": true,
+    "measured_throughput_gain_percent": 25,
+    "expected_gain_range_percent": [20, 30],
+    "os_context_switch_latency_assessed": true,
+    "genes": ["LLM-004"]
+  },
+  "evidence_traceability": {
+    "cited_references": [
+      "LLM-Pilot (SC24, IBM/ETH) — OS context switch/interrupt 对延迟的显著影响",
+      "Evaluating Containerization Overhead in MCP Servers (AIxSE 2025) — Linux 容器开销远小于 WSL2",
+      "Optimizing LLM Inference Clusters (2025) — 内核调优对高并发吞吐影响 20-30%"
+    ],
+    "fabricated_data": false,
+    "gene": "LLM-005"
+  },
+  "reproducibility": {
+    "steps_replayable": true,
+    "replay_result_consistent": true,
+    "gene": "LLM-006"
+  },
+  "verification_passes": ["LLM-001", "LLM-003", "LLM-004", "LLM-005", "LLM-006"],
+  "error": null
+}

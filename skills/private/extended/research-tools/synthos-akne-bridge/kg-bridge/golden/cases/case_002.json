@@ -1,0 +1,14 @@
+{
+  "case_id": "kg-bridge_case_002",
+  "case_name": "resolve_entity_wrong_location",
+  "skill": "kg-bridge",
+  "path": "error",
+  "genes": ["KGB-006"],
+  "input": {
+    "query": "BPPV",
+    "api_call": "kg.resolve_entity(q)",
+    "api_host": "KnowledgeGraph",
+    "unpack_style": "four_tuple"
+  },
+  "notes": "陷阱 1 + 2（常见陷阱小节）：resolve_entity 位于 QueryEngine 而非 KnowledgeGraph；find_related 返回 3 元组，4 元解包致 ValueError。"
+}

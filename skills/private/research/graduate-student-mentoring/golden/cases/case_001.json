@@ -1,0 +1,36 @@
+{
+  "case_id": "case_001",
+  "skill": "graduate-student-mentoring",
+  "description": "Golden Input：每周自检记录达标 —— 新增 42 行可运行代码、2 张图 + 1 个 Table、理解每行代码、无卡超 2h 问题、AI 生码已亲自修改 1 处边界条件",
+  "input": {
+    "weekly_self_check": {
+      "new_runnable_code_lines": 42,
+      "figures_produced": 2,
+      "tables_produced": 1,
+      "understands_each_line": true,
+      "stuck_over_2h_unreported": false,
+      "ai_generated_code_personally_modified": {
+        "modified": true,
+        "modification_count": 1,
+        "modification_desc": "修改了数据加载的边界条件（空帧/越界）处理"
+      }
+    },
+    "research_direction": {
+      "drifted_off_core": false,
+      "anchored_to_five_pillars": true
+    }
+  },
+  "expected_checks": {
+    "critical": [
+      "以代码计周：代码行数（42）+ 图/Table 产出（2 图 + 1 Table）均有记录 → 判为有效进展（GRAD-002）",
+      "AI 生码存在可定位的学生修改记录（1 处边界条件）→ 记为已掌握（GRAD-004）"
+    ],
+    "high": [
+      "方向锚定五大支柱，未发散（GRAD-001）",
+      "无卡超 2 小时未上报问题（GRAD-003 无触发）"
+    ],
+    "medium": [
+      "周报中范围约束可复查"
+    ]
+  }
+}

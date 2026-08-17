@@ -1,0 +1,17 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径：S2 废弃字段 400 + PubScholar API 关闭降级",
+  "type": "error",
+  "input": {
+    "s2_request_with_deprecated_fields": ["pdfUrls", "urls"],
+    "pubscholar_credentials_present": false
+  },
+  "expected": {
+    "s2_response": "400 Unrecognized or unsupported fields",
+    "s2_fix": "fields exclude pdfUrls and urls",
+    "pubscholar_result": [],
+    "pubscholar_behavior": "silent empty list, no exception",
+    "fallback_sources": ["semantic_scholar", "pubmed", "crossref", "arxiv"]
+  },
+  "weight": "critical"
+}

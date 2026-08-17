@@ -1,0 +1,27 @@
+{
+  "id": "case_001",
+  "status": "success",
+  "result": {
+    "error_source": "vllm_node",
+    "error_source_not_feishu": true,
+    "breakpoint": "inbound message 之后缺失 response ready 与 Sending response —— 模型调用阶段（API call #1）返回 404，断点在 vLLM 节点而非飞书网关",
+    "root_cause": "模型 qwen3.6-35b-nvfp4 在节点 http://192.168.64.21:8000 上不存在（已删除/改名），节点返回 404；飞书网关消息流（Received raw → Flushing → inbound）本身完整",
+    "evidence": [
+      "agent.log: base_url=http://192.168.64.21:8000/v1（非 open.feishu.cn / api.deepseek.com）→ 404 来自 vLLM 节点（FEIS-001）",
+      "gateway.log: Received raw / Flushing text batch / inbound message 均存在，response ready 缺失 → 断点为模型调用（FEIS-002）",
+      "curl -s http://192.168.64.21:8000/v1/models 返回空/404 → 模型在该节点不存在（FEIS-003）"
+    ],
+    "repair": [
+      "curl -s http://192.168.64.21:8000/v1/models 列出节点实际可用模型名，核对 qwen3.6-35b-nvfp4 是否存在",
+      "若模型不存在：从轮询配置移除该节点，或修正模型名/切换节点",
+      "重发消息后验证 gateway.log 出现 response ready + Sending response，错误不再复现"
+    ]
+  },
+  "checks": {
+    "source_identified_as_vllm_not_feishu": true,
+    "base_url_evidence_cited": true,
+    "timeline_breakpoint_located": true,
+    "v1_models_verification_included": true,
+    "diagnosis_traceable_to_log_lines": true
+  }
+}

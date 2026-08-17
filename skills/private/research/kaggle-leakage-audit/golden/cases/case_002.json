@@ -1,0 +1,32 @@
+{
+  "case_id": "case_002",
+  "skill": "kaggle-leakage-audit",
+  "description": "Golden Error：正样本 <1% 的极度不平衡数据集，仅凭 F1≈0 下结论；且全局 SMOTE 先于分割却报告为「基线 F1」 → 须补 precision/recall/AUC 并检出跨分割泄漏",
+  "input": {
+    "dataset": {
+      "name": "kaggle_extreme_imbalanced",
+      "class_imbalanced": true,
+      "positive_ratio": 0.0017,
+      "positive_fraction": "0.17%"
+    },
+    "reported_result": {
+      "claimed_baseline_f1": 0.02,
+      "preprocessing_order": "全局 SMOTE 先于分割",
+      "conclusion_basis": "仅凭 F1≈0 下结论"
+    },
+    "models": ["RandomForest", "XGBoost"]
+  },
+  "expected_checks": {
+    "critical": [
+      "正样本 <1%（0.17%）→ 禁止仅凭 F1≈0 下结论，必须用 precision/recall/AUC 补充评估（KAGG-004）",
+      "检出全局 SMOTE 先于分割的跨分割边界泄漏：不得把该结果报告为「基线 F1」（预处理必须严格在折内，KAGG-006）"
+    ],
+    "high": [
+      "极不平衡场景：所有模型 F1≈0 时，明确 SMOTE 也无法挽救，结论改由 precision/recall/AUC 支撑",
+      "重跑基线（折内 SMOTE）与泄漏变体（全局 SMOTE）对比，输出差异"
+    ],
+    "medium": [
+      "错误信息包含上下文（为何 F1≈0 不可信 + 泄漏来源）与恢复建议（折内重跑 + 多指标评估）"
+    ]
+  }
+}

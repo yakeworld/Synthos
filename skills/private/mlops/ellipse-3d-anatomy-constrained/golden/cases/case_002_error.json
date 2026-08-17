@@ -1,0 +1,26 @@
+{
+  "case_id": "case_002",
+  "skill": "ellipse-3d-anatomy-constrained",
+  "type": "error",
+  "description": "错误路径：仅给出单帧椭圆参数即请求求解眼球中心。单帧无法确定眼球中心（方位角模糊未消除），应拒绝求解并返回带上下文的错误信息与恢复指引（SKILL.md EXAMPLES / 验证清单第 5 条；ELLI-002）",
+  "input": {
+    "request": "由椭圆参数求解眼球中心（仅 1 帧输入）",
+    "context": {
+      "frames": [
+        {
+          "frame_id": 1,
+          "a": 8.0,
+          "b": 5.0,
+          "beta_rad": 0.3,
+          "center_2d": [1.0, 2.0]
+        }
+      ],
+      "R_iris": 5.0,
+      "anatomical_constraints": {
+        "R_eyeball": "2 * R_iris",
+        "d": "sqrt(3) * R_iris"
+      },
+      "Center_eye_z": 0.0
+    }
+  }
+}

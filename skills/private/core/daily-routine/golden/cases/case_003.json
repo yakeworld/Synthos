@@ -1,0 +1,16 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径：请求未匹配三个目标（整理桌面文件），以及在技能文件内直接实现自动化逻辑——前者应提示用户明确意图，后者判定违反 REDIRECT 边界",
+  "input": {
+    "routine_request": "帮我整理桌面文件并按日期归档",
+    "context": {
+      "trigger": "manual",
+      "matched_targets": [],
+      "audit_violation": {
+        "file": "skills/private/core/daily-routine/SKILL.md",
+        "violation": "SKILL.md 内新增直接执行文件归档的 shell 脚本实现（未分流即执行）"
+      }
+    }
+  },
+  "weight": "high"
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "001",
+  "description": "OpenML 分页检索正常路径：医学关键词 'breast cancer' + limit=50, offset=0，验证分页/解析/类型转换/去重全流程",
+  "input": {
+    "keyword": "breast cancer",
+    "api_endpoint": "/api/v1/json/data/list/",
+    "query_params": {
+      "limit": 50,
+      "offset": 0
+    },
+    "papers_dir_for_dedup": "outputs/papers/"
+  },
+  "expected": {
+    "output_structure": {
+      "candidates": "list[dict]: 候选数据集 {did, name, quality_metrics: dict[str, float]}",
+      "total_datasets": "int: OpenML 返回的总数据集数",
+      "dedup_result": "dict: 与 outputs/papers/ 交叉去重结果",
+      "pagination_info": "dict: {limit: 50, offset: 0, truncated: false}"
+    },
+    "key_checks": [
+      "分页参数 limit=50（非 >200），JSON 无截断（DATA-001）",
+      "使用 /api/v1/json/data/list/ 端点，非 /tag/ 或 /name/（DATA-004）",
+      "从 data.dataset 数组提取（非 data.data），以 did 为唯一标识（非 id）（DATA-006）",
+      "质量指标字符串→float 转换（如 '684.0' → 684.0），非 int 或原生字符串（DATA-002）",
+      "候选数据集与 outputs/papers/ 交叉核对，排除已用数据集"
+    ]
+  },
+  "weight": "critical"
+}

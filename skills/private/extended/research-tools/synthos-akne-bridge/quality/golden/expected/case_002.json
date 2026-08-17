@@ -1,0 +1,12 @@
+{
+  "case_id": "quality_case_002",
+  "status": "rejected",
+  "error": {
+    "code": "INVALID_INPUT",
+    "context": "skill_path 为空字符串，无法定位待检技能目录",
+    "recovery": "请提供有效的技能目录路径（如 skills/core/knowledge-extraction），父级技能将路由到对应子技能执行质量检查",
+    "gene_applied": "QUAL-001"
+  },
+  "quality_report": null,
+  "internal_state_exposed": false
+}

@@ -1,0 +1,25 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "routings": [
+      {
+        "routine_request": "检查 cron 任务健康度",
+        "routing": "devops/cron-system-maintenance",
+        "action": "skill_view(name='devops/cron-system-maintenance')"
+      },
+      {
+        "routine_request": "运行系统健康检查 self-check",
+        "routing": "devops/project-health-audit",
+        "action": "skill_view(name='devops/project-health-audit')"
+      }
+    ],
+    "execution_result": null,
+    "status": "PASS"
+  },
+  "verification": [
+    "cron 请求分流至 devops/cron-system-maintenance（DAIL-003）",
+    "健康检查请求分流至 devops/project-health-audit（DAIL-004）",
+    "两个分流目标均在白名单三目标内（daily-intelligence-briefing / cron-system-maintenance / project-health-audit）",
+    "本技能不产出任何执行结果，仅返回 routing 决策（DAIL-001）"
+  ]
+}

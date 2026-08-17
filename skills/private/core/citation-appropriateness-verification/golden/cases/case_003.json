@@ -1,0 +1,20 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径：SS/Crossref/PubMed 三源全部失效（网络故障），验证三源回退过程完整记录、无法验证条目标记、不编造结果",
+  "input": {
+    "bibtex_entries": [
+      {
+        "key": "Lee2022Survey",
+        "title": "A survey of transformer architectures in NLP",
+        "author": "Lee, H. et al.",
+        "year": "2022",
+        "doi": "10.1007/978-3-030-00000-0_01",
+        "citation_context": "背景部分引用以说明 Transformer 架构演进。"
+      }
+    ],
+    "api_sources": {"semantic_scholar": "unreachable", "crossref": "unreachable", "pubmed": "unreachable"},
+    "crossref_query_length_chars": 142,
+    "context": {"network": "all_sources_down"}
+  },
+  "weight": "high"
+}
