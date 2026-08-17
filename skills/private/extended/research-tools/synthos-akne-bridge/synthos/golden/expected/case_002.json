@@ -1,0 +1,31 @@
+{
+  "case_id": "002",
+  "expected_output": "'等待用户下一步指示' 响应被诊断为违反 '动灵在内'（自主性失守）；修复动作立即回到技能树扫描空白/失败任务并执行主动发现，产出附来源引用（文件路径/日志行号），凭据自环境变量读取，修复后不再出现等待指示的响应",
+  "verification": [
+    {
+      "check": "诊断正确（SYNT-001）",
+      "expected": "diagnosis.violation == '动灵在内'，root_cause == 'autonomy_lapse'",
+      "method": "检查诊断块：erroneous_response '等待用户下一步指示' 被映射到违反 SYNT-001/Rule1；诊断非空且具体"
+    },
+    {
+      "check": "修复为主动探索（SYNT-001）",
+      "expected": "fix_action.executed_immediately == true，action 为扫描技能树空白/失败任务，非再次等待",
+      "method": "检查 fix_action：executed_immediately 为真；gap_found 非空且定位到具体文件；响应中不再出现 '等待用户指示'"
+    },
+    {
+      "check": "产出附来源引用（SYNT-002/Rule3）",
+      "expected": "fix_output.provenance 含可验证来源（文件路径/日志行号）",
+      "method": "对 fix_output.provenance 每项验证：文件路径存在或日志行号可定位；diff 非空且与 gap_found 对应"
+    },
+    {
+      "check": "凭据自环境（SYNT-003/Rule4）",
+      "expected": "fix_output.hardcoded_credentials == false",
+      "method": "grep 修复命令与产出中的凭据模式；确认为空或来自 env 变量引用，非明文硬编码"
+    },
+    {
+      "check": "复验通过（Rule1）",
+      "expected": "re_verification.waiting_for_user_after_fix == false",
+      "method": "检查修复后的完整响应序列：不再含 '等待用户指示' 类输出；主动探索动作已执行完毕"
+    }
+  ]
+}

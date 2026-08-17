@@ -1,0 +1,38 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：健康状态 + 明确改进方向（验证清单覆盖率缺口）→ 四态决策 OPTIMIZE，overall 六维按 v2.21 公式精确重算（数必重算，不可袭旧）",
+  "input": {
+    "current_state": {
+      "cycle": 207,
+      "score": 0.96,
+      "status": "healthy",
+      "consecutive_healthy": 3,
+      "rejected_buffer": []
+    },
+    "cycle_data": {
+      "total_skills": 191,
+      "yaml_valid_pct": 1.0,
+      "git_tracked_pct": 1.0,
+      "circular_clean": 1.0,
+      "encoding_clean": 1.0,
+      "dirty_sk_count": 0,
+      "version_pct": 1.0,
+      "signature_pct": 1.0,
+      "io_contract_pct": 1.0,
+      "principles_pct": 0.98,
+      "verify_pct": 0.72,
+      "example_pct": 0.95,
+      "deep_pct": 1.0,
+      "rules_pct": 0.74,
+      "golden_pct": 0.57,
+      "coverage_pct": 1.0,
+      "dirty_files": 0
+    }
+  },
+  "expected": {
+    "decision": "OPTIMIZE",
+    "overall_score_expected_range": [0.9599, 0.9601],
+    "lowest_roi_dimension": "verify"
+  },
+  "weight": 0.4
+}

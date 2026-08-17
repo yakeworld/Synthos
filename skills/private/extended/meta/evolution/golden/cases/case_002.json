@@ -1,0 +1,40 @@
+{
+  "case_id": "case_002",
+  "description": "错误路径（自欺检测）：state.json 声称 score=0.95，但实测重算为 0.7956（差异 15.9% > 5%）→ 采用实测值，记录 self_deception_risk，拒绝以声称值推进（Cycle 85 重组后膨胀陷阱复现）",
+  "input": {
+    "current_state": {
+      "cycle": 85,
+      "score": 0.95,
+      "status": "excellent",
+      "consecutive_healthy": 8,
+      "rejected_buffer": []
+    },
+    "cycle_data": {
+      "total_skills": 197,
+      "yaml_valid_pct": 1.0,
+      "git_tracked_pct": 0.94,
+      "circular_clean": 1.0,
+      "encoding_clean": 1.0,
+      "dirty_sk_count": 2,
+      "version_pct": 0.99,
+      "signature_pct": 0.94,
+      "io_contract_pct": 0.7956,
+      "principles_pct": 0.90,
+      "verify_pct": 0.45,
+      "example_pct": 0.50,
+      "deep_pct": 1.0,
+      "rules_pct": 0.30,
+      "golden_pct": 0.40,
+      "coverage_pct": 0.95,
+      "dirty_files": 40
+    }
+  },
+  "expected": {
+    "self_deception_detected": true,
+    "claimed_score": 0.95,
+    "measured_score_expected_range": [0.79, 0.80],
+    "discrepancy_pct_gt_5": true,
+    "proceed_with": "measured_score"
+  },
+  "weight": 0.3
+}

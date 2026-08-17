@@ -1,0 +1,21 @@
+{
+  "case_id": "case_002",
+  "description": "正常路径（QueryEngine 查询）：resolve_entity 精确/模糊匹配命中 + get_relations 关系遍历（基于 references/api-reference.md 实测行为）",
+  "input": {
+    "mode": "query",
+    "queries": [
+      {"api": "qe.resolve_entity", "args": ["BPPV"]},
+      {"api": "qe.resolve_entity", "args": ["Synthos"]},
+      {"api": "qe.get_relations", "args": ["bppv"]}
+    ]
+  },
+  "expected": {
+    "status": "ok",
+    "resolve_results": {
+      "BPPV": "bppv",
+      "Synthos": "sources/synthos"
+    },
+    "relations_non_empty": true
+  },
+  "weight": 0.3
+}

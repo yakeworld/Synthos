@@ -1,0 +1,33 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：完整 7+1 东西融合哲学框架 + 真实原子技能 knowledge-extraction → 按 extract→trace→classify→fix→verify 五步，将每条哲学约束追溯为可执行工程约束",
+  "input": {
+    "philosophical_framework": {
+      "source_file": "skills/private/extended/meta/cognitive-atom-architecture/references/philosophical-foundations.md",
+      "dimensions": [
+        {"name": "第一性原理", "has_definition": true, "has_metric": true, "atom_mapping": ["ACQ", "EXT", "HYP", "ARG"]},
+        {"name": "系统思维", "has_definition": true, "has_metric": true, "atom_mapping": ["ACQ", "ASC", "ARG"]},
+        {"name": "贝叶斯思维", "has_definition": true, "has_metric": true, "atom_mapping": ["HYP", "VER"]},
+        {"name": "证伪主义", "has_definition": true, "has_metric": true, "atom_mapping": ["VER"]},
+        {"name": "奥卡姆剃刀", "has_definition": true, "has_metric": true, "atom_mapping": ["EXT", "ARG"]},
+        {"name": "熵减", "has_definition": true, "has_metric": true, "atom_mapping": ["EXT"]},
+        {"name": "人机共生", "has_definition": true, "has_metric": true, "atom_mapping": ["META"]}
+      ],
+      "reference_set_complete": true,
+      "reference_files": [
+        "references/philosophical-foundations.md",
+        "references/synthos-dimension-guide.md",
+        "references/philosophy-engineering-verification-pattern.md",
+        "references/east-west-syncretism-pattern.md"
+      ]
+    },
+    "target_skill": "skills/core/knowledge-extraction/SKILL.md",
+    "target_skill_excerpt": "## 原则 (Principles)\n\n- **凡数必源**：每个实体声明必须可追溯到原文段落或表格\n- **去形留神**：只提取结构化知识，不复制原文叙述\n\n## 验证清单 (Verification)\n\n- [ ] 每个 KnowledgeItem 的 claim 字段含原文引用位置"
+  },
+  "expected": {
+    "status": "ok",
+    "constraint_count": 7,
+    "steps_in_order": ["extract", "trace", "classify", "fix", "verify"]
+  },
+  "weight": 0.5
+}

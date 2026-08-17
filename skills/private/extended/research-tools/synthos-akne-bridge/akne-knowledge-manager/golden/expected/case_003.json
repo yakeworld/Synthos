@@ -1,0 +1,29 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "status": "error_handled",
+    "results": [
+      {
+        "query": "qe.resolve_entity('')",
+        "error": "entity_name_empty: 实体名为空，无法解析",
+        "context": {"stage": "validate_input", "raw_input": ""},
+        "recovery_hint": "请提供非空实体名；可用 qe.search_entities(关键词) 先浏览知识库实体列表"
+      },
+      {
+        "query": "qe.resolve_entity('杨晓凯')",
+        "error": "entity_not_found: 知识库中未找到实体 '杨晓凯'",
+        "context": {"stage": "resolve", "raw_input": "杨晓凯"},
+        "recovery_hint": "底层 resolve_entity 返回 None（已知限制）；建议改用 qe.search_entities('杨晓凯') 模糊检索，或检查实体名拼写（中英混写/全半角）"
+      }
+    ],
+    "silent_empty_results": 0
+  },
+  "verification": [
+    "json.load 输出有效",
+    "两条查询均未静默返回空/None（silent_empty_results == 0）—— Golden Error 契约",
+    "每条错误含 error（明确错误信息）+ context（查询实体名与失败阶段）+ recovery_hint（建议的查询入口或参数修正）",
+    "错误信息不暴露内部状态细节（如堆栈裸抛），但保留可定位上下文（AKNE-007）",
+    "底层 None 行为被如实记录（api-reference 实测: 杨晓凯→None✗），不伪造命中（AKNE-001 准确为先）",
+    "同一输入二次运行：错误信息与恢复指引一致（AKNE-003 可复现）"
+  ]
+}

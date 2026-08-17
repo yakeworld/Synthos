@@ -1,0 +1,31 @@
+{
+  "case_id": "001",
+  "expected_output": "空闲周期触发后自主扫描技能树，识别 xhs-content 缺 RULES 小节，从该文件实际内容推导补齐，产出含 diff 与可验证来源（文件路径/日志行号），凭据自环境变量读取，无功能重叠；全程无 '等待用户指示' 输出",
+  "verification": [
+    {
+      "check": "主动优先（SYNT-001/Rule1）",
+      "expected": "触发后自主执行探索动作，输出中无 '等待用户指示'",
+      "method": "检查响应文本不含 '等待用户指示'/'等待下一步'；exploration_action.executed 为真且由触发事件（idle_cycle）驱动"
+    },
+    {
+      "check": "空白识别具体且基于实际内容（SYNT-005）",
+      "expected": "gap_found 定位到具体技能文件（skills/xhs-content/SKILL.md 缺 RULES），补齐内容从该文件 Pitfalls/Verification 实际内容推导",
+      "method": "read 该技能文件，核对 added_rules 各条可在文件既有内容（Pitfalls/Verification）中找到依据；fix.diff 非空"
+    },
+    {
+      "check": "凡数必源（SYNT-002/Rule3）",
+      "expected": "每条断言/发现附可验证来源（文件路径或日志行号），来源可执行验证",
+      "method": "对 provenance 每项执行验证：文件路径存在（os.path.exists）或日志行号可定位到对应内容；无来源即 fail"
+    },
+    {
+      "check": "凭据自环境（SYNT-003/Rule4）",
+      "expected": "credential_check.hardcoded_credentials == false，凭据自环境变量读取",
+      "method": "grep 产出与命令中的凭据模式（API key/token/密码）；确认为空或来自 env 变量引用（如 $ENV_VAR），非明文硬编码"
+    },
+    {
+      "check": "边界不叠（SYNT-004/Rule2）",
+      "expected": "overlap_check.overlaps_with_other_skills == false",
+      "method": "核对本动作职责（主动探索/空白补齐）与 synthos-akne-bridge 其他技能（如 akne-maintenance 的审计）功能不重叠；重叠即需合并"
+    }
+  ]
+}

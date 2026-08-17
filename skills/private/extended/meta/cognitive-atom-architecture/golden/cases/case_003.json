@@ -1,0 +1,33 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径（原件缺件）：references/ 四件套缺 east-west-syncretism-pattern.md → '原件无损'不成立，拒绝产出",
+  "input": {
+    "philosophical_framework": {
+      "source_file": "skills/private/extended/meta/cognitive-atom-architecture/references/philosophical-foundations.md",
+      "dimensions": [
+        {"name": "第一性原理", "has_definition": true, "has_metric": true, "atom_mapping": ["ACQ", "EXT", "HYP", "ARG"]},
+        {"name": "系统思维", "has_definition": true, "has_metric": true, "atom_mapping": ["ACQ", "ASC", "ARG"]},
+        {"name": "贝叶斯思维", "has_definition": true, "has_metric": true, "atom_mapping": ["HYP", "VER"]},
+        {"name": "证伪主义", "has_definition": true, "has_metric": true, "atom_mapping": ["VER"]},
+        {"name": "奥卡姆剃刀", "has_definition": true, "has_metric": true, "atom_mapping": ["EXT", "ARG"]},
+        {"name": "熵减", "has_definition": true, "has_metric": true, "atom_mapping": ["EXT"]},
+        {"name": "人机共生", "has_definition": true, "has_metric": true, "atom_mapping": ["META"]}
+      ],
+      "reference_set_complete": false,
+      "reference_files": [
+        "references/philosophical-foundations.md",
+        "references/synthos-dimension-guide.md",
+        "references/philosophy-engineering-verification-pattern.md"
+      ]
+    },
+    "target_skill": "skills/core/knowledge-extraction/SKILL.md",
+    "target_skill_excerpt": "## 原则 (Principles)\n\n- **凡数必源**：每个实体声明必须可追溯到原文段落或表格"
+  },
+  "expected": {
+    "status": "rejected",
+    "reason": "reference_set_incomplete",
+    "missing_files": ["references/east-west-syncretism-pattern.md"],
+    "constraint_count": 0
+  },
+  "weight": 0.2
+}

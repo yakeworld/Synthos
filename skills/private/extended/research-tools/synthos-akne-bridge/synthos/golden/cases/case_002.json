@@ -1,0 +1,32 @@
+{
+  "case_id": "002",
+  "description": "错误路径：空闲周期内产出 '等待用户下一步指示' 的响应 → 诊断自主性失守，修复为立即执行主动探索动作并附来源引用",
+  "input": {
+    "trigger_event": "idle_cycle",
+    "session_context": {
+      "available_skills_tree": "skills/",
+      "system_state": "idle",
+      "last_evolution_log": "evolution-log.md"
+    },
+    "user_instruction": null,
+    "erroneous_response": "等待用户下一步指示",
+    "credentials_source": "environment_variables"
+  },
+  "expected": {
+    "output_structure": {
+      "diagnosis": "dict: {violation: '动灵在内 (SYNT-001/Rule1)', root_cause: 'autonomy_lapse', waiting_for_user: true}",
+      "fix_action": "dict: {action: 'scan_skills_tree_for_gaps_or_failed_tasks', executed_immediately: true, gap_found: str}",
+      "fix_output": "dict: {provenance: list[str], diff: str, hardcoded_credentials: false}",
+      "re_verification": "dict: {waiting_for_user_after_fix: false}"
+    },
+    "key_checks": [
+      "诊断正确：'等待用户下一步指示' 被识别为违反 '动灵在内' 原则（自主性失守）（SYNT-001）",
+      "修复为主动探索：回到技能树扫描空白/失败任务并立即执行，非再次等待（SYNT-001）",
+      "产出附来源引用：修复产出含可验证来源（文件路径/日志行号）（SYNT-002/Rule3）",
+      "凭据自环境：修复执行凭据自环境变量读取，无硬编码（SYNT-003/Rule4）",
+      "无功能重叠：修复动作未与 synthos-akne-bridge 他技功能重叠（SYNT-004/Rule2）",
+      "复验通过：修复后不再出现 '等待用户指示' 响应"
+    ]
+  },
+  "weight": "critical"
+}

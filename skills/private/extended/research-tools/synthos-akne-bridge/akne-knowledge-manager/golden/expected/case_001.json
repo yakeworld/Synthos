@@ -1,0 +1,28 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "status": "ok",
+    "contradictions": [
+      {
+        "file_path": "akne/wiki/BPPV拟真参数设置.md",
+        "declared_value": "耳石半径 0.5~15nm，平均 7.5nm",
+        "correct_value_source": "akne/wiki/耳石解剖参考.md + 解剖学标准值：碳酸钙耳石直径 5-30 μm",
+        "magnitude_ratio": 1000,
+        "severity": "fatal",
+        "analysis": "声明为半径 0.5~15 nm（直径 1~30 nm），实际耳石直径 5~30 μm = 5000~30000 nm，量级差约 1000 倍（10^3），疑为 μm 误写为 nm"
+      }
+    ],
+    "non_contradictions": [
+      "耳石密度 2950 kg/m^3（碳酸钙）— 与标准值一致，无矛盾",
+      "半规管角加速度阈值 4.37°/s^2 — 单源声明，未检出矛盾（标注为待核证）"
+    ]
+  },
+  "verification": [
+    "json.load 输出有效",
+    "检出的耳石半径矛盾 severity == 'fatal'，magnitude_ratio == 1000（手算可复现: 5-30 μm / 1-30 nm ≈ 10^3）",
+    "每条矛盾含 file_path + declared_value + correct_value_source 三要素（Golden Output 契约：路径+原文+正确值来源）",
+    "无矛盾的参数不被误报（密度 2950 kg/m^3 不得出现在 contradictions 中）",
+    "单源声明（角加速度阈值）标注为待核证而非断言矛盾（AKNE-002 证据驱动：无孤证断言）",
+    "同一输入二次运行：矛盾条数与判定一致（AKNE-003 可复现）"
+  ]
+}

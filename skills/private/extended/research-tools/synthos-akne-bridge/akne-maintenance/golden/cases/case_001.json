@@ -1,0 +1,26 @@
+{
+  "case_id": "001",
+  "description": "正常路径：已验证存在的 AKNE 图谱目录 + 源文件，运行 scripts/akne-comprehensive-audit.py 一次尽测，产出 16 项指标与五阶递进审计报告",
+  "input": {
+    "akne_graph_dir": "/media/yakeworld/sda2/Synthos/akne/graph",
+    "source_files_dir": "/media/yakeworld/sda2/Synthos/akne/sources",
+    "daemon_status": "running",
+    "operation_request": "daily_health_check",
+    "audit_script": "scripts/akne-comprehensive-audit.py"
+  },
+  "expected": {
+    "output_structure": {
+      "input_validation": "dict: AKNE-005 输入校验结果 {path_exists: true, readable: true, valid: true}",
+      "metrics": "dict: 16 项指标，每项为可溯数值，如 {connectivity, orphan_nodes, duplicate_names, self_loops, source_coverage, vectors, edge_format, metadata, wiki_pollution, entity_namespace, path_prefix, ...}",
+      "audit_report": "list[str]: 报告阶段，严格顺序 [健康诊断, 内容矛盾, 研究空白, 假设, 修复]"
+    },
+    "key_checks": [
+      "输入校验先行：图谱目录与源文件路径存在、可读（AKNE-005）",
+      "一次尽测：单次运行覆盖全部 16 项指标，未分项测试（AKNE-001）",
+      "指标齐全：连通性/孤立节点/重名/自环/源文件覆盖/向量/边格式等 16 项均有可溯数值（P0 证据可溯性）",
+      "五阶递进：报告章节顺序为 健康诊断→内容矛盾→研究空白→假设→修复（AKNE-002）",
+      "矛盾先于假设：内容矛盾确认解决前不生成假设（AKNE-003）"
+    ]
+  },
+  "weight": "critical"
+}

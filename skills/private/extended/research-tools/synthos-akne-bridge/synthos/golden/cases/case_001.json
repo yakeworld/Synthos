@@ -1,0 +1,32 @@
+{
+  "case_id": "001",
+  "description": "正常路径：进化轮次结束且无新任务（空闲周期触发），无用户显式指示 → 自主扫描技能树，发现 xhs-content 缺少约束规则小节并补齐，产出可追溯",
+  "input": {
+    "trigger_event": "idle_cycle",
+    "session_context": {
+      "available_skills_tree": "skills/",
+      "system_state": "evolution_round_ended_no_new_tasks",
+      "last_evolution_log": "evolution-log.md"
+    },
+    "user_instruction": null,
+    "credentials_source": "environment_variables"
+  },
+  "expected": {
+    "output_structure": {
+      "exploration_action": "dict: {triggered_by: 'idle_cycle', scanned_target: 'skills/xhs-content/SKILL.md', gap_found: 'missing RULES section'}",
+      "fix": "dict: {derived_from: [str], added_rules: [str], diff: str}",
+      "provenance": "list[str]: 可验证来源（文件路径/日志行号）",
+      "credential_check": "dict: {hardcoded_credentials: false, source: 'environment_variables'}",
+      "overlap_check": "dict: {overlaps_with_other_skills: false, merged: false}"
+    },
+    "key_checks": [
+      "主动优先：触发后自主执行探索动作，未输出 '等待用户指示'（SYNT-001/Rule1）",
+      "空白识别具体：定位到具体技能文件级空白（xhs-content 缺 RULES 小节）（SYNT-005）",
+      "推导补齐：补齐内容基于该文件实际内容（Pitfalls/Verification）推导，产出含修改 diff（SYNT-005）",
+      "凡数必源：产出附可验证来源（文件路径/日志行号），来源可执行验证（SYNT-002/Rule3）",
+      "凭据自环境：凭据自环境变量读取，无硬编码（SYNT-003/Rule4）",
+      "边界不叠：未与 synthos-akne-bridge 他技功能重叠（SYNT-004/Rule2）"
+    ]
+  },
+  "weight": "critical"
+}

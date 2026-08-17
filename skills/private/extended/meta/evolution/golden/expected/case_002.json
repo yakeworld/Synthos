@@ -1,0 +1,28 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "self_deception_detected": true,
+    "claimed_score": 0.95,
+    "measured_score": 0.7956,
+    "discrepancy_pct": 16.3,
+    "decision": "DIAGNOSE",
+    "state_downgrade": {"from": "excellent", "to": "good"},
+    "self_deception_risk_recorded": true,
+    "recommendations": [
+      "重组周期（文件移动/分母变化 109→197）后必须完整重跑 BENCHMARK，不可沿用旧分",
+      "VERIFY 独立重算，不信任 state.json 历史值"
+    ],
+    "next_actions": [
+      "以 measured_score=0.7956 更新 state",
+      "在 evolution-log highlights 中声明状态降级原因（差异>5% 规则）"
+    ]
+  },
+  "verification": [
+    "claimed_score 与 current_state.score 一致（0.95）",
+    "measured_score 由输入 cycle_data 按 v2.21 公式独立重算得出（手算可复现），与 state 声称值差异 16.3% > 5%（|0.95-0.7956|/0.95）",
+    "self_deception_detected == true 且 self_deception_risk 已写入 state（P0 证据可溯：声称值无源即弃）",
+    "状态降级 excellent→good（差异>5% 强制降级规则）",
+    "next_actions 不含任何基于 0.95 声称值的 IMPROVE 动作",
+    "同一输入二次运行：measured_score 与降级判定一致（P1 可复现）"
+  ]
+}

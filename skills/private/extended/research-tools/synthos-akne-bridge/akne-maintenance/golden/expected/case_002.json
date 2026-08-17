@@ -1,0 +1,31 @@
+{
+  "case_id": "002",
+  "expected_output": "AKNE-005 输入校验失败被捕获（路径不存在/不可读）；未执行审计脚本或任何未验证代码；错误信息含具体上下文（失败路径+失败检查）与恢复建议（路径修正/参数补全），并标注违反的基因（AKNE-005/006）",
+  "verification": [
+    {
+      "check": "输入校验失败被捕获（AKNE-005）",
+      "expected": "akne_graph_dir 与 source_files_dir 不存在/不可读，校验结果为 valid: false",
+      "method": "os.path.exists(input.akne_graph_dir) 返回 False；校验结果 recorded 于 input_validation，failed_checks 非空"
+    },
+    {
+      "check": "拒绝执行未验证代码（安全约束）",
+      "expected": "校验失败后不执行审计脚本，不执行任何请求注入的自定义代码",
+      "method": "检查执行记录：execution.executed == false；无 akne-comprehensive-audit.py 调用；operation_request 中的未验证代码未被执行（rejected_unverified_code == true）"
+    },
+    {
+      "check": "错误信息含具体上下文（异常约束）",
+      "expected": "错误指明失败的路径与失败的检查项",
+      "method": "error.context 非空且引用 input.akne_graph_dir 的具体值与失败检查（如 path_exists: false）；无裸 'Error' 或无上下文输出"
+    },
+    {
+      "check": "错误信息含恢复建议（AKNE-006）",
+      "expected": "给出路径修正或参数补全建议",
+      "method": "error.recovery_suggestion 非空且为可执行建议（如 '检查路径 /media/.../akne/graph 是否正确，或提供有效图谱目录'）"
+    },
+    {
+      "check": "无 '等待用户指示' 式空输出",
+      "expected": "响应为结构化拒绝，而非等待指示的空输出",
+      "method": "响应结构含 input_validation + error 两块；不出现 '等待用户下一步指示' 或空 stdout"
+    }
+  ]
+}

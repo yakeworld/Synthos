@@ -1,0 +1,27 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "hard_convergence_triggered": true,
+    "trigger_rule": "连续3轮无进展 → 降级至探索模式（硬收敛护栏）",
+    "decision": "EXPLORE",
+    "action": "degrade_to_explore",
+    "rejected_buffer": [
+      {"cycle": 208, "dimension": "verify", "suggestion": "批量注入验证清单", "status": "rejected"},
+      {"cycle": 210, "dimension": "verify", "suggestion": "verify 方向整体封禁（3 轮无进展）", "status": "rejected"}
+    ],
+    "next_actions": [
+      "自扩关键词探索新方向（EXPLORE 语义），不重提 verify 同方向建议",
+      "本 cycle 不执行任何 SKILL.md 编辑（edits=0）",
+      "记录降级原因到 evolution-log"
+    ],
+    "edits_this_cycle": 0
+  },
+  "verification": [
+    "hard_convergence_triggered == true（3 轮同方向 progress=false 触发）",
+    "decision == EXPLORE 且 action == degrade_to_explore",
+    "next_actions 中不含 verify 同方向建议（rejected_buffer 生效：同方向不再提）",
+    "edits_this_cycle == 0（降级轮不编辑，遵守一维一修与 EDIT_BUDGET）",
+    "降级事件写入 evolution-log（Git 即记忆：交而后信）",
+    "同一输入二次运行：触发判定与降级动作一致（P1 可复现）"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "case_id": "001",
+  "expected_output": "输入校验通过（路径存在、可读）；单次运行 akne-comprehensive-audit.py 覆盖全部 16 项指标，每项有可溯数值；审计报告严格循 健康诊断→内容矛盾→研究空白→假设→修复 五阶递进，无 '先假设后矛盾' 倒序",
+  "verification": [
+    {
+      "check": "输入校验先行（AKNE-005）",
+      "expected": "图谱目录与源文件路径存在且可读，校验结果 recorded",
+      "method": "执行 os.path.exists + os.access(R_OK) 于 input.akne_graph_dir 与 input.source_files_dir；两者均通过后才进入审计"
+    },
+    {
+      "check": "一次尽测（AKNE-001）",
+      "expected": "单次运行 scripts/akne-comprehensive-audit.py 覆盖全部 16 项指标，无分项测试",
+      "method": "检查执行记录仅调用一次审计脚本；16 项指标在同一输出的 metrics 中齐全"
+    },
+    {
+      "check": "指标齐全且可溯（P0 证据可溯性）",
+      "expected": "连通性/孤立节点/重名/自环/源文件覆盖/向量/边格式/元数据/Wiki污染/entity命名空间/路径前缀等 16 项均有可溯数值",
+      "method": "对 metrics 的 16 个键逐一检查：值非空且可追溯至脚本输出/数据文件；缺项即 fail"
+    },
+    {
+      "check": "五阶递进顺序（AKNE-002）",
+      "expected": "报告章节顺序为 [健康诊断, 内容矛盾, 研究空白, 假设, 修复]",
+      "method": "提取审计报告章节序列，断言与期望顺序完全一致；出现 '假设' 在 '内容矛盾' 之前即 fail"
+    },
+    {
+      "check": "矛盾先于假设（AKNE-003）",
+      "expected": "内容矛盾确认解决前，'假设' 阶段不产出任何假设项",
+      "method": "检查报告中 '假设' 章节内容仅在对应矛盾条目标记为 resolved 之后出现；无 '先假设后矛盾' 倒序"
+    }
+  ]
+}

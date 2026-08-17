@@ -1,0 +1,31 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "status": "ok",
+    "steps": ["extract", "trace", "classify", "fix", "verify"],
+    "engineering_constraints": [
+      {
+        "philosophical_source": "第一性原理",
+        "target_skill_location": "skills/core/knowledge-extraction/SKILL.md#原则",
+        "constraint_text": "提取实体时必须标注其定义的最小公理来源（原文定理/假设编号），无来源者标 inferred 并降低置信度",
+        "step": "fix"
+      },
+      {
+        "philosophical_source": "贝叶斯思维",
+        "target_skill_location": "skills/core/knowledge-extraction/SKILL.md#验证清单",
+        "constraint_text": "每个 claim 输出 prior/posterior 置信度字段，证据不足时 posterior 不得高于 0.6",
+        "step": "fix"
+      }
+    ],
+    "note": "以上 2 条为示例；完整输出须覆盖全部 7 个维度各 1 条约束（constraint_count=7），每条含 philosophical_source/target_skill_location/constraint_text 三字段且位置在目标技能文件内"
+  },
+  "verification": [
+    "json.load 输出有效",
+    "steps 数组顺序严格为 extract→trace→classify→fix→verify",
+    "engineering_constraints 长度 == 7（== 输入框架维度数）",
+    "每条约束含 philosophical_source、target_skill_location、constraint_text 三个非空字段",
+    "每条 constraint_text 是可执行措辞（含动词/阈值/字段名），非哲学空话",
+    "target_skill_location 全部落在 target_skill 文件路径之下",
+    "同一 target_skill_location 不出现两条矛盾约束（verify 步去重通过）"
+  ]
+}

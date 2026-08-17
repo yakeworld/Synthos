@@ -1,0 +1,18 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径（边界查询）：空实体名与未知实体查询 → 技能层必须返回明确错误信息 + 恢复指引（建议的查询入口或参数修正），而非静默空结果（AKNE-007）",
+  "input": {
+    "mode": "query",
+    "queries": [
+      {"api": "qe.resolve_entity", "args": [""]},
+      {"api": "qe.resolve_entity", "args": ["杨晓凯"]}
+    ],
+    "known_behavior": "底层 QueryEngine 对未命中实体返回 None（api-reference 实测: 杨晓凯→None✗），技能层负责将 None 转为结构化错误"
+  },
+  "expected": {
+    "status": "error_handled",
+    "silent_empty_results": 0,
+    "errors_with_recovery_hint": 2
+  },
+  "weight": 0.3
+}

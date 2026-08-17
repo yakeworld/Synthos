@@ -1,0 +1,36 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径（硬收敛护栏）：连续 3 轮对 verify 维度无进展 + rejected_buffer 含同方向建议 → 触发硬收敛，降级 EXPLORE，同方向不再提",
+  "input": {
+    "current_state": {
+      "cycle": 210,
+      "score": 0.96,
+      "status": "healthy",
+      "consecutive_healthy": 6,
+      "recent_cycles": [
+        {"cycle": 208, "target_dimension": "verify", "progress": false},
+        {"cycle": 209, "target_dimension": "verify", "progress": false},
+        {"cycle": 210, "target_dimension": "verify", "progress": false}
+      ],
+      "rejected_buffer": [
+        {"cycle": 208, "dimension": "verify", "suggestion": "批量注入验证清单", "status": "rejected"}
+      ]
+    },
+    "cycle_data": {
+      "total_skills": 191,
+      "dirty_files": 0,
+      "verify_pct": 0.72,
+      "example_pct": 0.95,
+      "rules_pct": 0.74,
+      "golden_pct": 0.57
+    }
+  },
+  "expected": {
+    "hard_convergence_triggered": true,
+    "action": "degrade_to_explore",
+    "decision": "EXPLORE",
+    "verify_target_repeats": 3,
+    "edits_this_cycle": 0
+  },
+  "weight": 0.3
+}

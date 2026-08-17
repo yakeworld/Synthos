@@ -1,0 +1,26 @@
+{
+  "case_id": "002",
+  "description": "错误路径：不存在的图谱目录 + 无效运维请求 → AKNE-005 输入校验失败，拒绝执行，输出含上下文与恢复建议的错误信息",
+  "input": {
+    "akne_graph_dir": "/media/yakeworld/sda2/Synthos/akne/graph_does_not_exist",
+    "source_files_dir": "/media/yakeworld/sda2/Synthos/akne/sources_missing",
+    "daemon_status": "unknown",
+    "operation_request": "unvalidated_custom_code_injection",
+    "audit_script": "scripts/akne-comprehensive-audit.py"
+  },
+  "expected": {
+    "output_structure": {
+      "input_validation": "dict: {path_exists: false, readable: false, valid: false, failed_checks: [str]}",
+      "error": "dict: {context: str, recovery_suggestion: str, violated_genes: ['AKNE-005', 'AKNE-006']}",
+      "execution": "dict: {executed: false, rejected_unverified_code: true}"
+    },
+    "key_checks": [
+      "输入校验失败被捕获：图谱目录/源文件路径不存在（AKNE-005）",
+      "错误信息含具体上下文：指明哪个路径、何种检查失败（异常约束）",
+      "错误信息含恢复建议：路径修正或参数补全（AKNE-006）",
+      "拒绝执行未验证的代码/脚本（安全约束）",
+      "无 '等待用户指示' 式空输出或无上下文的裸报错"
+    ]
+  },
+  "weight": "critical"
+}

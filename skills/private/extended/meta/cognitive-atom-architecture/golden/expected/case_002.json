@@ -1,0 +1,18 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "status": "aborted",
+    "reason": "framework_incomplete",
+    "missing_dimension": "证伪主义",
+    "missing_aspect": "度量法",
+    "engineering_constraints": [],
+    "recovery_hint": "为『证伪主义』维度补充度量法（如: 可证伪条件覆盖率 = 含 falsification 字段的 HYP 数 / HYP 总数），重新运行追溯"
+  },
+  "verification": [
+    "status == 'aborted' 且 reason == 'framework_incomplete'",
+    "missing_dimension 精确为 '证伪主义'（与输入中 has_metric=false 的维度一致）",
+    "engineering_constraints 为空数组（中止即不产出，宁缺毋滥）",
+    "输出包含 recovery_hint 恢复指引（COGN-006: 错误信息必须含上下文与恢复建议）",
+    "不出现对完整维度的部分约束产出（不允许半截追溯）"
+  ]
+}

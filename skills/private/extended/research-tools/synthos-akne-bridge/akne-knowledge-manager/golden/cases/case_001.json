@@ -1,0 +1,32 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径（内容级审计）：提取 BPPV 知识库各文件物理参数声明并交叉比对，检出耳石半径单位矛盾（声明 0.5~15nm vs 碳酸钙晶体实际 5-30 μm，相差 1000 倍，致命级）",
+  "input": {
+    "mode": "content_audit",
+    "source_files": [
+      {
+        "path": "akne/wiki/BPPV拟真参数设置.md",
+        "declarations": [
+          "耳石半径 0.5~15nm，平均 7.5nm",
+          "耳石密度 2950 kg/m^3（碳酸钙）",
+          "半规管角加速度阈值 4.37°/s^2"
+        ]
+      },
+      {
+        "path": "akne/wiki/耳石解剖参考.md",
+        "declarations": [
+          "碳酸钙耳石（otoconia）直径 5-30 μm",
+          "椭圆囊耳石膜附着密度 ~3000 个/mm^2"
+        ]
+      }
+    ],
+    "external_reference": "碳酸钙耳石（otolith/calcium carbonate crystal）实际尺寸 5-30 μm（解剖学标准值）"
+  },
+  "expected": {
+    "status": "ok",
+    "contradiction_count": 1,
+    "fatal_contradictions": 1,
+    "must_detect": "耳石半径 0.5~15nm vs 5-30 μm（1000 倍量级差）"
+  },
+  "weight": 0.4
+}

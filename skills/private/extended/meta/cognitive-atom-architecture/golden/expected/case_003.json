@@ -1,0 +1,17 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "status": "rejected",
+    "reason": "reference_set_incomplete",
+    "missing_files": ["references/east-west-syncretism-pattern.md"],
+    "engineering_constraints": [],
+    "recovery_hint": "恢复 references/east-west-syncretism-pattern.md（v4.0.0 四件套之一），校验四件套齐全后重新运行追溯"
+  },
+  "verification": [
+    "status == 'rejected' 且 reason == 'reference_set_incomplete'",
+    "missing_files 精确列出缺失的四件套文件（本例: east-west-syncretism-pattern.md）",
+    "engineering_constraints 为空数组（COGN-004: 原件缺失则拒绝产出）",
+    "输出包含 recovery_hint（COGN-006: 错误信息含上下文与恢复建议）",
+    "不暴露内部状态细节（COGN-007: 严禁暴露内部状态）"
+  ]
+}

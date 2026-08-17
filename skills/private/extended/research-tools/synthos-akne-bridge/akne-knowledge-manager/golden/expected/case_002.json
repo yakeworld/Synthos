@@ -1,0 +1,21 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "status": "ok",
+    "results": [
+      {"query": "qe.resolve_entity('BPPV')", "resolved": "bppv", "match_type": "fuzzy"},
+      {"query": "qe.resolve_entity('Synthos')", "resolved": "sources/synthos", "match_type": "fuzzy"},
+      {"query": "qe.get_relations('bppv')", "relations": [
+        {"type": "示例关系（实际以知识库为准）", "target": "<entity>", "source": "akne knowledge graph"}
+      ], "relations_non_empty": true}
+    ]
+  },
+  "verification": [
+    "json.load 输出有效",
+    "resolve_entity('BPPV') == 'bppv'（与 references/api-reference.md 实测一致: BPPV→bppv✓）",
+    "resolve_entity('Synthos') == 'sources/synthos'（与 api-reference 实测一致）",
+    "get_relations('bppv') 返回非空关系列表，每条含 type 与 target 字段",
+    "查询结果可追溯到知识库（AKNE-002 证据驱动，无编造实体）",
+    "同一查询二次运行结果一致（AKNE-003 可复现）"
+  ]
+}
