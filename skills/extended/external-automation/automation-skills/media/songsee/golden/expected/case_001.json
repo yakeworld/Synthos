@@ -1,0 +1,30 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "route": "songsee track.mp3 --viz spectrogram,mel,chroma,tempogram,flux -o grid.png --style magma --format png",
+    "preflight": {
+      "audio_file_exists": true,
+      "audio_format_supported_natively": true,
+      "viz_types_all_valid": true,
+      "style_valid": true
+    },
+    "result": {
+      "status": "success",
+      "output_file": "grid.png",
+      "panel_count": 5,
+      "output_format": "png",
+      "file_exists": true,
+      "file_nonzero_bytes": true
+    },
+    "note": "MP3 原生解码无需 ffmpeg；多 viz 类型渲染为单图网格（SONG-001）；--style magma 合法色板（SONG-006）"
+  },
+  "verification": [
+    "input.context.viz 中每个值 ∈ {spectrogram, mel, chroma, hpss, selfsim, loudness, tempogram, mfcc, flux}（验证清单第 3 项）",
+    "输入音频文件存在且格式受支持：MP3 原生解码，ffmpeg_installed=false 仍可执行（SONG-003）",
+    "执行命令中 --viz 为逗号拼接的 5 个类型，顺序与输入一致",
+    "输出 grid.png 存在且非零字节（验证清单第 5 项，P0：ls -l 独立复核）",
+    "输出扩展名 .png 与 --format png 一致",
+    "单张图像含 5 个面板，各面板对应 viz 类型可辨（验证清单第 6 项 / 例 2 验证）",
+    "crashed == False"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "sanity_report": [
+      {
+        "issue": "NFS mount point — full traversal would timeout",
+        "fix": "Use timeout + shallow commands"
+      }
+    ],
+    "fix_commands": ["timeout 30 git -C /mnt/nfs/big config --list --show-origin | grep credential"]
+  },
+  "verification": [
+    "全程使用 timeout + 浅层命令（REPO-005）",
+    "禁止 os.walk / du -sh 全遍历（300s 超时）",
+    "每条诊断命令在超时上限内完成",
+    "输出限定范围的 sanity_report，避免全盘扫描"
+  ]
+}

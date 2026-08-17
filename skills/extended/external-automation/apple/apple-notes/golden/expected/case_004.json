@@ -1,0 +1,23 @@
+{
+  "case_id": "case_004",
+  "expected_output": {
+    "command_executed": null,
+    "note_result": {
+      "status": "error",
+      "error": "memo 未安装（command -v memo 失败）",
+      "recovery": [
+        "brew tap antoniorodr/memo && brew install antoniorodr/memo/memo",
+        "安装后授予自动化权限（System Settings → Privacy → Automation）"
+      ]
+    },
+    "note": "前置环境缺失 → 不静默失败，返回可执行安装指引（异常约束 / APPL-007 权限与前置检查）"
+  },
+  "verification": [
+    "检测到 memo_installed == false 后未执行 memo 命令（command_executed == null）",
+    "note_result.status == 'error'",
+    "note_result.error 指明失败上下文（memo 未安装，command -v memo 失败）",
+    "note_result.recovery 含完整安装命令 'brew tap antoniorodr/memo && brew install antoniorodr/memo/memo'",
+    "recovery 含自动化权限授予指引（验证清单第 1 项）",
+    "未将错误伪装成'无笔记'等空结果（数据诚实：无源则无诚）"
+  ]
+}

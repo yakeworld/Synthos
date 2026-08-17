@@ -1,0 +1,24 @@
+{
+  "case_id": "case_001",
+  "skill": "citation-verification",
+  "phase": "phase1",
+  "description": "Phase 1 假DOI判定 — 三验铁律全真 → FABRICATED，进入替代决策树",
+  "input": {
+    "paper_dir": "papers/demo-crispdm",
+    "citation_key": "Balloccu2020SMOTE",
+    "bib_entry": {
+      "type": "@article",
+      "title": "SMOTE for high-dimensional data: a survey",
+      "author": "Balloccu et al.",
+      "year": 2020,
+      "doi": "10.1000/0000000.00000"
+    },
+    "checks": {
+      "doi_org_status": 404,
+      "crossref_status": 404,
+      "semantic_scholar_match": null,
+      "pdf_present": false
+    }
+  },
+  "weight": "critical"
+}

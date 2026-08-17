@@ -1,0 +1,16 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "route": "skill_view(name='references')",
+    "delegate_to": "references",
+    "passthrough": true,
+    "parent_executes": false,
+    "note": "父级仅目录索引（SHAR-005/006），references 子技能通过 Hermes 自动发现并以 skill_view 加载执行；request/context（含 target_doc）完整转交无吞并"
+  },
+  "verification": [
+    "route == \"skill_view(name='references')\"",
+    "delegate_to == 'references'（路由目标精确匹配唯一子技能）",
+    "parent_executes == False（父级不直接执行，仅目录索引）",
+    "passthrough == True 且 context.target_doc 字段原样转交"
+  ]
+}

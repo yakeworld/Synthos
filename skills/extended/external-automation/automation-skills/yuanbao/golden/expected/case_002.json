@@ -1,0 +1,14 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "should_clarify": true,
+    "reply_example": "群里匹配到 3 个「小明」：小明(u_1001)、小明同学(u_1002)、小明子(u_1003)。请告诉我要私信哪一位？",
+    "notes": "YUAN-005: 匹配不唯一时必须返回候选列表并要求澄清，禁止猜测或随机选择"
+  },
+  "verification": [
+    "未发送 DM（ambiguous 状态不得发送）",
+    "回复列出全部 3 个候选（名称+user_id），数量与工具返回一致",
+    "明确请求用户澄清目标，未猜测/随机选择任何用户（YUAN-005）",
+    "group_code 已从 chat_id 'group:535168412' 正确提取为 '535168412'"
+  ]
+}

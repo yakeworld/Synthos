@@ -1,0 +1,24 @@
+{
+  "case_id": "case_002",
+  "expect": {
+    "status": "ok",
+    "layout": "linear-progression",
+    "style_allowed": ["craft-handmade", "ikea-manual", "hand-drawn-edu"],
+    "aspect": "3:4",
+    "image_generate_format": "portrait",
+    "language": "zh",
+    "data_integrity": {
+      "verbatim_data_points": ["8.4%", "12,000", "3.1x", "2024-03", "2025-06"],
+      "secrets_stripped": true,
+      "forbidden_substrings": []
+    },
+    "deliverables": [
+      "source-{slug}.md",
+      "analysis.md",
+      "structured-content.md",
+      "prompts/infographic.md",
+      "infographic.png"
+    ],
+    "rationale": "时间线内容 → BAOY-004 linear-progression；3:4 非 image_generate 支持档 → 映射到最近的 portrait"
+  }
+}

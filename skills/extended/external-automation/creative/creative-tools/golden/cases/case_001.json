@@ -1,0 +1,16 @@
+{
+  "case_id": "case_001",
+  "description": "ASCII 艺术请求路由到 ascii-art 成员（正常路径）",
+  "input": {
+    "task_desc": "帮我把 'Synthos' 生成一个 ASCII 艺术横幅",
+    "context": {
+      "available_members": ["ascii-art", "manim-video", "heartmula", "p5js"]
+    }
+  },
+  "expected": {
+    "routed_member": "ascii-art",
+    "unique_member": true,
+    "executed_at_suite_level": false
+  },
+  "weight": "critical"
+}

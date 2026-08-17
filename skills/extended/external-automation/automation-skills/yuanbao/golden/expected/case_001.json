@@ -1,0 +1,17 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "tool_call": {
+      "name": "yb_query_group_members",
+      "args": { "group_code": "328306697", "action": "find", "name": "元宝", "mention": true }
+    },
+    "reply_example": "@元宝 你好，有人找你！",
+    "notes": "回复文本本身即群消息（YUAN-001），无需调用发送工具；@nickname 前有空格；group_code 从 chat_id 'group:328306697' 提取"
+  },
+  "verification": [
+    "group_code == '328306697'（从 chat_id 'group:328306697' 正确提取，YUAN-004）",
+    "发送前已调用 yb_query_group_members 且 action=='find', mention==true（YUAN-002）",
+    "回复文本含 '@' + 工具返回的精确昵称，且 @ 前有空格",
+    "未调用多余发送工具，未添加权限免责声明或'我无法发送'类措辞（YUAN-001）"
+  ]
+}

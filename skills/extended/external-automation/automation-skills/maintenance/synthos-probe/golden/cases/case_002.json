@@ -1,0 +1,13 @@
+{
+  "case_id": "case_002",
+  "type": "error_path",
+  "description": "错误路径：单原子检查传入不存在的路径（路径陷阱）",
+  "input": {
+    "probe_target": "single_atom",
+    "atom": {
+      "name": "research-ideation",
+      "path": "skills/research-ideation/SKILL.md"
+    },
+    "repo_root": "/media/yakeworld/sda2/Synthos"
+  }
+}

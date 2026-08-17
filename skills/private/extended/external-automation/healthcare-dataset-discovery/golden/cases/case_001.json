@@ -1,0 +1,29 @@
+{
+  "case_id": "case_001",
+  "description": "OpenML 心血管数据集发现（正常路径）",
+  "input": {
+    "medical_domain": "cardiovascular disease"
+  },
+  "strategy": {
+    "primary_source": "OpenML",
+    "endpoint": "https://www.openml.org/api/v1/json/data/list",
+    "filtering": "local",
+    "avoid": ["limit/500"]
+  },
+  "expected": {
+    "status": "accessible",
+    "dataset_results": [
+      {
+        "name": "Cardiovascular-Disease-dataset",
+        "did": 45547,
+        "source": "OpenML",
+        "url": "https://www.openml.org/data/v1/download/{file_id}",
+        "NumberOfInstances": 70000,
+        "NumberOfFeatures": 13,
+        "access_type": "open",
+        "relevance": "high"
+      }
+    ]
+  },
+  "weight": "critical"
+}

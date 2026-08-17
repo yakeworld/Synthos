@@ -1,0 +1,22 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径：意图模糊「remind me」→ 先澄清再行动",
+  "input": {
+    "task": "remind me to review the PR",
+    "list": null,
+    "context": {
+      "platform": "macOS",
+      "remindctl_authorized": true,
+      "intent_clarified": false,
+      "ambiguous": true
+    }
+  },
+  "expected": {
+    "command_executed": null,
+    "reminder_status": {
+      "status": "clarify",
+      "clarify": "这是要在 Apple Reminders（同步到你的 iPhone/iPad）建条目，还是要 agent 在指定时间发 cronjob 警报？"
+    }
+  },
+  "weight": "critical"
+}

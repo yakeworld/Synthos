@@ -1,0 +1,13 @@
+{
+  "case_id": "case_003",
+  "path": "error",
+  "description": "空源内容 → 拒绝执行并返回带上下文的错误",
+  "input": {
+    "request": "帮我做一张信息图",
+    "source_content": "",
+    "layout": null,
+    "style": null,
+    "aspect": null,
+    "language": "zh"
+  }
+}

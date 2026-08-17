@@ -1,0 +1,27 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：多步表单流程自测（注册/登录表单，有效+无效+边界输入，端到端走通）",
+  "input": {
+    "target_app_url": "http://localhost:3000/register",
+    "test_scenarios": [
+      "有效输入：合法邮箱+8位密码+确认密码一致 → 提交成功进入登录页",
+      "无效输入：空邮箱 → 提交，应显示邮箱必填校验",
+      "无效输入：邮箱含特殊字符 <script>alert(1)</script> → 提交，应转义/拒绝",
+      "边界输入：超长密码（200字符）→ 提交，应截断或提示超限",
+      "多步导航：注册成功 → 跳转到 /login → 用新账号登录 → 进入 /dashboard",
+      "快速点击：连续快速点击提交按钮 5 次 → 应仅提交一次（防重复）"
+    ],
+    "context": {
+      "app_type": "web_form",
+      "long_page": false,
+      "evidence_required": true
+    }
+  },
+  "expected": {
+    "covers_valid_and_invalid": true,
+    "console_checked_after_interactions": true,
+    "findings_have_repro_steps": true,
+    "evidence_media_inline": true
+  },
+  "weight": "critical"
+}

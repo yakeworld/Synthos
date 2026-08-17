@@ -1,0 +1,27 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：播放指定专辑 'play miles davis kind of blue' → 单次搜索取 URI 后立即播放（示例 1 / SPOT-001）",
+  "input": {
+    "request": "play miles davis kind of blue",
+    "context": {
+      "user_tier": "premium",
+      "active_device": true,
+      "intent_type": "album",
+      "search_mock": {
+        "tool": "spotify_search",
+        "args": {"query": "miles davis kind of blue", "types": ["album"], "limit": 1},
+        "returns": {"uri": "spotify:album:1weenld61qoidwYuZ1GESA"}
+      }
+    }
+  },
+  "expected": {
+    "route": "tool_sequence",
+    "sequence": [
+      {"tool": "spotify_search", "args": {"query": "miles davis kind of blue", "types": ["album"], "limit": 1}},
+      {"tool": "spotify_playback", "args": {"action": "play", "context_uri": "spotify:album:1weenld61qoidwYuZ1GESA"}}
+    ],
+    "result": {"status": "success", "is_playing": true},
+    "crashed": false
+  },
+  "weight": "critical"
+}

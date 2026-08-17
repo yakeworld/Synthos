@@ -1,0 +1,16 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "status": "success",
+    "geo_data": {
+      "lat": 40.689,
+      "lon": -74.044
+    }
+  },
+  "verification": [
+    "search 返回 lat ~40.689（±0.01）、lon ~-74.044（±0.01）",
+    "输出含 lat/lon/display_name/type 字段",
+    "使用 Nominatim 数据源，请求频率 ≤1 req/s",
+    "输出含 bounding box 和 importance score（若可用）"
+  ]
+}

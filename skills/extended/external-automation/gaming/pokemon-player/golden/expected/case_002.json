@@ -1,0 +1,19 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "game_response": {
+      "action_sequence": ["walk_left", "walk_left", "walk_up", "walk_up", "wait_60", "wait_60", "wait_60"],
+      "sidestep": {"executed": true, "tiles": 2, "direction": "left", "before_north_move": true},
+      "warp_wait": {"action": "wait_60", "count": 3, "placed": "end of sequence (after door map transition)"},
+      "verification": {"screenshot_after_segment": true}
+    },
+    "note": "出建筑陷阱（POKE-004）：出门后直接向北会走回室内，必须先横向（left/right）2 格再向预定方向；门换图（POKE-003）：序列末尾追加 2-3 个 wait_60 等待黑屏过渡完成，防止读到过时位置"
+  },
+  "verification": [
+    "序列中任何 walk_up（向预定方向）之前都存在 2 个同向 walk_left/walk_right（先横向避让门口，POKE-004）",
+    "序列末尾 wait_60 计数 ∈ [2,3] 且位于动作序列尾部（POKE-003）",
+    "wait_60 未被拆分到序列中部（换图等待必须在过渡完成后统一追加）",
+    "动作段总长度 ≤ 4 个移动动作 + 等待（未超过 4-5 动作无视觉验证的阈值）",
+    "段后存在截图 + vision_analyze 确认位置已在新地图（Step 5 VERIFY）"
+  ]
+}

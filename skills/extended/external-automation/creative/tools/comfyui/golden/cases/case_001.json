@@ -1,0 +1,27 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：SDXL txt2img 工作流执行并返回 image_results",
+  "input": {
+    "workflow_desc": "生成一张 1024x1024 的电影感风景图：cinematic photograph, dramatic lighting, intricate detail",
+    "workflow_file": "workflows/sdxl_txt2img.json",
+    "model": "sd_xl_base_1.0.safetensors",
+    "parameters": {
+      "width": 1024,
+      "height": 1024,
+      "steps": 30,
+      "cfg": 7.5,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "denoise": 1.0,
+      "seed": 42
+    }
+  },
+  "expected": {
+    "status": "success",
+    "workflow_valid_dict": true,
+    "image_results_non_empty": true,
+    "image_fields": ["url", "dimensions", "seed", "model_version"],
+    "expected_dimensions": [1024, 1024]
+  },
+  "weight": "critical"
+}

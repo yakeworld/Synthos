@@ -1,0 +1,21 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "browser_findings": [
+      {"type": "render", "detail": "滚动至底部时某表格下方出现 120px 空白占位（图片懒加载未触发）", "repro": "加载 /docs/api-reference → browser_scroll 到底 → 逐屏 browser_snapshot", "evidence": "MEDIA:/tmp/dogfood/longpage_bottom.png"},
+      {"type": "layout", "detail": "窄视口下目录侧栏与正文重叠", "repro": "视口 375px → 加载首页 → browser_vision annotate=true", "evidence": "MEDIA:/tmp/dogfood/narrow_layout.png"}
+    ],
+    "scroll_to_bottom": {"executed": true, "method": "browser_scroll down until document height reached"},
+    "screenshot_evidence": "MEDIA:/tmp/dogfood/longpage_annotate.png",
+    "console_checks": ["after_navigate_docs", "after_scroll_bottom", "after_subpage_return"],
+    "evidence_captured_with": "browser_vision annotate=true"
+  },
+  "verification": [
+    "存在执行滚动直至页面底部的操作记录（DOGF-004 尽览无余），未只截首屏",
+    "findings 含折叠线以下的渲染/布局观察（render/layout 类），非仅首屏问题",
+    "导航与滚动关键交互后调用了 browser_console()（DOGF-002）",
+    "布局/渲染缺陷以 MEDIA:<path> 内联 browser_vision annotate=true 截图（DOGF-003）",
+    "多步（子文档往返）走通并确认状态恢复（DOGF-005）",
+    "全程仅测试，未修改目标应用代码（验证清单项 5）"
+  ]
+}

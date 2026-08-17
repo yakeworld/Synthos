@@ -1,0 +1,19 @@
+{
+  "case_id": "case_002",
+  "type": "error_path",
+  "description": "错误路径：HeartCodec 误用 bfloat16，违反 HEAR-004（音质退化）",
+  "input": {
+    "request": "generate song",
+    "command": "python ./examples/run_music_generation.py",
+    "params": {
+      "model_path": "./ckpt",
+      "version": "3B",
+      "lyrics": "./assets/lyrics.txt",
+      "tags": "./assets/tags.txt",
+      "save_path": "./assets/output_bad.mp3",
+      "lazy_load": true,
+      "codec_dtype": "bfloat16",
+      "max_audio_length_ms": 240000
+    }
+  }
+}

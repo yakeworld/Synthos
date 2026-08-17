@@ -1,0 +1,27 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径 — 模板不在 54 目录（notion-redesign.md 不存在）",
+  "input": {
+    "user_request": "用 templates/notion-redesign.md 模板生成页面",
+    "context": {
+      "chosen_template": "notion-redesign.md",
+      "content_type": "marketing landing page",
+      "deliverable": "rendered HTML page"
+    }
+  },
+  "expected_behavior": {
+    "should_produce": false,
+    "critical_checks": [
+      "error_non_empty",
+      "template_is_null",
+      "suggestions_non_empty"
+    ],
+    "high_checks": [
+      "error_states_template_not_in_54",
+      "suggestions_list_closest_real_template"
+    ],
+    "medium_checks": [
+      "suggestions_offer_recovery"
+    ]
+  }
+}

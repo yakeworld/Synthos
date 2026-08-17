@@ -1,0 +1,37 @@
+{
+  "case_id": "case_002",
+  "description": "正常路径 — 戏仿改编（结构映射 + 单音节替换 + 保留原句）",
+  "input": {
+    "user_request": "戏仿改编一首已有的 crime 主题歌曲，新主题是 code（编码/算法），保留原曲结构骨架与部分原句",
+    "context": {
+      "original_structure": {
+        "sections": ["Verse 1", "Chorus", "Verse 2", "Chorus", "Bridge", "Chorus"],
+        "sample_line": {
+          "text": "We buried the crime under the pines",
+          "syllables": 10,
+          "stressed_positions": [1, 3, 5, 7],
+          "rhyme_scheme": "AABB",
+          "held_note_vowel": "ee"
+        }
+      },
+      "new_theme": "code",
+      "monosyllable_swap": {"Crime": "Code", "Snake": "Noose"}
+    }
+  },
+  "expected_behavior": {
+    "should_produce": true,
+    "critical_checks": [
+      "skeleton_mapped",
+      "stress_alignment_preserved",
+      "lyrics_not_null"
+    ],
+    "high_checks": [
+      "held_note_vowel_matched",
+      "monosyllable_swap_applied",
+      "original_lines_retained_ge_2"
+    ],
+    "medium_checks": [
+      "new_theme_carries_whole_song"
+    ]
+  }
+}

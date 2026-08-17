@@ -1,0 +1,27 @@
+{
+  "case_id": "case_003",
+  "description": "NFS 挂载点诊断超时（浅探规避路径）",
+  "input": {
+    "repo_path": "/mnt/nfs/big",
+    "failure_symptom": "Diagnosis on NFS mount point"
+  },
+  "strategy": {
+    "constraint": "Use timeout + shallow commands only",
+    "avoid": ["os.walk", "du -sh", "full directory traversal"],
+    "max_command_timeout": "300s"
+  },
+  "expected": {
+    "sanity_report": [
+      {
+        "issue": "NFS mount point — full traversal would timeout at 300s",
+        "root_cause": "NFS is extremely slow; os.walk/du -sh over all entries timeout",
+        "fix": "Use timeout + shallow commands; avoid full traversal"
+      }
+    ],
+    "fix_commands": [
+      "timeout 30 git -C /mnt/nfs/big config --list --show-origin | grep credential"
+    ],
+    "status": "constrained_diagnosis"
+  },
+  "weight": "high"
+}

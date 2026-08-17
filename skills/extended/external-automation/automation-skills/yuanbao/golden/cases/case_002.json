@@ -1,0 +1,26 @@
+{
+  "case_id": "case_002",
+  "description": "目标用户名匹配不唯一，需请求澄清（错误路径）",
+  "input": {
+    "request": "给小明私信发一个 hello",
+    "context": {
+      "chat_id": "group:535168412",
+      "tool_response": {
+        "yb_send_dm": {
+          "status": "ambiguous",
+          "candidates": [
+            { "name": "小明", "user_id": "u_1001" },
+            { "name": "小明同学", "user_id": "u_1002" },
+            { "name": "小明子", "user_id": "u_1003" }
+          ]
+        }
+      }
+    }
+  },
+  "expected": {
+    "should_clarify": true,
+    "no_guessing": true,
+    "candidate_count_returned": 3
+  },
+  "weight": "critical"
+}

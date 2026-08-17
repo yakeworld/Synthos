@@ -1,0 +1,21 @@
+{
+  "case_id": "case_002",
+  "expected_error": {
+    "raised": false,
+    "http_status": 401,
+    "http_status_alternatives": [401, 403, 400],
+    "no_local_gif_written": true,
+    "error_message_contains_context": true,
+    "error_message_contains_recovery_suggestion": true,
+    "message_keywords": [
+      "TENOR_API_KEY",
+      "https://developers.google.com/tenor/guides/quickstart"
+    ],
+    "message_example": "GIF-SEARCH ERROR: Tenor API returned 401 (invalid or missing key) for https://tenor.googleapis.com/v2/search?q=cat&limit=1. Recovery: set a valid TENOR_API_KEY environment variable (free key: https://developers.google.com/tenor/guides/quickstart) and retry."
+  },
+  "invariants": [
+    "curl 请求不得被静默忽略：401/403 必须显式检测（验证清单第 1 条）",
+    "不产生本地 GIF 文件，不抛出未捕获异常",
+    "错误信息含上下文（端点 + 状态码）与恢复建议（RULES 异常约束）"
+  ]
+}

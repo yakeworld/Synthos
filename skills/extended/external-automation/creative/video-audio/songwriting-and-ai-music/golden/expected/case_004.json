@@ -1,0 +1,42 @@
+{
+  "case_id": "case_004",
+  "status": "error",
+  "error": "style_field_violation: 'Nirvana-style' 含艺术家名/商标，违反 SKILL.md §6 'NO artist names or trademarks. Describe the sound instead.'",
+  "violation": {
+    "type": "artist_name_or_trademark",
+    "offending_tokens": ["Nirvana-style"],
+    "clause": "SKILL.md §6 Suno AI Prompt Engineering — TIPS: NO artist names or trademarks"
+  },
+  "lyrics": null,
+  "compliant_alternative": {
+    "style_field": "90s grunge, distorted overdriven guitars, raw anguished male vocals, minor key, lo-fi analog warmth, dynamic build from hushed verse to screaming chorus",
+    "formula_elements_present": ["genre", "mood", "era", "instruments", "vocal_style", "production"],
+    "describes_sound_not_name": true
+  },
+  "suggestions": [
+    "用声音描述替代艺术家名：'90s grunge' 而非 'Nirvana-style'",
+    "补全公式各要素（情绪/时代/乐器/人声/制作）",
+    "如需排除风格，使用 Exclude Styles 字段"
+  ],
+  "qa_checks": [
+    {
+      "id": "violation_detected",
+      "rule": "检测并拒绝艺术家名/商标",
+      "critical": true,
+      "expected_pass_condition": "error 非空且 violation.type=artist_name_or_trademark"
+    },
+    {
+      "id": "compliant_alternative",
+      "rule": "提供合规替代（描述声音而非指名）",
+      "critical": true,
+      "expected_pass_condition": "compliant_alternative.describes_sound_not_name=true 且无艺术家名"
+    },
+    {
+      "id": "alternative_formula",
+      "rule": "替代风格含公式要素",
+      "critical": false,
+      "expected_pass_condition": "compliant_alternative.formula_elements_present 全齐"
+    }
+  ],
+  "references_used": ["SKILL.md §6 TIPS: NO artist names or trademarks"]
+}

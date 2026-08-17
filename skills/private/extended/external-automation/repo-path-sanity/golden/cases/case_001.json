@@ -1,0 +1,26 @@
+{
+  "case_id": "case_001",
+  "description": "全局 insteadOf 劫持 HTTPS remote（正常诊断+修复路径）",
+  "input": {
+    "repo_path": "/work/proj",
+    "failure_symptom": "HTTPS push 异常转 SSH"
+  },
+  "strategy": {
+    "first_step": "git config --list --show-origin | grep credential",
+    "trace": "Check ~/.gitconfig for url.*.insteadOf and credential.helper",
+    "diagnostic_command": "git config --global --get url.https://github.com/.insteadOf || echo \"no insteadOf\""
+  },
+  "expected": {
+    "sanity_report": [
+      {
+        "issue": "url.https://github.com/.insteadOf = ssh://git@github.com/ in ~/.gitconfig",
+        "root_cause": "HTTPS remote 被转 SSH",
+        "fix": "git config --global --unset url.https://github.com/.insteadOf"
+      }
+    ],
+    "fix_commands": [
+      "git config --global --unset url.https://github.com/.insteadOf"
+    ]
+  },
+  "weight": "critical"
+}

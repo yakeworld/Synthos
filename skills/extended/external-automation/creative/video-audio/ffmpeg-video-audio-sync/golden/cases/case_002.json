@@ -1,0 +1,23 @@
+{
+  "case_id": "case_002",
+  "description": "错误路径 — 视频文件不存在（约束规则第1/3条: 输入校验 + 错误含上下文与恢复建议）",
+  "input": {
+    "video_file": "demo_talk.mp4",
+    "video_file_exists": false,
+    "audio_file": "narration.mp3",
+    "audio_file_exists": true,
+    "request": "Sync the audio to this video: demo_talk.mp4"
+  },
+  "expected_behavior": {
+    "should_fix": false,
+    "critical_checks": [
+      "returns_structured_error",
+      "no_ffmpeg_commands_executed",
+      "does_not_crash"
+    ],
+    "high_checks": [
+      "error_has_context_and_recovery"
+    ],
+    "medium_checks": []
+  }
+}

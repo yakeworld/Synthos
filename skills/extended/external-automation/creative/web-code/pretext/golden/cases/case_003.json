@@ -1,0 +1,29 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径：非法 font 字符串 + unpkg 引入 TS-only 入口（双陷阱组合）",
+  "input": {
+    "request": "做一个 pretext demo：text-as-tetris 文字方块游戏",
+    "context": {
+      "brief": "tetris blocks made of measured words",
+      "font_css": "font-family: 'InterVariable', sans-serif; font-size: 18px; font-weight: 700",
+      "font_measure": "InterVariable Bold 18px 700",
+      "cdn_attempt": "import { prepareWithSegments } from 'https://unpkg.com/@chenglou/pretext@0.0.6/pretext.js'",
+      "delivery": "单文件自包含 .html"
+    }
+  },
+  "expected": {
+    "error_path": true,
+    "error_type": "font_string_malformed + cdn_unpkg_ts_only",
+    "context": {
+      "failing_call": "prepareWithSegments(text, \"InterVariable Bold 18px 700\")",
+      "malformed_font_reason": "canvas ctx.font 合法格式为 '<weight> <size>px <family>'（weight ∈ {normal,bold,100..900}）；'InterVariable Bold 18px 700' 中 'Bold' 与 '700' 重复且非合法 weight token",
+      "cdn_reason": "unpkg 提供 raw TS 入口（pretext.js 为 TypeScript-only），浏览器直接 import 会 404 或语法错误；必须改用 esm.sh（自动编译 TS→ESM）"
+    },
+    "recovery": [
+      "font 字符串改为合法 canvas 格式：'bold 18px InterVariable' 或 '700 18px InterVariable'，且与 CSS 实际渲染字体完全一致（preload 字体或改用 web-safe family 防 404 回退漂移）",
+      "CDN 改为 https://esm.sh/@chenglou/pretext@0.0.6（esm.sh 编译 TS 导出为浏览器 ESM），并固定版本",
+      "改后在 python3 -m http.server 下打开验证 prepareWithSegments 不再抛错且 console 无错误"
+    ]
+  },
+  "weight": "critical"
+}

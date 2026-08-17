@@ -1,0 +1,30 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "ok": false,
+    "crashed": false,
+    "fabricated_stats": false,
+    "error": {
+      "code": "REPO_PATH_NOT_FOUND",
+      "context": {
+        "request_echo": "统计 /nonexistent/repo 的代码规模",
+        "failed_path": "/nonexistent/repo",
+        "reason": "目标目录不存在（输入约束：路径必须存在）"
+      },
+      "recovery": [
+        "确认 repo_path 拼写/挂载正确后重试（如 cd 到真实路径或改用绝对路径）",
+        "若仓库尚未克隆，先执行 git clone 再运行 pygount"
+      ]
+    },
+    "note": "Golden Error 路径（输入约束）：目标路径不存在 → 返回结构化错误（context + ≥2 recovery），不崩溃、不产出臆造 LOC 统计（P0 凡数必源：无源则无诚）"
+  },
+  "verification": [
+    "ok == False 且 crashed == False（边界处理不崩溃，异常约束）",
+    "error.code == 'REPO_PATH_NOT_FOUND'",
+    "error.context.request_echo 与输入 request 精确一致",
+    "error.context.failed_path == '/nonexistent/repo'",
+    "len(error.recovery) >= 2（恢复建议可操作，非通用错误）",
+    "fabricated_stats == False（未产出任何臆造 LOC/语言统计，P0 凡数必源）",
+    "internal_state_exposed == False（安全约束：不暴露内部状态）"
+  ]
+}

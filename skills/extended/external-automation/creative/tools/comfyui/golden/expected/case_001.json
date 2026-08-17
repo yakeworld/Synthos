@@ -1,0 +1,21 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "status": "success",
+    "workflow_valid_dict": true,
+    "image_results_non_empty": true,
+    "image_fields": ["url", "dimensions", "seed", "model_version"],
+    "expected_dimensions": [1024, 1024],
+    "note": "工作流为合法 dict：节点连接/端口类型/参数键符合 ComfyUI 规范，无悬空节点（COMF-003）；API 执行成功返回非空 image_results（COMF-001/005）"
+  },
+  "verification": [
+    "输入参数（workflow_desc + model + parameters）完整且有效，符合 IO 契约（COMF-001）",
+    "工作流为合法 dict：每个节点含 class_type + inputs",
+    "节点间连接均为 [node_id, port_index] 形式且 node_id 指向已定义节点（无悬空连接/未连线节点）",
+    "端口类型匹配（model/CLIP/VAE/latent/image 连接类型正确）",
+    "API 执行成功且 image_results 非空",
+    "image_results 每项含 url / dimensions / seed / model_version 四字段",
+    "返回图像可下载/打开，实际分辨率与 dimensions 字段一致（1024x1024）",
+    "seed=42 固定保证可复现（P1 可复现性）"
+  ]
+}

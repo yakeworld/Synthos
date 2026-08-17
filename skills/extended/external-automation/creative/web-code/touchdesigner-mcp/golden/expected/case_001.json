@@ -1,0 +1,24 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "call_sequence_summary": [
+      "td_get_hints(topic) 在构建前调用",
+      "td_get_par_info × 3（noiseTOP/levelTOP/nullTOP 各一次）在构建前调用",
+      "td_create_operator × 3（bg/brightness/out）",
+      "td_execute_python 仅用于连线（outputConnectors[0].connect）",
+      "td_set_operator_pars 设置 outputresolution='custom' + width=1280 + height=720",
+      "td_get_errors(recursive=true) + td_get_operator_info(detail=full) + td_get_screenshot 在构建后调用"
+    ],
+    "note": "参数名（roughness/monochrome/resolutionw/resolutionh）必须来自 td_get_par_info 返回而非训练数据（TOUC-001/CRITICAL #1）；非商业版 1280x1280 上限通过 outputresolution='custom' + 显式宽高规避（TOUC-006/Environment Notes）；验证三连（errors+info+screenshot）对应 VERIFICATION #3/#4"
+  },
+  "verification": [
+    "call_sequence 前 4 项为 discover 阶段（td_get_hints + td_get_par_info×3）且全部早于任何 td_create_operator",
+    "td_create_operator 调用次数 == 3 且 type/name/parent 与 input.ops 精确匹配",
+    "未出现对参数名的猜测式调用（所有 td_set_operator_pars 的参数名均可追溯至 td_get_par_info 覆盖的 op type）",
+    "td_execute_python 仅用于连线逻辑，未用于节点创建（TOUC-004 原生优先）",
+    "outputresolution == 'custom' 且 width==1280、height==720 显式设置（TOUC-006，非商业版）",
+    "验证阶段含 td_get_errors(recursive=true)（VERIFICATION #3）",
+    "验证阶段含 td_get_operator_info(detail='full')（VERIFICATION #3）",
+    "验证阶段含 td_get_screenshot 且早于任何录制动作（VERIFICATION #4/#5 前置）"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "case_id": "case_003",
+  "skill": "citation-verification",
+  "phase": "phase1",
+  "description": "Phase 1 D10a 回归 — 删除假DOI条目后 tex 引用键变孤儿，必须回归检查",
+  "input": {
+    "paper_dir": "papers/demo-crispdm",
+    "bib_entries_after_fix": ["Shearer2000CRISPDM", "Wirth2000CRISPDM", "MartinezPlumed2021CRISPDM"],
+    "tex_cited_keys": ["Shearer2000CRISPDM", "Wirth2000CRISPDM", "Balloccu2020SMOTE", "MartinezPlumed2021CRISPDM"],
+    "removed_keys": ["Balloccu2020SMOTE"]
+  },
+  "weight": "critical"
+}

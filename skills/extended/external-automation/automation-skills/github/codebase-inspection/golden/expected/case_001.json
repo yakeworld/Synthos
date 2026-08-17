@@ -1,0 +1,22 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "ok": true,
+    "format": "summary",
+    "command": "pygount --format=summary --folders-to-skip \".git,venv,.venv,__pycache__,.cache,dist,build,.tox,.eggs,.mypy_cache\" .",
+    "summary": [
+      {"language": "Python", "files": 2, "code": 20, "comment": 5},
+      {"language": "Markdown", "files": 1, "code": 0, "comment": 9}
+    ],
+    "totals": {"files": 3, "code": 20, "comment": 14},
+    "note": "命令含 --folders-to-skip 排除 .git/venv/__pycache__ 等（CODE-001）；--format=summary 汇总表含 Language/Files/Code/Comment（CODE-002）；Markdown code=0（预期，CODE-006）；依赖目录未被扫描（无挂起）"
+  },
+  "verification": [
+    "命令字符串包含 '--folders-to-skip'（CODE-001 防挂起）",
+    "--folders-to-skip 值至少覆盖 .git, node_modules, venv（本 fixture 覆盖 .git,venv,.venv,__pycache__ 等）",
+    "format == 'summary' 且输出含 language/files/code/comment 四列（CODE-002）",
+    "Python 行 files==2 且 code==20（与 fixture app.py 12 + utils.py 8 一致，P0 凡数必源）",
+    "Markdown 行 code == 0（pygount 将 Markdown 全计为注释，预期行为 CODE-006）",
+    "无 venv/__pycache__/.cache 目录被扫描（扫描未挂起，CODE-001）"
+  ]
+}

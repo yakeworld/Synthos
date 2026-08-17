@@ -1,0 +1,24 @@
+{
+  "case_id": "case_002",
+  "description": "错误路径：非法模型名（ckpt 不存在）触发结构化错误",
+  "input": {
+    "workflow_desc": "生成一张 1024x1024 风景图",
+    "workflow_file": "workflows/sdxl_txt2img.json",
+    "model": "does_not_exist_model.safetensors",
+    "parameters": {
+      "width": 1024,
+      "height": 1024,
+      "steps": 30,
+      "seed": 42
+    }
+  },
+  "expected": {
+    "status": "error",
+    "error_code": "INVALID_CHECKPOINT",
+    "fault_node": "CheckpointLoaderSimple",
+    "must_contain_context": true,
+    "must_contain_recovery": true,
+    "image_results": []
+  },
+  "weight": "critical"
+}

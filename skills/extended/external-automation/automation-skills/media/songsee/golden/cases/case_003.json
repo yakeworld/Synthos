@@ -1,0 +1,36 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径：--viz 值不在合法 9 类集合内 → 结构化拒绝 + 恢复建议，不生成输出文件",
+  "input": {
+    "request": "对 track.mp3 用 --viz spectro,heatmap 生成频谱",
+    "context": {
+      "audio_file": "/media/yakeworld/sda2/Synthos/testdata/track.mp3",
+      "audio_format": "mp3",
+      "audio_duration_seconds": 30.0,
+      "viz": ["spectro", "heatmap"],
+      "valid_viz_set": ["spectrogram", "mel", "chroma", "hpss", "selfsim", "loudness", "tempogram", "mfcc", "flux"],
+      "output_format": "png",
+      "output_path": "out.png"
+    }
+  },
+  "expected": {
+    "route": "rejected",
+    "error": {
+      "code": "INVALID_VIZ_TYPE",
+      "context": {
+        "request_echo": "对 track.mp3 用 --viz spectro,heatmap 生成频谱",
+        "invalid_values": ["spectro", "heatmap"],
+        "valid_values": ["spectrogram", "mel", "chroma", "hpss", "selfsim", "loudness", "tempogram", "mfcc", "flux"]
+      },
+      "recovery": [
+        "将 viz 值修正为合法类型：spectrogram/mel/chroma/hpss/selfsim/loudness/tempogram/mfcc/flux（逗号分隔多类型）",
+        "spectro 疑似 spectrogram 缩写 → 直接使用 spectrogram；heatmap 无对应类型，如只需基础频谱图使用 spectrogram",
+        "修正后重试：songsee track.mp3 --viz spectrogram -o out.png"
+      ]
+    },
+    "output_file_created": false,
+    "crashed": false,
+    "internal_state_exposed": false
+  },
+  "weight": "critical"
+}

@@ -1,0 +1,25 @@
+{
+  "case_id": "case_005",
+  "expected_output": {
+    "status": "blocked",
+    "error": {
+      "type": "INPUT_INCOMPLETE",
+      "context": {
+        "provided": {"model_family": "claude", "query": "present", "attack_mode": null},
+        "missing": ["attack_mode"]
+      },
+      "recovery": [
+        "补齐 attack_mode（如 boundary_inversion / refusal_inversion / prefill_only / parseltongue / race）",
+        "三参数 model_family + query + attack_mode 齐备后重试"
+      ]
+    },
+    "default_strategy_applied": false,
+    "result": null
+  },
+  "verification": [
+    "status == 'blocked'（输入契约三项 model_family/query/attack_mode 未齐备即阻断）",
+    "error.context 指明缺失 attack_mode 且回显已提供字段",
+    "error.recovery 含 ≥1 条可执行恢复建议",
+    "禁止静默用默认/通用策略执行（default_strategy_applied == false，result == null）"
+  ]
+}

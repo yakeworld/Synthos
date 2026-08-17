@@ -1,0 +1,40 @@
+{
+  "case_id": "case_002",
+  "description": "错误路径 — 非法 DESIGN.md（broken-ref + 未引号负维度 + 嵌套变体 + 重复标题）",
+  "input": {
+    "user_request": "校验这份 DESIGN.md 是否符合规范，并逐条给出修复建议",
+    "context": {
+      "artifact": "DESIGN.md",
+      "violations_planted": [
+        "component references non-existent {colors.missing}",
+        "unquoted negative dimension letterSpacing: -0.02em (YAML flow parse risk)",
+        "nested variant button-primary.hover instead of sibling button-primary-hover",
+        "duplicate section heading '## Colors' appearing twice"
+      ],
+      "snippet": {
+        "typography": {
+          "h1": {
+            "fontFamily": "Inter",
+            "letterSpacing": "-0.02em"
+          }
+        },
+        "components": {
+          "button-primary": {
+            "backgroundColor": "{colors.tertiary}",
+            "textColor": "{colors.missing}",
+            "hover": {
+              "backgroundColor": "{colors.primary}"
+            }
+          }
+        },
+        "sections": ["Overview", "Colors", "Colors"]
+      }
+    }
+  },
+  "expected_behavior": {
+    "should_succeed": false,
+    "critical_checks": ["does_not_crash", "lint_exit_code_nonzero", "errors_structured"],
+    "high_checks": ["detects_broken_ref", "detects_duplicate_section", "detects_nested_variant_or_invalid_property"],
+    "medium_checks": ["flags_unquoted_negative_dim", "recovery_advice_non_empty"]
+  }
+}

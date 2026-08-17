@@ -1,0 +1,29 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "status": "success",
+    "geo_data": {
+      "area": {
+        "bbox": {
+          "south": 47.59,
+          "west": -122.355,
+          "north": 47.615,
+          "east": -122.325
+        }
+      },
+      "pois": [
+        {
+          "name": "non-empty",
+          "maps_url": "https://maps.google.com/?q=..."
+        }
+      ]
+    }
+  },
+  "verification": [
+    "先使用 area 获取边界框（MAPS-002）",
+    "再结合 bbox 进行矩形区域搜索",
+    "POI 列表非空，每条含 name/lat/lon/maps_url",
+    "请求频率 ≤1 req/s（Nominatim ToS）",
+    "OSRM/Overpass 路由覆盖欧洲/北美优先"
+  ]
+}

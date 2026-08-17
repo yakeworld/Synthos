@@ -1,0 +1,23 @@
+{
+  "case_id": "case_002",
+  "description": "正常路径：脚本化统计逾期提醒（JSON 可解析）",
+  "input": {
+    "task": "列出所有逾期提醒并计数",
+    "list": null,
+    "context": {
+      "platform": "macOS",
+      "remindctl_authorized": true,
+      "output_format": "json",
+      "sample_count": 3
+    }
+  },
+  "expected": {
+    "command": "remindctl overdue --json",
+    "reminder_status": {
+      "status": "ok",
+      "count": 3,
+      "parseable": true
+    }
+  },
+  "weight": "high"
+}

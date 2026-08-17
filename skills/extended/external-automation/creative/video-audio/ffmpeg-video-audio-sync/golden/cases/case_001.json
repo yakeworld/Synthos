@@ -1,0 +1,59 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径 — 3 段 MP4 拼接 + 旁白同步（多陷阱: ultrafast 源 / start_time=0 分段 / 视频短于音频 / 非标准音频格式）",
+  "input": {
+    "video_files": [
+      "scene_01.mp4",
+      "scene_02.mp4",
+      "scene_03.mp4"
+    ],
+    "audio_file": "narration_48k_mono.mp3",
+    "ffprobe_results": {
+      "scene_01.mp4": {
+        "duration": 38.77,
+        "start_time": 0.0,
+        "nb_frames": 1163,
+        "encode_preset": "ultrafast",
+        "codec": "h264"
+      },
+      "scene_02.mp4": {
+        "duration": 38.77,
+        "start_time": 0.0,
+        "nb_frames": 1163,
+        "encode_preset": "ultrafast",
+        "codec": "h264"
+      },
+      "scene_03.mp4": {
+        "duration": 38.77,
+        "start_time": 0.0,
+        "nb_frames": 1163,
+        "encode_preset": "ultrafast",
+        "codec": "h264"
+      },
+      "narration_48k_mono.mp3": {
+        "duration": 128.0,
+        "sample_rate": 48000,
+        "channels": 1,
+        "codec": "mp3"
+      }
+    },
+    "request": "Concatenate the 3 scene MP4s and mux the narration so the final video is perfectly in sync"
+  },
+  "expected_behavior": {
+    "should_fix": true,
+    "critical_checks": [
+      "diagnoses_all_3_traps",
+      "fix_commands_use_preset_medium_or_higher",
+      "concat_uses_ts_binary_path_not_fconcat_copy",
+      "final_ffprobe_duration_diff_lt_0.2s"
+    ],
+    "high_checks": [
+      "ffprobe_diagnosis_before_any_ffmpeg_fix",
+      "stream_loop_used_for_video_shorter_than_audio"
+    ],
+    "medium_checks": [
+      "audio_normalized_to_aac_44100_stereo",
+      "nb_frames_sum_verified_after_concat"
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "case_id": "case_002",
+  "description": "TouchDesigner 任务：未先查元数据直接猜参数名（错误路径）",
+  "input": {
+    "task_desc": "在 TouchDesigner 里把 GLSLTop 的 shader 颜色改成蓝色",
+    "context": {
+      "td_session": "active",
+      "agent_action": "directly_set_parameter",
+      "guessed_param_name": "shader_color"
+    }
+  },
+  "expected": {
+    "should_reject": true,
+    "required_first_call": "td_get_par_info",
+    "error_report_required": true
+  },
+  "weight": "critical"
+}

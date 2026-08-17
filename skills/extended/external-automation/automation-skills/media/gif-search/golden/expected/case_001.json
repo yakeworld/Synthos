@@ -1,0 +1,43 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "request_url": "https://tenor.googleapis.com/v2/search?q=thumbs+up&limit=5&contentfilter=medium&key=${TENOR_API_KEY}",
+    "url_encoding": {
+      "space_as_plus": true,
+      "q_encoded": "thumbs+up"
+    },
+    "http_status": 200,
+    "response_contract": {
+      "results_is_array": true,
+      "results_length_gte": 1,
+      "results_length_lte": 5,
+      "each_result_has": [
+        "id",
+        "media_formats.gif.url",
+        "media_formats.tinygif.url"
+      ],
+      "gif_url_nonempty": true,
+      "tinygif_url_nonempty": true
+    },
+    "extraction": {
+      "gif_urls": ["<non-empty https url x N>"],
+      "tinygif_urls": ["<non-empty https url x N>"]
+    },
+    "result": {
+      "ok": true,
+      "mode": "search",
+      "preferred_format_for_chat": "tinygif",
+      "markdown_embedding": "![alt](<tinygif url>)"
+    }
+  },
+  "invariants": [
+    "查询词空格必须编码为 +（GIF-002）",
+    "limit 在 1-50 范围内",
+    "jq 提取的 URL 字段非空且可访问（验证清单）",
+    "聊天场景优先 tinygif / nanogif（GIF-001）；Markdown 可直接 ![](url)（GIF-006）"
+  ],
+  "notes": [
+    "具体结果条目（id/title/URL）不纳入精确匹配——外部 API 返回随时间变化，仅做契约级断言",
+    "key 必须来自环境变量 TENOR_API_KEY，禁止硬编码（凭据管理铁律）"
+  ]
+}

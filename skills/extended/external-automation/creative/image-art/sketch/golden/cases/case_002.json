@@ -1,0 +1,22 @@
+{
+  "case_id": "case_002",
+  "description": "错误路径：请求生产级可交付组件（非设计探索意图）",
+  "input": {
+    "description": "给我写一个可以直接上线的生产级 React 侧边栏组件，要能通过 CI",
+    "style": "production, shippable, 需要单测",
+    "intake": {
+      "feel": "production-grade",
+      "references": [],
+      "core_action": "上线交付"
+    }
+  },
+  "expected": {
+    "status": "error",
+    "error_code": "WRONG_SKILL_INTENT",
+    "redirect_to": "claude-design",
+    "must_contain_context": true,
+    "must_contain_recovery": true,
+    "sketch_variants_produced": 0
+  },
+  "weight": "critical"
+}

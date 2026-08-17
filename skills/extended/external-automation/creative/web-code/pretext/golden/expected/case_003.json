@@ -1,0 +1,17 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "error_path": true,
+    "error_type": "font_string_malformed + cdn_unpkg_ts_only",
+    "note": "Golden Error 路径：必须同时含 context（failing_call + malformed_font_reason + cdn_reason）与 recovery（≥2 条建议）；unpkg TS-only 入口 404 为 Pitfall #5 已知陷阱，必须被显式识别并拒绝，禁止静默回退到 sans-serif/monospace 造成 5-20% 测量漂移（Pitfall #1/#6）"
+  },
+  "verification": [
+    "error_path == True 且 error_type 覆盖 'font_string_malformed' 与 'cdn_unpkg_ts_only' 两个失败面",
+    "context.failing_call 精确到调用点（prepareWithSegments）与非法 font 串原值",
+    "context.malformed_font_reason 说明 canvas ctx.font 合法格式（weight token 规则），非泛化『字体错了』",
+    "context.cdn_reason 指明 unpkg 提供 raw TS 入口需 404/语法错，且给出 esm.sh 替代（Pitfall #5）",
+    "recovery 数组长度 >= 2 且每条含可执行动作（改 font 串 + 改 CDN + 本地验证）",
+    "recovery 未建议『换个字体试试』这类无上下文建议（异常约束：错误信息必须含上下文和恢复建议）",
+    "未出现静默回退策略（monospace/sans-serif 回退会掩盖测量漂移，Pitfall #1/#6）"
+  ]
+}

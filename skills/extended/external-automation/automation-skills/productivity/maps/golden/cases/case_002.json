@@ -1,0 +1,21 @@
+{
+  "case_id": "case_002",
+  "description": "nearby 仅给邮编 '90210' 无上下文（全球歧义失败路径）",
+  "input": {
+    "command": "nearby",
+    "query": "90210",
+    "category": "pharmacy"
+  },
+  "strategy": {
+    "data_source": "Nominatim + Overpass",
+    "ambiguity_check": "Zip code alone is globally ambiguous — must require country/state context"
+  },
+  "expected": {
+    "status": "ambiguous",
+    "geo_data": {
+      "error": "Zip code '90210' is globally ambiguous. Please include country/state, e.g. '90210, California, USA'.",
+      "suggestion": "nearby --near '90210, California, USA' --category pharmacy"
+    }
+  },
+  "weight": "critical"
+}

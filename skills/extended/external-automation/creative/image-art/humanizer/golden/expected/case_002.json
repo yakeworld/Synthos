@@ -1,0 +1,32 @@
+{
+  "case_id": "case_002",
+  "expect": {
+    "status": "ok",
+    "voice_analysis": {
+      "required_fields": ["sentence_length_profile", "diction_level", "punctuation_habits"],
+      "sample_avg_sentence_words": 8
+    },
+    "voice_match": {
+      "final_avg_sentence_words_lte": 10,
+      "no_diction_upgrades": ["elements", "components", "facilitate", "leverage"],
+      "colloquial_words_allowed": ["stuff", "things", "just", "sure"]
+    },
+    "forbidden_terms_in_final": [
+      "delve",
+      "serves as",
+      "Additionally",
+      "In order to",
+      "the future looks bright",
+      "industry experts say",
+      "underscores"
+    ],
+    "preserved_facts": [
+      "34%",
+      "2025",
+      "code review"
+    ],
+    "voice_fallback_declared": false,
+    "output_sections": ["draft", "remaining_ai_traits", "final_text"],
+    "rationale": "HUMA-004/P4 声音匹配：样本为短句口语 → 最终句长 ≤10 词、不升级用词、保留样本标点习惯（无 em dash）"
+  }
+}

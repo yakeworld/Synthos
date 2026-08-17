@@ -1,0 +1,25 @@
+{
+  "case_id": "case_004",
+  "skill": "citation-verification",
+  "phase": "phase2",
+  "description": "Phase 2 语义比对 — PDF存在且DOI真实，但PDF第一作者与bib不符 → INAPPROPRIATE",
+  "input": {
+    "paper_dir": "papers/demo-crispdm",
+    "citation_key": "Balloccu2020SMOTE",
+    "cite_context": "Balloccu et al. (2020) propose an improved SMOTE variant for high-dimensional data.",
+    "bib_entry": {
+      "title": "SMOTE for high-dimensional data: a survey",
+      "author": "Balloccu, A.",
+      "year": 2020
+    },
+    "pdf": {
+      "present": true,
+      "extracted_title": "Portfolio optimization under transaction costs",
+      "first_author": "Gupta, R.",
+      "year": 2020,
+      "withdrawn": false,
+      "pdfinfo_title": "Portfolio optimization under transaction costs"
+    }
+  },
+  "weight": "high"
+}

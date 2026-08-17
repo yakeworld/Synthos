@@ -1,0 +1,16 @@
+{
+  "case_id": "case_002",
+  "path": "normal",
+  "description": "同一 AI 文本 + 口语短句声音样本 → 声音校准（匹配样本而非默认声音）",
+  "input": {
+    "text": "In order to fully understand the impact of autonomous agents on software engineering, it is important to note that we must delve into the broader landscape. These systems serve as a crucial foundation, highlighting the transformative potential of AI. Additionally, industry experts say that the integration of agentic workflows ensures unprecedented efficiency, with adoption rates increasing by 34% in 2025. Not only does this represent a significant shift, but it also underscores a pivotal trend across the industry — from code review to deployment automation. The future looks bright, and exciting times lie ahead for all data-driven teams.",
+    "target_tone": "casual",
+    "voice_sample": "Look. The stuff is fast. Faster than I expected. Things break, sure. But the whole code review pipeline just works now. 34% more teams use it in 2025. I keep coming back to that number.",
+    "voice_profile_hint": {
+      "avg_sentence_words": 8,
+      "diction": "colloquial (stuff/things)",
+      "punctuation": "periods, no em dashes, minimal commas"
+    },
+    "source": "inline"
+  }
+}

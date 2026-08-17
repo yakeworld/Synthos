@@ -1,0 +1,30 @@
+{
+  "case_id": "case_004",
+  "description": "错误路径 — 不合法参数（fps=120 超目标 / canvas 4096x4096 超导出上限）",
+  "input": {
+    "user_request": "生成一个 p5 草图，fps=120，画布 4096x4096",
+    "context": {
+      "mode_hint": "generative art",
+      "canvas": "4096x4096",
+      "fps": 120,
+      "interaction": null,
+      "export_target": "browser",
+      "p5_version": "1.11.3"
+    }
+  },
+  "expected_behavior": {
+    "should_produce": false,
+    "critical_checks": [
+      "error_non_empty",
+      "mode_is_unmatched_or_null",
+      "param_validation_failed"
+    ],
+    "high_checks": [
+      "error_names_fps_out_of_range",
+      "error_names_canvas_out_of_range"
+    ],
+    "medium_checks": [
+      "suggestions_give_valid_ranges"
+    ]
+  }
+}

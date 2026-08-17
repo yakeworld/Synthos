@@ -1,0 +1,20 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "command": "memo notes -a \"组会材料\"",
+    "interactive": false,
+    "note_result": {
+      "status": "created",
+      "note_title": "组会材料"
+    },
+    "note": "跨设备同步需求 → Apple Notes（APPL-001）；快速创建走非交互式 -a（APPL-003），不得进入交互编辑器"
+  },
+  "verification": [
+    "命令 flag 结构精确等于 memo notes -a \"<title>\"，标题为「组会材料\"",
+    "interactive == False（非交互，pty 非必需）",
+    "note_result 为 dict 且 status == 'created'",
+    "note_result.note_title == '组会材料'",
+    "执行前已确认 macOS + memo 已安装 + 自动化权限已授予（验证清单第 1 项）",
+    "请求属跨设备同步场景，未被误路由到 memory 工具或 obsidian（APPL-005 / When NOT to Use）"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "case_id": "case_003",
+  "path": "error",
+  "description": "空文本 → 报错并说明缺失字段与恢复建议",
+  "input": {
+    "text": "",
+    "target_tone": "casual",
+    "voice_sample": null,
+    "source": "inline"
+  }
+}

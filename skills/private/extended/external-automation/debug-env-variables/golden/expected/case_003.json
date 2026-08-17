@@ -1,0 +1,24 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "error": {
+      "refused": true,
+      "context": "输入校验失败：(1) missing_var 为空字符串，无法定位目标变量；(2) shell_context='zsh-interactive' 不在合法枚举内（合法值：interactive / bash -c / Python subprocess）。缺少有效输入时无法执行逐层验证，拒绝输出 diagnosis/fix 结论。",
+      "recovery": [
+        "提供非空的 missing_var（要调试的环境变量名，如 SEMANTIC_SCHOLAR_API）",
+        "将 shell_context 修正为合法枚举之一：interactive / bash -c / Python subprocess",
+        "若实际故障层不明确，可先按默认顺序（父进程 → bash -c → Python 子层）逐层验证后再指定"
+      ],
+      "diagnosis_emitted": false,
+      "fix_emitted": false
+    },
+    "note": "输入约束（RULES-1）：参数类型/范围/格式必须校验；异常约束（RULES-3）：错误信息必须含上下文和恢复建议。输入无效时不凭记忆断言、不输出 diagnosis/fix（验证清单末项）"
+  },
+  "verification": [
+    "refused == True：未输出 diagnosis/fix 结论（diagnosis_emitted == False 且 fix_emitted == False）",
+    "error.context 非空且分别点明两个具体问题：missing_var 为空、shell_context 非合法枚举",
+    "error.context 列出合法 shell_context 枚举（interactive / bash -c / Python subprocess）",
+    "error.recovery 为列表且长度 >= 2，含补全 missing_var 与修正 shell_context 的具体指引",
+    "错误信息未暴露内部状态（RULES-4 安全约束）"
+  ]
+}

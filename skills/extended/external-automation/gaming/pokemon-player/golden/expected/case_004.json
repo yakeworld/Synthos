@@ -1,0 +1,26 @@
+{
+  "case_id": "case_004",
+  "expected_output": {
+    "error": {
+      "violated_rule": "Do NOT send more than 4-5 actions without checking vision (POKE-001 / Verification checklist)",
+      "context": "请求的动作列表含 10 个连续移动动作，单次 POST /action 未配段间截图",
+      "recovery": [
+        "将 10 步拆分为 ≤4 步/段（如 4/4/2 三段），每段后 GET /screenshot + vision_analyze 核实位置",
+        "若路径含门/楼梯换图，对应段末尾追加 2-3 个 wait_60 后再继续下一段"
+      ],
+      "split_plan": [
+        ["walk_up", "walk_up", "walk_right", "walk_right"],
+        ["walk_up", "walk_right", "walk_up", "walk_right"],
+        ["walk_up", "walk_right"]
+      ]
+    },
+    "note": "POKE-001 要求每 2-4 步必须截图验证；连续 10 步无视觉验证将导致 overshoot/迷路（Pitfalls 明言 Do not spam 10-15 movements）。正确处理：自动拆分为 ≤4 步段并在段间插入截图验证；直接拒绝 + 恢复建议亦可"
+  },
+  "verification": [
+    "未以单次 POST /action 发送 10 个动作（actions_count > 5 即违规）",
+    "error.context 含原始请求回声（10 步动作列表）与违规说明（>4-5 动作无视觉验证）",
+    "error.recovery 为列表且长度 >= 2，含拆段方案 + 段间截图要求",
+    "若采用拆分路径：每段长度 <= 4，且段间存在 screenshot + vision_analyze 调用",
+    "拆分后的动作顺序与原始 10 步序列完全一致（不重排、不丢失）"
+  ]
+}

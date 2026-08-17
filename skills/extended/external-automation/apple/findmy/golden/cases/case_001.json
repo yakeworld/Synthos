@@ -1,0 +1,29 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：基础法（AppleScript + 截图 + vision_analyze）查询 iPhone 位置",
+  "input": {
+    "device_query": "我的 iPhone 在哪？",
+    "context": {
+      "platform": "macOS",
+      "icloud_signed_in": true,
+      "screen_recording_permission": true,
+      "device_registered": true,
+      "device_owned_by_user": true,
+      "method": "applescript_screenshot"
+    }
+  },
+  "expected": {
+    "method_chain": [
+      "osascript -e 'tell application \"FindMy\" to activate'",
+      "sleep 3",
+      "screencapture -w -o /tmp/findmy.png",
+      "vision_analyze(image_url=\"/tmp/findmy.png\", question=\"What devices/items are shown and what are their locations?\")"
+    ],
+    "location_data": {
+      "status": "ok",
+      "device": "iPhone",
+      "location": "用户住址附近（语义等价，以本机 FindMy 显示为准）"
+    }
+  },
+  "weight": "critical"
+}

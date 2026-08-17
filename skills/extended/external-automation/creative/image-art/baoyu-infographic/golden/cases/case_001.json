@@ -1,0 +1,13 @@
+{
+  "case_id": "case_001",
+  "path": "normal",
+  "description": "关键词'信息图'触发默认组合 bento-grid + craft-handmade；源含统计数字与凭证",
+  "input": {
+    "request": "帮我把这份报告做成信息图，保持数据原样",
+    "source_content": "Q2 营收报告\n\n- 总营收同比增长 73% increase，达到 4.2 亿美元\n- 新客获取成本下降 12%\n- 配置凭证（勿泄露）：api_key = sk-test-9f8e7d6c5b4a3210\n- 结论：增长主要由企业客户驱动",
+    "layout": null,
+    "style": null,
+    "aspect": null,
+    "language": "zh"
+  }
+}

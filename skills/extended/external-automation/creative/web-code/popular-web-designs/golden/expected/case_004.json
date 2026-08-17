@@ -1,0 +1,40 @@
+{
+  "case_id": "case_004",
+  "status": "routed",
+  "routed_skill": "design-md",
+  "template": "stripe",
+  "template_role": "visual vocabulary source only（本技能仅作模板视觉词汇来源，不生成渲染 HTML）",
+  "deliverable": "DESIGN.md token file",
+  "error": null,
+  "suggestions": [
+    "交付物为正式设计令牌规范 → 切换 design-md 技能生成 DESIGN.md（POPU-005）",
+    "本技能仍可选取模板（如 stripe）作为视觉词汇来源"
+  ],
+  "routing_decision": {
+    "reason": "交付物 = DESIGN.md 令牌规范，非渲染页面",
+    "gene": "POPU-005",
+    "switch_to": "design-md",
+    "this_skill_html_mode_invoked": false
+  },
+  "qa_checks": [
+    {
+      "id": "boundary_route",
+      "rule": "交付物为 DESIGN.md 时路由切换 design-md（POPU-005）",
+      "critical": true,
+      "expected_pass_condition": "routed_skill=design-md 且 this_skill_html_mode_invoked=false"
+    },
+    {
+      "id": "deliverable_type",
+      "rule": "交付物为规范文件而非渲染 HTML",
+      "critical": true,
+      "expected_pass_condition": "deliverable=DESIGN.md token file 且无渲染 HTML"
+    },
+    {
+      "id": "vocabulary_source",
+      "rule": "本技能仅作模板视觉词汇来源",
+      "critical": false,
+      "expected_pass_condition": "template_role 说明仅词汇来源"
+    }
+  ],
+  "references_used": ["SKILL.md Genes POPU-005", "SKILL.md 示例 3", "SKILL.md Related design skills (design-md)"]
+}

@@ -1,0 +1,21 @@
+{
+  "case_id": "case_002",
+  "description": "正常路径：subprocess.run(shell=True) 嵌套 bash -c + Python，引号边界导致 Python 层读不到变量",
+  "input": {
+    "missing_var": "API_KEY",
+    "shell_context": "Python subprocess",
+    "context": {
+      "parent_process_value": "sk-live-xyz789",
+      "interactive_echo": "sk-live-xyz789",
+      "bash_c_echo": "sk-live-xyz789",
+      "python_os_environ": "NOTSET",
+      "failing_call": "subprocess.run('bash -c \"export API_KEY=$API_KEY; python3 -c \\'import os; print(os.environ.get(\\\"API_KEY\\\"))\\'\"', shell=True)",
+      "boundary_note": "内层单引号被外层 shell 消费，export 作用域未正确传播到 python3 子进程"
+    }
+  },
+  "expected": {
+    "diagnosis_point": "quoting_subprocess_boundary",
+    "fix_first_recommendation": "file_fallback"
+  },
+  "weight": "high"
+}

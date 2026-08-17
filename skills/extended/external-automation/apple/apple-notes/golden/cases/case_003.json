@@ -1,0 +1,27 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径：编辑包含图片/附件的笔记 → 必须拒绝并给恢复建议",
+  "input": {
+    "note_action": "edit",
+    "content": "把笔记「照片整理」里的文字段落改一下",
+    "context": {
+      "platform": "macOS",
+      "memo_installed": true,
+      "automation_permission_granted": true,
+      "note_title": "照片整理",
+      "contains_attachments": true
+    }
+  },
+  "expected": {
+    "command_executed": null,
+    "note_result": {
+      "status": "rejected",
+      "error": "笔记「照片整理」包含图片/附件，memo 无法直接编辑",
+      "recovery": [
+        "改为仅查看：memo notes -s \"照片整理\"",
+        "在 Notes.app 中手动编辑含附件内容"
+      ]
+    }
+  },
+  "weight": "critical"
+}

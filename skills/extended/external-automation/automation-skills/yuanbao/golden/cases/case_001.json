@@ -1,0 +1,20 @@
+{
+  "case_id": "case_001",
+  "description": "群内 @mention 用户（正常路径）",
+  "input": {
+    "request": "帮我艾特元宝，告诉他有人找他",
+    "context": {
+      "chat_id": "group:328306697",
+      "user_known": true
+    }
+  },
+  "expected": {
+    "tool_call": {
+      "name": "yb_query_group_members",
+      "args": { "group_code": "328306697", "action": "find", "name": "元宝", "mention": true }
+    },
+    "reply_is_message": true,
+    "reply_contains_mention": true
+  },
+  "weight": "critical"
+}

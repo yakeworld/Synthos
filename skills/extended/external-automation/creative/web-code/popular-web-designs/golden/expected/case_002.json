@@ -1,0 +1,73 @@
+{
+  "case_id": "case_002",
+  "status": "pass",
+  "routed_skill": "popular-web-designs",
+  "template": "spotify",
+  "deliverable": "rendered HTML page",
+  "font_substitution": {
+    "proprietary": "Circular",
+    "substitute": "DM Sans",
+    "source_table": "SKILL.md Font Substitution Reference (Circular (Spotify) → DM Sans)",
+    "google_fonts_link": true,
+    "keeps_weight_size_spacing": true,
+    "link_example": "<link href=\"https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700\" rel=\"stylesheet\">"
+  },
+  "html_contract": {
+    "root_variables": {
+      "from_section2": true,
+      "brand_green_preserved": true,
+      "examples": ["--color-bg: #121212", "--color-text: #ffffff", "--color-accent: #1ed760"]
+    },
+    "typography": {
+      "matches_section3": true,
+      "font_family_stack": "'DM Sans', system-ui, sans-serif"
+    },
+    "components": {
+      "follows_section4_6": true
+    },
+    "meta": {
+      "viewport": "width=device-width, initial-scale=1.0",
+      "lang": "en",
+      "charset_utf8": true
+    }
+  },
+  "verification": {
+    "write_file": true,
+    "browser_vision_screenshot": true,
+    "font_stack_not_fallback_default": true,
+    "green_dark_brand_present": true
+  },
+  "qa_checks": [
+    {
+      "id": "template_is_spotify",
+      "rule": "模板为 spotify.md",
+      "critical": true,
+      "expected_pass_condition": "template=spotify"
+    },
+    {
+      "id": "font_substitution",
+      "rule": "专有字体按参考表替换为 Google Fonts（含 <link>）",
+      "critical": true,
+      "expected_pass_condition": "substitute=DM Sans 且 google_fonts_link=true"
+    },
+    {
+      "id": "keeps_metrics",
+      "rule": "严格沿用原模板 weight/size/letter-spacing",
+      "critical": false,
+      "expected_pass_condition": "keeps_weight_size_spacing=true"
+    },
+    {
+      "id": "brand_feature",
+      "rule": "绿底深色品牌特征保留（非回退默认体）",
+      "critical": false,
+      "expected_pass_condition": "brand_green_preserved=true 且 green_dark_brand_present=true"
+    },
+    {
+      "id": "browser_verify",
+      "rule": "write_file + browser_vision 验证",
+      "critical": false,
+      "expected_pass_condition": "verification.browser_vision_screenshot=true"
+    }
+  ],
+  "references_used": ["SKILL.md Font Substitution Reference", "SKILL.md Genes POPU-002", "templates/spotify.md"]
+}

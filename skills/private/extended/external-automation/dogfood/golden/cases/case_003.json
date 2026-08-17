@@ -1,0 +1,22 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径：目标应用 URL 无效/不可访问（连接拒绝）",
+  "input": {
+    "target_app_url": "http://localhost:9999/admin",
+    "test_scenarios": [
+      "加载 /admin 页面并截图",
+      "点击登录按钮提交"
+    ],
+    "context": {
+      "url_reachable": false,
+      "failure_mode": "connection_refused (ECONNREFUSED)"
+    }
+  },
+  "expected": {
+    "must_reject": true,
+    "error_requires_context": true,
+    "error_requires_recovery": true,
+    "findings_must_not_be_fabricated": true
+  },
+  "weight": "critical"
+}

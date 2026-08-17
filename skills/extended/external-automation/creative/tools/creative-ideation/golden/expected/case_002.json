@@ -1,0 +1,17 @@
+{
+  "case_id": "case_002",
+  "error": {
+    "present": true,
+    "error_type": "empty_request",
+    "context": "非空字符串, 说明输入为空/无意义",
+    "recovery": "非空字符串, 提供恢复建议（例如: 请描述你想构建什么/你的领域, 或说 'inspire me' 触发随机约束）"
+  },
+  "ideas_count": 0,
+  "constraint": null,
+  "output_format": {
+    "compliant": false,
+    "note": "错误路径不产出 Output Format 模板内容"
+  },
+  "crash": false,
+  "exit_behavior": "进程正常退出, 错误信息包含上下文和恢复建议（约束规则第3条: 异常约束）"
+}

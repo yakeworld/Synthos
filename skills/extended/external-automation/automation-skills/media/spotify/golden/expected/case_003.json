@@ -1,0 +1,29 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "route": "failure_handled",
+    "sequence": [
+      {"tool": "spotify_playback", "args": {"action": "pause"}},
+      {"tool": "spotify_devices", "args": {"action": "list", "purpose": "confirm_no_device"}}
+    ],
+    "retry_count": 0,
+    "result": {
+      "status": "blocked_by_user_action",
+      "http_status": 403,
+      "error_code": "NO_ACTIVE_DEVICE",
+      "user_guidance": "先在你的手机/桌面/Web 播放器上打开 Spotify，任意播放一轨几秒，再重试。当前设备列表为空，确认无活跃设备。"
+    },
+    "crashed": false,
+    "internal_state_exposed": false,
+    "note": "Critical failure mode（SPOT-004 / 示例 3）：403 No active device 是永久错误直到用户行动——不盲目重试，明确告知用户先启动客户端"
+  },
+  "verification": [
+    "pause 调用恰好 1 次，收到 403 'No active device found' 后不再调用 spotify_playback（retry_count == 0）",
+    "可选 spotify_devices(list) 确认设备列表为空（SPOT-004 文档允许用于确认，不计为重试）",
+    "result.user_guidance 必须包含三要素：(1) 先打开 Spotify 客户端 (2) 任意播放一轨 (3) 再重试（RULES 异常约束：含上下文与恢复建议）",
+    "不得出现 '403 Premium required' 的误判（本例 active_device=false，根因是无活跃设备而非套餐）",
+    "不得静默吞错：响应必须明确报告失败原因与用户需采取的行动",
+    "internal_state_exposed == False（不暴露内部状态，RULES 安全约束）",
+    "crashed == False"
+  ]
+}

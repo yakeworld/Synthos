@@ -1,0 +1,28 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：Python 仓库整体规模概览（summary + --folders-to-skip 排除依赖目录）",
+  "input": {
+    "request": "这个 repo 有多大？给我语言分布和代码/注释行数汇总",
+    "context": {
+      "repo_path": "/path/to/repo",
+      "repo_kind": "python",
+      "folders_to_skip": ".git,venv,.venv,__pycache__,.cache,dist,build,.tox,.eggs,.mypy_cache",
+      "fixture_files": {
+        "app.py": {"code": 12, "comment": 3},
+        "utils.py": {"code": 8, "comment": 2},
+        "README.md": {"code": 0, "comment": 9}
+      }
+    }
+  },
+  "expected": {
+    "command": "pygount --format=summary --folders-to-skip \".git,venv,.venv,__pycache__,.cache,dist,build,.tox,.eggs,.mypy_cache\" .",
+    "format": "summary",
+    "summary": [
+      {"language": "Python", "files": 2, "code": 20, "comment": 5},
+      {"language": "Markdown", "files": 1, "code": 0, "comment": 9}
+    ],
+    "totals": {"files": 3, "code": 20, "comment": 14},
+    "notes": "Markdown 计 0 代码行（pygount 将 Markdown 全计为注释，预期行为 CODE-006）；无 venv/__pycache__ 被扫描（未挂起）"
+  },
+  "weight": "critical"
+}

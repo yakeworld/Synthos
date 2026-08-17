@@ -1,0 +1,36 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：文本环绕拖拽精灵的重排 demo（reflow-around-obstacle pattern）",
+  "input": {
+    "request": "做一个 pretext demo：一段编辑级长文围绕一个可拖拽的光球精灵实时重排，60fps，暗色 CRT 风格",
+    "context": {
+      "brief": "text flowing around a draggable sprite",
+      "corpus": "真实散文（manifesto / 诗歌 / README），10-100 句，非 lorem ipsum",
+      "font_css": "font-family: 'Iowan Old Style', Georgia, serif; font-size: 16px; line-height: 24px",
+      "font_measure": "16px 'Iowan Old Style'",
+      "delivery": "单文件自包含 .html，无构建步骤",
+      "perf_target": "中端笔记本 60fps"
+    }
+  },
+  "expected": {
+    "pattern": "reflow-around-obstacle",
+    "core_api": ["prepareWithSegments", "layoutNextLineRange", "materializeLineRange"],
+    "strategy": {
+      "width_fn": "widthAtY(y) 每行动态宽度函数，扣除精灵在该行占据的跨度",
+      "skip_rule": "该行走廊过窄时跳过该行（y += lineHeight; continue），不传极小 maxWidth",
+      "cache": "prepareWithSegments 仅调用一次并缓存 handle，resize/每帧仅重跑 layout*",
+      "interaction": "drag 精灵 + idle 自动运动",
+      "aesthetic": "暗色底 + 暖色核心（CRT amber-on-black），比例字体（Iowan Old Style）"
+    },
+    "product_checks": [
+      "单文件自包含 .html，python3 -m http.server 可打开",
+      "esm.sh 引入 @chenglou/pretext@0.0.6（固定版本）",
+      "prepareWithSegments 的 font 字符串与 CSS 渲染字体完全一致",
+      "prepareWithSegments 仅调用一次（模块级缓存）",
+      "corpus 为真实内容且与 demo 概念匹配",
+      "首帧无空白、无 console 错误，中端设备 60fps",
+      "含至少一个 extra-mile 细节（vignette / scanline / 交互响应）"
+    ]
+  },
+  "weight": "critical"
+}

@@ -1,0 +1,20 @@
+{
+  "case_id": "case_004",
+  "description": "错误路径：动作序列超长（10 步连续移动、无视觉验证）",
+  "input": {
+    "game_state": "player at Pallet Town wanting to reach Viridian; agent drafted one long action list",
+    "actions": ["walk_up", "walk_up", "walk_right", "walk_right", "walk_up", "walk_right", "walk_up", "walk_right", "walk_up", "walk_right"],
+    "context": {
+      "screenshot_before_segment": true,
+      "screenshot_planned_after_segment": true,
+      "actions_count": 10
+    }
+  },
+  "expected": {
+    "must_reject_or_split": true,
+    "split_max_segment": 4,
+    "error_requires_context": true,
+    "error_requires_recovery": true
+  },
+  "weight": "high"
+}

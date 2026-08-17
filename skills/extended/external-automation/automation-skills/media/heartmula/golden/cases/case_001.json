@@ -1,0 +1,35 @@
+{
+  "case_id": "case_001",
+  "type": "normal",
+  "description": "正常路径：3B 模型 GPU 生成，lazy_load + codec float32，结构标签歌词 + 逗号 tags",
+  "input": {
+    "request": "generate song",
+    "environment": {
+      "python": "3.10",
+      "venv": ".venv",
+      "patches_applied": [
+        "rope_cache_fix (modeling_heartmula.py setup_caches)",
+        "heartcodec_ignore_mismatched_sizes (music_generation.py, 2x from_pretrained)"
+      ],
+      "dependency_upgrades": ["datasets", "transformers"],
+      "checkpoints": {
+        "HeartMuLaGen": "ckpt/HeartMuLaGen",
+        "HeartMuLa-oss-3B": "ckpt/HeartMuLa-oss-3B",
+        "HeartCodec-oss": "ckpt/HeartCodec-oss"
+      }
+    },
+    "command": "python ./examples/run_music_generation.py",
+    "params": {
+      "model_path": "./ckpt",
+      "version": "3B",
+      "lyrics": "./assets/lyrics.txt",
+      "tags": "./assets/tags.txt",
+      "save_path": "./assets/output.mp3",
+      "lazy_load": true,
+      "codec_dtype": "float32",
+      "max_audio_length_ms": 240000
+    },
+    "lyrics_sample": "[Intro]\n\n[Verse]\nYour lyrics here...\n\n[Chorus]\nChorus lyrics...\n\n[Outro]",
+    "tags_sample": "piano,happy,wedding,synthesizer,romantic"
+  }
+}

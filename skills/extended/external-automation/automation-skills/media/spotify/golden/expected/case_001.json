@@ -1,0 +1,21 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "route": "tool_sequence",
+    "sequence": [
+      {"tool": "spotify_search", "args": {"query": "miles davis kind of blue", "types": ["album"], "limit": 1}},
+      {"tool": "spotify_playback", "args": {"action": "play", "context_uri": "spotify:album:1weenld61qoidwYuZ1GESA"}}
+    ],
+    "result": {"status": "success", "is_playing": true},
+    "note": "Canonical pattern（SPOT-001 / 示例 1）：一次搜索取 top URI 后立即播放；不循环描述搜索结果；不预检 get_state"
+  },
+  "verification": [
+    "调用序列长度 == 2，且顺序敏感：spotify_search → spotify_playback",
+    "spotify_search.args.types == ['album'] 且 limit == 1（'play <album>' 用 album 类型 + limit 1）",
+    "spotify_playback.args.action == 'play' 且 context_uri 为 album 类型化 URI（spotify:album:<id>），与 search 返回的 uri 字段一致",
+    "序列中不含 spotify_playback(action='get_state')（What NOT to do：播放前不预检）",
+    "响应不描述/列举搜索结果，仅执行播放（What NOT to do：Don't describe search results）",
+    "context_uri 的实体类型为 album（play 的 context_uri 接受 album/playlist/artist）",
+    "crashed == False"
+  ]
+}

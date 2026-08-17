@@ -1,0 +1,33 @@
+{
+  "case_id": "case_002",
+  "description": "正常路径：时间切片局部分析 — 12.5s 起 8s 片段，切片不越界（例 3 / SONG-002）",
+  "input": {
+    "request": "截取 track.mp3 从 12.5s 开始的 8 秒片段生成频谱 jpg",
+    "context": {
+      "audio_file": "/media/yakeworld/sda2/Synthos/testdata/track.mp3",
+      "audio_format": "mp3",
+      "audio_duration_seconds": 30.0,
+      "start_seconds": 12.5,
+      "duration_seconds": 8.0,
+      "output_format": "jpg",
+      "output_path": "slice.jpg"
+    }
+  },
+  "expected": {
+    "route": "songsee track.mp3 --start 12.5 --duration 8 -o slice.jpg --format jpg",
+    "preflight": {
+      "audio_file_exists": true,
+      "slice_within_audio": true,
+      "slice_end_seconds": 20.5,
+      "audio_duration_seconds": 30.0
+    },
+    "result": {
+      "status": "success",
+      "output_file": "slice.jpg",
+      "output_format": "jpg",
+      "covered_interval_seconds": [12.5, 20.5]
+    },
+    "crashed": false
+  },
+  "weight": "high"
+}

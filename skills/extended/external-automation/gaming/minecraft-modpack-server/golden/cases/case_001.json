@@ -1,0 +1,42 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：ATM10（MC 1.21, NeoForge, ~300 mods）4 人正版服务器，32GB 主机（24GB 可分配给服务器）",
+  "input": {
+    "server_spec": "ATM10 server pack, MC 1.21 NeoForge, ~300 mods, 4 名玩家, 正版, 主机 32GB RAM（可分配给服务器 24GB）, MOTD 'Synthos ATM10', 难度 hard, 每时备份 24 份"
+  },
+  "context": {
+    "mc_version": "1.21",
+    "mod_loader": "neoforge",
+    "mod_count": 300,
+    "players": 4,
+    "online_mode": true,
+    "host_ram_total_gb": 32,
+    "server_ram_allocation_gb": 24,
+    "motd": "Synthos ATM10",
+    "difficulty": "hard",
+    "backup": {"frequency": "hourly", "max_backups": 24},
+    "pack_env": "ATM10_INSTALL_ONLY=true"
+  },
+  "expected": {
+    "java": "openjdk-21-jre-headless（MC 1.21+ → Java 21）",
+    "server_properties": {
+      "motd": "Synthos ATM10",
+      "server-port": 25565,
+      "online-mode": "true",
+      "enforce-secure-profile": "true",
+      "difficulty": "hard",
+      "allow-flight": "true",
+      "spawn-protection": 0,
+      "max-tick-time": 180000,
+      "enable-command-block": "true",
+      "view-distance": 10,
+      "simulation-distance": 6
+    },
+    "jvm_args": ["-Xms12G", "-Xmx24G", "-XX:+UseG1GC"],
+    "ram_check": {"host_total_gb": 32, "server_alloc_gb": 24, "os_reserve_gb": 8, "pass": true},
+    "firewall": "ufw allow 25565/tcp comment 'Minecraft Server'",
+    "launch_script": "独立脚本引用 @user_jvm_args.txt + neoforge unix_args.txt nogui（非 startserver.sh，MINE-006）",
+    "backup": {"script": "~/minecraft-server/backup.sh", "cron": "0 * * * *", "max_backups": 24}
+  },
+  "weight": "critical"
+}

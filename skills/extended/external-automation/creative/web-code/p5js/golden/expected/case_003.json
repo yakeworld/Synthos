@@ -1,0 +1,36 @@
+{
+  "case_id": "case_003",
+  "status": "error",
+  "mode": "unmatched",
+  "error": "capability_boundary: 'Unity 风格实时物理引擎（碰撞检测+刚体动力学）' 不属于本技能 7 种模式（生成艺术/数据可视化/交互体验/动画/3D场景/图像处理/音频响应），p5.js 无内置刚体物理引擎",
+  "suggestions": [
+    "列出 7 种可用模式：generative art / data viz / interactive / animation / 3D scene / image processing / audio-reactive",
+    "最接近模式：3D scene（WEBGL 几何+相机），但刚体物理需第三方库（如 cannon-es 封装）",
+    "若需真实物理引擎，建议改用 Unity/Three.js+物理库 而非 p5.js",
+    "可降级为：粒子系统模拟（自定义力场）近似流体/碰撞视觉，非真实刚体"
+  ],
+  "renderer": null,
+  "fps": null,
+  "export_target": null,
+  "qa_checks": [
+    {
+      "id": "no_fabrication",
+      "rule": "超出能力边界时不得硬造草图",
+      "critical": true,
+      "expected_pass_condition": "mode=unmatched 且 renderer/fps 为 null"
+    },
+    {
+      "id": "error_with_context",
+      "rule": "错误信息说明能力边界",
+      "critical": true,
+      "expected_pass_condition": "error 非空且点名 7 种模式与 p5.js 无物理引擎"
+    },
+    {
+      "id": "actionable_suggestions",
+      "rule": "给出 7 种模式列表 + 最近模式/替代方案",
+      "critical": true,
+      "expected_pass_condition": "suggestions 非空且含 7 模式列表与近似建议"
+    }
+  ],
+  "references_used": ["SKILL.md R1 触发条件", "IO_CONTRACT.md Modes 表 (7 种模式)"]
+}

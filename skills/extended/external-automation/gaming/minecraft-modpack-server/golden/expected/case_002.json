@@ -1,0 +1,17 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "summary": "online-mode=false 必须同步 enforce-secure-profile=false（MINE-005，否则客户端被 rejected）；allow-flight=true 与 max-tick-time=180000 不缺失（非正版不影响 modded 需求）；其余字段与 case_001 一致",
+    "note": "MINE-005 是认证配对的硬性约束：online-mode 与 enforce-secure-profile 必须同真同假；EXAMPLES 2 明确指出『设 online-mode=false 后必须同步 enforce-secure-profile=false』；非正版模式不改变 MINE-002/003/004/006 的任何字段"
+  },
+  "verification": [
+    "server_properties['online-mode'] == 'false'",
+    "server_properties['enforce-secure-profile'] == 'false'（MINE-005 配对，二者同假）",
+    "server_properties['allow-flight'] == 'true'（非正版不改变 MINE-002）",
+    "server_properties['max-tick-time'] == 180000（非正版不改变 MINE-003）",
+    "jvm_args 含 '-Xms12G' 与 '-Xmx24G'（MINE-004 与 case_001 一致）",
+    "ram_check.pass == True 且 os_reserve_gb >= 8",
+    "firewall 含 '25565/tcp'",
+    "launch_script 为独立脚本引用 'user_jvm_args.txt'（MINE-006）"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "case_id": "case_002",
+  "skill": "shared",
+  "description": "输入约束校验（错误路径）：request 为空字符串",
+  "input": {
+    "request": "",
+    "context": {}
+  },
+  "weight": "critical"
+}

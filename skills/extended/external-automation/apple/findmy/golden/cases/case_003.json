@@ -1,0 +1,31 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径：终端未授予屏幕录制权限 → 截图黑屏，禁止伪造位置",
+  "input": {
+    "device_query": "我的 iPad 在哪？",
+    "context": {
+      "platform": "macOS",
+      "icloud_signed_in": true,
+      "screen_recording_permission": false,
+      "device_registered": true,
+      "device_owned_by_user": true,
+      "screenshot_result": "black_screen"
+    }
+  },
+  "expected": {
+    "method_chain": [
+      "osascript -e 'tell application \"FindMy\" to activate'",
+      "sleep 3",
+      "screencapture -w -o /tmp/findmy.png（产出黑屏）"
+    ],
+    "location_data": {
+      "status": "error",
+      "error": "截图为黑屏：终端缺少屏幕录制权限",
+      "recovery": [
+        "System Settings → Privacy & Security → Screen Recording，为终端授权",
+        "授权后重新执行截图与 vision_analyze"
+      ]
+    }
+  },
+  "weight": "critical"
+}

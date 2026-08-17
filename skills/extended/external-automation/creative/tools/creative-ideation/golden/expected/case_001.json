@@ -1,0 +1,42 @@
+{
+  "case_id": "case_001",
+  "constraint": {
+    "name_in": [
+      "Solve your own itch",
+      "The CLI tool that should exist",
+      "Automate the annoying thing"
+    ],
+    "profile_match": "useful",
+    "profile_match_rule": "Matching Constraints to Users 表: 'I want something useful' → Solve your own itch / The CLI that should exist / Automate the annoying thing",
+    "interpretation_rule": "按最宽泛原则解读（'Does this include X?' → Yes）— CREA-002"
+  },
+  "ideas_count": 3,
+  "ideas_schema": {
+    "count": 3,
+    "required_fields_per_idea": [
+      "pitch",
+      "description",
+      "time_budget",
+      "stack"
+    ],
+    "field_constraints": {
+      "pitch": "非空, 单行, 具体项目名/命令（非抽象概念）",
+      "description": "2-3 句: 构建什么 + 为何有趣",
+      "time_budget": "enum: weekend | week | month",
+      "stack": "非空, 技术栈标注"
+    },
+    "concreteness": "每个想法必须具体可执行（有明确的构建对象），而非抽象概念（CREA-003）"
+  },
+  "output_format": {
+    "compliant": true,
+    "required_structure": [
+      "## Constraint: [Name] 头",
+      "> 引用块: 约束一句话描述",
+      "### Ideas 编号列表（1. 2. 3.）",
+      "每 idea 附 ⏱ 时间预算 • 🔧 技术栈 行"
+    ]
+  },
+  "post_selection_behavior": {
+    "if_user_picks_idea": "立即进入构建阶段: 创建项目、编写代码、迭代交付（CREA-007），不得停留在概念"
+  }
+}

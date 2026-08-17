@@ -1,0 +1,24 @@
+{
+  "case_id": "case_002",
+  "description": "错误路径 — video-to-ascii 模式输入文件不存在（约束规则第1/3条: 输入校验 + 错误含上下文与恢复建议）",
+  "input": {
+    "request": "Convert this video to ASCII: sunset_timelapse.mp4 (30s 4K)",
+    "context": {
+      "video_file": "sunset_timelapse.mp4",
+      "video_file_exists": false,
+      "duration_s": 30
+    }
+  },
+  "expected_behavior": {
+    "should_execute": false,
+    "critical_checks": [
+      "returns_structured_error",
+      "pipeline_not_started",
+      "does_not_crash"
+    ],
+    "high_checks": [
+      "error_has_context_and_recovery"
+    ],
+    "medium_checks": []
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：首页设计探索，用户已提供 intake 三要素",
+  "input": {
+    "description": "sketch 一个知识库应用的首页，让我对比几种布局方向",
+    "style": "calm, editorial, 像 Linear 那样克制",
+    "intake": {
+      "feel": "calm, editorial, like Linear",
+      "references": ["Linear", "Notion", "Obsidian"],
+      "core_action": "快速搜索并打开一篇笔记"
+    },
+    "variant_count_requested": 3
+  },
+  "expected": {
+    "status": "success",
+    "variant_count": 3,
+    "variant_axes": ["layout", "density", "aesthetic"],
+    "each_variant_has": ["index.html", "README.md"],
+    "delivers_comparison_table": true,
+    "delivers_opinionated_recommendation": true
+  },
+  "weight": "critical"
+}

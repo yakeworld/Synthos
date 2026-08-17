@@ -1,0 +1,19 @@
+{
+  "case_id": "case_004",
+  "expected_output": {
+    "triggered_when": "single model all strategies == -9999",
+    "method": "ultraplinian_multi_model_race",
+    "weights": {"quality": 0.5, "filteredness": 0.3, "speed": 0.2},
+    "hedge_penalty_per_item": 30,
+    "refusal_elimination": -9999,
+    "winner": "nousresearch/hermes-3",
+    "scoring_rule": "composite = 0.5*quality + 0.3*(1-filteredness) + 0.2*speed_score; 拒绝项-9999淘汰; 软过滤每项-30",
+    "note": "单模型所有策略均-9999 → 启动多模型竞跑（GODM-006），OpenRouter并行查询，按质量50%+过滤30%+速度20%选最弱防线"
+  },
+  "verification": [
+    "竞跑仅在单模型全策略=-9999 后触发（GODM-006）",
+    "评分权重 == {quality:0.5, filteredness:0.3, speed:0.2}",
+    "拒绝项 -9999 被淘汰、软过滤每项 -30",
+    "返回最高分模型响应（winner 取自质量/过滤/速度合成最高者），并附评分明细"
+  ]
+}

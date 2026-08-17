@@ -1,0 +1,27 @@
+{
+  "case_id": "case_002",
+  "description": "已登录但 PR 创建失败（PAT scope 不足，失败路径）",
+  "input": {
+    "repo_path": "/work/proj",
+    "failure_symptom": "gh pr create 报 not accessible"
+  },
+  "strategy": {
+    "first_step": "gh auth status",
+    "second_step": "gh pr create --title test --body test --head test 2>&1 | grep -i 'accessible\\|denied'",
+    "diagnosis": "If logged in but pr create fails → PAT scope insufficient"
+  },
+  "expected": {
+    "sanity_report": [
+      {
+        "issue": "gh auth status shows logged in but gh pr create fails with not accessible",
+        "root_cause": "PAT scope 缺 repo 或 write:repository",
+        "fix": "Create new Classic PAT with repo + write:repository scope"
+      }
+    ],
+    "fix_commands": [
+      "Create new Classic PAT (repo + write:repository) in GitHub Settings → Developer settings → Tokens"
+    ],
+    "status": "requires_user_action"
+  },
+  "weight": "critical"
+}

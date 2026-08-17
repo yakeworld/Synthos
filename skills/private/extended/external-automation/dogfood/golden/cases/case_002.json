@@ -1,0 +1,24 @@
+{
+  "case_id": "case_002",
+  "description": "正常路径：长文档页面滚动尽览 + 折叠线以下渲染/布局观察",
+  "input": {
+    "target_app_url": "http://localhost:3000/docs/api-reference",
+    "test_scenarios": [
+      "加载文档首页，截图初始视口",
+      "向下滚动至页面最底部，逐屏截图（检测折叠线以下渲染/布局问题）",
+      "检查长页中的图片/表格是否在滚动后正确渲染（无空白占位/错位）",
+      "导航到子文档页再返回，确认滚动位置与状态恢复"
+    ],
+    "context": {
+      "app_type": "long_document_page",
+      "long_page": true,
+      "evidence_required": true
+    }
+  },
+  "expected": {
+    "scrolled_to_bottom": true,
+    "layout_observations_recorded": true,
+    "console_checked_after_interactions": true
+  },
+  "weight": "high"
+}

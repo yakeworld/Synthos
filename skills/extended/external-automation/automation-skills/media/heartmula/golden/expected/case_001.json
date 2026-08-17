@@ -1,0 +1,37 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "result": {
+      "ok": true,
+      "output_file": "./assets/output.mp3",
+      "file_exists": true,
+      "file_size_bytes_gt": 0,
+      "audio_format": {
+        "container": "mp3",
+        "sample_rate_hz": 48000,
+        "channels": 2,
+        "bitrate_kbps": 128
+      },
+      "max_duration_s": 240
+    },
+    "log_contains": "CUDA memory",
+    "vram_peak_gb_approx": 6.2,
+    "preflight_passed": [
+      "python 3.10 venv",
+      "datasets/transformers upgraded + RoPE & HeartCodec patches applied",
+      "3 checkpoints present under ./ckpt",
+      "lyrics use bracketed structural tags",
+      "tags comma-separated without spaces"
+    ]
+  },
+  "invariants": [
+    "HeartCodec 必须 float32（HEAR-004）",
+    "lazy_load true 控制峰值 VRAM ~6.2GB（HEAR-001）",
+    "输出时长不超 max_audio_length_ms/1000（验证清单）",
+    "RTF≈1.0：4 分钟歌曲约 4 分钟（GPU）"
+  ],
+  "notes": [
+    "tags 可能被歌词主导（上游 issue #90），音质以实测为准",
+    "无 GPU/macOS 场景走云端 GPU 或在线 Demo（HEAR-005），不在本 case 交付断言内"
+  ]
+}

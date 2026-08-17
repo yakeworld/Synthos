@@ -1,0 +1,25 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "status": "error",
+    "error": {
+      "type": "RESOURCE_NOT_FOUND",
+      "context": {
+        "subskill": "references",
+        "missing_file": "references/MISSING_DOC.md",
+        "step": "load_document"
+      },
+      "recovery": [
+        "确认文件名/拼写是否正确（当前 references/ 下可用：DATA_ACCESS_LEVELS.md, auto-execution-engine.md, dual-quality-check-protocol.md, human-response-analysis.md, philosophy-gap-analysis-pattern.md, pipeline-trace.md, sequential-consistency-gate.md）",
+        "或列出 references/ 目录后重试以获取可用文档清单"
+      ]
+    },
+    "partial_output": null
+  },
+  "verification": [
+    "status == 'error'（目标资源不存在）",
+    "error.context 含 哪个子技能(references) + 缺失文件路径 + 失败步骤（SHAR-002/RULES-3）",
+    "error.recovery 含具体恢复指引（列出可用文档清单），非仅 'file not found'",
+    "错误信息包含上下文和明确恢复指引，不得只报通用错误"
+  ]
+}

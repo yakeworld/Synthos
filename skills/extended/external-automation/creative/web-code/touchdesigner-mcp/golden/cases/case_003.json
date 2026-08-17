@@ -1,0 +1,31 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径：tdAttributeError（猜参数名）+ 同一脚本混合 destroy+create 同名节点",
+  "input": {
+    "request": "重建 /project1/bg 节点：删掉旧的 noiseTOP，换成新的 glslTOP，参数 noise_scale=3.5",
+    "context": {
+      "td_version": "2025.32",
+      "network_path": "/project1",
+      "old_node": "/project1/bg (noiseTOP)",
+      "new_node": "/project1/bg (glslTOP)",
+      "guessed_param": {"name": "noise_scale", "value": 3.5},
+      "agent_attempted_script": "root = op('/project1'); [c.delete() for c in list(root.children) if c.name=='bg']; n = root.create(glslTOP, 'bg'); n.par.noise_scale = 3.5"
+    }
+  },
+  "expected": {
+    "error_path": true,
+    "error_type": "td_attribute_error + invalid_op_object_risk",
+    "context": {
+      "failing_param": "noise_scale（未经验证 —— 训练数据对 TD 2025.32 的参数名不可信）",
+      "failing_node": "/project1/bg",
+      "mixed_script_risk": "同一 td_execute_python 内 delete() + create() 同名节点 'bg' → 旧 OP 对象失效 → 'Invalid OP object' 错误（TOUC-005）"
+    },
+    "recovery": [
+      "第一步（立即）：调用 td_get_operator_info(path='/project1/bg') 检查失败节点状态（TOUC-002/CRITICAL #2），不盲目重试",
+      "第二步：调用 td_get_par_info(op_type='glslTOP') 获取当前版本真实参数名（TOUC-001/CRITICAL #1），用返回的真实名字替换 noise_scale",
+      "第三步：将 destroy 与 create 拆分为两个独立 MCP 调用 —— 调用 A：td_execute_python 仅执行 [c.delete() for c in list(root.children) if c.name=='bg' and c.valid]；调用 B（新调用）：td_create_operator(type='glslTOP', parent='/project1', name='bg', parameters={真实参数名: 3.5})",
+      "第四步：td_get_errors(recursive=true) 确认无残留 error/warning 后再继续"
+    ]
+  },
+  "weight": "critical"
+}

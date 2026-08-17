@@ -1,0 +1,23 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "status": "error",
+    "error_code": "WRONG_SKILL_INTENT",
+    "context": "请求为生产级可交付组件（需要 CI/单测/可上线），属于 sketch 技能的 When-NOT-to-use 边界",
+    "recovery": [
+      "改用 claude-design 技能构建正式可交付组件",
+      "或走正式项目构建流程（组件库 + 单测 + CI），而非一次性 HTML sketch"
+    ],
+    "redirect_to": "claude-design",
+    "sketch_variants_produced": 0,
+    "note": "sketch 仅用于'看到设计方向再决定'的可抛弃原型（SKET-001）；生产级组件/抛光一次性 HTML/图表均不在本技能范围内"
+  },
+  "verification": [
+    "返回 status == 'error' 且 error_code == 'WRONG_SKILL_INTENT'",
+    "错误信息包含请求回声（生产级 React 侧边栏 + CI 要求）",
+    "错误信息说明不适用原因（sketch 定位为一次性设计探索原型，非可交付代码）",
+    "错误信息包含 >= 1 条恢复建议（引导至 claude-design 或正式构建）",
+    "未生成任何 sketches/ 变体目录（sketch_variants_produced == 0）",
+    "未产出任何 HTML 原型文件"
+  ]
+}

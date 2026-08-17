@@ -1,0 +1,18 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "status": "success",
+    "output_file": "/tmp/pixel_test/nes_out.png",
+    "output_format": "PNG",
+    "max_colors": 54,
+    "block_size": 8,
+    "note": "NES 硬件调色板 54 色（大小写键名 'NES'，大小写敏感）；NEAREST 降采样 8px 后无插值模糊（PIXE-004）"
+  },
+  "verification": [
+    "输出文件存在于 /tmp/pixel_test/nes_out.png 且为合法 PNG（Image.open 可打开）",
+    "Image.open(p).getcolors(maxcolors=...) 唯一颜色数 <= 54（NES 硬件调色板上限）",
+    "像素块尺寸为 8px：相邻 8x8 区域内颜色一致，NEAREST 无插值模糊",
+    "palette 键名精确为 'NES'（大小写敏感，无 Key 错误降级）",
+    "输出尺寸 = 源图尺寸（降采样后再 NEAREST 升回原尺寸）"
+  ]
+}

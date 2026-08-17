@@ -1,0 +1,43 @@
+{
+  "case_id": "case_002",
+  "description": "正常路径：audio-reactive GLSL 录制（macOS 非商业版，ProRes 编码，1080p 自定义分辨率）",
+  "input": {
+    "request": "做一个 audio-reactive 视觉：音频频谱驱动 GLSL shader，录 30 秒视频，输出 ProRes，1920x1080",
+    "context": {
+      "td_version": "2025.32",
+      "os": "macOS",
+      "license": "non-commercial",
+      "audio_file": "/tmp/track.wav",
+      "output_video": "/tmp/output.mov",
+      "output_resolution": {"mode": "custom", "width": 1920, "height": 1080},
+      "recording": {"duration_seconds": 30, "codec": "prores"}
+    }
+  },
+  "expected": {
+    "signal_chain": [
+      {"type": "audiofileinCHOP", "name": "audio_in", "params": {"file": "/tmp/track.wav", "playmode": "sequential"}},
+      {"type": "audiospectrumCHOP", "name": "spectrum", "params": {"fftsize": 512, "outputmenu": "setmanually", "outlength": 256, "timeslice": true}},
+      {"type": "mathCHOP", "name": "gain", "params": {"gain": 10}},
+      {"type": "choptotopCHOP", "name": "spec_top", "params": {"dataformat": "r", "layout": "rowscropped"}},
+      {"type": "constantTOP", "name": "time_src", "params": {"format": "rgba32float", "width": 1, "height": 1}},
+      {"type": "glslTOP", "name": "shader", "params": {"value0name": "uTime"}},
+      {"type": "nullTOP", "name": "out", "params": {}},
+      {"type": "moviefileoutTOP", "name": "recorder", "params": {"type": "movie", "file": "/tmp/output.mov", "videocodec": "prores"}}
+    ],
+    "glsl_sampling": {
+      "input0": "time (1x1 rgba32float) → texture(sTD2DInputs[0], vec2(0.5)).r",
+      "input1": "spectrum (256x2) → y=0.25 采样首声道，多点多取平均"
+    },
+    "strategy": {
+      "no_lag_filter": "禁用 Lag/Filter CHOP 做 spectrum 平滑（timeslice 扩张 256→2400+，值趋近 0）；平滑在 GLSL 内用 temporal lerp + feedback texture",
+      "timeslice_on": "AudioSpectrum timeslice 必须 ON（OFF 会处理整个音频文件 → 24000+ 样本 → CHOP to TOP 溢出）",
+      "non_commercial": "outputresolution='custom' + 1920x1080；编码 prores（macOS 非商业版无 H.264/H.265/AV1，TOUC-007）",
+      "recording_order": "rec.par.file 先设置 → 再 rec.par.record=True（分两次调用，避免 race）"
+    },
+    "pre_checks": [
+      "td_get_perf 确认 FPS > 0（否则录制为空）",
+      "td_get_screenshot(path='/project1/out') 确认输出非全黑"
+    ]
+  },
+  "weight": "high"
+}

@@ -1,0 +1,19 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "command": "memo notes -s \"文献综述\"",
+    "interactive": false,
+    "note_result": {
+      "status": "ok",
+      "matches": ["文献综述提纲"]
+    },
+    "note": "查看/搜索走非交互式 -s 模糊搜索（APPL-003 / 验证清单第 3 项）；matches 列表内容语义等价即可（取决于用户本机实际笔记）"
+  },
+  "verification": [
+    "命令 flag 结构精确等于 memo notes -s \"<query>\"，查询为「文献综述\"",
+    "note_result 为 dict 且 status == 'ok'",
+    "note_result.matches 为 list；无命中时必须为空 list 而非报错或崩溃",
+    "搜索未使用交互模式（-e/-d 等未出现）",
+    "输出字段结构与 IO_CONTRACT（note_result: dict）一致"
+  ]
+}

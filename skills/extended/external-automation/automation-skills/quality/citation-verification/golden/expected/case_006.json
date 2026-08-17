@@ -1,0 +1,27 @@
+{
+  "case_id": "case_006",
+  "expected_output": {
+    "phase": "precheck",
+    "status": "blocked",
+    "error": {
+      "type": "INPUT_MISSING",
+      "context": {
+        "paper_dir": "papers/incomplete-paper",
+        "missing_paths": ["06-references/"],
+        "present_paths": ["01-manuscript/paper.tex"]
+      },
+      "recovery": [
+        "补齐 06-references/ 目录（含 references.bib）后重试",
+        "或确认 bib 实际位置并更新 paper_dir 指向"
+      ]
+    },
+    "verdict": null,
+    "report_generated": false
+  },
+  "verification": [
+    "status == 'blocked'（输入校验失败即阻断，不产生半成品报告）",
+    "error.context 指明缺什么（06-references/）及已存在什么（P0 证据可溯）",
+    "error.recovery 含 ≥1 条可执行恢复建议",
+    "未生成 phase1/2/3 报告（report_generated == false）"
+  ]
+}

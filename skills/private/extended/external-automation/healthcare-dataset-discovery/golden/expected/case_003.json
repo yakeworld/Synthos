@@ -1,0 +1,18 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "status": "accessible",
+    "dataset_results": [
+      {
+        "source": "Crossref",
+        "access_type": "open"
+      }
+    ]
+  },
+  "verification": [
+    "Crossref 使用 query= 参数（非 search=）",
+    "空格用 quote_plus() 或 + 编码，无 422 错误",
+    "PubMed eSearch 空格用 + 而非 URL 编码",
+    "查询参数解析正确，无空结果或 422"
+  ]
+}

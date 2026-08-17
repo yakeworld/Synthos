@@ -1,0 +1,29 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：创建带日期提醒（内容/列表/日期已确认）",
+  "input": {
+    "task": "明天下午 3 点提醒我开会",
+    "list": "Work",
+    "context": {
+      "platform": "macOS",
+      "remindctl_authorized": true,
+      "title": "开会",
+      "due": "2026-07-16 15:00",
+      "confirmed": {
+        "content": true,
+        "list": true,
+        "due_date": true
+      }
+    }
+  },
+  "expected": {
+    "command": "remindctl add --title \"开会\" --list Work --due \"2026-07-16 15:00\"",
+    "reminder_status": {
+      "status": "created",
+      "title": "开会",
+      "list": "Work",
+      "due": "2026-07-16 15:00"
+    }
+  },
+  "weight": "critical"
+}

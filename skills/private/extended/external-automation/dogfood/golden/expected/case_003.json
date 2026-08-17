@@ -1,0 +1,24 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "error": {
+      "refused": true,
+      "context": "目标 URL http://localhost:9999/admin 不可访问：browser_navigate 连接被拒（ECONNREFUSED / connection refused）。URL 不可达时无法执行任何自测，拒绝输出 browser_findings 与截图证据。",
+      "recovery": [
+        "核对目标应用 URL 与端口是否正确（9999 端口是否为目标服务实际监听端口）",
+        "确认目标服务已启动（检查进程/容器/开发服务器是否运行）",
+        "换用可访问的入口 URL 或先部署/启动应用后再自测"
+      ],
+      "findings_emitted": false,
+      "screenshot_emitted": false
+    },
+    "note": "输入约束（RULES-1）：target_app_url 必须有效且可访问（验证清单项 1）；异常约束（RULES-3）：错误含上下文与恢复建议。URL 不可达时不伪造 browser_findings / MEDIA 截图（所见必证原则 DOGF-003 的反面约束）"
+  },
+  "verification": [
+    "refused == True：未输出 browser_findings 列表或任何 screenshot_evidence（findings_emitted == False 且 screenshot_emitted == False）",
+    "error.context 非空且含目标 URL 回声与具体失败模式（ECONNREFUSED / connection refused）",
+    "error.recovery 为列表且长度 >= 2，含核对 URL/端口、确认服务启动、换入口的具体指引",
+    "未伪造任何 MEDIA:<path> 证据截图（所见必证：无实际浏览器交互即无截图）",
+    "错误信息未暴露内部状态（RULES-4 安全约束）"
+  ]
+}

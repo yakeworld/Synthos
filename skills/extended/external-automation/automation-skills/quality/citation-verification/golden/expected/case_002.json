@@ -1,0 +1,17 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "phase": "phase1",
+    "verdict": "DOI_TAMPERED",
+    "reason": "doi.org 404 但 Semantic Scholar 按 author+title 搜到不同真实DOI → 论文真实、DOI被篡改（CITA-002）",
+    "action": "repair_doi_and_metadata",
+    "repaired_doi": "10.1109/AIML.2000.882629",
+    "do_not": "treat_as_fabricated"
+  },
+  "verification": [
+    "verdict == 'DOI_TAMPERED'（doi 404 但 SS 搜到不同DOI）",
+    "action 为修复DOI+元数据以匹配真实文献（CITA-002），而非删除/替代",
+    "repaired_doi 来自 SS 匹配结果，非原bib中的错误DOI",
+    "与 case_001 区分：SS 有匹配→篡改；SS 无匹配→虚构，处置不得混用"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "case_id": "case_004",
+  "status": "error",
+  "mode": null,
+  "error": "param_validation_failed: fps=120 超出性能目标（交互 60fps / 动画 30fps / noLoop）；canvas 4096x4096 超出导出上限 3840x2160",
+  "param_violations": [
+    {"param": "fps", "given": 120, "valid": "interactive=60 / animation=30 / static=noLoop", "out_of_range": true},
+    {"param": "canvas", "given": "4096x4096", "valid": "<= 3840x2160 (export) / 1920x1080 (interactive)", "out_of_range": true}
+  ],
+  "suggestions": [
+    "fps 改为 60（交互）或 30（动画导出）；静态生成用 noLoop()",
+    "画布改为 <=3840x2160（导出）或 1920x1080（交互）",
+    "若需更高分辨率，用 Puppeteer 无头捕获 + pixelDensity(1) 而非直接放大画布"
+  ],
+  "renderer": null,
+  "export_target": null,
+  "qa_checks": [
+    {
+      "id": "param_validation",
+      "rule": "fps/画布参数必须在性能目标范围内",
+      "critical": true,
+      "expected_pass_condition": "param_violations 含 fps 与 canvas 且 out_of_range=true"
+    },
+    {
+      "id": "error_with_context",
+      "rule": "错误信息指出具体越界参数与合规范围",
+      "critical": true,
+      "expected_pass_condition": "error 非空且 suggestions 含 valid 范围"
+    },
+    {
+      "id": "no_fabrication",
+      "rule": "参数不合法时不硬造草图",
+      "critical": true,
+      "expected_pass_condition": "mode=null 且 renderer=null"
+    }
+  ],
+  "references_used": ["SKILL.md 约束规则 §1 输入约束", "IO_CONTRACT.md Performance Targets 表"]
+}

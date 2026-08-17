@@ -1,0 +1,39 @@
+{
+  "case_id": "case_002",
+  "description": "正常路径：局域网非正版模式（online-mode=false），ATM10 4 人",
+  "input": {
+    "server_spec": "ATM10 局域网联机, 4 名玩家, 非正版客户端, 难度 normal, MOTD 'LAN ATM10'"
+  },
+  "context": {
+    "mc_version": "1.21",
+    "mod_loader": "neoforge",
+    "mod_count": 300,
+    "players": 4,
+    "online_mode": false,
+    "host_ram_total_gb": 32,
+    "server_ram_allocation_gb": 24,
+    "motd": "LAN ATM10",
+    "difficulty": "normal"
+  },
+  "expected": {
+    "java": "openjdk-21-jre-headless",
+    "server_properties": {
+      "motd": "LAN ATM10",
+      "server-port": 25565,
+      "online-mode": "false",
+      "enforce-secure-profile": "false",
+      "difficulty": "normal",
+      "allow-flight": "true",
+      "spawn-protection": 0,
+      "max-tick-time": 180000,
+      "enable-command-block": "true",
+      "view-distance": 10,
+      "simulation-distance": 6
+    },
+    "jvm_args": ["-Xms12G", "-Xmx24G", "-XX:+UseG1GC"],
+    "ram_check": {"host_total_gb": 32, "server_alloc_gb": 24, "os_reserve_gb": 8, "pass": true},
+    "firewall": "ufw allow 25565/tcp",
+    "launch_script": "独立脚本引用 @user_jvm_args.txt（MINE-006）"
+  },
+  "weight": "high"
+}

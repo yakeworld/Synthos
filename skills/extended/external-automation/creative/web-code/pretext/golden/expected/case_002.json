@@ -1,0 +1,18 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "pattern": "shatter/particles",
+    "core_api": ["prepareWithSegments", "walkLineRanges"],
+    "note": "字素级物理必须基于 prepareWithSegments 的每字素坐标（PRET-002）；CJK+emoji 文本必须经 Intl.Segmenter 分割（PRET-005，Pitfall #3：'é'.split('') 会产出 2 字符）；walkLineRanges 用于无字符串分配的物理遍历（PRET-004）；ctx.font 每帧仅设一次（Performance Notes）"
+  },
+  "verification": [
+    "pattern == 'shatter/particles'（Demo Recipe Patterns 表精确匹配）",
+    "core_api 包含 'prepareWithSegments'（字素坐标来源，PRET-002）",
+    "strategy.grapheme_split == 'Intl.Segmenter' 且 granularity == 'grapheme'（PRET-005）",
+    "策略与代码描述中未出现 str.split('') 用于字素级处理（Pitfall #3）",
+    "strategy.positions 使用 layout 结果的 per-grapheme (x,y) 作为物理初始位置",
+    "strategy.font_perf：同帧 ctx.font 设置次数 == 1（Performance Notes）",
+    "product_checks 含 esm.sh 固定版本（PRET-007）",
+    "product_checks 含点击交互（VERIFICATION #5）"
+  ]
+}

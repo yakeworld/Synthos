@@ -1,0 +1,19 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "should_reject": true,
+    "correct_behavior": "先调用 td_get_par_info 获取 GLSLTop 的参数元数据，再基于真实参数名设置颜色；参数名 'shader_color' 是猜测，不得使用",
+    "error_report_example": {
+      "status": "failed",
+      "failed_step": "设置 GLSLTop 参数（跳过元数据查询）",
+      "reason": "未经 td_get_par_info 验证的参数名不可用（CREA-005）",
+      "recovery_suggestion": "调用 td_get_par_info(op_type='GLSLTop') 获取准确参数列表后重试"
+    },
+    "notes": "Golden Error 路径：猜参数名 → 拒绝执行；失败时错误报告必须含上下文 + 恢复建议（CREA-008），裸异常判失败"
+  },
+  "verification": [
+    "未使用猜测的参数名 'shader_color' 执行任何 TD 写操作",
+    "在操作前要求/执行 td_get_par_info 元数据查询（CREA-005）",
+    "返回的错误报告含 failed_step（上下文）+ recovery_suggestion（可操作建议），非裸异常（CREA-008）"
+  ]
+}

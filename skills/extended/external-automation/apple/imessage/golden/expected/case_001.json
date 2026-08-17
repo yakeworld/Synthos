@@ -1,0 +1,23 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "sent_status": {
+      "ok": true,
+      "recipient": "+1555123456",
+      "service": "imessage",
+      "chat_id": 12,
+      "confirmed": true,
+      "error": null
+    },
+    "command": "imsg send --to \"+1555123456\" --text \"I'll be late\" --service imessage",
+    "note": "发送前已用 imsg chats --json 定位收件人 chat-id=12（IMES-001 定位）并完成用户确认（IMES-001）；--service imessage 显式指定，气泡与意图一致（IMES-005）"
+  },
+  "verification": [
+    "sent_status.ok == True 且 sent_status.error == null",
+    "sent_status.recipient == '+1555123456' 且与输入 recipient 精确一致",
+    "sent_status.service == 'imessage'（--service 显式指定，IMES-005）",
+    "sent_status.chat_id == 12（来自 imsg chats 定位，非凭空猜测）",
+    "sent_status.confirmed == True（发送前与用户确认收件人+内容，IMES-001）",
+    "消息体与输入 message 精确一致（'I'll be late'），无父级改写"
+  ]
+}

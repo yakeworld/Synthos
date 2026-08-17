@@ -1,0 +1,30 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径：目标目录不存在 → 结构化 Golden Error（不崩溃、不臆造统计）",
+  "input": {
+    "request": "统计 /nonexistent/repo 的代码规模",
+    "context": {
+      "repo_path": "/nonexistent/repo",
+      "repo_exists": false,
+      "expected_exit_code": 1
+    }
+  },
+  "expected": {
+    "ok": false,
+    "error": {
+      "code": "REPO_PATH_NOT_FOUND",
+      "context": {
+        "request_echo": "统计 /nonexistent/repo 的代码规模",
+        "failed_path": "/nonexistent/repo",
+        "reason": "目标目录不存在（输入约束：路径必须存在）"
+      },
+      "recovery": [
+        "确认 repo_path 拼写/挂载正确后重试（如 cd 到真实路径或改用绝对路径）",
+        "若仓库尚未克隆，先执行 git clone 再运行 pygount"
+      ]
+    },
+    "crashed": false,
+    "fabricated_stats": false
+  },
+  "weight": "critical"
+}

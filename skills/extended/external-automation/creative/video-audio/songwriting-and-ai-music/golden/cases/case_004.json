@@ -1,0 +1,26 @@
+{
+  "case_id": "case_004",
+  "description": "错误路径 — Style 字段含艺术家名/商标，须拒绝并给合规替代",
+  "input": {
+    "user_request": "用这个 Style 字段生成：Nirvana-style grunge, sad rock song",
+    "context": {
+      "style_draft": "Nirvana-style grunge, sad rock song",
+      "platform": "Suno",
+      "mode": "custom"
+    }
+  },
+  "expected_behavior": {
+    "should_produce": false,
+    "critical_checks": [
+      "error_non_empty",
+      "violation_named_artist_name",
+      "compliant_alternative_provided"
+    ],
+    "high_checks": [
+      "alternative_describes_sound_not_name"
+    ],
+    "medium_checks": [
+      "alternative_contains_formula_elements"
+    ]
+  }
+}

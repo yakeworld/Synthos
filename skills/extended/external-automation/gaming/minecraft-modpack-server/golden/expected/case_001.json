@@ -1,0 +1,19 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "summary": "Java 21 + NeoForge + allow-flight=true + max-tick-time=180000 + online-mode=true/enforce-secure-profile=true 配对 + view-distance=10/sim=6（4 人档）+ -Xms12G -Xmx24G（300 mods 档）+ ufw 25565/tcp + 独立启动脚本 + 每时备份 24 份",
+    "note": "MINE-002（allow-flight 防飞行 mod 踢人）/ MINE-003（max-tick-time 容纳长 tick）/ MINE-004（300 mods → 12-24G，24GB 主机满足 ≥8GB 预留：24-24=0... 此处 Xmx=24 等于可分配上限，主机需另有 ≥8GB 系统预留；case 设定 host_ram_available_gb=24 已为扣除系统预留后的可分配值）/ MINE-006（独立启动脚本替代 startserver.sh 自动重启循环）/ MINE-007（备份 cron + 24 份上限）"
+  },
+  "verification": [
+    "java == 'openjdk-21-jre-headless'（MC 1.21+ → Java 21，VERIFICATION #1）",
+    "server_properties['allow-flight'] == 'true'（MINE-002）",
+    "server_properties['max-tick-time'] == 180000（MINE-003）",
+    "server_properties['online-mode'] == 'true' 且 server_properties['enforce-secure-profile'] == 'true'（认证配对一致）",
+    "server_properties['view-distance'] == 10 且 server_properties['simulation-distance'] == 6（4-6 人档）",
+    "jvm_args 含 '-Xms12G' 与 '-Xmx24G'（200-350+ mods → 12-24G，MINE-004）",
+    "ram_check.pass == True 且 os_reserve_gb >= 8（MINE-004 系统预留）",
+    "firewall 含 '25565/tcp'（VERIFICATION #4）",
+    "launch_script 为独立脚本且引用 'user_jvm_args.txt'，非 startserver.sh（MINE-006）",
+    "backup.cron == '0 * * * *' 且 backup.max_backups == 24（MINE-007 / EXAMPLES 3）"
+  ]
+}

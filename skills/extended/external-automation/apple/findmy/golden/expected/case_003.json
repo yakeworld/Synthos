@@ -1,0 +1,27 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "method_chain": [
+      "osascript -e 'tell application \"FindMy\" to activate'",
+      "sleep 3",
+      "screencapture -w -o /tmp/findmy.png（产出黑屏）"
+    ],
+    "location_data": {
+      "status": "error",
+      "error": "截图为黑屏：终端缺少屏幕录制权限",
+      "recovery": [
+        "System Settings → Privacy & Security → Screen Recording，为终端授权",
+        "授权后重新执行截图与 vision_analyze"
+      ]
+    },
+    "note": "无屏幕录制权限时截图黑屏（FIND-006 / 验证清单第 1 项）；黑屏即失败，必须报错并给权限恢复指引，禁止输出伪造位置（数据诚实）"
+  },
+  "verification": [
+    "检测到黑屏/截图失败后 location_data.status == 'error'（而非 'ok'）",
+    "error 含上下文：指明黑屏根因为屏幕录制权限缺失",
+    "recovery 为 list 且含 'Screen Recording' 权限设置路径（System Settings → Privacy & Security → Screen Recording）",
+    "recovery 含授权后重试指引",
+    "location_data 中不存在任何 device 位置/坐标字段（未伪造数据：claimed == measured）",
+    "未把黑屏截图交给 vision_analyze 后采信其幻觉输出（FIND-005 的边界：输入无效则结果无效）"
+  ]
+}

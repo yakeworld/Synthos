@@ -1,0 +1,21 @@
+{
+  "case_id": "case_002",
+  "expected_error": {
+    "generated_product_delivered": false,
+    "blocked_at": "preflight_validation",
+    "error_message_contains_context": true,
+    "error_message_contains_recovery_suggestion": true,
+    "message_keywords": [
+      "codec_dtype",
+      "bfloat16",
+      "float32",
+      "HEAR-004"
+    ],
+    "message_example": "HEARTMULA PREFLIGHT ERROR: --codec_dtype bfloat16 is forbidden for HeartCodec (HEAR-004: bf16 degrades audio quality). Recovery: rerun with --codec_dtype float32 (default, fp32 recommended for quality)."
+  },
+  "invariants": [
+    "检测到 codec_dtype=bfloat16 即拦截，不得交付音质退化 MP3（去形留神）",
+    "错误信息含上下文（参数名 + 违反的基因）与恢复建议（RULES 异常约束）",
+    "不抛出未捕获异常"
+  ]
+}

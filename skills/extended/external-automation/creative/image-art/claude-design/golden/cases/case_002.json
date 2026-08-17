@@ -1,0 +1,19 @@
+{
+  "case_id": "case_002",
+  "path": "normal",
+  "description": "品牌匹配请求（Linear 风格）→ 联动 popular-web-designs，不加载 design-md",
+  "input": {
+    "request": "给我做一个定价页，视觉上要像 Linear 官网那种感觉：暗色、简洁、命令优先。",
+    "context": {
+      "repo": null,
+      "brand_docs": null,
+      "screenshots": null
+    },
+    "fidelity": "medium",
+    "allow_questions": true,
+    "environment": {
+      "browser_tools": false,
+      "screenshot_tools": false
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "fallback_command_example": "curl -s \"https://asciified.thelicato.io/api/v2/ascii?text=Hello+World&font=Slant\"",
+    "notes": "pyfiglet 缺失 → 按决策流第 9 条降级到 asciified API（ASCI-003）；响应为纯文本 ASCII art，无需 JSON 解析"
+  },
+  "verification": [
+    "pyfiglet 不可用后降级到 asciified REST API（curl），未直接放弃或抛裸异常",
+    "URL 中空格已 URL-encode 为 '+'（text=Hello+World）",
+    "字体名大小写正确（Slant，经 fonts 端点核实的精确名称）",
+    "向用户明确提示了降级行为（本地工具缺失 → 使用远程 API）"
+  ]
+}

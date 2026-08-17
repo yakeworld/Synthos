@@ -1,0 +1,30 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径 — developer dashboard（dark mode，数据密集，路由 linear.app/sentry）",
+  "input": {
+    "user_request": "做一个数据密集的分析 dashboard 页面，需 dark mode，面向开发者",
+    "context": {
+      "content_type": "data-dense dashboard",
+      "style_requirement": "dark mode",
+      "audience": "developers",
+      "deliverable": "rendered HTML page"
+    }
+  },
+  "expected_behavior": {
+    "should_produce": true,
+    "critical_checks": [
+      "template_routed_correctly",
+      "root_variables_section2",
+      "viewport_lang_present",
+      "deliverable_is_html"
+    ],
+    "high_checks": [
+      "typography_matches_section3",
+      "components_section4_6"
+    ],
+    "medium_checks": [
+      "shadows_section6",
+      "browser_vision_verification"
+    ]
+  }
+}

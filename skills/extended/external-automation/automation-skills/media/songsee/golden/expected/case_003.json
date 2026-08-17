@@ -1,0 +1,33 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "route": "rejected",
+    "error": {
+      "code": "INVALID_VIZ_TYPE",
+      "context": {
+        "request_echo": "对 track.mp3 用 --viz spectro,heatmap 生成频谱",
+        "invalid_values": ["spectro", "heatmap"],
+        "valid_values": ["spectrogram", "mel", "chroma", "hpss", "selfsim", "loudness", "tempogram", "mfcc", "flux"]
+      },
+      "recovery": [
+        "将 viz 值修正为合法类型：spectrogram/mel/chroma/hpss/selfsim/loudness/tempogram/mfcc/flux（逗号分隔多类型）",
+        "spectro 疑似 spectrogram 缩写 → 直接使用 spectrogram；heatmap 无对应类型，如只需基础频谱图使用 spectrogram",
+        "修正后重试：songsee track.mp3 --viz spectrogram -o out.png"
+      ]
+    },
+    "output_file_created": false,
+    "crashed": false,
+    "internal_state_exposed": false,
+    "note": "Golden Error 路径（RULES 异常约束）：--viz 值必须为合法 9 类之一（验证清单第 3 项），非法值必须结构化拒绝且不得生成任何输出文件、不得静默降级"
+  },
+  "verification": [
+    "route == 'rejected'",
+    "error.code == 'INVALID_VIZ_TYPE'",
+    "error.context.request_echo 与输入 request 精确一致",
+    "error.context.invalid_values 精确等于 ['spectro', 'heatmap']（逐值比对合法集合得出）",
+    "error.context.valid_values 精确等于 9 类合法集合（SKILL.md Visualization Types 表）",
+    "len(error.recovery) >= 2 且可操作（RULES 异常约束：错误信息含上下文和恢复建议）",
+    "output_file_created == False（未生成 out.png，拒绝而非降级）",
+    "crashed == False 且 internal_state_exposed == False（RULES 安全约束）"
+  ]
+}

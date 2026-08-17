@@ -1,0 +1,29 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：后台在 Safari 逐元素点击（capture→click by element→capture_after 复验）",
+  "input": {
+    "task": "在 Safari 中打开 example.com 并点击 'Sign In' 链接",
+    "app": "Safari",
+    "context": {
+      "capture_mode": "som",
+      "target_element_index": 7,
+      "target_element": "AXLink 'Sign In' @ (900, 420, 80, 24)",
+      "background_driving": true
+    }
+  },
+  "expected": {
+    "steps": [
+      {"action": "capture", "mode": "som", "app": "Safari"},
+      {"action": "click", "element": 7, "capture_after": true}
+    ],
+    "raise_window": false,
+    "spaces_switched": false,
+    "result": {
+      "ok": true,
+      "clicked_element": 7,
+      "verified_by": "capture_after",
+      "error": null
+    }
+  },
+  "weight": "critical"
+}

@@ -1,0 +1,37 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径 — 交互式生成艺术（粒子噪声流场，seed 探索，60fps，1920x1080）",
+  "input": {
+    "user_request": "交互式生成艺术：粒子跟随多八度噪声流场，浏览器可探索 seed，1920x1080，60fps",
+    "context": {
+      "mode_hint": "generative art",
+      "canvas": "1920x1080",
+      "fps": 60,
+      "interaction": "seed navigation",
+      "export_target": "browser + PNG",
+      "p5_version": "1.11.3"
+    }
+  },
+  "expected_behavior": {
+    "should_produce": true,
+    "critical_checks": [
+      "mode_is_generative_art",
+      "renderer_is_P2D",
+      "fps_is_60",
+      "single_file_html"
+    ],
+    "high_checks": [
+      "reproducible_seeds",
+      "state_separation_CONFIG_PALETTE_globals",
+      "custom_palette_3_7",
+      "non_plain_background",
+      "disable_fes",
+      "pixel_density_1"
+    ],
+    "medium_checks": [
+      "invented_element_present",
+      "keyboard_shortcuts_S_G_R_Space",
+      "uses_viewer_template"
+    ]
+  }
+}

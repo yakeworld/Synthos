@@ -1,0 +1,22 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径：源图宽度 <100px 未预放大，block=8 触发坍缩陷阱",
+  "input": {
+    "script": "pixel_art",
+    "source_image": "/tmp/pixel_test/tiny_64x48.jpg",
+    "output": "/tmp/pixel_test/tiny_out.png",
+    "params": {
+      "preset": "snes",
+      "block": 8,
+      "pre_upscale": false
+    }
+  },
+  "expected": {
+    "status": "error",
+    "error_code": "SOURCE_TOO_SMALL",
+    "must_contain_context": true,
+    "must_contain_recovery": true,
+    "recovery_hint": "先对源图 upscale 至宽度 >= 100px 再转换"
+  },
+  "weight": "critical"
+}

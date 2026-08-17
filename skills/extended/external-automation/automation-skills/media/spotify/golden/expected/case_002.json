@@ -1,0 +1,22 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "route": "tool_sequence",
+    "sequence": [
+      {"tool": "spotify_playlists", "args": {"action": "list"}},
+      {"tool": "spotify_playback", "args": {"action": "get_currently_playing"}},
+      {"tool": "spotify_playlists", "args": {"action": "add_items", "playlist_id": "37i9dQZF1DX4wta20PHgwo", "uris": ["spotify:track:0DiWol3AO6WpXZgp0goxAV"]}}
+    ],
+    "result": {"status": "success", "playlist_id": "37i9dQZF1DX4wta20PHgwo", "added_track_uris": ["spotify:track:0DiWol3AO6WpXZgp0goxAV"]},
+    "note": "Canonical pattern（SPOT-006 / 示例 2）：用户私有播放列表只能走 spotify_playlists list；get_currently_playing 单调用取 track URI"
+  },
+  "verification": [
+    "序列第 1 步为 spotify_playlists(action='list')，按 name 精确匹配 'Late Night Jazz' 得 playlist_id == '37i9dQZF1DX4wta20PHgwo'",
+    "序列中不含 spotify_search（What NOT to do：不用公共目录搜索找用户私有播放列表，SPOT-006）",
+    "get_currently_playing 恰好调用 1 次，取 track URI（SPOT-005：单调用不链式 get_state）",
+    "add_items.args.playlist_id 与 list 结果一致；uris 为数组且元素为 spotify:track:<id> 类型化 URI",
+    "序列长度 == 3（list → get_currently_playing → add_items），无多余调用",
+    "Free 用户亦可执行：playlist 操作不要求 Premium（验证清单第 2 项）",
+    "crashed == False"
+  ]
+}

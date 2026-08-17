@@ -1,0 +1,25 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "status": "blocked",
+    "error": {
+      "type": "INPUT_INVALID",
+      "context": {
+        "field": "request",
+        "received": "",
+        "expected": "非空 str（用户请求描述）"
+      },
+      "recovery": [
+        "提供非空 request 字符串（描述所需共享资源/操作）",
+        "若仅需加载子技能，补充 context.target_doc 指明 references 下文档"
+      ]
+    },
+    "executed": false
+  },
+  "verification": [
+    "status == 'blocked'（输入约束校验失败即阻断，SHAR-001/RULES-1）",
+    "error.context 回显缺失字段 request 及期望类型/格式（非空 str）",
+    "error.recovery 含 ≥1 条可执行恢复建议",
+    "未静默执行任何路由/操作（executed == false）"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "case_id": "case_002",
+  "output_dir": "comic/alan-turing-bio/",
+  "failure": {
+    "detected": true,
+    "failed_page": 6,
+    "expected_path": "comic/alan-turing-bio/06-page-midlife.png",
+    "failure_mode": "file missing or empty after download",
+    "url": "https://images.example/generated/06-page-midlife.png",
+    "path_is_absolute": true,
+    "auto_retried_once": true,
+    "retry_result": "still empty -> page marked failed, downstream pages continue"
+  },
+  "report": {
+    "failed_page": 6,
+    "context": {
+      "absolute_path": "comic/alan-turing-bio/06-page-midlife.png",
+      "url": "https://images.example/generated/06-page-midlife.png",
+      "symptom": "curl -fsSL 下载后文件为 0 字节 / 路径缺失"
+    },
+    "recovery_advice": [
+      "确认 URL 可访问（curl -I 检查状态码），必要时重新 image_generate 该页",
+      "确认 -o 使用了绝对路径，避免 CWD 漂移把文件写到错误目录",
+      "若仍失败，换 aspect 或提示词重试；必要时人工复核该页 prompt 文件 prompts/06-page-midlife.md",
+      "重新生成已存在页面前，按 -backup-YYYYMMDD-HHMMSS 后缀备份旧 PNG"
+    ],
+    "other_pages": "其余页 PNG 保持原样，不受影响"
+  },
+  "invariants": {
+    "does_not_crash": true,
+    "failure_detected_empty_or_missing": true,
+    "retried_once": true,
+    "report_includes_failed_page": true,
+    "report_includes_context_abs_path_and_url": true,
+    "recovery_advice_present": true,
+    "other_pages_untouched": true
+  },
+  "references_used": [
+    "SKILL.md#Step-7-Image-Generation",
+    "SKILL.md#Pitfalls",
+    "SKILL.md#验证清单"
+  ]
+}

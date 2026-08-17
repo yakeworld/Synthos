@@ -1,0 +1,32 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径 — cinematic ballad（whisper→roar，Suno Custom Mode，ABABCB）",
+  "input": {
+    "user_request": "写一首 cinematic ballad，情感核是失去后的释然，主题是雨夜告别，结构用 ABABCB，Suno Custom Mode",
+    "context": {
+      "emotional_core": "失去后的释然",
+      "theme": "雨夜告别",
+      "structure_pref": "ABABCB",
+      "mode": "custom",
+      "platform": "Suno"
+    }
+  },
+  "expected_behavior": {
+    "should_produce": true,
+    "critical_checks": [
+      "structure_is_ABABCB",
+      "style_no_artist_name",
+      "lyrics_not_null"
+    ],
+    "high_checks": [
+      "style_follows_formula",
+      "style_has_dynamic_arc",
+      "metatags_5_8_per_section",
+      "metatags_no_contradiction"
+    ],
+    "medium_checks": [
+      "metatags_doubled_in_style_and_lyrics",
+      "phonetic_treatment_applied"
+    ]
+  }
+}

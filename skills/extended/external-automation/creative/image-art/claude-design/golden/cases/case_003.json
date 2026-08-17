@@ -1,0 +1,21 @@
+{
+  "case_id": "case_003",
+  "path": "error",
+  "description": "高保真外部落地页 + 零上下文 + 禁止提问 → 必须先拒绝并说明缺失上下文",
+  "input": {
+    "request": "给外部客户做一个高保真营销落地页，明天就要用。",
+    "context": {
+      "repo": null,
+      "brand_docs": null,
+      "screenshots": null,
+      "audience": null
+    },
+    "fidelity": "high",
+    "externally_facing": true,
+    "allow_questions": false,
+    "environment": {
+      "browser_tools": false,
+      "screenshot_tools": false
+    }
+  }
+}

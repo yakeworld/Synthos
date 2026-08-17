@@ -1,0 +1,28 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径 — 实用型用户请求（匹配表: useful → 痛点类约束）",
+  "input": {
+    "request": "I want something useful. I'm a backend dev, my biggest pain is writing repetitive API client wrappers.",
+    "context": {
+      "user_domain": "software-development",
+      "mood": "productive",
+      "time_horizon": "weekend"
+    }
+  },
+  "expected_behavior": {
+    "should_generate": true,
+    "critical_checks": [
+      "constraint_from_library",
+      "ideas_count_exactly_3",
+      "each_idea_has_pitch"
+    ],
+    "high_checks": [
+      "constraint_matches_useful_profile",
+      "output_format_compliant"
+    ],
+    "medium_checks": [
+      "each_idea_has_time_budget",
+      "each_idea_has_stack"
+    ]
+  }
+}

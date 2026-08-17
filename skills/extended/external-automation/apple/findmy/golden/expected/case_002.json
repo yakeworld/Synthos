@@ -1,0 +1,28 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "method_chain": [
+      "osascript -e 'tell application \"FindMy\" to activate'",
+      "sleep 3",
+      "peekaboo see --app \"FindMy\" --annotate --path /tmp/findmy-ui.png",
+      "osascript（切到 Items 页签）",
+      "peekaboo click --on <element_id> --app \"FindMy\"",
+      "peekaboo image --app \"FindMy\" --path /tmp/findmy-detail.png",
+      "vision_analyze(image_url=\"/tmp/findmy-detail.png\", question=\"What is the location shown for this device/item? Include address and coordinates if visible.\")"
+    ],
+    "location_data": {
+      "status": "ok",
+      "device": "背包上的 AirTag",
+      "address": "详情页读出的地址（语义等价，含坐标则一并返回）"
+    },
+    "note": "peekaboo 推荐法（FIND-002 / 示例 2）：标注 → 切 Items 页签 → 点击目标元素 → 详情页截图 → vision_analyze 读地址/坐标"
+  },
+  "verification": [
+    "方法链含 peekaboo see --annotate（标注元素）与 peekaboo click --on <id>（点击目标），element id 来自标注结果而非硬编码猜测",
+    "包含切换到 Items 页签（AirTag 在 Items 下，SKILL.md Method 1 切换命令）",
+    "详情页截图后经 vision_analyze 读出地址/坐标（FIND-005），未直接解析像素",
+    "location_data 为 dict 且 status == 'ok'，device 语义含 'AirTag'",
+    "追踪期间 FindMy 保持前台激活（FIND-003 / Rules 第 1 条）",
+    "目标物品 device_owned_by_user == true（验证清单第 5 项隐私边界）"
+  ]
+}

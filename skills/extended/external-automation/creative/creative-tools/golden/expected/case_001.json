@@ -1,0 +1,18 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "routed_member": "ascii-art",
+    "result_shape": {
+      "member": "ascii-art",
+      "ascii_output": "<ASCII art text>",
+      "trace": "task_desc -> creative-tools 路由 -> ascii-art 执行"
+    },
+    "notes": "P3 人机分层：路由器只负责路由到唯一成员（CREA-001），ascii-art 负责执行；result 结构可追溯至成员输出"
+  },
+  "verification": [
+    "路由目标 == 'ascii-art'（25 members 中的唯一成员，未路由到 manim-video/heartmula 等）",
+    "未在套件层直接生成 ASCII 艺术（executed_at_suite_level == false）",
+    "输入符合 IO_CONTRACT：task_desc 为 str 且非空，context 为 dict（CREA-007）",
+    "result 为 dict 且含 member 字段，可追溯至 ascii-art 的实际输出"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "case_id": "case_002",
+  "artifact": "DESIGN.md",
+  "yaml_parses": false,
+  "yaml_note": "未引号负维度 letterSpacing: -0.02em 触发 YAML flow/序列解析歧义；若解析器容忍，则按 lint 规则继续校验",
+  "lint": {
+    "command": "npx -y @google/design.md lint DESIGN.md",
+    "exit_code": 1,
+    "errors": [
+      {
+        "code": "broken-ref",
+        "location": "components.button-primary.textColor",
+        "message": "{colors.missing} 指向不存在的 token；colors 中无 'missing' 键",
+        "severity": "error"
+      },
+      {
+        "code": "duplicate-section",
+        "location": "## Colors",
+        "message": "同一 '## Colors' 标题出现两次；规范章节不得重复",
+        "severity": "error"
+      },
+      {
+        "code": "invalid-dimension",
+        "location": "typography.h1.letterSpacing",
+        "message": "负维度 -0.02em 未加引号，YAML 解析风险；应写为 \"-0.02em\"",
+        "severity": "error"
+      }
+    ],
+    "warnings": [
+      {
+        "code": "unknown-component-property",
+        "location": "components.button-primary.hover",
+        "message": "'hover' 不在组件属性白名单内；变体应为同级键 button-primary-hover 而非嵌套属性",
+        "severity": "warning"
+      }
+    ]
+  },
+  "recovery_advice": [
+    "将 {colors.missing} 改为已定义 token（如 {colors.on-tertiary}），或在 colors 中补充该键",
+    "删除重复的 '## Colors' 标题，或将其与首次出现合并；保持 Overview→…→Do's/Don'ts 规范顺序",
+    "为负维度加引号：letterSpacing: \"-0.02em\"",
+    "将嵌套的 button-primary.hover 提升为同级键 button-primary-hover，属性限制在白名单内"
+  ],
+  "invariants": {
+    "does_not_crash": true,
+    "errors_structured": true,
+    "error_includes_context": true,
+    "recovery_advice_present": true,
+    "wcag_findings_reported": true
+  },
+  "references_used": [
+    "SKILL.md#Lint-rule-reference",
+    "SKILL.md#验证清单"
+  ]
+}

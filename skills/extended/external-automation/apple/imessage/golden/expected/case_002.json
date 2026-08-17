@@ -1,0 +1,25 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "sent_status": {
+      "ok": true,
+      "recipient": "+14155551212",
+      "service": "imessage",
+      "chat_id": 7,
+      "confirmed": true,
+      "attachment": "/path/to/image.jpg",
+      "attachment_verified": true,
+      "error": null
+    },
+    "command": "imsg send --to \"+14155551212\" --text \"Check this out\" --file /path/to/image.jpg --service imessage",
+    "note": "发送前先验证 --file 路径存在（IMES-004）；附件路径与消息体一一对应；--service imessage 显式指定（IMES-005）"
+  },
+  "verification": [
+    "sent_status.ok == True 且 sent_status.error == null",
+    "sent_status.attachment == '/path/to/image.jpg' 且与输入 context.attachment 一致",
+    "sent_status.attachment_verified == True（发送前已校验路径存在，IMES-004）",
+    "sent_status.confirmed == True（发送前用户确认收件人+内容，IMES-001）",
+    "sent_status.service == 'imessage'（IMES-005）",
+    "命令中 --file 参数值与输入 context.attachment 精确一致"
+  ]
+}

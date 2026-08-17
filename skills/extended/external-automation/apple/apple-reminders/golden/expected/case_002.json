@@ -1,0 +1,19 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "command": "remindctl overdue --json",
+    "reminder_status": {
+      "status": "ok",
+      "count": 3,
+      "parseable": true
+    },
+    "note": "程序化解析必须走 --json（APPL-003 / 示例 3）；计数须与 remindctl overdue --quiet 一致（SKILL.md 示例 3 验证条款）"
+  },
+  "verification": [
+    "命令精确为 remindctl overdue --json（不用 --plain/--quiet 做主数据源）",
+    "输出可被 python3 -c \"import json,sys;print(len(json.load(sys.stdin)))\" 成功解析（P1 可复现）",
+    "解析得到的条目数 == context.sample_count（3）",
+    "计数与 remindctl overdue --quiet 的输出一致",
+    "reminder_status.count 与 JSON 实际长度一致（数据诚实：claimed == measured）"
+  ]
+}

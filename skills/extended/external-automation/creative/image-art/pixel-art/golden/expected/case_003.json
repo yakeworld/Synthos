@@ -1,0 +1,20 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "status": "error",
+    "error_code": "SOURCE_TOO_SMALL",
+    "context": "源图 64x48（宽 64px < 100px）× block 8px → 水平方向仅 8 块像素，细节完全坍缩",
+    "recovery": [
+      "先将源图 upscale 至宽度 >= 100px（建议 >= 640px）再执行像素化",
+      "或降低 block 至 2-4px 以适配小尺寸源图"
+    ],
+    "note": "触发 <100px 大块坍缩陷阱（PIXE-005）；错误信息必须含上下文（源尺寸 + block）与恢复建议，禁止静默产出坍缩图"
+  },
+  "verification": [
+    "返回 status == 'error' 且 error_code == 'SOURCE_TOO_SMALL'",
+    "错误信息包含源图实际尺寸（64x48）与 block 值（8）",
+    "错误信息包含 >= 1 条恢复建议（upscale 源图或降低 block）",
+    "不产出无效 PNG（或若产出则显式标记为退化警告，不冒充成功）",
+    "错误未暴露内部敏感状态（无堆栈泄露/内部路径泄露）"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：标准照片 → NES 预设像素化 PNG",
+  "input": {
+    "script": "pixel_art",
+    "source_image": "/tmp/pixel_test/photo_640x480.jpg",
+    "output": "/tmp/pixel_test/nes_out.png",
+    "params": {
+      "preset": "nes",
+      "palette": "NES",
+      "block": 8
+    }
+  },
+  "expected": {
+    "status": "success",
+    "output_file": "/tmp/pixel_test/nes_out.png",
+    "output_format": "PNG",
+    "max_colors": 54,
+    "block_size": 8
+  },
+  "weight": "critical"
+}

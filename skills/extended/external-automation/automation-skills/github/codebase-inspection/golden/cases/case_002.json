@@ -1,0 +1,29 @@
+{
+  "case_id": "case_002",
+  "description": "正常路径：仅统计 .py 文件行数（--suffix=py 定向过滤）",
+  "input": {
+    "request": "只数 .py 文件的行数",
+    "context": {
+      "repo_path": "/path/to/repo",
+      "suffix": "py",
+      "format": "summary",
+      "fixture_py_files": {
+        "app.py": {"code": 12, "comment": 3},
+        "utils.py": {"code": 8, "comment": 2}
+      },
+      "non_py_present": ["README.md", "config.yaml"]
+    }
+  },
+  "expected": {
+    "command": "pygount --suffix=py --format=summary .",
+    "format": "summary",
+    "suffix_filter": "py",
+    "summary": [
+      {"language": "Python", "files": 2, "code": 20, "comment": 5}
+    ],
+    "totals": {"files": 2, "code": 20, "comment": 5},
+    "cross_check": "find . -name '*.py' | xargs wc -l  → 总行数 35（code 20 + comment 5 + blank 10），与 summary code=20 量级一致",
+    "notes": "输出仅含 Python 行（及可能的伪语言标签），README.md/config.yaml 未计入（--suffix=py 过滤，CODE-003）"
+  },
+  "weight": "high"
+}

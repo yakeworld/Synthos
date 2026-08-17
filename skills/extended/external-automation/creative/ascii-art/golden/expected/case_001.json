@@ -1,0 +1,13 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "command_example": "python3 -m pyfiglet \"HERMES\" -f doom",
+    "notes": "短文本(1-8字符)优先细节字体（ASCI-001）：doom/block/big 等；'HERMES' 为 6 字符，适用细节字体"
+  },
+  "verification": [
+    "工具选择为 pyfiglet（本地已安装，决策流第 1 条首选）",
+    "字体为细节类（doom/block/big/3-d 之一），不得为 small/mini",
+    "输出每行宽度 ≤ 80（dimensions 约束），横幅行数 ≤ 15",
+    "输出为等宽字体安全的纯文本（无 ANSI 转义码污染）"
+  ]
+}

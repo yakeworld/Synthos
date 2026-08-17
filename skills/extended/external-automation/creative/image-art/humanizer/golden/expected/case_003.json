@@ -1,0 +1,15 @@
+{
+  "case_id": "case_003",
+  "expect": {
+    "status": "error",
+    "error": {
+      "code": "EMPTY_INPUT",
+      "message_contains_context": true,
+      "missing_field_named": "text",
+      "suggestion_non_empty": true,
+      "suggestion_mentions": ["提供待处理文本", "inline", "文件路径"]
+    },
+    "humanized_text": null,
+    "rationale": "IO_CONTRACT input 为 text: str；空文本无模式可扫描、无语义可保真（P3），必须按 RULES-3 返回带上下文与恢复建议的错误，不得返回空改写"
+  }
+}

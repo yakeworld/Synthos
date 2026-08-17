@@ -1,0 +1,19 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "error_path": true,
+    "error_type": "jvm_ram_exceeds_host",
+    "summary": "Golden Error 路径：拒绝 -Xmx24G（16GB 主机扣除 ≥8GB 系统预留后可用仅 8GB），降档至 -Xms6G -Xmx8G + 同步降 view-distance/simulation-distance；错误信息同时含 context（主机实测 RAM + Mod 数量 + 请求 Xmx + 超额量）与 recovery（≥2 条：降档 / 升级硬件 / 裁剪 mods）",
+    "note": "MINE-004 硬性约束：『确保系统保留至少 8GB 空闲内存』—— 16GB 主机可用 8GB < 请求 24GB，违反必须拒绝；恢复建议必须含可执行降档值（非泛化『降低内存』）；view-distance/simulation-distance 同步降档是 SKILL.md 性能分档表（8+ 人或弱机 → 8/4）的直接应用"
+  },
+  "verification": [
+    "error_path == True 且 error_type == 'jvm_ram_exceeds_host'",
+    "context.usable_for_server_gb == 8（16 - 8 预留）且 context.requested_xmx_gb == 24",
+    "context.over_by_gb == 16（24 - 8）",
+    "recovery[0] 含降档值 '-Xms6G' 与 '-Xmx8G'（16GB 主机可复现）",
+    "recovery 含 view-distance=8 / simulation-distance=4 同步降档（SKILL.md 性能分档表 8+ 人/弱机档）",
+    "recovery 数组长度 >= 2（升级硬件 / 裁剪 mods 至少其一）",
+    "recovery 未出现『忽略 8GB 预留直接给 24G』类违反 MINE-004 的建议",
+    "未出现仅返回『内存不足』无上下文的通用错误（异常约束：错误信息必须含上下文和恢复建议）"
+  ]
+}

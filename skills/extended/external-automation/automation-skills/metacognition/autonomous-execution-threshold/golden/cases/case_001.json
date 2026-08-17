@@ -1,0 +1,42 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：≥80% 闭嘴执行 — 论文管线上下文中用户说 '继续'（v2.5/v2.6 循环协议）",
+  "input": {
+    "request": "继续",
+    "context": {
+      "scene": "pipeline_continuation_same_session",
+      "pipeline_trace": {"current_step": "P-2.1", "next_step": "P-2.2", "skill_view_recorded": true},
+      "sentiment": {
+        "sentence_class": "ellipsis",
+        "signal_words": [{"word": "继续", "type": "affirmative", "weight": 0.10}],
+        "short_phrase_ellipsis_bonus": 0.05
+      },
+      "history": {
+        "has_pending_correction": false,
+        "recent_user_said_continue": true,
+        "note": "管线执行'继续'（同session）置信度>=95%（阈值矩阵 🟢 区）"
+      }
+    }
+  },
+  "expected": {
+    "route": "predict_judge_act",
+    "confidence_computation": {
+      "baseline": 0.80,
+      "signal_avg": 0.10,
+      "sentence_class_correction": 0.05,
+      "history_correction_match": 0.0,
+      "dynamic_confidence": 0.90
+    },
+    "decision": "execute_silently",
+    "output_structure": {
+      "visible_predict_text": false,
+      "options_presented": false,
+      "slogan": false,
+      "action_executed": true,
+      "reasoning_chain_position": "after_action",
+      "reasoning_chain_present": true
+    },
+    "crashed": false
+  },
+  "weight": "critical"
+}

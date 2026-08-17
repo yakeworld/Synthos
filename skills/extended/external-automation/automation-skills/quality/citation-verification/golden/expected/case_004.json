@@ -1,0 +1,22 @@
+{
+  "case_id": "case_004",
+  "expected_output": {
+    "phase": "phase2",
+    "verdict": "INAPPROPRIATE",
+    "mismatches": {
+      "title": "MISMATCH",
+      "author": "MISMATCH",
+      "year": "MATCH",
+      "content_supports_claim": false,
+      "topic_consistent": false
+    },
+    "reason": "PDF第一作者(Gupta)与bib(Balloccu)不符，且PDF标题为金融论文而非SMOTE → DOI存在但内容跨域/作者编造陷阱（CITA-004/005）",
+    "action": "flag_for_replacement_or_removal"
+  },
+  "verification": [
+    "verdict == 'INAPPROPRIATE'（Phase 2 读PDF发现作者/标题/内容不匹配）",
+    "phase2 基于PDF全文阅读(pymupdf/pdfplumber)而非仅API标题匹配（CITA-004）",
+    "执行了 pdfinfo 标题校验排除串流（CITA-005），withdrawn 检测为 false 非误判依据",
+    "mismatches 六维中至少 title/author/content_supports_claim 为 MISMATCH/false"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径：JVM 内存超额分配 — 300 mods 请求 -Xmx24G 但主机仅 16GB RAM（扣除 8GB 系统预留后可用 8GB）",
+  "input": {
+    "server_spec": "ATM10, ~300 mods, 4 人, 正版, 主机 16GB RAM, 请求 -Xmx24G"
+  },
+  "context": {
+    "mc_version": "1.21",
+    "mod_loader": "neoforge",
+    "mod_count": 300,
+    "players": 4,
+    "online_mode": true,
+    "host_ram_total_gb": 16,
+    "requested_xmx": "-Xmx24G",
+    "requested_xms": "-Xms12G"
+  },
+  "expected": {
+    "error_path": true,
+    "error_type": "jvm_ram_exceeds_host",
+    "context": {
+      "host_total_gb": 16,
+      "os_reserve_gb": 8,
+      "usable_for_server_gb": 8,
+      "requested_xmx_gb": 24,
+      "requested_xms_gb": 12,
+      "over_by_gb": 16
+    },
+    "recovery": [
+      "降档 JVM：-Xms6G -Xmx8G（16GB 主机扣除 8GB 预留后可用 8GB，Xmx 取可用上限，Xms 取 75% 以留 GC 余量）",
+      "同步降 view-distance=8 / simulation-distance=4（8+ 人或弱机档，降低区块生成内存压力）",
+      "或升级主机至 ≥32GB RAM 以维持 -Xmx24G（300 mods 推荐档）",
+      "或裁剪 mods 至 100-200 档（-Xms6G -Xmx12G 即可）",
+      "启动后监控 free -h 确认 OOM killer 未触发，tail logs/latest.log 观察 'Can't keep up' 频率"
+    ]
+  },
+  "weight": "critical"
+}

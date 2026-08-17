@@ -1,0 +1,34 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "route": "predict_judge_act",
+    "confidence_computation": {
+      "baseline": 0.80,
+      "signal_avg": -0.125,
+      "sentence_class_correction": -0.15,
+      "history_correction_match": 0.0,
+      "dynamic_confidence": 0.525,
+      "derivation": "0.80 基线 + (犹豫 嗯 -0.10 + 疑问标记 是不是 -0.15)/2 = -0.125 + 疑问句 -0.15 + 历史 0.0 = 0.525，未触发 clamp"
+    },
+    "decision": "present_options_with_prediction",
+    "output_structure": {
+      "options_count": 3,
+      "recommendation_present": true,
+      "prediction_suffix_present": true,
+      "prediction_suffix_format": "🔍 推测: 我预测人类会选 [方案X], 因为 [推理] + 🟢 30 秒无纠正按推测方案自动执行",
+      "waits_for_confirmation": false,
+      "reasoning_chain_position": "after_options"
+    },
+    "note": "AUTO-001 的 <60% 分支：给 2-3 选项 + 推荐。v2.7.0 征求意见带预判：每个选项后附推测，预测输出后继续工作，不等回复"
+  },
+  "verification": [
+    "confidence_computation 可复算：0.80 + (-0.10 + -0.15)/2 + (-0.15) + 0 = 0.525（v2.0 公式，signal 为平均权重）",
+    "0.525 < 0.60 → decision == 'present_options_with_prediction'（JUDGE 三分支：≥80 执行 / 60-80 推荐+纠正入口 / <60 选项）",
+    "options_count ∈ [2, 3]（🟡 给选项区：2-3 方案 + 推荐）",
+    "recommendation_present == True：有明确推荐项",
+    "prediction_suffix_present == True 且格式含 '🔍 推测' 与 '30 秒无纠正按推测方案自动执行'（v2.7.0：问了就猜，猜了继续干）",
+    "waits_for_confirmation == False：预测输出后继续工作，不停在'等确认'（v2.7.0 铁律）",
+    "本 case 选项可见（<80% 咨询场景），与 case_001 的 PREDICT 内部不可见形成对照（v2.6 两个模式区别表）",
+    "crashed == False"
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "case_id": "case_002",
+  "status": "pass",
+  "skeleton_mapping": {
+    "sections_mapped": true,
+    "syllables_counted_per_line": true,
+    "rhyme_scheme_marked": true,
+    "stressed_positions_marked": true,
+    "held_note_vowels_noted": true
+  },
+  "fitting_rules": {
+    "stress_alignment": "新词重音对齐原节拍",
+    "syllable_flex": "±1-2 非重读音节内可浮动",
+    "held_note_vowel_match": "长延音处匹配原元音 (ee)",
+    "monosyllable_swaps": [
+      {"original": "Crime", "new": "Code"},
+      {"original": "Snake", "new": "Noose"}
+    ]
+  },
+  "sample_adaptation": {
+    "original_line": "We buried the crime under the pines",
+    "original_syllables": 10,
+    "new_line_syllables": 10,
+    "new_line_stressed_positions": [1, 3, 5, 7],
+    "stress_aligned": true
+  },
+  "original_lines_retained": 3,
+  "new_theme_carries_whole_song": true,
+  "qa_checks": [
+    {
+      "id": "skeleton_mapped",
+      "rule": "先映射原曲结构（音节/韵式/重音/延音元音）",
+      "critical": true,
+      "expected_pass_condition": "skeleton_mapping 五项全 true"
+    },
+    {
+      "id": "stress_alignment",
+      "rule": "新词重音对齐原节拍",
+      "critical": true,
+      "expected_pass_condition": "sample_adaptation.stress_aligned=true"
+    },
+    {
+      "id": "held_note_vowel",
+      "rule": "长延音处匹配原元音",
+      "critical": false,
+      "expected_pass_condition": "held_note_vowel_match 含 (ee)"
+    },
+    {
+      "id": "monosyllable_swap",
+      "rule": "单音节替换保持节奏（Crime→Code, Snake→Noose）",
+      "critical": false,
+      "expected_pass_condition": "monosyllable_swaps 含两对且节奏不变"
+    },
+    {
+      "id": "retain_originals",
+      "rule": "保留 ≥2 句原词以维持辨识度",
+      "critical": false,
+      "expected_pass_condition": "original_lines_retained>=2"
+    },
+    {
+      "id": "theme_pervasiveness",
+      "rule": "新主题贯穿全曲而非仅片段",
+      "critical": false,
+      "expected_pass_condition": "new_theme_carries_whole_song=true"
+    }
+  ],
+  "references_used": ["SKILL.md §5 Parody and Adaptation"]
+}

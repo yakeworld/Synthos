@@ -1,0 +1,17 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "error_path": true,
+    "error_type": "td_attribute_error + invalid_op_object_risk",
+    "note": "Golden Error 路径：tdAttributeError 触发后必须立即停止（CRITICAL #2/TOUC-002），第一步必须是 td_get_operator_info 而非重试或换参数盲猜；参数名必须经 td_get_par_info 重新验证（CRITICAL #1/TOUC-001）；cleanup+create 拆分是 TOUC-005 的硬性约束 —— 'Invalid OP object' 是已知可复现错误（pitfalls #11b），恢复序列必须体现拆分调用而非重试原脚本"
+  },
+  "verification": [
+    "error_path == True 且 error_type 覆盖 'td_attribute_error' 与 'invalid_op_object_risk' 两个失败面",
+    "context.failing_param 精确到 'noise_scale' 且标注『未经验证』，非泛化『参数错了』",
+    "recovery[0] 必须是 td_get_operator_info(path='/project1/bg')（TOUC-002 立即停止并检查），不得是 td_set_operator_pars 重试",
+    "recovery 含 td_get_par_info(op_type='glslTOP') 且早于任何参数设置（TOUC-001）",
+    "recovery 中 destroy 与 create 位于两个独立 MCP 调用（TOUC-005），未出现 delete() 与 create() 在同一脚本字符串中",
+    "recovery 末尾含 td_get_errors(recursive=true) 验证步骤",
+    "未出现『直接重试原脚本』或『换个参数名再试』类无上下文恢复（异常约束：错误信息必须含上下文和恢复建议）"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "case_id": "case_002",
+  "description": "错误路径 — 空请求（约束规则第3条: 错误信息必须包含上下文和恢复建议）",
+  "input": {
+    "request": "",
+    "context": {}
+  },
+  "expected_behavior": {
+    "should_generate": false,
+    "critical_checks": [
+      "returns_structured_error",
+      "does_not_crash",
+      "error_has_context_and_recovery"
+    ],
+    "high_checks": [
+      "ideas_count_is_zero"
+    ],
+    "medium_checks": []
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "case_id": "case_002",
+  "description": "正常路径：<60% 给选项+推荐 — 用户犹豫询问新方向（疑问句+犹豫信号，v2.7 征求意见带预判）",
+  "input": {
+    "request": "嗯……是不是该换个新方向了？",
+    "context": {
+      "scene": "new_direction_choice",
+      "pipeline_trace": null,
+      "sentiment": {
+        "sentence_class": "question",
+        "signal_words": [
+          {"word": "嗯", "type": "hesitation", "weight": -0.10},
+          {"word": "是不是", "type": "question_marker", "weight": -0.15}
+        ]
+      },
+      "history": {
+        "has_pending_correction": false,
+        "note": "新方向/新任务选择属 🟡 给选项区 60-70%；本例叠加疑问+犹豫后 <60% → 选项+推荐"
+      },
+      "candidate_options": ["三维眼动：BPPV 仿真精度提升", "半规管姿态建模新基线", "VOR 数字孪生公开数据集"]
+    }
+  },
+  "expected": {
+    "route": "predict_judge_act",
+    "confidence_computation": {
+      "baseline": 0.80,
+      "signal_avg": -0.125,
+      "sentence_class_correction": -0.15,
+      "history_correction_match": 0.0,
+      "dynamic_confidence": 0.525,
+      "clamped": false
+    },
+    "decision": "present_options_with_prediction",
+    "output_structure": {
+      "options_count": 3,
+      "recommendation_present": true,
+      "prediction_suffix_present": true,
+      "prediction_suffix_format": "🔍 推测: 我预测人类会选 [方案X], 因为 [推理] + 🟢 30 秒无纠正按推测方案自动执行",
+      "waits_for_confirmation": false,
+      "reasoning_chain_position": "after_options"
+    },
+    "crashed": false
+  },
+  "weight": "high"
+}

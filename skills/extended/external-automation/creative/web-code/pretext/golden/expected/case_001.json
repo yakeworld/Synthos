@@ -1,0 +1,20 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "pattern": "reflow-around-obstacle",
+    "core_api": ["prepareWithSegments", "layoutNextLineRange", "materializeLineRange"],
+    "note": "环绕移动物体必须用 layoutNextLineRange + 每行动态宽度函数（PRET-001）；文字本身由本技能自绘于 canvas（use-case 2）；走廊过窄行必须跳过而非调窄 maxWidth（Pitfall #7）；esm.sh 固定版本 + font 字符串与 CSS 同步（PRET-007 + Pitfall #1）"
+  },
+  "verification": [
+    "pattern == 'reflow-around-obstacle'（Demo Recipe Patterns 表 7 选 1 精确匹配）",
+    "core_api 包含 'layoutNextLineRange'（非 layoutWithLines —— 变宽度流式排版专用，PRET-001）",
+    "strategy.width_fn 存在且为每行动态宽度函数",
+    "strategy.skip_rule == 跳过过窄行（Pitfall #7），未出现『传极小 maxWidth』的替代策略",
+    "strategy.cache：prepareWithSegments 调用次数 == 1 且 handle 缓存于模块作用域（Performance Notes）",
+    "product_checks 含 esm.sh + 固定版本 '@chenglou/pretext@0.0.6'（PRET-007）",
+    "product_checks 含 font 字符串与 CSS 一致（VERIFICATION #2）",
+    "product_checks 含 corpus 非 lorem ipsum（Creative Standard）",
+    "product_checks 含至少一个交互响应（drag）或 idle auto-motion（VERIFICATION #5）",
+    "单文件自包含 .html、无构建步骤（Workflow step 2）"
+  ]
+}

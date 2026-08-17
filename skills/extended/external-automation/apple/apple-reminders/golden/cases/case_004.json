@@ -1,0 +1,25 @@
+{
+  "case_id": "case_004",
+  "description": "错误路径：remindctl 未授权 → 引导 authorize",
+  "input": {
+    "task": "查看今天的提醒",
+    "list": null,
+    "context": {
+      "platform": "macOS",
+      "remindctl_authorized": false,
+      "status_output": "Not authorized. Run: remindctl authorize"
+    }
+  },
+  "expected": {
+    "command_executed": null,
+    "reminder_status": {
+      "status": "error",
+      "error": "remindctl status 显示未授权",
+      "recovery": [
+        "remindctl authorize",
+        "授权后重试 remindctl today"
+      ]
+    }
+  },
+  "weight": "high"
+}

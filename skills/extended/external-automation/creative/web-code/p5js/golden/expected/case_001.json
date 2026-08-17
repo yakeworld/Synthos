@@ -1,0 +1,77 @@
+{
+  "case_id": "case_001",
+  "status": "pass",
+  "mode": "generative art",
+  "renderer": "P2D",
+  "canvas": "1920x1080",
+  "fps": 60,
+  "interaction_model": "seed navigation (templates/viewer.html)",
+  "export_target": ["browser", "PNG"],
+  "p5_version": "1.11.3",
+  "structure": "single_file_html",
+  "reproducibility": {
+    "randomSeed": true,
+    "noiseSeed": true,
+    "state_separation": ["CONFIG", "PALETTE", "globals"],
+    "seed_from_config": true
+  },
+  "performance": {
+    "disable_fes": true,
+    "pixel_density_1": true,
+    "hot_loop_optimizations": ["Math.*", "beginShape batch", "pixelBuffer (if >5k particles)"],
+    "no_console_log_in_draw": true
+  },
+  "first_frame_excellence": {
+    "custom_palette_size": 5,
+    "palette_within_3_7": true,
+    "non_plain_background": true,
+    "background_treatment": "noise-textured layered gradient",
+    "aesthetic_coherence": true,
+    "invented_element": "domain-warped multi-octave flow field + ghost trail echoes"
+  },
+  "keyboard_shortcuts": {"S": "save PNG", "G": "save GIF", "R": "reseed", "Space": "pause"},
+  "qa_checks": [
+    {
+      "id": "technical_design",
+      "rule": "模式/渲染器/帧率/导出与技术设计表匹配",
+      "critical": true,
+      "expected_pass_condition": "mode=generative art, renderer=P2D, fps=60, single_file_html"
+    },
+    {
+      "id": "reproducibility",
+      "rule": "randomSeed+noiseSeed 且 CONFIG/PALETTE/globals 分离",
+      "critical": false,
+      "expected_pass_condition": "randomSeed=true 且 noiseSeed=true 且 state_separation 含三项"
+    },
+    {
+      "id": "first_frame",
+      "rule": "首帧视觉冲击：自定义调色板 3-7 色 + 非纯色背景",
+      "critical": false,
+      "expected_pass_condition": "palette_within_3_7=true 且 non_plain_background=true"
+    },
+    {
+      "id": "performance_discipline",
+      "rule": "FES 禁用 + pixelDensity(1) + 热循环 Math.*/beginShape",
+      "critical": false,
+      "expected_pass_condition": "disable_fes=true 且 pixel_density_1=true 且 hot_loop_optimizations 非空"
+    },
+    {
+      "id": "invention",
+      "rule": "至少一个主动发明元素",
+      "critical": false,
+      "expected_pass_condition": "invented_element 非空且超越参考词汇"
+    },
+    {
+      "id": "keyboard_convention",
+      "rule": "快捷键 S/G/R/Space 可用",
+      "critical": false,
+      "expected_pass_condition": "keyboard_shortcuts 含四键"
+    }
+  ],
+  "references_used": [
+    "SKILL.md 方法 2 技术设计表",
+    "IO_CONTRACT.md Creative Direction / Per-Project Variation Rules",
+    "templates/viewer.html",
+    "references/visual-effects.md § Noise/Particles"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "case_id": "case_004",
+  "description": "技能边界 — 交付物为 DESIGN.md 令牌规范（应路由 design-md，POPU-005）",
+  "input": {
+    "user_request": "给我一份可复用的设计令牌文件（DESIGN.md），不要渲染页面",
+    "context": {
+      "content_type": "design token spec",
+      "deliverable": "DESIGN.md token file",
+      "style_requirement": "premium dark"
+    }
+  },
+  "expected_behavior": {
+    "should_produce": false,
+    "critical_checks": [
+      "routed_to_design_md",
+      "deliverable_is_design_md",
+      "no_rendered_html"
+    ],
+    "high_checks": [
+      "this_skill_used_as_visual_vocabulary_only"
+    ],
+    "medium_checks": [
+      "template_still_picked_as_source"
+    ]
+  }
+}

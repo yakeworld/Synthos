@@ -1,0 +1,23 @@
+{
+  "case_id": "case_004",
+  "expected_output": {
+    "command_executed": null,
+    "reminder_status": {
+      "status": "error",
+      "error": "remindctl status 显示未授权",
+      "recovery": [
+        "remindctl authorize",
+        "授权后重试 remindctl today"
+      ]
+    },
+    "note": "执行前先检查 remindctl status（APPL-005 / 验证清单第 1 项）；未授权时不静默失败，给可执行恢复命令"
+  },
+  "verification": [
+    "检测到未授权（remindctl_authorized == false）后未执行业务命令（command_executed == null）",
+    "reminder_status.status == 'error'",
+    "error 含上下文：指明失败于授权检查（remindctl status 输出）",
+    "recovery 为 list 且含完整命令 'remindctl authorize'",
+    "recovery 含授权后重试指引（'授权后重试 remindctl today' 语义等价）",
+    "未把未授权错误伪装成空结果（数据诚实：无源则无诚）"
+  ]
+}

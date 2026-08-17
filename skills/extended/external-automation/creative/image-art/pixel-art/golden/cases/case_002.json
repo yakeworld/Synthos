@@ -1,0 +1,26 @@
+{
+  "case_id": "case_002",
+  "description": "正常路径：像素化 PNG → night 场景 MP4（seed 固定）",
+  "input": {
+    "script": "pixel_art_video",
+    "source_image": "/tmp/pixel_test/nes_out.png",
+    "output": "/tmp/pixel_test/nes_night.mp4",
+    "params": {
+      "scene": "night",
+      "duration": 6,
+      "fps": 15,
+      "seed": 42,
+      "export_gif": true
+    }
+  },
+  "expected": {
+    "status": "success",
+    "output_file": "/tmp/pixel_test/nes_night.mp4",
+    "output_format": "MP4",
+    "scene": "night",
+    "duration_seconds": 6,
+    "fps": 15,
+    "gif_file": "/tmp/pixel_test/nes_night.gif"
+  },
+  "weight": "high"
+}

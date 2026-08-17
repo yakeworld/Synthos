@@ -1,0 +1,23 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "status": "accessible",
+    "dataset_results": [
+      {
+        "name": "Cardiovascular-Disease-dataset",
+        "did": 45547,
+        "source": "OpenML",
+        "NumberOfInstances": 70000,
+        "NumberOfFeatures": 13,
+        "access_type": "open"
+      }
+    ]
+  },
+  "verification": [
+    "使用 /api/v1/json/data/list 端点获取全量列表，本地过滤，不用 limit/500",
+    "命中 DID=45547，NumberOfInstances=70000，NumberOfFeatures=13",
+    "列表接口响应结构为 {\"data\": {\"dataset\": [...]}}，详情接口为 {\"data_set_description\": {...}}，两者结构正确区分",
+    "输出含 name/source/url/access_type/relevance 字段",
+    "推荐数据集与 cardiovascular disease 主题匹配"
+  ]
+}

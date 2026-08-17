@@ -1,0 +1,18 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "phase": "phase1",
+    "check": "D10a_regression",
+    "orphan_keys": ["Balloccu2020SMOTE"],
+    "method": "comm -23 (tex_cited_keys - bib_entries)",
+    "verdict": "ORPHANED",
+    "overall_gate": "FAIL",
+    "reason": "删除假DOI条目 Balloccu2020SMOTE 后，tex 仍 \\cite{Balloccu2020SMOTE} 但 bib 无此键 → 孤儿引用，D10a 骤降（CITA-007）"
+  },
+  "verification": [
+    "orphan_keys == ['Balloccu2020SMOTE']（tex 有引用但 bib 无对应条目）",
+    "修改bib后触发了 D10a 回归检查（CITA-007），而非跳过",
+    "存在孤儿键时 overall_gate 不得为 PASS",
+    "method 为 comm -23 差集（tex 引用键 - bib 键）"
+  ]
+}

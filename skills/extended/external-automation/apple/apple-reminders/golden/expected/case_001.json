@@ -1,0 +1,21 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "command": "remindctl add --title \"开会\" --list Work --due \"2026-07-16 15:00\"",
+    "reminder_status": {
+      "status": "created",
+      "title": "开会",
+      "list": "Work",
+      "due": "2026-07-16 15:00"
+    },
+    "note": "创建前三项确认（内容/列表/日期，APPL-002）已完成；日期用受支持的绝对格式 YYYY-MM-DD HH:mm（APPL-006）；执行后应可用 remindctl tomorrow --json 验证条目出现"
+  },
+  "verification": [
+    "执行前 confirmed.content/list/due_date 均为 true（验证清单第 3 项，APPL-002）",
+    "命令 flag 结构精确含 --title、--list、--due 三段",
+    "--due 值 '2026-07-16 15:00' 属于受支持格式集合（验证清单第 4 项）",
+    "reminder_status 为 dict 且 status == 'created'，title/list/due 与输入一致",
+    "执行前 remindctl status 已检查且授权（APPL-005）",
+    "意图非日历事件/项目任务，未误转介（APPL-004）"
+  ]
+}

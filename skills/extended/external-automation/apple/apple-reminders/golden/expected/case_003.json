@@ -1,0 +1,18 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "command_executed": null,
+    "reminder_status": {
+      "status": "clarify",
+      "clarify": "这是要在 Apple Reminders（同步到你的 iPhone/iPad）建条目，还是要 agent 在指定时间发 cronjob 警报？"
+    },
+    "note": "「remind me」意图模糊 → 必须澄清 Apple Reminders vs agent cronjob（APPL-001 / 验证清单第 2 项 / 示例 2），澄清前不创建任何条目"
+  },
+  "verification": [
+    "澄清前 command_executed == null（未抢跑执行 remindctl add）",
+    "reminder_status.status == 'clarify'",
+    "clarify 文本必须同时出现两个分支：'Apple Reminders'（同步设备）与 'cronjob 警报'（agent 侧）",
+    "澄清后走对分支：选 Apple Reminders → 进入三项确认流程（APPL-002）；选 cronjob → 转交 cronjob 工具而非本技能",
+    "未误建 Reminders 条目（示例 2 验证条款）"
+  ]
+}

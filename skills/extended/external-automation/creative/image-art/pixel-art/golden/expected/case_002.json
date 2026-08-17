@@ -1,0 +1,20 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "status": "success",
+    "output_file": "/tmp/pixel_test/nes_night.mp4",
+    "output_format": "MP4",
+    "scene": "night",
+    "duration_seconds": 6,
+    "fps": 15,
+    "gif_file": "/tmp/pixel_test/nes_night.gif",
+    "note": "ffprobe 可打开且非零大小；night 场景 = 闪烁星星 + 萤火虫 + 飘落树叶；seed=42 固定保证粒子分布可复现"
+  },
+  "verification": [
+    "ffprobe 可正常打开 /tmp/pixel_test/nes_night.mp4 且文件大小 > 0",
+    "ffprobe 报告时长 ≈ 6s（容差 ±0.5s）、帧率 ≈ 15fps",
+    "MP4 编码为 libx264 / yuv420p",
+    "export_gif=True 时 /tmp/pixel_test/nes_night.gif 存在且非零大小",
+    "seed=42 时两次运行粒子布局一致（P1 可复现性）"
+  ]
+}

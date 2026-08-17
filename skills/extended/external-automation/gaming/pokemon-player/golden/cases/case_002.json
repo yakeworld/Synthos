@@ -1,0 +1,19 @@
+{
+  "case_id": "case_002",
+  "description": "正常路径：通过门进入新地图后向目标方向行进（出建筑横向避让 + 换图等待）",
+  "input": {
+    "game_state": "player inside Pallet Town lab; exits the door, now standing directly in front of the door; intended direction = north toward the road",
+    "actions": ["walk_left", "walk_left", "walk_up", "walk_up"],
+    "context": {
+      "warp_type": "door_exit",
+      "post_exit_position": "directly in front of door",
+      "intended_direction": "north",
+      "risk_level": "normal"
+    }
+  },
+  "expected": {
+    "warp_wait_actions": "wait_60 appended 2-3 times after door transition",
+    "sidestep_before_north": true
+  },
+  "weight": "high"
+}

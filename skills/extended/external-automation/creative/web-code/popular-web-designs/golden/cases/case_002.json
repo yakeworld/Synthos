@@ -1,0 +1,30 @@
+{
+  "case_id": "case_002",
+  "description": "正常路径 — Spotify 风格落地页（Circular 无 CDN → DM Sans 替换）",
+  "input": {
+    "user_request": "做一个 Spotify 风格的落地页",
+    "context": {
+      "content_type": "marketing landing page",
+      "chosen_template": "spotify.md",
+      "proprietary_font": "Circular",
+      "deliverable": "rendered HTML page"
+    }
+  },
+  "expected_behavior": {
+    "should_produce": true,
+    "critical_checks": [
+      "template_is_spotify",
+      "font_substituted_to_google_fonts",
+      "root_variables_section2"
+    ],
+    "high_checks": [
+      "keeps_weight_size_spacing",
+      "google_fonts_link_pasted",
+      "brand_green_preserved"
+    ],
+    "medium_checks": [
+      "components_section4_6",
+      "browser_vision_verification"
+    ]
+  }
+}

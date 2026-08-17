@@ -1,0 +1,21 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：SEMANTIC_SCHOLAR_API 在交互 shell 存在，但在 bash -c / Python subprocess 中丢失（.bashrc 守卫）",
+  "input": {
+    "missing_var": "SEMANTIC_SCHOLAR_API",
+    "shell_context": "bash -c",
+    "context": {
+      "parent_process_value": "s2k-abc123...",
+      "interactive_echo": "s2k-abc123...",
+      "bash_c_echo": "NOTSET",
+      "after_source_bashrc_echo": "s2k-abc123...",
+      "python_os_environ": "NOTSET",
+      "bashrc_layout": "export SEMANTIC_SCHOLAR_API=... 位于 case $- in *i*) ... esac 守卫块之后"
+    }
+  },
+  "expected": {
+    "diagnosis_point": "bashrc_guard",
+    "fix_ordered": true
+  },
+  "weight": "critical"
+}

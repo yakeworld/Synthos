@@ -1,0 +1,22 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "command_executed": null,
+    "note_result": {
+      "status": "rejected",
+      "error": "笔记「照片整理」包含图片/附件，memo 无法直接编辑",
+      "recovery": [
+        "改为仅查看：memo notes -s \"照片整理\"",
+        "在 Notes.app 中手动编辑含附件内容"
+      ]
+    },
+    "note": "含图片/附件笔记拒绝直接编辑（APPL-002 / Limitations）；错误信息必须含上下文 + ≥2 条恢复建议（异常约束）"
+  },
+  "verification": [
+    "未执行任何编辑/删除类 memo 命令（command_executed == null）",
+    "note_result.status == 'rejected'",
+    "note_result.error 含上下文：指明笔记名「照片整理」与失败原因（含附件）",
+    "note_result.recovery 为 list 且长度 >= 2，含「仅查看」与「手动处理」两类建议",
+    "拒绝决策由「contains_attachments == true」触发，可复现（P1）"
+  ]
+}

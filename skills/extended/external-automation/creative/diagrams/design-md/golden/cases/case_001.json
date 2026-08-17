@@ -1,0 +1,26 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径 — 合法 DESIGN.md 生成与校验（starter 模板派生）",
+  "input": {
+    "user_request": "为一个极简学术品牌生成 DESIGN.md：主色 #0F172A，强调色 #2563EB，字体 Inter，4px 间距基线",
+    "context": {
+      "template": "templates/starter.md",
+      "project_root": ".",
+      "brand": "MyBrand",
+      "palette": {
+        "primary": "#0F172A",
+        "tertiary": "#2563EB",
+        "neutral": "#F8FAFC"
+      },
+      "typography": {
+        "fontFamily": "Inter"
+      }
+    }
+  },
+  "expected_behavior": {
+    "should_succeed": true,
+    "critical_checks": ["lint_exit_code_zero", "yaml_parses", "frontmatter_has_name_and_colors"],
+    "high_checks": ["section_order_canonical", "variants_are_sibling_keys", "components_use_token_refs"],
+    "medium_checks": ["wcag_findings_reported", "quoting_of_hex_and_negative_dims"]
+  }
+}

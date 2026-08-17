@@ -1,0 +1,20 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "status": "requires_user_action",
+    "result": {
+      "fix_steps": [
+        "xurl auth oauth2 --app my-app YOUR_USERNAME",
+        "xurl auth default my-app",
+        "xurl auth status (verify)"
+      ]
+    }
+  },
+  "verification": [
+    "诊断：403 on /2/users/me 后 token 未绑定到具名应用",
+    "修复步骤含显式传 username 参数（XURL-004）",
+    "agent 不代执行 auth 命令（XURL-006）",
+    "指导用户在 agent 会话外手动操作",
+    "验证：xurl auth status 中 token 绑定到具名应用而非空 default"
+  ]
+}

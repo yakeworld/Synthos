@@ -1,0 +1,41 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：构建 noise→level→null 三段生成链并截图验证（非商业版 1280x720）",
+  "input": {
+    "request": "在 TD 里建一个生成式背景：noise 源 + 亮度控制 + 输出 null，1280x720，最后截图确认输出",
+    "context": {
+      "td_version": "2025.32",
+      "license": "non-commercial",
+      "network_path": "/project1",
+      "ops": [
+        {"type": "noiseTOP", "name": "bg", "params": {"resolutionw": 1280, "resolutionh": 720, "roughness": 0.6, "monochrome": true}},
+        {"type": "levelTOP", "name": "brightness", "params": {}},
+        {"type": "nullTOP", "name": "out", "params": {}}
+      ],
+      "output_resolution": {"mode": "custom", "width": 1280, "height": 720},
+      "verify": ["errors", "operator_info_full", "screenshot"]
+    }
+  },
+  "expected": {
+    "call_sequence": [
+      {"tool": "td_get_hints", "args": {"topic": "noise generative background"}},
+      {"tool": "td_get_par_info", "args": {"op_type": "noiseTOP"}},
+      {"tool": "td_get_par_info", "args": {"op_type": "levelTOP"}},
+      {"tool": "td_get_par_info", "args": {"op_type": "nullTOP"}},
+      {"tool": "td_create_operator", "args": {"type": "noiseTOP", "parent": "/project1", "name": "bg", "parameters": {"resolutionw": 1280, "resolutionh": 720, "roughness": 0.6, "monochrome": true}}},
+      {"tool": "td_create_operator", "args": {"type": "levelTOP", "parent": "/project1", "name": "brightness"}},
+      {"tool": "td_create_operator", "args": {"type": "nullTOP", "parent": "/project1", "name": "out"}},
+      {"tool": "td_execute_python", "args": {"script": "op('/project1/bg').outputConnectors[0].connect(op('/project1/brightness').inputConnectors[0]); op('/project1/brightness').outputConnectors[0].connect(op('/project1/out').inputConnectors[0])"}},
+      {"tool": "td_set_operator_pars", "args": {"path": "/project1", "parameters": {"outputresolution": "custom", "width": 1280, "height": 720}}},
+      {"tool": "td_get_errors", "args": {"path": "/project1", "recursive": true}},
+      {"tool": "td_get_operator_info", "args": {"path": "/project1/out", "detail": "full"}},
+      {"tool": "td_get_screenshot", "args": {"path": "/project1/out"}}
+    ],
+    "strategy": {
+      "discover_first": "构建前对每个 op type 调用 td_get_par_info + td_get_hints（TOUC-001/CRITICAL #1）",
+      "native_tools": "节点创建/参数设置走原生工具，td_execute_python 仅用于连线（TOUC-004）",
+      "non_commercial": "outputresolution='custom' + 显式宽高 1280x720（TOUC-006）"
+    }
+  },
+  "weight": "critical"
+}

@@ -1,0 +1,15 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "status": "ambiguous",
+    "geo_data": {
+      "error": "Zip code globally ambiguous — requires country/state context"
+    }
+  },
+  "verification": [
+    "nearby 调用提供了 lat/lon 或 --near 之一（MAPS-003）",
+    "全球歧义输入（仅邮编/通用名）已识别并提示补充国家/州",
+    "不返回空结果或错误坐标",
+    "建议中含具体补充方式（如 '90210, California, USA'）"
+  ]
+}

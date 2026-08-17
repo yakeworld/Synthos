@@ -1,0 +1,24 @@
+{
+  "case_id": "case_001",
+  "expect": {
+    "status": "ok",
+    "layout": "bento-grid",
+    "style": "craft-handmade",
+    "aspect": "landscape",
+    "image_generate_format": "landscape",
+    "language": "zh",
+    "data_integrity": {
+      "verbatim_data_points": ["73% increase", "4.2 亿美元", "12%"],
+      "secrets_stripped": true,
+      "forbidden_substrings": ["sk-test-9f8e7d6c5b4a3210"]
+    },
+    "deliverables": [
+      "source-{slug}.md",
+      "analysis.md",
+      "structured-content.md",
+      "prompts/infographic.md",
+      "infographic.png"
+    ],
+    "prompt_notes_applied": "Minimalist: clean canvas, ample whitespace, no complex background textures."
+  }
+}

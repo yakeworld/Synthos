@@ -1,0 +1,30 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径 — 请求不属于 7 种模式（Unity 风格实时物理引擎）",
+  "input": {
+    "user_request": "用 p5.js 做一个 Unity 风格的 3D 实时物理引擎，含碰撞检测与刚体动力学",
+    "context": {
+      "mode_hint": null,
+      "canvas": null,
+      "fps": null,
+      "interaction": null,
+      "export_target": null,
+      "p5_version": "1.11.3"
+    }
+  },
+  "expected_behavior": {
+    "should_produce": false,
+    "critical_checks": [
+      "error_non_empty",
+      "mode_is_unmatched",
+      "suggestions_non_empty"
+    ],
+    "high_checks": [
+      "error_states_capability_boundary",
+      "suggestions_list_7_modes"
+    ],
+    "medium_checks": [
+      "suggestions_offer_nearest_mode_or_webgl_physics_lib"
+    ]
+  }
+}

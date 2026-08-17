@@ -1,0 +1,21 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "phase": "phase1",
+    "verdict": "FABRICATED",
+    "reason": "三验铁律全真：doi.org 404 + Crossref 404 + Semantic Scholar 无匹配（且无PDF）→ 完全虚构文献（CITA-001）",
+    "action": "enter_replacement_decision_tree",
+    "do_not": "attempt_doi_repair",
+    "decision_tree": {
+      "topic_covered_by_existing": null,
+      "core_or_audited": true,
+      "next": "find_replacement_same_topic_high_citation_public_pdf"
+    }
+  },
+  "verification": [
+    "verdict == 'FABRICATED'（三验铁律：doi 404 且 Crossref 404 且 SS 无匹配）",
+    "action 为进入替代文献决策树，而非修复DOI（CITA-001：虚构→找替代，非修复）",
+    "未触发 DOI_TAMPERED 分支（SS 无匹配，非搜到不同DOI）",
+    "verdict 取自受控集 {FABRICATED, DOI_TAMPERED, INAPPROPRIATE, MISSING, ORPHANED, OK}"
+  ]
+}

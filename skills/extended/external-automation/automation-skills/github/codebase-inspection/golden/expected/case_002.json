@@ -1,0 +1,22 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "ok": true,
+    "format": "summary",
+    "suffix_filter": "py",
+    "command": "pygount --suffix=py --format=summary .",
+    "summary": [
+      {"language": "Python", "files": 2, "code": 20, "comment": 5}
+    ],
+    "totals": {"files": 2, "code": 20, "comment": 5},
+    "cross_check": "find . -name '*.py' | xargs wc -l → 总行数 35，其中 code=20 与 summary 一致",
+    "note": "--suffix=py 定向过滤（CODE-003）；输出仅含 Python 行（及可能伪语言标签）；README.md/config.yaml 未计入；code 行数与独立 wc -l 校准量级一致（P0 凡数必源）"
+  },
+  "verification": [
+    "命令字符串包含 '--suffix=py'（CODE-003 定向过滤）",
+    "输出仅含 Python 语言行（及可能的伪语言标签），无 Markdown/YAML 行",
+    "Python 行 files==2 且 code==20（fixture app.py 12 + utils.py 8，P0 凡数必源）",
+    "独立交叉校准：find . -name '*.py' | xargs wc -l 的 code 部分与 summary code=20 量级一致",
+    "README.md 与 config.yaml 未计入统计（--suffix=py 生效）"
+  ]
+}

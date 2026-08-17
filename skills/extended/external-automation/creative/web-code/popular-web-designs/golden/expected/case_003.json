@@ -1,0 +1,34 @@
+{
+  "case_id": "case_003",
+  "status": "error",
+  "routed_skill": "popular-web-designs",
+  "template": null,
+  "error": "template_not_in_catalog: 'notion-redesign.md' 不存在于 54 个模板目录中（真实文件为 notion.md）",
+  "suggestions": [
+    "54 目录中真实的 Notion 模板是 templates/notion.md（暖色极简+serif 标题+柔和表面）",
+    "请改用 templates/notion.md 加载完整视觉语言",
+    "或从 Design Catalog 选择其他匹配的 54 模板之一"
+  ],
+  "deliverable": null,
+  "qa_checks": [
+    {
+      "id": "no_fabrication",
+      "rule": "模板不在 54 目录时不得硬造模板内容",
+      "critical": true,
+      "expected_pass_condition": "template=null 且 deliverable=null"
+    },
+    {
+      "id": "error_with_context",
+      "rule": "错误信息指出模板不在 54 目录",
+      "critical": true,
+      "expected_pass_condition": "error 非空且点名 54 目录与真实 notion.md"
+    },
+    {
+      "id": "recovery_suggestion",
+      "rule": "给出最接近的真实模板 + 恢复建议",
+      "critical": true,
+      "expected_pass_condition": "suggestions 非空且含 notion.md 替代"
+    }
+  ],
+  "references_used": ["SKILL.md Design Catalog (54 templates)", "SKILL.md 约束规则 §3 异常约束"]
+}

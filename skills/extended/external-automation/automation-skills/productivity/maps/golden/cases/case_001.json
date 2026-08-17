@@ -1,0 +1,24 @@
+{
+  "case_id": "case_001",
+  "description": "地理编码 'Statue of Liberty'（正常路径）",
+  "input": {
+    "command": "search",
+    "query": "Statue of Liberty"
+  },
+  "strategy": {
+    "data_source": "Nominatim",
+    "rate_limit": "1 req/s"
+  },
+  "expected": {
+    "status": "success",
+    "geo_data": {
+      "lat": 40.689,
+      "lon": -74.044,
+      "display_name": "Statue of Liberty, Liberty Island, New York",
+      "type": "monument",
+      "bounding_box": null,
+      "importance": 0.75
+    }
+  },
+  "weight": "critical"
+}

@@ -1,0 +1,26 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "method_chain": [
+      "osascript -e 'tell application \"FindMy\" to activate'",
+      "sleep 3",
+      "screencapture -w -o /tmp/findmy.png",
+      "vision_analyze(image_url=\"/tmp/findmy.png\", question=\"What devices/items are shown and what are their locations?\")"
+    ],
+    "location_data": {
+      "status": "ok",
+      "device": "iPhone",
+      "location": "用户住址附近（语义等价，以本机 FindMy 显示为准）"
+    },
+    "note": "基础法方法链（FIND-001 / 示例 1）：无 CLI 时 AppleScript 激活 + 截图 + vision_analyze；截图前确认屏幕录制权限（FIND-006）"
+  },
+  "verification": [
+    "方法链顺序精确：activate → sleep 3 → screencapture → vision_analyze（步骤不可颠倒、不可缺失）",
+    "执行前已确认屏幕录制权限存在（FIND-006 / 验证清单第 1 项）",
+    "截图 /tmp/findmy.png 非黑屏（文件存在且 vision 可读出内容）",
+    "vision_analyze 读出的设备名与位置文本非空白（验证清单第 3 项）",
+    "location_data 为 dict 且 status == 'ok'，device 语义含 'iPhone'",
+    "位置解析经 vision_analyze 完成，未直接解析像素（FIND-005）",
+    "目标为设备（非 AirTag），无前台持续更新要求亦未违反（FIND-003 不适用）"
+  ]
+}

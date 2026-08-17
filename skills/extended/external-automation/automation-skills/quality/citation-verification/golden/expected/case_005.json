@@ -1,0 +1,20 @@
+{
+  "case_id": "case_005",
+  "expected_output": {
+    "phase": "phase3",
+    "verdict": "MISSING",
+    "missing": [
+      {"key_suggested": "MartinezPlumed2021CRISPDM", "category": "suggested", "citations": 332, "topic_match": 0.9},
+      {"key_suggested": "Schroer2021CRISPDM", "category": "suggested", "citations": 555, "topic_match": 0.7}
+    ],
+    "thresholds": {"critical": "citations>1000 AND topic_match>0.8 AND published>3y", "suggested": "citations>100 AND topic_match>0.6"},
+    "reason": "独立检索发现两篇2021高引综述未被引用；按阈值均落在 suggested（被引<1000 不达 critical 下限）（CITA-006）",
+    "action": "generate_supplement_recommendation"
+  },
+  "verification": [
+    "verdict == 'MISSING'（独立检索发现引用列表遗漏关键文献，CITA-006）",
+    "遗漏按阈值分类：citations>1000 且 topic>0.8 才 critical；两者均 <1000 故为 suggested",
+    "分类不得一律 suggested 或一律 critical —— 需逐条按 citations/topic_match 阈值判定",
+    "missing 列表包含两篇 2021 CRISP-DM 综述（被审计领域经典遗漏）"
+  ]
+}

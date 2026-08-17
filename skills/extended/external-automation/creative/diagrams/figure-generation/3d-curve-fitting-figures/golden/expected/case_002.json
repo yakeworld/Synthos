@@ -1,0 +1,56 @@
+{
+  "case_id": "case_002",
+  "artifact": "code/gen_composite_figure.py (audit result)",
+  "diagnosis": {
+    "detected": true,
+    "root_causes": [
+      {
+        "id": "argsort_final_fit",
+        "location": "code/gen_composite_figure.py — final a/b/A fit",
+        "description": "np.argsort(theta) 用于确定最终拟合的点序，将同角度相近但螺旋位置不同的点混排，破坏解剖顺序",
+        "severity": "fatal"
+      },
+      {
+        "id": "missing_center_offset",
+        "location": "rebuild line: r*cos(t+rot)*u + r*sin(t+rot)*v (无 cx, cy)",
+        "description": "重建未含 (cx + r*cos(...))*u + (cy + r*sin(...))*v，曲线被错误锚定在数据质心",
+        "severity": "fatal"
+      }
+    ],
+    "rebuild_contains_center_offset": false,
+    "argsort_used_in_final_fit": true
+  },
+  "parameter_distortion": {
+    "reported_rmse_AC_bony_mm": 2.2700,
+    "correct_rmse_AC_bony_mm": 0.1330,
+    "rmse_inflation_factor": 17.0,
+    "reported_rmse_PC_memb_mm": 2.1731,
+    "correct_rmse_PC_memb_mm": 0.1704,
+    "reported_b_PC_bony": -0.0463,
+    "correct_b_PC_bony": -0.0191,
+    "b_sign_or_magnitude_off": true,
+    "reported_b_LC_bony": 0.0267,
+    "correct_b_LC_bony": 0.0052,
+    "b_in_physical_range": false
+  },
+  "visual_symptom": "拟合曲线与数据点视觉明显错位；复合图与单标本图同一曲线位置不同",
+  "recovery_advice": [
+    "最终拟合改为沿 nearest_neighbor_path(pts) + np.unwrap(theta_raw[path]) 展开的 θ 回归 log(r) = a + b*θ",
+    "重建公式显式加入中心偏移：centroid + (cx + r*cos(t+rot))*u + (cy + r*sin(t+rot))*v + z*normal",
+    "argsort 仅保留在 grid-search 找中心步骤（refine_2d），不得用于确定 a/b/A",
+    "交叉验证：RMSE + b + 视觉三者同时检查；对比单标本脚本与复合图脚本同一曲线 RMSE 应一致"
+  ],
+  "invariants": {
+    "does_not_crash": true,
+    "detects_argsort_final_fit": true,
+    "detects_missing_center_offset": true,
+    "reports_distorted_parameters": true,
+    "recovery_advice_present": true,
+    "cross_verified_failure_reported": true
+  },
+  "references_used": [
+    "SKILL.md#致命陷阱：argsort-路径错乱",
+    "SKILL.md#拟合重建陷阱：中心偏移",
+    "SKILL.md#数据一致性检查"
+  ]
+}

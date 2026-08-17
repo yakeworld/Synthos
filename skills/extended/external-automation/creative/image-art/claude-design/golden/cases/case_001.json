@@ -1,0 +1,19 @@
+{
+  "case_id": "case_001",
+  "path": "normal",
+  "description": "命令面板原型：自包含 HTML，先读仓库主题文件，2 变体 + Tweaks 面板",
+  "input": {
+    "request": "做一个键盘命令面板（command palette）的可点击原型。需要 2 个布局变体（居中模态 / 底部 sheet），加一个 Tweaks 面板控制 density 和 theme。响应式。",
+    "context": {
+      "repo": "/repo/demo-app",
+      "theme_files": ["/repo/demo-app/src/theme.ts"],
+      "theme_ts_content": "export const tokens = { colors: { bg: '#0f1117', surface: '#1a1d27', ink: '#e8eaf0', muted: '#8b90a0', accent: '#6e7bff' }, radii: 8, spacing: 4, fontStack: 'Inter, system-ui, sans-serif' };"
+    },
+    "fidelity": "high",
+    "allow_questions": true,
+    "environment": {
+      "browser_tools": false,
+      "screenshot_tools": true
+    }
+  }
+}

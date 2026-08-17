@@ -1,0 +1,38 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径 — 多页 ohmsha 知识漫画完整生成（艾伦·图灵传记，10 页）",
+  "input": {
+    "user_request": "用 ohmsha 风格生成一部 10 页知识漫画：艾伦·图灵的传记，竖版 3:4，中文，附一张风格参考图 refs/turing-style.png",
+    "context": {
+      "topic": "alan-turing-bio",
+      "preset": "ohmsha",
+      "pages": 10,
+      "aspect_ratio": "3:4",
+      "language": "zh",
+      "reference_images": ["refs/turing-style.png"],
+      "reference_usage": "style",
+      "source_content_has_sensitive_figure": true,
+      "source_content_has_secrets": false,
+      "output_root": "comic/"
+    }
+  },
+  "expected_behavior": {
+    "should_succeed": true,
+    "critical_checks": [
+      "step2_confirmation_done",
+      "prompt_written_before_image",
+      "downloads_absolute_path_and_nonempty"
+    ],
+    "high_checks": [
+      "output_structure_complete",
+      "character_desc_embedded_in_every_prompt",
+      "aspect_map_3to4_is_portrait",
+      "source_scanned_for_secrets"
+    ],
+    "medium_checks": [
+      "refs_copied_and_frontmatter_recorded",
+      "sensitive_figure_stylized",
+      "completion_report_present"
+    ]
+  }
+}

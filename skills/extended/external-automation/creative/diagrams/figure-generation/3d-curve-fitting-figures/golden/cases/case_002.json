@@ -1,0 +1,45 @@
+{
+  "case_id": "case_002",
+  "description": "错误路径 — argsort 路径错乱 + 重建缺中心偏移（参数失真，须被检出）",
+  "input": {
+    "user_request": "审查这段拟合脚本：点序用 np.argsort(theta) 确定，重建曲线未加 cx/cy，输出的 RMSE 与 b 是否正常",
+    "context": {
+      "script": "code/gen_composite_figure.py",
+      "defects_planted": [
+        "final fit uses np.argsort(theta) instead of nearest_neighbor_path + np.unwrap",
+        "rebuild omits center offset: uses r*cos(theta)*u + r*sin(theta)*v without (cx, cy)"
+      ],
+      "reported_metrics": {
+        "AC_bony_RMSE_mm": 2.2700,
+        "PC_memb_RMSE_mm": 2.1731,
+        "PC_bony_b": -0.0463,
+        "LC_bony_b": 0.0267
+      },
+      "reference_metrics": {
+        "AC_bony_RMSE_mm": 0.1330,
+        "PC_memb_RMSE_mm": 0.1704,
+        "PC_bony_b": -0.0191,
+        "LC_bony_b": 0.0052
+      }
+    }
+  },
+  "expected_behavior": {
+    "should_succeed": false,
+    "critical_checks": [
+      "does_not_crash",
+      "detects_argsort_final_fit",
+      "detects_missing_center_offset",
+      "reports_distorted_parameters"
+    ],
+    "high_checks": [
+      "flags_rmse_inflation",
+      "flags_b_out_of_range_or_sign_flip",
+      "recovery_advice_non_empty"
+    ],
+    "medium_checks": [
+      "recommends_path_based_fit",
+      "recommends_center_offset_rebuild",
+      "cross_verified_failure_reported"
+    ]
+  }
+}

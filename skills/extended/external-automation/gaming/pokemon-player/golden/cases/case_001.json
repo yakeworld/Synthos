@@ -1,0 +1,22 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：启动服务器并执行一段带保存的导航回合（红/黄版，从 Pallet 镇向 Viridian 前进）",
+  "input": {
+    "game_state": "player at Pallet Town, just chose Bulbasaur; heading to Viridian via Route 1; next risk = first wild battle + Brock badge later",
+    "actions": ["press_a", "walk_right", "walk_right", "walk_up"],
+    "context": {
+      "rom_path": "roms/pokemon_red.gb",
+      "rom_source": "user_provided",
+      "port": 9876,
+      "save_name_if_risk": "route1_start",
+      "upcoming_risk": "entering Route 1 (new area)"
+    }
+  },
+  "expected": {
+    "health_check": "GET /health returns 200 healthy after 4s startup wait",
+    "save_before_risk": true,
+    "action_segment_length": 4,
+    "post_segment_screenshot": true
+  },
+  "weight": "critical"
+}

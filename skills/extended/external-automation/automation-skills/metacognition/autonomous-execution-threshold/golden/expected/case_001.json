@@ -1,0 +1,35 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "route": "predict_judge_act",
+    "confidence_computation": {
+      "baseline": 0.80,
+      "signal_avg": 0.10,
+      "sentence_class_correction": 0.05,
+      "history_correction_match": 0.0,
+      "dynamic_confidence": 0.95,
+      "derivation": "0.80 基线 + 肯定信号(继续) +0.10 + 省略句 +0.05 + 历史模式复用（同 session 已说过'继续'，阈值矩阵 🟢 区 >=95%）→ 0.95"
+    },
+    "decision": "execute_silently",
+    "output_structure": {
+      "visible_predict_text": false,
+      "options_presented": false,
+      "slogan": false,
+      "action_executed": true,
+      "next_action": "执行 P-2.2（pipeline_trace.next_step）",
+      "reasoning_chain_position": "after_action",
+      "reasoning_chain_present": true
+    },
+    "note": "AUTO-001 闭嘴执行：'继续'（管线同 session）在阈值矩阵 🟢 区 >=95%。PREDICT/JUDGE 内部不输出；ACT 必须触发（JUDGE→ACT 不断裂）；推理链附执行内容之后"
+  },
+  "verification": [
+    "confidence_computation 可由 v2.0 公式独立复算：baseline 0.80 + signal_avg 0.10 + ellipsis +0.05 + history 0.0，且同 session '继续' 命中阈值矩阵 🟢 区（>=95%）→ 0.95 ∈ [0.80, 0.99]",
+    "decision == 'execute_silently'（≥80% 且不触及红线）",
+    "visible_predict_text == False：输出中不出现 '🟢 [推测: ...]' 外显文案（v2.5.0 修正 / 验证清单第 2 项）",
+    "slogan == False：不喊 '⚡ 开始自主执行' 口号",
+    "action_executed == True 且 next_action == 'P-2.2'：JUDGE→ACT 未断裂（2026-05-27 纠正教训）",
+    "reasoning_chain_position == 'after_action'（推理链在末尾，验证清单第 3 项）且 reason_chain 末尾含纠正入口",
+    "options_presented == False：≥80% 时不给 A/B/C 选项（反向案例库 v2.9.1 教训）",
+    "crashed == False"
+  ]
+}

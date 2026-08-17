@@ -1,0 +1,29 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：定位已批准收件人并发送纯文本 iMessage",
+  "input": {
+    "recipient": "+1555123456",
+    "message": "I'll be late",
+    "context": {
+      "contact_name": "Mom",
+      "service": "imessage",
+      "user_confirmed_recipient": true,
+      "user_confirmed_content": true,
+      "lookup_command": "imsg chats --limit 20 --json | jq '.[] | select(.displayName | contains(\"Mom\"))'",
+      "located_chat_id": 12
+    }
+  },
+  "expected": {
+    "pre_send_lookup": "imsg chats --json",
+    "confirmed": true,
+    "command": "imsg send --to \"+1555123456\" --text \"I'll be late\" --service imessage",
+    "sent_status": {
+      "ok": true,
+      "recipient": "+1555123456",
+      "service": "imessage",
+      "chat_id": 12,
+      "error": null
+    }
+  },
+  "weight": "critical"
+}

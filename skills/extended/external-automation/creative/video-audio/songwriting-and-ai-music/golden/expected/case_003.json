@@ -1,0 +1,36 @@
+{
+  "case_id": "case_003",
+  "status": "error",
+  "error": "missing_required_inputs: emotional_core, theme 未提供，无法确定创作方向（P0 输入约束）",
+  "lyrics": null,
+  "structure": null,
+  "style_field": null,
+  "missing_fields": ["emotional_core", "theme"],
+  "suggestions": [
+    "请提供情感核（如：失去后的释然、愤怒、思念）",
+    "请提供主题/叙事（如：雨夜告别、城市孤独）",
+    "可选：结构偏好（ABABCB / AABA / ABAB / AAA）与人声性别",
+    "可选：目标 BPM 与调性"
+  ],
+  "qa_checks": [
+    {
+      "id": "no_fabrication",
+      "rule": "输入缺失时不得硬造歌词",
+      "critical": true,
+      "expected_pass_condition": "lyrics=null 且 structure=null"
+    },
+    {
+      "id": "error_with_context",
+      "rule": "错误信息包含上下文与缺失字段列表",
+      "critical": true,
+      "expected_pass_condition": "error 非空且 missing_fields 列出 emotional_core/theme"
+    },
+    {
+      "id": "actionable_suggestions",
+      "rule": "给出可操作的补全建议",
+      "critical": true,
+      "expected_pass_condition": "suggestions 非空且含情感核/主题询问"
+    }
+  ],
+  "references_used": ["SKILL.md 约束规则 §1 输入约束", "SKILL.md §8 Workflow step 1"]
+}

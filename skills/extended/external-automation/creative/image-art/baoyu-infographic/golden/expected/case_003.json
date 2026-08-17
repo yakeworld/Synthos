@@ -1,0 +1,14 @@
+{
+  "case_id": "case_003",
+  "expect": {
+    "status": "error",
+    "error": {
+      "code": "MISSING_SOURCE",
+      "message_contains_context": true,
+      "suggestion_non_empty": true,
+      "suggestion_mentions": ["提供源内容", "paste", "file path", "topic"]
+    },
+    "deliverables_created": [],
+    "rationale": "RULES-3 异常约束：错误信息必须包含上下文和恢复建议；空源无法执行 Step 1，必须拒绝而非编造内容（P0 不凭空生成）"
+  }
+}

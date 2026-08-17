@@ -1,0 +1,42 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径 — 对数螺旋点云（AC bony, micro-CT 单标本）的 path-based 拟合",
+  "input": {
+    "user_request": "对 AC 骨性中心线点云拟合 3D 对数螺旋，生成出版级 figure 并标注 RMSE 与参数",
+    "context": {
+      "specimen": "sp1",
+      "modality": "micro-CT",
+      "structure": "AC bony",
+      "point_cloud": {
+        "n_points": 220,
+        "plane_from_svd": true,
+        "center_at_data_centroid": true,
+        "segmented_two_ends_to_mid": true,
+        "seg1_len": 110,
+        "seg2_len": 110,
+        "merged_point_count": 219
+      },
+      "code_dir": "code/",
+      "figures_dir": "figures/"
+    }
+  },
+  "expected_behavior": {
+    "should_succeed": true,
+    "critical_checks": [
+      "rebuild_contains_center_offset",
+      "fit_is_path_based_not_argsort",
+      "cross_verified_rmse_b_visual"
+    ],
+    "high_checks": [
+      "rmse_below_0.2mm",
+      "b_in_physical_range",
+      "independent_params_equal_8",
+      "figure_title_rmse_matches_console"
+    ],
+    "medium_checks": [
+      "segments_merged_dedup_midpoint",
+      "merged_gap_below_0.2mm",
+      "no_duplicate_fit_function"
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "case_id": "case_001",
+  "artifact": "figures/sp1_microCT_AC_bony_fit.png",
+  "fitting": {
+    "model": "3D log-spiral",
+    "path_ordering": "nearest_neighbor_path(pts)",
+    "theta_expansion": "np.unwrap(theta_raw[path])",
+    "regression": "log(r) = a + b * theta_unwrapped",
+    "center_search": "grid search over (cx, cy) in 2D projection plane",
+    "rebuild_formula": "centroid + (cx + r*cos(t+rot))*u + (cy + r*sin(t+rot))*v + z*normal",
+    "rebuild_contains_center_offset": true,
+    "argsort_used_in_final_fit": false
+  },
+  "parameters": {
+    "cx": 0.000,
+    "cy": 0.000,
+    "theta0": 0.0,
+    "a": -0.42,
+    "b": 0.0958,
+    "A": 1.0,
+    "omega": 0.0,
+    "phi": 0.0,
+    "independent_params": 8,
+    "param_count_note": "SVD 固定平面法线(0自由) + 质心固定 3D 中心(0自由)；仅计面内 8 个独立参数 (cx, cy, θ0, a, b, A, ω, φ)"
+  },
+  "quality": {
+    "rmse_mm": 0.133,
+    "rmse_below_0.2": true,
+    "b": 0.0958,
+    "b_in_physical_range": true,
+    "b_physical_range": [0.01, 0.2],
+    "visual_quality": "curve passes through point cloud",
+    "cross_verified": true
+  },
+  "consistency": {
+    "figure_title_rmse": 0.133,
+    "console_rmse": 0.133,
+    "rmse_delta_mm": 0.0,
+    "rmse_delta_below_0.01": true,
+    "composite_vs_single_rmse_equal": true,
+    "duplicate_fit_logspiral_3d": false
+  },
+  "segment_merge": {
+    "rule": "merged = np.vstack([seg1, seg2[-2::-1]])",
+    "seg1_len": 110,
+    "seg2_len": 110,
+    "merged_point_count": 219,
+    "expected_merged_point_count": 219,
+    "point_count_correct": true,
+    "merged_gap_mm": 0.08,
+    "merged_gap_below_0.2": true
+  },
+  "invariants": {
+    "does_not_crash": true,
+    "rebuild_contains_center_offset": true,
+    "fit_is_path_based_not_argsort": true,
+    "cross_verified_rmse_b_visual": true,
+    "independent_params_equal_8": true
+  },
+  "references_used": [
+    "SKILL.md#拟合重建陷阱：中心偏移",
+    "SKILL.md#致命陷阱：argsort-路径错乱",
+    "SKILL.md#数据一致性检查",
+    "SKILL.md#3D参数计数约定"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "case_002",
+  "skill": "citation-verification",
+  "phase": "phase1",
+  "description": "Phase 1 DOI篡改 — DOI 404 但 SS 搜到不同DOI → DOI_TAMPERED，修复DOI+元数据",
+  "input": {
+    "paper_dir": "papers/demo-crispdm",
+    "citation_key": "Shearer2000CRISPDM",
+    "bib_entry": {
+      "type": "@inproceedings",
+      "title": "CRISP-DM: a process framework for data mining",
+      "author": "Shearer, C.",
+      "year": 2000,
+      "doi": "10.1007/978-wrong-doi"
+    },
+    "checks": {
+      "doi_org_status": 404,
+      "crossref_status": 404,
+      "semantic_scholar_match": {
+        "found_doi": "10.1109/AIML.2000.882629",
+        "title": "CRISP-DM: a process framework for data mining",
+        "first_author": "Shearer",
+        "year": 2000
+      },
+      "pdf_present": true
+    }
+  },
+  "weight": "high"
+}

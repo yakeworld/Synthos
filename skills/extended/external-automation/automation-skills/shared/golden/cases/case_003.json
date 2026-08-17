@@ -1,0 +1,14 @@
+{
+  "case_id": "case_003",
+  "skill": "shared",
+  "description": "异常恢复指引（错误路径）：references/ 下目标文件不存在",
+  "input": {
+    "request": "读取 references/ 下的 MISSING_DOC.md",
+    "context": {
+      "known_subskills": ["references"],
+      "matched_subskill": "references",
+      "target_doc": "MISSING_DOC.md"
+    }
+  },
+  "weight": "high"
+}

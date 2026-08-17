@@ -1,0 +1,33 @@
+{
+  "case_id": "case_002",
+  "description": "正常路径：peekaboo 推荐法精确定位背包上的 AirTag",
+  "input": {
+    "device_query": "背包上的 AirTag 现在在哪？",
+    "context": {
+      "platform": "macOS",
+      "icloud_signed_in": true,
+      "screen_recording_permission": true,
+      "peekaboo_installed": true,
+      "airtag_registered": true,
+      "item_owned_by_user": true,
+      "method": "peekaboo"
+    }
+  },
+  "expected": {
+    "method_chain": [
+      "osascript -e 'tell application \"FindMy\" to activate'",
+      "sleep 3",
+      "peekaboo see --app \"FindMy\" --annotate --path /tmp/findmy-ui.png",
+      "osascript（切到 Items 页签）",
+      "peekaboo click --on <element_id> --app \"FindMy\"",
+      "peekaboo image --app \"FindMy\" --path /tmp/findmy-detail.png",
+      "vision_analyze(image_url=\"/tmp/findmy-detail.png\", question=\"What is the location shown for this device/item? Include address and coordinates if visible.\")"
+    ],
+    "location_data": {
+      "status": "ok",
+      "device": "背包上的 AirTag",
+      "address": "详情页读出的地址（语义等价，含坐标则一并返回）"
+    }
+  },
+  "weight": "high"
+}

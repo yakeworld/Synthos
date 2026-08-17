@@ -1,0 +1,20 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "sanity_report": [
+      {
+        "issue": "Logged in but gh pr create fails",
+        "root_cause": "PAT scope 缺 repo/write:repository",
+        "fix": "重建 Classic PAT(repo+write:repository)"
+      }
+    ],
+    "fix_commands": ["Create new Classic PAT (repo + write:repository)"]
+  },
+  "verification": [
+    "gh auth status 确认已登录（REPO-003）",
+    "判定 PAT scope 不足（缺 repo 或 write:repository）",
+    "建议重建 Classic PAT，scope 含 repo + write:repository",
+    "登录非凭据，权限乃凭据 — 已登录不代表可写",
+    "修复建议可执行（非仅诊断）"
+  ]
+}

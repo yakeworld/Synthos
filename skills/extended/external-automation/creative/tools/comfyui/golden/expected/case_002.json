@@ -1,0 +1,23 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "status": "error",
+    "error_code": "INVALID_CHECKPOINT",
+    "fault_node": "CheckpointLoaderSimple",
+    "fault_param": "ckpt_name=does_not_exist_model.safetensors",
+    "context": "CheckpointLoaderSimple 节点的 ckpt_name 指向不存在的模型文件",
+    "recovery": [
+      "修正 ckpt_name 为已下载的模型（列出 models/checkpoints/ 下可用 ckpt）",
+      "先执行 scripts/comfyui_setup.sh 或手动下载所需 checkpoint"
+    ],
+    "image_results": [],
+    "note": "异常场景（非法模型名）返回带上下文与恢复建议的错误信息，不暴露内部敏感状态（COMF-004/005）；禁止仅返回通用错误"
+  },
+  "verification": [
+    "返回 status == 'error' 且 error_code == 'INVALID_CHECKPOINT'",
+    "错误信息定位到具体节点（CheckpointLoaderSimple）与参数（ckpt_name）",
+    "错误信息包含 >= 1 条恢复建议（列出可用 ckpt 或修正参数名）",
+    "image_results 为空列表（不返回伪造图像）",
+    "错误未暴露内部敏感状态（无完整堆栈/内部绝对路径/凭据泄露）"
+  ]
+}

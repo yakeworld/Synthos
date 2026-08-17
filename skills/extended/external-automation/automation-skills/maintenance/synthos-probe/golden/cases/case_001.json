@@ -1,0 +1,48 @@
+{
+  "case_id": "case_001",
+  "type": "normal",
+  "description": "全量 Probe：对 7 核心原子做结构检查 + 全量 SKILL.md 基准检查",
+  "input": {
+    "probe_target": "full",
+    "repo_root": "/media/yakeworld/sda2/Synthos",
+    "atoms": [
+      {
+        "name": "knowledge-acquisition",
+        "path": "skills/core/knowledge-acquisition/SKILL.md"
+      },
+      {
+        "name": "knowledge-extraction",
+        "path": "skills/core/knowledge-extraction/SKILL.md"
+      },
+      {
+        "name": "association-discovery",
+        "path": "skills/core/association-discovery/SKILL.md"
+      },
+      {
+        "name": "hypothesis-generation",
+        "path": "skills/core/hypothesis-generation/SKILL.md"
+      },
+      {
+        "name": "argument-expression",
+        "path": "skills/core/argument-expression/SKILL.md"
+      },
+      {
+        "name": "viewpoint-verification",
+        "path": "skills/core/viewpoint-verification/SKILL.md"
+      },
+      {
+        "name": "research-ideation",
+        "path": "skills/research/research-ideation/SKILL.md"
+      }
+    ],
+    "options": {
+      "check_version_top_level": true,
+      "check_version_nested_metadata_synthos": true,
+      "signature_requires_explicit_declaration": true,
+      "count_skills_via_os_walk": true,
+      "skill_filename_match": "SKILL.md in filename (covers ARCHIVED-SKILL.md variants)",
+      "compare_git_paths_relative_to_repo_root": true,
+      "state_file": "evolution-state.json"
+    }
+  }
+}

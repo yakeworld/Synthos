@@ -1,0 +1,71 @@
+{
+  "case_id": "case_001",
+  "status": "pass",
+  "routed_skill": "popular-web-designs",
+  "template": "linear.app",
+  "template_alternatives": ["sentry"],
+  "template_rationale": "developer tools / dark mode / 数据密集 → linear.app（超极简暗色+紫色强调）或 sentry（数据密集 dashboard）",
+  "deliverable": "rendered HTML page",
+  "html_contract": {
+    "root_variables": {
+      "from_section2": true,
+      "min_custom_properties": 4,
+      "examples": ["--color-bg", "--color-text", "--color-accent", "--color-surface"]
+    },
+    "typography": {
+      "matches_section3": true,
+      "font_family_stack": true,
+      "size_weight_tracking_from_template": true
+    },
+    "components": {
+      "follows_section4_6": true,
+      "buttons_cards_spacing": true
+    },
+    "shadows": {
+      "from_section6": true
+    },
+    "meta": {
+      "viewport": "width=device-width, initial-scale=1.0",
+      "lang": "en",
+      "charset_utf8": true
+    }
+  },
+  "verification": {
+    "write_file": true,
+    "browser_vision_screenshot": true,
+    "visual_match_to_template": true
+  },
+  "qa_checks": [
+    {
+      "id": "template_route",
+      "rule": "从 54 目录选匹配模板（developer/dark/数据密集）",
+      "critical": true,
+      "expected_pass_condition": "template 为 linear.app 或 sentry"
+    },
+    {
+      "id": "html_contract",
+      "rule": ":root 含 Section 2 调色板 + viewport/lang 正确",
+      "critical": true,
+      "expected_pass_condition": "root_variables.from_section2=true 且 meta 三项全对"
+    },
+    {
+      "id": "typography",
+      "rule": "排版字号/字重/字间距与 Section 3 一致",
+      "critical": false,
+      "expected_pass_condition": "typography.matches_section3=true"
+    },
+    {
+      "id": "components",
+      "rule": "按钮/卡片/间距/阴影遵循 Section 4-6",
+      "critical": false,
+      "expected_pass_condition": "components.follows_section4_6=true 且 shadows.from_section6=true"
+    },
+    {
+      "id": "browser_verify",
+      "rule": "write_file 写入 + browser_vision 截图验证",
+      "critical": false,
+      "expected_pass_condition": "verification.browser_vision_screenshot=true"
+    }
+  ],
+  "references_used": ["SKILL.md Design Catalog (Developer Tools)", "SKILL.md HTML Generation Pattern", "templates/linear.app.md"]
+}

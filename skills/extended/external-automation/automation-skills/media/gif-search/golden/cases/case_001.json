@@ -1,0 +1,23 @@
+{
+  "case_id": "case_001",
+  "type": "normal",
+  "description": "正常路径：搜索 'thumbs up'，limit=5，提取 gif / tinygif URL",
+  "input": {
+    "request": "search gif",
+    "params": {
+      "q": "thumbs up",
+      "limit": 5,
+      "contentfilter": "medium",
+      "media_filter": null,
+      "locale": "en_US"
+    },
+    "env": {
+      "TENOR_API_KEY": "<valid_key>"
+    },
+    "endpoint": "https://tenor.googleapis.com/v2/search",
+    "extraction": [
+      "jq -r '.results[].media_formats.gif.url'",
+      "jq -r '.results[].media_formats.tinygif.url'"
+    ]
+  }
+}

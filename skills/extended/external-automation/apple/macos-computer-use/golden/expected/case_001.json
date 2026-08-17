@@ -1,0 +1,26 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "result": {
+      "ok": true,
+      "clicked_element": 7,
+      "verified_by": "capture_after",
+      "raise_window": false,
+      "spaces_switched": false,
+      "error": null
+    },
+    "steps": [
+      {"action": "capture", "mode": "som", "app": "Safari"},
+      {"action": "click", "element": 7, "capture_after": true}
+    ],
+    "note": "先 capture(som, app=Safari) 取编号 AX 索引（MACO-001）→ 用 element=7 点击（MACO-002，非像素坐标）→ capture_after=True 复验（MACO-003）；全程后台驱动，未 raise_window、未切 Spaces（MACO-004）"
+  },
+  "verification": [
+    "steps[0] 为 capture 且 mode=='som' 且 app=='Safari'（MACO-001 先捕获）",
+    "steps 中的 click 使用 element=7（数字索引）而非 coordinate=[x,y]（MACO-002）",
+    "click 步骤含 capture_after==True 或其后存在重新 capture（MACO-003 变更后复验）",
+    "raise_window == False 且 spaces_switched == False（MACO-004 后台驱动）",
+    "capture 用 app='Safari' 限定目标应用（MACO-004 作用域收敛）",
+    "result.ok == True 且 result.error == null"
+  ]
+}

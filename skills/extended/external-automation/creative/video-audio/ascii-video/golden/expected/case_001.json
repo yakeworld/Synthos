@@ -1,0 +1,80 @@
+{
+  "case_id": "case_001",
+  "mode": "audio-reactive",
+  "mode_selection_rule": "输入为音频文件（无视频）→ Modes 表 audio-reactive: Audio file → Generative visuals driven by audio features",
+  "creative_concept": {
+    "required_before_coding": true,
+    "fields": {
+      "mood": "非空 — 例如 meditative / warm / mellow",
+      "visual_story": "非空 — 45s 内发生什么（开/建/收的情绪弧线）",
+      "color_world": "非空 — warm/cool? 主 hue? 饱和度?",
+      "character_texture": "非空 — dense data / sparse stars / organic dots?",
+      "uniqueness": "非空 — '什么让 THIS 不同'（拒绝提示词字面转录, ASCI-001）"
+    }
+  },
+  "pipeline_stages": {
+    "complete": true,
+    "stages_in_order": [
+      "INPUT",
+      "ANALYZE",
+      "SCENE_FN",
+      "TONEMAP",
+      "SHADE",
+      "ENCODE"
+    ],
+    "stage_requirements": {
+      "INPUT": "音频解码（ffmpeg）",
+      "ANALYZE": "逐帧特征提取: FFT 频段 / beats / 能量（SciPy）",
+      "SCENE_FN": "场景函数渲染 uint8 H,W,3 canvas, 多网格 _render_vf() 合成",
+      "TONEMAP": "percentile-based 自适应 tonemap(), 禁用 canvas * N 线性乘子",
+      "SHADE": "ShaderChain + FeedbackBuffer",
+      "ENCODE": "raw RGB 管道送 ffmpeg 编码 H.264"
+    }
+  },
+  "pre_render_verification": {
+    "test_frames_first": true,
+    "test_frame_timestamps": [
+      5,
+      15,
+      30,
+      40
+    ],
+    "brightness_threshold": 8,
+    "brightness_check": "canvas.mean() > 8 for all ASCII content; 暗场景调低 gamma（如 0.55）而非乘子"
+  },
+  "per_scene_variation": {
+    "required": true,
+    "min_scenes": 3,
+    "scenes_must_differ_in": [
+      "background_effect",
+      "character_palette",
+      "color_strategy",
+      "shader_intensity"
+    ],
+    "unified_aesthetic": "全片共享色温/字符调色板/运动词汇（ASCI-004）"
+  },
+  "invented_elements": {
+    "min_count": 1,
+    "allowed_types": [
+      "custom character palette",
+      "custom background effect",
+      "custom discrete RGB color palette",
+      "custom particle character set",
+      "novel scene transition / visual moment"
+    ],
+    "note": "至少 1 个用户未要求但提升品质的视觉时刻（ASCI-003/007）"
+  },
+  "pitfall_avoidance": {
+    "font_cell_height_uses_getmetrics": true,
+    "ffmpeg_no_stderr_pipe": true,
+    "font_compat_validation_at_init": true
+  },
+  "output": {
+    "resolution": "1920x1080",
+    "fps": 24,
+    "container": "MP4",
+    "codec": "H.264",
+    "first_frame_standard": "首帧即达视觉惊艳标准, 非平庸 AI 生成感（ASCI-002）",
+    "playable": true
+  }
+}

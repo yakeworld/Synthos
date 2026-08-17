@@ -1,0 +1,21 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "diagnosis": "变量消失点 = 引号与 subprocess 边界（非 .bashrc 守卫，也非从未设置）。逐层验证：父进程有、交互有、bash -c 层有，但 Python 子层 NOTSET —— 消失发生在 bash -c 内部向 python3 子进程传播时。根因：subprocess.run(shell=True) 的嵌套引号使内层单引号被外层 shell 消费，export 的变量作用域未正确进入 python3 进程（DEBU-005）。",
+    "fix": {
+      "ordered_by_reliability": [
+        {"rank": 1, "method": "file_fallback", "detail": "API 密钥存于 .api_key 文件（gitignored），Python 在 os.environ 为空时读文件回退 —— 自动化系统最可靠，且密钥不硬编码、不入 .bashrc（DEBU-004）"},
+        {"rank": 2, "method": "fix_quoting", "detail": "用 && 链接命令或 heredoc 结构重写，避免双引号内嵌套单引号被外层 shell 消费（DEBU-005）；或不用 shell=True，改用 list 参数 + env= 直接传入"},
+        {"rank": 3, "method": "pass_at_call_site", "detail": "调用 subprocess 时以参数/env 显式传入密钥，不依赖 bash -c 传播"},
+        {"rank": 4, "method": "etc_environment", "detail": "写入 /etc/environment（需 root）"}
+      ]
+    }
+  },
+  "verification": [
+    "diagnosis 精确定位到引号/subprocess 边界，且明确排除 .bashrc 守卫与从未设置（三层证据：bash -c 有 / Python 无）",
+    "fix 首推为 file_fallback（.api_key 文件回退），未把 export 前移 .bashrc 作为首选（自动化场景 DEBU-003）",
+    "fix 含 && 链接或 heredoc 的引号替代方案（DEBU-005），或 list 参数 + env= 的非 shell 写法",
+    "密钥处理建议不硬编码、不写入 .bashrc（DEBU-004 安全约束）",
+    "输出同时包含 diagnosis 与 fix 两段，定位依据来自逐层 os.environ/echo 对比而非凭记忆断言（DEBU-006）"
+  ]
+}

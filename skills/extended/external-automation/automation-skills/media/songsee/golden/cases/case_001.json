@@ -1,0 +1,35 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：多面板特征网格（调试合成）— 5 类 viz 生成单图网格（例 2 / SONG-001 / SONG-006）",
+  "input": {
+    "request": "对 track.mp3 生成多面板特征网格用于调试合成",
+    "context": {
+      "audio_file": "/media/yakeworld/sda2/Synthos/testdata/track.mp3",
+      "audio_format": "mp3",
+      "audio_duration_seconds": 30.0,
+      "ffmpeg_installed": false,
+      "cli": "songsee",
+      "viz": ["spectrogram", "mel", "chroma", "tempogram", "flux"],
+      "style": "magma",
+      "output_format": "png",
+      "output_path": "grid.png"
+    }
+  },
+  "expected": {
+    "route": "songsee track.mp3 --viz spectrogram,mel,chroma,tempogram,flux -o grid.png --style magma --format png",
+    "preflight": {
+      "audio_file_exists": true,
+      "audio_format_supported_natively": true,
+      "viz_types_all_valid": true,
+      "style_valid": true
+    },
+    "result": {
+      "status": "success",
+      "output_file": "grid.png",
+      "panel_count": 5,
+      "output_format": "png"
+    },
+    "crashed": false
+  },
+  "weight": "critical"
+}

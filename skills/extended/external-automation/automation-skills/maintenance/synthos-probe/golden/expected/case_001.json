@@ -1,0 +1,31 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "atoms": {
+      "knowledge-acquisition": { "exists": true, "has_version": true, "has_signature": true, "has_io_contract": true },
+      "knowledge-extraction": { "exists": true, "has_version": true, "has_signature": true, "has_io_contract": true },
+      "association-discovery": { "exists": true, "has_version": true, "has_signature": true, "has_io_contract": true },
+      "hypothesis-generation": { "exists": true, "has_version": true, "has_signature": true, "has_io_contract": true },
+      "argument-expression": { "exists": true, "has_version": true, "has_signature": true, "has_io_contract": true },
+      "viewpoint-verification": { "exists": true, "has_version": true, "has_signature": true, "has_io_contract": true },
+      "research-ideation": { "exists": false, "has_version": false, "has_signature": false, "has_io_contract": false }
+    },
+    "structural_score": 0.71,
+    "structural_fraction": "5/7",
+    "benchmark": {
+      "skill_md_count_via_os_walk": 157,
+      "all_git_tracked": true,
+      "untracked_files": [],
+      "evolution_state_parseable": true
+    },
+    "drift": "green",
+    "output_line_format": "SYNTHOS PROBE: structural=0.71, benchmark=1.00, drift=green | cycle=N",
+    "score": 0.86
+  },
+  "notes": [
+    "research-ideation 在当前仓库不存在（path_trap 实测）：不存在路径按 SYNT-001 必须用 os.path.exists() 确认，三项均为 false，不得沿用上一周期 3/3 的乐观结论（cycle68_optimism_trap）",
+    "skill_md_count 必须来自 os.walk 实际遍历（SYNT-005），157 为 2026-06 实测快照，不信任 spec 声称数字",
+    "benchmark 分数 1.00 表示：frontmatter 有效 + 全部 git tracked + 根 evolution-state.json 可解析",
+    "structural = 5/7 = 0.71（四舍入两位）"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径 — 缺失情感核/主题/风格，不得硬造歌词",
+  "input": {
+    "user_request": "写首歌",
+    "context": {
+      "emotional_core": null,
+      "theme": null,
+      "structure_pref": null,
+      "mode": "custom",
+      "platform": "Suno"
+    }
+  },
+  "expected_behavior": {
+    "should_produce": false,
+    "critical_checks": [
+      "error_non_empty",
+      "lyrics_is_null",
+      "suggestions_non_empty"
+    ],
+    "high_checks": [
+      "error_lists_missing_fields"
+    ],
+    "medium_checks": [
+      "suggestions_ask_emotional_core"
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "browser_findings": [
+      {"type": "console_error", "detail": "提交 <script> 载荷后 console 出现未捕获的 XSS 相关 JS 静默错误", "repro": "email 输入 <script>alert(1)</script> → 点击提交 → 查 browser_console()", "evidence": "MEDIA:/tmp/dogfood/xss_console.png"},
+      {"type": "form_bug", "detail": "连续快速点击提交按钮 5 次触发 2 次重复注册请求", "repro": "有效表单 → 快速点击提交 5 次 → 查 console 网络请求数", "evidence": "MEDIA:/tmp/dogfood/double_submit.png"},
+      {"type": "form_bug", "detail": "超长密码（200字符）未截断/未提示超限，直接提交", "repro": "password 输入 200 字符 → 点击提交 → 观察", "evidence": "MEDIA:/tmp/dogfood/long_password.png"}
+    ],
+    "screenshot_evidence": "MEDIA:/tmp/dogfood/finding_annotate.png",
+    "console_checks": ["after_navigate_register", "after_submit_valid", "after_submit_xss_payload", "after_rapid_clicks"],
+    "evidence_captured_with": "browser_vision annotate=true"
+  },
+  "verification": [
+    "test_scenarios 同时覆盖有效输入与无效/边界输入（DOGF-001/DOGF-006），未仅测单一正常路径",
+    "存在多步端到端导航走通（注册→登录→dashboard）并验证中间状态转换（DOGF-005）",
+    "每次导航与关键交互（提交/XSS 载荷/快速点击）后调用了 browser_console()（DOGF-002），console_error 类 finding 来自静默错误捕获",
+    "每个 finding 含 type + detail + repro 复现步骤（验证清单项 3）",
+    "发现的缺陷以 MEDIA:<path> 内联 screenshot_evidence，且截图来自 browser_vision annotate=true（DOGF-003）",
+    "全程仅测试，未修改目标应用代码（验证清单项 5）"
+  ]
+}

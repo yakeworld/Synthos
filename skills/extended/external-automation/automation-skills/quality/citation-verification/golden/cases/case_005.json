@@ -1,0 +1,30 @@
+{
+  "case_id": "case_005",
+  "skill": "citation-verification",
+  "phase": "phase3",
+  "description": "Phase 3 全面性 — CRISP-DM 论文只引原始文献，遗漏 2021 高引综述 → 分类 critical/suggested",
+  "input": {
+    "paper_dir": "papers/demo-crispdm",
+    "topic_terms": ["CRISP-DM", "data mining process framework"],
+    "cited_keys": ["Shearer2000CRISPDM", "Wirth2000CRISPDM"],
+    "independent_search_results": [
+      {
+        "key_suggested": "MartinezPlumed2021CRISPDM",
+        "title": "CRISP-DM Twenty Years Later",
+        "journal": "IEEE TKDE",
+        "year": 2021,
+        "citations": 332,
+        "topic_match": 0.9
+      },
+      {
+        "key_suggested": "Schroer2021CRISPDM",
+        "title": "A Systematic Literature Review on Applying CRISP-DM",
+        "journal": "Procedia CS",
+        "year": 2021,
+        "citations": 555,
+        "topic_match": 0.7
+      }
+    ]
+  },
+  "weight": "high"
+}

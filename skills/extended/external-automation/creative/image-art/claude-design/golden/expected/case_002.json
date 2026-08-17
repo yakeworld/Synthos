@@ -1,0 +1,23 @@
+{
+  "case_id": "case_002",
+  "expect": {
+    "status": "ok",
+    "loaded_skills": ["claude-design", "popular-web-designs"],
+    "not_loaded": ["design-md"],
+    "skill_rationale": {
+      "popular-web-designs": "CLAU-001：匹配已知品牌（Linear）视觉 → 由该技能提供精确颜色/字体/组件值",
+      "claude-design": "流程驱动：brief→上下文→变体→验证",
+      "design-md": "未加载：交付物是渲染的 HTML 页面，不是 DESIGN.md token 规范文件（CLAU-002 反向）"
+    },
+    "artifact": {
+      "path_pattern": "*.html",
+      "self_contained": true,
+      "remote_dependencies": []
+    },
+    "verification": {
+      "declared_checks": ["file_exists", "html_saved_completely"],
+      "forbidden_checks": ["browser_check", "screenshot_check"],
+      "rationale": "环境无浏览器/截图工具 → 验证声明仅限文件存在与完整性，并说明未验证项"
+    }
+  }
+}

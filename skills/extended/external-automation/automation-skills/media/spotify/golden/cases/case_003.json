@@ -1,0 +1,38 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径：'pause' 但 Spotify 无活跃设备 → 403 No active device → 停止重试 + 提示先启动客户端（示例 3 / SPOT-004）",
+  "input": {
+    "request": "pause",
+    "context": {
+      "user_tier": "premium",
+      "active_device": false,
+      "playback_pause_mock": {
+        "tool": "spotify_playback",
+        "args": {"action": "pause"},
+        "returns": {"status_code": 403, "error": "Forbidden — No active device found"}
+      },
+      "devices_list_mock": {
+        "tool": "spotify_devices",
+        "args": {"action": "list"},
+        "returns": []
+      }
+    }
+  },
+  "expected": {
+    "route": "failure_handled",
+    "sequence": [
+      {"tool": "spotify_playback", "args": {"action": "pause"}},
+      {"tool": "spotify_devices", "args": {"action": "list", "purpose": "confirm_no_device"}}
+    ],
+    "retry_count": 0,
+    "result": {
+      "status": "blocked_by_user_action",
+      "http_status": 403,
+      "error_code": "NO_ACTIVE_DEVICE",
+      "user_guidance": "先在你的手机/桌面/Web 播放器上打开 Spotify，任意播放一轨几秒，再重试。当前设备列表为空，确认无活跃设备。"
+    },
+    "crashed": false,
+    "internal_state_exposed": false
+  },
+  "weight": "critical"
+}

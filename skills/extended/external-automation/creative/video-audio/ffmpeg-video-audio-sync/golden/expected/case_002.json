@@ -1,0 +1,16 @@
+{
+  "case_id": "case_002",
+  "error": {
+    "present": true,
+    "error_type": "input_file_missing",
+    "context": "非空字符串, 指明缺失文件 demo_talk.mp4 及 IO_CONTRACT 的 video_file 参数",
+    "recovery": "非空字符串, 提供恢复建议（例如: 检查文件路径/拼写, 或重新提供视频文件）"
+  },
+  "diagnosis": null,
+  "fix_plan": null,
+  "ffmpeg_commands_executed": 0,
+  "ffprobe_commands_executed": 0,
+  "synced_output": null,
+  "crash": false,
+  "exit_behavior": "进程正常退出, 错误信息包含上下文和恢复建议（约束规则第3条: 异常约束）; 输入校验（约束规则第1条）失败时不执行任何 ffmpeg/ffprobe 修复命令"
+}

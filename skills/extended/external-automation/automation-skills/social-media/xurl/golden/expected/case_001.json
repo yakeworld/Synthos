@@ -1,0 +1,29 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "status": "success",
+    "result": {
+      "whoami": {
+        "data": {
+          "id": "non-empty string"
+        }
+      },
+      "search": {
+        "data": [
+          {
+            "id": "non-empty string",
+            "text": "non-empty string"
+          }
+        ]
+      }
+    },
+    "exit_code": 0
+  },
+  "verification": [
+    "xurl whoami 返回合法 JSON（data.id 非空）",
+    "xurl search 返回合法 JSON（data 数组非空）",
+    "命令未使用 --verbose/-v 及任何内联密钥 flag（XURL-001）",
+    "会话中未读取、打印或解析 ~/.xurl（XURL-002）",
+    "输出为合法 JSON，exit code 0"
+  ]
+}

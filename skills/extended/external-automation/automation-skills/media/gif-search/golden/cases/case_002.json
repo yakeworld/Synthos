@@ -1,0 +1,16 @@
+{
+  "case_id": "case_002",
+  "type": "error_path",
+  "description": "错误路径：TENOR_API_KEY 未设置/无效，API 返回 401/403",
+  "input": {
+    "request": "search gif",
+    "params": {
+      "q": "cat",
+      "limit": 1
+    },
+    "env": {
+      "TENOR_API_KEY": null
+    },
+    "endpoint": "https://tenor.googleapis.com/v2/search"
+  }
+}

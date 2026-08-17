@@ -1,0 +1,22 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "diagnosis": "变量消失点 = .bashrc 的 `case $- in *i*)` 交互守卫。SEMANTIC_SCHOLAR_API 的 export 位于守卫块之后（esac 之下），非交互 shell（bash -c 无 i 标志）在到达 export 前即命中 `return`，故 bash -c 与 Python 子层读不到该变量；交互 shell 与 source ~/.bashrc 后可见，符合 DEBU-001/DEBU-006 逐层验证结论（父进程有 → 交互有 → bash -c 无 → source 后有）。",
+    "fix": {
+      "ordered_by_reliability": [
+        {"rank": 1, "method": "move_export_before_guard", "detail": "将 export SEMANTIC_SCHOLAR_API=... 移至 .bashrc 中 case $- in *i*) ... esac 守卫块之前，非交互 shell 会在命中 return 前执行 export"},
+        {"rank": 2, "method": "set_BASH_ENV", "detail": "export BASH_ENV=~/.bashrc（或独立 env 文件），非交互 shell 会读取 BASH_ENV 指向的文件"},
+        {"rank": 3, "method": "file_fallback", "detail": "应用层读取 .api_key / .env 文件作为 os.environ 为空时的回退（自动化系统最可靠，DEBU-004）"},
+        {"rank": 4, "method": "etc_environment", "detail": "写入 /etc/environment（PAM 会话均读，最可靠但需 root）"}
+      ],
+      "automation_note": "CI/cron/subprocess 场景不得倚赖 .bashrc export（DEBU-003）；密钥不得写入 .bashrc（DEBU-004），优先文件回退或 /etc/environment"
+    }
+  },
+  "verification": [
+    "diagnosis 精确定位到 case $- in *i*) 守卫（消失点三选一：bashrc 守卫 / 引号边界 / 从未设置），且引用了逐层验证证据链（父进程有/交互有/bash -c 无/source 后有）",
+    "fix 为有序列表，顺序严格为 export 前移 → BASH_ENV → 文件回退 → /etc/environment，未倒置（修复有序原则）",
+    "输出同时包含 diagnosis 与 fix 两段，定位依据来自逐层 echo/os.environ 对比而非凭记忆断言（DEBU-006）",
+    "未将敏感凭证写入 .bashrc 的建议（DEBU-004 安全约束）",
+    "对自动化场景（CI/cron/subprocess）明确给出不得倚赖 .bashrc 的说明（DEBU-003）"
+  ]
+}

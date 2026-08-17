@@ -1,0 +1,19 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "sanity_report": [
+      {
+        "issue": "url.https://github.com/.insteadOf in ~/.gitconfig",
+        "fix": "git config --global --unset url.https://github.com/.insteadOf"
+      }
+    ],
+    "fix_commands": ["git config --global --unset url.https://github.com/.insteadOf"]
+  },
+  "verification": [
+    "先执行 git config --list --show-origin 溯源配置来源，再下结论（REPO-001）",
+    "发现 ~/.gitconfig 含 url.https://github.com/.insteadOf",
+    "修复命令为 git config --global --unset url.https://github.com/.insteadOf",
+    "验证：git config --global --get url.https://github.com/.insteadOf || echo \"no insteadOf\" 输出 no insteadOf",
+    "修复建议可执行（非仅诊断）"
+  ]
+}

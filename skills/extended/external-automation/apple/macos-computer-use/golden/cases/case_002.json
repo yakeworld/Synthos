@@ -1,0 +1,32 @@
+{
+  "case_id": "case_002",
+  "description": "错误/故障恢复路径：索引过期导致点击无效 → 重新 capture 刷新索引并消除遮挡模态后重试",
+  "input": {
+    "task": "在 Numbers 中保存当前文档（cmd+s）",
+    "app": "Numbers",
+    "context": {
+      "stale_element_index": 17,
+      "first_click_result": "no_effect",
+      "re_capture_finds": "一个未预见的模态框遮挡了保存按钮",
+      "background_driving": true
+    }
+  },
+  "expected": {
+    "steps": [
+      {"action": "click", "element": 17, "note": "旧索引点击无效（索引过期）"},
+      {"action": "capture", "mode": "som", "app": "Numbers", "note": "重新 capture 刷新索引（MACO-003）"},
+      {"action": "key", "keys": "escape", "note": "消除遮挡模态"},
+      {"action": "click", "element": 18, "capture_after": true, "note": "刷新后的新索引重试"}
+    ],
+    "raise_window": false,
+    "spaces_switched": false,
+    "result": {
+      "ok": true,
+      "recovered": true,
+      "re_capture_count": 1,
+      "verified_by": "capture_after",
+      "error": null
+    }
+  },
+  "weight": "high"
+}

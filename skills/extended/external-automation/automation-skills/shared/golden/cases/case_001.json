@@ -1,0 +1,14 @@
+{
+  "case_id": "case_001",
+  "skill": "shared",
+  "description": "正常路由：引用共享参考资源 → 路由到 references 子技能",
+  "input": {
+    "request": "查找共享参考资源中的数据访问分级说明",
+    "context": {
+      "known_subskills": ["references"],
+      "matched_subskill": "references",
+      "target_doc": "DATA_ACCESS_LEVELS.md"
+    }
+  },
+  "weight": "critical"
+}

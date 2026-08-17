@@ -1,0 +1,17 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径：输入参数不完整/非法（missing_var 为空 + shell_context 非合法枚举）",
+  "input": {
+    "missing_var": "",
+    "shell_context": "zsh-interactive",
+    "context": {
+      "note": "missing_var 为空字符串，shell_context='zsh-interactive' 不在合法枚举（interactive / bash -c / Python subprocess）内"
+    }
+  },
+  "expected": {
+    "must_reject": true,
+    "error_requires_context": true,
+    "error_requires_recovery": true
+  },
+  "weight": "critical"
+}

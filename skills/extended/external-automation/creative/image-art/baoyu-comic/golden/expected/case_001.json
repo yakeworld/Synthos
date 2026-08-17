@@ -1,0 +1,89 @@
+{
+  "case_id": "case_001",
+  "output_dir": "comic/alan-turing-bio/",
+  "workflow": {
+    "steps_completed": [
+      "1.1 Analyze content",
+      "1.2 Check existing directory",
+      "2 Confirm style & options (required, not skipped)",
+      "3 Generate storyboard + characters",
+      "5 Generate prompts",
+      "7.1 Generate character sheet",
+      "7.2 Generate pages",
+      "8 Completion report"
+    ],
+    "step2_confirmation_done": true,
+    "conditional_reviews": {
+      "step4_outline_review": false,
+      "step6_prompt_review": false
+    }
+  },
+  "output_structure": {
+    "required_files": [
+      "source-alan-turing-bio.md",
+      "analysis.md",
+      "storyboard.md",
+      "characters/characters.md",
+      "characters/characters.png",
+      "prompts/00-cover-alan-turing-bio.md",
+      "00-cover-alan-turing-bio.png",
+      "prompts/01-page-early-life.md",
+      "01-page-early-life.png",
+      "prompts/10-page-legacy.md",
+      "10-page-legacy.png",
+      "refs/01-ref-turing-style.png"
+    ],
+    "required_files_exist": true,
+    "slug_format": "kebab-case, 2-4 words"
+  },
+  "prompts": {
+    "naming": "NN-{cover|page}-[slug].md under prompts/",
+    "prompt_written_before_image": true,
+    "character_desc_embedded_in_every_prompt": true,
+    "character_source": "characters/characters.md (text), not the PNG"
+  },
+  "aspect_mapping": {
+    "3:4": "portrait",
+    "4:3": "landscape",
+    "16:9": "landscape",
+    "1:1": "square",
+    "case_used": { "storyboard": "3:4", "image_generate_format": "portrait" }
+  },
+  "references": {
+    "copied_to": "refs/01-ref-turing-style.png",
+    "frontmatter_recorded": true,
+    "record": {
+      "ref_id": "01",
+      "filename": "01-ref-turing-style.png",
+      "usage": "style",
+      "traits": "muted earth tones, clean ink lines, low-contrast backgrounds"
+    }
+  },
+  "downloads": {
+    "tool": "curl -fsSL <url> -o <abs path>/NN-page-<slug>.png",
+    "path_is_absolute": true,
+    "verified_non_empty": true,
+    "per_page_verified_before_next": true
+  },
+  "safety": {
+    "source_scanned_for_secrets": true,
+    "secrets_found": false,
+    "sensitive_figure_stylized": true,
+    "stylized_alternative": "stylized public-figure rendering, not photoreal likeness"
+  },
+  "invariants": {
+    "does_not_crash": true,
+    "step2_confirmation_done": true,
+    "prompt_written_before_image": true,
+    "downloads_absolute_path_and_nonempty": true,
+    "output_structure_complete": true,
+    "completion_report_present": true
+  },
+  "references_used": [
+    "SKILL.md#Workflow",
+    "SKILL.md#Step-7-Image-Generation",
+    "SKILL.md#Reference-Images",
+    "references/workflow.md",
+    "references/presets/ohmsha.md"
+  ]
+}

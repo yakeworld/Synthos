@@ -1,0 +1,15 @@
+{
+  "case_id": "case_001",
+  "description": "短文本横幅生成（正常路径，本地 pyfiglet）",
+  "input": {
+    "description": "为项目生成一个 'HERMES' 标题横幅",
+    "dimensions": [80, 15],
+    "environment": { "pyfiglet_installed": true }
+  },
+  "expected": {
+    "tool": "pyfiglet",
+    "font_class": "detailed",
+    "max_width": 80
+  },
+  "weight": "critical"
+}

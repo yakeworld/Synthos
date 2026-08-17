@@ -1,0 +1,66 @@
+{
+  "case_id": "case_002",
+  "status": "pass",
+  "mode": "animation / motion graphics",
+  "renderer": "P2D",
+  "canvas": "1920x1080",
+  "fps": 30,
+  "duration_seconds": 30,
+  "export_target": ["MP4"],
+  "p5_version": "1.11.3",
+  "structure": "single_file_html",
+  "headless": {
+    "setup_uses_noLoop": true,
+    "p5_ready_signal": "window._p5Ready = true",
+    "frame_advance": "capture script calls redraw() once per frame (1:1)",
+    "capture_tool": "Puppeteer + scripts/render.sh + ffmpeg",
+    "deterministic_framerate": true
+  },
+  "performance": {
+    "disable_fes": true,
+    "pixel_density_1": true,
+    "hot_loop_optimizations": ["Math.*", "beginShape batch"]
+  },
+  "reproducibility": {
+    "randomSeed": true,
+    "noiseSeed": true,
+    "seed_from_config": true
+  },
+  "qa_checks": [
+    {
+      "id": "noLoop_mandatory",
+      "rule": "无头渲染 setup 必须 noLoop() 且设 _p5Ready 信号",
+      "critical": true,
+      "expected_pass_condition": "setup_uses_noLoop=true 且 p5_ready_signal 含 _p5Ready"
+    },
+    {
+      "id": "export_contract",
+      "rule": "导出 MP4，帧率由捕获脚本控制",
+      "critical": true,
+      "expected_pass_condition": "export_target 含 MP4 且 deterministic_framerate=true"
+    },
+    {
+      "id": "fps_match",
+      "rule": "帧率=30（动画导出最低标准）",
+      "critical": false,
+      "expected_pass_condition": "fps=30"
+    },
+    {
+      "id": "performance_discipline",
+      "rule": "FES 禁用 + pixelDensity(1)",
+      "critical": false,
+      "expected_pass_condition": "disable_fes=true 且 pixel_density_1=true"
+    },
+    {
+      "id": "render_pipeline",
+      "rule": "使用 scripts/render.sh + ffmpeg 管线",
+      "critical": false,
+      "expected_pass_condition": "capture_tool 含 Puppeteer 与 ffmpeg"
+    }
+  ],
+  "references_used": [
+    "SKILL.md R5 无头渲染 / 方法 6 导出管线",
+    "IO_CONTRACT.md Headless Video Export — Use noLoop()",
+    "references/export-pipeline.md § Deterministic Capture"
+  ]
+}

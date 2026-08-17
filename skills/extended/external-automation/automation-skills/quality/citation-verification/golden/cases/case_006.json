@@ -1,0 +1,12 @@
+{
+  "case_id": "case_006",
+  "skill": "citation-verification",
+  "phase": "precheck",
+  "description": "输入阻断（错误路径）— paper_dir 缺少 06-references，应阻断并结构化报错",
+  "input": {
+    "paper_dir": "papers/incomplete-paper",
+    "dir_listing": ["01-manuscript/paper.tex", "02-figures/"],
+    "missing": ["06-references/"]
+  },
+  "weight": "critical"
+}

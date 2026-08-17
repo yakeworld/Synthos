@@ -1,0 +1,25 @@
+{
+  "case_id": "case_004",
+  "description": "错误路径：macOS 上 memo 未安装 → 返回安装指引",
+  "input": {
+    "note_action": "list",
+    "content": "列出所有 Apple Notes 笔记",
+    "context": {
+      "platform": "macOS",
+      "memo_installed": false,
+      "automation_permission_granted": true
+    }
+  },
+  "expected": {
+    "command_executed": null,
+    "note_result": {
+      "status": "error",
+      "error": "memo 未安装（command -v memo 失败）",
+      "recovery": [
+        "brew tap antoniorodr/memo && brew install antoniorodr/memo/memo",
+        "安装后授予自动化权限（System Settings → Privacy → Automation）"
+      ]
+    }
+  },
+  "weight": "high"
+}

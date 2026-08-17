@@ -1,0 +1,31 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径 — audio-reactive 模式: lo-fi chill 音乐 ASCII 可视化",
+  "input": {
+    "request": "Make a chill lo-fi ASCII visualizer for this track (45 seconds, mellow beat, 90 BPM)",
+    "context": {
+      "audio_file": "lofi_track_45s.mp3",
+      "duration_s": 45,
+      "bpm": 90,
+      "aspect": "landscape",
+      "output_format": "mp4"
+    }
+  },
+  "expected_behavior": {
+    "should_execute": true,
+    "critical_checks": [
+      "mode_is_audio_reactive",
+      "pipeline_6_stages_complete",
+      "brightness_uses_tonemap_not_multiplier"
+    ],
+    "high_checks": [
+      "creative_concept_articulated_before_code",
+      "per_scene_variation_present",
+      "output_spec_1920x1080_24fps_mp4"
+    ],
+    "medium_checks": [
+      "at_least_one_invented_element",
+      "known_pitfalls_avoided"
+    ]
+  }
+}

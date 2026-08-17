@@ -1,0 +1,28 @@
+{
+  "case_id": "case_003",
+  "description": "Crossref/PubMed 文献检索参数陷阱（正常路径带参数陷阱）",
+  "input": {
+    "medical_domain": "breast cancer diagnosis"
+  },
+  "strategy": {
+    "crossref_param": "query",
+    "crossref_encoding": "quote_plus()",
+    "pubmed_encoding": "plus_for_spaces",
+    "avoid": ["search= param", "standard URL encoding for PubMed spaces"]
+  },
+  "expected": {
+    "status": "accessible",
+    "dataset_results": [
+      {
+        "name": "breast cancer diagnosis literature/data",
+        "source": "Crossref",
+        "url": "https://api.crossref.org/works?query={quote_plus(term)}",
+        "NumberOfInstances": null,
+        "NumberOfFeatures": null,
+        "access_type": "open",
+        "relevance": "high"
+      }
+    ]
+  },
+  "weight": "high"
+}

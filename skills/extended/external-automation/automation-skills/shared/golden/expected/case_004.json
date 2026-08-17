@@ -1,0 +1,26 @@
+{
+  "case_id": "case_004",
+  "expected_output": {
+    "status": "rejected",
+    "error": {
+      "type": "UNSAFE_INPUT_REJECTED",
+      "context": {
+        "violation": "RULES-4 安全约束：不执行未验证的任意代码，不暴露内部状态",
+        "source": "untrusted_external_input",
+        "code_verified": false
+      },
+      "recovery": [
+        "提供经过验证、白名单内的操作（references 子技能仅处理只读参考资源）",
+        "如需执行代码，须在上层编排者完成代码验证后单独调度，而非经本共享资源父级"
+      ]
+    },
+    "executed": false,
+    "internal_state_exposed": false
+  },
+  "verification": [
+    "status == 'rejected'（未验证任意代码执行被拒绝/隔离，SHAR-004/RULES-4）",
+    "executed == False（未执行 rm -rf 或 cat /etc/passwd）",
+    "internal_state_exposed == False（响应不泄露内部状态/路径/凭据）",
+    "error.recovery 指明合规替代路径（仅只读参考资源 / 上层验证后单独调度）"
+  ]
+}

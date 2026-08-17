@@ -1,0 +1,29 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "route": "songsee track.mp3 --start 12.5 --duration 8 -o slice.jpg --format jpg",
+    "preflight": {
+      "audio_file_exists": true,
+      "slice_within_audio": true,
+      "slice_end_seconds": 20.5,
+      "audio_duration_seconds": 30.0
+    },
+    "result": {
+      "status": "success",
+      "output_file": "slice.jpg",
+      "output_format": "jpg",
+      "covered_interval_seconds": [12.5, 20.5],
+      "file_exists": true,
+      "file_nonzero_bytes": true
+    },
+    "note": "时间切片局部分析（SONG-002 / 例 3）：越界判据 start+duration <= 音频实际时长"
+  },
+  "verification": [
+    "preflight 先于执行：start + duration == 12.5 + 8.0 == 20.5 <= 30.0（音频时长），slice_within_audio == True（验证清单第 4 项）",
+    "若越界（start+duration > 时长）必须拒绝并报告越界上下文，本例不越界故继续",
+    "输出 slice.jpg 存在且非零字节（验证清单第 5 项）",
+    "输出扩展名 .jpg 与 --format jpg 一致",
+    "输出图像仅覆盖 12.5s–20.5s 时间段（例 3 验证：切片未越界）",
+    "crashed == False"
+  ]
+}

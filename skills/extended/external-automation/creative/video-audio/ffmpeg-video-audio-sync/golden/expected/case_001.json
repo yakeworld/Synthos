@@ -1,0 +1,87 @@
+{
+  "case_id": "case_001",
+  "diagnosis": {
+    "ffprobe_first": true,
+    "traps_identified": [
+      {
+        "id": "source_preset_too_fast",
+        "gene": "FFMP-004",
+        "evidence": "全部 3 段源 MP4 encode_preset == 'ultrafast'",
+        "risk": "MP4→TS -c copy 转换时静默丢 ~25% 数据（43.8MB→32.9MB 案例）"
+      },
+      {
+        "id": "concat_requires_ts_path",
+        "gene": "FFMP-003 / FFMP-005",
+        "evidence": "全部 3 段 start_time == 0.0",
+        "risk": "直接 -f concat -c copy 因 PTS 全 0 冲突静默丢段，输出时长短于预期且无报错"
+      },
+      {
+        "id": "video_shorter_than_audio",
+        "gene": "FFMP-006",
+        "evidence": "视频总时长 3×38.77=116.31s < 音频 128.0s",
+        "risk": "-shortest 会把音频截断到 116.31s，旁白尾部丢失"
+      },
+      {
+        "id": "non_standard_audio_format",
+        "gene": "FFMP-002",
+        "evidence": "音频 sample_rate=48000, channels=1（非 44100/stereo）",
+        "risk": "采样率不一致导致漂移或报错"
+      }
+    ]
+  },
+  "fix_plan": {
+    "stages_in_order": [
+      {
+        "stage": 1,
+        "name": "reencode_sources_with_preset_medium",
+        "command_template": "ffmpeg -y -i {src}.mp4 -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p fixed_{src}.mp4",
+        "key_params": ["-preset medium", "-crf 18"],
+        "note": "源分段必须重编码为 preset >= medium, 禁止直接对 ultrafast 源做 TS 转换（FFMP-004）"
+      },
+      {
+        "stage": 2,
+        "name": "convert_to_ts",
+        "command_template": "ffmpeg -y -i fixed_{src}.mp4 -c copy -f mpegts tmp_{src}.ts",
+        "key_params": ["-c copy", "-f mpegts"]
+      },
+      {
+        "stage": 3,
+        "name": "binary_concat_ts",
+        "command_template": "cat tmp_scene_01.ts tmp_scene_02.ts tmp_scene_03.ts > all_concatenated.ts",
+        "key_params": ["binary cat of .ts files"],
+        "forbidden_alternative": "-f concat -c copy on MP4 with all start_time=0 (FFMP-005: 静默丢段)"
+      },
+      {
+        "stage": 4,
+        "name": "remux_to_mp4",
+        "command_template": "ffmpeg -y -i all_concatenated.ts -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p concat.mp4",
+        "key_params": ["-c:v libx264", "-preset medium"]
+      },
+      {
+        "stage": 5,
+        "name": "normalize_audio",
+        "command_template": "ffmpeg -i narration_48k_mono.mp3 -vn -c:a aac -b:a 192k -ar 44100 -ac 2 clean_narration.aac",
+        "key_params": ["-c:a aac", "-ar 44100", "-ac 2", "-b:a 192k"],
+        "note": "标准输出: AAC 44100Hz 立体声 192kbps（FFMP-002）"
+      },
+      {
+        "stage": 6,
+        "name": "loop_video_and_mux",
+        "command_template": "ffmpeg -y -stream_loop -1 -i concat.mp4 -i clean_narration.aac -c:v copy -c:a aac -b:a 192k -ar 44100 -ac 2 -shortest out.mp4",
+        "key_params": ["-stream_loop -1", "-shortest"],
+        "note": "视频 116.31s < 音频 128s → 循环视频匹配旁白时长（FFMP-006）; -shortest 此处安全因为视频已 loop"
+      }
+    ]
+  },
+  "final_verification": {
+    "ffprobe_video_duration": "ffprobe -v error -select_streams v:0 -show_entries stream=duration -of default=noprint_wrappers=1:nokey=1 out.mp4",
+    "ffprobe_audio_duration": "ffprobe -v error -select_streams a:0 -show_entries stream=duration -of default=noprint_wrappers=1:nokey=1 out.mp4",
+    "tolerance_s": 0.2,
+    "expected_video_duration": 128.0,
+    "expected_audio_duration": 128.0,
+    "max_allowed_diff_s": 0.2,
+    "nb_frames_check": "concat.mp4 的 nb_frames 总和 == 1163×3=3489（排除静默丢段）",
+    "gene": "FFMP-007"
+  },
+  "synced_output": "out.mp4"
+}

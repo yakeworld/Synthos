@@ -1,0 +1,25 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：非交互式创建带标题笔记（跨设备同步需求）",
+  "input": {
+    "note_action": "create",
+    "content": "在 Apple Notes 里创建笔记「组会材料」：明天 10:00 实验室组会，带打印版综述",
+    "context": {
+      "platform": "macOS",
+      "memo_installed": true,
+      "automation_permission_granted": true,
+      "note_title": "组会材料",
+      "note_body": "明天 10:00 实验室组会，带打印版综述",
+      "requires_sync": true
+    }
+  },
+  "expected": {
+    "command": "memo notes -a \"组会材料\"",
+    "interactive": false,
+    "note_result": {
+      "status": "created",
+      "note_title": "组会材料"
+    }
+  },
+  "weight": "critical"
+}

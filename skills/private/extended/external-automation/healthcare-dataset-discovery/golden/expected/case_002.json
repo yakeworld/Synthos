@@ -1,0 +1,20 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "status": "unavailable",
+    "dataset_results": [
+      {
+        "name": "healthcare-dataset-stroke-data",
+        "access_type": "unavailable",
+        "evidence": ["UCI 404", "GitHub mirrors dead", "HuggingFace 404", "Kaggle auth required"]
+      }
+    ],
+    "recommendation": "Redirect to OpenML equivalent source"
+  },
+  "verification": [
+    "标记 UNAVAILABLE，每条结论有具体 404/认证失败证据",
+    "无凭空的'存在'声明（P0 证据可溯性）",
+    "建议转 OpenML 替代源",
+    "不将死链数据集标记为 accessible"
+  ]
+}

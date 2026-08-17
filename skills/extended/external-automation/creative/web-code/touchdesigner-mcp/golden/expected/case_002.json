@@ -1,0 +1,19 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "signal_chain_summary": "AudioFileIn(sequential) → AudioSpectrum(FFT=512, outmenu=setmanually, outlength=256, timeslice=ON) → Math(gain=10) → CHOPtoTOP(r, rowscropped) → GLSL TOP input1；ConstantTOP(rgba32float 1x1) → GLSL TOP input0；GLSL → Null → MovieFileOut(prores)",
+    "note": "配方为 SKILL.md 已验证 April 2026 的正确信号链；4 条 critical 规则：timeslice ON、outlength 手动 256、禁 Lag/Filter、CHOPtoTOP r+rowscropped；y=0.25 采样首声道（256x2 立体声纹理）；Math gain=10（非 5，bass 原始值 ~0.19）；录制前 pre-check（FPS>0 + 非黑截图）对应 VERIFICATION #5；prores 编码对应 TOUC-007"
+  },
+  "verification": [
+    "signal_chain 含 audiofileinCHOP 且 playmode=='sequential'",
+    "signal_chain 含 audiospectrumCHOP 且 fftsize==512、outputmenu=='setmanually'、outlength==256、timeslice==true（4 参数缺一不可）",
+    "signal_chain 含 mathCHOP 且 gain==10（非 5）",
+    "signal_chain 含 choptotopCHOP 且 dataformat=='r'、layout=='rowscropped'",
+    "signal_chain 未出现 lagCHOP 或 filterCHOP（Critical rule #3/#4）",
+    "signal_chain 含 constantTOP 且 format=='rgba32float'（8-bit 会 clamp 冻结 shader）",
+    "recorder 的 videocodec=='prores'（非 H.264/H.265/AV1，TOUC-007 非商业版）",
+    "pre_checks 含 td_get_perf(FPS>0) 且执行于 record=True 之前",
+    "pre_checks 含 td_get_screenshot 确认非全黑且执行于 record=True 之前",
+    "recording_order：rec.par.file 设置调用早于 rec.par.record=True 调用（分两次调用，避免 race）"
+  ]
+}

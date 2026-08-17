@@ -1,0 +1,19 @@
+{
+  "case_id": "case_002",
+  "description": "pyfiglet 未安装，降级到 asciified REST API（错误路径）",
+  "input": {
+    "description": "生成 'Hello World' 的 ASCII 横幅（Slant 字体）",
+    "dimensions": [80, 15],
+    "environment": { "pyfiglet_installed": false, "curl_available": true }
+  },
+  "expected": {
+    "fallback_tool": "asciified_api",
+    "url_contains": [
+      "https://asciified.thelicato.io/api/v2/ascii",
+      "text=Hello+World",
+      "font=Slant"
+    ],
+    "user_notified_of_fallback": true
+  },
+  "weight": "critical"
+}

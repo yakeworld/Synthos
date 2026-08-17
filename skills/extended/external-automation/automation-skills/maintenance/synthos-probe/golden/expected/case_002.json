@@ -1,0 +1,29 @@
+{
+  "case_id": "case_002",
+  "expected_error": {
+    "raised": false,
+    "atom": {
+      "name": "research-ideation",
+      "path": "skills/research-ideation/SKILL.md",
+      "exists": false,
+      "has_version": false,
+      "has_signature": false,
+      "has_io_contract": false
+    },
+    "error_message_contains_context": true,
+    "error_message_contains_recovery_suggestion": true,
+    "message_keywords": [
+      "skills/research-ideation/SKILL.md",
+      "not found",
+      "os.path.exists",
+      "skills/research/"
+    ],
+    "message_example": "PROBE ERROR: atom 'research-ideation' SKILL.md not found at 'skills/research-ideation/SKILL.md' (path_trap). Recovery: confirm actual hierarchical path with os.path.exists() (known location: skills/research/research-ideation/SKILL.md); the atom may not yet exist in this repository — record 0/3 and do not carry over previous-cycle results."
+  },
+  "invariants": [
+    "不抛出未捕获异常（以结构化错误返回）",
+    "不静默跳过缺失原子",
+    "不把文件缺失误报为结构完整（防 cycle68 乐观偏差）",
+    "错误信息必须包含上下文（检查的路径）与恢复建议（RULES 异常约束）"
+  ]
+}

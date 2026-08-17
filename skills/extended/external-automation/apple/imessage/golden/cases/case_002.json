@@ -1,0 +1,30 @@
+{
+  "case_id": "case_002",
+  "description": "正常路径：发送带附件的 iMessage（附件路径已验证存在）",
+  "input": {
+    "recipient": "+14155551212",
+    "message": "Check this out",
+    "context": {
+      "attachment": "/path/to/image.jpg",
+      "attachment_exists": true,
+      "service": "imessage",
+      "user_confirmed_recipient": true,
+      "user_confirmed_content": true,
+      "located_chat_id": 7
+    }
+  },
+  "expected": {
+    "pre_send_check": "test -f /path/to/image.jpg",
+    "confirmed": true,
+    "command": "imsg send --to \"+14155551212\" --text \"Check this out\" --file /path/to/image.jpg --service imessage",
+    "sent_status": {
+      "ok": true,
+      "recipient": "+14155551212",
+      "service": "imessage",
+      "chat_id": 7,
+      "attachment": "/path/to/image.jpg",
+      "error": null
+    }
+  },
+  "weight": "high"
+}

@@ -1,0 +1,73 @@
+{
+  "case_id": "case_001",
+  "status": "pass",
+  "structure": "ABABCB",
+  "sections": ["Verse 1", "Chorus", "Verse 2", "Chorus", "Bridge", "Chorus"],
+  "style_field": {
+    "formula_elements_present": ["genre", "mood", "era", "instruments", "vocal_style", "production"],
+    "has_dynamic_arc": true,
+    "dynamic_arc_example": "begins as a sparse piano whisper, layers muted strings, builds to full orchestra at the chorus, strips back to a lone piano fade at the outro",
+    "has_artist_name": false,
+    "has_trademark": false,
+    "bpm_key_optional": true
+  },
+  "lyrics": {
+    "is_custom_mode": true,
+    "structural_tags_present": ["[Verse]", "[Chorus]", "[Bridge]"],
+    "metatags": {
+      "per_section_counts": {
+        "intro": 6,
+        "verse_1": 6,
+        "chorus": 7,
+        "bridge": 5
+      },
+      "counts_within_5_8": true,
+      "contradictions": []
+    },
+    "metatags_doubled_in_style": true,
+    "phonetic_treatment": {
+      "numbers_spelled_out": true,
+      "acronyms_spaced": true,
+      "proper_nouns_tested_in_30s_clip": true
+    }
+  },
+  "qa_checks": [
+    {
+      "id": "structure_match",
+      "rule": "结构必须为 ABABCB（6 段）",
+      "critical": true,
+      "expected_pass_condition": "sections 长度=6 且顺序匹配"
+    },
+    {
+      "id": "style_no_artist_name",
+      "rule": "Style 字段无艺术家名或商标",
+      "critical": true,
+      "expected_pass_condition": "has_artist_name=false 且 has_trademark=false"
+    },
+    {
+      "id": "style_formula",
+      "rule": "Style 遵循流派+情绪+时代+乐器+人声+制作公式且含动态旅程",
+      "critical": false,
+      "expected_pass_condition": "formula_elements_present 全齐且 has_dynamic_arc=true"
+    },
+    {
+      "id": "metatags_discipline",
+      "rule": "每节 5-8 个不冲突元标签",
+      "critical": false,
+      "expected_pass_condition": "counts_within_5_8=true 且 contradictions=[]"
+    },
+    {
+      "id": "double_reinforcement",
+      "rule": "关键标签在 Style 与 Lyrics 双处出现",
+      "critical": false,
+      "expected_pass_condition": "metatags_doubled_in_style=true"
+    },
+    {
+      "id": "variation_takes",
+      "rule": "生成 ≥3 变体择优，Extend 时重申 genre/mood",
+      "critical": false,
+      "expected_pass_condition": "生成计划中 takes>=3 且 extend_restates_genre_mood=true"
+    }
+  ],
+  "references_used": ["SKILL.md §6 Suno AI Prompt Engineering", "SKILL.md §7 Phonetic Tricks"]
+}

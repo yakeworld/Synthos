@@ -1,0 +1,44 @@
+{
+  "case_id": "case_003",
+  "description": "area + bbox 区域 POI 查询（正常路径）",
+  "input": {
+    "command": "area + bbox",
+    "query": "Downtown Seattle",
+    "category": "restaurant",
+    "limit": 30
+  },
+  "strategy": {
+    "step_1": "area 'Downtown Seattle' → get bounding box",
+    "step_2": "bbox S W N E restaurant --limit 30",
+    "data_source": "Nominatim + Overpass",
+    "rate_limit": "1 req/s"
+  },
+  "expected": {
+    "status": "success",
+    "geo_data": {
+      "area": {
+        "name": "Downtown Seattle",
+        "bbox": {
+          "south": 47.590,
+          "west": -122.355,
+          "north": 47.615,
+          "east": -122.325
+        },
+        "width_km": 2.8,
+        "height_km": 2.8,
+        "approx_area_km2": 7.8
+      },
+      "pois": [
+        {
+          "name": "Restaurant example 1",
+          "lat": 47.606,
+          "lon": -122.332,
+          "distance_m": null,
+          "maps_url": "https://maps.google.com/?q=47.606,-122.332",
+          "cuisine": "american"
+        }
+      ]
+    }
+  },
+  "weight": "high"
+}

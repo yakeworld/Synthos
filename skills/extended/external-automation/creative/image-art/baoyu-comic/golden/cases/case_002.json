@@ -1,0 +1,33 @@
+{
+  "case_id": "case_002",
+  "description": "错误路径 — 出图 URL 下载失败（第 6 页文件为空/缺失）",
+  "input": {
+    "user_request": "与 case_001 同参数生成漫画；第 6 页 image_generate 返回的 URL 下载后文件为空",
+    "context": {
+      "topic": "alan-turing-bio",
+      "preset": "ohmsha",
+      "pages": 10,
+      "output_root": "comic/",
+      "failing_page": 6,
+      "failure_mode": "curl download yields empty/missing file",
+      "url": "https://images.example/generated/06-page-midlife.png"
+    }
+  },
+  "expected_behavior": {
+    "should_succeed": false,
+    "critical_checks": [
+      "does_not_crash",
+      "failure_detected_empty_or_missing",
+      "retried_once"
+    ],
+    "high_checks": [
+      "report_includes_failed_page",
+      "report_includes_context_abs_path_and_url",
+      "recovery_advice_non_empty"
+    ],
+    "medium_checks": [
+      "backup_naming_convention_documented",
+      "other_pages_untouched"
+    ]
+  }
+}

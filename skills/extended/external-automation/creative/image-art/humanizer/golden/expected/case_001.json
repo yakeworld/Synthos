@@ -1,0 +1,44 @@
+{
+  "case_id": "case_001",
+  "expect": {
+    "status": "ok",
+    "detected_patterns_min": 6,
+    "detected_pattern_categories_min": 4,
+    "expected_pattern_ids": [
+      "L7_ai_vocabulary",
+      "L8_avoid_copula",
+      "L13_passive_no_subject",
+      "S14_em_dash",
+      "C5_vague_attribution",
+      "F23_filler_phrase",
+      "F25_generic_positive_conclusion"
+    ],
+    "evidence_rule": "每条 detected_pattern 的 evidence_substring 必须是 case 输入 text 的真实子串",
+    "forbidden_terms_in_final": [
+      "delve",
+      "serves as",
+      "Additionally",
+      "In order to",
+      "the future looks bright",
+      "industry experts say",
+      "underscores",
+      "pivotal"
+    ],
+    "preserved_facts": [
+      "34%",
+      "2025",
+      "code review",
+      "deployment automation"
+    ],
+    "personality_injection": {
+      "any_of": [
+        "sentence_length_ratio_gte_3",
+        "first_person_present",
+        "opinionated_statement_present"
+      ]
+    },
+    "voice_fallback_declared": true,
+    "output_sections": ["draft", "remaining_ai_traits", "final_text"],
+    "rationale": "HUMA-003 模式替换 + HUMA-001/002 去平滑与有魂 + R3 三段输出；无样本 → 声明回退默认自然声音"
+  }
+}

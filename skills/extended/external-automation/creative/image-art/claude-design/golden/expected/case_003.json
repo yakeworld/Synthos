@@ -1,0 +1,16 @@
+{
+  "case_id": "case_003",
+  "expect": {
+    "status": "error",
+    "error": {
+      "code": "MISSING_CONTEXT_HIGH_FIDELITY",
+      "message_contains_context": true,
+      "missing_context_named": ["brand_docs", "audience", "screenshots"],
+      "suggestion_non_empty": true,
+      "suggestion_mentions": ["提供品牌文档或截图", "允许澄清提问"]
+    },
+    "generic_layout_produced": false,
+    "artifact_created": null,
+    "rationale": "CLAU-005 + Pitfalls：高保真外部交付物无品牌上下文时，不得产出通用 SaaS 布局并称之为设计；allow_questions=false 使问题路径不可行 → 必须报错阻塞而非强行设计"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "case_id": "case_002",
+  "description": "正常路径：模糊搜索笔记",
+  "input": {
+    "note_action": "search",
+    "content": "搜索 Apple Notes 里和「文献综述」相关的笔记",
+    "context": {
+      "platform": "macOS",
+      "memo_installed": true,
+      "automation_permission_granted": true,
+      "query": "文献综述"
+    }
+  },
+  "expected": {
+    "command": "memo notes -s \"文献综述\"",
+    "interactive": false,
+    "note_result": {
+      "status": "ok",
+      "matches": [
+        "文献综述提纲"
+      ]
+    }
+  },
+  "weight": "high"
+}

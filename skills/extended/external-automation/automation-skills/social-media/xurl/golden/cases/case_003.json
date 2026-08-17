@@ -1,0 +1,30 @@
+{
+  "case_id": "case_003",
+  "description": "OAuth 后 403 / UsernameNotFound 修复（失败路径）",
+  "input": {
+    "task_desc": "OAuth flow succeeded but /2/users/me returns 403 UsernameNotFound",
+    "params": {
+      "symptom": "UsernameNotFound or 403 on /2/users/me after OAuth",
+      "app_name": "my-app"
+    }
+  },
+  "strategy": {
+    "diagnosis": "Token bound to default profile instead of named app, or /2/users/me call broken",
+    "fix": "User must re-run xurl auth oauth2 --app my-app YOUR_USERNAME outside agent session (XURL-004, XURL-006)",
+    "agent_action": "Do NOT execute auth commands; direct user to manual fix"
+  },
+  "expected": {
+    "status": "requires_user_action",
+    "result": {
+      "diagnosis": "403 on /2/users/me after OAuth — token not bound to named app",
+      "fix_steps": [
+        "User runs: xurl auth oauth2 --app my-app YOUR_USERNAME (outside agent session)",
+        "User runs: xurl auth default my-app",
+        "Verify: xurl auth status shows token bound to my-app"
+      ],
+      "agent_cannot_execute": true
+    },
+    "exit_code": 0
+  },
+  "weight": "high"
+}

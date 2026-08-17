@@ -1,0 +1,13 @@
+{
+  "case_id": "case_002",
+  "path": "normal",
+  "description": "时间线内容无关键词 → linear-progression 布局推断；自定义宽高比 3:4 映射到 portrait",
+  "input": {
+    "request": "把产品发布历程做成一张长图",
+    "source_content": "产品发布里程碑：\n2024-03 v0.1 内部测试（50 用户）\n2024-09 v1.0 公测（DAU 12,000）\n2025-01 v1.5 付费功能上线，转化率达 8.4%\n2025-06 v2.0 企业版发布，ARR 增长 3.1x",
+    "layout": null,
+    "style": null,
+    "aspect": "3:4",
+    "language": "zh"
+  }
+}
