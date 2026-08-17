@@ -6930,3 +6930,302 @@ PD-EEG 多库族 (第 42 档扩展, 2026-08-16 确立):
 3. G14 OpenEDS — 等用户凭证 (唯一 P0 阻塞)
 4. BALLADEER — 下载通道解决后启动 (监控中)
 5. 下次 PhysioNet 双周扫描 08-27
+
+
+---
+
+## 第 35 轮 (2026-08-17, 文献监控+数据集发现 cron): MSN-TCSeg 条件 P0.5 + 阅读眼动活体调查 + pymovements 工具链
+
+### 35.1 本轮扫描范围
+
+- 通道: PubMed esearch (5 查询面 / 21 天窗口, 38 唯一 PMID), PhysioNet 最新列表, Zenodo API (SN/TCS + eye tracking 双查询), GitHub repo search (TCS/SN 分割/OpenEDS/pymovements), Crossref DOI
+- 网络状态: PubMed/GitHub/PhysioNet/Zenodo 全部 200; **Kaggle 404 JS 壳 (Pitfall #49 延续)**; **figshare 403 (Cloudflare 拦 DC IP, 延续)**; **web_search 返回被污染结果** (MSN-TCSeg 查询命中 msn.com 新闻站, SearXNG 语义失效) — 本轮全部走 API 直连通道
+
+### 35.2 新发现数据集
+
+#### 1. MSN-TCSeg — 经颅超声 (TCS) 黑质高回声分割数据集+基准 (条件 P0.5) ⭐
+- **来源**: Comput Methods Programs Biomed 286:109605, 2026-08-10 (PMID 42600437, DOI 10.1016/j.cmpb.2026.109605)
+- **内容**: 700 TCS 图像像素级中脑标注 + 370 TCS 图像 SN+ (黑质高回声) 标注; 双盲双神经超声专家独立标注 + 第三专家标注 SN+ 子集生成概率软标签; 14 模型 × 6 分割范式, subject-level 5-fold CV 统一 region/boundary 指标
+- **临床意义**: SN+ 是 TCS 下 PD 早期诊断最可靠的影像生物标志物; 论文明确指出此前依赖小规模非公开数据集
+- **原作者分析**: 仅构建分割基准 + 14 模型对比 (中脑分割准确率高, SN+ 更具挑战性, 标注不确定性分析)
+- **数据可达性核查**: GitHub repo search (MSN-TCSeg / msn-tcseg / substantia nigra segmentation) 无官方仓库; Zenodo 无记录; PMC 无全文 (ScienceDirect 壳); **数据尚未在任何公开渠道上线** — 条件 P0.5: 待数据发布 (论文 ahead of print, 2026-08-10)
+- **Synthos 空白** (数据可用后):
+  - SN+ 面积/回声强度的定量形态学分析 — 与 3diris 形状分析方法论同源 (模式 A)
+  - SN+ 软标签 (3 标注者) → 标注不确定性感知的分割/回归 (利用概率标签, 原作者未做)
+  - 中脑-黑质空间关系: 中脑面积 vs SN+ 面积比 → PD 严重度关联 (模式 D 跨模态/结构)
+  - **核心创新**: TCS 影像 → 中脑/SN 几何参数化 → PD 生物标志物定量化 (从分类基准升级为形态学表征)
+- **匹配模式**: 模式A (形状分析) + 模式D (跨模态融合) + 模式E (方法迁移)
+- **产出潜力**: 高 — 若数据公开, TCS 3D/形态学分析近乎空白, 且与 3diris 帕金森生物标志物方向 (MobilityAPP/weargait 族) 形成影像-运动双模态叙事
+- **追踪项**: 季度复查 PubMed/GitHub/Zenodo 看数据发布 (2026-11 复查)
+
+#### 2. Eye-tracking-while-reading living survey — 阅读眼动数据集活体索引 (工具/索引信号, P1) ⭐
+- **来源**: Behav Res Methods 58(9):263, 2026-08-10 (PMID 42576128, DOI 10.3758/s13428-026-03126-6, PMC13457489)
+- **内容**: 非数据集本身, 而是**阅读眼动数据集的活体在线索引** (https://t.uzh.ch/1Yh, 55+ 特征/数据集, 跨学科); 将全部公开数据集集成进 **pymovements** Python 包数据集库
+- **Synthos 价值**: 数据集发现通道 — 未来眼动/阅读研究立项时, 先查此活体表即可枚举公开语料库 (含 FAIR 状态标注), 免去逐源搜索; 可作为第 36+ 轮扫描的标准通道之一
+- **匹配模式**: 工具/通道, 支持模式 A (阅读眼动 → 认知分析) 与模式 D (多数据集跨语料一致性)
+
+#### 3. GuttmannFlury2025 Eye-BCI — SSVEP 多模态 EEG 数据集 (P1)
+- **来源**: Zenodo 21905748, 2026-08-12, CC0; 从 Synapse syn64005218 re-host (EEG 转 BDF)
+- **内容**: 稳态视觉诱发电位 (SSVEP) 眼-脑接口多模态 EEG, 30+ 受试者 (S01-S31 zip, 单文件 0.4-1.5GB, 总计 ~30GB)
+- **Synthos 空白**: 原作者做 BCI 分类; 空白在 SSVEP 响应 × 眼动参数联合分析 (注视稳定性 × SSVEP 强度), 模式 D 跨模态
+- **可达性**: Zenodo 直下 (CC0) — 大文件下载需 zenodo_curl_dl.py 并行模式; 网络受限时同 BALLADEER 处置
+- **备注**: Eye-BCI 族可并入神经精神障碍眼动族 (第 34.3 轮 BALLADEER 同族)
+
+#### 4. FLS Peg Transfer 手术训练多模态数据集 (P1)
+- **来源**: Data Brief 67:113010, 2026 (PMID 42440453, DOI 10.1016/j.dib.2026.113010, PMC13333294)
+- **内容**: 19 大学生自我练习 FLS 腹腔镜 peg transfer; 85 sessions / 1971 trials; 每 trial 双侧腕 IMU + 工具柄 IMU + 眼动 + 训练箱视频同步; 附完成时间/掉落数注释
+- **可达性**: 机构仓库公开 (Data Brief 标准)
+- **Synthos 空白**: 技能习得曲线 × 眼动特征 (专家化过程: 注视分配随熟练度变化); 模式 A + 模式 D; 与 BALLADEER 眼动族方法同源 (扫视/注视特征提取管线复用)
+- **匹配模式**: 模式A (时间序列/技能) + 模式D (多模态)
+
+#### 5. 方法学信号 (无新数据, 背景引用)
+- **eyeris** (Psychophysiology 63:e70375, 2026-08, PMID 42590799): R 瞳孔测量预处理框架 (Stanford) — 瞳孔分析标准化工具信号
+- **VisionMD** (J Parkinsons Dis 16:929, 2026-08, PMID 42170718): 开源视频运动量化平台, 36 PD 纵向手指敲击视频分析 — PD 视频生物标志物方法学 (数据为 PPMI 视频, 非新数据集)
+- **MSN-TCSeg 同域**: GitHub 3177905269-jpg/Transcranial-Sonography-Based-Machine-Learning (2026-05, 无 license, 490KB): TCS 特征区分 PD vs 非典型帕金森综合征嵌套交叉验证 — 确认 TCS-PD 域活跃
+- **nmMRI-SN-ManSeg-framework** (2026-07): 7T MRI 黑质手动分割框架 — MRI 域, 与 TCS 互补
+
+### 35.3 负向确认 (第九轮)
+
+- **OpenEDS**: GitHub 官方仓库 404 (microsoft/OpenEDS 已不存在, 改名/私有化?) + PubMed 无新记录 (仅 34300511/36044495 旧文) — **维持季度检查, 2024 版仍最新**; G14 阻塞状态不变 (Meta 认证墙)
+- **BPPV/眩晕**: 连续第九轮零新公开数据集 (vertigo/nystagmus/vestibular 查询全为临床/方法学: 听神经瘤前庭回归 41970943、vHIT 扫视 42568415、RAO 痴呆 All of Us 42578165 等均无新数据) — 领域数据空白维持
+- **PhysioNet**: latest 10 项与上轮完全一致 (script-carpediem/mimic-br/bidmc-metabolomic-masld/minute-level-step-count/kingston-icu-af/BRSET/argo/insulin4rl/inspire/dreamt) — 双周维持, 下次 08-27
+- **Kaggle**: 无凭证 + 网页 JS 壳 (Pitfall #49 延续)
+- **figshare**: 403 延续 (Cloudflare 拦 DC IP) — 数据核查统一走 Zenodo API + GitHub repo search (免认证双通道)
+- **web_search**: 本轮出现污染 (查询词被无关站点劫持) — 关键路径全面切换到 API 直连
+
+### 35.4 本轮新增可扩展模式 (第 35 轮, 2026-08-17 确立)
+
+```
+可扩展模式 #47: 数据集"活体索引"论文 = 免扫描数据集发现通道
+触发条件: 某领域出现 "living survey / living overview / living table" 论文 (如阅读眼动 42576128)
+价值: 作者已枚举领域内全部公开数据集 + FAIR 状态 + 特征表 → 立项前先查活体表,
+      免去逐源 web/API 搜索 (一表顶十次扫描); 常伴工具包集成 (pymovements datasets 库)
+行动: 记录活体 URL + 关联工具包 → 纳入标准扫描通道清单 → 立项时首查
+
+可扩展模式 #48: 影像分割基准 → 形态学空白 (benchmark → shape)
+触发条件: 医学影像分割基准论文 (如 MSN-TCSeg) 只做 14 模型对比, 无几何/形态学分析
+价值: 基准数据 (像素级标注) 直接复用为形状分析输入 — 与 3diris 形状方法论同源,
+      零额外标注成本; 分类基准 → 形态学表征 是系统性空白 (第 35.2.1 核心创新)
+行动: 基准可达性核查 (GitHub/Zenodo 双查) → 若公开: 面积/形状/空间关系参数化 →
+      关联临床严重度 → 短文
+
+可扩展模式 #49: 数据发布追踪 — "条件 P0.5" 状态机
+触发条件: 论文 (ahead of print) 宣布数据集但尚无公开渠道 (GitHub/Zenodo 空)
+价值: 不因"数据未上线"丢弃高价值候选; 也不因"论文说公开"假设可下 (Pitfall 实测原则)
+行动: 记条件 P0.5 + 季度复查日期 (2026-11) → 复查命中即升 P0.5 正式立项
+```
+
+### 35.5 待办/方向
+
+1. **MSN-TCSeg**: 数据发布追踪 (2026-11 复查) — 若公开, 立即走 dataset-feasibility 立项 (TCS 形态学 → PD 生物标志物短文)
+2. **阅读眼动活体表**: 下一轮 (第 36 轮) 起纳入标准通道; 立项阅读/认知眼动项目时首查 t.uzh.ch/1Yh
+3. G14 OpenEDS 阻塞不变 (等用户凭证) — 维持季度检查
+4. BALLADEER 下载通道待解决 (网络/代理) — 维持
+5. MobilityAPP H02/H03 + 论文推进 (上轮待办, 无变化)
+6. 下次 PhysioNet 双周扫描 08-27
+
+## 第 36 轮 (2026-08-17 12:00, 文献监控+数据集发现 cron): Cuentos 西班牙语阅读眼动语料库 (P1) + EASE-TSD 日常活动多模态 (P1) — 净新增 2 数据集 + 2 工具信号 (查重后)
+
+### 36.1 本轮扫描范围
+
+- 通道: PubMed esearch (8 查询面 / 2026[dp], 384 唯一 PMID) + arXiv API (4 查询面 43 条目) + GitHub repo search (免认证) + Zenodo API (追踪项核验) + Nature Sci Data 页面核验 (figshare/OSF 直链提取)
+- 网络状态: PubMed 8/8 查询面成功 (无 api_key, Pitfall #58), arXiv 4/4 成功, GitHub 4/4 成功, Zenodo 2/2 成功, Nature 2/2 成功; Kaggle 无凭证延续跳过; figshare API 403 延续 (走文章页 grep fallback); web_search 未使用 (上轮污染延续, 关键路径全 API 直连)
+
+### 36.2 净新增数据集 (查重后 2 项)
+
+#### 1. Cuentos — 西班牙语叙事文本大规模阅读眼动语料库 (P1) ⭐
+- **来源**: Sci Data 13:437, 2026-02-12 (PMID 41680192, DOI 10.1038/s41597-026-06798-z)
+- **内容**: 西班牙语叙事文本自然阅读眼动语料库, 94 万+ fixations, 近 4 万词 (8.5K 唯一词); 母语西班牙语读者自然阅读
+- **数据可达性 (本轮全文核验)**: figshare 28311908 (https://doi.org/10.6084/m9.figshare.28311908) + GitHub NeuroLIAA/reading-et (代码 + requirements.txt, Python 3.10+, EDF2ASC 转换管线) — 双重公开确认
+- **原始分析**: 语料库描述 + 语言特异性认知过程 (西班牙语眼动模式), 提供 NLP/阅读研究算法开发基础
+- **未做**: (a) 跨语种眼动对比 (与 MECO 繁体 41794836 / Cuentos 西语 / 俄语儿童 42250537 构成多语阅读语料库族 — 语言特异性 vs 通用阅读机制); (b) 3D 凝视轨迹/扫视微结构动力学 (事件型数据 → 相空间重构, 模式 C); (c) pymovements 数据集库集成 (活体表家族成员); (d) 阅读障碍/认知筛查应用迁移 (与 BALLADEER/EMS 神经精神眼动族方法复用)
+- **Synthos 定位**: 模式 A (阅读眼动 → 认知分析) + 模式 C (动力学); 与第 35 轮阅读眼动活体表 (t.uzh.ch/1Yh) + pymovements 工具链直接衔接 — **活体表 → 具体数据集落地 首个实证**
+- **匹配模式**: 模式A + 模式C
+
+#### 2. EASE-TSD — Everyday Activity Science and Engineering Table Setting Dataset (P1)
+- **来源**: Sci Data 13:396, 2026-05-12 (PMID 42120431, DOI 10.1038/s41597-026-07077-7)
+- **内容**: 日常活动 (餐桌布置) 多模态数据集; 3 级标注 schema (phases/activities/motions/interacted objects) + think-aloud 协议标注 (TA codes); 半自动标注 + 生物信号处理 + ML 后处理管线
+- **数据可达性 (本轮全文核验)**: OSF rbyfk (https://osf.io/rbyfk, 78 受试者同意公开的数据, 按 session 分文件, 模态分离) + GitHub cognitive-systems-lab/easelan — 公开确认
+- **原始分析**: 数据集发布 + 标注 schema + 后处理管线
+- **未做**: (a) 眼动-手部动作-物体交互的时序耦合分析 (动作发起前注视预测 — 眼-手协调是日常活动核心, 原作者仅提供原始多模态); (b) 日常活动 vs 实验室范式的注视分配差异 (生态效度分析); (c) think-aloud 文本 × 眼动 × 动作三模态对齐 (语言-行为耦合)
+- **Synthos 定位**: 模式 D (跨模态动力学) — 日常活动多模态族新入口; 与 BBBD (视频观看) 互补为"真实世界行为"双数据集
+- **匹配模式**: 模式D
+
+### 36.3 工具信号 (净新增 2 项, 无独立数据)
+
+1. **PupEyes** (PMID 41491873, Behav Res Methods, DOI 10.3758/s13428-025-02830-z): Python 交互式瞳孔/眼动数据处理库; GitHub HanZhang-psych/pupeyes 核验存在 + readthedocs 教程 — 与 pymovements 互补的瞳孔分析工具信号 (第 35 轮 eyeris 同族), 列入工具链清单
+2. **VS 纵向体积追踪 WEB 平台** (PMID 42325604, Neurooncol Adv, DOI 10.1093/noajnl/vdag138): 前庭神经鞘瘤自动分割+纵向体积追踪开放平台, 分割分数与人工勾画间观察者变异相当 — VS 影像工具信号 (无独立数据集, 平台本身可用)
+
+### 36.4 方法学信号 (无公开数据, 论文背景引用)
+
+- **PPPD 纵向 qEEG** (42503621, J Vestib Res): PPPD 高 beta 活动追踪疾病状态 — 前庭/PPPD 电生理信号, 无数据
+- **FOG 皮质-丘脑底核步态周期锁定** (42571859, Neurobiol Dis): FOG 的步态周期锁定皮质-STN 签名, DBS 可调制 — PD 深部脑电信号
+- **单 IMU 姿势转换识别** (42577388, Front Bioeng): DTW 姿势转换识别, PD 患者 pilot — PD 可穿戴信号 (31% sit-stand / 19% stand-sit)
+- **HY1 PD 踝关节初始接触侧向缺陷** (42574844, Gait Posture): HY1 期 PD 患侧踝跖屈位初始接触 + 双侧步态异常 — 早期 PD 步态标志物信号
+- **7T MRI QSM 黑质** (42573812, Neuroradiology): 7T QSM 黑质定性分级+定量聚焦测量, PD 患者更高 — PD 影像信号 (与 MSN-TCSeg TCS 影像互补)
+- **下直肌实时 MRI** (42029431, Craniomaxillofac Trauma Reconstr): 正常受试者垂直注视全程下直肌实时 MRI 形态基线 — 眼眶运动 3D 成像信号 (计划用作创伤性复视对比基线)
+- **智能手机凝视精神评估** (42086860, NPJ Ment Health Res): Android 自由观看任务抑郁症状分类 AUC 75.54% — 智能手机眼动筛查信号 (与 42086860 平板族同向)
+- **VR 眼动 MRD1/MRD2 眼睑下垂** (41981030, Sci Rep): AI + VR 眼动客观测量眼睑下垂, 匹配临床精度 — 临床眼科工具信号
+- **斜视 AI 眼动诊断** (41897643, Diagnostics): 眼动 + ML 斜视诊断 — 信号
+- **前庭性偏头痛多模态特征** (42246042, Front Neurol): 眼动+前庭+反应时+认知签名 — VM 信号 (无数据, 与第 21 轮 VM 瞳孔信号 42548108 同域)
+- **自闭症检测数据集综述** (42601827, Int J Dev Neurosci): ASD 检测 ML 算法+数据集全面综述 — 综述信号 (提示 BIDS 标准化需求)
+- **眼部成像抑郁检测** (40880330, IEEE JBHI): 眼动图像 + 多尺度时频注意力网络, 自采数据集 ACC 76.8% — 眼动影像抑郁信号 (自采未公开)
+- **多语阅读眼动** (42250537, J Exp Child Psychol): 俄语儿童阅读扫视目标定位受阅读熟练度驱动非成熟度 — 与 Cuentos 同族的跨语种信号
+- **驾驶扫描路径+风险感知联合建模** (42346319, J Eye Mov Res): 扫视路径与交通风险感知统一框架 — 驾驶眼动方法信号
+- **自动立体 3D 双眼视觉** (42194635, J Clin Med): 自动立体 3D 系统双眼视功能验证 — 3D 视觉信号
+- **物体基注视分类 D/I/R** (41948073, Open Mind): 复杂场景注视的物体基分类度量 (Detection/Inspection/Return) + 开源代码 — 注视分析方法信号
+
+### 36.5 负向确认 (第十轮)
+
+- **OpenEDS**: 无新版本 (维持季度检查, G14 阻塞不变)
+- **BPPV/眩晕**: 连续第十轮零新公开数据集 (本轮 vestibular 查询 161 条全为临床/方法学: PPPD qEEG 42503621、VM 眼动 42246042、VS 平台 42325604 等均无新数据) — 领域数据空白维持
+- **PhysioNet**: 双周检查维持 (下次 08-27, 上轮 latest 10 项无变化)
+- **Kaggle**: 无凭证延续跳过 (reCAPTCHA)
+- **MSN-TCSeg 追踪**: Zenodo 18376539 复查 **files=0 仍为占位** (标题已确认 "MSN-TCSeg: A Transcranial Sonography Dataset for Midbrain and Substantia Nigra Hyperechoge...") — 条件 P0.5 维持, 2026-11 复查不变
+- **Eye-BCI 补核验**: Zenodo 21905748 确认 31 文件 27.2GB (S13 1434MB/S25 843MB/S18 1291MB) — 第 35 轮 P1 数据实际可下 (网络受限时同 BALLADEER 处置)
+- **figshare API**: 403 延续 — 数据链接核验走 Nature 文章页 grep (本轮 Cuentos figshare 28311908 + EASE-TSD OSF rbyfk 均经文章页核验成功)
+
+### 36.6 本轮新增可扩展模式 (第 50-51 档扩展, 2026-08-17 确立)
+
+```
+可扩展模式 #50: 阅读眼动多语语料库族 — 跨语种阅读机制对比
+触发条件: 同任务域多语种阅读眼动语料库并存 (Cuentos 西语 41680192 + MECO 繁体 41794836
+      + 俄语儿童 42250537 + 活体表 55+ 数据集 t.uzh.ch/1Yh)
+价值: 单一语种阅读分析已饱和, 跨语种对比 (语言特异性 vs 通用阅读机制) 是系统性空白;
+      全部数据公开零摩擦; pymovements 库统一加载 → 分析管线一次编写多语复用
+行动: 立项阅读/认知项目时首查活体表 → 选 2+ 语种语料库 → 跨语种扫视/注视特征对比短文
+
+可扩展模式 #51: 活体表 → 具体数据集落地 (living-survey → dataset landing)
+触发条件: 已有活体索引 (第 35 轮 #47 收录 t.uzh.ch/1Yh), 且活体表中数据集有 Sci Data 论文
+价值: 第 36 轮实证 — 从活体表族发现 Cuentos → Nature 文章页核验 figshare/GitHub 双公开 → 24h 内入库
+      (传统逐源搜索需 3-4 通道交叉); 活体表通道从"发现辅助"升级为"直接落地"
+行动: 每次扫描先查活体表家族 → 识别 Sci Data/Data Brief 论文 → 文章页 DA 段落提取直链 →
+      核验 → 入库; 将活体表列入标准通道首位 (替代泛化搜索)
+```
+
+### 36.7 待办/方向
+
+1. **阅读眼动多语族 (模式 #50)**: 下一轮评估 Cuentos + MECO 跨语种对比短文可行性 — 数据全公开, pymovements 支持, 低风险短文通道
+2. **EASE-TSD**: OSF rbyfk 下载可行性评估 (78 受试者多模态, 网络受限时同 BALLADEER 处置); 眼-手协调时序耦合分析立项候选
+3. **MSN-TCSeg**: 数据发布追踪不变 (2026-11 复查 Zenodo 18376539 files 非空即升 P0.5)
+4. **PupEyes**: 工具链清单补录 (与 pymovements/eyeris 并列)
+5. G14 OpenEDS 阻塞不变 (等用户凭证)
+6. BALLADEER 下载通道待解决 (网络/代理)
+7. MobilityAPP H02/H03 + 论文推进 (无变化)
+8. 下次 PhysioNet 双周扫描 08-27
+
+---
+
+## 第 37 轮 (2026-08-17 18:21, 文献监控+数据集发现 cron): ImmerIris 离轴虹膜数据集 (条件 P0.5, CVPR 2026 Oral ⭐) — 净新增 6 数据集 + 1 方法信号 (查重后)
+
+### 37.1 本轮扫描范围
+
+- 通道: PubMed esearch (12 查询面 / 2026[dp], 381 唯一 PMID 汇总) + arXiv API (4 查询面) + GitHub repo search (免认证, 8 仓库核验) + PhysioNet News 页面 + Zenodo API (追踪项核验)
+- 网络状态: PubMed 12/12 查询面成功 (无 api_key, Pitfall #58); arXiv 4/4 成功; GitHub 8/8 成功; PhysioNet News 成功 (无新数据集); **Zenodo API 本轮 403 (Cloudflare 拦截 — 上轮 2/2 成功, 网络条件变化, 后续走 GitHub 双通道替代)**; Kaggle 无凭证延续跳过; web_search 未使用 (污染延续, 关键路径全 API 直连)
+- 查重: 全部候选与历史轮次 grep 交叉比对 (BBBD/GazeVaLM/42502107/DriE-Cog/EmoRoad/SONIVA/PD 转身视频 均已收录, 排除)
+
+### 37.2 净新增数据集 (查重后 6 项)
+
+#### 1. ImmerIris — 离轴/无约束虹膜识别大规模数据集 (条件 P0.5) ⭐⭐⭐
+- **来源**: CVPR 2026 (Oral + Award Candidate), arXiv 2510.10113 (2025-10-11, v3); GitHub NiborPolaris/ImmerIris (⭐30)
+- **内容**: **499,791 张眼图 / 546 受试者**, 消费级 VR 头显侧置近红外相机采集 (复旦 + 多校合作); 离轴无约束场景; **显式 9 注视方向 × 11 亮度等级受控变化**; ~42% 图像至少一个质量维度退化 (眼睑/睫毛遮挡、**瞳孔扩张**、极端离轴、镜面反射、运动模糊); 8 个评估协议 (隔离/组合挑战因素); NormFree 免归一化识别范式
+- **数据可达性 (本轮核验)**: **受控访问** — 学术用途, 邮件申请 (yxmi20@fudan.edu.cn), 逐案审查 (虹膜为敏感生物数据, 社区惯例); **Benchmark 协议 Google Drive 公开** (drive.google.com/file/d/1j8oTcBEyCh4KMu3-Gn5gbxvG_fI6jdOP); GitHub 仓库 = 官方主页 + 代码 + 协议文件
+- **原作者分析**: 识别基准 — 8 协议系统验证现有 SOTA 识别方法在离轴/无约束下性能退化 (归一化阶段失效); NormFree 免归一化范式取得 SOTA
+- **Synthos 空白** (与 3diris 集群直接衔接):
+  - **9 注视方向标签 → 虹膜表观×注视方向的 3D 姿态映射** — 3diris Sim2Real 转折 ("恢复虹膜 3D 姿态而非 3D 结构") 的直接数据支撑; 离轴透视畸变 = 眼-相机几何, 可用 3D 参数化模型拟合
+  - **11 亮度等级 → 光照-瞳孔-虹膜形态耦合** — H03 (瞳孔扩张虹膜变平, r=-0.618) 的可控光照验证集; 光照是瞳孔唯一受控变量 → 瞳孔光反射 (PPR) 动力学的大规模数据
+  - **"瞳孔扩张/极端离轴" 标注为质量退化 → 反向利用为形态学特征** (见模式 #53) — benchmark 的负样本 = 形态/姿态分析的标签金矿
+  - NormFree 免归一化 ↔ 3diris 关键洞察 (Daugman rubber sheet 平面假设失效) 互证 — 方法叙事可交叉引用
+- **匹配模式**: 模式A (形状/姿态分析) + 模式C (生物物理关联) + 模式E (方法迁移)
+- **产出潜力**: **极高** — 虹膜域近两年最相关大规模数据 (超越 OpenEDS 的 2024 版); 但受控访问需申请 → **条件 P0.5** (模式 #52 状态机)
+- **追踪项**: 立即邮件申请 (学术身份) + 2026-11 复查访问流程; 若获批 → dataset-feasibility 立项 (虹膜 3D 姿态 × 注视方向短文)
+
+#### 2. GazeXPErT — 核医学专家眼动数据集 (P1)
+- **来源**: arXiv 2603.00162 (2026-02-26); GitHub danmarbeck/GazeXPErT; 数据 Stanford Redivis 460a-2j4r7trxr
+- **内容**: 4D 眼动数据集, 346 例 FDG-PET/CT 扫描的肿瘤检出与测量过程; 每例由 trainee + 认证核医学专家双读; 图像数据公开 (Tübingen FDG-PET-CT-Lesions nifti, fdat.uni-tuebingen.de/records/wf9fy-txq84); COCO 风格 JSON 三级标注 (volume/lesion 级)
+- **原作者分析**: XAI 基准 — 专家搜索模式 vs AI 可解释性对齐
+- **Synthos 空白**: 专家 vs trainee 注视搜索模式差异的动力学分析 (扫视路径、驻留分布、双读一致性) — 与 BALLADEER/EMS 神经精神眼动族方法同源; 医学影像专家眼动 = 决策过程可视化 (模式 D)
+- **匹配模式**: 模式A (眼动动力学) + 模式D (跨模态)
+- **产出潜力**: 中 — 数据全公开零摩擦, 但医学影像域需 PET/CT 读片领域知识
+
+#### 3. Multi-TPC — 三方对话多模态数据集 (P1)
+- **来源**: Sci Data 13(1):429, 2026-02-12 (PMID 41673008, DOI 10.1038/s41597-026-06819-x); GitHub MCMartinLee/Multi-TPC
+- **内容**: 三方对话语音+动作+注视同步多模态; 休斯顿大学; 手势-音频/文本/说话人身份相关性统计
+- **原作者分析**: 数据集发布 + 会话手势生成基础 + 模态间相关性统计
+- **Synthos 空白**: 多方对话注视分配动力学 (谁在看谁 × 话语权轮转); 3D 注视目标定位 (对话空间坐标系) — 模式 D 跨模态; 与 EASE-TSD (日常活动) 互补为"社交-日常行为"双数据集
+- **匹配模式**: 模式D
+- **产出潜力**: 中低 — 社交注视域与现有集群关联弱, 但数据公开
+
+#### 4. HeyJay! — 神经退行性疾病非典型语音语料库 (P1) ⭐
+- **来源**: Sci Data 2026-06-03 (PMID 42236740, DOI 10.1038/s41597-026-07497-5); GitHub Neuro-Logical/HeyJay; JHU + Amazon
+- **内容**: **8,669 条话语录音, 神经退行性疾病 (含帕金森病、ALS) 非典型英语语音** + 监督转写 + 意图标注; 用于 SLU/ASR/数据增强
+- **原作者分析**: ASR + SLU + 数据增强有效性验证
+- **Synthos 空白**: PD 语音声学生物标志物 (韵律/构音障碍特征 × 疾病严重度) — 与 NeuroVoz/Bridge2AI-Voice 语音族直接衔接; 意图标注 × 声学特征 (认知-语言耦合); 语音域模式 B 复用
+- **匹配模式**: 模式B (信号分析) + 模式D (跨模态)
+- **产出潜力**: 中 — PD 语音家族新成员, 有 Amazon 背书; 与 NeuroVoz 形成 PD 语音双数据集叙事
+
+#### 5. MEG-EEG 意识视觉感知多中心开放数据集 (P1)
+- **来源**: Sci Data 13(1):799, 2026-05-29 (PMID 42215489, DOI 10.1038/s41597-026-07350-9)
+- **内容**: 开放多中心 (北京/伯明翰/牛津/特拉维夫等) MEG-EEG 同步数据, 意识视觉感知范式 (视觉意识/无意识加工)
+- **原作者分析**: 数据集发布 + 意识视觉感知神经关联
+- **Synthos 空白**: 视觉意识 × 瞳孔/眼动参数联合 (感知状态的电生理-眼部耦合); MEG 时间序列动力学 (模式 B) — 与 BBBD 视觉注意族互补
+- **匹配模式**: 模式B + 模式D
+- **产出潜力**: 中低 — 与核心域关联一般, 但多中心开放标准高
+
+#### 6. L2 习语加工眼动数据集 (P1, 可达性待核验)
+- **来源**: arXiv 2605.04857 (2026-05-06); 葡萄牙 L1 英语 L2 学习者, 全 CEFR 等级 (A1-C2), 60Hz Tobii Pro Spark
+- **内容**: 二语习语加工认知负荷眼动数据 (literal-first 策略的认知代价)
+- **原作者分析**: 验证 60Hz 硬件对习语加工指标的充分性
+- **Synthos 空白**: 跨语种认知负荷眼动对比 (与 Cuentos 西语/俄语儿童族合并 → 语言加工通用机制); 认知负荷 × 瞳孔直径联合 (模式 C)
+- **可达性**: arXiv 页面无公开直链 — 待查 OSF/机构仓库; 匹配模式: 模式A + 模式C
+- **产出潜力**: 中低 — 阅读眼动族扩充候选; 与活体表 (t.uzh.ch/1Yh) 交叉索引
+
+### 37.3 方法学信号 (无公开数据)
+
+- **Longitudinal Vestibular Schwannoma Dataset** (arXiv 2511.00472, 2025-11-01): 多中心纵向 VS MRI 分割数据集 + 专家共识人机协同标注; 数据链接未公开 (arXiv 页面无 GitHub/Zenodo/OSF 直链) — 若发布, 与第 36 轮 VS 平台信号 (42325604) 构成前庭影像双信号; 维持观察
+- **ImmerIris 同域**: 数据集受控访问惯例确认 (虹膜生物数据 → 逐案审查) — 影响 OpenEDS G14 阻塞评估 (Meta 认证墙同理, 属社区惯例而非异常)
+- **DBS 慢性记录 PD 运动状态** (42376478, Front Bioinform): 植入式自适应 DBS 真实世界慢性记录 — 信号 (数据是否公开待查)
+
+### 37.4 负向确认 (第十一轮)
+
+- **OpenEDS**: GitHub 三仓库全 404 (microsoft/OpenEDS, OpenEDS2020, OpenEDS-Segmentation) — 连续第十一轮无新版本, G14 阻塞维持; 虹膜域新数据窗口已由 ImmerIris 填补
+- **BPPV/眩晕**: 连续第十一轮零新公开数据集 (vestibular/nystagmus 查询 191 条全为临床: pDBN 120 例 42562905、下跳性 BPPV 定义 41454844、小鼠冷热试验 42502276 等均无数据) — 领域数据空白维持, 自创数据集机会不变
+- **PhysioNet News**: 与上轮一致 (Challenge 2026 + Bridge2AI Voice Synapse + 常规公告) — 无新数据集; 双周维持, 下次 08-27
+- **Zenodo API**: 本轮 403 (上轮成功) — 网络条件变化, 追踪项核验临时切 GitHub/DOI 直查
+- **Kaggle**: 无凭证延续跳过
+- **figshare API**: 403 延续 (未变)
+
+### 37.5 本轮新增可扩展模式 (第 52-54 档扩展, 2026-08-17 确立)
+
+```
+可扩展模式 #52: 受控访问生物识别数据集 — "受控可申请"状态机 (区别于 #49 未发布状态机)
+触发条件: 数据集已发布但非公开下载 (生物识别/隐私敏感数据, 邮件申请逐案审查, 如 ImmerIris 复旦)
+价值: 数据真实存在且质量高 (CVPR Oral 级) — 不因"不可直接下载"丢弃; 也不假设"论文说公开=可下"
+行动: 记条件 P0.5 + 立即邮件申请 (学术身份) + 季度复查访问流程; 获批即升 P0.5 正式立项;
+      benchmark 协议/评估工具通常公开 → 先下载协议做方法预研, 数据到位即跑
+
+可扩展模式 #53: "缺陷维度"反向利用 — benchmark 负样本 = 形态学/姿态分析标签金矿
+触发条件: 数据集把物理变量标注为质量退化 (ImmerIris 把瞳孔扩张/极端离轴/镜面反射列为退化维度)
+价值: 识别/检测任务视角是"缺陷", 形态学视角是"受控变量" — 同一标签双倍价值;
+      瞳孔扩张 = 瞳孔-虹膜形态耦合 (H03) 的天然实验条件; 离轴 = 3D 姿态的地面真值来源
+行动: 评估新数据集时, 将"质量退化维度清单"反转映射为"可分析生物物理变量清单" → 补入空白分析
+
+可扩展模式 #54: 会议 Oral/Award 候选数据集 = 高信号发现通道
+触发条件: arXiv 命中带会议标识的数据集论文 (CVPR 2026 Oral + Award Candidate, 如 ImmerIris)
+价值: 顶会 Oral/Award 候选的数据集刚发布且质量控制高 (双盲评审背书), 且通常伴随完整评估协议 —
+      比期刊数据论文 (Sci Data) 的"发布即饱和"更快锁定新窗口
+行动: arXiv 排序优先扫 Oral/Award 候选 + 顶会获奖论文; 与 Sci Data 通道 (期刊级) 形成互补双通道
+```
+
+### 37.6 待办/方向
+
+1. **ImmerIris (最高优先)**: 立即发申请邮件 (yxmi20@fudan.edu.cn, 学术身份说明 + 3diris 研究背景); 同时下载公开 benchmark 协议做方法预研 (9 注视方向 × 11 亮度 → 虹膜 3D 姿态短文设计); 获批后走 dataset-feasibility 立项
+2. **HeyJay!**: 评估 PD 语音声学生物标志物分析 (与 NeuroVoz 形成 PD 语音双数据集叙事); GitHub Neuro-Logical/HeyJay 数据规模/许可核验
+3. **GazeXPErT**: Stanford Redivis 下载可行性评估 (346 例 PET/CT 眼动, 网络受限时同 BALLADEER 处置)
+4. **MSN-TCSeg**: 数据发布追踪不变 (2026-11 复查; Zenodo API 本轮 403, 复查走 GitHub/DOI 直查)
+5. **VS 纵向数据集**: 季度复查数据发布 (arXiv 2511.00472, 无公开链接)
+6. **L2 习语眼动**: 查 OSF/机构仓库数据链接 (下轮)
+7. G14 OpenEDS 阻塞不变 (等用户凭证; 受控访问是生物识别社区惯例, 非异常)
+8. BALLADEER 下载通道待解决 (网络/代理)
+9. MobilityAPP H02/H03 + 论文推进 (无变化)
+10. 下次 PhysioNet 双周扫描 08-27; Zenodo 403 下轮复测 (网络条件)
