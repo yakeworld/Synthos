@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "generated": "2026-08-17",
-  "total_projects": 20,
+  "total_projects": 21,
   "categories": {
     "absorbed": "方法论已注入技能体系",
     "methodology_only": "仅吸收方法论/思想，无代码注入",
@@ -466,6 +466,22 @@
         "纠正→规则自动转化原型",
         "压缩感知状态机制"
       ]
+    },
+    {
+      "name": "sandbase-harness",
+      "source": "sandbaseai/sandbase-harness",
+      "url": "https://github.com/sandbaseai/sandbase-harness",
+      "stars": 613,
+      "license": "Apache-2.0",
+      "absorbed_at": "2026-08-17",
+      "category": "absorbed",
+      "capabilities_absorbed": [
+        "凭据 vault 隔离 (agent 不持凭据) -> DSH-009",
+        "审批留痕最小集 {who,what,scope,reason,timestamp,result} -> DSH-009",
+        "audit+replay 验证原语 -> EVOL-007 增强"
+      ],
+      "methodology_only": true,
+      "note": "独立核验通过 (父级 API 复核一致); 代码未搬, P7 方法论剥离"
     }
   ],
   "self_reflection": [
@@ -502,43 +518,34 @@
     "tigicion/dao-code (1254⭐, DeepSeek-V4 终端编码代理, MIT, 2026-06-08) — 编码方向，追踪",
     "keli-wen/agentic-harness-patterns-skill (301⭐, 代理 Harness 模式, MIT, 2026-04-01) — Harness 工程，追踪",
     "kennethlaw325/awesome-llm-knowledge-systems (89⭐, LLM 知识工程, MIT, 2026-04-06) — 知识系统，追踪",
-    "AaronCIH/Awesome-AutoSkill-AutoRubric (7⭐, 自动技能论文集, MIT, 2026-06-01) — 直接相关，持续追踪 → [evaluating] 直接相关：Auto-Skill (自进化代理) + Auto-Rubric (从偏好学习评分)。7⭐但内容精准。待深度评估。"
+    "AaronCIH/Awesome-AutoSkill-AutoRubric (7⭐, 自动技能论文集, MIT, 2026-06-01) — 直接相关，持续追踪 → [evaluating] 直接相关：Auto-Skill (自进化代理) + Auto-Rubric (从偏好学习评分)。7⭐但内容精准。待深度评估。",
+    "omnigent-ai/omnigent (8965⭐, meta-harness 跨 agent 策略+沙箱+互审, 已独立核验, 下轮深读 policy/sandbox docs)",
+    "Rath-Team/OpenRath (901⭐, PyTorch-like 多agent运行时, arXiv:2606.19409, 已核验, 范式差异大)",
+    "Bevel-Software/Hexis (69⭐, git-backed control plane 审计轨迹即存储, 已核验, 下轮深读)",
+    "christiangrey922/multi-agent-workflow-lab (87⭐, 确定性规则独立于模型裁判, 待 rate-limit 核验)",
+    "prashar32/riskkernel (20⭐, 确定性 governor 预算+审批门, 待核验)",
+    "Inomy-shop/allen (46⭐, git worktree 隔离执行+检查点审批, 单源)",
+    "EXXETA/exxperts (333⭐, approval-gated memory, 单源)",
+    "VisionForge-OU/foreman (456⭐, gated pipeline 监督无头 agent, license NOASSERTION)",
+    "1norqaq/audit-the-judge (142⭐, 裁判校准: 合成对照+注入偏差 null test, 单源)",
+    "wenhuahuo/BABY (20⭐, oracle gate 参考解重放+防泄漏, 单源)",
+    "bridge-mind/bridgebench (119⭐, 盲评三裁判+Elo+可重放证据日志, 单源)"
   ],
   "last_scan": {
     "date": "2026-08-17",
     "sources": [
-      "GitHub API search",
+      "GitHub API search (6 parallel scouts)",
       "arXiv"
     ],
     "queries": [
-      "AI agent evolution self-improving created:>2026-01-01",
-      "AI research agent autonomous created:>2026-01-01",
-      "self-evolving LLM skill learning created:>2025-06-01",
-      "AI scientific discovery automation created:>2026-01-01",
-      "agent memory context engineering created:>2026-01-01",
-      "topic:ai-agent topic:skills created:>2026-01-01"
+      "self-evolving/skill evolution agent created:>2026-06-01",
+      "agent memory context engineering created:>2026-06-01",
+      "llm eval/verification/guardrails created:>2026-06-01",
+      "ai scientist/scientific discovery created:>2026-05-01",
+      "agent sandbox/permission/orchestration created:>2026-05-01"
     ],
-    "new_absorbed": 3,
-    "new_tracked": 8,
-    "notes": "DSH 发布后首轮外部扫描。重点发现: EvoMap/Evolver (Gene 策略基因, 4590次实验) 和 SkillClaw (集体技能进化, 保守验证门)。",
-    "round2": {
-      "date": "2026-08-16T14:48:50Z",
-      "evaluated": [
-        "SakanaAI/AI-Scientist-v2",
-        "assafelovic/gpt-researcher",
-        "kaixindelele/ChatPaper",
-        "AaronCIH/Awesome-AutoSkill-AutoRubric",
-        "VoltAgent/awesome-ai-agent-papers"
-      ],
-      "results": {
-        "SakanaAI/AI-Scientist-v2": "deferred",
-        "assafelovic/gpt-researcher": "deferred",
-        "kaixindelele/ChatPaper": "deferred",
-        "AaronCIH/Awesome-AutoSkill-AutoRubric": "evaluating",
-        "VoltAgent/awesome-ai-agent-papers": "evaluating"
-      },
-      "new_absorbed": 0,
-      "notes": "Round 2: 5 projects evaluated. 0 absorbed (all deferred/evaluating). gpt-researcher (29k) and ChatPaper (19.7k) are product-level tools, not methodology sources. AI-Scientist-v2 BFTS tree search interesting but different paradigm. AutoSkill-AutoRubric most relevant, pending deep eval."
-    }
+    "new_absorbed": 1,
+    "new_tracked": 11,
+    "notes": "Cycle 265 DSH 域扫描。独立核验 4/12 通过 (omnigent/sandbase/OpenRath/Hexis), 2 待核验 (MAWL/riskkernel, rate-limit), 6 单源 tracked。P0 纪律: 单源不吸收。CubeSandbox 未验证+NOASSERTION 不入库。"
   }
 }
