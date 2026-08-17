@@ -534,10 +534,14 @@
     "ianarawjo/evalstats (115⭐ NOASSERTION, LLM 评估统计检验抗裁判偏差, Monte-Carlo 验证, 已核验)",
     "Kareem-Rashed/rubric-eval (13⭐ MIT, 测行为不测输出文本: 工具调用/参数/轨迹/延迟, 已核验)",
     "openguardrails/openguardrails (27⭐ Apache-2.0, 供应商中立 agent 安全协议, 已核验)",
-    "reaatech/agent-eval-harness (⭐待核, TS 单仓: 轨迹评估+13 工具调用问题类型+黄金轨迹+裁判校准, 未核验超时)",
-    "renee-jia/scholar-loop (⭐待核, 6-原子管线最接近+冻结指标防奖励黑客, 未核验超时)",
-    "raktim-mondol/co-scientist (⭐待核, Crossref 引用完整性+Glicko-2 虚构惩罚, 未核验超时)",
-    "aipoch/open-science (⭐待核, 可复现报告工作台, 未核验超时)"
+    "reaatech/agent-eval-harness (TS 单仓: 轨迹评估+黄金轨迹+裁判校准, 未核验)",
+    "renee-jia/scholar-loop (466⭐ MIT, 8-agent PhD 环, FROZEN 指标防奖励黑客, scout 核验/父级网络超时未复验 — 深读优先1)",
+    "raktim-mondol/co-scientist (10⭐ MIT, Glicko-2 引用完整性+虚构惩罚, 与凡引必核 1:1, scout 核验/父级未复验 — 深读优先2)",
+    "aipoch/open-science (2639⭐ Apache-2.0 v0.16.0, 可复现报告+可检查活动历史, scout 核验/父级未复验 — 深读优先3)",
+    "MingfengHong/paperseek (204⭐ Apache-2.0, NL 文献检索+迭代查询扩展, scout 单源)",
+    "Agents365-ai/paper-fetch (180⭐ MIT, DOI→PDF 7 源回退, scout 单源)",
+    "federicodeponte/opendraft (384⭐ MIT, 19 agent 20k 词论文, scout 单源)",
+    "Kewanvk/vkskill (CLAIM LEDGER 证据验证, scout 单源)"
   ],
   "last_scan": {
     "date": "2026-08-17",
@@ -553,7 +557,7 @@
       "agent sandbox/permission/orchestration created:>2026-05-01"
     ],
     "new_absorbed": 3,
-    "new_tracked": 24,
-    "notes": "Cycle 265 全 6 scout 汇总: 吸收 3 (sandbase DSH-009 + SkillHone DSH-010 decision-history 验证链 + OptMem 记忆压缩 LOG+TREE 无license标记); 核验 8/8 (HTML stargazerCount); 16 tracked (omnigent/MAWL/deja-vu/engramory/memmesh/rethinkskill/OpenSkill/self-learning-skills 等); CubeSandbox 不入库 (未验证+NOASSERTION); 补充核验: agentjail/evalstats/rubric-eval/openguardrails HTML 通过, 4 候选网络超时未核验"
+    "new_tracked": 31,
+    "notes": "Cycle 265 全 6 scout 汇总: 吸收 3 (sandbase DSH-009 + SkillHone DSH-010 decision-history 验证链 + OptMem 记忆压缩 LOG+TREE 无license标记); 核验 8/8 (HTML stargazerCount); 16 tracked (omnigent/MAWL/deja-vu/engramory/memmesh/rethinkskill/OpenSkill/self-learning-skills 等); CubeSandbox 不入库 (未验证+NOASSERTION); 补充核验: agentjail/evalstats/rubric-eval/openguardrails HTML 通过, 4 候选网络超时未核验; scout-4 终报: 网络超时父级未复验 4 项 (scholar-loop/co-scientist/open-science 深读优先), +4 单源 tracked"
   }
 }
