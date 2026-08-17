@@ -529,7 +529,15 @@
     "VisionForge-OU/foreman (456⭐, gated pipeline 监督无头 agent, license NOASSERTION)",
     "1norqaq/audit-the-judge (142⭐, 裁判校准: 合成对照+注入偏差 null test, 单源)",
     "wenhuahuo/BABY (20⭐, oracle gate 参考解重放+防泄漏, 单源)",
-    "bridge-mind/bridgebench (119⭐, 盲评三裁判+Elo+可重放证据日志, 单源)"
+    "bridge-mind/bridgebench (119⭐, 盲评三裁判+Elo+可重放证据日志, 单源)",
+    "LuD1161/agentjail (77⭐ Apache-2.0, 确定性策略护栏: 每个工具调用本地预检, 无 LLM 在环, 已 HTML 核验)",
+    "ianarawjo/evalstats (115⭐ NOASSERTION, LLM 评估统计检验抗裁判偏差, Monte-Carlo 验证, 已核验)",
+    "Kareem-Rashed/rubric-eval (13⭐ MIT, 测行为不测输出文本: 工具调用/参数/轨迹/延迟, 已核验)",
+    "openguardrails/openguardrails (27⭐ Apache-2.0, 供应商中立 agent 安全协议, 已核验)",
+    "reaatech/agent-eval-harness (⭐待核, TS 单仓: 轨迹评估+13 工具调用问题类型+黄金轨迹+裁判校准, 未核验超时)",
+    "renee-jia/scholar-loop (⭐待核, 6-原子管线最接近+冻结指标防奖励黑客, 未核验超时)",
+    "raktim-mondol/co-scientist (⭐待核, Crossref 引用完整性+Glicko-2 虚构惩罚, 未核验超时)",
+    "aipoch/open-science (⭐待核, 可复现报告工作台, 未核验超时)"
   ],
   "last_scan": {
     "date": "2026-08-17",
@@ -545,7 +553,7 @@
       "agent sandbox/permission/orchestration created:>2026-05-01"
     ],
     "new_absorbed": 3,
-    "new_tracked": 16,
-    "notes": "Cycle 265 全 6 scout 汇总: 吸收 3 (sandbase DSH-009 + SkillHone DSH-010 decision-history 验证链 + OptMem 记忆压缩 LOG+TREE 无license标记); 核验 8/8 (HTML stargazerCount); 16 tracked (omnigent/MAWL/deja-vu/engramory/memmesh/rethinkskill/OpenSkill/self-learning-skills 等); CubeSandbox 不入库 (未验证+NOASSERTION)"
+    "new_tracked": 24,
+    "notes": "Cycle 265 全 6 scout 汇总: 吸收 3 (sandbase DSH-009 + SkillHone DSH-010 decision-history 验证链 + OptMem 记忆压缩 LOG+TREE 无license标记); 核验 8/8 (HTML stargazerCount); 16 tracked (omnigent/MAWL/deja-vu/engramory/memmesh/rethinkskill/OpenSkill/self-learning-skills 等); CubeSandbox 不入库 (未验证+NOASSERTION); 补充核验: agentjail/evalstats/rubric-eval/openguardrails HTML 通过, 4 候选网络超时未核验"
   }
 }
