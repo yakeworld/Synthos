@@ -920,3 +920,4 @@ Nudge 系统 = 结构行为校正 (Structural Behavior Correction)。核心机�
 - **[EVOL-008]** 评分体系全维度饱和（1.0 理论上限） → 提请用户/宪法级裁决引入新维度；新维度必须锚定宪法原则（v3 liveness 锚定 CON v5.1 P7 基因层），引擎不自改公式
 - **[DSH-009]** 工具凭据或敏感执行 → 凭据不进 agent 上下文（vault 代理注入），越级事件结构化留痕 {who, what, scope, reason, timestamp, result} 可重放；审计轨迹本身是验证原语（与 DSH-008 组合：008 管原则，009 管机制）
 - **[EVOL-010]** 外部候选未经验证（单源 scout 报告 / rate-limit 未核验） → 仅入 tracked 不吸收；吸收前父级独立核验仓库存在性与关键声明（P0：宁缺毋滥）
+- **[DSH-010]** 技能修订 → 决策历史绑定证据：每次 evolve 记录 {diagnosis, edit, outcome, rejected_alternatives}，验证链可追溯（吸收自 Tencent/SkillHone, arXiv:2606.08671, 独立核验 127⭐）

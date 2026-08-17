@@ -544,8 +544,8 @@
       "ai scientist/scientific discovery created:>2026-05-01",
       "agent sandbox/permission/orchestration created:>2026-05-01"
     ],
-    "new_absorbed": 1,
-    "new_tracked": 11,
-    "notes": "Cycle 265 DSH 域扫描。独立核验 4/12 通过 (omnigent/sandbase/OpenRath/Hexis), 2 待核验 (MAWL/riskkernel, rate-limit), 6 单源 tracked。P0 纪律: 单源不吸收。CubeSandbox 未验证+NOASSERTION 不入库。"
+    "new_absorbed": 3,
+    "new_tracked": 16,
+    "notes": "Cycle 265 全 6 scout 汇总: 吸收 3 (sandbase DSH-009 + SkillHone DSH-010 decision-history 验证链 + OptMem 记忆压缩 LOG+TREE 无license标记); 核验 8/8 (HTML stargazerCount); 16 tracked (omnigent/MAWL/deja-vu/engramory/memmesh/rethinkskill/OpenSkill/self-learning-skills 等); CubeSandbox 不入库 (未验证+NOASSERTION)"
   }
 }
