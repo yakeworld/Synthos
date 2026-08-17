@@ -8,8 +8,9 @@ description: GOLDEN_SET.md
 ## 测试用例
 | ID | 描述 | 关键检查 |
 |----|------|---------|
-| 1 | 基本功能测试 | 工具调用成功 |
-
+| case_001 | 外部 references.bib 论文首次编译后出现 natbib Citation undefi | 见 expected/case_001.json |
+| case_002 | bibtex 报 'I found no ibstyle command'（paper.bbl  | 见 expected/case_002.json |
+| case_003 | BibTeX 报 'didn't find a database entry for X' 但条目存 | 见 expected/case_003.json |
 ## 通过标准
 - 加权总分 ≥ 0.80
 - 所有 critical 检查通过

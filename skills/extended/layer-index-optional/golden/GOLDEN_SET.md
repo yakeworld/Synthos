@@ -8,8 +8,8 @@ description: GOLDEN_SET.md
 ## 测试用例
 | ID | 描述 | 关键检查 |
 |----|------|---------|
-| 1 | 基本功能测试 | 工具调用成功 |
-
+| case_001 | 基本功能测试: 查询"生成科研图表"应命中 figure-generation 技能，并提示"结论- | 见 expected/case_001.json |
+| case_002 | 边界/模糊意图测试: 空 query 或模糊意图 (只有工具无方向) 时，不异常中断，返回明确提示并 | 见 expected/case_002.json |
 ## 通过标准
 - 加权总分 ≥ 0.80
 - 所有 critical 检查通过

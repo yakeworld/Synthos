@@ -8,8 +8,8 @@ description: GOLDEN_SET.md
 ## 测试用例
 | ID | 描述 | 关键检查 |
 |----|------|---------|
-| 1 | 基本功能测试 | 工具调用成功 |
-
+| case_001 | Audit /learn-generated xhs-content skill against S | 见 expected/case_001.json |
+| case_002 | Dual-repo architecture audit — 3 private skills mi | 见 expected/case_002.json |
 ## 通过标准
 - 加权总分 ≥ 0.80
 - 所有 critical 检查通过

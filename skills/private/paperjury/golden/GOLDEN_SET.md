@@ -8,8 +8,8 @@ description: GOLDEN_SET.md
 ## 测试用例
 | ID | 描述 | 关键检查 |
 |----|------|---------|
-| 1 | 基本功能测试 | 工具调用成功 |
-
+| case_001 | 基本功能测试：含实验指标的论文目录（F1=0.92），03-code/ 下存在对应脚本与运行输出，q | 见 expected/case_001.json |
+| case_002 | 错误路径测试：指标在 03-code/ 下无对应脚本/输出 → 直接标 FABRICATED 禁止放 | 见 expected/case_002.json |
 ## 通过标准
 - 加权总分 ≥ 0.80
 - 所有 critical 检查通过

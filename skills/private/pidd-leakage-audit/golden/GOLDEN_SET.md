@@ -8,8 +8,8 @@ description: GOLDEN_SET.md
 ## 测试用例
 | ID | 描述 | 关键检查 |
 |----|------|---------|
-| 1 | 基本功能测试 | 工具调用成功 |
-
+| case_001 | 折内预处理：PIDD 数据集上在数据分割前执行 SMOTE 的 10-fold CV 脚本（泄漏路径 | 见 expected/case_001.json |
+| case_002 | SHAP 可解释性分析 + CRISP-DM 引用规范：在系统 Python 为 Debian nu | 见 expected/case_002.json |
 ## 通过标准
 - 加权总分 ≥ 0.80
 - 所有 critical 检查通过

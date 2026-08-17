@@ -8,8 +8,8 @@ description: GOLDEN_SET.md
 ## 测试用例
 | ID | 描述 | 关键检查 |
 |----|------|---------|
-| 1 | 基本功能测试 | 工具调用成功 |
-
+| case_001 | Ubuntu + fcitx5 环境，fcitx5 已安装且 daemon 运行，但 GTK3 应用 | 见 expected/case_001.json |
+| case_002 | Snap 版 Firefox 硬编码 ibus，环境变量修复无效（Golden Error 路径） | 见 expected/case_002.json |
 ## 通过标准
 - 加权总分 ≥ 0.80
 - 所有 critical 检查通过

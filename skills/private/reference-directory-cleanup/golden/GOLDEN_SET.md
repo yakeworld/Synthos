@@ -8,8 +8,8 @@ description: GOLDEN_SET.md
 ## 测试用例
 | ID | 描述 | 关键检查 |
 |----|------|---------|
-| 1 | 基本功能测试 | 工具调用成功 |
-
+| case_001 | 子目录旧管线 PDF 归档 + bib 清理 + 编译验证（Golden Input 全场景） | 见 expected/case_001.json |
+| case_002 | 文件名与 bibkey 年份不一致 + 子目录已有 PDF 建 symlink（边界场景） | 见 expected/case_002.json |
 ## 通过标准
 - 加权总分 ≥ 0.80
 - 所有 critical 检查通过

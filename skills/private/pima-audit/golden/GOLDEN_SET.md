@@ -8,8 +8,8 @@ description: GOLDEN_SET.md
 ## 测试用例
 | ID | 描述 | 关键检查 |
 |----|------|---------|
-| 1 | 基本功能测试 | 工具调用成功 |
-
+| case_001 | 正常审计路径：PIDD 泄漏审计目录（独立 .py 脚本、实验条件固定、文献库含 accuracy> | 见 expected/case_001.json |
+| case_002 | 失败路径覆盖：跨数据集审计实验条件不一致 + 无输出 Notebook + Pima/HCS-3WT | 见 expected/case_002.json |
 ## 通过标准
 - 加权总分 ≥ 0.80
 - 所有 critical 检查通过

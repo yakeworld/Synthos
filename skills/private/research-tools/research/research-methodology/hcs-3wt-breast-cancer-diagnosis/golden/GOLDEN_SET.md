@@ -8,8 +8,8 @@ description: GOLDEN_SET.md
 ## 测试用例
 | ID | 描述 | 关键检查 |
 |----|------|---------|
-| 1 | 基本功能测试 | 工具调用成功 |
-
+| case_001 | WDBC 10x5 stratified CV — full HCS-3WT pipeline on | 见 expected/case_001.json |
+| case_002 | PIMA diabetes low-separability dataset — threshold | 见 expected/case_002.json |
 ## 通过标准
 - 加权总分 ≥ 0.80
 - 所有 critical 检查通过

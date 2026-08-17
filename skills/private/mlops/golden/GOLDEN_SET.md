@@ -8,8 +8,8 @@ description: GOLDEN_SET.md
 ## 测试用例
 | ID | 描述 | 关键检查 |
 |----|------|---------|
-| 1 | 基本功能测试 | 工具调用成功 |
-
+| case_001 | 路由请求：将 Codex CLI v0.139+ 路由到本地 LLM 的 Responses API | 见 expected/case_001.json |
+| case_002 | 请求描述无法映射到任一子域，应拒绝执行并返回含上下文的错误信息（Golden Error 路径） | 见 expected/case_002.json |
 ## 通过标准
 - 加权总分 ≥ 0.80
 - 所有 critical 检查通过
