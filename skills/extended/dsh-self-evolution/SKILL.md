@@ -45,6 +45,7 @@ license: MIT
 > 魂驭器，器运魂，环环相扣，生生不息。
 > 器在隔离之中运行，魂于证据之上裁决。
 > 无验证不记录，无记录不进史。
+> 默则闭户，开必分级。越级必问，问必留痕。
 
 
 ## Genes (策略基因)
@@ -58,6 +59,7 @@ license: MIT
 - **[DSH-005]** 当 dsh 声称的改进与实测结果存在偏差或验证失败时 → 标记 `self_deception_risk` 并基于 `git diff --name-only` 精确回滚本轮改动，禁止全量回滚
 - **[DSH-006]** 当更新 `evolution-state.json` 等结构化状态文件时 → 必须使用 Python 进行结构化读写（json.load/dump），严禁使用字符串替换（patch）方式
 - **[DSH-007]** 当执行 git 提交操作时 → 由父 Agent 负责选择性 `git add` 具体文件列表，严禁 dsh 内部提交或父 Agent 使用 `git add -A`，以维持 commit-scope-check 纪律
+- **[DSH-008]** 当 dsh 任务需要执行越级操作（写关键状态文件、网络凭据访问、删除文件）时 → 按执行层权限分级（只读 / 工作区写 / 完全访问）默认封闭，越级须显式确认并留痕；禁止越级静默执行（吸收 Codex 沙箱+审批方法论，P7 只取方法论）
 
 ## 触发条件
 
@@ -206,6 +208,7 @@ bash -lc 'dsh --profile headless "$(cat /media/yakeworld/sda2/Synthos/outputs/ds
 6. **headless 无交互审批** — dsh headless 中需要用户审批的操作会被自动拒绝。任务中不安排需要审批的操作（如网络凭据操作）
 7. **回滚要精确** — 回滚用 `git diff --name-only` 生成的精确文件列表，不 `git checkout .` 全量回滚（可能误伤并行改动）
 8. **JSON 编辑用 Python** — 更新 evolution-state.json 一律 Python 结构化读写 + `json.load` 验证，不 patch 字符串
+9. **执行层默认封闭** — 派发 dsh 任务时按权限分级（只读/工作区写/完全访问）默认最低档；需越级（写 state/删除/凭据）时在任务 prompt 显式声明并留痕，禁止静默越级（吸收 Codex 沙箱方法论，P7）
 
 ## 输出
 
