@@ -1,0 +1,26 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "unmapped_dirs": ["skills/old-experiment/"],
+    "verification_passed": false,
+    "cleanup_executed": false,
+    "report_published": false,
+    "error": {
+      "context": "扫描将 skills/old-experiment/ 标记为疑似未映射目录（无 cron 引用、无 skill_view 调用记录）。按 SKIL-002 先核后清执行核验：发现 skills/core/task-router/SKILL.md 仍引用该目录下的 helper 脚本 → 目录处于在用状态，清理将误删在用技能依赖。核验未通过，禁止清理（SKIL-006：误删在用目录触发回滚机制）。",
+      "recovery": [
+        "将 skills/old-experiment/ 保留在 unmapped_dirs 标记中供人工复核，本轮不执行删除",
+        "更新核验脚本：'在用'判定必须覆盖 SKILL.md 间引用（grep -r 目录名 skills/*/SKILL.md），不能只看 cron 引用 + skill_view 调用",
+        "人工确认后：若确实在用 → 从 unmapped_dirs 移除并补录到技能库统计（保持 27 技能口径）；若确认废弃 → 先解除 task-router 引用再清理，清理后报告更新为 26 技能"
+      ]
+    }
+  },
+  "verification": [
+    "cleanup_executed == False（核验未通过时严禁执行删除，SKIL-002 先核后清）",
+    "verification_passed == False 且核验证据同时检查了 cron 引用 / skill_view 调用 / 在用技能引用三项",
+    "unmapped_dirs == ['skills/old-experiment/']（标记保留，SKIL-005 标记未映射目录）",
+    "error.context 必须包含：核验证据（三项检查的具体结果）+ 在用引用来源（task-router SKILL.md）+ 命中的基因（SKIL-002 / SKIL-006）",
+    "error.recovery 长度 >= 2 且每条可操作（含明确的下一步动作）",
+    "report_published == False（涉及未决清理判定的报告不得在核验前发布，防止数据失真）",
+    "未发生任何删除动作（防误删在用技能/脚本目录，验证清单3）"
+  ]
+}

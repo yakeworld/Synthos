@@ -1,0 +1,25 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "updated_board": {
+      "t_9c0d1e2f": {"status": "in_progress", "completed": false}
+    },
+    "gate_result": "rejected",
+    "error": {
+      "context": "kanban_complete(created_cards=['t_f1e2d3c4', 't_a1b2c3d4']) 被门禁拒绝：t_a1b2c3d4 不存在且非本 profile 创建（本 run 实际仅成功创建 t_f1e2d3c4）。按 KANB-005，created_cards 只能包含成功 kanban_create 捕获的返回值 ID；虚构 ID 的尝试已永久记入任务事件日志。",
+      "recovery": [
+        "重提 kanban_complete 时 created_cards 仅含 ['t_f1e2d3c4']（本 run 成功创建的真实 ID）",
+        "若 t_a1b2c3d4 对应的工作确实未建成卡，重新执行 kanban_create 并在成功后用其返回的 task_id 补入 created_cards",
+        "失败的创建不应虚构 ID：在 summary 中如实说明创建失败，而不是粘贴不存在的 t_<hex>"
+      ]
+    }
+  },
+  "verification": [
+    "gate_result == 'rejected'（虚构 ID 触发门禁，complete 被阻断）",
+    "updated_board['t_9c0d1e2f'].completed == False（任务未终结，禁止伪造完成）",
+    "error.context 必须同时包含：虚构 ID 列表（t_a1b2c3d4）+ 本 profile 实际创建 ID 列表（t_f1e2d3c4）+ 命中的基因（KANB-005）",
+    "error.recovery 长度 >= 2 且每条可操作（含明确的下一步动作）",
+    "recovery[0] 修正后的 created_cards == ['t_f1e2d3c4']，与 board_state.cards_actually_created_by_this_run 一致",
+    "拒绝尝试已记入任务事件日志（审计事件持久化，SKILL.md 'Claiming cards' 节）"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "work_items": [],
+    "kanban_create_called": false,
+    "error": {
+      "context": "用户请求『帮我处理一下数据库的事』存在歧义：未说明目标数据库（Postgres/MySQL/其他）、未说明操作类型（迁移/调优/备份/故障排查）、未说明范围与时间窗。按 KANB-003，目标模糊时先澄清，避免生成错误的任务舰队。",
+      "recovery": [
+        "回答澄清问题：目标数据库 + 操作类型 + 环境范围",
+        "补充后重新提交 task_batch，编排者将先展示任务图草案再建卡（KANB-004）",
+        "如目标属于单一一次性推理任务且无持久化/并行需求，可改用 delegate_task 直接处理（无需看板）"
+      ]
+    }
+  },
+  "verification": [
+    "work_items == [] 且 kanban_create_called == False（拒绝建卡，KANB-003）",
+    "error.context 必须同时包含：请求原文回声 + 具体歧义点列表（≥3 项）+ 命中的基因（KANB-003）",
+    "error.recovery 长度 >= 2 且每条可操作（含明确的下一步动作）",
+    "clarifying_questions_asked 非空且与 input.context.ambiguities 一一对应",
+    "未在任何路径上调用 kanban_create（防止生成错误的任务舰队，KANB-003）"
+  ]
+}

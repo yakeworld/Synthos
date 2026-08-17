@@ -1,0 +1,23 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "send_command": "cat << 'EOF' | himalaya template send\nFrom: you@example.com\nTo: recipient@example.com\nSubject: Test Message\n\nHello from Himalaya!\nEOF",
+    "list_command": "himalaya envelope list --output json",
+    "sent_status": {
+      "ok": true,
+      "exit_code": 0,
+      "editor_used": false,
+      "json_output_used": true
+    },
+    "note": "发送走管道输入（HIMA-002，非交互环境不依赖 $EDITOR）；列表命令带 --output json 供程序化解析（HIMA-003）；config.toml 中 backend.auth.cmd = 'pass show email/smtp'，密码非明文（HIMA-006）；前置检查 himalaya --version 与 config 存在均通过"
+  },
+  "verification": [
+    "前置检查：himalaya --version 可执行 且 ~/.config/himalaya/config.toml 存在（验证清单1）",
+    "send_command 为管道形式（himalaya template send + stdin heredoc），无 $EDITOR 依赖（HIMA-002）",
+    "send_command 头部含 From/To/Subject 三行且正文与输入 args 一致（To: recipient@example.com, Subject: Test Message）",
+    "list_command 含 '--output json'（HIMA-003，程序化解析必须 JSON）",
+    "sent_status.ok == True 且 sent_status.exit_code == 0",
+    "config 中密码经 backend.auth.cmd（pass show email/smtp）获取，config 文件内无明文密码字段（HIMA-006）",
+    "config 使用 folder.aliases.X（复数点分键）语法而非旧 [accounts.NAME.folder.alias] 子节（HIMA-001 预防）"
+  ]
+}

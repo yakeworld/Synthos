@@ -1,0 +1,35 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：扫描 27 技能 + 21 cron 任务 + evolution-state.json → 生成 v2 使用率报告（与 v1 同口径）+ unmapped_dirs: []",
+  "input": {
+    "scan_targets": {
+      "skills_dir": "skills/",
+      "cron_dir": "cron/",
+      "evolution_state": "evolution-state.json"
+    },
+    "expected_counts": {
+      "skills": 27,
+      "cron_tasks": 21,
+      "total_runs": 1352,
+      "archived_tasks": 3
+    },
+    "context": {
+      "report_version": "v2",
+      "data_source": "evolution-state.json",
+      "v1_report": "references/skill-usage-data.md",
+      "v2_report": "references/skill-usage-data-v2.md"
+    }
+  },
+  "expected": {
+    "report": {
+      "skills": 27,
+      "cron_tasks": 21,
+      "total_runs": 1352,
+      "archived_tasks": 3,
+      "usage_ranking": true
+    },
+    "unmapped_dirs": [],
+    "report_published": true
+  },
+  "weight": "critical"
+}

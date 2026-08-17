@@ -1,0 +1,24 @@
+{
+  "case_id": "case_002",
+  "description": "错误路径：Gmail 服务器发送退出码非零（旧 alias 子节被 v1.2.0 静默忽略，存 Sent 失败）→ 修 folder.aliases 配置而非盲目重试 SMTP",
+  "input": {
+    "command": "message send (retry scenario after non-zero exit)",
+    "args": [
+      "To: recipient@example.com",
+      "Subject: Weekly Report"
+    ],
+    "context": {
+      "server": "gmail",
+      "first_attempt_exit_code": 1,
+      "first_attempt_failure_stage": "save_to_sent (SMTP delivery succeeded, save failed)",
+      "config_syntax_in_use": "[accounts.personal.folder.alias] (deprecated singular sub-section)",
+      "retry_count_allowed": 1
+    }
+  },
+  "expected": {
+    "diagnosis": "himalaya v1.2.0+ 静默忽略旧 [accounts.NAME.folder.alias] 子节，别名解析落到 canonical 名，Gmail 存 [Gmail]/Sent Mail 失败 → 发送命令退出码非零",
+    "fix": "改用 folder.aliases.sent = \"[Gmail]/Sent Mail\"（复数点分键，直接位于 [accounts.personal] 下）",
+    "smtp_retry_count": 1
+  },
+  "weight": "critical"
+}

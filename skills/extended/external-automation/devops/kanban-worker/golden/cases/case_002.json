@@ -1,0 +1,30 @@
+{
+  "case_id": "case_002",
+  "description": "错误路径：kanban_complete 的 created_cards 含虚构 ID → 门禁拒绝完成，任务未终结，返回结构化 Golden Error",
+  "input": {
+    "task_list": [
+      {
+        "task_id": "t_9c0d1e2f",
+        "title": "review PR #123",
+        "assignee": "reviewer",
+        "workspace_kind": "scratch",
+        "body": "Review PR #123 and spawn remediation cards for findings."
+      }
+    ],
+    "board_state": {
+      "HERMES_TENANT": null,
+      "kanban_show_status": "ready",
+      "cards_actually_created_by_this_run": ["t_f1e2d3c4"],
+      "proposed_created_cards": ["t_f1e2d3c4", "t_a1b2c3d4"]
+    }
+  },
+  "expected": {
+    "updated_board": {
+      "t_9c0d1e2f": {
+        "status": "in_progress",
+        "completed": false
+      }
+    }
+  },
+  "weight": "critical"
+}

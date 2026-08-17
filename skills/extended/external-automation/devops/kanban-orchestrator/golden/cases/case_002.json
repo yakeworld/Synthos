@@ -1,0 +1,28 @@
+{
+  "case_id": "case_002",
+  "description": "错误路径：目标模糊 → 命中 KANB-003，先澄清、不建卡，返回结构化 Golden Error",
+  "input": {
+    "task_batch": [
+      "帮我处理一下数据库的事"
+    ],
+    "priorities": {},
+    "context": {
+      "HERMES_TENANT": null,
+      "ambiguities": [
+        "未说明目标数据库（Postgres / MySQL / 其他）",
+        "未说明操作类型（迁移 / 调优 / 备份 / 故障排查）",
+        "未说明范围与时间窗"
+      ],
+      "user_confirmed_task_graph": false
+    }
+  },
+  "expected": {
+    "work_items": [],
+    "clarifying_questions_asked": [
+      "目标数据库是哪一个（Postgres / MySQL / 其他）？",
+      "操作类型是迁移、调优、备份还是故障排查？",
+      "涉及哪些环境（dev / staging / prod）与时间窗？"
+    ]
+  },
+  "weight": "critical"
+}

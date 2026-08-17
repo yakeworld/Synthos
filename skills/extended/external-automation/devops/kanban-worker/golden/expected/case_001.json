@@ -1,0 +1,31 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "updated_board": {
+      "t_1a2b3c4d": {
+        "status": "blocked",
+        "block_reason": "review-required: rate limiter shipped, 14/14 tests pass — needs eyes on the user_id/IP fallback choice before merging",
+        "comment_metadata": {
+          "changed_files": ["rate_limiter.py", "tests/test_rate_limiter.py"],
+          "tests_run": 14,
+          "tests_passed": 14,
+          "diff_path": "/srv/repos/api/.worktrees/t_1a2b3c4d",
+          "decisions": ["user_id primary, IP fallback for unauthenticated requests"]
+        }
+      }
+    },
+    "kanban_show_first": true,
+    "kanban_complete_called": false,
+    "note": "启动先 kanban_show 确认状态为 ready（非 blocked/archived）；代码变更任务按 KANB-003 不直接 complete：先把 changed_files/tests/decisions 等结构化元数据写入 kanban_comment（comment 是持久注释通道，block 只带人类可读 reason），再 kanban_block(reason='review-required: ...') 让 dashboard 显示待审查"
+  },
+  "verification": [
+    "kanban_show_first == True 且启动时状态为 ready（验证清单1：非 blocked/archived 才继续执行）",
+    "updated_board['t_1a2b3c4d'].status == 'blocked'",
+    "block_reason 以 'review-required: ' 前缀开头（KANB-003，review-required 场景 block 而非 complete）",
+    "block_reason 为单句人类可读决策点，不含完整元数据 JSON（元数据走 comment 通道）",
+    "comment_metadata 含 changed_files / tests_run / tests_passed / decisions 四个键",
+    "comment_metadata.tests_run == 14 且 tests_passed == 14，changed_files == ['rate_limiter.py', 'tests/test_rate_limiter.py']",
+    "kanban_complete_called == False（review-required 场景不得 complete）",
+    "diff_path 指向 $HERMES_KANBAN_WORKSPACE 内的 worktree 绝对路径"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "work_items": [
+      {"task_id": "t_1a2b3c4d", "title": "research: Postgres cost vs current", "assignee": "researcher", "parents": [], "tenant": "business-a"},
+      {"task_id": "t_5e6f7a8b", "title": "research: Postgres performance vs current", "assignee": "researcher", "parents": [], "tenant": "business-a"},
+      {"task_id": "t_9c0d1e2f", "title": "synthesize migration recommendation", "assignee": "analyst", "parents": ["t_1a2b3c4d", "t_5e6f7a8b"], "tenant": "business-a"},
+      {"task_id": "t_3a4b5c6d", "title": "draft decision memo", "assignee": "writer", "parents": ["t_9c0d1e2f"], "tenant": "business-a"}
+    ],
+    "task_graph_confirmed": true,
+    "executed_by_orchestrator": false,
+    "note": "先向用户展示 T1-T4 任务图草案并获确认（KANB-004）；全部 4 项具体工作均 kanban_create 并分配给 researcher/analyst/writer，编排者未自行执行（KANB-002）；analyst 任务 parents=[T1,T2]、writer 任务 parents=[T3] 利用自动晋升（KANB-005）；HERMES_TENANT=business-a 已设置，每次 kanban_create 均传 tenant"
+  },
+  "verification": [
+    "work_items 非空且长度为 4（与任务图草案 T1-T4 一一对应）",
+    "每个 work_item 均含 task_id/title/assignee 三个字段，task_id 来自 kanban_create 返回值而非虚构",
+    "assignee 均属于标准专家角色（researcher/analyst/writer），无 orchestrator 自执行项",
+    "task_graph_confirmed == True（任务图草案先展示给用户确认后才创建，KANB-004）",
+    "executed_by_orchestrator == False（只路由不执行，KANB-002）",
+    "'synthesize migration recommendation' 的 parents == [t_1a2b3c4d, t_5e6f7a8b]（两个 researcher 任务，KANB-005 依赖链）",
+    "'draft decision memo' 的 parents == [t_9c0d1e2f]（父任务 ID 为本批已创建的真实 task_id）",
+    "HERMES_TENANT='business-a' 已设置 → 每个 work_item.tenant == 'business-a'（验证清单第4项）",
+    "无 work_item 的 parents 中出现未在本批创建的 task_id（防止幻觉依赖）"
+  ]
+}

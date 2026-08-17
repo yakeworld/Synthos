@@ -1,0 +1,36 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：非交互发送新邮件（管道输入）+ 程序化列表（--output json），密码经 pass 管理",
+  "input": {
+    "command": "message send (non-interactive) + envelope list (programmatic parse)",
+    "args": [
+      "To: recipient@example.com",
+      "Subject: Test Message",
+      "Body: Hello from Himalaya!"
+    ],
+    "context": {
+      "himalaya_version_check": "himalaya --version",
+      "config_path": "~/.config/himalaya/config.toml",
+      "config_present": true,
+      "auth_cmd": "pass show email/smtp",
+      "folder_aliases": {
+        "inbox": "INBOX",
+        "sent": "Sent",
+        "drafts": "Drafts",
+        "trash": "Trash"
+      },
+      "server": "custom-imap"
+    }
+  },
+  "expected": {
+    "send_command": "cat << 'EOF' | himalaya template send\nFrom: you@example.com\nTo: recipient@example.com\nSubject: Test Message\n\nHello from Himalaya!\nEOF",
+    "list_command": "himalaya envelope list --output json",
+    "sent_status": {
+      "ok": true,
+      "exit_code": 0,
+      "editor_used": false,
+      "json_output_used": true
+    }
+  },
+  "weight": "critical"
+}

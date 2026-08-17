@@ -1,0 +1,23 @@
+{
+  "case_id": "case_002",
+  "description": "错误路径：扫描发现疑似未映射目录 skills/old-experiment/ → 先核后清，核验发现仍被在用技能引用 → 拒绝清理并返回结构化 Golden Error",
+  "input": {
+    "scan_targets": {
+      "skills_dir": "skills/",
+      "cron_dir": "cron/",
+      "evolution_state": "evolution-state.json"
+    },
+    "suspected_unmapped_dir": "skills/old-experiment/",
+    "context": {
+      "cron_references": 0,
+      "skill_view_calls": 0,
+      "live_skill_references": ["skills/core/task-router/SKILL.md 中引用 old-experiment 的 helper 脚本"]
+    }
+  },
+  "expected": {
+    "unmapped_dirs": ["skills/old-experiment/"],
+    "verification_passed": false,
+    "cleanup_executed": false
+  },
+  "weight": "critical"
+}

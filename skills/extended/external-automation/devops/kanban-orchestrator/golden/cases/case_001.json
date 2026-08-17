@@ -1,0 +1,55 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：多专家协作目标 → 展示任务图草案并获用户确认 → kanban_create 建卡并建立 parents 依赖链",
+  "input": {
+    "task_batch": [
+      "Analyze whether we should migrate to Postgres: cost comparison, performance comparison, synthesize recommendation, draft decision memo"
+    ],
+    "priorities": {
+      "research_cost": "high",
+      "research_performance": "high",
+      "synthesize": "critical",
+      "memo": "normal"
+    },
+    "context": {
+      "HERMES_TENANT": "business-a",
+      "user_confirmed_task_graph": true,
+      "task_graph_shown_before_create": true
+    }
+  },
+  "expected": {
+    "work_items": [
+      {
+        "task_id": "t_1a2b3c4d",
+        "title": "research: Postgres cost vs current",
+        "assignee": "researcher",
+        "parents": [],
+        "tenant": "business-a"
+      },
+      {
+        "task_id": "t_5e6f7a8b",
+        "title": "research: Postgres performance vs current",
+        "assignee": "researcher",
+        "parents": [],
+        "tenant": "business-a"
+      },
+      {
+        "task_id": "t_9c0d1e2f",
+        "title": "synthesize migration recommendation",
+        "assignee": "analyst",
+        "parents": ["t_1a2b3c4d", "t_5e6f7a8b"],
+        "tenant": "business-a"
+      },
+      {
+        "task_id": "t_3a4b5c6d",
+        "title": "draft decision memo",
+        "assignee": "writer",
+        "parents": ["t_9c0d1e2f"],
+        "tenant": "business-a"
+      }
+    ],
+    "task_graph_confirmed": true,
+    "executed_by_orchestrator": false
+  },
+  "weight": "critical"
+}

@@ -1,0 +1,37 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：代码变更任务完成 → 元数据写入 comment + kanban_block(review-required: ...)，不直接 complete",
+  "input": {
+    "task_list": [
+      {
+        "task_id": "t_1a2b3c4d",
+        "title": "implement rate limiter",
+        "assignee": "backend-eng",
+        "workspace_kind": "worktree",
+        "workspace_path": "/srv/repos/api/.worktrees/t_1a2b3c4d",
+        "body": "Add a token-bucket rate limiter keyed on user_id with IP fallback."
+      }
+    ],
+    "board_state": {
+      "HERMES_TENANT": null,
+      "kanban_show_status": "ready",
+      "prior_runs": []
+    }
+  },
+  "expected": {
+    "updated_board": {
+      "t_1a2b3c4d": {
+        "status": "blocked",
+        "block_reason": "review-required: rate limiter shipped, 14/14 tests pass — needs eyes on the user_id/IP fallback choice before merging",
+        "comment_metadata": {
+          "changed_files": ["rate_limiter.py", "tests/test_rate_limiter.py"],
+          "tests_run": 14,
+          "tests_passed": 14,
+          "diff_path": "/srv/repos/api/.worktrees/t_1a2b3c4d",
+          "decisions": ["user_id primary, IP fallback for unauthenticated requests"]
+        }
+      }
+    }
+  },
+  "weight": "critical"
+}

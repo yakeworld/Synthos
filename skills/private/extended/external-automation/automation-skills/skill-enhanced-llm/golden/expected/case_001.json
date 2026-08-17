@@ -1,0 +1,31 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "report": {
+      "skills": 27,
+      "cron_tasks": 21,
+      "total_runs": 1352,
+      "archived_tasks": 3,
+      "usage_ranking": true,
+      "sources": {
+        "skills_count": "ls skills/*/SKILL.md | wc -l",
+        "cron_tasks_count": "crontab -l | grep -c '^'",
+        "total_runs": "crontab -l 解析 + evolution-state.json 运行计数汇总（逐任务命令见报告附录）",
+        "archived_tasks": "evolution-state.json -> archived 列表长度"
+      }
+    },
+    "unmapped_dirs": [],
+    "report_published": true,
+    "v1_v2_consistent": true,
+    "note": "凡数必源：27/21/1352/3 每个数字都带采集命令溯源（SKIL-001）；v2 与 v1 同口径、evolution-state.json 为唯一数据源（SKIL-003 源一不二）；21 个 cron 任务统计命令已逐一验证可执行可复现（SKIL-004 统计可复）；无未映射目录，无需清理"
+  },
+  "verification": [
+    "report.skills == 27 且 report.sources.skills_count 为可执行命令（凡数必源，SKIL-001）",
+    "report.cron_tasks == 21 且 21 个 cron 统计命令均可执行、可复现（SKIL-004，验证清单2）",
+    "report.total_runs == 1352 且有采集口径与命令溯源（1352 次运行口径一致，验证清单2）",
+    "report.archived_tasks == 3 且溯源到 evolution-state.json（SKIL-003 唯一数据源）",
+    "v1_v2_consistent == True（v1 与 v2 使用率数据口径一致，源一不二）",
+    "unmapped_dirs == []（无清理需求，与 SKILL.md 示例1一致）",
+    "report_published == True（发布前验证全部通过：数据一致 + 命令可验 + 无误删）"
+  ]
+}

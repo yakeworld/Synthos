@@ -1,0 +1,27 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "diagnosis": "himalaya v1.2.0+ 静默忽略旧 [accounts.NAME.folder.alias] 子节，别名解析落到 canonical 名，Gmail 存 [Gmail]/Sent Mail 失败 → 发送命令退出码非零",
+    "fix": {
+      "config_change": "folder.aliases.sent = \"[Gmail]/Sent Mail\"",
+      "syntax_rule": "复数点分键 folder.aliases.X，直接位于 [accounts.NAME] 下"
+    },
+    "error": {
+      "context": "himalaya message send 退出码 1：SMTP 投递已成功但保存 Sent 失败。服务器为 Gmail，config 使用旧 [accounts.personal.folder.alias] 子节（单数），v1.2.0+ 静默忽略该语法导致别名解析失败。命中 HIMA-005（非零退出码+重试场景）与 HIMA-001（文件夹别名语法）。若此时盲目重跑发送，SMTP 将再次投递产生重复邮件。",
+      "recovery": [
+        "将 config.toml 中的别名改为 folder.aliases.sent = \"[Gmail]/Sent Mail\"（复数点分键，位于 [accounts.personal] 下；同时核对 inbox/drafts/trash 别名）",
+        "用 RUST_LOG=debug himalaya message send 重跑验证（HIMA-007），确认保存 Sent 成功后再执行第二次发送",
+        "严禁在诊断前重跑发送：SMTP 已投递成功，盲目重试会产生重复邮件（HIMA-005）"
+      ]
+    },
+    "smtp_retry_count": 1
+  },
+  "verification": [
+    "error.context 必须同时包含：退出码（1）+ 服务器类型（Gmail）+ 失败阶段定位（SMTP 成功但存 Sent 失败）+ 命中的基因（HIMA-005 与 HIMA-001）",
+    "smtp_retry_count == 1（诊断前不重跑发送，防重复邮件，HIMA-005）",
+    "error.recovery 长度 >= 2 且每条可操作",
+    "fix.config_change 使用 folder.aliases.X（复数点分键）语法，非旧 alias 子节（HIMA-001）",
+    "fix 后的重跑验证包含 RUST_LOG=debug（HIMA-007 调试定位）",
+    "诊断顺序正确：先检查别名配置 → 修配置 → 再允许第二次发送（非直接重试 SMTP）"
+  ]
+}
