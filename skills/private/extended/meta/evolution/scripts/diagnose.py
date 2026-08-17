@@ -8,7 +8,8 @@ Usage:
     python3 skills/extended/meta/evolution/scripts/diagnose.py
 """
 
-import os, json, subprocess, sys
+import os, json, re, subprocess, sys
+import yaml
 
 WORKDIR = os.environ.get('SYNTHOS_DIR', '/media/yakeworld/sda2/Synthos')
 os.chdir(WORKDIR)
@@ -17,6 +18,13 @@ os.chdir(WORKDIR)
 total_skills = 0
 yaml_valid_ct = 0
 encoding_corrupt = 0
+genes_section_ct = 0
+gene_ids_ct = 0
+gene_count_ok = 0
+gene_dup_ct = 0
+gene_section = r'^##\s+Genes'
+gene_id = re.compile(r'([A-Z]{2,4}-\d{3})')
+seen_gene_ids = {}
 
 for root, dirs, files in os.walk('skills'):
     for f in files:
@@ -33,12 +41,29 @@ for root, dirs, files in os.walk('skills'):
             parts = content.split('---')
             if len(parts) >= 3:
                 try:
-                    import yaml
                     fm = yaml.safe_load(parts[1])
                     if fm and isinstance(fm, dict):
                         yaml_valid_ct += 1
                 except:
                     pass
+
+            # Gene layer (v3 liveness inputs)
+            gm = re.search(gene_section, content, re.M)
+            if gm:
+                genes_section_ct += 1
+                rest = content[gm.start():]
+                nxt = re.search(r'\n##\s+(?!Genes)', rest)
+                seg = rest[:nxt.start()] if nxt else rest
+                ids = list(dict.fromkeys(gene_id.findall(seg)))
+                gene_ids_ct += len(ids)
+                if 4 <= len(ids) <= 8:
+                    gene_count_ok += 1
+                for gid in ids:
+                    seen_gene_ids[gid] = seen_gene_ids.get(gid, 0) + 1
+            else:
+                gene_ids_ct += 0
+
+gene_dup_ct = sum(v - 1 for v in seen_gene_ids.values() if v > 1)
 
 # Git tracking — exclude private/ (intentionally gitignored due to credentials)
 r = subprocess.run(['git', 'ls-files', 'skills/'], capture_output=True, text=True)
@@ -203,8 +228,21 @@ coverage = min(1.0, max(0.0, coverage))
 absorption = 1.0 - (total_dirty / total_skills) if total_skills else 0
 constitutional = 1.0
 
-overall = (structural * 0.25 + benchmark * 0.25 + optimize * 0.10 +
-           coverage * 0.10 + absorption * 0.10 + constitutional * 0.20)
+# ── LIVENESS (v3, gene-layer vitality) ─────────────────
+# 基因层活性: 进化最小单元 (Gene, CON v5.1 P7) 的存在/数量/唯一性
+#   section_pct: 有 ## Genes 小节的技能占比
+#   count_pct:   每技能 4-8 条 Gene (宪法标准) 达标占比
+#   unique_pct:  基因 ID 全库唯一性 = 1 - 重复数/总基因数
+# 当前权重: structural 0.20 / benchmark 0.20 / optimize 0.10 / coverage 0.10 /
+#           absorption 0.10 / constitutional 0.20 / liveness 0.10
+section_pct = genes_section_ct / total_skills if total_skills else 0
+count_pct = gene_count_ok / total_skills if total_skills else 0
+unique_pct = 1.0 - (gene_dup_ct / gene_ids_ct) if gene_ids_ct else 0.0
+liveness = min(1.0, section_pct * 0.40 + count_pct * 0.30 + unique_pct * 0.30)
+
+overall = (structural * 0.20 + benchmark * 0.20 + optimize * 0.10 +
+           coverage * 0.10 + absorption * 0.10 + constitutional * 0.20 +
+           liveness * 0.10)
 
 # ── OUTPUT ─────────────────────────────────────────────
 print(f"=== PROBE ===")
@@ -215,6 +253,12 @@ print(f"  Untracked: {untracked_public}")
 print(f"  Dirty SKILL.md: {dirty_sk}")
 print(f"  Total dirty: {total_dirty}")
 print(f"  Encoding corrupt: {encoding_corrupt}")
+
+print(f"\n=== LIVENESS (v3) ===")
+print(f"  Genes section: {genes_section_ct}/{total_skills} ({section_pct*100:.1f}%)  x0.40 = {section_pct*0.40:.4f}")
+print(f"  Count 4-8 ok:  {gene_count_ok}/{total_skills} ({count_pct*100:.1f}%)  x0.30 = {count_pct*0.30:.4f}")
+print(f"  Unique IDs:    {gene_ids_ct - gene_dup_ct}/{gene_ids_ct} (dups={gene_dup_ct})  x0.30 = {unique_pct*0.30:.4f}")
+print(f"  LIVENESS: {liveness:.4f}")
 
 print(f"\n=== BENCHMARK ===")
 print(f"  Version:      {ver_count}/{total_skills} ({vp*100:.1f}%)  x0.33 = {vp*0.33:.4f}")
@@ -230,6 +274,7 @@ dims = {
     'coverage': coverage,
     'absorption': absorption,
     'constitutional': constitutional,
+    'liveness': liveness,
 }
 for k, v in sorted(dims.items(), key=lambda x: x[1]):
     print(f"  {k:20s}: {v:.4f}")
@@ -237,13 +282,14 @@ for k, v in sorted(dims.items(), key=lambda x: x[1]):
 lowest = min(dims, key=dims.get)
 print(f"\n  LOWEST: {lowest} ({dims[lowest]:.4f})")
 
-print(f"\n=== OVERALL ===")
-print(f"  structural({structural:.4f})   x0.25 = {structural*0.25:.4f}")
-print(f"  benchmark({benchmark:.4f})    x0.25 = {benchmark*0.25:.4f}")
+print(f"\n=== OVERALL (v3, 7-dim) ===")
+print(f"  structural({structural:.4f})   x0.20 = {structural*0.20:.4f}")
+print(f"  benchmark({benchmark:.4f})    x0.20 = {benchmark*0.20:.4f}")
 print(f"  optimize({optimize:.4f})     x0.10 = {optimize*0.10:.4f}")
 print(f"  coverage({coverage:.4f})     x0.10 = {coverage*0.10:.4f}")
 print(f"  absorption({absorption:.4f})  x0.10 = {absorption*0.10:.4f}")
 print(f"  constitutional({constitutional:.4f}) x0.20 = {constitutional*0.20:.4f}")
+print(f"  liveness({liveness:.4f})     x0.10 = {liveness*0.10:.4f}")
 print(f"  ─────────────────────────────────────────")
 print(f"  OVERALL: {overall:.4f}")
 

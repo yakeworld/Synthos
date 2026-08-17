@@ -181,11 +181,13 @@ SELF_REFLECT → 漂移检测 + 宪法集成
 - 连续3轮无进展 → 降级至探索模式
 - 相同目标连续2次 → 自动切换到其他维度
 
-## DIAGNOSE 六维评分公式 (v2.21)
+## DIAGNOSE 评分公式 (v3, 七维, 2026-08-17 用户授权升级)
 
-**Overall** = structural × 0.25 + benchmark × 0.25 + optimize × 0.10 + coverage × 0.10 + absorption × 0.10 + constitutional × 0.20
+**Overall** = structural × 0.20 + benchmark × 0.20 + optimize × 0.10 + coverage × 0.10 + absorption × 0.10 + constitutional × 0.20 + liveness × 0.10
 
-> **公式验证（Cycle 175）**: cycle-174 值 structural=1.0, benchmark=0.9984, optimize=0.8, coverage=0.8, absorption=0.8798, constitutional=1.0 → 0.25+0.2496+0.08+0.08+0.08798+0.20 = 0.94758 ≈ 0.9476 ✓。**每次 RECORD 必须用此公式精确计算，不可估算。**
+> **v3 升级说明（cycle 264）**: 六维饱和（全 1.0 = 理论上限）后，用户裁决引入第 7 维 liveness（基因层活性），评估 CON v5.1 P7 确立的 Gene 进化单元层。原有六维权重等比收缩（structural/benchmark 0.25→0.20，其余不变）。
+
+> **公式验证（Cycle 175, 旧六维）**: cycle-174 值 structural=1.0, benchmark=0.9984, optimize=0.8, coverage=0.8, absorption=0.8798, constitutional=1.0 → 0.9476 ✓。**每次 RECORD 必须用 diagnose.py 实际输出值，不可估算、不可袭旧。**
 
 ### 子维度公式
 
@@ -218,9 +220,11 @@ SELF_REFLECT → 漂移检测 + 宪法集成
 **absorption** = 1.0 - (total_dirty_files / total_skills)
 **constitutional** = 1.0 (宪法不可修改，除非宪法变更)
 
-### 自动化脚本
-
-`scripts/diagnose.py` — 一键运行 PROBE + BENCHMARK + DIAGNOSE，输出六维评分和 Pareto 排序。
+**liveness** (v3 新增) = section_pct × 0.40 + count_pct × 0.30 + unique_pct × 0.30 — 基因层活性（CON v5.1 P7: Gene 为最小进化单位）
+- section_pct: 有 `## Genes` 小节的 SKILL.md 占比
+- count_pct: 每技能 4-8 条 Gene（宪法标准）达标占比
+- unique_pct: 基因 ID 全库唯一性 = 1 - 重复数/总基因数（1033 基因, 2026-08-17 重编号后 0 重复）
+- 设计意图: 基因层是 v2.24+ 的进化最小单元，活性退化（基因丢失/重复/数量越界）是六维无法检测的进化风险
 
 运行方式：
 ```bash
@@ -913,3 +917,4 @@ Nudge 系统 = 结构行为校正 (Structural Behavior Correction)。核心机�
 - **[EVOL-005]** 吸收外部方法论 → 执行五维评分筛选，剥离具体实现提取可移植原理，并压缩为3-5条文言格言注入现有协议
 - **[EVOL-006]** 多Agent并行进化 → 实施统一状态同步机制，防止各Agent独立演进导致的状态分叉与漂移
 - **[EVOL-007]** 验证技能或基准测试 → 独立计算验证结果（如diagnose.py独立计算optimize/coverage），严禁复用被验证对象的输出以避免自欺
+- **[EVOL-008]** 评分体系全维度饱和（1.0 理论上限） → 提请用户/宪法级裁决引入新维度；新维度必须锚定宪法原则（v3 liveness 锚定 CON v5.1 P7 基因层），引擎不自改公式

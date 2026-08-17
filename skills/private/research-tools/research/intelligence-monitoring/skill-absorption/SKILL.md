@@ -50,12 +50,12 @@ category: private
 
 > 紧凑策略表示。条件→策略。需要深度时参考完整文档。
 
-- **[SKIL-001]** 多源扫描场景 → 执行关键词轮转策略，按不同频率（每轮/每2轮）扫描 GitHub、Hermes 及 arXiv 以确保持续发现新源
-- **[SKIL-002]** 发现新项目或技能 → 统一记录至 `absorption-ledger.json` 单一台账，确保所有发现状态可追溯
-- **[SKIL-003]** 项目状态变更 → 严格遵循 tracking→evaluating→absorbed/deferred/archived 生命周期进行状态流转与记录
-- **[SKIL-004]** 执行深度吸收操作 → 必须生成五层吸收记录（`evolution/absorption-{project}.md`），未留痕者不视为有效吸收
-- **[SKIL-005]** 吸收完成后 → 先写入详细记录文件，再汇总追加至统一台账，最后按 OpenClaw merge pattern 进行格式归一化
-- **[SKIL-006]** 处理外部输入或代码 → 执行输入参数、类型及范围校验，拒绝执行未验证的任意代码以保障安全
+- **[SKIL-008]** 多源扫描场景 → 执行关键词轮转策略，按不同频率（每轮/每2轮）扫描 GitHub、Hermes 及 arXiv 以确保持续发现新源
+- **[SKIL-009]** 发现新项目或技能 → 统一记录至 `absorption-ledger.json` 单一台账，确保所有发现状态可追溯
+- **[SKIL-010]** 项目状态变更 → 严格遵循 tracking→evaluating→absorbed/deferred/archived 生命周期进行状态流转与记录
+- **[SKIL-011]** 执行深度吸收操作 → 必须生成五层吸收记录（`evolution/absorption-{project}.md`），未留痕者不视为有效吸收
+- **[SKIL-012]** 吸收完成后 → 先写入详细记录文件，再汇总追加至统一台账，最后按 OpenClaw merge pattern 进行格式归一化
+- **[SKIL-013]** 处理外部输入或代码 → 执行输入参数、类型及范围校验，拒绝执行未验证的任意代码以保障安全
 - **[SKIL-007]** 验证吸收结果或改进 → 基于 Golden 集合（Input/Output/Error）进行可执行、可记录、可复现的测试验证
 
 ## 项目追踪

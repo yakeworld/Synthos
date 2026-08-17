@@ -238,10 +238,10 @@ Use the tools from inside an agent; the CLI exists for the human at the terminal
 
 > 紧凑策略表示。条件→策略。需要深度时参考完整文档。
 
-- **[KANB-001]** 工作区类型为 `worktree` 且 `.git` 不存在 → 先从主仓库执行 `git worktree add` 初始化，再进入目录工作并提交
-- **[KANB-002]** 存在 `$HERMES_TENANT` 环境变量 → 读写持久化记忆时必须添加租户前缀以防止上下文跨租户泄漏
-- **[KANB-003]** 任务涉及代码变更且需人工审查 → 使用 `kanban_block` 并添加 `review-required:` 前缀，同时将结构化元数据写入评论而非直接完成
-- **[KANB-004]** 任务真正终结（如文档修改、无功能影响的修复） → 使用 `kanban_complete` 并附带结构化 metadata 供下游解析器使用
-- **[KANB-005]** 运行中创建了新的看板任务 → 仅将成功捕获的 `kanban_create` 返回 ID 传入 `created_cards`，严禁虚构或引用失败创建的 ID
-- **[KANB-006]** 需要阻塞任务等待人工决策 → 在 `kanban_block` 中用一句话明确具体决策点，并将详细背景上下文写入 `kanban_comment`
+- **[KANB-008]** 工作区类型为 `worktree` 且 `.git` 不存在 → 先从主仓库执行 `git worktree add` 初始化，再进入目录工作并提交
+- **[KANB-009]** 存在 `$HERMES_TENANT` 环境变量 → 读写持久化记忆时必须添加租户前缀以防止上下文跨租户泄漏
+- **[KANB-010]** 任务涉及代码变更且需人工审查 → 使用 `kanban_block` 并添加 `review-required:` 前缀，同时将结构化元数据写入评论而非直接完成
+- **[KANB-011]** 任务真正终结（如文档修改、无功能影响的修复） → 使用 `kanban_complete` 并附带结构化 metadata 供下游解析器使用
+- **[KANB-012]** 运行中创建了新的看板任务 → 仅将成功捕获的 `kanban_create` 返回 ID 传入 `created_cards`，严禁虚构或引用失败创建的 ID
+- **[KANB-013]** 需要阻塞任务等待人工决策 → 在 `kanban_block` 中用一句话明确具体决策点，并将详细背景上下文写入 `kanban_comment`
 - **[KANB-007]** 检测到历史运行记录（Retry 场景） → 分析前次运行的 `outcome` 和 `error` 以诊断失败原因（如超时、OOM），避免重复相同路径

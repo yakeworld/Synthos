@@ -293,10 +293,10 @@ Report: topic, layout, style, aspect, language, output path, files created.
 
 > 紧凑策略表示。条件→策略。需要深度时参考完整文档。
 
-- **[BAOY-001]** 用户输入包含特定关键词（如“高密度信息大图”） → 直接匹配预设的布局与风格组合，跳过基于内容结构的自动推断
-- **[BAOY-002]** 处理源数据或生成结构化内容时 → 严格保留原始数据与引用，禁止摘要或改写，但必须剥离所有凭证、密钥及敏感信息
-- **[BAOY-003]** 面对复杂或多主题内容且未指定布局时 → 默认采用 `bento-grid` 布局与 `craft-handmade` 风格，以平衡信息密度与视觉亲和力
-- **[BAOY-004]** 内容涉及时间线、流程或教程 → 优先选择 `linear-progression` 布局，并根据受众匹配 `craft-handmade` 或 `ikea-manual` 等线性引导风格
-- **[BAOY-005]** 内容涉及对比、层级或重叠概念 → 分别选用 `binary-comparison`、`hierarchical-layers` 或 `venn-diagram` 布局，以直观呈现逻辑关系
-- **[BAOY-006]** 内容涉及技术指标、KPI 或专业拆解 → 选用 `dashboard` 或 `structural-breakdown` 布局，搭配 `corporate-memphis` 或 `technical-schematic` 风格以增强专业感
-- **[BAOY-007]** 在结构化内容之前 → 先明确学习目标（Learning Objectives），并据此将内容转化为包含标题、标签及视觉元素描述的可视化结构
+- **[BAOY-008]** 用户输入包含特定关键词（如“高密度信息大图”） → 直接匹配预设的布局与风格组合，跳过基于内容结构的自动推断
+- **[BAOY-009]** 处理源数据或生成结构化内容时 → 严格保留原始数据与引用，禁止摘要或改写，但必须剥离所有凭证、密钥及敏感信息
+- **[BAOY-010]** 面对复杂或多主题内容且未指定布局时 → 默认采用 `bento-grid` 布局与 `craft-handmade` 风格，以平衡信息密度与视觉亲和力
+- **[BAOY-011]** 内容涉及时间线、流程或教程 → 优先选择 `linear-progression` 布局，并根据受众匹配 `craft-handmade` 或 `ikea-manual` 等线性引导风格
+- **[BAOY-012]** 内容涉及对比、层级或重叠概念 → 分别选用 `binary-comparison`、`hierarchical-layers` 或 `venn-diagram` 布局，以直观呈现逻辑关系
+- **[BAOY-013]** 内容涉及技术指标、KPI 或专业拆解 → 选用 `dashboard` 或 `structural-breakdown` 布局，搭配 `corporate-memphis` 或 `technical-schematic` 风格以增强专业感
+- **[BAOY-014]** 在结构化内容之前 → 先明确学习目标（Learning Objectives），并据此将内容转化为包含标题、标签及视觉元素描述的可视化结构

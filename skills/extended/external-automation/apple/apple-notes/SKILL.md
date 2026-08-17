@@ -150,10 +150,10 @@ memo notes -ex                    # Export to HTML/Markdown
 
 > 紧凑策略表示。条件→策略。需要深度时参考完整文档。
 
-- **[APPL-001]** 用户需要跨设备（iPhone/iPad/Mac）同步笔记 → 优先使用 Apple Notes (`memo`) 而非本地存储或 Obsidian
-- **[APPL-002]** 笔记内容包含图片或附件 → 拒绝直接编辑操作，提示限制并建议手动处理或仅查看
-- **[APPL-003]** 需要快速创建或查看笔记 → 使用 `memo notes -a "Title"` 或 `memo notes -s "query"` 进行非交互式操作
-- **[APPL-004]** 执行删除、移动或复杂编辑操作 → 启用交互式模式（`-d`, `-m`, `-e`）并确保终端支持 pty 以处理用户选择
-- **[APPL-005]** 用户请求仅用于 Agent 内部记忆且无需同步 → 使用 `memory` 工具而非 Apple Notes
-- **[APPL-006]** 需要导出笔记内容用于其他工具处理 → 使用 `memo notes -ex` 导出为 Markdown 或 HTML 格式
+- **[APPL-008]** 用户需要跨设备（iPhone/iPad/Mac）同步笔记 → 优先使用 Apple Notes (`memo`) 而非本地存储或 Obsidian
+- **[APPL-009]** 笔记内容包含图片或附件 → 拒绝直接编辑操作，提示限制并建议手动处理或仅查看
+- **[APPL-010]** 需要快速创建或查看笔记 → 使用 `memo notes -a "Title"` 或 `memo notes -s "query"` 进行非交互式操作
+- **[APPL-011]** 执行删除、移动或复杂编辑操作 → 启用交互式模式（`-d`, `-m`, `-e`）并确保终端支持 pty 以处理用户选择
+- **[APPL-012]** 用户请求仅用于 Agent 内部记忆且无需同步 → 使用 `memory` 工具而非 Apple Notes
+- **[APPL-013]** 需要导出笔记内容用于其他工具处理 → 使用 `memo notes -ex` 导出为 Markdown 或 HTML 格式
 - **[APPL-007]** 首次运行或权限缺失 → 检查 macOS 自动化权限（System Settings → Privacy → Automation）并引导用户授权

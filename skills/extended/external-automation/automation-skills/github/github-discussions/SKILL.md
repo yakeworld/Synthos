@@ -305,12 +305,12 @@ print('Comments:', d['comments'])
 
 > 紧凑策略表示。条件→策略。需要深度时参考完整文档。
 
-- **[GITH-001]** 创建 Discussion 时 → 必须使用 GraphQL `createDiscussion` mutation，因为 REST POST 端点返回 404
-- **[GITH-002]** 处理长文本或包含特殊字符的 Body 时 → 将内容写入临时 JSON 文件并通过 `--input` 参数执行，避免内联转义错误
-- **[GITH-003]** 获取 Repository 或 Category ID 时 → 必须通过 GraphQL 查询获取 Node ID，严禁混用 REST API 的整数 ID
-- **[GITH-004]** 执行创建操作前 → 检查仓库对象的 `has_discussions` 属性，若为 false 需先启用讨论功能
-- **[GITH-005]** 发布 A2A (Agent-to-Agent) 风格讨论时 → 遵循“单一技术概念 + 具体数据 + 开放问题”结构，禁止使用营销语言
-- **[GITH-006]** 执行批量 GraphQL 操作时 → 实施查询批处理策略以应对主要速率限制 (Primary Rate Limit)
+- **[GITH-008]** 创建 Discussion 时 → 必须使用 GraphQL `createDiscussion` mutation，因为 REST POST 端点返回 404
+- **[GITH-009]** 处理长文本或包含特殊字符的 Body 时 → 将内容写入临时 JSON 文件并通过 `--input` 参数执行，避免内联转义错误
+- **[GITH-010]** 获取 Repository 或 Category ID 时 → 必须通过 GraphQL 查询获取 Node ID，严禁混用 REST API 的整数 ID
+- **[GITH-011]** 执行创建操作前 → 检查仓库对象的 `has_discussions` 属性，若为 false 需先启用讨论功能
+- **[GITH-012]** 发布 A2A (Agent-to-Agent) 风格讨论时 → 遵循“单一技术概念 + 具体数据 + 开放问题”结构，禁止使用营销语言
+- **[GITH-013]** 执行批量 GraphQL 操作时 → 实施查询批处理策略以应对主要速率限制 (Primary Rate Limit)
 
 ## 示例 · EXAMPLES
 

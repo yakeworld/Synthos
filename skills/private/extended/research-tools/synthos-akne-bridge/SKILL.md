@@ -53,13 +53,13 @@ category: private
 
 > 紧凑策略表示。条件→策略。需要深度时参考完整文档。
 
-- **[SYNT-001]** 执行桥接修复前 → 必须运行 `akne-query.sh bridge` 诊断连接状态，确立“先诊后治”且以孤立节点归零为最终目标
-- **[SYNT-002]** 构建知识图谱边时 → 必须显式创建 `source_category` 等逆向边，确保知识流双向可达，避免单向依赖
-- **[SYNT-003]** 执行语义检索与数据注入时 → 必须同步推进 source 节点、content_summary 摘要、vectors.db 向量三条线，任一线断裂即导致检索残缺
-- **[SYNT-004]** 调用 Python 环境时 → 严格隔离边界，逻辑处理走 venv 3.11，AKNE 查询走系统 3.12，禁止跨环境 import
-- **[SYNT-005]** 处理 Synthos 论文目录时 → 必须规范化为 `01-manuscript`/`06-references`/`07-quality` 子目录结构，以便后续图谱映射
-- **[SYNT-006]** 连接孤立论文或技能时 → 依据领域关键词（如 BPPV、眼动、科研）手动映射至对应的 AKNE 分类及 Wiki 概念节点
-- **[SYNT-007]** 注入源节点元数据时 → 提取前 3KB 内容生成 `content_summary`、`content_hash` 及标题层级，以支持图内内容语义搜索
+- **[SYNT-009]** 执行桥接修复前 → 必须运行 `akne-query.sh bridge` 诊断连接状态，确立“先诊后治”且以孤立节点归零为最终目标
+- **[SYNT-010]** 构建知识图谱边时 → 必须显式创建 `source_category` 等逆向边，确保知识流双向可达，避免单向依赖
+- **[SYNT-011]** 执行语义检索与数据注入时 → 必须同步推进 source 节点、content_summary 摘要、vectors.db 向量三条线，任一线断裂即导致检索残缺
+- **[SYNT-012]** 调用 Python 环境时 → 严格隔离边界，逻辑处理走 venv 3.11，AKNE 查询走系统 3.12，禁止跨环境 import
+- **[SYNT-013]** 处理 Synthos 论文目录时 → 必须规范化为 `01-manuscript`/`06-references`/`07-quality` 子目录结构，以便后续图谱映射
+- **[SYNT-014]** 连接孤立论文或技能时 → 依据领域关键词（如 BPPV、眼动、科研）手动映射至对应的 AKNE 分类及 Wiki 概念节点
+- **[SYNT-015]** 注入源节点元数据时 → 提取前 3KB 内容生成 `content_summary`、`content_hash` 及标题层级，以支持图内内容语义搜索
 
 ## 当前状态（2026-06-13 全面修复后）
 

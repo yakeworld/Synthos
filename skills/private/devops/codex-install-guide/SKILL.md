@@ -115,12 +115,12 @@ codex -p amax exec "echo test"
 # Codex Install Guide
 ## Genes (策略基因)
 > 紧凑策略表示。条件→策略。需要深度时参考完整文档。
-- **[CODE-001]** 安装 Codex CLI 时 → 必须使用官方包 `@openai/codex`，严禁使用已移除的旧包名 `@openai/codexec`
-- **[CODE-002]** 遇到第三方打包器（如 `@codexapi/codexclaude`）时 → 拒绝安装，防止其覆盖 vLLM 配置或修改指向付费端点
-- **[CODE-003]** 需要与 `opencode` 共存时 → 利用二进制名及配置路径（`~/.codex` vs `~/.local/share/opencode`）的天然隔离实现互不干扰
-- **[CODE-004]** 安装完成后 → 执行 `which codex` 和 `codex --version` 以验证二进制路径有效且版本无报错
-- **[CODE-005]** 配置多节点 Profile 时 → 确保 `~/.codex/profiles/` 下存在所有 cron 脚本引用的 profile 文件，避免批量超时
-- **[CODE-006]** 调试 `codex exec` 超时问题时 → 优先检查对应 profile 文件是否存在，因为缺失 profile 会导致无具体错误信息的静默超时
+- **[CODE-022]** 安装 Codex CLI 时 → 必须使用官方包 `@openai/codex`，严禁使用已移除的旧包名 `@openai/codexec`
+- **[CODE-023]** 遇到第三方打包器（如 `@codexapi/codexclaude`）时 → 拒绝安装，防止其覆盖 vLLM 配置或修改指向付费端点
+- **[CODE-024]** 需要与 `opencode` 共存时 → 利用二进制名及配置路径（`~/.codex` vs `~/.local/share/opencode`）的天然隔离实现互不干扰
+- **[CODE-025]** 安装完成后 → 执行 `which codex` 和 `codex --version` 以验证二进制路径有效且版本无报错
+- **[CODE-026]** 配置多节点 Profile 时 → 确保 `~/.codex/profiles/` 下存在所有 cron 脚本引用的 profile 文件，避免批量超时
+- **[CODE-027]** 调试 `codex exec` 超时问题时 → 优先检查对应 profile 文件是否存在，因为缺失 profile 会导致无具体错误信息的静默超时
 
 ## 示例 · EXAMPLES
 

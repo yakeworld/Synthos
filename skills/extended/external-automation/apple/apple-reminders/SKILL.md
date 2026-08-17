@@ -159,12 +159,12 @@ Accepted by `--due` and date filters:
 
 > 紧凑策略表示。条件→策略。需要深度时参考完整文档。
 
-- **[APPL-001]** 用户提及 "remind me" 或 "提醒" → 必须澄清是指 Apple Reminders（同步至设备）还是 Agent Cronjob 警报
-- **[APPL-002]** 创建提醒事项前 → 必须确认提醒内容、所属列表及截止日期
-- **[APPL-003]** 需要程序化解析提醒数据时 → 使用 `--json` 参数获取结构化输出
-- **[APPL-004]** 用户意图涉及日历事件或项目管理 → 拒绝使用 Apple Reminders，转而推荐 Calendar 或 GitHub/Notion
-- **[APPL-005]** 执行 `remindctl` 命令前 → 检查 macOS 环境及 Reminders 权限授权状态
-- **[APPL-006]** 处理日期参数时 → 支持 `today`/`tomorrow` 等相对时间或 `YYYY-MM-DD HH:mm` 等绝对时间格式
+- **[APPL-014]** 用户提及 "remind me" 或 "提醒" → 必须澄清是指 Apple Reminders（同步至设备）还是 Agent Cronjob 警报
+- **[APPL-015]** 创建提醒事项前 → 必须确认提醒内容、所属列表及截止日期
+- **[APPL-016]** 需要程序化解析提醒数据时 → 使用 `--json` 参数获取结构化输出
+- **[APPL-017]** 用户意图涉及日历事件或项目管理 → 拒绝使用 Apple Reminders，转而推荐 Calendar 或 GitHub/Notion
+- **[APPL-018]** 执行 `remindctl` 命令前 → 检查 macOS 环境及 Reminders 权限授权状态
+- **[APPL-019]** 处理日期参数时 → 支持 `today`/`tomorrow` 等相对时间或 `YYYY-MM-DD HH:mm` 等绝对时间格式
 
 ## 示例 · EXAMPLES
 
