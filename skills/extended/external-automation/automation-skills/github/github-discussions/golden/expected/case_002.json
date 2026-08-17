@@ -1,0 +1,36 @@
+{
+  "test_id": "case_002",
+  "result": "error",
+  "error": {
+    "code": "DISCUSSIONS_NOT_ENABLED",
+    "message": "Repository 'synthos-labs/legacy-monorepo' has discussions disabled (has_discussions=false). Enable discussions via repo Settings > General > Features before creating a discussion.",
+    "message_contains": ["has_discussions", "enable discussions", "Settings"],
+    "http_status": null
+  },
+  "steps_executed": ["precheck_has_discussions"],
+  "steps_skipped": ["step1_get_repo_id", "step2_get_category_id", "step3_create_discussion", "step4_verify_creation"],
+  "checks": [
+    {"field": "error.code", "type": "exact_match", "value": "DISCUSSIONS_NOT_ENABLED", "critical": true},
+    {"field": "error.message", "type": "contains", "value": "has_discussions", "critical": true},
+    {"field": "error.message", "type": "contains", "value": "enable discussions", "critical": true},
+    {"field": "createDiscussion_attempted", "type": "exact_match", "value": false, "critical": true},
+    {"field": "temp_file_created", "type": "exact_match", "value": false, "critical": true},
+    {"field": "steps_executed", "type": "exact_match", "value": ["precheck_has_discussions"], "critical": true}
+  ],
+  "behavior_on_error": {
+    "must_report": true,
+    "must_crash": false,
+    "error_message_must_include": ["has_discussions", "false", "enable discussions"],
+    "must_not_attempt": ["GraphQL createDiscussion mutation", "REST POST to /discussions", "writing temp JSON file"]
+  },
+  "remediation": {
+    "action": "Enable discussions in repository settings",
+    "path": "Settings > General > Features > Discussions",
+    "alternative": "Use a different repository that has discussions enabled"
+  },
+  "security_constraints": [
+    "No GraphQL mutation sent to GitHub API",
+    "No temp file written to /tmp",
+    "No discussion created on any repository"
+  ]
+}

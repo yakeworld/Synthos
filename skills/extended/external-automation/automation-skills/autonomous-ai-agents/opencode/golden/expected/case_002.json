@@ -1,0 +1,70 @@
+{
+  "test_id": "case_002",
+  "result": "error",
+  "overall_status": "degraded",
+  "diagnosis_steps": [
+    {
+      "step": 1,
+      "name": "process_check",
+      "expected_observation": "no opencode process found",
+      "interpretation": "NORMAL — non-daemon service",
+      "is_fault": false,
+      "passed": true
+    },
+    {
+      "step": 2,
+      "name": "installation_check",
+      "expected_output": "1.17.8",
+      "passed": true
+    },
+    {
+      "step": 3,
+      "name": "config_check",
+      "passed": true
+    },
+    {
+      "step": 4,
+      "name": "backend_connectivity",
+      "expected": {
+        "hermes-primary": "connection succeeded",
+        "amax-fallback": "connection FAILED — 100.82.27.51:8000 unreachable",
+        "hermes-fallback": "connection succeeded"
+      },
+      "passed": false,
+      "fault_node": "amax-fallback",
+      "fault_node_host": "100.82.27.51",
+      "fault_node_port": 8000
+    },
+    {
+      "step": 5,
+      "name": "usage_history",
+      "passed": true
+    }
+  ],
+  "conclusion": "OpenCode installation and configuration are healthy. 2 of 3 backend nodes reachable. AMAX fallback (100.82.27.51:8000) is DOWN.",
+  "faults_found": [
+    {
+      "node": "amax-fallback",
+      "host": "100.82.27.51",
+      "port": 8000,
+      "symptom": "port unreachable (nc timeout)",
+      "likely_causes": [
+        "Tailscale connection to AMAX node dropped",
+        "vLLM container on AMAX is not running"
+      ],
+      "fix_steps": [
+        "Check Tailscale status: tailscale status",
+        "Verify vLLM container: docker ps | grep vllm (on AMAX node)",
+        "If Tailscale down: restart tailscaled service",
+        "If vLLM down: restart the vLLM container"
+      ]
+    }
+  ],
+  "misdiagnosis_guard": {
+    "must_not_report_as": "opencode_process_fault",
+    "explanation": "Backend node unreachability is a network/infrastructure issue, NOT an OpenCode process fault. OpenCode is correctly reported as healthy (no process = normal)."
+  },
+  "action_required": true,
+  "severity": "medium",
+  "impact": "AMAX fallback unavailable. Primary (hermes) and secondary (hermes-fallback) still work. No immediate outage but reduced redundancy."
+}

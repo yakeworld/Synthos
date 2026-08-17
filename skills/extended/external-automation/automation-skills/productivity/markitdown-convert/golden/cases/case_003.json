@@ -1,0 +1,31 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径：无文本层/损坏 PDF，markitdown 与 pdftotext 均返回 0 字符",
+  "input": {
+    "file_path": "06-ref/pdfs/Cracked1995.pdf",
+    "context": {
+      "pdf_header": "%PDF- 存在但 xref 表破损",
+      "markitdown_output_chars": 0,
+      "pdftotext_output_chars": 0,
+      "mutool_error": "cannot find page tree"
+    }
+  },
+  "expected": {
+    "command": "uvx markitdown 06-ref/pdfs/Cracked1995.pdf；失败后 pdftotext 06-ref/pdfs/Cracked1995.pdf -",
+    "result": {
+      "status": "error",
+      "md_path": "06-ref/pdfs_md/Cracked1995.md",
+      "fallback": "placeholder",
+      "placeholder_content": "# Cracked1995\n\n[PDF无法提取文本 — 需手动补摘要或走OCR]\n"
+    },
+    "error": {
+      "context": "markitdown 与 pdftotext 均输出 0 字符；mutool 报 cannot find page tree（损坏 PDF）",
+      "recovery": [
+        "寻找 arXiv/PMC 替代版本（多数经典论文有线上全文）",
+        "手动补写摘要（知名论文适用）",
+        "走 OCR 管线（marker-pdf / pdftoppm + tesseract）"
+      ]
+    }
+  },
+  "weight": "critical"
+}

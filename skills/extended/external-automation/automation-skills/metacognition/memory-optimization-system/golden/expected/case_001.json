@@ -1,0 +1,26 @@
+{
+  "case_id": "case_001",
+  "expected": {
+    "offload": {
+      "triggered": true,
+      "level": "L1",
+      "context_refs": ["~/.hermes/context_refs/<hash>.md"],
+      "context_refs_count": 1,
+      "summary": "mermaid",
+      "summary_present_in_reply": true,
+      "raw_text_in_reply": false
+    },
+    "optimization_report": {
+      "offloaded": ["~/.hermes/context_refs/<hash>.md"],
+      "merged": [],
+      "cleaned": []
+    },
+    "checks": [
+      {"id": "c1", "check": "offload.level == 'L1'", "weight": "critical", "expected": "L1"},
+      {"id": "c2", "check": "context_refs 恰好包含 1 个 hash 路径", "weight": "critical", "expected": 1},
+      {"id": "c3", "check": "回复包含 Mermaid 摘要", "weight": "high", "expected": true},
+      {"id": "c4", "check": "回复不内联 45KB 原文", "weight": "high", "expected": false},
+      {"id": "c5", "check": "清理未触发（空间 62% < 85%）", "weight": "medium", "expected": "cleaned 为空列表"}
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "id": "case_002",
+  "title": "--deliver-only 透传订阅（正常路径）",
+  "type": "happy_path",
+  "skill": "webhook-subscriptions",
+  "input": {
+    "request": "创建匹配通知订阅：收到 match 事件直接推送到 Telegram，不经 LLM",
+    "subscribe": {
+      "name": "antenna-matches",
+      "prompt": "🎉 New match: {match.user_name} matched with you!",
+      "description": "Antenna match notifications",
+      "deliver": "telegram",
+      "deliver_chat_id": "123456789",
+      "deliver_only": true
+    },
+    "incoming_post": {
+      "payload": {"match": {"user_name": "Bob"}},
+      "signature_valid": true
+    }
+  },
+  "checks": {
+    "critical": [
+      "POST 成功返回 200 OK",
+      "不触发 agent run（零 LLM 成本，WEBH-003）",
+      "渲染后的 Prompt 作为消息体直接送达 telegram"
+    ],
+    "high": [
+      "目标不可达时返回 502（上游可重试）",
+      "HMAC 签名、限流、幂等仍然生效"
+    ],
+    "medium": [
+      "消息体为 '🎉 New match: Bob matched with you!'"
+    ]
+  }
+}

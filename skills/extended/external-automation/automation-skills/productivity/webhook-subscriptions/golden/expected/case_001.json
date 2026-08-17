@@ -1,0 +1,34 @@
+{
+  "id": "case_001",
+  "status": "ok",
+  "result": {
+    "webhook_url": "https://gw.example.com/hooks/github-issues",
+    "secret": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b",
+    "subscription_persisted": {
+      "file": "~/.hermes/webhook_subscriptions.json",
+      "name": "github-issues"
+    },
+    "test_run": {
+      "command": "hermes webhook test github-issues --payload '{\"issue\": {\"number\": 42, \"title\": \"Fix login bug\", \"user\": {\"login\": \"alice\"}, \"body\": \"Steps...\"}, \"action\": \"opened\"}'",
+      "rendered_prompt": "New GitHub issue #42: Fix login bug\n\nAction: opened\nAuthor: alice\nBody:\nSteps...\n\nPlease triage this issue.",
+      "agent_run_triggered": true,
+      "delivery": {
+        "target": "telegram",
+        "chat_id": "-100123456789",
+        "delivered": true
+      }
+    }
+  },
+  "upstream_config_hint": {
+    "payload_url": "https://gw.example.com/hooks/github-issues",
+    "content_type": "application/json",
+    "events": "Issues",
+    "secret_env": "X-Hub-Signature-256"
+  },
+  "assertions": {
+    "gateway_checked_before_subscribe": true,
+    "secret_is_40_hex_chars": true,
+    "no_unrendered_placeholders": true,
+    "subscription_in_list": true
+  }
+}

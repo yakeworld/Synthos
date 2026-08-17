@@ -1,0 +1,33 @@
+{
+  "case_id": "case_001",
+  "skill": "openhue",
+  "scene": "正常路径：睡前预设 — 房间调光 + 暖色温（批量使用 set room）",
+  "genes": ["OPEN-003", "OPEN-005"],
+  "input": {
+    "user_request": "把卧室灯调到睡前氛围",
+    "precondition": "openhue get room 已列出房间 'Bedroom'（名称区分大小写）",
+    "command": "openhue set room \"Bedroom\" --on --brightness 20 --temperature 450",
+    "params": {
+      "resource": "room",
+      "name": "Bedroom",
+      "on": true,
+      "brightness": 20,
+      "temperature": 450
+    }
+  },
+  "checks": {
+    "critical": [
+      "命令使用 set room 批量控制而非逐灯（OPEN-005）",
+      "brightness=20 在 0-100 区间",
+      "temperature=450 在 153-500 mirek 区间",
+      "房间名称与 openhue get room 输出精确一致（区分大小写，OPEN-002）"
+    ],
+    "high": [
+      "组合亮度+色温体现氛围预设而非单一开关（OPEN-003）",
+      "退出码 0"
+    ],
+    "medium": [
+      "可复用于 cron 定时任务（OPEN-006）"
+    ]
+  }
+}

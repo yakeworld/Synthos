@@ -1,0 +1,24 @@
+{
+  "case_id": "case_002",
+  "name": "内核执行 NameError + 首次超时重试（错误路径）",
+  "genes": ["JUPY-003", "JUPY-007", "JUPY-008"],
+  "input": {
+    "request": "验证 notebook 可从头运行，但其中引用了未定义变量",
+    "server": {"url": "http://127.0.0.1:8888", "online": true},
+    "session": {"notebook": "verify.ipynb", "exists": true, "kernel_just_restarted": true},
+    "commands": [
+      {
+        "op": "execute",
+        "cmd": "uv run $SCRIPT execute --path verify.ipynb --code 'result = undefined_var * 2' --compact",
+        "expected_error": "NameError"
+      },
+      {
+        "op": "restart-run-all",
+        "cmd": "uv run $SCRIPT restart-run-all --path verify.ipynb --save-outputs --timeout 60 --compact",
+        "note": "内核刚重启，首次执行可能超时（JUPY-003），预期重试一次",
+        "timeout": 60
+      }
+    ]
+  },
+  "notes": "错误路径：execute 触发 NameError，需解析 ename/evalue；restart-run-all 首次超时后重试一次。期望错误被结构化捕获并定位根因，重试后流程继续。"
+}

@@ -1,0 +1,46 @@
+{
+  "case_id": "case_001",
+  "type": "happy_path",
+  "title": "被动发现通道初始化：AGENTS.md + README 链接",
+  "skill_contract": {
+    "input": "request: str, context: dict",
+    "output": "result: dict",
+    "gene": "AIO-001"
+  },
+  "input": {
+    "request": "为新项目仓库建立 AI 智能体间被动发现机制",
+    "context": {
+      "repo_path": "/repo",
+      "project_name": "Synthos",
+      "architecture_summary": "自主进化科研认知操作系统：6 认知原子 + 进化引擎",
+      "license": "MIT",
+      "contact": "discussion@a2a"
+    }
+  },
+  "checks": [
+    {
+      "id": "agents_md_at_root",
+      "severity": "critical",
+      "description": "AGENTS.md 存在于项目根目录 /repo/AGENTS.md",
+      "assert": "file_exists:/repo/AGENTS.md"
+    },
+    {
+      "id": "agents_md_structure",
+      "severity": "critical",
+      "description": "AGENTS.md 含 AGENT-TO-AGENT 注释块、Architecture 段、For AI Agents 指引",
+      "assert": "contains_all:[AGENT-TO-AGENT, Architecture, For AI Agents]"
+    },
+    {
+      "id": "readme_link",
+      "severity": "high",
+      "description": "README.md 含指向 AGENTS.md 的链接",
+      "assert": "contains:AGENTS.md"
+    },
+    {
+      "id": "git_tracked",
+      "severity": "high",
+      "description": "git ls-files AGENTS.md 有输出（已跟踪）",
+      "assert": "git_ls_files_nonempty:AGENTS.md"
+    }
+  ]
+}

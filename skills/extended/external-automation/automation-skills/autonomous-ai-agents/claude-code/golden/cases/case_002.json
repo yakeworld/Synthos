@@ -1,0 +1,39 @@
+{
+  "case_id": "case_002",
+  "type": "error_path",
+  "title": "错误路径：CLI 未安装（which claude 为空）→ 失败并给出安装恢复建议",
+  "skill_contract": {
+    "input": "request: str, context: dict",
+    "output": "result: dict",
+    "gene": "CLAU-005 / RULES 第3条"
+  },
+  "input": {
+    "request": "用 claude 实现功能 X",
+    "context": {
+      "mode": "single_task",
+      "task": "Implement feature X in file Y",
+      "cli_available": false,
+      "which_claude_output": ""
+    }
+  },
+  "checks": [
+    {
+      "id": "precheck_detects_missing_cli",
+      "severity": "critical",
+      "description": "执行前 `which claude` 为空必须被检测为 CLI 缺失（CLAU-005），不得盲目执行 claude 命令",
+      "assert": "result.status==error AND result.errors[0].code==CLI_NOT_FOUND"
+    },
+    {
+      "id": "no_silent_execution",
+      "severity": "critical",
+      "description": "CLI 缺失时禁止静默执行 claude 命令（避免挂起或命令未找到）",
+      "assert": "launch.command NOT executed OR result.status==error"
+    },
+    {
+      "id": "error_has_recovery",
+      "severity": "high",
+      "description": "错误信息必须含上下文与恢复建议（RULES 第3条），给出安装命令",
+      "assert": "errors[0].recovery contains 'npm install -g @anthropic-ai/claude-code' OR 'pip install claude-code-cli'"
+    }
+  ]
+}

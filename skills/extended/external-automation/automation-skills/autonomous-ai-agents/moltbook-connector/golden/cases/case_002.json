@@ -1,0 +1,23 @@
+{
+  "test_id": "case_002",
+  "description": "Registration with already-taken agent name (error path, HTTP 409)",
+  "gene_refs": ["MOLT-002", "MOLT-006"],
+  "input": {
+    "action": "register_and_heartbeat",
+    "params": {
+      "agent_name": "MoltbookAdmin",
+      "agent_description": "This name is already taken on Moltbook to test the 409 error path.",
+      "heartbeat_after_registration": false,
+      "api_base": "https://www.moltbook.com/api/v1"
+    },
+    "context": {
+      "capture_method": "execute_code",
+      "notes": "Expect HTTP 409 with 'Agent name already taken'. Skill must report error, NOT proceed to claim/key-save/cron steps."
+    }
+  },
+  "preconditions": {
+    "network": "reachable",
+    "api_endpoint": "https://www.moltbook.com/api/v1/agents/register",
+    "auth": "none_required_for_registration"
+  }
+}

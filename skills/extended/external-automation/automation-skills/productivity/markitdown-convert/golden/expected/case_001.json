@@ -1,0 +1,20 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "command": "uvx markitdown 06-ref/pdfs/Smith1988.pdf > 06-ref/pdfs_md/Smith1988.md",
+    "result": {
+      "status": "ok",
+      "md_path": "06-ref/pdfs_md/Smith1988.md",
+      "fallback": null,
+      "chars_gt": 50
+    },
+    "note": "学术 PDF 管线强制步骤（MARK-001）；单文件转换走 uvx markitdown 直转（MARK-002），PDF 与 MD 共存在于 pdfs_md/ 子目录"
+  },
+  "verification": [
+    "命令 flag 结构为 `uvx markitdown <pdf> > <md>`，目标目录为 pdfs_md/",
+    "执行前确认依赖安装方式为 `uv tool install markitdown --with markitdown[pdf]`，未触发 MissingDependencyException（MARK-006）",
+    "输出 .md 文件存在且字符数 > 50",
+    "结果 dict 键名稳定（status/md_path/fallback/chars_gt），status == 'ok' 且 fallback == null",
+    "保留章节标题与 LaTeX 内联公式（转换质量抽查，验证清单第 2 项）"
+  ]
+}

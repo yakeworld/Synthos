@@ -1,0 +1,28 @@
+{
+  "case_id": "case_002",
+  "description": "正常路径：PDF 源上传前 pdftotext 预检 + 上传后状态复核",
+  "input": {
+    "action": "source_add",
+    "params": {
+      "file": "papers/Smith1988.pdf",
+      "precheck": {
+        "pdftotext_chars": 214000
+      },
+      "post_upload": {
+        "source_list_status": "ready",
+        "retries_needed": 0
+      }
+    }
+  },
+  "expected": {
+    "command": "pdftotext papers/Smith1988.pdf - | wc -c && notebooklm source add papers/Smith1988.pdf && notebooklm source list",
+    "result": {
+      "status": "ok",
+      "source_type": "pdf_direct",
+      "precheck_chars": 214000,
+      "post_upload_status": "ready",
+      "fallback": null
+    }
+  },
+  "weight": "high"
+}

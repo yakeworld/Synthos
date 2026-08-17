@@ -1,0 +1,28 @@
+{
+  "case_id": "case_001",
+  "skill": "youtube-content",
+  "scene": "正常路径：标准 watch URL，未指定输出格式",
+  "gene": "YOUT-001",
+  "input": {
+    "command": "python3 scripts/fetch_transcript.py \"https://www.youtube.com/watch?v=dQw4w9WgXcQ\" --timestamps",
+    "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "flags": ["--timestamps"],
+    "language": null,
+    "user_request": "summarize this video"
+  },
+  "checks": {
+    "critical": [
+      "extract_video_id 从 URL 提取 11 位 ID 'dQw4w9WgXcQ'",
+      "转录 JSON 输出包含 video_id / segment_count / duration / full_text 字段",
+      "full_text 非空",
+      "未指定格式时默认生成 5-10 句摘要（YOUT-001）"
+    ],
+    "high": [
+      "timestamped_text 存在且每行以时间戳开头（H:MM:SS 或 M:SS 格式）",
+      "language 字段与可用转录一致"
+    ],
+    "medium": [
+      "segment_count > 0 且 duration 合理"
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "response": {
+      "status_code": 200,
+      "object": "list",
+      "results[0].properties_present": true,
+      "jq_check": "jq '.results[0].properties'"
+    },
+    "note": "查询端点必须为 /v1/data_sources/{data_source_id}/query（NOTI-004），data_source_id 与 database_id 不可混用（NOTI-002）；filter 结构与 select 属性匹配；响应经 jq 管道解析（NOTI-006）"
+  },
+  "verification": [
+    "请求为 POST /v1/data_sources/{id}/query，端点 ID 为 data_source_id（来自 search 结果的 object == 'data_source'）",
+    "body.filter 为 {\"property\": \"Status\", \"select\": {\"equals\": \"...\"}}，sorts 数组含 property+direction",
+    "响应 status 200 且 object == 'list'",
+    "jq '.results[0].properties' 输出存在且字段结构稳定（properties 为 dict）",
+    "空结果时 results 为 [] 而非报错（边界行为）"
+  ]
+}

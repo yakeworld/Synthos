@@ -1,0 +1,26 @@
+{
+  "case_id": "case_002",
+  "expected": {
+    "status": "error_then_recovered",
+    "execute_error": {
+      "status": "error",
+      "ename": "NameError",
+      "evalue": "name 'undefined_var' is not defined",
+      "root_cause": "引用了未定义变量 undefined_var",
+      "parsed_from_json": true
+    },
+    "restart_run_all": {
+      "first_attempt": "timeout",
+      "retried": true,
+      "retries_attempted": 1,
+      "second_attempt": "ok"
+    },
+    "checks": [
+      {"id": "c1", "check": "错误返回 JSON 的 ename 解析为 NameError", "weight": "critical", "expected": "NameError"},
+      {"id": "c2", "check": "evalue 指向 undefined_var 未定义", "weight": "critical", "expected": true},
+      {"id": "c3", "check": "首次超时后重试一次（而非立即报错）", "weight": "critical", "expected": true},
+      {"id": "c4", "check": "长耗时操作使用显式 --timeout 60 覆盖默认 30s", "weight": "high", "expected": 60},
+      {"id": "c5", "check": "错误处理包含上下文与恢复建议（重定义变量或修正引用）", "weight": "medium", "expected": true}
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "case_id": "case_002",
+  "expected": {
+    "fsrs_grades": {
+      "mem-101": "正常（R=0.43，非健康/非低可检索；因过期被清理优先移除）",
+      "mem-102": "正常（R=0.74，access=1 不达健康档 access>=2）",
+      "mem-103": "健康（R=0.82>0.7 且 access_count=6>=2）",
+      "mem-104": "可移除（access_count=0 且 age_days=21>14）"
+    },
+    "remove_candidates": ["mem-104"],
+    "optimization_report": {
+      "offloaded": [],
+      "merged": [],
+      "cleaned": ["mem-104", "mem-101"]
+    },
+    "iron_rule": {
+      "triggered": true,
+      "tier": ">90%",
+      "action": "清理+压缩",
+      "before_space_pct": 92,
+      "after_space_pct": {"min": 70, "max": 89},
+      "capacity_changed": true
+    },
+    "checks": [
+      {"id": "c1", "check": "mem-104 分级为『可移除』", "weight": "critical", "expected": "可移除"},
+      {"id": "c2", "check": "mem-103 分级为『健康』", "weight": "critical", "expected": "健康"},
+      {"id": "c3", "check": "空间 92% 触发『清理+压缩』tier", "weight": "critical", "expected": ">90%"},
+      {"id": "c4", "check": "清理后空间落在 [70, 89] 区间", "weight": "high", "expected": [70, 89]},
+      {"id": "c5", "check": "remove 后 capacity X/2200 数字变化（无 hidden Unicode 静默失败）", "weight": "high", "expected": true},
+      {"id": "c6", "check": "无 L1 卸载发生（输出 4KB < 10KB）", "weight": "medium", "expected": "offloaded 为空列表"}
+    ]
+  }
+}

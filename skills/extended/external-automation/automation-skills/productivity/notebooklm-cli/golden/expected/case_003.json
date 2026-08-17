@@ -1,0 +1,26 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "result": {
+      "status": "fallback_manual",
+      "report_path": "<paper-dir>/07-quality/layer-b-report.md",
+      "dimensions": ["原创性/重要性", "方法学严谨性", "结果可信性/可复现性", "文献引用质量", "写作/结构"],
+      "thresholds": { "T1": ">=0.85", "T2": "0.75-0.84", "fail": "<0.75" }
+    },
+    "error": {
+      "context": "notebooklm list 在 CSRF token 阶段抛 httpx.ConnectTimeout；curl notebooklm.google.com=000 而 httpbin.org=200（Google 定向阻断）",
+      "recovery": [
+        "配置代理后重试 notebooklm 命令",
+        "启用 Manual Fallback：pdftotext 提取全文 + 五维人工评估（NOTE-006）"
+      ]
+    },
+    "note": "网络不可达时不放弃 Layer B（NOTE-006）：先双 curl 诊断区分整机断网与 Google 阻断，再走 Manual Fallback；报告按 layer-b-audit-template 模板，评分阈值与在线版完全一致"
+  },
+  "verification": [
+    "错误信息含上下文：异常类型（httpx.ConnectTimeout）、CSRF 阶段、两条 curl 对比结果（000 vs 200）",
+    "未把 Google 定向阻断误判为整机断网（httpbin.org 200 是关键反证）",
+    "Fallback 报告保存到 <paper-dir>/07-quality/layer-b-report.md 且覆盖五维评估",
+    "评分阈值不变：≥0.85=T1 / 0.75-0.84=T2 / <0.75 不通过",
+    "recovery 建议 ≥ 2 条（代理重试 + Manual Fallback），未静默放弃 Layer B"
+  ]
+}

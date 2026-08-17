@@ -1,0 +1,31 @@
+{
+  "case_id": "case_002",
+  "expected_result": {
+    "status": "error",
+    "mode": "single_task",
+    "launch": {
+      "command": null,
+      "background": false,
+      "notify_on_complete": false,
+      "pty": false
+    },
+    "checks": {
+      "precheck_detects_missing_cli": "pass",
+      "no_silent_execution": "pass",
+      "error_has_recovery": "pass"
+    },
+    "errors": [
+      {
+        "code": "CLI_NOT_FOUND",
+        "context": "`which claude` 返回空，Claude Code CLI 未安装（CLAU-005 要求执行前验证）",
+        "recovery": "安装 CLI：npm install -g @anthropic-ai/claude-code（或 pip install claude-code-cli），安装后重新执行 `which claude` 确认可用，再发起任务"
+      }
+    ],
+    "weight_score": 0.67
+  },
+  "pass_criteria": {
+    "all_critical": true,
+    "weighted_score_min": 0.8,
+    "note": "critical 检查要求技能在 CLI 缺失时正确失败并给出安装建议；launch.command 必须为 null（未执行），体现 no_silent_execution"
+  }
+}

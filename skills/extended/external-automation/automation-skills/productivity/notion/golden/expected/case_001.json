@@ -1,0 +1,20 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "response": {
+      "status_code": 200,
+      "object": "page",
+      "id_present": true,
+      "properties.Name.title[0].text.content": "Paper audit Q3",
+      "properties.Status.select.name": "Todo"
+    },
+    "note": "创建页面 parent 必须用 database_id（NOTI-002，2025-09-03 双 ID 区分）；属性 JSON 严格遵循类型规范（NOTI-005）；请求头带 Notion-Version: 2025-09-03（NOTI-001），key 仅来自环境变量"
+  },
+  "verification": [
+    "请求为 POST /v1/pages，headers 含 Notion-Version: 2025-09-03 与 Bearer（值取自 $NOTION_API_KEY，非硬编码字面量）",
+    "body.parent 为 {\"database_id\": \"...\"}（未误用 data_source_id）",
+    "Name 属性结构为 {\"title\": [{\"text\": {\"content\": \"...\"}}]}，Status 为 {\"select\": {\"name\": \"...\"}}（NOTI-005）",
+    "响应 status 200 且 object == 'page'，返回的 properties 与请求属性一致",
+    "响应经 jq 解析确认结构（如 jq '.id, .properties'）"
+  ]
+}

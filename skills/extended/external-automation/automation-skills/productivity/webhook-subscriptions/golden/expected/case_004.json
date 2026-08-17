@@ -1,0 +1,30 @@
+{
+  "id": "case_004",
+  "status": "rejected",
+  "result": {
+    "http_status": 401,
+    "agent_run_triggered": false,
+    "signature_validation": {
+      "header": "X-Hub-Signature-256",
+      "provided": "sha256=1111111111111111111111111111111111111111",
+      "expected": "sha256=aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+      "match": false
+    },
+    "secret_disclosed_in_response": false
+  },
+  "error": {
+    "code": "signature_mismatch",
+    "message": "HMAC-SHA256 签名校验失败，请求被拒绝（401）",
+    "recovery": [
+      "运行 hermes webhook list 查看服务端当前 secret",
+      "核对上游服务（GitHub Settings -> Webhooks -> Secret）配置的 secret 是否一致",
+      "注意 GitHub 使用 X-Hub-Signature-256，GitLab 使用 X-Gitlab-Token"
+    ]
+  },
+  "assertions": {
+    "http_401_on_mismatch": true,
+    "no_agent_run": true,
+    "recovery_mentions_webhook_list": true,
+    "server_secret_not_leaked": true
+  }
+}

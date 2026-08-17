@@ -1,0 +1,36 @@
+{
+  "id": "case_003",
+  "title": "Vault 初始化：项目目录转为知识库（Tier 2，正常路径）",
+  "type": "happy_path",
+  "skill": "obsidian",
+  "tier": 2,
+  "input": {
+    "request": "把项目目录初始化为 Obsidian 知识库：生成 MOC 索引链、frontmatter、符号链接源文件",
+    "project_root": "/home/user/projects/retinal",
+    "subdirs": ["docs", "papers", "outputs/papers"],
+    "source_files": [
+      {
+        "path": "/home/user/projects/retinal/src/paper1.tex",
+        "link_target": "/home/user/projects/retinal-vault/outputs/papers/paper1/"
+      },
+      {
+        "path": "/home/user/projects/retinal/src/paper1.pdf",
+        "link_target": "/home/user/projects/retinal-vault/outputs/papers/paper1/"
+      }
+    ]
+  },
+  "checks": {
+    "critical": [
+      "每个子目录生成 _INDEX.md 且文件名以 _ 前缀置顶",
+      "frontmatter tags 使用数组格式 tags: [a, b]",
+      "外部源文件用 symlink 映射而非复制"
+    ],
+    "high": [
+      ".gitignore 追加 .obsidian/",
+      ".obsidian/core-plugins.json 启用 backlink/graph/tag-pane/search"
+    ],
+    "medium": [
+      "笔记末尾含 ## 参照 区块与 wikilink"
+    ]
+  }
+}

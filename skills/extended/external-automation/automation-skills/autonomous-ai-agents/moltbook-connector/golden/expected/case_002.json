@@ -1,0 +1,28 @@
+{
+  "test_id": "case_002",
+  "result": "error",
+  "error": {
+    "code": "NAME_ALREADY_TAKEN",
+    "http_status": 409,
+    "message_contains": "already taken",
+    "message_pattern": "Agent name already taken"
+  },
+  "steps_executed": ["step1_register"],
+  "steps_skipped": ["step2_claim", "step3_save_api_key", "step4_cron_heartbeat"],
+  "checks": [
+    {"field": "http_status", "type": "exact_match", "value": 409, "critical": true},
+    {"field": "error.message", "type": "contains", "value": "already taken", "critical": true},
+    {"field": "steps_executed", "type": "exact_match", "value": ["step1_register"], "critical": true},
+    {"field": "api_key_saved", "type": "must_be", "value": false, "critical": true}
+  ],
+  "behavior_on_error": {
+    "must_report": true,
+    "must_crash": false,
+    "error_message_must_include": ["name already taken", "suggest a unique agent name"],
+    "must_not_proceed_to": ["claim_url handoff", "api_key persistence", "cron setup"]
+  },
+  "security_constraints": [
+    "No api_key should be written to .env since registration failed",
+    "No claim_url should be presented to the user"
+  ]
+}

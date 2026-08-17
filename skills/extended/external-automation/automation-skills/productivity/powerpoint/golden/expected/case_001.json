@@ -1,0 +1,35 @@
+{
+  "id": "case_001",
+  "status": "ok",
+  "result": {
+    "output_file": "code/output/grid_6cards.pptx",
+    "slide_count": 1,
+    "page_size_emu": {
+      "width": 12191712,
+      "height": 6858000
+    },
+    "grid_positions": [
+      {"i": 0, "row": 0, "col": 0},
+      {"i": 1, "row": 0, "col": 1},
+      {"i": 2, "row": 0, "col": 2},
+      {"i": 3, "row": 1, "col": 0},
+      {"i": 4, "row": 1, "col": 1},
+      {"i": 5, "row": 1, "col": 2}
+    ],
+    "card_shapes": [
+      {"card_id": "card_1", "left_emu": 4504392, "top_emu": 1261248, "width_emu": 2356728, "height_emu": 2560320},
+      {"card_id": "card_2", "left_emu": 7073652, "top_emu": 1261248, "width_emu": 2356728, "height_emu": 2560320},
+      {"card_id": "card_3", "left_emu": 9642912, "top_emu": 1261248, "width_emu": 2356728, "height_emu": 2560320},
+      {"card_id": "card_4", "left_emu": 4504392, "top_emu": 3830508, "width_emu": 2356728, "height_emu": 2560320},
+      {"card_id": "card_5", "left_emu": 7073652, "top_emu": 3830508, "width_emu": 2356728, "height_emu": 2560320},
+      {"card_id": "card_6", "left_emu": 9642912, "top_emu": 3830508, "width_emu": 2356728, "height_emu": 2560320}
+    ]
+  },
+  "assertions": {
+    "no_duplicate_grid_positions": true,
+    "max_right_inches": 12.89,
+    "max_bottom_inches": 7.19,
+    "all_within_page": true,
+    "safety_factor_applied": true
+  }
+}

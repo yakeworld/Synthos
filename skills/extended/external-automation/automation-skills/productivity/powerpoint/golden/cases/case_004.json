@@ -1,0 +1,25 @@
+{
+  "id": "case_004",
+  "title": "页面顺序重排（正常路径）",
+  "type": "happy_path",
+  "skill": "powerpoint",
+  "input": {
+    "request": "将 4 页 pptx 的页面顺序从 [0,1,2,3] 重排为 [0,2,1,3]",
+    "pptx_path": "code/output/4pages.pptx",
+    "current_order": [0, 1, 2, 3],
+    "target_order": [0, 2, 1, 3]
+  },
+  "checks": {
+    "critical": [
+      "通过直接改写 ppt/presentation.xml 中的 sldIdLst 实现重排",
+      "重排后读取页面顺序 == target_order"
+    ],
+    "high": [
+      "XML 标签名使用 sldIdLst（非 slideIdLst）",
+      "所有其他 zip 条目原样保留"
+    ],
+    "medium": [
+      "python-pptx 重新打开文件可正常读取（无损坏）"
+    ]
+  }
+}

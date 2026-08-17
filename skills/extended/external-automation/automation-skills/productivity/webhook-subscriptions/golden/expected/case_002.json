@@ -1,0 +1,31 @@
+{
+  "id": "case_002",
+  "status": "ok",
+  "result": {
+    "subscription": {
+      "name": "antenna-matches",
+      "deliver_only": true,
+      "secret": "2c26b46b68ffc68ff99b453c1d30413413422d70"
+    },
+    "post_handling": {
+      "http_status": 200,
+      "agent_run_triggered": false,
+      "llm_cost": 0,
+      "delivered_message": "🎉 New match: Bob matched with you!",
+      "target": {
+        "deliver": "telegram",
+        "chat_id": "123456789"
+      }
+    },
+    "failure_semantics": {
+      "target_unreachable_status": 502,
+      "upstream_may_retry": true
+    }
+  },
+  "assertions": {
+    "http_200_on_success": true,
+    "no_agent_run": true,
+    "message_is_rendered_prompt_verbatim": true,
+    "hmac_rate_limit_idempotency_still_applied": true
+  }
+}

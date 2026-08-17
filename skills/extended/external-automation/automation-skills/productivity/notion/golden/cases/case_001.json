@@ -1,0 +1,41 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：在已有数据库中创建页面（Title + Select 属性）",
+  "input": {
+    "action": "create_page",
+    "params": {
+      "database_id": "a1b2c3d4-0000-4000-8000-000000000001",
+      "properties": {
+        "Name": {"title": [{"text": {"content": "Paper audit Q3"}}]},
+        "Status": {"select": {"name": "Todo"}}
+      },
+      "env": "NOTION_API_KEY 来自 ~/.hermes/.env（ntn_ 前缀）"
+    }
+  },
+  "expected": {
+    "request": {
+      "method": "POST",
+      "endpoint": "https://api.notion.com/v1/pages",
+      "headers": {
+        "Authorization": "Bearer $NOTION_API_KEY",
+        "Notion-Version": "2025-09-03",
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "parent": {"database_id": "a1b2c3d4-0000-4000-8000-000000000001"},
+        "properties": {
+          "Name": {"title": [{"text": {"content": "Paper audit Q3"}}]},
+          "Status": {"select": {"name": "Todo"}}
+        }
+      }
+    },
+    "response": {
+      "status_code": 200,
+      "object": "page",
+      "id_present": true,
+      "properties.Name.title[0].text.content": "Paper audit Q3",
+      "properties.Status.select.name": "Todo"
+    }
+  },
+  "weight": "critical"
+}

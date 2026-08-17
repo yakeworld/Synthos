@@ -1,0 +1,32 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径：Google 服务网络不可达（httpx.ConnectTimeout），触发 Manual Layer B Fallback",
+  "input": {
+    "action": "list",
+    "params": {
+      "error": "httpx.ConnectTimeout during CSRF token fetch",
+      "diagnostics": {
+        "curl_notebooklm_google_com": "000",
+        "curl_httpbin_ip": "200",
+        "conclusion": "其他互联网可达，Google 服务被网络阻断"
+      }
+    }
+  },
+  "expected": {
+    "command": "pdftotext <paper-dir>/paper.pdf - | head -c 50000  # 提取全文后人工五维评估",
+    "result": {
+      "status": "fallback_manual",
+      "report_path": "<paper-dir>/07-quality/layer-b-report.md",
+      "dimensions": ["原创性/重要性", "方法学严谨性", "结果可信性/可复现性", "文献引用质量", "写作/结构"],
+      "thresholds": { "T1": ">=0.85", "T2": "0.75-0.84", "fail": "<0.75" }
+    },
+    "error": {
+      "context": "notebooklm list 在 CSRF token 阶段抛 httpx.ConnectTimeout；curl notebooklm.google.com 返回 000，httpbin.org 返回 200（Google 定向阻断，非整机断网）",
+      "recovery": [
+        "配置代理后重试 notebooklm 命令",
+        "启用 Manual Fallback：pdftotext 提取全文 + 五维人工评估（NOTE-006）"
+      ]
+    }
+  },
+  "weight": "critical"
+}

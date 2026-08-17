@@ -1,0 +1,36 @@
+{
+  "id": "case_001",
+  "title": "GitHub issues 订阅创建（正常路径）",
+  "type": "happy_path",
+  "skill": "webhook-subscriptions",
+  "input": {
+    "request": "创建 GitHub issues webhook 订阅，新 issue 触发 triage 并推送到 Telegram",
+    "precheck": {
+      "gateway_health": {"url": "http://localhost:8644/health", "status": "ok"},
+      "platform_enabled": true
+    },
+    "subscribe": {
+      "name": "github-issues",
+      "events": ["issues"],
+      "prompt": "New GitHub issue #{issue.number}: {issue.title}\n\nAction: {action}\nAuthor: {issue.user.login}\nBody:\n{issue.body}\n\nPlease triage this issue.",
+      "description": "Triage new GitHub issues",
+      "deliver": "telegram",
+      "deliver_chat_id": "-100123456789",
+      "secret": null
+    }
+  },
+  "checks": {
+    "critical": [
+      "Gateway 健康检查通过后创建订阅（WEBH-001）",
+      "返回 webhook_url 与自动生成的 HMAC-SHA256 secret",
+      "webhook test --payload 渲染 Prompt，无未渲染占位符残留"
+    ],
+    "high": [
+      "订阅落盘 ~/.hermes/webhook_subscriptions.json 且 webhook list 可见",
+      "secret 为 40 位十六进制"
+    ],
+    "medium": [
+      "上游配置提示含 Content type=application/json 与 Events=Issues"
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "id": "case_003",
+  "status": "blocked",
+  "result": {
+    "quality_check": {
+      "command": "scripts/quality_check.py code/output/overflow.pptx",
+      "overflow_count": 1,
+      "overflow_details": [
+        {
+          "card_id": "card_overflow",
+          "left_inches": 9.0,
+          "width_inches": 5.0,
+          "right_inches": 14.0,
+          "page_width_inches": 13.333,
+          "exceeds_page": true,
+          "exceeds_safe_zone": true
+        }
+      ],
+      "safe_zone_violations": 1
+    },
+    "deliverable": "blocked"
+  },
+  "error": {
+    "code": "layout_overflow",
+    "message": "card_overflow 右边界 14.0in 超出页面 13.333in，质量门拦截，禁止交付",
+    "recovery": [
+      "将非零 Inches(N) 乘以 0.92 安全系数（width 5.0 -> 4.6in）",
+      "或左移卡片 left 至 <= 13.333 - 5.0 = 8.333in",
+      "重新运行 scripts/quality_check.py 确认 overflow_count == 0 后再交付"
+    ]
+  },
+  "assertions": {
+    "deliverable_blocked": true,
+    "overflow_count_at_least_one": true,
+    "error_includes_overflow_coords": true
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "case_004",
+  "title": "未解析的 Vault 路径变量（错误路径）",
+  "type": "error_path",
+  "skill": "obsidian",
+  "tier": 1,
+  "input": {
+    "request": "读取 $OBSIDIAN_VAULT_PATH/papers/iris-segmentation.md",
+    "vault_path": "$OBSIDIAN_VAULT_PATH",
+    "note_path": "$OBSIDIAN_VAULT_PATH/papers/iris-segmentation.md",
+    "context": {
+      "vault_path_resolved": false
+    }
+  },
+  "checks": {
+    "critical": [
+      "拒绝执行文件操作",
+      "error 字段包含 'resolve vault path' 上下文与恢复建议（terminal 解析或回退 ~/Documents/Obsidian Vault）"
+    ],
+    "high": [
+      "未对任何路径执行 write_file/patch"
+    ],
+    "medium": [
+      "建议中包含 fallback 路径 ~/Documents/Obsidian Vault"
+    ]
+  }
+}

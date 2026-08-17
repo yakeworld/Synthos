@@ -1,0 +1,26 @@
+{
+  "id": "case_003",
+  "status": "rejected",
+  "error": {
+    "code": "deliver_only_requires_real_target",
+    "message": "--deliver-only 要求 --deliver 为真实交付目标；log-only 直接透传无意义",
+    "context": {
+      "name": "bad-direct",
+      "deliver": "log",
+      "deliver_only": true
+    },
+    "recovery": [
+      "将 --deliver 改为 telegram / discord / slack / github_comment 等真实目标并提供 --deliver-chat-id",
+      "或去掉 --deliver-only，让 agent 处理事件后再决定是否记录到 log"
+    ]
+  },
+  "result": {
+    "subscription_created": false,
+    "persisted_entry": null
+  },
+  "assertions": {
+    "subscribe_rejected": true,
+    "no_entry_in_subscriptions_json": true,
+    "recovery_suggests_real_target": true
+  }
+}

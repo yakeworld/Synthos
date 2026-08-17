@@ -1,0 +1,30 @@
+{
+  "id": "case_001",
+  "title": "读取已有笔记（正常路径）",
+  "type": "happy_path",
+  "skill": "obsidian",
+  "tier": 1,
+  "input": {
+    "request": "读取 vault 中 papers 目录下的 iris-segmentation.md 笔记",
+    "vault_path": "/home/user/Documents/Obsidian Vault",
+    "note_path": "/home/user/Documents/Obsidian Vault/papers/iris-segmentation.md",
+    "context": {
+      "env": {
+        "OBSIDIAN_VAULT_PATH": "/home/user/Documents/Obsidian Vault"
+      },
+      "vault_path_resolved": true
+    }
+  },
+  "checks": {
+    "critical": [
+      "vault 路径为具体绝对路径且含空格时正确传递",
+      "使用 read_file 而非 shell cat"
+    ],
+    "high": [
+      "返回内容包含 frontmatter 的 tags 字段"
+    ],
+    "medium": [
+      "返回内容带行号"
+    ]
+  }
+}

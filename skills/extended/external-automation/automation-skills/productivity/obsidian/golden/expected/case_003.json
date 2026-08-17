@@ -1,0 +1,51 @@
+{
+  "id": "case_003",
+  "status": "ok",
+  "result": {
+    "action": "vault_init",
+    "created_files": [
+      "/home/user/projects/retinal-vault/_INDEX.md",
+      "/home/user/projects/retinal-vault/docs/_INDEX.md",
+      "/home/user/projects/retinal-vault/papers/_INDEX.md",
+      "/home/user/projects/retinal-vault/outputs/papers/_INDEX.md",
+      "/home/user/projects/retinal-vault/.obsidian/core-plugins.json"
+    ],
+    "symlinks": [
+      {
+        "link": "/home/user/projects/retinal-vault/outputs/papers/paper1/paper1.tex",
+        "target": "/home/user/projects/retinal/src/paper1.tex",
+        "is_copy": false
+      },
+      {
+        "link": "/home/user/projects/retinal-vault/outputs/papers/paper1/paper1.pdf",
+        "target": "/home/user/projects/retinal/src/paper1.pdf",
+        "is_copy": false
+      }
+    ],
+    "gitignore_appended": [".obsidian/"],
+    "frontmatter": {
+      "tags_format": "array",
+      "example": "---\ntags: [paper, retinal, segmentation]\n---\n"
+    }
+  },
+  "tool_calls": [
+    {
+      "tool": "write_file",
+      "args": {
+        "path": "/home/user/projects/retinal-vault/docs/_INDEX.md"
+      }
+    },
+    {
+      "tool": "write_file",
+      "args": {
+        "path": "/home/user/projects/retinal-vault/_INDEX.md"
+      }
+    }
+  ],
+  "assertions": {
+    "all_index_files_prefixed_underscore": true,
+    "frontmatter_tags_array_format": true,
+    "source_files_linked_not_copied": true,
+    "gitignore_contains_obsidian": true
+  }
+}

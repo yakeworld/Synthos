@@ -1,0 +1,21 @@
+{
+  "case_id": "case_001",
+  "name": "长工具输出 L1 上下文卸载（正常路径）",
+  "genes": ["MEMO-001"],
+  "input": {
+    "consolidation_trigger": "context_overflow",
+    "context_size": 46080,
+    "tool_output": {
+      "size_bytes": 46080,
+      "line_count": 620,
+      "sample_head": "=== build log ===\n[1/987] Compiling module alpha\n...",
+      "content_preview": "45KB 编译/测试日志输出（>10KB 且 >50 行）"
+    },
+    "memory_entries": [
+      {"id": "mem-001", "text": "用户偏好: 特色介绍优先于平台架构", "age_days": 3, "access_count": 4},
+      {"id": "mem-002", "text": "环境: Python 3.12, pip 需 --break-system-packages", "age_days": 10, "access_count": 2}
+    ],
+    "memory_space_pct": 62
+  },
+  "notes": "45KB 输出应触发 L1 卸载：保存原文到 context_refs 并以 Mermaid 摘要替换上下文；本例空间 62% 不触发清理铁律。"
+}

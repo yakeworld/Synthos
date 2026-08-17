@@ -1,0 +1,28 @@
+{
+  "id": "case_002",
+  "status": "ok",
+  "result": {
+    "quality_check": {
+      "command": "scripts/quality_check.py code/output/grid_6cards.pptx",
+      "overflow_count": 0,
+      "child_out_of_parent_count": 0,
+      "overlap_count": 0,
+      "safe_zone_violations": 0
+    },
+    "l05_data_honesty": {
+      "checked_facts": [
+        {"fact": "论文数", "value": "21", "match": true},
+        {"fact": "发明专利", "value": "12", "match": true},
+        {"fact": "经费(万)", "value": "101.9", "match": true},
+        {"fact": "行业标准", "value": "3", "match": true}
+      ],
+      "approximations_found": 0
+    },
+    "deliverable": "approved"
+  },
+  "assertions": {
+    "quality_gate_passed": true,
+    "all_facts_exact": true,
+    "deliverable_approved": true
+  }
+}

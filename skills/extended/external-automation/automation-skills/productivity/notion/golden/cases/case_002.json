@@ -1,0 +1,34 @@
+{
+  "case_id": "case_002",
+  "description": "正常路径：按 data_source_id 查询数据库（filter + sort），jq 解析响应",
+  "input": {
+    "action": "query_database",
+    "params": {
+      "data_source_id": "a1b2c3d4-0000-4000-8000-000000000002",
+      "filter": {"property": "Status", "select": {"equals": "Active"}},
+      "sorts": [{"property": "Date", "direction": "descending"}]
+    }
+  },
+  "expected": {
+    "request": {
+      "method": "POST",
+      "endpoint": "https://api.notion.com/v1/data_sources/a1b2c3d4-0000-4000-8000-000000000002/query",
+      "headers": {
+        "Authorization": "Bearer $NOTION_API_KEY",
+        "Notion-Version": "2025-09-03",
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "filter": {"property": "Status", "select": {"equals": "Active"}},
+        "sorts": [{"property": "Date", "direction": "descending"}]
+      }
+    },
+    "response": {
+      "status_code": 200,
+      "object": "list",
+      "results[0].properties_present": true,
+      "jq_check": "jq '.results[0].properties'"
+    }
+  },
+  "weight": "high"
+}

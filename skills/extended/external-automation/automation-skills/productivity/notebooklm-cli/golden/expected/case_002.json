@@ -1,0 +1,20 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "result": {
+      "status": "ok",
+      "source_type": "pdf_direct",
+      "precheck_chars": 214000,
+      "post_upload_status": "ready",
+      "fallback": null
+    },
+    "note": "上传前 pdftotext 预检（NOTE-003）：文本层 214000 chars 充足 → 直接 `source add file.pdf`；上传后立即 `source list` 复核（NOTE-007），status=ready 且无需重试"
+  },
+  "verification": [
+    "上传前执行了 `pdftotext <pdf> - | wc -c`，结果 214000 chars ≥ 1000，判定文本层充足",
+    "文本层充足时允许 `notebooklm source add <file.pdf>` 直传（v0.4.1+ 自动类型检测）",
+    "上传后立即执行 `notebooklm source list` 复核，状态为 ready（非 error/空列表）",
+    "result dict 键名稳定（status/source_type/precheck_chars/post_upload_status/fallback），fallback == null",
+    "若复核为 error 须回退 pdftotext 文本 + `--type text` 上传；若空列表须重试 2-3 次（本 case 未触发，但代码路径存在）"
+  ]
+}

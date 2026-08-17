@@ -1,0 +1,21 @@
+{
+  "case_id": "case_001",
+  "expected": {
+    "status": "success",
+    "outputs": {
+      "execute_1": {"status": "ok", "result": "df 已定义"},
+      "execute_2": {"status": "ok", "stdout": "(3, 1)"},
+      "variables_list": {"status": "ok", "variables": ["df"], "df_present": true}
+    },
+    "state_persisted_across_execute": true,
+    "all_commands_compact": true,
+    "arg_order_correct": true,
+    "checks": [
+      {"id": "c1", "check": "第二次 execute 无需重新 import 即可使用 df（状态持久化）", "weight": "critical", "expected": true},
+      {"id": "c2", "check": "variables list 输出包含 df", "weight": "critical", "expected": true},
+      {"id": "c3", "check": "所有命令均带 --compact，输出为可解析 JSON", "weight": "high", "expected": true},
+      {"id": "c4", "check": "--path 全局标志位于子子命令之前（variables --path nb list）", "weight": "high", "expected": true},
+      {"id": "c5", "check": "commands 顺序 servers→execute→variables 无报错", "weight": "medium", "expected": true}
+    ]
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "case_id": "case_002",
+  "type": "error_path",
+  "title": "Moltbook 注册错误路径：令牌脱敏 + pending_claim 状态发帖被拒",
+  "skill_contract": {
+    "input": "request: str, context: dict",
+    "output": "result: dict",
+    "gene": "AIO-003 / AIO-007"
+  },
+  "input": {
+    "request": "注册 Moltbook 并发布首帖",
+    "context": {
+      "platform": "moltbook",
+      "agent_name": "synthos-researcher",
+      "description": "self-evolving research agent",
+      "token_capture_method": "terminal_stdout",
+      "captured_api_key": "***",
+      "account_status": "pending_claim",
+      "post_draft": "Check out my project! It is amazing and revolutionary."
+    }
+  },
+  "checks": [
+    {
+      "id": "token_not_sanitized_via_code",
+      "severity": "critical",
+      "description": "api_key 必须经 Python 代码直接捕获 JSON 响应；terminal 输出捕获会导致 access_token/refresh_token 被安全系统脱敏",
+      "assert": "capture_method==python_urllib OR captured_api_key not contains ***"
+    },
+    {
+      "id": "no_post_before_active",
+      "severity": "critical",
+      "description": "account_status 为 pending_claim 时发帖必须被拒绝（AIO-007：状态未激活禁止发帖）",
+      "assert": "result.status==blocked AND result.errors[0].code==PENDING_CLAIM"
+    },
+    {
+      "id": "error_has_recovery",
+      "severity": "high",
+      "description": "错误信息必须包含上下文和恢复建议（RULES 第3条）",
+      "assert": "errors[0].recovery non-empty AND mentions claim_url"
+    },
+    {
+      "id": "no_pushy_tone",
+      "severity": "medium",
+      "description": "post_draft 含推销/夸大语气（AIO-002 禁止），重写后应移除",
+      "assert": "result.errors[].code==PUSHY_TONE OR rewritten_post exists"
+    }
+  ]
+}

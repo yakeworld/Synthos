@@ -1,0 +1,24 @@
+{
+  "id": "case_002",
+  "title": "交付前质量门检查（正常路径）",
+  "type": "happy_path",
+  "skill": "powerpoint",
+  "input": {
+    "request": "对 case_001 生成的 pptx 执行交付前三步验证",
+    "pptx_path": "code/output/grid_6cards.pptx",
+    "facts_source": "references/申报书原文（姓名/职称/专利号/经费/论文数）",
+    "spec_doc": null
+  },
+  "checks": {
+    "critical": [
+      "quality_check.py 报告 overflow_count == 0 且 overlap_count == 0 且 child_out_of_parent_count == 0",
+      "L0.5 数据诚实门：硬事实逐条核对，无近似"
+    ],
+    "high": [
+      "安全区检查：(left+width)/914400 <= 12.8 且 (top+height)/914400 <= 7.0 对非零元素成立"
+    ],
+    "medium": [
+      "生成脚本可从 code/ 目录复现同一文件"
+    ]
+  }
+}

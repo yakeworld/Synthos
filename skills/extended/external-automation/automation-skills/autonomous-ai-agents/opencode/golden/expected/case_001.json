@@ -1,0 +1,79 @@
+{
+  "test_id": "case_001",
+  "result": "success",
+  "overall_status": "healthy",
+  "diagnosis_steps": [
+    {
+      "step": 1,
+      "name": "process_check",
+      "command": "ps aux | grep -i opencode",
+      "expected_observation": "no opencode process found",
+      "interpretation": "NORMAL — OpenCode is a non-daemon service. No process is expected when idle.",
+      "is_fault": false,
+      "checks": [
+        {"field": "process_count", "type": "exact_match", "value": 0, "critical": true},
+        {"field": "is_fault", "type": "exact_match", "value": false, "critical": true}
+      ]
+    },
+    {
+      "step": 2,
+      "name": "installation_check",
+      "command": "opencode --version",
+      "expected_output": "1.17.8",
+      "checks": [
+        {"field": "exit_code", "type": "exact_match", "value": 0, "critical": true},
+        {"field": "version_string", "type": "non_empty", "critical": true},
+        {"field": "version_string", "type": "matches_pattern", "value": "^\\d+\\.\\d+\\.\\d+", "critical": true}
+      ]
+    },
+    {
+      "step": 3,
+      "name": "config_check",
+      "command": "cat ~/.config/opencode/opencode.json",
+      "expected": {
+        "file_exists": true,
+        "json_valid": true,
+        "required_fields": ["provider", "model"],
+        "provider_keys": ["hermes", "amax-fallback", "hermes-fallback", "deepseek"]
+      },
+      "checks": [
+        {"field": "file_exists", "type": "exact_match", "value": true, "critical": true},
+        {"field": "json_valid", "type": "exact_match", "value": true, "critical": true},
+        {"field": "has_provider_field", "type": "exact_match", "value": true, "critical": true},
+        {"field": "has_model_field", "type": "exact_match", "value": true, "critical": true}
+      ]
+    },
+    {
+      "step": 4,
+      "name": "backend_connectivity",
+      "command": "nc -zv -w 3 <host> <port> (x3 nodes)",
+      "expected": {
+        "hermes-primary": "connection succeeded",
+        "amax-fallback": "connection succeeded",
+        "hermes-fallback": "connection succeeded"
+      },
+      "checks": [
+        {"field": "hermes_primary_reachable", "type": "exact_match", "value": true, "critical": true},
+        {"field": "amax_fallback_reachable", "type": "exact_match", "value": true, "critical": true},
+        {"field": "hermes_fallback_reachable", "type": "exact_match", "value": true, "critical": true}
+      ]
+    },
+    {
+      "step": 5,
+      "name": "usage_history",
+      "command": "tail -3 ~/.local/state/opencode/prompt-history.jsonl",
+      "expected": {
+        "file_exists": true,
+        "non_empty": true,
+        "locks_dir_empty": true
+      },
+      "checks": [
+        {"field": "history_file_exists", "type": "exact_match", "value": true, "critical": false},
+        {"field": "active_session_locks", "type": "exact_match", "value": 0, "critical": false}
+      ]
+    }
+  ],
+  "conclusion": "All systems healthy. OpenCode is installed (v1.17.8), configured correctly, and all 3 backend nodes are reachable. No process running is expected (non-daemon).",
+  "faults_found": [],
+  "action_required": false
+}

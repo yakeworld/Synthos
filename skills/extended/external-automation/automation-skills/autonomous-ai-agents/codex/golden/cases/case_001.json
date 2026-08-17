@@ -1,0 +1,58 @@
+{
+  "case_id": "case_001",
+  "type": "happy_path",
+  "title": "主力节点一次性编码任务：cron 脚本模式（无 PTY）",
+  "skill_contract": {
+    "input": "request: str, context: dict",
+    "output": "result: dict",
+    "gene": "CODE-001 / CODE-005 / CODE-006"
+  },
+  "input": {
+    "request": "为项目添加深色模式切换",
+    "context": {
+      "mode": "cron_script",
+      "workdir": "/media/yakeworld/sda2/project",
+      "is_git_repo": true,
+      "profile": null,
+      "profile_node": "100.82.27.51:8000",
+      "model": "qwen3.6-35b-nvfp4",
+      "wire_api": "responses",
+      "use_yolo": true,
+      "task_trusted": true,
+      "env_isolated": true,
+      "needs_pty": false
+    }
+  },
+  "checks": [
+    {
+      "id": "git_repo_required",
+      "severity": "critical",
+      "description": "运行目录必须是 git 仓库（CODE-004 / Pitfall 1），否则 Codex 直接拒绝",
+      "assert": "context.is_git_repo==true"
+    },
+    {
+      "id": "exec_prompt_as_cli_arg",
+      "severity": "critical",
+      "description": "cron/脚本环境用 `codex exec` 且 prompt 作为 CLI 参数传递，不依赖 PTY（CODE-005 / Pitfall 4）",
+      "assert": "launch.command starts with 'codex exec' AND launch.pty==false AND launch.prompt_via=='cli_arg'"
+    },
+    {
+      "id": "yolo_only_for_trusted_isolated",
+      "severity": "critical",
+      "description": "`--yolo`（无沙箱）仅用于可信任务且环境隔离（CODE-006 / Pitfall 6）",
+      "assert": "launch.use_yolo==true IMPLIES context.task_trusted==true AND context.env_isolated==true"
+    },
+    {
+      "id": "cron_script_shebang_and_guard",
+      "severity": "high",
+      "description": "cron 脚本含 `#!/bin/bash` + `set -euo pipefail` + `cd` 到工作目录（Cron 迁移清单）",
+      "assert": "script.header=='#!/bin/bash' AND script.guard=='set -euo pipefail' AND script.cd==context.workdir"
+    },
+    {
+      "id": "wire_api_responses_only",
+      "severity": "high",
+      "description": "供应商 wire_api 必须为 responses（CODE-007 / Pitfall 10）",
+      "assert": "context.wire_api=='responses'"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：单文件学术 PDF 转 Markdown（含文本层）",
+  "input": {
+    "file_path": "06-ref/pdfs/Smith1988.pdf",
+    "context": {
+      "markitdown_installed": "uv tool install markitdown --with markitdown[pdf]",
+      "pdf_has_text_layer": true,
+      "md_dir": "06-ref/pdfs_md"
+    }
+  },
+  "expected": {
+    "command": "uvx markitdown 06-ref/pdfs/Smith1988.pdf > 06-ref/pdfs_md/Smith1988.md",
+    "result": {
+      "status": "ok",
+      "md_path": "06-ref/pdfs_md/Smith1988.md",
+      "fallback": null,
+      "chars_gt": 50
+    }
+  },
+  "weight": "critical"
+}

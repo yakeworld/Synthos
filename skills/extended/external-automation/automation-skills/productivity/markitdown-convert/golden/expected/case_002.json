@@ -1,0 +1,22 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "result": {
+      "status": "ok",
+      "md_path": "06-ref/pdfs_md",
+      "skipped_cache": ["Smith1988.md"],
+      "fallback_pdftotext": ["Li2019"],
+      "converted_direct": ["Wang2020"],
+      "placeholder": []
+    },
+    "note": "缓存文件（Smith1988.md 4210 chars > 100）必须跳过；markitdown 失败（Li2019 仅 38 chars < 50）必须回退 pdftotext 并标记 ⚠️（MARK-002）；每步独立验证（运行即证）"
+  },
+  "verification": [
+    "Smith1988.md（已存在且 >100 chars）未重新执行 markitdown（缓存跳过）",
+    "Li2019 的 markitdown 输出 38 chars < 50 → 触发 pdftotext 回退，报告标记 ⚠️ 与字符数",
+    "Wang2020 直转成功（5123 chars），无回退",
+    "pdfs_md/ 中 3 个 PDF 均有对应 .md，无静默缺失",
+    "批量列表已排除 *reference*/*template*/*graphical* 及作者年格式引用 PDF（MARK-004）",
+    "placeholder 列表为空（本 case 双路径均未失败）"
+  ]
+}

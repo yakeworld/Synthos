@@ -1,0 +1,24 @@
+{
+  "case_id": "case_002",
+  "name": "模板缺失 + 必填字段缺失（错误路径）",
+  "genes": ["CHIN-006", "CHIN-007"],
+  "input": {
+    "request": "填充 NJJK 摸底表",
+    "form_type": "njjk_survey",
+    "template": {
+      "path": "templates/missing-survey-template.md",
+      "exists": false,
+      "python_version": "3.12",
+      "required_fields": ["项目名称", "所属单位", "技术方向", "特色介绍", "产业化基础"]
+    },
+    "data": {
+      "项目名称": "某项目",
+      "技术方向": "脑机接口"
+    },
+    "delivery": {
+      "channel": "feishu",
+      "chat_id": "feishu"
+    }
+  },
+  "notes": "错误路径：模板文件不存在；data 缺 3 个必填字段；chat_id 为裸 'feishu'（违规）。期望拒绝执行并返回含上下文与恢复建议的结构化错误，不产出半成品文档。"
+}

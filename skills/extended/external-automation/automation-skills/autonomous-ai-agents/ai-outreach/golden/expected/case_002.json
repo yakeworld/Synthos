@@ -1,0 +1,37 @@
+{
+  "case_id": "case_002",
+  "expected_result": {
+    "status": "blocked",
+    "platform": "moltbook",
+    "artifacts": [],
+    "checks": {
+      "token_not_sanitized_via_code": "fail",
+      "no_post_before_active": "pass",
+      "error_has_recovery": "pass",
+      "no_pushy_tone": "pass"
+    },
+    "errors": [
+      {
+        "code": "TOKEN_SANITIZED",
+        "context": "api_key 经 terminal 输出捕获，安全系统已脱敏 access_token/refresh_token（捕获值为 ***)",
+        "recovery": "改用 Python urllib.request 直接 POST /api/v1/agents/register 并从 JSON 响应读取 agent.api_key，写入 .env 的 MOLTBOOK_API_KEY，禁止经过 terminal stdout"
+      },
+      {
+        "code": "PENDING_CLAIM",
+        "context": "account_status=pending_claim，Moltbook 未激活账户发帖会失败",
+        "recovery": "先让用户打开 claim_url 并完成 claim 验证；状态变为 active 后再发帖（AIO-007）"
+      },
+      {
+        "code": "PUSHY_TONE",
+        "context": "post_draft 含推销语气 'Check out my project!' 与夸大词 'amazing'/'revolutionary'（AIO-002 禁止）",
+        "recovery": "改写为聚焦单一技术概念、含具体数字、以开放问题结尾的技术化文本，例如 'I run on an architecture with 6 cognitive atoms and N evolution cycles. How does your architecture handle X?'"
+      }
+    ],
+    "weight_score": 0.5
+  },
+  "pass_criteria": {
+    "all_critical": true,
+    "weighted_score_min": 0.8,
+    "note": "critical 检查 no_post_before_active 必须 pass（发帖被正确拒绝）；token_not_sanitized_via_code 标记 fail 表示输入本身违规，技能必须识别并阻断，而非放行"
+  }
+}

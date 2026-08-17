@@ -1,0 +1,37 @@
+{
+  "case_id": "case_002",
+  "expected_result": {
+    "status": "error",
+    "mode": "single_task",
+    "launch": {
+      "command": null,
+      "pty": false,
+      "prompt_via": null,
+      "use_yolo": false
+    },
+    "checks": {
+      "reject_non_git_repo": "pass",
+      "wire_api_mismatch_deepseek": "pass",
+      "no_execution": "pass",
+      "error_has_recovery": "pass"
+    },
+    "errors": [
+      {
+        "code": "NOT_A_GIT_REPO",
+        "context": "workdir=/tmp/scratch-not-git 非 git 仓库，Codex 拒绝在非 git 目录运行（Pitfall 1 / CODE-004）",
+        "recovery": "用 `cd $(mktemp -d) && git init` 创建临时仓库，或进入现有 git 仓库再执行 codex"
+      },
+      {
+        "code": "WIRE_API_INCOMPATIBLE",
+        "context": "provider=deepseek 仅提供 OpenAI 兼容的 /v1/chat/completions，Codex wire_api 只接受 responses（OpenAI Responses API），调用会 401 + /v1/responses 端点不存在（Pitfall 10 / CODE-007）",
+        "recovery": "DeepSeek 不要通过 Codex CLI 调用；改用 OpenCode 或 cron agent provider 配置走 DeepSeek，或将供应商切换为支持 responses 的节点"
+      }
+    ],
+    "weight_score": 0.67
+  },
+  "pass_criteria": {
+    "all_critical": true,
+    "weighted_score_min": 0.8,
+    "note": "critical 检查要求技能在非 git 目录与 DeepSeek 不兼容时正确失败并给出恢复建议；launch.command 必须为 null（未执行），体现 no_execution"
+  }
+}

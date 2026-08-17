@@ -1,0 +1,96 @@
+{
+  "test_id": "case_001",
+  "result": "success",
+  "steps": {
+    "step1_get_repo_id": {
+      "query": "GraphQL: repository(owner: \"synthos-labs\", name: \"cognitive-os\") { id }",
+      "expected_response": {
+        "data": {
+          "repository": {
+            "id": "MDEwOlJlcG9zaXRvcnkNNNNNNNNN (Node ID format: MDEw...)"
+          }
+        }
+      },
+      "checks": [
+        {"field": "repository.id", "type": "node_id_format", "value": "^MDEw", "critical": true}
+      ]
+    },
+    "step2_get_category_id": {
+      "query": "GraphQL: repository { discussionCategories(first: 10) { nodes { id name slug } } }",
+      "expected_response": {
+        "data": {
+          "repository": {
+            "discussionCategories": {
+              "nodes": [
+                {"id": "DIC_kwDOSaMet84C8z7P (Node ID format: DIC_...)", "name": "Ideas", "slug": "ideas"}
+              ]
+            }
+          }
+        }
+      },
+      "checks": [
+        {"field": "category.id", "type": "node_id_format", "value": "^DIC_", "critical": true},
+        {"field": "category.slug", "type": "exact_match", "value": "ideas", "critical": true}
+      ]
+    },
+    "step3_create_discussion": {
+      "method": "GraphQL mutation createDiscussion",
+      "input_source": "temp_file (/tmp/gql_mutation.json)",
+      "expected_response": {
+        "data": {
+          "createDiscussion": {
+            "discussion": {
+              "id": "Node ID (D_kwDO...)",
+              "url": "https://github.com/synthos-labs/cognitive-os/discussions/NN",
+              "number": "integer > 0"
+            }
+          }
+        }
+      },
+      "body_escaping_checks": [
+        {"field": "body_double_quotes", "type": "escaped", "value": "\\\"", "critical": true},
+        {"field": "body_newlines", "type": "escaped", "value": "\\n", "critical": true}
+      ],
+      "checks": [
+        {"field": "createDiscussion.discussion.id", "type": "node_id_format", "value": "^D_", "critical": true},
+        {"field": "createDiscussion.discussion.url", "type": "url", "critical": true},
+        {"field": "createDiscussion.discussion.number", "type": "integer_gt_0", "critical": true},
+        {"field": "api_used", "type": "exact_match", "value": "GraphQL", "critical": true},
+        {"field": "not_rest_post", "type": "must_not_be", "value": "REST POST /repos/owner/repo/discussions", "critical": true}
+      ]
+    },
+    "step4_verify_creation": {
+      "method": "REST GET /repos/synthos-labs/cognitive-os/discussions/NUMBER",
+      "expected_response": {
+        "title": "[A2A] Constitutional Hierarchy: CON > MEM > CMD > SKL > DEF",
+        "html_url": "https://github.com/synthos-labs/cognitive-os/discussions/NN",
+        "category": {"name": "Ideas", "slug": "ideas"},
+        "comments": 0
+      },
+      "checks": [
+        {"field": "title", "type": "exact_match", "value": "[A2A] Constitutional Hierarchy: CON > MEM > CMD > SKL > DEF", "critical": true},
+        {"field": "category.name", "type": "exact_match", "value": "Ideas", "critical": true},
+        {"field": "category.slug", "type": "exact_match", "value": "ideas", "critical": true},
+        {"field": "comments", "type": "exact_match", "value": 0, "critical": true}
+      ]
+    }
+  },
+  "a2a_template_checks": {
+    "title_starts_with_a2a": true,
+    "title_format": "[A2A] <Technical Concept>: <Subtitle>",
+    "body_has_single_concept": true,
+    "body_has_concrete_numbers": true,
+    "body_ends_with_open_question": true,
+    "no_marketing_language": true,
+    "has_signature": true
+  },
+  "postconditions": {
+    "discussion_created": true,
+    "discussion_number": "assigned by GitHub (not predictable)",
+    "body_escaped_correctly": true
+  },
+  "security_constraints": [
+    "Long body written to /tmp/gql_mutation.json, NOT inline -f query",
+    "No API tokens exposed in command output"
+  ]
+}

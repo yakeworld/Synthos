@@ -1,0 +1,16 @@
+{
+  "case_id": "case_002",
+  "skill": "openhue",
+  "expected": {
+    "exit_code": {">": 0},
+    "error": {
+      "must_mention": ["not supported", "white-only"],
+      "context": "目标灯泡 'Bathroom Light' 为白光灯泡，不支持 color/rgb",
+      "recovery_suggestion": "使用 on/brightness/temperature 调整，或用 openhue get light 确认灯泡能力"
+    },
+    "state_after": {
+      "color": "unchanged"
+    },
+    "gene": "OPEN-004"
+  }
+}

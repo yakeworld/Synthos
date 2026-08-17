@@ -1,0 +1,25 @@
+{
+  "case_id": "case_001",
+  "expected_result": {
+    "status": "success",
+    "mode": "single_task",
+    "launch": {
+      "command": "claude \"Add unit tests for Z\" --context \"Project structure: src/ contains auth.py, users.py; tests/ uses pytest\"",
+      "background": true,
+      "notify_on_complete": true,
+      "pty": false
+    },
+    "checks": {
+      "cli_precheck_passed": "pass",
+      "background_notify_for_long_task": "pass",
+      "single_task_with_context": "pass",
+      "pty_only_for_repl": "pass"
+    },
+    "errors": [],
+    "weight_score": 1.0
+  },
+  "pass_criteria": {
+    "all_critical": true,
+    "weighted_score_min": 0.8
+  }
+}

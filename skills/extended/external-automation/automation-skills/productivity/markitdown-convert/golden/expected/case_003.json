@@ -1,0 +1,27 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "result": {
+      "status": "error",
+      "md_path": "06-ref/pdfs_md/Cracked1995.md",
+      "fallback": "placeholder",
+      "placeholder_content": "# Cracked1995\n\n[PDF无法提取文本 — 需手动补摘要或走OCR]\n"
+    },
+    "error": {
+      "context": "markitdown 与 pdftotext 均输出 0 字符；mutool 报 cannot find page tree（损坏 PDF，%PDF- 头存在但 xref 破损）",
+      "recovery": [
+        "寻找 arXiv/PMC 替代版本（多数经典论文有线上全文）",
+        "手动补写摘要（知名论文适用）",
+        "走 OCR 管线（marker-pdf / pdftoppm + tesseract）"
+      ]
+    },
+    "note": "损坏 PDF 必须写占位文件而非静默跳过（MARK-003 / 验证清单第 3 项）；恢复建议须覆盖 ≥2 条路径（MARK-003 + MARK-007）"
+  },
+  "verification": [
+    "pdfs_md/Cracked1995.md 存在且内容为 [PDF无法提取文本] 占位（非空文件、非静默缺失）",
+    "错误信息含上下文：文件名、markitdown 与 pdftotext 各自输出字符数（0）、损坏判定依据",
+    "恢复建议 ≥ 2 条且可执行（替代版本 / 手动摘要 / OCR 管线任选其二）",
+    "未将损坏 PDF 误报为转换成功（status 必须为 error）",
+    "损坏检测可用可读字符比例脚本复核（text_chars/len(content) 极低）"
+  ]
+}

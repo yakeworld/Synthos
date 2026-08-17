@@ -1,0 +1,19 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "result": {
+      "status": "ok",
+      "project": "layer-b-audit-abc123",
+      "answer_chars_gt": 100,
+      "timeout_seconds": 90
+    },
+    "note": "逐问法一问一收（NOTE-001）：每轮仅一个 Prompt，答案决定下一问；timeout 必须 ≥90s 以适配 30-60s 响应（NOTE-002）；纯英文 ASCII Prompt 规避 tirith:confusable_text 安全扫描（NOTE-004）"
+  },
+  "verification": [
+    "命令结构为 `notebooklm ask \"<prompt>\"`，Prompt 为纯英文 ASCII（不含中文字符）",
+    "timeout 配置值 ≥ 90，且回答未因默认超时而截断",
+    "同一项目内无并行 ask 调用（串话防护，验证清单/关键陷阱项）",
+    "result 为 dict 且 status == 'ok'，answer 非空（>100 chars）",
+    "执行前已 `notebooklm use <project>` 切到目标项目，源状态非 error"
+  ]
+}

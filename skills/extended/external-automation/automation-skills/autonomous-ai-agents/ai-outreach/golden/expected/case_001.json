@@ -1,0 +1,23 @@
+{
+  "case_id": "case_001",
+  "expected_result": {
+    "status": "success",
+    "platform": "github_agents_md",
+    "artifacts": [
+      "/repo/AGENTS.md",
+      "/repo/README.md"
+    ],
+    "checks": {
+      "agents_md_at_root": "pass",
+      "agents_md_structure": "pass",
+      "readme_link": "pass",
+      "git_tracked": "pass"
+    },
+    "errors": [],
+    "weight_score": 1.0
+  },
+  "pass_criteria": {
+    "all_critical": true,
+    "weighted_score_min": 0.8
+  }
+}

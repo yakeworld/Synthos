@@ -1,0 +1,30 @@
+{
+  "case_id": "case_002",
+  "skill": "openhue",
+  "scene": "错误路径：对不支持彩色的白光灯泡设置颜色",
+  "gene": "OPEN-004",
+  "input": {
+    "user_request": "把浴室的白光灯泡设为红色",
+    "precondition": "openhue get light 显示 'Bathroom Light' 为白光灯泡（仅支持开关/亮度/色温）",
+    "command": "openhue set light \"Bathroom Light\" --on --color red",
+    "params": {
+      "resource": "light",
+      "name": "Bathroom Light",
+      "on": true,
+      "color": "red"
+    }
+  },
+  "checks": {
+    "critical": [
+      "设置颜色前已确认灯泡颜色能力（OPEN-004）",
+      "对白光灯泡下发 color/rgb 时命令失败或参数被拒绝",
+      "错误信息包含上下文与恢复建议（如：该灯为白光灯泡，仅支持 on/brightness/temperature）"
+    ],
+    "high": [
+      "恢复建议指引用户使用 openhue get light 核对灯泡能力"
+    ],
+    "medium": [
+      "若灯泡支持彩色则不应误报不支持"
+    ]
+  }
+}

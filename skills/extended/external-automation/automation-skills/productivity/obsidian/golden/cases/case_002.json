@@ -1,0 +1,28 @@
+{
+  "id": "case_002",
+  "title": "按内容正则搜索笔记（正常路径）",
+  "type": "happy_path",
+  "skill": "obsidian",
+  "tier": 1,
+  "input": {
+    "request": "在 vault 中搜索包含 'saccadic latency' 的所有 markdown 笔记",
+    "vault_path": "/home/user/Documents/Obsidian Vault",
+    "search": {
+      "target": "content",
+      "pattern": "saccadic latency",
+      "file_glob": "*.md"
+    }
+  },
+  "checks": {
+    "critical": [
+      "使用 search_files target=content 而非 grep/find/ls",
+      "file_glob 限定为 *.md"
+    ],
+    "high": [
+      "返回结果含匹配文件路径与行号"
+    ],
+    "medium": [
+      "所有命中文件均位于 vault 路径下"
+    ]
+  }
+}

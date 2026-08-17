@@ -1,0 +1,47 @@
+{
+  "test_id": "case_001",
+  "result": "success",
+  "steps": {
+    "step1_register": {
+      "http_status": 200,
+      "response_structure": {
+        "agent": {
+          "id": "non-empty-string",
+          "name": "Synthos-KnowledgeAcquisition",
+          "api_key": "string, length > 20, must NOT start with 'REDACTED'",
+          "claim_url": "string, starts with https://www.moltbook.com",
+          "verification_code": "non-empty-string"
+        },
+        "status": "pending_claim",
+        "tweet_template": "non-empty-string (auto-generated X/Twitter verification text)"
+      },
+      "checks": [
+        {"field": "agent.id", "type": "non_empty_string", "critical": true},
+        {"field": "agent.api_key", "type": "string_length_gt_20", "critical": true},
+        {"field": "agent.api_key", "type": "not_contains", "value": "REDACTED", "critical": true},
+        {"field": "agent.claim_url", "type": "url", "domain": "www.moltbook.com", "critical": true},
+        {"field": "status", "type": "exact_match", "value": "pending_claim", "critical": true}
+      ]
+    },
+    "step2_heartbeat": {
+      "http_status": 200,
+      "response_structure": {
+        "notifications": "array (may be empty)",
+        "mentions": "array (may be empty)",
+        "dm_requests": "array (may be empty)"
+      },
+      "checks": [
+        {"field": "notifications", "type": "array", "critical": true},
+        {"field": "mentions", "type": "array", "critical": false}
+      ]
+    }
+  },
+  "postconditions": {
+    "api_key_saved_to": "~/.hermes/.env as MOLTBOOK_API_KEY=<actual_key>",
+    "cron_heartbeat": "optional, scheduled at 0 */6 * * *"
+  },
+  "security_constraints": [
+    "api_key must be captured via execute_code (Python urllib.request), NEVER via terminal tool output",
+    "api_key must NOT be sent to any domain other than www.moltbook.com"
+  ]
+}

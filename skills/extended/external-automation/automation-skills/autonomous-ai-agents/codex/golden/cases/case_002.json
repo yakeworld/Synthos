@@ -1,0 +1,48 @@
+{
+  "case_id": "case_002",
+  "type": "error_path",
+  "title": "错误路径：非 git 目录 + DeepSeek 供应商 → 拒绝运行 + wire_api 不兼容",
+  "skill_contract": {
+    "input": "request: str, context: dict",
+    "output": "result: dict",
+    "gene": "CODE-004 / CODE-007 / Pitfall 1 / Pitfall 10"
+  },
+  "input": {
+    "request": "用 codex 修复登录 bug",
+    "context": {
+      "mode": "single_task",
+      "workdir": "/tmp/scratch-not-git",
+      "is_git_repo": false,
+      "provider": "deepseek",
+      "wire_api": "chat",
+      "endpoint": "https://api.deepseek.com/v1/chat/completions",
+      "base_url_responds_to_responses": false
+    }
+  },
+  "checks": [
+    {
+      "id": "reject_non_git_repo",
+      "severity": "critical",
+      "description": "非 git 目录运行 Codex 会直接失败（Pitfall 1 / CODE-004），必须先 git init 临时仓库或进入现有仓库",
+      "assert": "result.errors[].code==NOT_A_GIT_REPO OR result.errors[].code==GIT_REPO_REQUIRED"
+    },
+    {
+      "id": "wire_api_mismatch_deepseek",
+      "severity": "critical",
+      "description": "DeepSeek 仅提供 chat/completions，Codex wire_api 只接受 responses → 401/端点不存在（Pitfall 10 / CODE-007），不得通过 Codex 调用",
+      "assert": "result.errors[].code==WIRE_API_INCOMPATIBLE AND context.wire_api!='responses'"
+    },
+    {
+      "id": "no_execution",
+      "severity": "critical",
+      "description": "任一前置条件不满足时禁止执行 codex 命令（避免挂起/401）",
+      "assert": "launch.command==null OR result.status==error"
+    },
+    {
+      "id": "error_has_recovery",
+      "severity": "high",
+      "description": "错误信息必须含上下文与恢复建议（RULES 第3条）：git init 临时仓库 + 改用 OpenCode 或 cron agent provider 走 DeepSeek",
+      "assert": "errors[].recovery contains 'git init' AND ('OpenCode' OR 'cron agent provider')"
+    }
+  ]
+}

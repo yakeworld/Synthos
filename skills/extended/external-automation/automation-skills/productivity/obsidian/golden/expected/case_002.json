@@ -1,0 +1,36 @@
+{
+  "id": "case_002",
+  "status": "ok",
+  "result": {
+    "action": "search_notes",
+    "matches": [
+      {
+        "file": "/home/user/Documents/Obsidian Vault/papers/eye-tracking-notes.md",
+        "line": 12,
+        "text": "increased saccadic latency is reported in ADHD"
+      },
+      {
+        "file": "/home/user/Documents/Obsidian Vault/skills/oculomotor.md",
+        "line": 4,
+        "text": "saccadic latency baseline: 220ms"
+      }
+    ],
+    "match_count": 2
+  },
+  "tool_calls": [
+    {
+      "tool": "search_files",
+      "args": {
+        "path": "/home/user/Documents/Obsidian Vault",
+        "target": "content",
+        "pattern": "saccadic latency",
+        "file_glob": "*.md"
+      }
+    }
+  ],
+  "assertions": {
+    "uses_shell_grep": false,
+    "all_matches_within_vault": true,
+    "all_match_files_are_markdown": true
+  }
+}

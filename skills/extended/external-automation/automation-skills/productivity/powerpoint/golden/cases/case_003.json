@@ -1,0 +1,36 @@
+{
+  "id": "case_003",
+  "title": "元素溢出安全区（错误路径）",
+  "type": "error_path",
+  "skill": "powerpoint",
+  "input": {
+    "request": "生成一页 PPTX：右侧放置一张宽卡片",
+    "page": {
+      "width_inches": 13.333,
+      "height_inches": 7.5
+    },
+    "cards": [
+      {"id": "card_overflow", "title": "溢出卡片", "body": "此卡片 right 超出页面边界"}
+    ],
+    "card_geom": {
+      "left_inches": 9.0,
+      "top_inches": 1.5,
+      "width_inches": 5.0,
+      "height_inches": 2.5
+    },
+    "safety_factor": null
+  },
+  "checks": {
+    "critical": [
+      "quality_check 检出 overflow_count >= 1",
+      "deliverable 标记为 blocked，不静默交付",
+      "error 报告包含溢出坐标（right=14.0in > 13.333in）与修复建议"
+    ],
+    "high": [
+      "修复建议提及 0.92 安全系数或缩小卡片宽度"
+    ],
+    "medium": [
+      "同时检测 LibreOffice 导出安全区 12.8in 违规"
+    ]
+  }
+}

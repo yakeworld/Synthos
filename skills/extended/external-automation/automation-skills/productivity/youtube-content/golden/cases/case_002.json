@@ -1,0 +1,30 @@
+{
+  "case_id": "case_002",
+  "skill": "youtube-content",
+  "scene": "错误路径：视频转录被禁用",
+  "gene": "YOUT-004",
+  "input": {
+    "command": "python3 scripts/fetch_transcript.py \"https://www.youtube.com/watch?v=dQw4w9WgXcQ\" --language en",
+    "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "flags": ["--language", "en"],
+    "language": "en",
+    "user_request": "get transcript of this video"
+  },
+  "mock": {
+    "description": "youtube-transcript-api fetch 抛出含 'disabled' 的异常（转录被禁用）",
+    "api_exception": "Transcripts are disabled for this video."
+  },
+  "checks": {
+    "critical": [
+      "stdout 为 {\"error\": \"Transcripts are disabled for this video.\"}",
+      "退出码为 1",
+      "向用户明确告知转录禁用，并建议检查视频页面的字幕可用性（YOUT-004）"
+    ],
+    "high": [
+      "不出现未捕获 traceback"
+    ],
+    "medium": [
+      "错误 JSON 可被 json.load 解析"
+    ]
+  }
+}

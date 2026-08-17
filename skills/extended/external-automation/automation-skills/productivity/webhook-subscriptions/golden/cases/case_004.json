@@ -1,0 +1,34 @@
+{
+  "id": "case_004",
+  "title": "HMAC 签名不匹配（错误路径）",
+  "type": "error_path",
+  "skill": "webhook-subscriptions",
+  "input": {
+    "request": "上游 POST 到 github-issues 订阅，但签名头与服务端 secret 不一致",
+    "subscription": {
+      "name": "github-issues",
+      "secret": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b"
+    },
+    "incoming_post": {
+      "url": "https://gw.example.com/hooks/github-issues",
+      "headers": {
+        "X-Hub-Signature-256": "sha256=1111111111111111111111111111111111111111"
+      },
+      "payload": {"issue": {"number": 43, "title": "Wrong signature"}},
+      "expected_signature": "sha256=aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+    }
+  },
+  "checks": {
+    "critical": [
+      "请求被 401 拒绝，不触发 agent run",
+      "错误/日志提示核对 secret 一致性（WEBH-004/005）"
+    ],
+    "high": [
+      "recovery 建议运行 hermes webhook list 查看服务端 secret 并与上游配置比对",
+      "不泄露服务端 secret 明文到错误响应"
+    ],
+    "medium": [
+      "区分 GitLab（X-Gitlab-Token）与 GitHub（X-Hub-Signature-256）签名头"
+    ]
+  }
+}

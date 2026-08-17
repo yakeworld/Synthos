@@ -1,0 +1,23 @@
+{
+  "case_id": "case_001",
+  "description": "正常路径：逐问法 Q&A（纯英文 Prompt，超时 90s，项目内串行）",
+  "input": {
+    "action": "ask",
+    "params": {
+      "prompt": "What are the main methodological gaps in ODE-based models of cardiac electrophysiology reported in these sources?",
+      "project": "layer-b-audit-abc123",
+      "timeout_seconds": 90,
+      "prompt_language": "ascii_english"
+    }
+  },
+  "expected": {
+    "command": "notebooklm ask \"What are the main methodological gaps in ODE-based models of cardiac electrophysiology reported in these sources?\"",
+    "result": {
+      "status": "ok",
+      "project": "layer-b-audit-abc123",
+      "answer_chars_gt": 100,
+      "timeout_seconds": 90
+    }
+  },
+  "weight": "critical"
+}

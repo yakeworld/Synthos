@@ -1,0 +1,34 @@
+{
+  "case_id": "case_001",
+  "expected_result": {
+    "status": "success",
+    "mode": "cron_script",
+    "profile_node": "100.82.27.51:8000",
+    "model": "qwen3.6-35b-nvfp4",
+    "launch": {
+      "command": "codex exec \"## 任务：为项目添加深色模式切换\\n\\n### 执行步骤\\n1. 实现深色模式切换组件\\n2. 在设置中暴露开关\\n\\n### 输出要求\\n- 修改完成后 git commit\\n- 只输出关键结果\" --yolo",
+      "pty": false,
+      "prompt_via": "cli_arg",
+      "use_yolo": true
+    },
+    "script": {
+      "header": "#!/bin/bash",
+      "guard": "set -euo pipefail",
+      "cd": "/media/yakeworld/sda2/project",
+      "profile_flag": ""
+    },
+    "checks": {
+      "git_repo_required": "pass",
+      "exec_prompt_as_cli_arg": "pass",
+      "yolo_only_for_trusted_isolated": "pass",
+      "cron_script_shebang_and_guard": "pass",
+      "wire_api_responses_only": "pass"
+    },
+    "errors": [],
+    "weight_score": 1.0
+  },
+  "pass_criteria": {
+    "all_critical": true,
+    "weighted_score_min": 0.8
+  }
+}

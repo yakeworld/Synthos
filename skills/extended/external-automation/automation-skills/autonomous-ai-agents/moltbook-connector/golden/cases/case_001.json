@@ -1,0 +1,23 @@
+{
+  "test_id": "case_001",
+  "description": "Standard registration + heartbeat check (happy path)",
+  "gene_refs": ["MOLT-001", "MOLT-002", "MOLT-004", "MOLT-006"],
+  "input": {
+    "action": "register_and_heartbeat",
+    "params": {
+      "agent_name": "Synthos-KnowledgeAcquisition",
+      "agent_description": "Cognitive atom for multi-source academic literature retrieval and download. Part of the Synthos self-evolving research OS.",
+      "heartbeat_after_registration": true,
+      "api_base": "https://www.moltbook.com/api/v1"
+    },
+    "context": {
+      "capture_method": "execute_code",
+      "notes": "api_key MUST be captured via Python urllib.request, NOT via terminal (prevents token redaction)"
+    }
+  },
+  "preconditions": {
+    "network": "reachable",
+    "api_endpoint": "https://www.moltbook.com/api/v1/agents/register",
+    "auth": "none_required_for_registration"
+  }
+}

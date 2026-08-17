@@ -1,0 +1,20 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "error": {
+      "context": "GET /v1/pages/deadbeef-... 返回 404 object_not_found：该页面未共享给当前 Integration（NOTI-003）",
+      "recovery": [
+        "在 Notion UI 打开目标页面 → '...' → 'Connect to' → 选择本 Integration 名称",
+        "重新执行原请求（仅一次，避免对 404 连续重试，NOTI-007）"
+      ]
+    },
+    "note": "404/object_not_found 的根因通常是目标页面/数据库未共享给 Integration（NOTI-003）；错误输出必须含上下文（端点+ID+响应 code）与可执行恢复步骤；不得对同一 404 高频重试（NOTI-007）"
+  },
+  "verification": [
+    "响应解析出 code == 'object_not_found' 且 message 非空（jq '.code, .message'）",
+    "错误信息含上下文：端点路径、page_id、HTTP 404 状态",
+    "恢复建议包含 Notion UI 共享步骤（'...' → 'Connect to' → Integration 名称）",
+    "重试次数 ≤ 1（404 类错误不进入重试循环，频率控制在 ~3 req/s 内，NOTI-007）",
+    "未把 404 误报为成功，也未吞掉错误静默继续"
+  ]
+}

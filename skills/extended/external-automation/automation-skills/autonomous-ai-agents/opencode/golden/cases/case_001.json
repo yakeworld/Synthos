@@ -1,0 +1,33 @@
+{
+  "test_id": "case_001",
+  "description": "Full 5-step diagnostic (happy path, all healthy)",
+  "gene_refs": ["OPEN-001", "OPEN-003", "OPEN-004", "OPEN-006"],
+  "input": {
+    "action": "diagnose",
+    "params": {
+      "check_process": true,
+      "check_installation": true,
+      "check_config": true,
+      "check_backend": true,
+      "check_history": true,
+      "backend_nodes": [
+        {"name": "hermes-primary", "host": "100.125.10.93", "port": 8000},
+        {"name": "amax-fallback", "host": "100.82.27.51", "port": 8000},
+        {"name": "hermes-fallback", "host": "100.100.252.99", "port": 8000}
+      ],
+      "config_path": "~/.config/opencode/opencode.json",
+      "history_path": "~/.local/state/opencode/prompt-history.jsonl"
+    },
+    "context": {
+      "opencode_version": "1.17.8",
+      "api_style": "chat/completions (NOT responses)",
+      "notes": "No process running is NORMAL (non-daemon service). Do not report as fault."
+    }
+  },
+  "preconditions": {
+    "opencode_installed": true,
+    "config_file_exists": true,
+    "backend_nodes_reachable": true,
+    "tailscale_active": true
+  }
+}

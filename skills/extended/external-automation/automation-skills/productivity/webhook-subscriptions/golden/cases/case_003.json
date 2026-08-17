@@ -1,0 +1,30 @@
+{
+  "id": "case_003",
+  "title": "--deliver-only 配 --deliver log（错误路径）",
+  "type": "error_path",
+  "skill": "webhook-subscriptions",
+  "input": {
+    "request": "创建 deliver-only 订阅，目标为 log",
+    "subscribe": {
+      "name": "bad-direct",
+      "prompt": "Alert: {alert.name}",
+      "deliver": "log",
+      "deliver_chat_id": null,
+      "deliver_only": true
+    }
+  },
+  "checks": {
+    "critical": [
+      "拒绝创建订阅（SKILL：--deliver log 被拒绝）",
+      "error 说明 log-only 直接透传无意义",
+      "recovery 建议改用真实目标（telegram/discord/slack/github_comment）"
+    ],
+    "high": [
+      "不落盘任何订阅条目",
+      "webhook list 无 bad-direct"
+    ],
+    "medium": [
+      "错误信息含上下文（参数名与取值）"
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "case_id": "case_001",
+  "name": "跨 execute 状态持久化 + variables list（正常路径）",
+  "genes": ["JUPY-001", "JUPY-002", "JUPY-006"],
+  "input": {
+    "request": "用 live kernel 迭代探索一个 DataFrame",
+    "server": {"url": "http://127.0.0.1:8888", "online": true},
+    "session": {"notebook": "scratch.ipynb", "exists": true},
+    "commands": [
+      {
+        "op": "execute",
+        "cmd": "uv run $SCRIPT execute --path scratch.ipynb --code 'import pandas as pd\ndf = pd.DataFrame({\"x\": [1, 2, 3]})' --compact",
+        "compact": true,
+        "path_before_subsubcommand": true
+      },
+      {
+        "op": "execute",
+        "cmd": "uv run $SCRIPT execute --path scratch.ipynb --code 'print(df.shape)' --compact",
+        "note": "第二次 execute 直接使用上一步定义的 df，不再 import",
+        "compact": true,
+        "path_before_subsubcommand": true
+      },
+      {
+        "op": "variables",
+        "cmd": "uv run $SCRIPT variables --path scratch.ipynb list --compact",
+        "note": "--path 位于子子命令 list 之前（JUPY-006）",
+        "compact": true,
+        "path_before_subsubcommand": true
+      }
+    ]
+  },
+  "notes": "标准正常路径：kernel 在线、session 已存在。期望三次命令全部成功，状态跨 execute 持久化。"
+}

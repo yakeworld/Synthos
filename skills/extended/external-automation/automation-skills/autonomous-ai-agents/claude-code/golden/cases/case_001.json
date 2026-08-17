@@ -1,0 +1,47 @@
+{
+  "case_id": "case_001",
+  "type": "happy_path",
+  "title": "长任务委托：预检通过后 background+notify 运行 claude",
+  "skill_contract": {
+    "input": "request: str, context: dict",
+    "output": "result: dict",
+    "gene": "CLAU-001 / CLAU-002 / CLAU-003"
+  },
+  "input": {
+    "request": "为模块 Z 添加单元测试并重构",
+    "context": {
+      "mode": "single_task",
+      "task": "Add unit tests for Z",
+      "project_context": "Project structure: src/ contains auth.py, users.py; tests/ uses pytest",
+      "is_long_task": true,
+      "cli_available": true,
+      "which_claude_output": "/usr/local/bin/claude"
+    }
+  },
+  "checks": [
+    {
+      "id": "cli_precheck_passed",
+      "severity": "critical",
+      "description": "执行前 `which claude` 非空，确认 CLI 已安装（CLAU-005）",
+      "assert": "context.which_claude_output non-empty"
+    },
+    {
+      "id": "background_notify_for_long_task",
+      "severity": "critical",
+      "description": "长任务必须 background=true 且 notify_on_complete=true（CLAU-002）",
+      "assert": "launch.background==true AND launch.notify_on_complete==true"
+    },
+    {
+      "id": "single_task_with_context",
+      "severity": "high",
+      "description": "单次任务 `claude \"task\"` 携带明确项目上下文（CLAU-003）",
+      "assert": "launch.command contains claude AND context.project_context non-empty"
+    },
+    {
+      "id": "pty_only_for_repl",
+      "severity": "medium",
+      "description": "REPL 模式需 pty=true 防止挂起；single_task 一次性任务无需 pty（CLAU-001）",
+      "assert": "mode!=repl OR launch.pty==true"
+    }
+  ]
+}

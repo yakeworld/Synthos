@@ -1,0 +1,44 @@
+{
+  "id": "case_001",
+  "title": "生成 6 卡 3×2 网格页（正常路径）",
+  "type": "happy_path",
+  "skill": "powerpoint",
+  "input": {
+    "request": "生成一页 PPTX：标题页 + 6 张成果卡片，3 列 2 行网格布局",
+    "page": {
+      "width_inches": 13.333,
+      "height_inches": 7.5
+    },
+    "cards": [
+      {"id": "card_1", "title": "21 篇 SCI 论文", "body": "一作/通讯 15 篇"},
+      {"id": "card_2", "title": "12 项发明专利", "body": "授权 8 项"},
+      {"id": "card_3", "title": "101.9 万经费", "body": "主持项目 2 项"},
+      {"id": "card_4", "title": "3 项行业标准", "body": "第一起草人"},
+      {"id": "card_5", "title": "2 个省级平台", "body": "重点实验室 + 工程中心"},
+      {"id": "card_6", "title": "5 名研究生", "body": "在读博士 3 名"}
+    ],
+    "grid": {
+      "num_cols": 3,
+      "col_width_inches": 2.8,
+      "row_height_inches": 2.8,
+      "left_margin_inches": 4.9,
+      "y_start_inches": 1.5
+    },
+    "safety_factor": 0.92
+  },
+  "checks": {
+    "critical": [
+      "列索引用 col = i % num_cols 计算，(i, row, col) 无重复",
+      "所有 shape 满足 (left+width)/914400 <= 13.333 且 (top+height)/914400 <= 7.5",
+      "非零 Inches(N) 均乘以 0.92 安全系数"
+    ],
+    "high": [
+      "生成脚本存于项目 code/ 目录而非 /tmp",
+      "使用 /usr/bin/python3 或 pipx shared python 执行（非沙盒 venv）"
+    ],
+    "medium": [
+      "页眉/页脚 helper 函数统一风格",
+      "卡片标题 13-15pt、正文 11pt"
+    ]
+  }
+}

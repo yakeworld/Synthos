@@ -1,0 +1,35 @@
+{
+  "case_id": "case_001",
+  "expected": {
+    "status": "success",
+    "tool": "python-docx",
+    "fill_method": "direct_python_docx",
+    "pip_install_flag": "--break-system-packages",
+    "ppt_generated": false,
+    "filled_form": {
+      "docx": "output/njjk-survey-Synthos-filled.docx",
+      "fields": {
+        "项目名称": "Synthos 自主进化科研认知操作系统",
+        "所属单位": "Synthos Lab",
+        "技术方向": "脑机接口 × 自主科研代理",
+        "特色介绍": "六认知原子 DAG + 宪法层级 + FSRS 记忆巩固，自进化为唯一目标",
+        "产业化基础": "MIT 开源，v5.0 已部署 20+ 认知技能"
+      },
+      "completeness": 1.0,
+      "errors": []
+    },
+    "delivery": {
+      "channel": "feishu",
+      "chat_id_format": "feishu:oc_<id>",
+      "chat_id": "feishu:oc_7a9c1b2d3e"
+    },
+    "checks": [
+      {"id": "c1", "check": "使用 python-docx 直接填充（非 markitdown）", "weight": "critical", "expected": "python-docx"},
+      {"id": "c2", "check": "5/5 必填字段一一对应，无遗漏无串位", "weight": "critical", "expected": 5},
+      {"id": "c3", "check": "未额外生成 PPT", "weight": "critical", "expected": false},
+      {"id": "c4", "check": "Python 3.12 下 pip 安装带 --break-system-packages", "weight": "high", "expected": true},
+      {"id": "c5", "check": "飞书 chat_id 为 feishu:oc_<id> 格式", "weight": "high", "expected": "feishu:oc_7a9c1b2d3e"},
+      {"id": "c6", "check": "输出 docx 可重新打开且抽查单元格一致", "weight": "medium", "expected": true}
+    ]
+  }
+}

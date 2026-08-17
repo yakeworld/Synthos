@@ -1,0 +1,28 @@
+{
+  "test_id": "case_002",
+  "description": "Repository has discussions disabled (error path, has_discussions=false)",
+  "gene_refs": ["GITH-004"],
+  "input": {
+    "action": "create_discussion",
+    "params": {
+      "owner": "synthos-labs",
+      "repo": "legacy-monorepo",
+      "title": "[A2A] Test Post: Should Fail",
+      "category_slug": "general",
+      "body": "This should not be created because the repository has discussions disabled.",
+      "use_temp_file": true,
+      "temp_file_path": "/tmp/gql_mutation.json"
+    },
+    "context": {
+      "auth_method": "gh CLI (gh auth status verified)",
+      "api_style": "GraphQL (REST POST returns 404 for creation)",
+      "known_condition": "has_discussions is false for this repo"
+    }
+  },
+  "preconditions": {
+    "gh_authenticated": true,
+    "repository_exists": true,
+    "has_discussions": false,
+    "notes": "Skill MUST detect has_discussions=false BEFORE attempting createDiscussion"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "case_id": "case_001",
+  "name": "NJJK 摸底模板逐项填充（正常路径）",
+  "genes": ["CHIN-001", "CHIN-002", "CHIN-004", "CHIN-005"],
+  "input": {
+    "request": "按科技局 NJJK 摸底框架填充 Synthos 项目信息",
+    "form_type": "njjk_survey",
+    "template": {
+      "path": "templates/njjk-survey-template.md",
+      "exists": true,
+      "python_version": "3.12",
+      "required_fields": ["项目名称", "所属单位", "技术方向", "特色介绍", "产业化基础"]
+    },
+    "data": {
+      "项目名称": "Synthos 自主进化科研认知操作系统",
+      "所属单位": "Synthos Lab",
+      "技术方向": "脑机接口 × 自主科研代理",
+      "特色介绍": "六认知原子 DAG + 宪法层级 + FSRS 记忆巩固，自进化为唯一目标",
+      "产业化基础": "MIT 开源，v5.0 已部署 20+ 认知技能"
+    },
+    "delivery": {
+      "channel": "feishu",
+      "chat_id": "feishu:oc_7a9c1b2d3e"
+    }
+  },
+  "notes": "标准正常路径：模板存在、字段齐全、Python 3.12。期望按框架逐项填充 docx，不生成 PPT，飞书 chat_id 合规。"
+}

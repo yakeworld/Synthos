@@ -1,0 +1,24 @@
+{
+  "id": "case_004",
+  "status": "ok",
+  "result": {
+    "output_file": "code/output/4pages_reordered.pptx",
+    "method": "zip_direct_xml_edit",
+    "xml_element": "ppt/presentation.xml",
+    "tag": "sldIdLst",
+    "sldId_sequence": [
+      {"slide_index": 0, "id": "256", "rId": "rId2"},
+      {"slide_index": 2, "id": "258", "rId": "rId4"},
+      {"slide_index": 1, "id": "257", "rId": "rId3"},
+      {"slide_index": 3, "id": "259", "rId": "rId5"}
+    ],
+    "final_order": [0, 2, 1, 3],
+    "other_zip_entries_preserved": 9
+  },
+  "assertions": {
+    "final_order_matches_target": true,
+    "uses_sldIdLst_tag": true,
+    "python_pptx_reopen_ok": true,
+    "no_slide_content_lost": true
+  }
+}

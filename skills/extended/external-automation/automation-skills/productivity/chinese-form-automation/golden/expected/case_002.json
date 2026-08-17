@@ -1,0 +1,28 @@
+{
+  "case_id": "case_002",
+  "expected": {
+    "status": "error",
+    "artifact": null,
+    "ppt_generated": false,
+    "error": {
+      "code": "INPUT_VALIDATION_FAILED",
+      "context": {
+        "template_missing": "templates/missing-survey-template.md",
+        "missing_required_fields": ["所属单位", "特色介绍", "产业化基础"],
+        "invalid_chat_id": "feishu（裸标识，应为 feishu:oc_<id>）"
+      },
+      "recovery": [
+        "确认模板文件路径存在且 python-docx 可打开",
+        "补齐 所属单位/特色介绍/产业化基础 三个必填字段后重试",
+        "飞书发送改为 feishu:oc_<id> 格式 chat_id"
+      ]
+    },
+    "checks": [
+      {"id": "c1", "check": "status == 'error' 且未产出半成品文档", "weight": "critical", "expected": "error"},
+      {"id": "c2", "check": "错误信息含具体上下文（缺失路径+缺失字段名）", "weight": "critical", "expected": true},
+      {"id": "c3", "check": "错误信息含恢复建议（recovery 非空）", "weight": "critical", "expected": true},
+      {"id": "c4", "check": "识别裸 'feishu' chat_id 为不合规", "weight": "high", "expected": true},
+      {"id": "c5", "check": "未执行部分填充（拒绝半成品）", "weight": "medium", "expected": "artifact 为 null"}
+    ]
+  }
+}

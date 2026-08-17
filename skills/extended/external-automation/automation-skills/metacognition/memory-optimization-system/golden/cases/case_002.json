@@ -1,0 +1,22 @@
+{
+  "case_id": "case_002",
+  "name": "FSRS 健康分级 + 记忆空间 92% 铁律清理（异常路径）",
+  "genes": ["MEMO-002", "MEMO-003"],
+  "input": {
+    "consolidation_trigger": "qc_scan",
+    "context_size": 8000,
+    "tool_output": {
+      "size_bytes": 4000,
+      "line_count": 20,
+      "sample_head": "no long output in this case"
+    },
+    "memory_entries": [
+      {"id": "mem-101", "text": "项目旧状态: v2.18 分支已合并，不再维护", "age_days": 30, "access_count": 1},
+      {"id": "mem-102", "text": "环境: 工作站路径 /media/yakeworld/sda2", "age_days": 8, "access_count": 1},
+      {"id": "mem-103", "text": "核心哲学: 自进化为唯一目标", "age_days": 5, "access_count": 6},
+      {"id": "mem-104", "text": "过期: 某 PR #42 状态", "age_days": 21, "access_count": 0}
+    ],
+    "memory_space_pct": 92
+  },
+  "notes": "错误/异常路径：条目含过期与零访问条目，空间 92% 触发 >90% 铁律（清理+压缩）。mem-104 从未访问且 21 天 → 可移除。mem-101 age=30 天: R=1/(1+30/22.5)=0.429<0.5… 按公式 R<0.3 才低可检索，R=0.4286 → 正常档由 access 判定；此处 mem-101 期望分级为『可移除候选/过期』需由 FSRS+过期规则综合给出『低可检索』（R=0.43 不满足 R>0.7；access<2 不满足健康；R 不 <0.3）→ 归入『正常』但被铁律清理优先移除。期望文件以分级+清理动作为准。"
+}

@@ -1,0 +1,19 @@
+{
+  "case_id": "case_002",
+  "skill": "youtube-content",
+  "expected": {
+    "exit_code": 1,
+    "stdout": "{\"error\": \"Transcripts are disabled for this video.\"}",
+    "stdout_schema": {
+      "type": "object",
+      "required": ["error"],
+      "error_equals": "Transcripts are disabled for this video."
+    },
+    "stderr": "",
+    "user_facing_response": {
+      "must_mention": ["transcripts disabled", "字幕"],
+      "suggestion": "建议用户检查视频页面的字幕可用性",
+      "gene": "YOUT-004"
+    }
+  }
+}

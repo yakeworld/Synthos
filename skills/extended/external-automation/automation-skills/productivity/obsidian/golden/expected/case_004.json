@@ -1,0 +1,22 @@
+{
+  "id": "case_004",
+  "status": "error",
+  "error": {
+    "code": "vault_path_unresolved",
+    "message": "vault 路径含未展开变量 $OBSIDIAN_VAULT_PATH，拒绝执行文件操作",
+    "context": {
+      "received_path": "$OBSIDIAN_VAULT_PATH/papers/iris-segmentation.md"
+    },
+    "recovery": [
+      "先通过 terminal 执行 echo $OBSIDIAN_VAULT_PATH 解析为具体绝对路径",
+      "若环境变量未设置，回退到 ~/Documents/Obsidian Vault",
+      "解析后以具体绝对路径重新调用文件工具"
+    ]
+  },
+  "tool_calls": [],
+  "assertions": {
+    "no_file_write_performed": true,
+    "error_mentions_resolve_vault_path": true,
+    "fallback_path_advised": true
+  }
+}
