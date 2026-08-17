@@ -86,6 +86,23 @@ metadata:
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
+## 示例 · EXAMPLES
+
+1. **请求 Minecraft 模组服务器**
+   - 输入: `game_type="minecraft", mode="modpack-server"`。
+   - 操作: 父级校验参数后路由到子技能 `minecraft-modpack-server`（如 `skill_view(name='minecraft-modpack-server')` 加载），父级自身不执行游戏操作。
+   - 验证: 输出 `game_state` 为 dict 且字段命名符合契约（P2）；请求确实由子技能处理。
+
+2. **请求宝可梦模拟器**
+   - 输入: `game_type="pokemon", mode="player"`。
+   - 操作: 路由到子技能 `pokemon-player` 执行；父级仅作为目录索引。
+   - 验证: 子技能返回的 `game_state` 结构一致；无越界执行。
+
+3. **未知游戏类型（Golden Error 路径）**
+   - 输入: `game_type="chess", mode="play"`。
+   - 操作: 参数校验拒绝（不在已知子技能范围 minecraft-modpack-server / pokemon-player）。
+   - 验证: 错误信息包含上下文（未知 game_type）与恢复指引（列出可用子技能），而非裸异常。
+
 ```
 skill_view(name='minecraft-modpack-server')  # 加载第一个子技能
 ```

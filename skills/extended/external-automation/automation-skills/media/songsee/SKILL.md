@@ -150,3 +150,20 @@ Multiple `--viz` types render as a grid in a single image.
 - **[SONG-004]** 需要自动化分析音频内容时 → 将生成的可视化图像作为输入传递给 `vision_analyze` 进行视觉特征提取
 - **[SONG-005]** 需要调整频谱显示细节时 → 通过 `--window`、`--hop` 及 `--min-freq`/`--max-freq` 参数精细控制 FFT 窗口与频率范围
 - **[SONG-006]** 需要标准化输出图像外观时 → 使用 `--style` 选择特定色板（如 magma, viridis）并指定 `--width`/`--height` 统一尺寸
+
+## 示例 · EXAMPLES
+
+**例 1: 生成基础频谱图**
+- 输入: `track.mp3`
+- 操作: `songsee track.mp3 -o spectrogram.png`（MP3 原生解码，无需 ffmpeg）
+- 验证: 输出 `spectrogram.png` 存在且非零字节，可用 `vision_analyze` 读取确认频谱清晰
+
+**例 2: 多面板特征网格（调试合成）**
+- 输入: `track.mp3`
+- 操作: `songsee track.mp3 --viz spectrogram,mel,chroma,tempogram,flux -o grid.png --style magma`
+- 验证: 单张图像含 5 个面板的网格；各面板对应可视化类型可辨
+
+**例 3: 时间切片局部分析**
+- 输入: `track.mp3`，关注 12.5s 起的 8s 片段
+- 操作: `songsee track.mp3 --start 12.5 --duration 8 -o slice.jpg --format jpg`
+- 验证: 切片未越界（12.5+8 ≤ 音频时长）；输出 `slice.jpg` 仅含指定时间段

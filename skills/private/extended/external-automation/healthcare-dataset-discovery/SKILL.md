@@ -98,6 +98,26 @@ When searching for public healthcare datasets:
 > Golden 集合是测试的单一真理来源。所有改进必须通过 golden 测试。
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+## 示例 · EXAMPLES
+
+**示例 1 · 发现心血管数据集（正常路径）**
+- 输入: `medical_domain="cardiovascular disease"`
+- 操作: 调用 OpenML `/api/v1/json/data/list` 拉取全量（不用 `limit/500`），本地按名称/描述过滤命中 DID=45547
+- 输出: `dataset_results=[{name:"Cardiovascular-Disease-dataset", source:"OpenML", url:"openml.org/download/{file_id}", NumberOfInstances:70000, access_type:"open"}]`
+- 验证: 详情 API 返回 `{"data_set_description": {...}}`，规模/特征数与列表接口一致
+
+**示例 2 · UCI 经典数据集已死链（失败路径）**
+- 输入: `medical_domain="stroke"`
+- 操作: 检索 `archive.ics.uci.edu` 与 GitHub 镜像（dsrscientist 等）、HuggingFace
+- 输出: 标记 `UNAVAILABLE`（UCI 404 + 镜像全死 + HF 404），建议转 OpenML 替代源
+- 验证: 每个"不可用"结论均有具体 404/认证失败证据，无凭空的"存在"声明
+
+**示例 3 · 文献检索 API 查询（参数陷阱）**
+- 输入: `medical_domain="breast cancer diagnosis"`
+- 操作: Crossref 用 `query=` 参数 + `quote_plus()`；PubMed eSearch 空格用 `+` 而非 URL 编码
+- 输出: 命中文献/数据列表
+- 验证: 查询参数解析正确，无空结果或 422
+
 ## Genes (策略基因)
 > 紧凑策略表示。条件→策略。需要深度时参考完整文档。
 - **[HEAL-001]** 当需要获取 OpenML 数据集列表时 → 使用 `/api/v1/json/data/list` 端点获取全量数据并在本地过滤，避免使用 `limit/500` 等可能导致空结果的参数

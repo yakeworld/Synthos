@@ -355,3 +355,20 @@ Style can drift in extensions — restate genre/mood when extending.
 - **[SONG-005]** 当进行改编或戏仿时 → 先映射原曲的音节数、重音及韵脚骨架，再填入新词并保留部分原句以维持辨识度
 - **[SONG-006]** 当编写 AI 音乐风格提示词时 → 使用“流派+情绪+时代+乐器+人声+制作”公式，描述声音旅程而非仅指定流派
 - **[SONG-007]** 当使用元标签控制生成时 → 在歌词中嵌入 5-8 个不冲突的结构/动态/氛围标签，并在风格字段中同步强化
+
+## 示例 · EXAMPLES
+
+1. **写一首"低语到嘶吼"的 cinematic ballad（Suno Custom Mode）**
+   - 输入: 情感核 = 失去后的释然，结构选 ABABCB。
+   - 操作: 按 流派+情绪+时代+乐器+人声+制作 公式写 Style（如 "sparse piano ballad, minor key, weathered alto, builds from whisper to full orchestra"）；歌词嵌入 [Verse]/[Chorus]/[Bridge] 结构标签，每节 5-8 个不冲突标签，Style 与 Lyrics 双处强化。
+   - 验证: 朗读歌词无顿挫；生成 ≥3 个变体择优；Extend 时重申 genre/mood 防漂移。
+
+2. **戏仿改编已有歌曲**
+   - 输入: 原曲歌词 + 新主题概念。
+   - 操作: 逐行统计音节数、标注韵式与重音；新词重音对齐原节拍，长延音处匹配原元音，单音节词做干净替换（Crime→Code），保留数句原词增加辨识度。
+   - 验证: 新词跟唱原曲不磕绊；保留原句存在且新主题贯穿全曲。
+
+3. **AI 歌手发音纠错**
+   - 输入: 含专有名词 "Nous" 与数字 "24/7" 的歌词行。
+   - 操作: 音韵改拼 "Nous"→"Noose"，数字拼出 "twenty four seven"；先跑 30 秒短片段试发音。
+   - 验证: 短片段中发音正确后再全曲生成；发音一旦烘焙进音频只能在歌词层面重改。

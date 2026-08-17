@@ -266,6 +266,23 @@ aliases: [Paper Title]
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
+## 示例 · EXAMPLES
+
+1. **单文件 PDF→Markdown 转换**
+   - 输入: `report.pdf`（学术 PDF，含文本层）
+   - 操作: `uvx markitdown report.pdf > pdfs_md/report.md`
+   - 验证: `wc -c pdfs_md/report.md` 输出 >50 chars，且保留 LaTeX 公式与章节标题
+
+2. **批量转换参考文献目录（含回退与缓存）**
+   - 输入: `06-ref/pdfs/` 下 40 个 PDF
+   - 操作: 运行"批量转换参考文献 PDF"脚本，`markitdown` 失败时回退 `pdftotext`
+   - 验证: `pdfs_md/` 中每个 PDF 均有对应 `.md`；成功率约 87.5%，失败项写入 `[PDF无法提取文本]` 占位而非静默跳过
+
+3. **扫描版 PDF 走 OCR 替代**
+   - 输入: `scan.pdf`（纯图像，无文本层）
+   - 操作: `pdftoppm -png -r 200` + Tesseract（`-l eng`）逐页提取并合并
+   - 验证: `full_text.txt` 含可读文本；`markitdown` 对该文件返回 0 字符时即应转入此路径
+
 # Markitdown Convert
 
 ## Genes (策略基因)

@@ -165,3 +165,9 @@ Accepted by `--due` and date filters:
 - **[APPL-004]** 用户意图涉及日历事件或项目管理 → 拒绝使用 Apple Reminders，转而推荐 Calendar 或 GitHub/Notion
 - **[APPL-005]** 执行 `remindctl` 命令前 → 检查 macOS 环境及 Reminders 权限授权状态
 - **[APPL-006]** 处理日期参数时 → 支持 `today`/`tomorrow` 等相对时间或 `YYYY-MM-DD HH:mm` 等绝对时间格式
+
+## 示例 · EXAMPLES
+
+1. **创建同步到 iPhone 的提醒**：输入「明天下午3点提醒我开会」→ 与用户确认内容/列表/日期后执行 `remindctl add --title "开会" --list Work --due "2026-02-15 15:00"` → 验证：`remindctl tomorrow --json` 中出现该条目且 due 正确。
+2. **用户说 "remind me"（意图模糊）**：输入「remind me to review the PR」→ 先澄清是 Apple Reminders（同步到手机）还是 agent cronjob 警报；若是日历事件则转介 Calendar → 验证：澄清后走对分支，未误建 Reminders 条目。
+3. **脚本化统计逾期项**：输入「列出所有逾期提醒」→ `remindctl overdue --json` 程序化解析（不用人眼读 plain 输出）→ 验证：JSON 可被 `python3 -c "import json,sys;print(len(json.load(sys.stdin)))"` 解析且计数与 `remindctl overdue --quiet` 一致。

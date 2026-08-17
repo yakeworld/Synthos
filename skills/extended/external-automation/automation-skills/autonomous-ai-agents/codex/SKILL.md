@@ -337,3 +337,23 @@ codex $PROFILE exec "
 - **[CODE-005]** 在 Cron 或无 PTY 脚本环境中执行 → 使用 `codex exec` 并将 Prompt 作为 CLI 参数传递，无需 PTY 支持
 - **[CODE-006]** 执行高风险或批量自动化任务 → 使用 `--yolo` 模式以跳过沙箱和审批，但需确保任务可信且环境隔离
 - **[CODE-007]** 配置模型供应商 → 仅支持 OpenAI Responses API (`wire_api = "responses"`)，避免使用仅支持 Chat Completions 的供应商
+
+## 示例 · EXAMPLES
+
+### Example 1 — 主力节点一次性编码任务
+- **输入**: 任务 "Add dark mode toggle"，工作目录 `~/project`（git 仓库）
+- **操作**: `terminal(command="codex exec 'Add dark mode toggle' --yolo", workdir="~/project", pty=true)`
+- **输出**: Codex 完成修改后退出，stdout 含变更摘要
+- **验证**: `git -C ~/project status --porcelain` 显示预期文件变更；命令正常退出（无 git 仓库会直接失败）
+
+### Example 2 — 多节点并行批量修 Issue
+- **输入**: 两个独立 issue #78、#99
+- **操作**: `git worktree add` 建两个工作树，分别 `codex --yolo exec`（主力节点）与 `codex -p hermes --yolo exec`（hermes 节点）后台并行执行，`process(action="list")` 监控
+- **输出**: 两个 worktree 各自完成修改并提交到 `fix/issue-78`、`fix/issue-99` 分支
+- **验证**: 两分支各有新 commit；`git worktree remove` 清理；推送后可建 PR
+
+### Example 3 — tmux 交互发送指令
+- **输入**: 已存在 `codex-session` 交互会话，需发送 "检查代码质量并优化"
+- **操作**: `tmux send-keys -t codex-session "检查代码质量并优化"` → `sleep 0.5` → `tmux send-keys -t codex-session Enter`（两条独立调用）
+- **输出**: Codex TUI 收到指令并提交，开始执行
+- **验证**: `tmux capture-pane -t codex-session` 显示指令后 Codex 有响应（若 `›` 后指令卡住说明 Enter 未独立发送，重发 Enter 恢复）

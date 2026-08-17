@@ -133,3 +133,20 @@ SYNTHOS PROBE: structural=X.X, benchmark=X.X, drift=green | cycle=N, score=X.XX
 - **[SYNT-006]** 比较 Git 追踪状态时 → 必须将文件系统绝对路径转换为相对于仓库根的路径，以匹配 `git ls-files` 的输出格式
 - **[SYNT-007]** 执行周期性 Probe 检查时 → 必须独立验证当前状态，不信任上一周期的 per-atom 结果，以 Cron 运行的实际检测结果为准
 - **[SYNT-008]** 读取 evolution-state.json 时 → 必须优先使用根目录下的主状态文件，并通过 `os.path.exists()` 确认路径，避免误读存档副本
+
+## 示例 · EXAMPLES
+
+**例 1: 单原子结构检查**
+- 输入: `knowledge-acquisition` 的 SKILL.md 路径
+- 操作: `os.path.exists()` 确认路径（防层级陷阱）→ 解析 frontmatter 检查 has_version（顶层 + `metadata.synthos.version` 嵌套）/ has_signature（独立声明或 name+signature，仅 name 不算）/ has_io_contract
+- 验证: 三项均通过 → 该原子计入结构分；输出如 `SYNTHOS PROBE: structural=0.86, benchmark=0.95, drift=green | cycle=N`
+
+**例 2: 全量基准计数**
+- 输入: Synthos 仓库根
+- 操作: `os.walk` + `"SKILL.md" in fn` 计数（覆盖 `ARCHIVED-SKILL.md` 变体）→ 与 `git ls-files` 相对路径比较（绝对路径先转相对仓库根）→ 检查根目录 `evolution-state.json` 可解析
+- 验证: 计数来自实际遍历而非 spec 声称数字；未追踪文件列表为空
+
+**例 3: 独立复核上周期记录**
+- 输入: 上周期 probe 记录的 per-atom 结论
+- 操作: 对每个原子重新执行 PROBE 检查，不沿用上一周期结果（防 cycle68 乐观偏差）
+- 验证: 复核结果与 Cron 实际检测一致；偏差处标注 corrected

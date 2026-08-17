@@ -261,3 +261,20 @@ setup or heavy computation.
 - **[JUPY-006]** 执行包含子命令的脚本参数 → 确保 --path 等全局标志位于子子命令之前（如 variables --path nb.ipynb list）
 - **[JUPY-007]** 遇到执行错误 → 解析返回 JSON 中的 ename 和 evalue 字段以定位具体异常原因
 - **[JUPY-008]** 执行长耗时计算或初始设置 → 显式传递 --timeout 参数（如 60 或 120 秒）以覆盖默认的 30 秒限制
+
+## 示例 · EXAMPLES
+
+### 示例 1：跨步骤保持状态的迭代探索
+- 输入: 探索一个 DataFrame 并逐步变换
+- 操作: `execute --path scratch.ipynb --code 'import pandas as pd\ndf = pd.read_csv("data.csv")'` → 再次 `execute` 用已存在的 `df`
+- 验证: 第二次 execute 无需重新 import，`variables --path scratch.ipynb list` 能看到 `df`
+
+### 示例 2：预览活变量
+- 输入: 检查当前 kernel 中 `result` 变量的内容
+- 操作: `uv run "$SCRIPT" variables --path scratch.ipynb preview --name result --compact`
+- 验证: 返回 JSON 含变量预览；注意 `--path` 必须位于子子命令 `preview` 之前
+
+### 示例 3：干净验证整本 notebook
+- 输入: 用户要求确认 notebook 从头到尾可运行
+- 操作: `uv run "$SCRIPT" restart-run-all --path <nb.ipynb> --save-outputs --compact`
+- 验证: 全部 cell 运行完成；出错时解析返回 JSON 的 `ename`/`evalue` 定位异常，首次超时则重试一次

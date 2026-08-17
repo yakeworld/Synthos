@@ -221,3 +221,20 @@ memory 和 fact_store 中内容相似度 > 80% 的条目：
 - **[MEMO-005]** Memory 与 Fact Store 内容相似度超过 80% → 以 Fact Store 版本为准并压缩 Memory 中的冗余条目
 - **[MEMO-006]** 执行记忆删除或替换操作时 → 仅使用短且唯一的 ASCII 前缀作为匹配键以避免隐藏 Unicode 字符导致静默失败
 - **[MEMO-007]** 复杂任务（5+ 工具调用）结束后 → 执行记忆管理检查清单以确认空间、偏好保存及过期条目清理
+
+## 示例 · EXAMPLES
+
+### 示例 1：长输出上下文卸载（L1）
+- 输入: 工具输出 45KB（>10KB 触发线）
+- 操作: 保存原文至 `~/.hermes/context_refs/{hash}.md`，回复中仅保留 Mermaid 摘要 + 引用路径
+- 验证: 文件存在且可读（`read_file ~/.hermes/context_refs/{hash}.md` 可回看细节），回复上下文轻量
+
+### 示例 2：记忆空间超阈值的自动清理
+- 输入: 复杂任务结束后 memory 空间 92%
+- 操作: 按铁律分级立即清理 + 压缩；优先删 `access_count=0` 且年龄 >14 天的条目
+- 验证: 清理后 memory 输出中 `capacity: X/2200` 数字下降，空间回落到 <90%
+
+### 示例 3：hidden Unicode 导致的静默删除失败
+- 输入: `memory(action='remove', old_text='核心哲学: Synthos自进化...')` 无输出
+- 操作: 改用短而唯一的 ASCII 前缀 `old_text='核心哲学'` 重试；仍失败则先 `add` 干净版本再短前缀删除旧版本
+- 验证: remove 后 `capacity: X/2200` 数字确有变化（不变即匹配失败）

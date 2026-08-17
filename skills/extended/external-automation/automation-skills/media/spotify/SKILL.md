@@ -200,3 +200,21 @@ Entity types: `track`, `album`, `artist`, `playlist`, `show`, `episode`. Use the
 - **[SPOT-005]** 查询当前播放状态返回 `204 No Content` 或 `is_playing: false` → 直接报告“无内容播放”，视为正常状态而非错误，禁止重试
 - **[SPOT-006]** 需要查找用户私有播放列表 → 必须使用 `spotify_playlists list` 接口，严禁使用 `spotify_search` 搜索公共目录
 - **[SPOT-007]** 操作用户库（Library）保存或移除项目 → 严格匹配 `kind` 参数（tracks/albums）与 URI 类型，禁止混用导致 API 端点错误
+
+
+## 示例 · EXAMPLES
+
+### 示例 1：播放指定专辑
+- 输入: "play miles davis kind of blue"
+- 操作: `spotify_search({"query": "miles davis kind of blue", "types": ["album"], "limit": 1})` 取 URI → `spotify_playback({"action": "play", "context_uri": "<album_uri>"})`
+- 验证: 播放成功（无 403）；`get_currently_playing` 返回该专辑
+
+### 示例 2：把当前歌曲加入私有播放列表
+- 输入: "add this to my Late Night Jazz playlist"
+- 操作: `spotify_playlists list` 按名找 playlist_id → `get_currently_playing` 取 track URI → `add_items`
+- 验证: 返回成功且 track 出现在该列表（勿用 `spotify_search` 找用户播放列表）
+
+### 示例 3：无活跃设备时的失败处理
+- 输入: "pause" 但 Spotify 未运行
+- 操作: `spotify_playback({"action": "pause"})` 返回 `403 No active device`
+- 验证: 停止重试，提示用户先启动 Spotify 客户端；可用 `spotify_devices list` 确认为空列表

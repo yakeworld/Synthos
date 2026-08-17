@@ -237,6 +237,26 @@ Add hourly cron:
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
+## 示例 · EXAMPLES
+
+**示例 1 · 完整搭建 ATM10 服务器（正常路径）**
+- 输入: `server_spec="ATM10 server pack zip URL, 4 名玩家, 正版"`
+- 操作: 下载解包 → 安装 OpenJDK 21 → `ATM10_INSTALL_ONLY=true bash startserver.sh` → 写 `eula.txt` → 配置 `server.properties`（`view-distance=10`/`simulation-distance=6`，`allow-flight=true`，`max-tick-time=180000`）→ `user_jvm_args.txt` 设 `-Xms12G -Xmx24G` → `ufw allow 25565/tcp` → 独立启动脚本
+- 输出: `server_config: dict`（含 server.properties 关键字段与 JVM 参数）
+- 验证: `tail logs/latest.log` 出现 "Done (Xs)!"；`pgrep -fa neoforge` 有进程
+
+**示例 2 · 局域网非正版模式（失败路径规避）**
+- 输入: `server_spec="局域网联机, online-mode=false"`
+- 操作: 设 `online-mode=false` 后**必须同步** `enforce-secure-profile=false`
+- 输出: 修正后的 server.properties 片段
+- 验证: 客户端可正常连接，无 "rejected" 拒绝日志
+
+**示例 3 · 自动化备份（配置路径）**
+- 输入: `server_spec="需每小时自动备份, 保留 24 份"`
+- 操作: 生成 `backup.sh`（tar 压缩 world 目录、超 24 份自动清理）+ hourly cron 条目
+- 输出: 备份脚本 + crontab 条目
+- 验证: `crontab -l | grep backup.sh` 有任务；手动执行后 `backups/` 出现 `world_*.tar.gz`
+
 # Minecraft Modpack Server
 
 ## Genes (策略基因)

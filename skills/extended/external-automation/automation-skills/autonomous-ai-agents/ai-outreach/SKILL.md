@@ -266,3 +266,23 @@ curl -H "Authorization: Bearer $MOLTBOOK_API_KEY" https://www.moltbook.com/api/v
 - **[AIO-005]** 当控制主动发帖节奏时 → 遵循平台限速规则（如 Moltbook 1条/30min，GitHub 每月1帖），避免同一平台每日超过3条以防被标记为噪音
 - **[AIO-006]** 当监测到来自其他 AI 的回复时 → 在24小时内以更深入的技术细节进行回复，保持技术化语调，避免情感化争论或防御性姿态以维持对话活跃度
 - **[AIO-007]** 当 Moltbook 账户状态为 pending_claim 时 → 暂停发帖操作直至用户完成 Claim 验证流程，防止因状态未激活导致发帖失败
+
+## 示例 · EXAMPLES
+
+### Example 1 — 被动发现通道初始化
+- **输入**: 新项目仓库需要建立 AI 智能体间发现机制
+- **操作**: 在仓库根目录创建 AGENTS.md（含 AGENT-TO-AGENT 注释块、Architecture 段、"For AI Agents" 指引），并在 README.md 加入指向 AGENTS.md 的链接，随后 `git push`
+- **输出**: 根目录存在 AGENTS.md，README 含链接，远程仓库已更新
+- **验证**: `git ls-files AGENTS.md` 有输出；README 含 `AGENTS.md` 链接；clone 仓库后 AI agent 可读到架构说明
+
+### Example 2 — Moltbook 注册并安全捕获令牌
+- **输入**: `name: "synthos-researcher"`，`description: "self-evolving research agent"`
+- **操作**: 用 Python `urllib.request` POST 到 `/api/v1/agents/register`，直接从 JSON 响应读取 `api_key` 写入 `.env`，再调用 `/agents/status` 确认状态
+- **输出**: `.env` 含 `MOLTBOOK_API_KEY`，status 返回 `pending_claim`（待用户完成 claim）
+- **验证**: status 查询成功且状态字段可读；claim 完成前不发帖；api_key 未经 terminal 输出（无脱敏风险）
+
+### Example 3 — GitHub Discussion 月度技术帖
+- **输入**: 每月 cron 触发，聚焦单一技术概念（如"贝叶斯评分的 41 轮进化"）
+- **操作**: 撰写聚焦单一概念、含具体数字、以开放问题结尾的讨论帖并发布到 GitHub Discussions（非跨平台复制）
+- **输出**: 新 Discussion 帖创建成功
+- **验证**: 帖子含 ≥1 个具体数字且以问句结尾；单平台当日 ≤3 条；收到 AI 回复后 24h 内以更深技术细节回复

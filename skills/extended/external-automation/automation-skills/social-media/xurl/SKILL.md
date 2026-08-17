@@ -467,6 +467,23 @@ xurl --app staging /2/users/me             # one-off against staging
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
 
+## 示例 · EXAMPLES
+
+1. **Agent 会话前置检查（只读凭证状态）**
+   - 输入: 会话开始，需确认 xurl 可用
+   - 操作: 仅运行 `xurl --help` 与 `xurl auth status`（不读 `~/.xurl`，不用 `--verbose`）
+   - 验证: 默认应用（`▸` 标记）显示有效 oauth2 token；若为 `(none)` 提示用户执行 `xurl auth default <that-app>`
+
+2. **发带图帖子的完整写入流**
+   - 输入: `photo.jpg` + 文案，用户已确认意图
+   - 操作: `xurl media upload photo.jpg` 取得 MEDIA_ID → `xurl post "Check out!" --media-id MEDIA_ID`
+   - 验证: 两条命令均返回合法 JSON（`data.id`）；图片报 `media processing failed` 时加 `--category tweet_image --media-type image/png`
+
+3. **OAuth 后 403 的修复路径**
+   - 输入: OAuth 流程成功但 `/2/users/me` 报 `UsernameNotFound`/403
+   - 操作: 指导用户（会话外）重跑 `xurl auth oauth2 --app my-app YOUR_USERNAME` 显式传 handle
+   - 验证: `xurl auth status` 中 token 绑定到具名应用而非空 `default` 配置；`xurl whoami` 返回正确用户 JSON
+
 # Xurl
 
 ## Genes (策略基因)

@@ -193,3 +193,23 @@ Before considering the codebase inspection task complete:
 - **[CODE-005]** 需要程序化处理或集成到自动化流程 → 使用 `--format=json` 输出结构化数据，以便后续脚本解析和计算
 - **[CODE-006]** 解读 Markdown 或 JSON 文件的代码行数时 → 需知悉 pygount 将 Markdown 全计为注释（0 代码行）且对 JSON 计数保守，必要时用 `wc -l` 辅助校准
 - **[CODE-007]** 需要识别代码库中的冗余或异常文件 → 关注输出中的伪语言标签（如 `__duplicate__` 重复文件、`__generated__` 生成文件、`__binary__` 二进制文件）以评估代码健康度
+
+## 示例 · EXAMPLES
+
+### Example 1 — Python 仓库整体规模概览
+- **输入**: "这个 repo 有多大？"，工作目录 `/path/to/repo`
+- **操作**: `pygount --format=summary --folders-to-skip=".git,venv,.venv,__pycache__,.cache,dist,build,.tox,.eggs,.mypy_cache" .`
+- **输出**: 汇总表（Language / Files / Code / Comment / %），含 Python 等语言分布
+- **验证**: 各语言 Files 数与实际文件数一致；无 node_modules/venv 被扫描（无挂起）；Markdown 显示 0 代码行（预期行为）
+
+### Example 2 — 仅统计 Python 文件
+- **输入**: "只数 .py 文件的行数"
+- **操作**: `pygount --suffix=py --format=summary .`
+- **输出**: 仅 Python 语言的 Files / Code / Comment 统计
+- **验证**: 输出仅含 `Python` 行（及可能的伪语言标签）；Code 行数与 `find . -name '*.py' | xargs wc -l` 量级一致
+
+### Example 3 — JSON 输出供程序化集成
+- **输入**: 自动化流程需结构化代码规模数据
+- **操作**: `pygount --format=json --folders-to-skip=".git,node_modules,venv" .`
+- **输出**: JSON 数组，每项含 language、code_lines、doc_lines、file_count 等字段
+- **验证**: `python3 -c "import json,sys; d=json.load(sys.stdin); print(sum(x['code_lines'] for x in d))"` 可解析并求和，与 summary 表代码行总量一致

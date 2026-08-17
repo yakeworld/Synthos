@@ -311,3 +311,20 @@ print('Comments:', d['comments'])
 - **[GITH-004]** 执行创建操作前 → 检查仓库对象的 `has_discussions` 属性，若为 false 需先启用讨论功能
 - **[GITH-005]** 发布 A2A (Agent-to-Agent) 风格讨论时 → 遵循“单一技术概念 + 具体数据 + 开放问题”结构，禁止使用营销语言
 - **[GITH-006]** 执行批量 GraphQL 操作时 → 实施查询批处理策略以应对主要速率限制 (Primary Rate Limit)
+
+## 示例 · EXAMPLES
+
+**例 1: 创建 Discussion（长 body，经临时 JSON 文件）**
+- 输入: 在 `owner/repo` 创建 Discussion，含 markdown 长文本
+- 操作: GraphQL 查 `repository.id` 与 `discussionCategories` node ID → body 转义后写入 `/tmp/gql_mutation.json` → `gh api graphql --input /tmp/gql_mutation.json`
+- 验证: 回读 `gh api /repos/owner/repo/discussions/NUMBER`，确认 title/url/category 一致
+
+**例 2: 列出讨论并取详情**
+- 输入: 查看 `owner/repo` 最近 10 条讨论
+- 操作: `gh api /repos/owner/repo/discussions`（REST GET 可用）或 GraphQL `discussions(first: 10)`
+- 验证: 输出含 `number/title/url/category` 字段
+
+**例 3: 回复 Discussion**
+- 输入: 给讨论 #N 添加评论
+- 操作: GraphQL 查 `discussion(number: N).id` → `addDiscussionComment` mutation
+- 验证: mutation 返回 `comment { id url }`，回读评论数 +1

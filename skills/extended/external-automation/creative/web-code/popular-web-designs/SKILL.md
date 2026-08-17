@@ -276,3 +276,20 @@ Match the design to the content:
 - **[POPU-004]** 需要区分设计流程与视觉实现时 → 结合 `claude-design` 处理设计思维与验证，使用本技能提供具体的视觉词汇和代码实现
 - **[POPU-005]** 交付物为正式设计令牌规范而非渲染页面时 → 切换至 `design-md` 技能生成 DESIGN.md 文件，而非使用本技能的 HTML 生成模式
 - **[POPU-006]** 完成 HTML 文件编写后 → 使用 `write_file` 保存文件，并通过 `browser_vision` 验证视觉准确性，确保符合模板规范
+
+## 示例 · EXAMPLES
+
+1. **给开发者 dashboard 选模板并生成页面**
+   - 输入: 内容 = 数据密集的分析面板，需 dark mode。
+   - 操作: 按 Choosing a Design 选 `linear.app.md`（超极简暗色 + 紫色强调）或 `sentry.md`（数据密集）；加载 `templates/<site>.md` 全文，把 Section 2 调色板写成 `:root` CSS 变量，按 Section 3-6 套排版/组件/阴影。
+   - 验证: 用 `write_file` 写出 HTML 后经 `browser_vision` 截图比对模板，色彩/字重/间距一致。
+
+2. **专有字体 CDN 替换（Spotify 风格落地页）**
+   - 输入: 选用 `spotify.md`，其 Circular 字体无 CDN。
+   - 操作: 按 Font Substitution 表用 Google Fonts 的 DM Sans 替代，粘贴模板 Hermes notes 中的 `<link>` 标签，严格沿用原模板的 weight/size/letter-spacing。
+   - 验证: 渲染页面中字体栈生效（非回退默认体），绿底深色的品牌特征仍在。
+
+3. **交付物是 DESIGN.md 令牌规范时**
+   - 输入: 用户要"给我一份可复用的设计令牌文件"而非渲染页面。
+   - 操作: 不调用本技能的 HTML 生成模式，切换到 `design-md` 技能输出 DESIGN.md；本技能仅用于挑选模板作为视觉词汇来源。
+   - 验证: 交付物为规范文件且不含渲染 HTML；页面需求时再回到本技能。

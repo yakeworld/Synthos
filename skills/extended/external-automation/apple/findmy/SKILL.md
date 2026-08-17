@@ -202,3 +202,9 @@ Analyze each screenshot with vision to extract coordinates, then compile a route
 - **[FIND-004]** 当需要长期监控物品移动轨迹（如宠物巡逻路线）时 → 建立周期性循环（如每 5 分钟）捕获屏幕并记录坐标，以编译完整路径
 - **[FIND-005]** 当解析截图中的位置信息时 → 始终使用 `vision_analyze` 读取文本内容，禁止尝试直接解析像素数据
 - **[FIND-006]** 当执行屏幕捕获操作前 → 必须确认终端已授予“屏幕录制”权限，否则截图将失败或为黑屏
+
+## 示例 · EXAMPLES
+
+1. **查询设备位置（基础法）**：输入「我的 iPhone 在哪？」→ 先确认终端有屏幕录制权限 → `osascript -e 'tell application "FindMy" to activate'` + `sleep 3` + `screencapture -w -o /tmp/findmy.png` → 验证：`vision_analyze` 读出的设备名与位置文本非空白，且截图非黑屏。
+2. **用 peekaboo 精确定位 AirTag（推荐法）**：输入「背包上的 AirTag 现在在哪？」→ `peekaboo see --app "FindMy" --annotate --path /tmp/findmy-ui.png` 标注元素 → 切到 Items 页签并 `peekaboo click --on B3 --app "FindMy"` 选中目标 → 验证：`peekaboo image` 截到的详情页经 `vision_analyze` 读出地址/坐标。
+3. **追踪猫巡逻路线（周期捕获）**：输入「记录这只猫一小时的移动轨迹」→ FindMy 保持前台并停留在 AirTag 页（最小化会停更），循环 `screencapture -w -o /tmp/findmy-$(date +%H%M%S).png; sleep 300` → 验证：每个周期截图的坐标单调可追踪，编译出的路径点数量 = 捕获次数，且仅涉及用户自有物品。

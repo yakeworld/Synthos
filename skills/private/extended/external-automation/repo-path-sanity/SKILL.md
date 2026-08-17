@@ -98,3 +98,24 @@ anatomy.
 > 违反规则的操作视为不安全，必须拒绝或隔离。
 
 > 每项验证必须可执行、可记录、可复现。验证失败时记录原因和修复。
+
+## 示例 · EXAMPLES
+
+**示例 1 · 全局 insteadOf 劫持 HTTPS remote（配置溯源）**
+- 输入: `repo_path="/work/proj", failure_symptom="HTTPS push 异常转 SSH"`
+- 操作: `git config --list --show-origin | grep credential` 发现 `~/.gitconfig` 含 `url.https://github.com/.insteadOf = ssh://git@github.com/`
+- 输出: `fix_commands=["git config --global --unset url.https://github.com/.insteadOf"]`
+- 验证: `git config --global --get url.https://github.com/.insteadOf || echo "no insteadOf"` 输出 `no insteadOf`
+
+**示例 2 · 已登录但 PR 创建失败（PAT scope 不足）**
+- 输入: `failure_symptom="gh pr create 报 not accessible"`
+- 操作: `gh auth status` 确认已登录 → 判定 PAT 缺 `repo`/`write:repository` scope → 重建 Classic PAT
+- 输出: sanity_report 行「PAT scope → 重建 Classic PAT(repo+write)」
+- 验证: 新 PAT 下 `gh pr create` 成功，无 denied
+
+**示例 3 · NFS 挂载点诊断超时（浅探规避）**
+- 输入: `repo_path="/mnt/nfs/big"`
+- 操作: 全程 `timeout` + 浅层命令，**禁止** `os.walk`/`du -sh` 全遍历（300s 超时）
+- 输出: 限定范围的 sanity_report，避免全盘扫描
+- 验证: 每条诊断命令在超时上限内完成
+
