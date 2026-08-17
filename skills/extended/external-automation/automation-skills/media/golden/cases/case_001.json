@@ -1,0 +1,17 @@
+{
+  "case_id": "case_001",
+  "description": "正常路由 — GIF 搜索委托 gif-search",
+  "input": {
+    "request": "搜索一个猫打哈欠的 GIF 用于演示文稿",
+    "context": {
+      "query": "cat yawn",
+      "limit": 5
+    }
+  },
+  "expected": {
+    "route": "delegate",
+    "target": "gif-search",
+    "contract_check": "passed"
+  },
+  "weight": "critical"
+}

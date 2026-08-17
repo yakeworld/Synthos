@@ -1,0 +1,29 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "route": "rejected",
+    "error": {
+      "code": "UNKNOWN_SUBSKILL",
+      "context": {
+        "request_echo": "帮我用 automation-skills 自动下围棋并直播棋谱",
+        "scanned_subdirs": 12,
+        "matched_capability": null
+      },
+      "recovery": [
+        "该请求不匹配任何已知子目录能力（无围棋/直播子技能）",
+        "可选：改路由到 gaming 或 media 域（若存在），或由上层 task-router 重新分派",
+        "若确需新增能力，走技能创建流程而非父级硬编码"
+      ]
+    },
+    "note": "Golden Error 路径：错误信息必须同时包含上下文（请求回声 + 扫描到的子目录数 + 匹配结果）与恢复建议（≥2 条可操作路径）"
+  },
+  "verification": [
+    "route == 'rejected'",
+    "error.code == 'UNKNOWN_SUBSKILL'",
+    "error.context.request_echo 与输入 request 精确一致",
+    "error.context.scanned_subdirs == 12",
+    "len(error.recovery) >= 2（恢复建议必须可操作，非通用错误）",
+    "crashed == False（边界处理，不崩溃）",
+    "internal_state_exposed == False（不暴露内部状态，安全约束）"
+  ]
+}

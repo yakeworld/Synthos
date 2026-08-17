@@ -1,0 +1,15 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "routed": true,
+    "target_skill": "xurl",
+    "load_call": "skill_view(name='xurl')",
+    "note": "X/Twitter 发帖/搜索/DM 由 xurl 子技能执行，父级仅作目录索引"
+  },
+  "verification": [
+    "routed == true",
+    "target_skill == 'xurl'",
+    "target_skill in context.sub_skills",
+    "result 结构符合 IO_CONTRACT（dict）"
+  ]
+}

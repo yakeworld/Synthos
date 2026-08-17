@@ -1,0 +1,13 @@
+{
+  "case_id": "case_001",
+  "skill": "gaming",
+  "description": "正常路由 — 请求 Minecraft 模组服务器",
+  "input": {
+    "game_type": "minecraft",
+    "mode": "modpack-server"
+  },
+  "context": {
+    "request": "启动一个 Minecraft 模组服务器",
+    "user_intent": "modpack-server"
+  }
+}

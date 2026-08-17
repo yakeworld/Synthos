@@ -1,0 +1,17 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "routed_to": null,
+    "parent_executed": false,
+    "error_type": "unknown_sub_skill",
+    "error_message_pattern": "Unknown sub-skill 'quantum-memory-fusion' under metacognition. Available sub-skills: autonomous-execution-threshold, memory-optimization-system.",
+    "recovery": "请检查 skill_hint 拼写，或从可用子技能列表 [autonomous-execution-threshold, memory-optimization-system] 中选择正确的目标。"
+  },
+  "verification": [
+    "routed_to is null",
+    "error_type == 'unknown_sub_skill'",
+    "error message 包含请求的 skill_hint 名称（上下文）",
+    "error message 包含可用子技能列表（恢复指引）",
+    "未崩溃，未静默失败（META-002: 错误信息必须包含上下文和明确的恢复指引）"
+  ]
+}

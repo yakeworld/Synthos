@@ -1,0 +1,30 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径：请求的自动化能力不属于任何已知子目录（未知子技能）→ 结构化拒绝 + 恢复建议",
+  "input": {
+    "request": "帮我用 automation-skills 自动下围棋并直播棋谱",
+    "context": {
+      "known_subdirs": ["autonomous-ai-agents", "github", "maintenance", "media", "metacognition", "productivity", "quality", "red-teaming", "shared", "smart-home", "social-media", "yuanbao"],
+      "matched_capability": null
+    }
+  },
+  "expected": {
+    "route": "rejected",
+    "error": {
+      "code": "UNKNOWN_SUBSKILL",
+      "context": {
+        "request_echo": "帮我用 automation-skills 自动下围棋并直播棋谱",
+        "scanned_subdirs": 12,
+        "matched_capability": null
+      },
+      "recovery": [
+        "该请求不匹配任何已知子目录能力（无围棋/直播子技能）",
+        "可选：改路由到 gaming 或 media 域（若存在），或由上层 task-router 重新分派",
+        "若确需新增能力，走技能创建流程而非父级硬编码"
+      ]
+    },
+    "crashed": false,
+    "internal_state_exposed": false
+  },
+  "weight": "critical"
+}

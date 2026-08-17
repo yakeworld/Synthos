@@ -1,0 +1,19 @@
+{
+  "case_id": "case_002",
+  "description": "错误路径: 请求指向未知子技能，应返回结构化错误而非崩溃",
+  "input": {
+    "request": "调用子技能 quantum-memory-fusion 进行量子记忆融合",
+    "context": {
+      "task_type": "unknown",
+      "skill_hint": "quantum-memory-fusion"
+    }
+  },
+  "expected": {
+    "routed_to": null,
+    "parent_executed": false,
+    "error_type": "unknown_sub_skill",
+    "error_contains": ["context", "recovery"],
+    "recovery_hint": "available_sub_skills"
+  },
+  "weight": "critical"
+}

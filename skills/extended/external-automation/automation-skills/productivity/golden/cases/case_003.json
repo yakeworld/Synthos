@@ -1,0 +1,30 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径：请求的能力不属于 10 个子技能中任何一个（未知子技能）→ 结构化拒绝 + 恢复建议",
+  "input": {
+    "request": "用 productivity 帮我剪辑一段 4K 视频并调色",
+    "context": {
+      "known_subskills": ["chinese-form-automation", "jupyter-live-kernel", "maps", "markitdown-convert", "notebooklm-cli", "notion", "obsidian", "powerpoint", "webhook-subscriptions", "youtube-content"],
+      "matched_capability": null
+    }
+  },
+  "expected": {
+    "route": "rejected",
+    "error": {
+      "code": "UNKNOWN_SUBSKILL",
+      "context": {
+        "request_echo": "用 productivity 帮我剪辑一段 4K 视频并调色",
+        "scanned_subskills": 10,
+        "matched_capability": null
+      },
+      "recovery": [
+        "productivity 下 10 个子技能均无视频剪辑/调色能力",
+        "可选：改路由到 media 域（automation-skills 父级下存在 media 子目录），或由上层 task-router 重新分派",
+        "若确需新增能力，走技能创建流程而非在父级硬编码"
+      ]
+    },
+    "crashed": false,
+    "internal_state_exposed": false
+  },
+  "weight": "critical"
+}

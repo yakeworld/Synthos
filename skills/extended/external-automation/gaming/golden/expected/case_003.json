@@ -1,0 +1,20 @@
+{
+  "case_id": "case_003",
+  "expected": {
+    "status": "error",
+    "routed_to": null,
+    "error": {
+      "code": "UNKNOWN_GAME_TYPE",
+      "context_must_mention": "game_type",
+      "recovery_must_list": ["minecraft-modpack-server", "pokemon-player"],
+      "raw_exception": false,
+      "notes": "参数校验拒绝：game_type='chess' 不在已知子技能范围；错误信息必须包含上下文（未知 game_type）与恢复指引（列出可用子技能），而非裸异常（GAMI-004）"
+    }
+  },
+  "assertions": [
+    "status == 'error'",
+    "routed_to is null",
+    "error.context 提及 game_type",
+    "error.recovery 列出全部可用子技能 [minecraft-modpack-server, pokemon-player]"
+  ]
+}

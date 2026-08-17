@@ -1,0 +1,19 @@
+{
+  "case_id": "case_002",
+  "description": "正常路由 — 架构/流程图（模式B）：三层系统架构",
+  "input": {
+    "user_request": "画一个系统架构图，包含数据层、计算层、展示层三层，箭头从下往上表示数据流",
+    "context": {
+      "paper_type": "method",
+      "style": "程序化布局，底部对齐向上计算",
+      "figures_dir": "05-figures/",
+      "code_dir": "03-code/"
+    }
+  },
+  "expected_behavior": {
+    "should_route": true,
+    "critical_checks": ["routed_mode_is_B", "tool_is_matplotlib_patches", "output_includes_png_300dpi"],
+    "high_checks": ["output_includes_pdf", "output_includes_svg", "qa_includes_arrow_endpoint_aabb"],
+    "medium_checks": ["qa_includes_box_overlap_margin_5pt", "qa_includes_no_diagonal_arrows"]
+  }
+}

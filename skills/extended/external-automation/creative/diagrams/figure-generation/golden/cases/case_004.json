@@ -1,0 +1,17 @@
+{
+  "case_id": "case_004",
+  "description": "错误路径 — 未知子技能/模式：Blender 3D动画（不属于任何已知模式）",
+  "input": {
+    "user_request": "用 Blender 渲染一个 3D 动画，带物理模拟和粒子系统",
+    "context": {
+      "paper_type": null,
+      "data_source": null
+    }
+  },
+  "expected_behavior": {
+    "should_route": false,
+    "critical_checks": ["does_not_crash", "error_field_non_empty"],
+    "high_checks": ["routed_mode_is_null_or_unmatched", "suggestions_list_non_empty"],
+    "medium_checks": ["suggestions_includes_available_modes", "error_includes_recovery_advice"]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "case_id": "case_003",
+  "description": "正常路由 — 子技能委托（模式I / 3d-curve-fitting-figures）",
+  "input": {
+    "user_request": "将瞳孔追踪图像中的椭圆逆投影为3D空间圆，使用解剖约束 R=2r, d=√3r",
+    "context": {
+      "domain": "3D医学影像",
+      "sub_skill": "3d-curve-fitting-figures",
+      "data": "椭圆参数 (a, b, theta) 来自 pupil_tracker.py"
+    }
+  },
+  "expected_behavior": {
+    "should_route": true,
+    "critical_checks": ["routed_to_subskill", "subskill_is_3d_curve_fitting"],
+    "high_checks": ["parent_does_not_execute_directly"],
+    "medium_checks": ["delegation_includes_anatomical_constraints"]
+  }
+}

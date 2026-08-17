@@ -1,0 +1,16 @@
+{
+  "case_id": "case_004",
+  "expected_output": {
+    "route": "reject",
+    "target": null,
+    "error_code": "contract_incomplete",
+    "error_message_template": "IO contract incomplete: context must contain owner and repo for issue operations (got {}); recovery: 提供 context={\"owner\": \"<owner>\", \"repo\": \"<repo>\"} 后重试",
+    "note": "契约不完整必须显式报错（GITH-001/GITH-005），不得以默认值静默兜底转发"
+  },
+  "verification": [
+    "route == 'reject'",
+    "error 消息指明缺失字段为 owner/repo（上下文具体）",
+    "error 消息包含恢复建议（含可执行的重试模板）",
+    "未向 github-issues 或其他子技能转发该请求"
+  ]
+}

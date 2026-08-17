@@ -1,0 +1,17 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "route": "skill_view(name='findmy')",
+    "delegate_to": "findmy",
+    "passthrough": true,
+    "parent_executes": false,
+    "note": "设备定位能力唯一对应 findmy，路由无歧义；device 参数完整转交"
+  },
+  "verification": [
+    "route == \"skill_view(name='findmy')\"",
+    "delegate_to == 'findmy'",
+    "parent_executes == False",
+    "passthrough == True 且 context.device == 'MacBook Pro'",
+    "能力→子技能映射唯一且精确（5 选 1 无歧义）"
+  ]
+}

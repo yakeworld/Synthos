@@ -1,0 +1,60 @@
+{
+  "case_id": "case_001",
+  "routed_mode": "A",
+  "routed_mode_name": "科学数据图（matplotlib）",
+  "tool": "matplotlib",
+  "tool_fallback_chain": ["matplotlib", "Pillow纯代码", "HTML+Firefox", "Pillow结构化"],
+  "output_formats": ["PNG(300DPI)", "PDF", "SVG"],
+  "output_path_convention": {
+    "figures_dir": "05-figures/",
+    "code_dir": "03-code/"
+  },
+  "contract": {
+    "claim": "LR、SVM、RF 三模型 AUC 对比",
+    "prototype": "quantitative-grid",
+    "panel_hierarchy": {
+      "hero": "ROC曲线汇总（3模型叠加）",
+      "verification": "AUC数值表格",
+      "control": null
+    },
+    "exit": "PNG(300DPI) + PDF + SVG + figure legend"
+  },
+  "qa_checks": [
+    {
+      "id": "dual_encoding",
+      "rule": "≥3条曲线必须 line_style + marker 双编码",
+      "critical": true,
+      "expected_pass_condition": "3条曲线各有不同 line_style 且 marker"
+    },
+    {
+      "id": "statistical_display",
+      "rule": "误差棒和统计检验正确显示",
+      "critical": false,
+      "expected_pass_condition": "如有误差棒则正确渲染"
+    },
+    {
+      "id": "colorblind_safe",
+      "rule": "色盲可分辨性（≥3色时颜色+形状双编码）",
+      "critical": true,
+      "expected_pass_condition": "红绿不是唯一区分手段"
+    },
+    {
+      "id": "data_driven",
+      "rule": "脚本从 JSON/CSV 读取数据，不硬编码",
+      "critical": true,
+      "expected_pass_condition": "json.load 或 pd.read_csv 存在"
+    },
+    {
+      "id": "exit_contract",
+      "rule": "必须同时生成 PNG(300DPI) + PDF + SVG",
+      "critical": true,
+      "expected_pass_condition": "fig.savefig 出现3次且格式正确"
+    }
+  ],
+  "references_used": [
+    "references/python-recipes.md",
+    "references/quantitative-data-qa-traps.md",
+    "references/sci-figure-recipes.md",
+    "references/global-palette.md"
+  ]
+}

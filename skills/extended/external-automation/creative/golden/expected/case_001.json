@@ -1,0 +1,17 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "routed_to": "diagrams",
+    "target_skill": "academic-diagram",
+    "parent_executed": false,
+    "input_validated": true,
+    "note": "CREA-001: 创意任务涉及图表媒介 → 路由至 diagrams/ 子类别的 academic-diagram 子技能执行"
+  },
+  "verification": [
+    "routed_to == 'diagrams'",
+    "target_skill == 'academic-diagram'",
+    "parent_executed == false",
+    "creative_request 非空且格式有效（CREA-002）",
+    "output_format == 'diagram' 与路由目标一致"
+  ]
+}

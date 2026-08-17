@@ -1,0 +1,17 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "routed_to": null,
+    "parent_executed": false,
+    "error_type": "unknown_sub_skill",
+    "error_message_pattern": "Unknown sub-skill 'docker-swarm-manager' under devops. Available sub-skills: cron-system-maintenance, kanban-orchestrator, kanban-worker.",
+    "recovery": "请检查 skill_hint 拼写，或从可用子技能列表 [cron-system-maintenance, kanban-orchestrator, kanban-worker] 中选择正确的目标。Docker Swarm 管理不在 devops 父级管辖范围内。"
+  },
+  "verification": [
+    "routed_to is null",
+    "error_type == 'unknown_sub_skill'",
+    "error message 包含请求的 skill_hint 名称（上下文）",
+    "error message 包含可用子技能列表（恢复指引）",
+    "未吞掉异常，未静默失败（DEVO-004: 错误信息必须包含上下文和明确的恢复指引）"
+  ]
+}

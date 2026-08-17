@@ -1,0 +1,18 @@
+{
+  "case_id": "case_001",
+  "description": "正常路由：Hue 灯光控制请求 → openhue",
+  "input": {
+    "request": "打开客厅的 Philips Hue 灯",
+    "context": {
+      "platform": "smart-home",
+      "sub_skills": ["openhue"]
+    }
+  },
+  "expected": {
+    "routed": true,
+    "target_skill": "openhue",
+    "load_call": "skill_view(name='openhue')",
+    "parent_executes": false
+  },
+  "weight": "critical"
+}

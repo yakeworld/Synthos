@@ -1,0 +1,20 @@
+{
+  "case_id": "case_002",
+  "description": "正常路由：PDF 文档转 Markdown 请求 → 路由到 markitdown-convert 子技能",
+  "input": {
+    "request": "把这个 PDF 综述转成 Markdown，保留表格和图片引用",
+    "context": {
+      "known_subskills": ["chinese-form-automation", "jupyter-live-kernel", "maps", "markitdown-convert", "notebooklm-cli", "notion", "obsidian", "powerpoint", "webhook-subscriptions", "youtube-content"],
+      "matched_capability": "markitdown-convert",
+      "input_file": "review.pdf",
+      "keep_tables": true
+    }
+  },
+  "expected": {
+    "route": "skill_view(name='markitdown-convert')",
+    "delegate_to": "markitdown-convert",
+    "passthrough": true,
+    "parent_executes": false
+  },
+  "weight": "high"
+}

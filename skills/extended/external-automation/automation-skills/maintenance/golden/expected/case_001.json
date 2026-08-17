@@ -1,0 +1,22 @@
+{
+  "case_id": "case_001",
+  "expected": {
+    "status": "ok",
+    "routed_to": "synthos-probe",
+    "parent_executed_directly": false,
+    "result": {
+      "type": "object",
+      "required_keys": ["skill", "status"]
+    },
+    "validation": {
+      "request_valid": true,
+      "context_valid": true,
+      "notes": "路由到 synthos-probe 子技能执行；父级目录仅做索引，未越界执行子技能逻辑（原子边界精确）"
+    }
+  },
+  "assertions": [
+    "routed_to == 'synthos-probe'",
+    "result 为 dict（P2 输出契约）",
+    "父级未越界执行子技能逻辑"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "case_id": "case_003",
+  "expected": {
+    "status": "error",
+    "routed_to": null,
+    "error": {
+      "code": "MISSING_REQUIRED_INPUT",
+      "context_must_mention": "request",
+      "recovery": "request must be a non-empty str; provide the maintenance request description",
+      "silent_failure": false,
+      "notes": "输入校验拒绝：request 为 null 不满足 IO_CONTRACT（request: str）；错误信息必须明确指向缺失字段，而非静默失败（MAIN-001 / MAIN-004）"
+    }
+  },
+  "assertions": [
+    "status == 'error'",
+    "routed_to is null",
+    "error.context 提及 request 字段",
+    "未静默失败"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "case_id": "case_001",
+  "description": "正常路由: 自主执行阈值请求应路由到 autonomous-execution-threshold 子技能",
+  "input": {
+    "request": "检查当前任务置信度是否达到自主执行阈值",
+    "context": {
+      "task_type": "autonomous_execution",
+      "confidence_score": 0.85,
+      "skill_hint": "autonomous-execution-threshold"
+    }
+  },
+  "expected": {
+    "routed_to": "autonomous-execution-threshold",
+    "parent_executed": false,
+    "route_mechanism": "hermes_auto_discovery"
+  },
+  "weight": "critical"
+}

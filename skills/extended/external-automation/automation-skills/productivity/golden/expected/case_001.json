@@ -1,0 +1,17 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "route": "skill_view(name='powerpoint')",
+    "delegate_to": "powerpoint",
+    "passthrough": true,
+    "parent_executes": false,
+    "note": "父级仅目录索引（PROD-001），PPT 生成由 powerpoint 子技能执行；request/context（含 template/slides）完整转交无吞并（PROD-002）"
+  },
+  "verification": [
+    "route == \"skill_view(name='powerpoint')\"",
+    "delegate_to == 'powerpoint'",
+    "parent_executes == False（父级不硬编码执行）",
+    "passthrough == True 且 context.template/slides 字段原样转交",
+    "返回结果由 powerpoint 子技能产生并符合其 output 契约，非父级伪造"
+  ]
+}

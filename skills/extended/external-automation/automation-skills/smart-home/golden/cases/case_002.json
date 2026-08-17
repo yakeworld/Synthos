@@ -1,0 +1,18 @@
+{
+  "case_id": "case_002",
+  "description": "未知子技能：请求目标不在 smart-home 子技能列表 → 拒绝路由",
+  "input": {
+    "request": "控制我的 Nest 门锁",
+    "context": {
+      "platform": "smart-home",
+      "sub_skills": ["openhue"]
+    }
+  },
+  "expected": {
+    "routed": false,
+    "error_contains_context": true,
+    "error_contains_recovery": true,
+    "parent_executes": false
+  },
+  "weight": "high"
+}

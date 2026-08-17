@@ -1,0 +1,15 @@
+{
+  "case_id": "case_004",
+  "description": "错误路径 — context 缺失 owner/repo，契约不完整必须拒绝",
+  "input": {
+    "request": "列出所有 open issues",
+    "context": {}
+  },
+  "expected": {
+    "route": "reject",
+    "target": null,
+    "error_code": "contract_incomplete",
+    "error_contains": ["owner", "recovery_hint"]
+  },
+  "weight": "high"
+}

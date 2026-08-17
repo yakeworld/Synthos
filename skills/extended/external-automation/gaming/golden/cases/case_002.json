@@ -1,0 +1,13 @@
+{
+  "case_id": "case_002",
+  "skill": "gaming",
+  "description": "正常路由 — 请求宝可梦模拟器",
+  "input": {
+    "game_type": "pokemon",
+    "mode": "player"
+  },
+  "context": {
+    "request": "运行宝可梦玩家模拟器",
+    "user_intent": "player"
+  }
+}

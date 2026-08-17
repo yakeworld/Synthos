@@ -1,0 +1,15 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "routed_to": "autonomous-execution-threshold",
+    "parent_executed": false,
+    "route_mechanism": "hermes_auto_discovery",
+    "note": "父级仅做路由索引，不承载业务逻辑（META-006: 通过 Hermes 机制自动发现并直接调用子技能名称）"
+  },
+  "verification": [
+    "routed_to == 'autonomous-execution-threshold'",
+    "parent_executed == false",
+    "route_mechanism == 'hermes_auto_discovery'",
+    "父级 SKILL.md 未硬编码业务逻辑"
+  ]
+}

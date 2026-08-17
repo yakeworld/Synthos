@@ -1,0 +1,20 @@
+{
+  "case_id": "case_001",
+  "description": "正常路由：创建备忘录请求 → 路由到 apple-notes 子技能",
+  "input": {
+    "request": "在备忘录里建一条笔记：明天实验室组会 10:00，带打印版综述",
+    "context": {
+      "known_subskills": ["apple-notes", "apple-reminders", "findmy", "imessage", "macos-computer-use"],
+      "matched_capability": "apple-notes",
+      "note_title": "组会提醒",
+      "note_body": "明天实验室组会 10:00，带打印版综述"
+    }
+  },
+  "expected": {
+    "route": "skill_view(name='apple-notes')",
+    "delegate_to": "apple-notes",
+    "passthrough": true,
+    "parent_executes": false
+  },
+  "weight": "critical"
+}

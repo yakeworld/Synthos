@@ -1,0 +1,13 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "route": "delegate",
+    "target": "ai-outreach",
+    "note": "AI 平台信号发布属 ai-outreach 语义域（social-media），路由不越级、不直接执行"
+  },
+  "verification": [
+    "route == 'delegate'",
+    "target == 'ai-outreach'",
+    "context.platforms 已透传给子技能（跨 Agent 信息有效流转）"
+  ]
+}

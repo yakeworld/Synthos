@@ -1,0 +1,19 @@
+{
+  "case_id": "case_002",
+  "description": "错误路径: 请求指向 devops 下不存在的子技能，应返回结构化错误",
+  "input": {
+    "request": "调用子技能 docker-swarm-manager 管理 Docker Swarm 集群",
+    "context": {
+      "pipeline_stage": "unknown",
+      "skill_hint": "docker-swarm-manager"
+    }
+  },
+  "expected": {
+    "routed_to": null,
+    "parent_executed": false,
+    "error_type": "unknown_sub_skill",
+    "error_contains": ["context", "recovery"],
+    "recovery_lists_available": true
+  },
+  "weight": "critical"
+}

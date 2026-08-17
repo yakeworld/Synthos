@@ -1,0 +1,18 @@
+{
+  "case_id": "case_001",
+  "description": "正常路由：X/Twitter 发帖请求 → xurl",
+  "input": {
+    "request": "在 Twitter 上发一条帖子：今天发布了 Synthos v5.0",
+    "context": {
+      "platform": "social-media",
+      "sub_skills": ["xurl", "xhs-content"]
+    }
+  },
+  "expected": {
+    "routed": true,
+    "target_skill": "xurl",
+    "load_call": "skill_view(name='xurl')",
+    "parent_executes": false
+  },
+  "weight": "critical"
+}

@@ -1,0 +1,17 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径 — 视频剪辑请求落在 4 个子技能之外，必须拒绝不越级",
+  "input": {
+    "request": "把 raw.mp4 剪成 15 秒短视频并加字幕",
+    "context": {
+      "input_video": "/tmp/raw.mp4"
+    }
+  },
+  "expected": {
+    "route": "reject",
+    "target": null,
+    "error_code": "no_matching_subskill",
+    "error_contains": ["context", "recovery_hint"]
+  },
+  "weight": "critical"
+}

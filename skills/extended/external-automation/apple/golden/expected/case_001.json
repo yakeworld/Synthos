@@ -1,0 +1,18 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "route": "skill_view(name='apple-notes')",
+    "delegate_to": "apple-notes",
+    "passthrough": true,
+    "parent_executes": false,
+    "note": "父级仅目录索引（APPL-001），备忘录创建由 apple-notes 子技能执行；request/context（含 note_title/note_body）完整转交无吞并（APPL-002）"
+  },
+  "verification": [
+    "route == \"skill_view(name='apple-notes')\"",
+    "delegate_to == 'apple-notes'",
+    "parent_executes == False（父级不直接执行，APPL-001）",
+    "passthrough == True 且 context.note_title/note_body 字段原样转交",
+    "返回结果由 apple-notes 子技能产生并符合其 output 契约，非父级伪造",
+    "子技能调用方式为 skill_view(name='...')，非父级内联实现"
+  ]
+}

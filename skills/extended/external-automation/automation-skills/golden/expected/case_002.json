@@ -1,0 +1,17 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "route": "child:productivity",
+    "delegate_to": "productivity/powerpoint",
+    "passthrough": true,
+    "parent_executes": false,
+    "note": "父级仅作路由索引，PPT 生成逻辑由 productivity/powerpoint 子技能执行；request/context 完整转交，无父级吞并"
+  },
+  "verification": [
+    "route == 'child:productivity'",
+    "delegate_to == 'productivity/powerpoint'",
+    "parent_executes == False（父级不硬编码执行，PROD 路由原则）",
+    "request 与 context 原样转交（passthrough == True），无字段丢失",
+    "返回结果由被调用子技能产生并符合其 output 契约，非父级伪造"
+  ]
+}

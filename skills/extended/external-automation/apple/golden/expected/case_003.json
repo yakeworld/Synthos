@@ -1,0 +1,29 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "route": "rejected",
+    "error": {
+      "code": "UNKNOWN_SUBSKILL",
+      "context": {
+        "request_echo": "用 apple 帮我改一下 Mac 系统的开机启动项",
+        "scanned_subskills": 5,
+        "matched_capability": null
+      },
+      "recovery": [
+        "apple 下 5 个子技能（apple-notes/apple-reminders/findmy/imessage/macos-computer-use）均无系统启动项管理能力",
+        "macos-computer-use 可尝试 GUI 层面操作「系统设置-通用-登录项」，但涉及系统级配置需谨慎确认",
+        "或由上层 task-router 重新分派到更合适的技能域"
+      ]
+    },
+    "note": "Golden Error 路径（APPL-003）：错误信息必须同时含上下文（请求回声 + 5 个已知子技能数 + 失败上下文）与 ≥2 条可操作恢复建议"
+  },
+  "verification": [
+    "route == 'rejected'",
+    "error.code == 'UNKNOWN_SUBSKILL'",
+    "error.context.request_echo 与输入 request 精确一致",
+    "error.context.scanned_subskills == 5",
+    "len(error.recovery) >= 2（恢复建议可操作，非通用错误，APPL-003）",
+    "crashed == False（边界处理不崩溃，APPL-004）",
+    "internal_state_exposed == False（APPL-005 安全约束）"
+  ]
+}

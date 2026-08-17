@@ -1,0 +1,20 @@
+{
+  "case_id": "case_001",
+  "description": "正常路由：邮件搜索请求 → himalaya",
+  "input": {
+    "request": "搜索上周收到的邮件，发件人是 yakeworld",
+    "context": {
+      "platform": "email",
+      "sub_skills": ["himalaya"],
+      "email_action": "search",
+      "email_account": "yakeworld@synthos.ai"
+    }
+  },
+  "expected": {
+    "routed": true,
+    "target_skill": "himalaya",
+    "load_call": "skill_view(name='himalaya')",
+    "parent_executes": false
+  },
+  "weight": "critical"
+}

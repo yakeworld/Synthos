@@ -1,0 +1,16 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "route": "reject",
+    "target": null,
+    "error_code": "unknown_subskill",
+    "error_message_template": "unknown sub-skill 'github-bot-factory' is not in the parent index [codebase-inspection, github-auth, github-code-review, github-discussions, github-issues, github-pr-workflow, github-repo-management]; recovery: 检查子技能名称拼写，或确认该能力（自动 fork/改写）是否应作为新子技能吸收",
+    "note": "Golden Error 路径：未知子技能必须拒绝（GITH-002/006），绝不臆造路由；自动 fork/改写属状态变更，拒绝同时规避未验证代码执行（GITH-007）"
+  },
+  "verification": [
+    "route == 'reject'",
+    "error 消息包含请求上下文（引用原始 request 与目标名）",
+    "error 消息包含恢复建议（recovery hint）",
+    "未加载、未调用任何子技能，未执行任何状态变更"
+  ]
+}

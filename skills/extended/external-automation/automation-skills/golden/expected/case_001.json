@@ -1,0 +1,25 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "route": "child:quality",
+    "action": "batch_quality_score_extraction",
+    "scores": {
+      "pima": 88,
+      "hcs3wt": 25.0,
+      "elliptic": 78.0,
+      "sotav2": 95
+    },
+    "skipped": ["pima"],
+    "note": "2.5/10→25（score/max_score*100）；7.8→78（total_score*10）；T1 QUALIFIED→95（纯文本合格默认高值）；pima 已有 quality_score 被跳过（AUTO-006）；12 篇单批 ≤15 无需拆分（AUTO-005）"
+  },
+  "verification": [
+    "route == 'child:quality'",
+    "abs(scores['hcs3wt'] - 25.0) <= 0.5（score/max_score 格式映射）",
+    "abs(scores['elliptic'] - 78.0) <= 0.5（total_score*10 格式映射）",
+    "scores['sotav2'] == 95（纯文本 QUALIFIED → 默认高值）",
+    "'pima' in skipped 且 scores['pima'] == 88 为原值（AUTO-006 跳过已处理，无重复写入）",
+    "state.json 中 quality_score 与 gate_status 均已更新且可被后续闸门读取",
+    "LaTeX 反斜杠清理（clean_json_for_latex）在 json.loads 前执行，无非法 \\X 解析失败（AUTO-001）",
+    "os.walk 递归定位 step_quality_check.md（AUTO-003），兼容不同子目录"
+  ]
+}

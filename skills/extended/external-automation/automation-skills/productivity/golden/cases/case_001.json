@@ -1,0 +1,20 @@
+{
+  "case_id": "case_001",
+  "description": "正常路由：PPT 生成请求 → 路由到 powerpoint 子技能",
+  "input": {
+    "request": "把这份组会材料做成 15 页 PPT，模板用学术蓝",
+    "context": {
+      "known_subskills": ["chinese-form-automation", "jupyter-live-kernel", "maps", "markitdown-convert", "notebooklm-cli", "notion", "obsidian", "powerpoint", "webhook-subscriptions", "youtube-content"],
+      "matched_capability": "powerpoint",
+      "template": "academic-blue",
+      "slides": 15
+    }
+  },
+  "expected": {
+    "route": "skill_view(name='powerpoint')",
+    "delegate_to": "powerpoint",
+    "passthrough": true,
+    "parent_executes": false
+  },
+  "weight": "critical"
+}

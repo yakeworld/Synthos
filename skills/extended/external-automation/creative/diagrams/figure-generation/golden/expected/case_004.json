@@ -1,0 +1,40 @@
+{
+  "case_id": "case_004",
+  "routed_mode": null,
+  "routed_mode_name": "unmatched",
+  "error": {
+    "code": "UNMATCHED_MODE",
+    "message": "请求 'Blender 3D动画渲染' 不匹配 figure-generation 的任何已知模式（A-J）。本技能覆盖：科学数据图、架构/流程图、手绘风格、宣传封面、论文转PPT、PDF逆向、自动QA、混合工作流、3D医学影像、质量报告可视化。"
+  },
+  "suggestions": [
+    "可用模式列表：A(科学数据图) B(架构/流程图) C(手绘excalidraw) D(宣传封面) E(论文转PPT) F(PDF逆向) G(自动QA) H(混合工作流) I(3D医学影像) J(质量报告可视化)",
+    "Blender 3D动画渲染超出本技能边界，建议使用外部工具（blender CLI）或 task-router 重新路由",
+    "如仅需静态3D渲染截图，可考虑模式I（3D医学影像子技能）作为近似"
+  ],
+  "recovery_advice": {
+    "option_1": "确认请求是否在 figure-generation 能力范围内，如是则明确指定模式",
+    "option_2": "重新提交请求给 task-router 进行全系统路由",
+    "option_3": "如需 3D 医学影像相关功能，指定模式I并描述具体解剖约束"
+  },
+  "qa_checks": [
+    {
+      "id": "no_crash",
+      "rule": "未知模式不得导致异常/崩溃",
+      "critical": true,
+      "expected_pass_condition": "响应正常返回（非 exception/traceback）"
+    },
+    {
+      "id": "error_informative",
+      "rule": "错误信息包含上下文（用户请求摘要 + 不匹配原因）",
+      "critical": true,
+      "expected_pass_condition": "error.message 非空且包含请求关键词"
+    },
+    {
+      "id": "suggestions_present",
+      "rule": "提供 ≥1 条可操作建议",
+      "critical": false,
+      "expected_pass_condition": "suggestions 列表长度 ≥ 1"
+    }
+  ],
+  "references_used": []
+}

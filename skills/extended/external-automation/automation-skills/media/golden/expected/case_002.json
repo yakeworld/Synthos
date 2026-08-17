@@ -1,0 +1,13 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "route": "delegate",
+    "target": "heartmula",
+    "note": "音乐生成属 heartmula 语义域（HeartMuLa 音乐基础模型），路由不越级"
+  },
+  "verification": [
+    "route == 'delegate'",
+    "target == 'heartmula'",
+    "context.duration_sec/genre 已透传给子技能"
+  ]
+}

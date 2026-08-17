@@ -1,0 +1,19 @@
+{
+  "case_id": "case_002",
+  "description": "正常路由 — Discussion 管理委托 github-discussions",
+  "input": {
+    "request": "在 Synthos 仓库的 Discussions 中搜索关于 self-evolution 的未解决讨论",
+    "context": {
+      "owner": "yakeworld",
+      "repo": "Synthos",
+      "search_query": "self-evolution",
+      "state": "open"
+    }
+  },
+  "expected": {
+    "route": "delegate",
+    "target": "github-discussions",
+    "contract_check": "passed"
+  },
+  "weight": "high"
+}

@@ -1,0 +1,15 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "routed": true,
+    "target_skill": "himalaya",
+    "load_call": "skill_view(name='himalaya')",
+    "note": "邮件搜索由 himalaya 子技能执行（Himalaya CLI），搜索须指定明确条件避免全量扫描"
+  },
+  "verification": [
+    "routed == true",
+    "target_skill == 'himalaya'",
+    "input.context 含 email_action 与 email_account（符合 IO_CONTRACT）",
+    "result 结构符合 IO_CONTRACT（dict）"
+  ]
+}

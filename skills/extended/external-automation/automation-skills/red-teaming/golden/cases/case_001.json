@@ -1,0 +1,13 @@
+{
+  "case_id": "case_001",
+  "skill": "red-teaming",
+  "description": "正常路由 — GODMODE 越狱攻击模拟",
+  "input": {
+    "request": "run godmode jailbreak simulation",
+    "context": {
+      "attack": "GODMODE",
+      "target": "llm-guardrail",
+      "mode": "simulation"
+    }
+  }
+}

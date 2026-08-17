@@ -1,0 +1,23 @@
+{
+  "case_id": "case_001",
+  "expected": {
+    "status": "ok",
+    "routed_to": "godmode",
+    "parent_executed_directly": false,
+    "result": {
+      "type": "object",
+      "required_keys": ["skill", "status"]
+    },
+    "validation": {
+      "request_valid": true,
+      "context_valid": true,
+      "attack_specific": true,
+      "notes": "路由到 godmode 子技能执行；针对特定越狱攻击（GODMODE）由子技能选择特定防御/模拟策略（RED-002）；父级仅作为目录索引"
+    }
+  },
+  "assertions": [
+    "routed_to == 'godmode'",
+    "result 为 dict（P2 输出契约）",
+    "针对特定越狱攻击采用特定策略而非通用方案（RED-002）"
+  ]
+}

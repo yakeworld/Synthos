@@ -1,0 +1,14 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "route": "delegate",
+    "target": "codebase-inspection",
+    "note": "仓库代码分析属 codebase-inspection 语义域（mlops），父级仅索引：契约校验后经 Hermes 机制 skill_view(name='codebase-inspection') 委托，未在父级直接实现 GitHub 操作（验证清单 L71）"
+  },
+  "verification": [
+    "route == 'delegate'",
+    "target == 'codebase-inspection'",
+    "context 含 owner/repo（验证清单 L70 契约完整）",
+    "父级未直接调用 GitHub API 或执行仓库分析"
+  ]
+}

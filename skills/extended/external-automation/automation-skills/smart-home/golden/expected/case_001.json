@@ -1,0 +1,15 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "routed": true,
+    "target_skill": "openhue",
+    "load_call": "skill_view(name='openhue')",
+    "note": "父级仅作目录索引，灯光控制实际执行由 openhue 子技能完成"
+  },
+  "verification": [
+    "routed == true",
+    "target_skill == 'openhue'",
+    "target_skill in context.sub_skills",
+    "result 结构符合 IO_CONTRACT（dict）"
+  ]
+}

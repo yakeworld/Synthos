@@ -1,0 +1,19 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径 — 未知子技能名称，必须拒绝且不臆造路由",
+  "input": {
+    "request": "用 github-bot-factory 自动 fork 并改写目标仓库",
+    "context": {
+      "target_skill": "github-bot-factory",
+      "owner": "yakeworld",
+      "repo": "Synthos"
+    }
+  },
+  "expected": {
+    "route": "reject",
+    "target": null,
+    "error_code": "unknown_subskill",
+    "error_contains": ["context", "recovery_hint"]
+  },
+  "weight": "critical"
+}

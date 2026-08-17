@@ -1,0 +1,18 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "routed_to": null,
+    "target_skill": null,
+    "parent_executed": false,
+    "error_type": "invalid_input",
+    "error_message_pattern": "Creative request validation failed: 'creative_request' is empty; 'output_format' 'hologram' is not a recognized format (valid: diagram, video, image, code).",
+    "recovery": "请提供非空的 creative_request 描述，并从有效输出格式 [diagram, video, image, code] 中选择 output_format。"
+  },
+  "verification": [
+    "routed_to is null",
+    "error_type == 'invalid_input'",
+    "error message 指出具体哪些字段无效（上下文，CREA-002）",
+    "recovery 包含有效格式列表（恢复建议，CREA-005）",
+    "未静默失败，未崩溃"
+  ]
+}

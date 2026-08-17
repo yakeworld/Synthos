@@ -1,0 +1,16 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "route": "reject",
+    "target": null,
+    "error_code": "no_matching_subskill",
+    "error_message_template": "no media sub-skill covers video editing among [gif-search, heartmula, songsee, spotify]; recovery: 视频剪辑超出本父级路由域，请使用 ffmpeg 相关技能或申请吸收新子技能",
+    "note": "Golden Error 路径：父级仅索引，无匹配子技能时必须拒绝并给出恢复指引，绝不越级直接执行（验证清单 L70/L71）"
+  },
+  "verification": [
+    "route == 'reject'",
+    "error 消息引用原始请求上下文（视频剪辑/输入文件）",
+    "error 消息包含恢复建议",
+    "未直接执行任何媒体操作，未调用任何子技能"
+  ]
+}

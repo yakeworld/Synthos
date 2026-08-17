@@ -1,0 +1,22 @@
+{
+  "case_id": "case_002",
+  "expected": {
+    "status": "ok",
+    "routed_to": "pokemon-player",
+    "parent_executed_directly": false,
+    "game_state": {
+      "type": "object",
+      "required_keys": ["game_type", "mode", "status"]
+    },
+    "validation": {
+      "game_type_valid": true,
+      "mode_valid": true,
+      "notes": "路由到 pokemon-player 子技能执行；父级仅作为目录索引（P3 人机分层）"
+    }
+  },
+  "assertions": [
+    "routed_to == 'pokemon-player'",
+    "game_state 结构一致（P2 输出契约）",
+    "无越界执行"
+  ]
+}

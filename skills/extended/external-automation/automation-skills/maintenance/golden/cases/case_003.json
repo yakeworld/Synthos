@@ -1,0 +1,9 @@
+{
+  "case_id": "case_003",
+  "skill": "maintenance",
+  "description": "错误路径 — 参数缺失（request 为 null）",
+  "input": {
+    "request": null,
+    "context": {}
+  }
+}

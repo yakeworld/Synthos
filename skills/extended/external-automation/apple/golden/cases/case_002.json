@@ -1,0 +1,19 @@
+{
+  "case_id": "case_002",
+  "description": "正常路由：查找设备位置请求 → 路由到 findmy 子技能",
+  "input": {
+    "request": "看看我的 MacBook Pro 现在在哪里，最后在线位置也行",
+    "context": {
+      "known_subskills": ["apple-notes", "apple-reminders", "findmy", "imessage", "macos-computer-use"],
+      "matched_capability": "findmy",
+      "device": "MacBook Pro"
+    }
+  },
+  "expected": {
+    "route": "skill_view(name='findmy')",
+    "delegate_to": "findmy",
+    "passthrough": true,
+    "parent_executes": false
+  },
+  "weight": "high"
+}

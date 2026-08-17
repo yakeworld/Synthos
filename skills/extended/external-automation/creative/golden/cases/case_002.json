@@ -1,0 +1,17 @@
+{
+  "case_id": "case_002",
+  "description": "错误路径: 空创意请求，应返回结构化错误而非静默失败",
+  "input": {
+    "creative_request": "",
+    "style": "",
+    "output_format": "hologram"
+  },
+  "expected": {
+    "routed_to": null,
+    "target_skill": null,
+    "parent_executed": false,
+    "error_type": "invalid_input",
+    "error_contains": ["context", "recovery"]
+  },
+  "weight": "critical"
+}

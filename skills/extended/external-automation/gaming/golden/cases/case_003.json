@@ -1,0 +1,13 @@
+{
+  "case_id": "case_003",
+  "skill": "gaming",
+  "description": "错误路径 — 未知游戏类型（Golden Error）",
+  "input": {
+    "game_type": "chess",
+    "mode": "play"
+  },
+  "context": {
+    "request": "玩国际象棋",
+    "user_intent": "play"
+  }
+}

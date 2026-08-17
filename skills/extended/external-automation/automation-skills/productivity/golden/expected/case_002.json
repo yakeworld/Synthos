@@ -1,0 +1,17 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "route": "skill_view(name='markitdown-convert')",
+    "delegate_to": "markitdown-convert",
+    "passthrough": true,
+    "parent_executes": false,
+    "note": "PDF→Markdown 能力唯一对应 markitdown-convert，路由无歧义；input_file/keep_tables 参数完整转交"
+  },
+  "verification": [
+    "route == \"skill_view(name='markitdown-convert')\"",
+    "delegate_to == 'markitdown-convert'",
+    "parent_executes == False",
+    "passthrough == True 且 context.input_file == 'review.pdf'",
+    "能力→子技能映射唯一且精确（10 选 1 无歧义）"
+  ]
+}

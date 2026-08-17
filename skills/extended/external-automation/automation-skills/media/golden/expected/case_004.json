@@ -1,0 +1,16 @@
+{
+  "case_id": "case_004",
+  "expected_output": {
+    "route": "reject",
+    "target": null,
+    "error_code": "contract_violation",
+    "error_message_template": "IO contract violation: input 'context' must be a dict (got str 'sunset'); recovery: 将 context 组织为 dict（如 {\"query\": \"sunset\"}）后重试",
+    "note": "契约校验失败必须显式报错（MEDI-002/MEDI-003），不得静默失败"
+  },
+  "verification": [
+    "route == 'reject'",
+    "error 消息指明违约字段为 context 及其实际类型（上下文具体）",
+    "error 消息包含恢复建议",
+    "未向 gif-search 转发该请求"
+  ]
+}

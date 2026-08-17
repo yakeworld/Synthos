@@ -1,0 +1,14 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "routed": true,
+    "target_skill": "xhs-content",
+    "load_call": "skill_view(name='xhs-content')",
+    "note": "小红书内容生成由 xhs-content 执行，内容包须含正文/标签/封面文案/排版建议四要素"
+  },
+  "verification": [
+    "routed == true",
+    "target_skill == 'xhs-content'",
+    "target_skill in context.sub_skills"
+  ]
+}

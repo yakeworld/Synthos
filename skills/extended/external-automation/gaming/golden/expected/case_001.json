@@ -1,0 +1,22 @@
+{
+  "case_id": "case_001",
+  "expected": {
+    "status": "ok",
+    "routed_to": "minecraft-modpack-server",
+    "parent_executed_directly": false,
+    "game_state": {
+      "type": "object",
+      "required_keys": ["game_type", "mode", "status"]
+    },
+    "validation": {
+      "game_type_valid": true,
+      "mode_valid": true,
+      "notes": "父级校验参数后路由到 minecraft-modpack-server 子技能执行；父级不越界执行游戏操作（P3 人机分层）"
+    }
+  },
+  "assertions": [
+    "routed_to == 'minecraft-modpack-server'",
+    "game_state 为 dict（P2 输出契约）",
+    "父级仅作为目录索引，未执行实际游戏操作"
+  ]
+}

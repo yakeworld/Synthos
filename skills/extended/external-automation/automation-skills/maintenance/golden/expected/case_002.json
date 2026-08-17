@@ -1,0 +1,19 @@
+{
+  "case_id": "case_002",
+  "expected": {
+    "status": "error",
+    "routed_to": null,
+    "error": {
+      "code": "UNKNOWN_SUBSKILL",
+      "context_must_mention": "target",
+      "recovery_must_list": ["synthos-probe"],
+      "raw_exception": false,
+      "notes": "参数校验拒绝：target='nonexistent-skill' 不在已知子技能范围；错误信息必须包含上下文与恢复指引（MAIN-004）"
+    }
+  },
+  "assertions": [
+    "status == 'error'",
+    "routed_to is null",
+    "error.recovery 列出唯一可用子技能 [synthos-probe]"
+  ]
+}

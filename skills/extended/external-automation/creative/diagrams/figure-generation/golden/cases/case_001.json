@@ -1,0 +1,19 @@
+{
+  "case_id": "case_001",
+  "description": "正常路由 — 科学数据图（模式A）：ROC曲线对比",
+  "input": {
+    "user_request": "画一个ROC曲线对比3个模型（LR、SVM、RF）的AUC，数据在 experiment_results.json 中",
+    "context": {
+      "paper_type": "benchmark",
+      "data_source": "experiment_results.json",
+      "figures_dir": "05-figures/",
+      "code_dir": "03-code/"
+    }
+  },
+  "expected_behavior": {
+    "should_route": true,
+    "critical_checks": ["routed_mode_is_A", "tool_is_matplotlib", "output_includes_png_300dpi"],
+    "high_checks": ["output_includes_pdf", "output_includes_svg"],
+    "medium_checks": ["qa_includes_dual_encoding", "qa_includes_statistical_display"]
+  }
+}

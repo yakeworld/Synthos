@@ -1,0 +1,17 @@
+{
+  "case_id": "case_001",
+  "description": "正常路由 — 仓库代码分析委托 codebase-inspection",
+  "input": {
+    "request": "统计 synthos 仓库的代码行数分布与语言占比",
+    "context": {
+      "owner": "yakeworld",
+      "repo": "Synthos"
+    }
+  },
+  "expected": {
+    "route": "delegate",
+    "target": "codebase-inspection",
+    "contract_check": "passed"
+  },
+  "weight": "critical"
+}

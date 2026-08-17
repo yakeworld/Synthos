@@ -1,0 +1,16 @@
+{
+  "case_id": "case_001",
+  "description": "正常路由: 学术图表请求应路由到 diagrams/ 子类别的 academic-diagram 子技能",
+  "input": {
+    "creative_request": "生成一张展示注意力机制的学术架构图",
+    "style": "academic",
+    "output_format": "diagram"
+  },
+  "expected": {
+    "routed_to": "diagrams",
+    "target_skill": "academic-diagram",
+    "parent_executed": false,
+    "input_validated": true
+  },
+  "weight": "critical"
+}

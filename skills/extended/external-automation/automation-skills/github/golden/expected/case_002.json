@@ -1,0 +1,14 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "route": "delegate",
+    "target": "github-discussions",
+    "note": "Discussion 创建/搜索/管理属 github-discussions 语义域（automation），路由不越级"
+  },
+  "verification": [
+    "route == 'delegate'",
+    "target == 'github-discussions'",
+    "context.search_query/state 已透传给子技能",
+    "只读搜索请求未触发任何状态变更（验证清单 L73）"
+  ]
+}

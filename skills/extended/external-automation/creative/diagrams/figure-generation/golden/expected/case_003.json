@@ -1,0 +1,38 @@
+{
+  "case_id": "case_003",
+  "routed_mode": "I",
+  "routed_mode_name": "3D医学影像",
+  "delegation": {
+    "type": "subskill",
+    "target_skill": "3d-curve-fitting-figures",
+    "target_path": "3d-curve-fitting-figures/SKILL.md",
+    "parent_executes_directly": false
+  },
+  "tool": "委托子技能决定",
+  "output_formats": ["由子技能定义"],
+  "contract": {
+    "claim": "椭圆→3D空间圆逆投影（瞳孔追踪解剖约束）",
+    "constraints": {
+      "R": "2r",
+      "d": "√3r",
+      "parameterization": "法向量参数化、光轴平面"
+    }
+  },
+  "qa_checks": [
+    {
+      "id": "delegation_correctness",
+      "rule": "父级不直接执行，必须委托子技能",
+      "critical": true,
+      "expected_pass_condition": "父级输出包含 delegation.target_skill 且不包含直接绘图代码"
+    },
+    {
+      "id": "constraint_passthrough",
+      "rule": "解剖约束参数完整传递给子技能",
+      "critical": false,
+      "expected_pass_condition": "delegation context 包含 R=2r, d=√3r"
+    }
+  ],
+  "references_used": [
+    "3d-curve-fitting-figures/SKILL.md"
+  ]
+}

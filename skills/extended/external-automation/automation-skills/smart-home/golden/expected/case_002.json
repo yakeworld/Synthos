@@ -1,0 +1,13 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "routed": false,
+    "note": "Nest 门锁不在 smart-home 子技能列表（仅 openhue），父级不得臆造子技能或代执行"
+  },
+  "verification": [
+    "routed == false",
+    "错误信息包含上下文（请求目标 'Nest 门锁' 与可用子技能列表 ['openhue']）",
+    "错误信息包含恢复建议（可用子技能/扩展方式）",
+    "parent_executes == false（父级不直接执行业务）"
+  ]
+}

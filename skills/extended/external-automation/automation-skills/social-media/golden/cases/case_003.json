@@ -1,0 +1,18 @@
+{
+  "case_id": "case_003",
+  "description": "未知子技能：抖音发帖请求不在 social-media 子技能列表 → 拒绝路由",
+  "input": {
+    "request": "帮我发一条抖音短视频",
+    "context": {
+      "platform": "social-media",
+      "sub_skills": ["xurl", "xhs-content"]
+    }
+  },
+  "expected": {
+    "routed": false,
+    "error_contains_context": true,
+    "error_contains_recovery": true,
+    "parent_executes": false
+  },
+  "weight": "high"
+}

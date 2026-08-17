@@ -1,0 +1,16 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "routed_to": "cron-system-maintenance",
+    "parent_executed": false,
+    "route_mechanism": "hermes_auto_discovery",
+    "note": "DEVO-002: 处理用户请求时优先通过子技能（如 cron-system-maintenance）执行而非父级直接操作"
+  },
+  "verification": [
+    "routed_to == 'cron-system-maintenance'",
+    "parent_executed == false（父级未越权执行）",
+    "route_mechanism == 'hermes_auto_discovery'",
+    "子技能通过 Hermes 技能加载机制成功发现并加载（验证清单 item 2）",
+    "result: dict 符合 IO_CONTRACT 结构，关键字段非空（验证清单 item 3）"
+  ]
+}

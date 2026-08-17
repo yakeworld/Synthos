@@ -1,0 +1,29 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "route": "rejected",
+    "error": {
+      "code": "UNKNOWN_SUBSKILL",
+      "context": {
+        "request_echo": "用 productivity 帮我剪辑一段 4K 视频并调色",
+        "scanned_subskills": 10,
+        "matched_capability": null
+      },
+      "recovery": [
+        "productivity 下 10 个子技能均无视频剪辑/调色能力",
+        "可选：改路由到 media 域（automation-skills 父级下存在 media 子目录），或由上层 task-router 重新分派",
+        "若确需新增能力，走技能创建流程而非在父级硬编码"
+      ]
+    },
+    "note": "Golden Error 路径（PROD-006）：错误信息必须同时含上下文（请求回声 + 10 个已知子技能数 + 匹配结果）与 ≥2 条可操作恢复建议"
+  },
+  "verification": [
+    "route == 'rejected'",
+    "error.code == 'UNKNOWN_SUBSKILL'",
+    "error.context.request_echo 与输入 request 精确一致",
+    "error.context.scanned_subskills == 10",
+    "len(error.recovery) >= 2（恢复建议可操作，非通用错误）",
+    "crashed == False（边界处理不崩溃，PROD-005）",
+    "internal_state_exposed == False（PROD-007 安全约束）"
+  ]
+}

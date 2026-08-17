@@ -1,0 +1,16 @@
+{
+  "case_id": "case_004",
+  "expected_output": {
+    "route": "reject",
+    "target": null,
+    "error_code": "contract_violation",
+    "error_message_template": "IO contract violation: input 'request' must be a non-empty str (got ''); recovery: 提供非空请求描述后重试",
+    "note": "契约校验失败必须显式报错，不得静默失败或回退默认路由（AUTO-004）"
+  },
+  "verification": [
+    "route == 'reject'",
+    "error 消息指明违约为 request 字段（上下文具体）",
+    "error 消息包含恢复建议",
+    "未向任何子技能转发该请求"
+  ]
+}

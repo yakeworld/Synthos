@@ -1,0 +1,71 @@
+{
+  "case_id": "case_002",
+  "routed_mode": "B",
+  "routed_mode_name": "架构/流程图（matplotlib patches）",
+  "tool": "matplotlib (FancyBboxPatch + FancyArrowPatch)",
+  "tool_fallback_chain": ["matplotlib", "Pillow纯代码", "HTML+Firefox", "Pillow结构化"],
+  "output_formats": ["PNG(300DPI)", "PDF", "SVG"],
+  "output_path_convention": {
+    "figures_dir": "05-figures/",
+    "code_dir": "03-code/"
+  },
+  "contract": {
+    "claim": "三层系统架构（数据层→计算层→展示层）",
+    "prototype": "schematic-led-composite",
+    "panel_hierarchy": {
+      "hero": "完整架构图（3层+箭头）",
+      "verification": null,
+      "control": null
+    },
+    "exit": "PNG(300DPI) + PDF + SVG"
+  },
+  "layout_rules": {
+    "alignment": "底部对齐向上计算（SINGLE_H/DOUBLE_H + GAP_S/GAP_M/GAP_T）",
+    "arrow_constraint": "所有箭头严格水平或垂直，不可斜线",
+    "arrow_endpoint": "终点在目标框AABB边缘内侧（x = cx0 + CORE_W*0.25/0.75）"
+  },
+  "qa_checks": [
+    {
+      "id": "arrow_endpoint_aabb",
+      "rule": "箭头终点在目标框AABB内，不是'接近'",
+      "critical": true,
+      "expected_pass_condition": "每个箭头终点坐标在对应目标框 AABB 范围内"
+    },
+    {
+      "id": "no_diagonal_arrows",
+      "rule": "箭头严格水平或垂直",
+      "critical": true,
+      "expected_pass_condition": "无 dx≠0 且 dy≠0 的箭头"
+    },
+    {
+      "id": "box_overlap_margin_5pt",
+      "rule": "所有框两两重叠检测 margin=5pt",
+      "critical": true,
+      "expected_pass_condition": "任意两框 AABB 距离 ≥ 5pt"
+    },
+    {
+      "id": "text_not_overflow",
+      "rule": "文字不超框（get_text_extent() 精确测量）",
+      "critical": true,
+      "expected_pass_condition": "所有文字 extent 在所属框内"
+    },
+    {
+      "id": "canvas_boundary",
+      "rule": "元素不越画布边界",
+      "critical": false,
+      "expected_pass_condition": "所有元素 bbox 在 fig 范围内（注意 bbox_inches='tight' 陷阱）"
+    },
+    {
+      "id": "arrow_crossing",
+      "rule": "箭头互不交叉",
+      "critical": true,
+      "expected_pass_condition": "任意两箭头线段无交点"
+    }
+  ],
+  "references_used": [
+    "references/architecture-flow-diagrams.md",
+    "references/arrow-endpoint-qa.md",
+    "references/hcs3wt-figure1-case-study.md",
+    "scripts/qa-architecture-diagram.py"
+  ]
+}

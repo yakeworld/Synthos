@@ -1,0 +1,30 @@
+{
+  "case_id": "case_001",
+  "description": "正常路由：批量质量分数提取请求 → 路由到 quality 域并执行 Batch Quality Score Extraction",
+  "input": {
+    "request": "对批次 B3 的 12 篇论文批量提取 quality_score 并写入 state.json，其中 pima 目录已有 quality_score=88",
+    "context": {
+      "paper_queue": ["pima", "hcs3wt", "elliptic", "sotav2"],
+      "known_subdirs": ["autonomous-ai-agents", "github", "maintenance", "media", "metacognition", "productivity", "quality", "red-teaming", "shared", "smart-home", "social-media", "yuanbao"],
+      "format_variants": {
+        "pima": "already_scored",
+        "hcs3wt": {"score": 2.5, "max_score": 10},
+        "elliptic": {"total_score": 7.8},
+        "sotav2": "T1 QUALIFIED"
+      }
+    }
+  },
+  "expected": {
+    "route": "child:quality",
+    "action": "batch_quality_score_extraction",
+    "scores": {
+      "pima": 88,
+      "hcs3wt": 25,
+      "elliptic": 78,
+      "sotav2": 95
+    },
+    "skipped": ["pima"],
+    "batch_size_max": 15
+  },
+  "weight": "critical"
+}

@@ -1,0 +1,13 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "route": "delegate",
+    "target": "gif-search",
+    "note": "GIF 请求属 gif-search 语义域（Tenor 搜索/下载），经 Hermes 机制 skill_view(name='gif-search') 委托，父级不越级直接执行"
+  },
+  "verification": [
+    "route == 'delegate'",
+    "target == 'gif-search'",
+    "context.query/limit 已透传给子技能"
+  ]
+}

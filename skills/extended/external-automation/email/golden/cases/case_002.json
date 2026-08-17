@@ -1,0 +1,20 @@
+{
+  "case_id": "case_002",
+  "description": "无效输入：email_action 缺失 → 输入验证拒绝",
+  "input": {
+    "request": "处理我的邮件",
+    "context": {
+      "platform": "email",
+      "sub_skills": ["himalaya"],
+      "email_action": null,
+      "email_account": "yakeworld@synthos.ai"
+    }
+  },
+  "expected": {
+    "routed": false,
+    "error_contains_context": true,
+    "error_contains_recovery": true,
+    "parent_executes": false
+  },
+  "weight": "high"
+}

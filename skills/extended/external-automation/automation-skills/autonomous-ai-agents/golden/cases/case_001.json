@@ -1,0 +1,17 @@
+{
+  "case_id": "case_001",
+  "description": "正常路由 — 编码任务委托 claude-code",
+  "input": {
+    "request": "用 Claude Code 修复 src/agent.py 中的异步死锁问题",
+    "context": {
+      "project_dir": "/media/yakeworld/sda2/Synthos",
+      "executed_atoms": []
+    }
+  },
+  "expected": {
+    "route": "delegate",
+    "target": "claude-code",
+    "contract_check": "passed"
+  },
+  "weight": "critical"
+}

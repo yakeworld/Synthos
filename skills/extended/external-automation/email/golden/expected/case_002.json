@@ -1,0 +1,13 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "routed": false,
+    "note": "email_action 缺失/非法 → 输入验证拒绝执行（Genes EMAI-001），不得基于错误上下文执行 Himalaya CLI"
+  },
+  "verification": [
+    "routed == false",
+    "错误信息包含上下文（缺失字段 'email_action' 与请求描述）",
+    "错误信息包含恢复建议（合法的 email_action 取值：send/search/list 等）",
+    "parent_executes == false"
+  ]
+}

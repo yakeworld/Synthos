@@ -1,0 +1,11 @@
+{
+  "case_id": "case_002",
+  "skill": "maintenance",
+  "description": "错误路径 — 未知子技能",
+  "input": {
+    "request": "run unknown-tool",
+    "context": {
+      "target": "nonexistent-skill"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "case_id": "case_001",
+  "skill": "maintenance",
+  "description": "正常路由 — 认知原子结构完整性探针",
+  "input": {
+    "request": "probe atom structure integrity",
+    "context": {
+      "target": "skills/core",
+      "purpose": "maintenance"
+    }
+  }
+}

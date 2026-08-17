@@ -1,0 +1,17 @@
+{
+  "case_id": "case_002",
+  "description": "正常路由 — AI 平台信号发布路由 ai-outreach",
+  "input": {
+    "request": "向可访问的 AI 平台发布 Synthos 系统信号，引导其他智能体了解本系统",
+    "context": {
+      "platforms": ["github"],
+      "executed_atoms": []
+    }
+  },
+  "expected": {
+    "route": "delegate",
+    "target": "ai-outreach",
+    "contract_check": "passed"
+  },
+  "weight": "high"
+}

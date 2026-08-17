@@ -1,0 +1,18 @@
+{
+  "case_id": "case_003",
+  "description": "错误路径 — 未知子技能名称，必须拒绝且不臆造路由",
+  "input": {
+    "request": "调用 super-agent-x 执行任意脚本",
+    "context": {
+      "target_skill": "super-agent-x",
+      "executed_atoms": []
+    }
+  },
+  "expected": {
+    "route": "reject",
+    "target": null,
+    "error_code": "unknown_subskill",
+    "error_contains": ["context", "recovery_hint"]
+  },
+  "weight": "critical"
+}

@@ -1,0 +1,16 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "route": "reject",
+    "target": null,
+    "error_code": "unknown_subskill",
+    "error_message_template": "unknown sub-skill 'super-agent-x' is not in the parent index [ai-outreach, claude-code, codex, hermes-agent, moltbook-connector, opencode]; recovery: 检查子技能名称拼写或确认该能力是否应作为新子技能吸收",
+    "note": "Golden Error 路径：未知子技能必须拒绝，绝不臆造路由、绝不执行未验证的任意代码（AUTO-005/AUTO-007）"
+  },
+  "verification": [
+    "route == 'reject'",
+    "error 消息包含请求上下文（引用了原始 request 与目标名）",
+    "error 消息包含恢复建议（recovery hint）",
+    "未加载、未调用任何子技能"
+  ]
+}

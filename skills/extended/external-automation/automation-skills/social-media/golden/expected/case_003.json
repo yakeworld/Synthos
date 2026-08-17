@@ -1,0 +1,13 @@
+{
+  "case_id": "case_003",
+  "expected_output": {
+    "routed": false,
+    "note": "抖音不在 social-media 子技能列表（仅 xurl/xhs-content），父级不得臆造子技能或代执行"
+  },
+  "verification": [
+    "routed == false",
+    "错误信息包含上下文（请求平台 '抖音' 与可用子技能列表 ['xurl', 'xhs-content']）",
+    "错误信息包含恢复建议（可用子技能/扩展方式）",
+    "parent_executes == false"
+  ]
+}

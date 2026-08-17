@@ -1,0 +1,14 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "route": "delegate",
+    "target": "claude-code",
+    "note": "父级仅做索引：校验契约后通过 Hermes 机制 skill_view(name='claude-code') 委托，不自行实现修复逻辑"
+  },
+  "verification": [
+    "route == 'delegate'",
+    "target == 'claude-code'（命中子技能清单，原子边界不重叠）",
+    "input.request 为非空 str 且 context 为 dict（契约校验通过）",
+    "父级未在 SKILL.md 层直接执行代码操作"
+  ]
+}

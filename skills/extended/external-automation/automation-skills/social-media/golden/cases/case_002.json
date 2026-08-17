@@ -1,0 +1,18 @@
+{
+  "case_id": "case_002",
+  "description": "正常路由：小红书内容生成请求 → xhs-content",
+  "input": {
+    "request": "帮我写一篇小红书帖子，主题是 Linux 工作站搭建",
+    "context": {
+      "platform": "social-media",
+      "sub_skills": ["xurl", "xhs-content"]
+    }
+  },
+  "expected": {
+    "routed": true,
+    "target_skill": "xhs-content",
+    "load_call": "skill_view(name='xhs-content')",
+    "parent_executes": false
+  },
+  "weight": "high"
+}
