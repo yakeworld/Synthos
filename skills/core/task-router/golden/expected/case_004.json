@@ -1,0 +1,13 @@
+{
+  "case_id": "case_004",
+  "expected_output": {
+    "route": "standard",
+    "atom_chain": ["argument-expression"],
+    "execution": "cognitive"
+  },
+  "verification": [
+    "route == 'standard'",
+    "atom_chain 仅含 argument-expression（不越级加 ACQ/EXT）",
+    "execution == 'cognitive'（无脚本，纯推理）"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "case_id": "case_004",
+  "description": "单点写作任务路由（润色引言→仅 ARG）",
+  "input": {
+    "query": "帮我润色一段论文引言",
+    "context": {"executed_atoms": []}
+  },
+  "expected": {
+    "route": "standard",
+    "atom_chain": ["argument-expression"],
+    "execution": "cognitive",
+    "note": "写作/润色类查询无检索/提取/关联需求，按 TR-002 不越级，仅调 ARG 原子"
+  },
+  "weight": "critical"
+}
