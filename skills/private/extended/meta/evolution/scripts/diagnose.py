@@ -23,7 +23,11 @@ gene_ids_ct = 0
 gene_count_ok = 0
 gene_dup_ct = 0
 gene_section = r'^##\s+Genes'
-gene_id = re.compile(r'([A-Z]{2,4}-\d{3})')
+# Gene ID uniqueness must count DEFINITION lines only ("- **[ID]** ..."),
+# not prose references inside the Genes section (e.g. "与 DSH-008 组合").
+# Cycle 266 fix: findall previously counted references as duplicate IDs
+# (false positive: DSH-008 referenced in evolution/SKILL.md vs defined in dsh-self-evolution/SKILL.md).
+gene_id = re.compile(r'^-\s*\*\*\[([A-Z]{2,4}-\d{3})\]\*\*', re.M)
 seen_gene_ids = {}
 
 for root, dirs, files in os.walk('skills'):
