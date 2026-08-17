@@ -1,0 +1,17 @@
+{
+  "case_id": "case_001",
+  "description": "连通性正例: 登录 shell (bash -lc) 调用 dsh headless 完成简单文件创建任务，验证 dsh 凭据链路 (VLLM 环境变量仅存于 ~/.bashrc)",
+  "input": {
+    "command": "bash -lc 'dsh --profile headless \"创建文件 /media/yakeworld/sda2/Synthos/dsh-synthos-connectivity-test.txt 内容为 SYNTHOS_DSH_OK\"'",
+    "workdir": "/media/yakeworld/sda2/Synthos",
+    "profile": "headless",
+    "task": "创建文件任务（简单，单文件写入）"
+  },
+  "expected": {
+    "exit_code": 0,
+    "output_file": "/media/yakeworld/sda2/Synthos/dsh-synthos-connectivity-test.txt",
+    "output_content": "SYNTHOS_DSH_OK",
+    "duration_minutes_max": 5
+  },
+  "weight": "critical"
+}

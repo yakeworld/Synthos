@@ -1,0 +1,25 @@
+{
+  "case_id": "competition-submission_case_002",
+  "title": "完整性检查发现评分维度缺项 / 当前时间已晚于截止 —— 输出缺项清单并拒绝交付 submission.zip",
+  "task": "competition-submission: 完整性检查失败（缺项或逾期）时应拒绝打包交付，而非静默交付",
+  "input": {
+    "competition_notice": {
+      "track": "医疗 AI 创新赛道",
+      "scoring_dimensions": ["创新性", "临床价值", "可落地性"],
+      "format_requirements": ["技术规格书", "路线图 (Mermaid timeline)", "视频脚本", "申报表 docx", "答辩 PPT pptx"],
+      "deadline": "2026-07-01T23:59:00+08:00"
+    },
+    "core_materials_ready": {
+      "tech_plan": true,
+      "code": true,
+      "demo_data": true
+    },
+    "templates_available": ["tech-spec", "roadmap", "video-script", "form-filling", "presentation"],
+    "generated_artifacts": [
+      "技术规格书",
+      "路线图 (Mermaid timeline)",
+      "视频脚本"
+    ],
+    "current_time": "2026-07-20T10:00:00+08:00"
+  }
+}

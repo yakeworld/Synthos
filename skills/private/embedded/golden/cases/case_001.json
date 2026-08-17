@@ -1,0 +1,19 @@
+{
+  "case_id": "case_001",
+  "description": "基本功能测试：双摄 AI 摄像头选型对标（标准档，预算 <500 元，对标 K230）",
+  "input": {
+    "requirement": "双摄 AI 摄像头",
+    "budget_max_cny": 500,
+    "reference_chip": "K230",
+    "tiers_to_evaluate": ["PV890", "RK3568"]
+  },
+  "expected": {
+    "tier": "标准",
+    "conclusions": {
+      "RK3568": "碾压",
+      "PV890": "超越",
+      "RV1103_T3": "完美对标"
+    }
+  },
+  "weight": "critical"
+}

@@ -1,0 +1,15 @@
+{
+  "case_id": "journal-selection-medical-ai_case_001",
+  "title": "医学影像 AI 辅助诊断选题 —— 期刊匹配推荐（≥3 条，含 OpenAlex 实测指标）",
+  "task": "journal-selection-medical-ai: 依据选题/方法学特征/受众/约束执行期刊匹配，输出候选推荐列表",
+  "input": {
+    "topic": "医学影像 AI 辅助诊断",
+    "study_design": "WDBC 乳腺癌 10x5 分层 CV，HCS-3WT 级联架构",
+    "methodology_features": ["集成学习", "级联分流"],
+    "target_audience": "放射学/肿瘤学临床读者",
+    "constraints": {
+      "apc_usd_max": 3000,
+      "review_weeks_max": 12
+    }
+  }
+}

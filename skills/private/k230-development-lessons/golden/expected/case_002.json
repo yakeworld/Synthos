@@ -1,0 +1,11 @@
+{
+  "case_id": "case_002",
+  "expected_output": "先读 /revision.txt：含 rtsmart → fpioa.set_function(pin, FPIOA.GPIO0 + pin) 后再 machine.Pin(pin, Pin.IN, Pin.PULL_UP)；标准 CanMV → 直接 machine.Pin 不叠 FPIOA。按键 GPIO 按 os.uname()[-1] 分配：01studio→GPIO21(按下=0)，lckfb→GPIO53(按下=1)。",
+  "verification": [
+    "配置 GPIO 前已读取 /revision.txt 并据此分支",
+    "RT-Smart 分支含显式 fpioa.set_function(pin, FPIOA.GPIO0 + pin)",
+    "CanMV 分支无多余 FPIOA 调用（额外 FPIOA 会覆盖正确映射）",
+    "os.uname()[-1] == 'k230_canmv_01studio' 时按键为 GPIO21、按下=0",
+    "os.uname()[-1] == 'k230_canmv_lckfb' 时按键为 GPIO53、按下=1"
+  ]
+}

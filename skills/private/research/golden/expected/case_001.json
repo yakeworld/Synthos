@@ -1,0 +1,15 @@
+{
+  "case_id": "case_001",
+  "checks": [
+    {"id": "parallel_dual_source_recall", "weight": "critical", "expect": {"gene": "RESE-001", "per_direction": {"pubmed": "E-utilities", "arxiv": "API"}, "keyword_variants_per_direction": {"min": 2, "max": 5}, "parallel": true}},
+    {"id": "local_date_filtering", "weight": "critical", "expect": {"gene": "RESE-002", "filter_location": "local", "pubmed_field": "Year", "arxiv_field": "published", "window_months": 3, "reldate_endpoint_used": false}},
+    {"id": "precise_boolean_queries", "weight": "high", "expect": {"gene": "RESE-003", "arxiv_query_style": "all:keyword1+AND+all:keyword2", "noise_rejected_examples": ["particle tracking", "counterfactual tracking"]}},
+    {"id": "title_dedup_and_scoring", "weight": "high", "expect": {"dedup_key": "exact_title_match", "score_components": ["keyword_match", "recency_weight"], "output_size": 10, "output_fields": ["title", "date", "source", "score", "direction_id"]}},
+    {"id": "conclusion_traceable", "weight": "high", "expect": {"gene": "RESE-005", "principle_order": ["准确", "证据", "可复现"], "every_conclusion_traces_to_source": true}}
+  ],
+  "pass_criteria": {"weighted_score_min": 0.8, "all_critical_must_pass": true},
+  "failure_behavior": {
+    "curl_blocked_by_security_scan": "触发 RESE-004：回退「curl 到文件 + 单独 python3 脚本」",
+    "arxiv_noise": "改用 all:eye+AND+all:tracking 精确布尔表达式重查"
+  }
+}

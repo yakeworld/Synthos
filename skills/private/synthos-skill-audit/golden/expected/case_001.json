@@ -1,0 +1,42 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "mapping_table": [
+      {"learn_block": "思想", "synthos_section": "原则 (Principles)"},
+      {"learn_block": "原理", "synthos_section": "核心原则"},
+      {"learn_block": "流程", "synthos_section": "验证清单 (Verification)"},
+      {"learn_block": "方法", "synthos_section": "Golden 集合 (Golden Set)"}
+    ],
+    "hierarchy_difference": {
+      "learn_skill_priority": "P2",
+      "synthos_standard_priority": "P0-P1",
+      "note": "/learn generated skill is P2; standard skills are P0-P1. Not interchangeable."
+    },
+    "privacy_scan": {
+      "credentials_found": 0,
+      "patterns_checked": ["API Key", "Token", "password", "secret", "Bearer"],
+      "coverage_verified": true,
+      "note": "0 findings requires re-verification that scan covered full file (SYNT-005)"
+    },
+    "path_trap_detection": {
+      "broken_symlinks_found": 1,
+      "repaired": true
+    },
+    "dual_repo_coverage": {
+      "skills_private_checked": true,
+      "skills_standard_checked": true,
+      "migration_status_complete": true
+    }
+  },
+  "expected_checks": [
+    {"id": "SYNT-001", "expected": "passed", "detail": "Four-block to five-section mapping table produced; each learn block mapped to corresponding Synthos section"},
+    {"id": "SYNT-002", "expected": "passed", "detail": "P2 vs P0-P1 hierarchy difference explicitly recorded; skills not conflated"},
+    {"id": "SYNT-003", "expected": "passed", "detail": "Privacy scan executed with grep for API Key/Token/password patterns; 0 credentials in skill content"},
+    {"id": "SYNT-004", "expected": "passed", "detail": "1 broken symlink detected and repaired; dual-repo migration state fully covered"},
+    {"id": "SYNT-005", "expected": "passed", "detail": "0-credential finding re-verified: scan coverage confirmed across entire file, not a false negative"}
+  ],
+  "pass_criteria": {
+    "weighted_score_threshold": 0.80,
+    "all_critical_must_pass": true
+  }
+}

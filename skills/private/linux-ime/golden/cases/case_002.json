@@ -1,0 +1,33 @@
+{
+  "case_id": "case_002",
+  "description": "Snap 版 Firefox 硬编码 ibus，环境变量修复无效（Golden Error 路径）",
+  "input": {
+    "os": "Ubuntu 24.04",
+    "symptom": "Firefox 中无法中文输入，报 IBUS-CRITICAL: ibus_bus_is_connected == FALSE",
+    "diagnostics": {
+      "dpkg_fcitx_installed": "ii  fcitx5  5.1.4-1  amd64  fcitx5 framework",
+      "pgrep_fcitx5": "1234 fcitx5 --daemon-started",
+      "env_variables": {
+        "GTK_IM_MODULE": "fcitx5",
+        "QT_IM_MODULE": "fcitx5",
+        "XMODIFIERS": "@im=fcitx5"
+      },
+      "which_firefox": "/usr/bin/firefox",
+      "readlink_firefox": "/snap/firefox/2370/usr/lib/firefox/firefox",
+      "snap_list_firefox": "firefox  2370  latest/stable  mozilla  -",
+      "file_firefox": "/usr/bin/firefox: POSIX shell script, ASCII text executable"
+    }
+  },
+  "checks": [
+    {
+      "id": "snap_firefox_detected",
+      "weight": "critical",
+      "description": "识别 Firefox 为 snap 版（路径含 /snap/firefox/），硬编码 ibus，环境变量无效"
+    },
+    {
+      "id": "correct_fix_identified",
+      "weight": "critical",
+      "description": "修复方案为安装 deb 版 Firefox，而非继续调 GTK_IM_MODULE"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "case_id": "case_002",
+  "checks": [
+    {"id": "name_mismatch_verified_by_content", "weight": "critical", "expect": {"tool": "pdfinfo", "confirmed_match": {"file": "Shams2025.pdf", "bibkey": "Shams2023BRFSS", "field": "year+title"}, "renamed_to": "Shams2023BRFSS.pdf"}},
+    {"id": "symlink_created_not_copied", "weight": "high", "expect": {"root_entry": "papers/demo-paper/Lee2023Pupil.pdf", "target": "pdfs/Lee2023Pupil.pdf", "is_symlink": true, "verified_by": "readlink", "duplicate_physical_copies": 0}},
+    {"id": "no_unrelated_pdf_deleted_directly", "weight": "high", "expect": {"policy": "mismatch_goes_to_archive_not_delete"}},
+    {"id": "compile_verified", "weight": "critical", "expect": {"pdflatex_errors": 0, "undefined_references": 0}}
+  ],
+  "pass_criteria": {"weighted_score_min": 0.8, "all_critical_must_pass": true},
+  "failure_behavior": {
+    "rename_without_pdfinfo": "违反 REFE-002，须先验证内容再改名",
+    "cp_instead_of_symlink": "违反 REFE-004，须用符号链接避免双份漂移"
+  }
+}

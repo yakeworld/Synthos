@@ -1,0 +1,17 @@
+{
+  "case_id": "case_003",
+  "description": "dpkg/apt 中断或锁死：dpkg --configure -a 修复 + 清除 /var/lib/dpkg 锁文件",
+  "input": {
+    "env": "Ubuntu",
+    "symptom": "apt/dpkg 操作中断，提示锁被占用或配置中断（'dpkg was interrupted' / lock 错误）"
+  },
+  "expected": {
+    "fix": "sudo dpkg --configure -a → 清除 /var/lib/dpkg/lock-frontend、/var/lib/dpkg/lock、/var/cache/apt/archives/lock → 再 sudo dpkg --configure -a 验证",
+    "verify": "dpkg --configure -a 正常完成，apt 恢复可用，未直接 apt remove 重装"
+  },
+  "weight": {
+    "critical": 1.0,
+    "high": 0.7,
+    "medium": 0.4
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "case_id": "journal-selection-medical-ai_case_002",
+  "title": "选题/方法学特征缺失（仅含期刊档次偏好）—— 拒绝择期并返回错误上下文与恢复建议",
+  "task": "journal-selection-medical-ai: 输入缺少选题与方法学特征时应拒绝期刊匹配并提示补充",
+  "input": {
+    "topic": null,
+    "study_design": null,
+    "methodology_features": [],
+    "target_audience": null,
+    "constraints": {
+      "journal_tier_preference": "Q1"
+    }
+  }
+}

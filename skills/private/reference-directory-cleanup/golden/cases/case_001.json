@@ -1,0 +1,36 @@
+{
+  "case_id": "case_001",
+  "description": "子目录旧管线 PDF 归档 + bib 清理 + 编译验证（Golden Input 全场景）",
+  "input": {
+    "paper_dir": "papers/demo-paper",
+    "bib_file": "papers/demo-paper/references.bib",
+    "tex_file": "papers/demo-paper/paper.tex",
+    "pdf_subdir": "papers/demo-paper/pdfs",
+    "bib_entries": 29,
+    "pdf_subdir_files": [
+      "Shams2025.pdf",
+      "Wang2024Gaze.pdf",
+      "Lee2023Pupil.pdf",
+      "Old2019Legacy.pdf",
+      "Old2020Legacy.pdf",
+      "Old2021Legacy.pdf",
+      "Old2022Legacy.pdf",
+      "Old2023Legacy.pdf",
+      "Old2024LegacyA.pdf",
+      "Old2024LegacyB.pdf",
+      "Old2024LegacyC.pdf",
+      "Old2025LegacyD.pdf"
+    ],
+    "pdfinfo_results": {
+      "Shams2025.pdf": {"title": "BRFSS-based risk factor surveillance", "authors": ["Shams"], "year": 2023},
+      "Wang2024Gaze.pdf": {"title": "Gaze estimation with lightweight networks", "authors": ["Wang"], "year": 2024},
+      "Lee2023Pupil.pdf": {"title": "Pupil tracking under low light", "authors": ["Lee"], "year": 2023},
+      "Old2019Legacy.pdf": {"title": "Unrelated legacy topic A", "authors": ["Someone"], "year": 2019}
+    }
+  },
+  "bibkey_pdf_map": {
+    "Shams2023BRFSS": {"expected_pdf": "Shams2025.pdf", "name_mismatch": true},
+    "Wang2024Gaze": {"expected_pdf": "Wang2024Gaze.pdf", "name_mismatch": false},
+    "Lee2023Pupil": {"expected_pdf": "Lee2023Pupil.pdf", "name_mismatch": false}
+  }
+}

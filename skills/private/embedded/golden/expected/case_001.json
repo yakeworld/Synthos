@@ -1,0 +1,71 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "tier_determined": "标准",
+    "comparison_table": [
+      {
+        "chip": "Hi3861",
+        "tier": "IoT 轻量",
+        "soc": "海思 WiFi",
+        "cpu": "MIPS 32M",
+        "npu": "无",
+        "memory": "128 KB",
+        "power": "<0.5W",
+        "price_cny": "<50",
+        "verdict_vs_k230": "不可运行"
+      },
+      {
+        "chip": "RV1103_T3",
+        "tier": "IoT 轻量",
+        "soc": "瑞芯微 RV1103",
+        "cpu": "M33 200M",
+        "npu": "2 TOPS",
+        "memory": "128 MB",
+        "power": "~2W",
+        "price_cny": "~200",
+        "verdict_vs_k230": "完美对标"
+      },
+      {
+        "chip": "PV890",
+        "tier": "标准",
+        "soc": "全志 PV890",
+        "cpu": "A7 1.5G",
+        "npu": "2 TOPS",
+        "memory": "512 MB",
+        "power": "~3W",
+        "price_cny": "~300",
+        "verdict_vs_k230": "超越"
+      },
+      {
+        "chip": "RK3568",
+        "tier": "标准",
+        "soc": "瑞芯微 RK3568",
+        "cpu": "A55×4 2.0G",
+        "npu": "6 TOPS",
+        "memory": "4 GB",
+        "power": "~5W",
+        "price_cny": "~400",
+        "verdict_vs_k230": "碾压"
+      },
+      {
+        "chip": "RK3588",
+        "tier": "高性能",
+        "soc": "瑞芯微 RK3588",
+        "cpu": "A76×4+A55×4",
+        "npu": "6 TOPS",
+        "memory": "8 GB",
+        "power": "~10W",
+        "price_cny": "~1200",
+        "verdict_vs_k230": "碾压（超预算）"
+      }
+    ],
+    "final_recommendation": "RK3568（标准档，~400 元，算力 10×/内存 8× 碾压 K230）"
+  },
+  "verification": [
+    "选型档位已确定（标准档），算力/内存/功耗/预算四维度均符合约束",
+    "RK3568 判「碾压」：6 TOPS vs K230 ~0.6 TOPS（10×）、4 GB vs 512 MB（8×），溯源到规格表数值",
+    "PV890 判「超越」：全维度对等或更强（2 TOPS/512 MB/~3W/~300 元）",
+    "RV1103 T3 判「完美对标」：AI 算力对等（2 TOPS）、双摄对等，但功耗/内存略差",
+    "每档结论均可溯源到规格表具体数值（算力 TOPS/内存 MB/功耗 W/价格 ¥）"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "case_id": "case_001",
+  "expected_output": "通过 Python 直调 Pyboard('/dev/openmvcam', baudrate=115200)：enter_raw_repl() → exec_() → exit_raw_repl()；exec_(\"import machine; machine.reset()\") 软重启成功；文件上传下载正常，全链无人工拔插 USB。",
+  "verification": [
+    "board = Pyboard('/dev/openmvcam', baudrate=115200) 可连接",
+    "board.enter_raw_repl() 成功（含软重启）",
+    "board.exec_(\"import machine; machine.reset()\") 返回且设备重启",
+    "k230_put/k230_get 文件传输字节一致",
+    "未使用 ampy run；未发生物理拔插 USB"
+  ]
+}

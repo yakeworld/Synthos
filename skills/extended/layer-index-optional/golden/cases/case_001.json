@@ -1,0 +1,16 @@
+{
+  "case_id": "case_001",
+  "description": "基本功能测试: 查询\"生成科研图表\"应命中 figure-generation 技能，并提示\"结论-证据-面板\"契约与 Nature 语义色板 (LAYE-006)",
+  "input": {
+    "layer": "optional",
+    "query": "生成科研图表",
+    "context": {"env": "linux-cli"}
+  },
+  "expected": {
+    "output_type": "list[dict]",
+    "hit_skill": "figure-generation",
+    "contract_hint": "结论-证据-面板契约方法论 + Nature 语义色板（蓝主-绿正-红基+中性色）",
+    "index_consistency": "skill_list 中的技能名与 SKILL.md 'Skills in this Layer' 清单逐一对应，无失效条目"
+  },
+  "weight": "critical"
+}

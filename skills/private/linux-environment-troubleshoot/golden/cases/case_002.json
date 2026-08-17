@@ -1,0 +1,18 @@
+{
+  "case_id": "case_002",
+  "description": "Python venv 隔离失效：pip 装包落入系统解释器，修正 pyvenv.cfg 并改用 venv 内 python",
+  "input": {
+    "env": "Ubuntu，用户 venv ~/.venv",
+    "symptom": "pip3 show Pillow 的 Location 指向 /usr/lib/python3.12（系统解释器），包未装入 venv",
+    "observed": "~/.venv/pyvenv.cfg 缺 include-system-site-packages = false"
+  },
+  "expected": {
+    "fix": "编辑 ~/.venv/pyvenv.cfg 设 include-system-site-packages = false → 改用 ~/.venv/bin/python3 -m pip install Pillow（不用系统 pip3 / uv pip）",
+    "verify": "pip3 show Pillow 的 Location 变为 ~/.venv/lib/python3.12/site-packages"
+  },
+  "weight": {
+    "critical": 1.0,
+    "high": 0.7,
+    "medium": 0.4
+  }
+}

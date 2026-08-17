@@ -1,0 +1,34 @@
+{
+  "case_id": "001",
+  "description": "基本功能测试：SerpAPI 引擎搜索，验证输出契约 {title, url, snippet, position, engine}",
+  "input": {
+    "command": "python3 scripts/web_search.py \"S2 API 论文检索\" --engine serpapi --max 10",
+    "preconditions": [
+      "SERPAPI_KEY 环境变量已设置且有效",
+      "网络连通正常（非 Tor 出口）"
+    ],
+    "query": "S2 API 论文检索",
+    "max_results": 10
+  },
+  "expected": {
+    "output_structure": {
+      "type": "list[dict]",
+      "length": 10,
+      "item_schema": {
+        "title": "string, non-empty",
+        "url": "string, valid http/https URL",
+        "snippet": "string, non-empty",
+        "position": "int, 1-based sequential",
+        "engine": "string == 'serpapi'"
+      }
+    },
+    "key_checks": [
+      "返回恰好 10 条结果",
+      "每条结果含且仅含 5 个契约字段：title/url/snippet/position/engine",
+      "engine 字段值为 'serpapi'（如实标记实际来源）",
+      "position 为 1-10 连续整数",
+      "无底层引擎字段混入（如 raw serpapi 字段泄露）"
+    ]
+  },
+  "weight": "critical"
+}

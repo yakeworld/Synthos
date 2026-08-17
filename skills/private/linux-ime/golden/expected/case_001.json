@@ -1,0 +1,42 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "diagnosis": "fcitx4 残留配置：环境变量和 xinput.d 仍指向 fcitx（fcitx4 值），需统一修正为 fcitx5",
+    "fix_commands": [
+      "sed -i 's/^GTK_IM_MODULE=fcitx$/GTK_IM_MODULE=fcitx5/' ~/.bashrc",
+      "sed -i 's/^QT_IM_MODULE=fcitx$/QT_IM_MODULE=fcitx5/' ~/.bashrc",
+      "sed -i 's/^XMODIFIERS=@im=fcitx$/XMODIFIERS=@im=fcitx5/' ~/.bashrc",
+      "sudo rm /etc/X11/xinit/xinput.d/fcitx",
+      "sudo tee /etc/X11/xinit/xinput.d/fcitx5 > /dev/null << 'EOF'\nXIM=fcitx5\nXIM_PROGRAM=/usr/bin/fcitx5\nXIM_ARGS=\"--daemon-started\"\nGTK_IM_MODULE=fcitx5\nQT_IM_MODULE=fcitx5\nXCINIF=xim\nDEPENDS=\"fcitx5\"\nEOF"
+    ],
+    "post_fix_verification": {
+      "env_variables": {
+        "GTK_IM_MODULE": "fcitx5",
+        "QT_IM_MODULE": "fcitx5",
+        "XMODIFIERS": "@im=fcitx5"
+      },
+      "xinput_d_fcitx": null,
+      "xinput_d_fcitx5": "XIM=fcitx5\nXIM_PROGRAM=/usr/bin/fcitx5\nXIM_ARGS=\"--daemon-started\"\nGTK_IM_MODULE=fcitx5\nQT_IM_MODULE=fcitx5\nXCINIF=xim\nDEPENDS=\"fcitx5\"",
+      "immodule_exists": true,
+      "application_restart_required": true
+    }
+  },
+  "checks_result": [
+    {
+      "id": "env_vars_unified",
+      "weight": "critical",
+      "passed": true
+    },
+    {
+      "id": "xinput_no_fcitx4_residue",
+      "weight": "critical",
+      "passed": true
+    },
+    {
+      "id": "immodule_exists",
+      "weight": "high",
+      "passed": true
+    }
+  ],
+  "score": 1.0
+}

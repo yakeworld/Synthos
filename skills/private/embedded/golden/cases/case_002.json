@@ -1,0 +1,20 @@
+{
+  "case_id": "case_002",
+  "description": "错误路径测试：K230 跑鸿蒙 → 架构不兼容，应直接判定「不可运行」",
+  "input": {
+    "requirement": "K230 跑鸿蒙",
+    "chip": "K230",
+    "os_target": "HarmonyOS",
+    "architecture": "64-bit RISC-V"
+  },
+  "expected": {
+    "should_raise_error": false,
+    "verdict": "不可运行",
+    "reasons": [
+      "架构 64-bit RISC-V 不兼容鸿蒙（ARM 架构）",
+      "外设驱动缺失",
+      "工具链不通"
+    ]
+  },
+  "weight": "high"
+}

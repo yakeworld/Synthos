@@ -1,0 +1,27 @@
+{
+  "case_id": "case_002",
+  "description": "错误路径测试：b/a 越界（b > a）应报错；a = b 正对相机应提示单帧无法确定旋转",
+  "input": {
+    "ellipse": {
+      "center": [960.0, 540.0],
+      "major_axis": 20.0,
+      "minor_axis": 25.0,
+      "rotation_angle": 0.0
+    },
+    "camera": {
+      "intrinsic_matrix": [[800.0, 0.0, 960.0], [0.0, 800.0, 540.0], [0.0, 0.0, 1.0]],
+      "principal_point": [960.0, 540.0],
+      "focal_length": 800.0
+    },
+    "prior": {
+      "circle_radius": 2.0,
+      "sphere_center_prior": null
+    }
+  },
+  "expected": {
+    "should_raise_error": true,
+    "error_type": "invalid_input_ratio",
+    "error_message_contains": "输入无效：b/a 必须满足 (0,1]"
+  },
+  "weight": "high"
+}

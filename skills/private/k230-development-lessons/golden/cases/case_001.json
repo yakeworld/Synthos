@@ -1,0 +1,25 @@
+{
+  "case_id": "case_001",
+  "description": "K230 自动化管理全链：Python 直调 ampy.pyboard.Pyboard 完成代码执行/文件传输/软重启，无人工拔插 USB",
+  "input": {
+    "device": "K230 摄像头板",
+    "port": "/dev/openmvcam",
+    "baudrate": 115200,
+    "tool": "ampy run",
+    "task": [
+      "执行代码 os.listdir('/data/') 并获取输出",
+      "上传 local_script.py 到设备 /data/remote_script.py",
+      "下发软重启命令"
+    ]
+  },
+  "expected": {
+    "tool_choice": "Python 直调 ampy.pyboard.Pyboard（/dev/openmvcam @115200），调用 enter_raw_repl() → exec_() → exit_raw_repl()",
+    "soft_reboot": "exec_(\"import machine; machine.reset()\") 经串口下发成功，无人工拔插 USB",
+    "file_transfer": "文件上传/下载正常（open().write() 写入 / open().read()+hexlify 读回）"
+  },
+  "weight": {
+    "critical": 1.0,
+    "high": 0.7,
+    "medium": 0.4
+  }
+}

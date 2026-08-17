@@ -1,0 +1,26 @@
+{
+  "case_id": "bppv-expert_case_002",
+  "status": "error",
+  "expected": {
+    "refuse_maneuver": true,
+    "maneuver": null,
+    "error": {
+      "code": "CANNOT_IDENTIFY_AFFECTED_CANAL",
+      "context": "无法从眼震模式识别受累半规管",
+      "recovery_suggestion": "请补充 Dix-Hallpike 或仰卧翻滚试验的眼震方向与持续时间的观察记录"
+    }
+  },
+  "checks": {
+    "critical": [
+      "拒绝输出复位手法（maneuver 为 null / 无手法方案）",
+      "错误信息含上下文 '无法从眼震模式识别受累半规管'",
+      "错误信息含恢复建议 '请补充 Dix-Hallpike 或仰卧翻滚试验的眼震方向与持续时间的观察记录'"
+    ],
+    "high": [
+      "不编造半规管识别结论"
+    ],
+    "medium": [
+      "错误信息结构包含 code/context/recovery_suggestion"
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "diagnosis": "Snap 版 Firefox 硬编码使用 ibus 后端，不受 GTK_IM_MODULE 环境变量影响。AppArmor 沙箱隔离导致 snap 容器内无法连接系统 ibus-daemon。环境变量修复无效。",
+    "root_cause": "snap_firefox_hardcoded_ibus",
+    "fix_commands": [
+      "sudo snap remove firefox",
+      "sudo apt install firefox",
+      "sudo apt-mark hold firefox"
+    ],
+    "post_fix_verification": {
+      "which_firefox": "/usr/bin/firefox",
+      "readlink_firefox": "/usr/lib/firefox/firefox",
+      "snap_list_firefox": null,
+      "file_firefox": "/usr/bin/firefox: ELF 64-bit LSB pie executable",
+      "ime_functional": true
+    }
+  },
+  "checks_result": [
+    {
+      "id": "snap_firefox_detected",
+      "weight": "critical",
+      "passed": true
+    },
+    {
+      "id": "correct_fix_identified",
+      "weight": "critical",
+      "passed": true
+    }
+  ],
+  "score": 1.0
+}

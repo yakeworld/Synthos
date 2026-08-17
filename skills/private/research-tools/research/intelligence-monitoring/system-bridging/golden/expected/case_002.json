@@ -1,0 +1,30 @@
+{
+  "case_id": "case_002",
+  "description": "异常测试：system_a_root 缺失 + 关键词匹配产生权重低于阈值/邻接超限的边",
+  "expected": {
+    "missing_root": {
+      "exit_nonzero": true,
+      "silent_empty_run": false,
+      "error_includes_context": true,
+      "message_contains": ["system_a_root", "missing"],
+      "recovery_suggestion": "提供系统 A 根目录路径后重试"
+    },
+    "threshold_enforcement": {
+      "low_weight_edge_accepted": false,
+      "over_capacity_edge_accepted": false,
+      "rejected_edge_count": 2,
+      "reason": "权重 0.21 < 0.3 阈值；邻接 47 > 上限 20，防图爆炸"
+    },
+    "outputs_written": []
+  },
+  "checks": [
+    {"id": "CK-01", "name": "system_a_root 缺失时以含上下文的非零错误退出（非静默空跑）", "weight": "critical"},
+    {"id": "CK-02", "name": "权重 0.21 < 0.3 的边被拒绝", "weight": "critical"},
+    {"id": "CK-03", "name": "邻接超过上限的单节点边被拒绝（防图爆炸）", "weight": "high"},
+    {"id": "CK-04", "name": "错误信息包含上下文与恢复建议", "weight": "medium"}
+  ],
+  "pass_criteria": {
+    "min_weighted_score": 0.8,
+    "all_critical_must_pass": true
+  }
+}

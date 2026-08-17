@@ -1,0 +1,39 @@
+{
+  "case_id": "case_001",
+  "skill": "pidd-leakage-audit",
+  "description": "折内预处理：PIDD 数据集上在数据分割前执行 SMOTE 的 10-fold CV 脚本（泄漏路径），要求按 PIDD-001/PIDD-002 将预处理隔离入折并重跑",
+  "input": {
+    "dataset": {
+      "name": "PIDD",
+      "n_samples": 768,
+      "class_imbalanced": true,
+      "openml_id": 292
+    },
+    "script": {
+      "type": "10-fold CV",
+      "defect": "SMOTE 与 imputation 在数据分割前对全量数据执行（折外预处理）",
+      "preprocessing": ["smote", "global_imputation"],
+      "pipeline": "sklearn.Pipeline"
+    },
+    "reported_metrics": {
+      "best_model_f1": 0.93,
+      "recall": 0.5,
+      "precision": 1.0
+    }
+  },
+  "expected_checks": {
+    "critical": [
+      "检测到折外预处理（SMOTE/imputation 在分割前执行）→ 按 PIDD-001 判定为严重泄漏",
+      "改用 imblearn.Pipeline 而非 sklearn.Pipeline（PIDD-002），SMOTE 仅在各 fold 训练折内执行",
+      "复算后 F1 回落至 ≈0.71 界内，不再 >0.90（PIDD-003 未再触发）",
+      "Recall 不再虚崩至 ~0.50，Precision 不再虚高至 1.00"
+    ],
+    "high": [
+      "缺失值填充改为验证折内独立计算（PIDD-006，消除全局 imputation 的 +0.6% F1 虚增）",
+      "输出契约完整：cv_results.csv 与 comprehensive_results.json 均已生成"
+    ],
+    "medium": [
+      "comprehensive_results.json 记录修复前后指标对照与泄漏来源"
+    ]
+  }
+}

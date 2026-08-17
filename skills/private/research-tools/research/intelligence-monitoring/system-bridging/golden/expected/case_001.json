@@ -1,0 +1,39 @@
+{
+  "case_id": "case_001",
+  "description": "基本功能测试：两系统根目录已摸底，单向 A→B 桥接，幂等重跑",
+  "expected": {
+    "files_created": [
+      "akne/scripts/synthos-to-akne-bridge.py",
+      "akne/scripts/akne-query-synthos.py",
+      "akne/scripts/generate-synthos-index.py",
+      "synthos/scripts/sync-synthos-to-akne.sh",
+      "akne/.knowledge/wiki/projects/synthos.md",
+      "akne/.knowledge/sources/synthos/index.md",
+      "akne/.knowledge/wiki/projects/synthos-bridge-protocol.md"
+    ],
+    "idempotency": {
+      "node_count_stable_on_rerun": true,
+      "duplicate_nodes": 0,
+      "edges_unchanged_on_rerun": true
+    },
+    "bridge_log_line": {
+      "new_nodes": 0,
+      "new_edges": 0,
+      "log_file": "logs/bridge-log.jsonl"
+    },
+    "threshold_enforcement": {
+      "min_edge_weight": 0.3,
+      "adjacency_cap_applied": true
+    }
+  },
+  "checks": [
+    {"id": "CK-01", "name": "7 个契约文件全部生成", "weight": "critical"},
+    {"id": "CK-02", "name": "重跑幂等：节点/边数不变，无重复创建", "weight": "critical"},
+    {"id": "CK-03", "name": "bridge-log.jsonl 新增一行且 new_nodes=0（增量生效）", "weight": "high"},
+    {"id": "CK-04", "name": "关键词匹配边权重 <0.3 的边被阈值制拒绝", "weight": "medium"}
+  ],
+  "pass_criteria": {
+    "min_weighted_score": 0.8,
+    "all_critical_must_pass": true
+  }
+}

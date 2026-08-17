@@ -1,0 +1,15 @@
+{
+  "case_id": "case_001",
+  "checks": [
+    {"id": "dataset_version_locked", "weight": "critical", "expect": {"gene": "REPR-001", "version": "v1.0-kaggle-2019", "pinned": true, "basis": "dataset.lock.json"}},
+    {"id": "dual_bib_source_synced", "weight": "critical", "expect": {"gene": "REPR-002", "thebibliography_count": 32, "bib_count": 32, "only_one_modified": false}},
+    {"id": "golden_test_passed", "weight": "critical", "expect": {"gene": "REPR-003", "test": "test_golden_repro.py", "status": "passed", "single_source_of_truth": true}},
+    {"id": "verification_trail", "weight": "high", "expect": {"gene": "REPR-004", "each_step": {"executable": true, "recorded": true, "reproducible": true}}},
+    {"id": "boundary_scenarios_covered", "weight": "medium", "expect": {"gene": "REPR-006", "covered": ["empty_input", "extreme_values", "error_recovery"]}}
+  ],
+  "pass_criteria": {"weighted_score_min": 0.8, "all_critical_must_pass": true},
+  "failure_behavior": {
+    "verification_failed": "触发 REPR-005：记录具体失败原因及对应修复措施，禁止静默跳过"
+  },
+  "output_artifact": "reproducibility-report.md（含数据集版本核对、双源同步状态、Golden 测试结果、每项验证留痕）"
+}

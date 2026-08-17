@@ -1,0 +1,36 @@
+{
+  "case_id": "case_001",
+  "description": "Ubuntu + fcitx5 环境，fcitx5 已安装且 daemon 运行，但 GTK3 应用中文候选窗口不出现",
+  "input": {
+    "os": "Ubuntu 24.04",
+    "symptom": "GTK3 应用（gedit）中文候选窗口不出现",
+    "diagnostics": {
+      "dpkg_fcitx_installed": "ii  fcitx5  5.1.4-1  amd64  fcitx5 framework",
+      "pgrep_fcitx5": "1234 fcitx5 --daemon-started",
+      "env_variables": {
+        "GTK_IM_MODULE": "fcitx",
+        "QT_IM_MODULE": "fcitx",
+        "XMODIFIERS": "@im=fcitx"
+      },
+      "xinput_d_fcitx": "GTK_IM_MODULE=fcitx\nQT_IM_MODULE=fcitx\nXMODIFIERS=@im=fcitx",
+      "immodules_fcitx5_so": "/usr/lib/x86_64-linux-gnu/gtk-3.0/3.0.0/immodules/im-fcitx5.so"
+    }
+  },
+  "checks": [
+    {
+      "id": "env_vars_unified",
+      "weight": "critical",
+      "description": "GTK_IM_MODULE/QT_IM_MODULE/XMODIFIERS 三变量统一为 fcitx5"
+    },
+    {
+      "id": "xinput_no_fcitx4_residue",
+      "weight": "critical",
+      "description": "/etc/X11/xinit/xinput.d/fcitx 无 fcitx4 残留或已替换为 fcitx5 版本"
+    },
+    {
+      "id": "immodule_exists",
+      "weight": "high",
+      "description": "im-fcitx5.so 存在"
+    }
+  ]
+}

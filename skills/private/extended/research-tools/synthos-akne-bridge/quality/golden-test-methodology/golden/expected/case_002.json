@@ -1,0 +1,26 @@
+{
+  "case_id": "002",
+  "expected_output": "方法论验证报告：pairing_result 显示 cases 与 expected 数量相等且全部配对；weight_distribution 含至少 2 种权重类型；schema_valid=true",
+  "verification": [
+    {
+      "check": "一一配对",
+      "expected": "cases/ 中每个 case_XXX.json 在 expected/ 中存在同名 expected/case_XXX.json，数量相等",
+      "method": "ls cases/*.json 和 ls expected/*.json 对比文件列表，确认 basename 集合完全一致"
+    },
+    {
+      "check": "权重区分度",
+      "expected": "weight_distribution 中至少存在 2 种不同权重值（如 critical + high），非全部 critical",
+      "method": "遍历所有 case JSON 的 weight 字段，统计 distinct values ≥ 2"
+    },
+    {
+      "check": "JSON 有效性",
+      "expected": "所有 .json 文件可被 python3 json.load 正常解析，无语法错误",
+      "method": "for f in cases/*.json expected/*.json; do python3 -c 'import json; json.load(open(\"$f\"))'; done — 全部 exit 0"
+    },
+    {
+      "check": "必填字段完整性",
+      "expected": "case 文件含 case_id/description/input/expected/weight；expected 文件含 case_id/expected_output/verification",
+      "method": "python3 脚本遍历所有 JSON，检查 required_fields 集合 ⊆ 实际 key 集合"
+    }
+  ]
+}

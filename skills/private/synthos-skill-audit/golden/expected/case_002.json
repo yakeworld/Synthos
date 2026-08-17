@@ -1,0 +1,43 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "migration_coverage": {
+      "total_skills": 3,
+      "migrated": 2,
+      "blocked": 1,
+      "coverage": "2/3"
+    },
+    "blocked_item": {
+      "skill": "some-skill-with-api-key",
+      "reason": "hardcoded API Key detected",
+      "grep_location": {"file": "SKILL.md", "line_number": 42, "pattern": "api_key = 'sk-...'"},
+      "remediation": "environment variable substitution: os.environ['API_KEY']"
+    },
+    "privacy_scan": {
+      "credentials_found": 1,
+      "credentials_remediated": 1,
+      "post_remediation_scan": "pass",
+      "note": "Blocked skill re-scanned after env-var fix; 0 residual credentials"
+    },
+    "path_trap_detection": {
+      "broken_symlinks_found": 0,
+      "repaired": 0
+    },
+    "dual_repo_coverage": {
+      "skills_private_checked": true,
+      "skills_standard_checked": true,
+      "migration_status_complete": true
+    }
+  },
+  "expected_checks": [
+    {"id": "SYNT-001", "expected": "passed", "detail": "All 3 skills mapped to five-section standard; 2 conform, 1 requires remediation before migration"},
+    {"id": "SYNT-003", "expected": "passed", "detail": "1 hardcoded API Key detected via grep; environment variable fix applied; re-scan confirmed 0 residual"},
+    {"id": "SYNT-004", "expected": "passed", "detail": "No broken symlinks in this batch; path traps clear"},
+    {"id": "SYNT-005", "expected": "passed", "detail": "The 1-credential finding is consistent with migration block; no false-negative risk"}
+  ],
+  "pass_criteria": {
+    "weighted_score_threshold": 0.80,
+    "all_critical_must_pass": true,
+    "blocked_skill_must_have_remediation": true
+  }
+}

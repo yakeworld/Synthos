@@ -1,0 +1,47 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "status": "fail",
+    "audit_log": [
+      {
+        "check_id": "mismatch_detected",
+        "result": "fail",
+        "detail": "跨版本对比 699 vs 569：F1 差值 |0.941 - 0.958| = 1.7% > 0.5% 阈值，触发 MISMATCH 标记"
+      },
+      {
+        "check_id": "blockdownstream",
+        "result": "blocked",
+        "detail": "MISMATCH 已触发，阻断后续所有结论。不得基于跨版本数据得出一致性结论"
+      },
+      {
+        "check_id": "version_source",
+        "result": "pass",
+        "detail": "差值来源已定位：version_699 (sample_count=699, F1=0.941) vs version_569 (sample_count=569, F1=0.958)。两版本样本量不同（699 vs 569），样本构成差异是 F1 差异的可能来源"
+      }
+    ],
+    "mismatches": [
+      {
+        "type": "cross_version",
+        "metric": "f1_score",
+        "version_a": {"version": "699", "sample_count": 699, "f1_score": 0.941},
+        "version_b": {"version": "569", "sample_count": 569, "f1_score": 0.958},
+        "difference": 0.017,
+        "threshold": 0.005,
+        "exceeds": true,
+        "source_files": ["main.tex#table_cross_version", "ablation/output_699.json", "ablation/output_569.json"]
+      }
+    ],
+    "actions_required": [
+      "锁定单一数据集版本（建议 699），移除另一版本的对比或明确标注为独立实验",
+      "若需跨版本对比，须在论文中说明样本量差异对结果的影响",
+      "重新运行消融实验，确保所有输出 JSON 使用相同数据集版本"
+    ],
+    "summary": "MISMATCH 阻断：跨版本 F1 差值 1.7% 超过 0.5% 阈值，后续结论已阻断，需锁定版本后重新审计"
+  },
+  "checks_result": [
+    {"id": "mismatch_detected", "weight": "critical", "passed": true},
+    {"id": "blockdownstream", "weight": "critical", "passed": true},
+    {"id": "version_source", "weight": "high", "passed": true}
+  ],
+  "score": 0.7
+}

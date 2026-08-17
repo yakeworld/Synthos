@@ -1,0 +1,34 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "anomalies": [
+      {
+        "name": "concussion-oculomotor-PINN",
+        "D10a": 0.0,
+        "orphans_count": 3,
+        "zombies_count": 1,
+        "Gates_result_format": "dict",
+        "flag": "需补充",
+        "reason": "D10a=0 且 orphans_count=3/zombies_count=1，引用健康异常 (PAPE-003)"
+      },
+      {
+        "name": "ocular-torsion-ODE",
+        "D10a": 0.0,
+        "orphans_count": 0,
+        "zombies_count": 0,
+        "Gates_result_format": "string",
+        "flag": "需补充",
+        "reason": "D10a=0 但 orphans/zombies 均为 0 — 需同时检查两者，D10a 仍为 0 视为异常"
+      }
+    ],
+    "excluded_from_normal_candidates": ["concussion-oculomotor-PINN", "ocular-torsion-ODE"],
+    "status": "PASS"
+  },
+  "verification": [
+    "D10a=0 的论文被单独核查 D8_d10a_scan.orphans_count 与 zombies_count (PAPE-003)，而非直接按正常候选处理",
+    "concussion-oculomotor-PINN: orphans_count=3/zombies_count=1 → 引用健康异常确认",
+    "ocular-torsion-ODE: orphans/zombies 均为 0 但 D10a 仍为 0 → 同时检查两者后仍标记异常 (不只看 orphans/zombies)",
+    "Gates_result 字符串 \"PASS\" 与字典 {gates:[...]} 两种格式均正确解析，未因格式不一致报错",
+    "异常论文标记「需补充」，未混入 submission_priority_list 正常候选"
+  ]
+}

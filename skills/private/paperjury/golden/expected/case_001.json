@@ -1,0 +1,44 @@
+{
+  "case_id": "case_001",
+  "skill": "paperjury",
+  "expected_output": {
+    "pipeline": ["L1-L2 结构检查", "语义审查", "修复", "深度庭审 auto loop", "L5-L7 合规检查"],
+    "independent_reproduction": {
+      "script_executed": "03-code/train_model.py",
+      "trusted_source": "independent_run_output",
+      "archived": {
+        "json": "references/paperjury_repro_train_model.json",
+        "csv": "references/paperjury_repro_train_model.csv"
+      }
+    },
+    "claims": [
+      {
+        "name": "F1",
+        "claimed": 0.92,
+        "actual": 0.92,
+        "match": true,
+        "code_available": true,
+        "verdict": "CLOSE",
+        "note": "有代码且独立复现数值匹配"
+      }
+    ],
+    "reviewer_independence": {
+      "each_reviewer_read_original": true,
+      "cross_round_note_sharing": false
+    },
+    "open_items": [
+      {"id": "open_001", "issue": "F1 在不同种子下的稳定性需新实验验证", "status": "OPEN", "assigned_to": "author"}
+    ],
+    "fabricated_or_mismatch_items": 0,
+    "token_usage": {"single_round": 8200, "within_budget": true}
+  },
+  "checks_results": [
+    {"id": "check_01", "result": "PASS"},
+    {"id": "check_02", "result": "PASS", "note": "F1: 0.92 == 0.92 → CLOSE"},
+    {"id": "check_03", "result": "PASS"},
+    {"id": "check_04", "result": "PASS"},
+    {"id": "check_05", "result": "PASS", "note": "8.2k < 10k"}
+  ],
+  "weighted_score": 0.88,
+  "passed": true
+}

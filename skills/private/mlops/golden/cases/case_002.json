@@ -1,0 +1,30 @@
+{
+  "case_id": "case_002",
+  "description": "请求描述无法映射到任一子域，应拒绝执行并返回含上下文的错误信息（Golden Error 路径）",
+  "input": {
+    "request": "帮我写一首关于春天的诗",
+    "context": {
+      "available_subdomains": [
+        "codex-llm-routing",
+        "ellipse-3d-anatomy-constrained",
+        "evaluation",
+        "inference",
+        "models",
+        "research",
+        "training"
+      ]
+    }
+  },
+  "checks": [
+    {
+      "id": "rejection",
+      "weight": "critical",
+      "description": "拒绝执行，不路由到任何子域"
+    },
+    {
+      "id": "error_context",
+      "weight": "high",
+      "description": "错误信息包含上下文背景与恢复建议（MLOP-003/MLOP-005）"
+    }
+  ]
+}

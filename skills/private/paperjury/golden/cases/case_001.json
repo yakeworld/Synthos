@@ -1,0 +1,27 @@
+{
+  "case_id": "case_001",
+  "skill": "paperjury",
+  "description": "基本功能测试：含实验指标的论文目录（F1=0.92），03-code/ 下存在对应脚本与运行输出，quality-gate L1-L2 已通过，触发完整庭审流水线",
+  "input": {
+    "paper_dir": "papers/hcs3wt-breast-cancer",
+    "paper_tex": "paper.tex",
+    "claimed_metrics": [
+      {"name": "F1", "value": 0.92, "section": "Results"}
+    ],
+    "code_artifacts": {
+      "dir": "03-code/",
+      "scripts": ["train_model.py"],
+      "outputs": ["train_model_output.txt", "results.json", "results.csv"]
+    },
+    "quality_gate": {"L1": "PASS", "L2": "PASS"},
+    "token_budget": {"single_round": 10000, "multi_round_cumulative": 50000},
+    "gene_path": ["PAPE-001", "PAPE-003", "PAPE-005", "PAPE-006"]
+  },
+  "checks": [
+    {"id": "check_01", "priority": "critical", "description": "独立复现：运行 03-code/ 脚本，输出 JSON+CSV 归档至 references/"},
+    {"id": "check_02", "priority": "critical", "description": "claimed (0.92) vs actual 逐条标注；有代码且数值匹配 → 标 CLOSE"},
+    {"id": "check_03", "priority": "high", "description": "reviewer 独立阅读原文，无跨轮次笔记/结论共享"},
+    {"id": "check_04", "priority": "high", "description": "需新实验的问题标 OPEN 移交作者，不自行补数据"},
+    {"id": "check_05", "priority": "critical", "description": "单轮 ≤10k tokens，流水线完整执行 结构检查(L1-L2)→语义审查→修复→深度庭审→合规检查(L5-L7)"}
+  ]
+}

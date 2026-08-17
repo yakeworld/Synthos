@@ -1,0 +1,47 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "post_body": {
+      "max_characters": 150,
+      "principle": "讲多的是错的 — no narrative commentary, no '值得一提的是', no '总结一下'",
+      "content_pattern": "df -h → 查 lock → venv 隔离, three steps, factual only",
+      "forbidden_phrases": ["值得一提的是", "总结一下", "我们来看", "希望能帮到你", "欢迎评论区交流"]
+    },
+    "tags": {
+      "count": 5,
+      "examples": ["#Linux", "#排障", "#MiKTeX", "#venv", "#运维"]
+    },
+    "cover_text": {
+      "text": "三步定位环境故障根因",
+      "max_words": 10
+    },
+    "layout_advice": {
+      "max_words_per_figure": 10,
+      "style": "pure data, no decoration"
+    },
+    "figures": {
+      "count": 5,
+      "spec": {
+        "resolution": "1080x1440",
+        "aspect_ratio": "3:4",
+        "background": "#0F172A",
+        "card_color": "#1E293B",
+        "accent_colors": ["#3B82F6", "#8B5CF6", "#EF4444"],
+        "font": "Noto Sans CJK SC Bold/Regular"
+      },
+      "composition": ["cover", "df_step", "lock_step", "venv_step", "conclusion"],
+      "each_figure": "one knowledge point only, no stacking"
+    }
+  },
+  "expected_checks": [
+    {"id": "XHS-001", "expected": "passed", "detail": "Body ≤ 150 chars (≤ target/3); all narrative commentary removed; word-by-word check performed"},
+    {"id": "XHS-002", "expected": "passed", "detail": "df -h, lock file path, venv isolation facts all traceable to real code/data sources"},
+    {"id": "XHS-003", "expected": "passed", "detail": "5 figures at 1080x1440 (3:4), #0F172A background, Noto Sans CJK SC, each ≤10 words, no decoration"},
+    {"id": "XHS-005", "expected": "passed", "detail": "Pillow card mode correctly selected for information comparison / step-by-step content"},
+    {"id": "XHS-007", "expected": "passed", "detail": "Noto Sans CJK SC rendered correctly; no load_default() fallback; no tofu boxes"}
+  ],
+  "pass_criteria": {
+    "weighted_score_threshold": 0.80,
+    "all_critical_must_pass": true
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "case_id": "case_002",
+  "description": "错误路径测试：模板行数不足或赛道必填字段不满足时，应报错而非静默截断",
+  "input": {
+    "template": "template.docx",
+    "template_note": "实际行数 30 < 预期 35（Row 34 不存在）",
+    "track": "数据基础设施",
+    "content": {
+      "pain_point": "数据基础设施赛道要求营收/Token/融资数据。",
+      "solution": "数据要素全生命周期治理框架。",
+      "results": "30 模型基准测试。",
+      "replicability": "可推广至其他领域。"
+    },
+    "track_checklist": {
+      "revenue_field": null,
+      "financing_field": null,
+      "token_field": null
+    }
+  },
+  "expected": {
+    "should_raise_error": true,
+    "error_type": "template_row_mismatch",
+    "error_message_contains": "模板行数不足：预期 35 行，实际 30 行",
+    "recovery_suggestion": "检查模板版本或联系大赛组委会确认最新模板行数"
+  },
+  "weight": "high"
+}

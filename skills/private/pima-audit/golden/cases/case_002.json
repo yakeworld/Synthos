@@ -1,0 +1,38 @@
+{
+  "case_id": "case_002",
+  "skill": "pima-audit",
+  "description": "失败路径覆盖：跨数据集审计实验条件不一致 + 无输出 Notebook + Pima/HCS-3WT 结论混同（覆盖 Golden Error 路径）",
+  "input": {
+    "defects": [
+      {
+        "type": "条件不一致",
+        "detail": "INSCAT 与 130-US 复跑时 ZeroReplacer/Pipeline/CV 设置与 PIDD 不同",
+        "gene": "PIMA-001"
+      },
+      {
+        "type": "Notebook 无输出",
+        "detail": "实验记录为 notebook 且所有 cell 均无输出",
+        "gene": "PIMA-002"
+      },
+      {
+        "type": "范式混同",
+        "detail": "将 Pima（方法论审计 32 基线）与 HCS-3WT（新架构验证 7 模型）结论写入同一论证段",
+        "gene": "PIMA-006"
+      }
+    ]
+  },
+  "expected_checks": {
+    "critical": [
+      "实验条件不一致（ZeroReplacer/Pipeline/CV 不同）→ 标注「对比无效」，拒绝输出跨数据集对比结论（PIMA-001）",
+      "Notebook 无 cell 输出 → 按 PIMA-002 拒绝作为可复现记录，要求改用独立 .py 脚本",
+      "Pima 与 HCS-3WT 结论混同 → 按 PIMA-006 隔离重审，两类范式分列"
+    ],
+    "high": [
+      "拒绝项均附恢复建议（固定条件后重跑 / 补 .py 脚本输出 / 拆分范式段落）",
+      "错误信息包含上下文（哪一条件不一致、哪个 notebook、哪段结论混同）"
+    ],
+    "medium": [
+      "审计日志记录三项失败检测与处置结果"
+    ]
+  }
+}

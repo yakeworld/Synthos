@@ -1,0 +1,25 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "circle_3d": {
+      "center_note": "深度 z_c 未唯一确定（无眼球模型/双目约束）",
+      "radius_mm": 2.4,
+      "normal": "单位向量 n = (sin(α)cos(φ), sin(α)sin(φ), cos(α))，α≈0.7227 rad，φ 由右手定则确定",
+      "tilt_angle_rad": 0.7227,
+      "tilt_angle_deg": 41.4,
+      "azimuth_angle_note": "φ = θ ± π/2，θ=0.5236 rad → φ ≈ 2.0944 或 -0.0472 rad（右手定则）"
+    },
+    "confidence": {
+      "well_determined": false,
+      "ambiguity": "depth"
+    }
+  },
+  "verification": [
+    "输入有效性：b/a = 18/24 = 0.75 ∈ (0,1]，输入合法",
+    "倾斜角 alpha = arccos(0.75) ≈ 0.7227 rad ≈ 41.4°，且 alpha ∈ [0, π/2]",
+    "单位法向量：||n|| ≈ 1（浮点容差 1e-6）",
+    "正交基右手系：u × v = n，u,v,n 两两正交且构成右手坐标系",
+    "深度模糊已标注：confidence.ambiguity = 'depth'，圆心深度 z_c 未唯一确定",
+    "单位一致：椭圆像素参数通过 f=800px 转换为物理单位（mm）"
+  ]
+}

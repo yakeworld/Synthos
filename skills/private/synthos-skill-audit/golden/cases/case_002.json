@@ -1,0 +1,22 @@
+{
+  "case_id": "case_002",
+  "description": "Dual-repo architecture audit — 3 private skills migration coverage check",
+  "input": {
+    "target_skills": [
+      "skills/private/synthos-skill-audit/SKILL.md",
+      "skills/private/xhs-content/SKILL.md",
+      "skills/private/some-skill-with-api-key/SKILL.md"
+    ],
+    "source": "dual_repo_migration",
+    "structure_blocks": ["五节法 (standard)"],
+    "reference_standard": "Synthos five-section method + privacy scan grade",
+    "dual_repo_paths": ["skills/private/", "skills/"],
+    "migration_status": "2/3 migrated; 1 blocked (hardcoded API Key detected)"
+  },
+  "checks": [
+    {"id": "SYNT-001", "name": "four_to_five_section_mapping", "weight": "critical"},
+    {"id": "SYNT-003", "name": "privacy_scan_executed", "weight": "critical"},
+    {"id": "SYNT-004", "name": "path_trap_detection", "weight": "high"},
+    {"id": "SYNT-005", "name": "zero_finding_verification", "weight": "high"}
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "case_id": "001",
+  "expected_output": "覆盖率统计报告：coverage_report 含 total_skills=3, covered_skills 按实际三要素判定, coverage_pct 为浮点数, grade 按阈值判定；gaps 列出缺失项；next_targets 按优先级排序",
+  "verification": [
+    {
+      "check": "三要素判定逻辑",
+      "expected": "仅当 GOLDEN_SET.md + cases/ + expected/ 三者均存在且目录非空（含 ≥1 个 .json）时才计入 covered_skills",
+      "method": "对 skill_list 中每个路径执行 ls golden/GOLDEN_SET.md && ls golden/cases/*.json && ls golden/expected/*.json，三者均成功才计数"
+    },
+    {
+      "check": "覆盖率计算",
+      "expected": "coverage_pct = covered_skills / total_skills * 100，为 0-100 浮点数",
+      "method": "验证 coverage_pct 值与 covered_skills/total_skills*100 一致"
+    },
+    {
+      "check": "等级判定",
+      "expected": "grade 按阈值正确映射：≥70→Excellent, 50-69→Adequate, 30-49→Low, <30→Critical",
+      "method": "根据 coverage_pct 值反查 grade 是否匹配对应区间"
+    },
+    {
+      "check": "优先级排序",
+      "expected": "next_targets 列表按 新吸收技能 → 高频使用 → 核心原子 → 扩展技能（DIAGNOSE 分从低到高）排序",
+      "method": "检查 next_targets 中各技能的 category 和 usage 标注，确认排序符合优先级规则"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "case_id": "journal-selection-medical-ai_case_002",
+  "status": "error",
+  "expected": {
+    "refuse_selection": true,
+    "candidates": null,
+    "error": {
+      "code": "TOPIC_METHODOLOGY_MISSING",
+      "context": "选题与方法学特征未明确，无法执行期刊匹配",
+      "recovery_suggestion": "请补充临床数据类型、方法学特征、目标受众"
+    }
+  },
+  "checks": {
+    "critical": [
+      "拒绝择期（candidates 为 null / 无推荐列表）",
+      "错误信息含上下文 '选题与方法学特征未明确，无法执行期刊匹配'",
+      "错误信息含恢复建议 '请补充临床数据类型、方法学特征、目标受众'"
+    ],
+    "high": [
+      "仅凭期刊档次偏好不产生任何候选推荐"
+    ],
+    "medium": [
+      "错误信息结构包含 code/context/recovery_suggestion"
+    ]
+  }
+}

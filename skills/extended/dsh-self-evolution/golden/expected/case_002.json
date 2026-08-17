@@ -1,0 +1,16 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "exit_code_nonzero": true,
+    "error_message": "MISSING_CREDENTIAL: llm-pi-ai: no credential for provider route \"vllm\"",
+    "output_file_created": false,
+    "root_cause": "headless 会话解析 vllm provider 的 apiKeyEnv 时，VLLM 凭据环境变量仅定义于 ~/.bashrc，非登录 shell 未加载",
+    "status": "PASS (expected failure — 负例按预期失败)"
+  },
+  "verification": [
+    "sh -c 'dsh ...' (非登录 shell) 退出码非 0",
+    "stderr/stdout 包含 'MISSING_CREDENTIAL: llm-pi-ai: no credential for provider route \"vllm\"'",
+    "目标文件未被创建 (test -f 为假) — 失败按预期，任务判定为已知负例 PASS",
+    "教训固化: 一切自动化 dsh 调用必须 bash -lc 包装（PRECHECK 检查项）"
+  ]
+}

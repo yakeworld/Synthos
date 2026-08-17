@@ -1,0 +1,19 @@
+{
+  "case_id": "case_003",
+  "description": "故障恢复决策：ampy run 失败改 Python 直调；串口完全无输出（sendBreak/Ctrl+C/Ctrl+D 均无效）判为设备死锁",
+  "input": {
+    "symptoms": [
+      "ampy run 始终失败（raw REPL 协议不兼容）",
+      "串口完全无输出，sendBreak/Ctrl+C/Ctrl+D 均无效"
+    ]
+  },
+  "expected": {
+    "ampy_failure": "停止重试 ampy run，改 Python 直调 ampy.pyboard.Pyboard 完成代码执行与文件传输",
+    "device_deadlock": "判定为设备死锁 → 物理拔插 USB 恢复；同时以 'lsusb 成功 ≠ 串口可用' 做假阳性判断（设备可能处于哑状态）"
+  },
+  "weight": {
+    "critical": 1.0,
+    "high": 0.7,
+    "medium": 0.4
+  }
+}

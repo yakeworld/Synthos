@@ -1,0 +1,31 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "status": "rejected",
+    "routed_to": null,
+    "error": {
+      "code": "MLOP-003",
+      "message": "请求描述无法映射到任一已知子域（codex-llm-routing / ellipse-3d-anatomy-constrained / evaluation / inference / models / research / training）",
+      "context": "请求「帮我写一首关于春天的诗」属于创意写作，不在 MLOps 技能管辖范围内",
+      "recovery_suggestion": "请使用创意写作相关技能（如 creative / songwriting-and-ai-music），或重新描述请求以匹配 MLOps 子域"
+    },
+    "traceability": {
+      "request_keyword": "写一首关于春天的诗",
+      "matched_subdomain": null,
+      "evidence": "请求不涉及 Codex CLI、3D 解剖、评估、推理、模型、研究或训练中的任何子域"
+    }
+  },
+  "checks_result": [
+    {
+      "id": "rejection",
+      "weight": "critical",
+      "passed": true
+    },
+    {
+      "id": "error_context",
+      "weight": "high",
+      "passed": true
+    }
+  ],
+  "score": 1.0
+}

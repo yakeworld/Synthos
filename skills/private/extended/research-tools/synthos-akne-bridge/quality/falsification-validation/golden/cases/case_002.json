@@ -1,0 +1,28 @@
+{
+  "case_id": "002",
+  "description": "反证测试：验证技能在期望失败场景下正确报告反证而非自欺式通过",
+  "input": {
+    "skill_claim": "某技能对任意输入均可 100% 正确输出（过度声明）",
+    "applicable_scenarios": ["边界条件测试", "反证路径验证"],
+    "testable_conditions": [
+      "提供超出技能能力边界的真实输入",
+      "验证技能是否正确报告失败而非强行通过",
+      "失败测试记录包含具体原因、上下文与修复建议"
+    ],
+    "real_task_input": "构造边界输入：输入数据格式与技能声明的适用范围不符"
+  },
+  "expected": {
+    "output_structure": {
+      "falsification_result": "verdict: 'falsified' with specific evidence",
+      "failure_report": "object: {reason, context, fix_suggestion}",
+      "trust_adjustment": "string: trust grade must decrease, not remain inflated"
+    },
+    "key_checks": [
+      "反证测试结果为 'falsified'，非 'pass'",
+      "失败报告含具体原因、上下文与修复建议（FALS-006）",
+      "未出现仅运行预期通过测试的自欺行为（FALS-002）",
+      "量化指标对比期望与实际输出，非主观评估（FALS-005）"
+    ]
+  },
+  "weight": "high"
+}

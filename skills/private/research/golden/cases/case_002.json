@@ -1,0 +1,25 @@
+{
+  "case_id": "case_002",
+  "description": "Golden Error 场景：curl 被安全扫描拦截 + arXiv 宽泛查询噪声 → 回退与精确布尔重查",
+  "input": {
+    "request_type": "multi_direction_monitoring",
+    "directions": [
+      {
+        "id": "dir_2",
+        "name": "眼动分析",
+        "sources": ["arxiv"],
+        "arxiv_queries": ["eye tracking"],
+        "raw_response_sample": [
+          {"title": "Particle tracking in turbulence with eye-like features", "published": "2026-05-10"},
+          {"title": "Counterfactual tracking in narrative understanding", "published": "2026-04-28"},
+          {"title": "Robust gaze estimation under occlusion", "published": "2026-05-02"}
+        ]
+      }
+    ],
+    "time_window_months": 3,
+    "top_n": 5,
+    "errors": [
+      {"type": "curl_intercepted_by_security_scan", "target": "https://export.arxiv.org/api/query", "context": "inline curl piped to python3", "recovery_attempt": 1}
+    ]
+  }
+}

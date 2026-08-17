@@ -1,0 +1,11 @@
+{
+  "case_id": "bppv-expert_case_001",
+  "title": "典型 BPPV 后向半规管受累 —— 触发半规管识别 + 诊断试验 + Epley 复位手法",
+  "task": "bppv-expert: 依据患者眼震与症状识别受累半规管，选择诊断试验，并给出结构化复位手法方案",
+  "input": {
+    "patient_data": {
+      "nystagmus": "upbeating + torsional, fatigable, duration <60s",
+      "symptoms": "特定头位诱发的短暂眩晕伴恶心"
+    }
+  }
+}

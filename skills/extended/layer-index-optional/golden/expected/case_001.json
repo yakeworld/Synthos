@@ -1,0 +1,21 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "skill_list": [
+      {
+        "name": "figure-generation",
+        "description": "科研图表创建：Figure契约方法论——结论Claim→证据层级→面板映射→出口契约→审核。支持Nature语义色板（蓝主-绿正-红基+中性色），16种排版模式。兼容所有SCI/会议图表场景。"
+      }
+    ],
+    "contract_hint": "命中 figure-generation 后提示: 遵循\"结论-证据-面板\"契约方法论并应用 Nature 语义色板标准（基因 LAYE-006）",
+    "output_type": "list[dict]",
+    "status": "PASS"
+  },
+  "verification": [
+    "skill_list 中首位命中 figure-generation（query '生成科研图表' 匹配）",
+    "输出符合 IO_CONTRACT 签名: skill_list: list[dict]（每项含 name/description 字段）",
+    "输出中包含 LAYE-006 契约提示: \"结论-证据-面板\" + Nature 语义色板",
+    "skill_list 中所有技能名与 SKILL.md 'Skills in this Layer (60 total)' 清单逐一对应，无混入其他层技能，无失效条目",
+    "未混入核心层 (core/meta) 技能（原子边界: 仅返回 optional 层技能）"
+  ]
+}

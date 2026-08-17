@@ -1,0 +1,49 @@
+{
+  "case_id": "case_001",
+  "skill": "pima-audit",
+  "description": "正常审计路径：PIDD 泄漏审计目录（独立 .py 脚本、实验条件固定、文献库含 accuracy>90% 论文、OpenML PIDD ID:292 可访问）",
+  "input": {
+    "audit_directory": {
+      "dataset": "PIDD (OpenML ID:292)",
+      "openml_public_experiments": "200+",
+      "experiment_code": "独立 .py 脚本（非 Notebook）",
+      "cell_outputs_present": true,
+      "fixed_conditions": {
+        "zero_replacer": "fixed",
+        "pipeline_structure": "fixed",
+        "cv_setup": "10-fold",
+        "metrics": "fixed"
+      },
+      "helix_benchmark": {
+        "models_recorded": 27,
+        "models_claimed": 32,
+        "missing": [
+          "DummyClassifier",
+          "GaussianProcessClassifier",
+          "StackingClassifier",
+          "TunedThresholdClassifierCV",
+          "FixedThresholdClassifier"
+        ]
+      },
+      "literature_library": {
+        "high_accuracy_papers": "含 report accuracy > 90% 的论文"
+      }
+    }
+  },
+  "expected_checks": {
+    "critical": [
+      "基线 27/32 缺失模型逐一点名（DummyClassifier/GaussianProcessClassifier/StackingClassifier/TunedThresholdClassifierCV/FixedThresholdClassifier）",
+      "实验代码为独立 .py 脚本且 cell 有输出，被接受为可复现记录（PIMA-002 未触发拒绝）",
+      "严格区分 Pima（方法论审计 32 基线）与 HCS-3WT（新架构验证 7 模型）范式，未混同结论（PIMA-006）"
+    ],
+    "high": [
+      "文献验证用 Semantic Scholar + CrossRef/PubMed 多源互补搜索（PIMA-003），过滤 Acc>90% 或 F1>0.70 论文并标注数据泄露风险（PIMA-004）",
+      "高准确率论文交叉参考 OpenML 公开实验（PIDD ID:292，200+ 实验）作为第三方验证",
+      "泄漏后 F1 趋同 ~0.70 标注为经验观察而非理论保证（PIMA-007）"
+    ],
+    "medium": [
+      "跨数据集对比实验条件一致（ZeroReplacer/Pipeline/CV/指标），对比有效（PIMA-001）",
+      "形成「跨数据集方法论审计 vs 已有论文声明」的对比论证"
+    ]
+  }
+}

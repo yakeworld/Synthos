@@ -1,0 +1,40 @@
+{
+  "case_id": "case_002",
+  "skill": "paper-improvement",
+  "expected_output": {
+    "input_validation": {
+      "status": "FAIL",
+      "tex_exists": true,
+      "pdf_exists": false,
+      "references_dir_exists": true,
+      "missing": ["paper.pdf"],
+      "decision": "BLOCK",
+      "blocked_by_gene": "PAPE-001",
+      "improvement_pipeline_entered": false,
+      "decision_recorded_in_audit_report": true
+    },
+    "sub_scenario_latex_fallback": {
+      "trigger": "PAPE-005",
+      "failed_key": "lee2024attention",
+      "fallback_command": "sed -i 's/10.1109\\/[0-9.]*-PLACEHOLDER/10.1109\\/TCYB.2024.3387654/g' paper.tex references.bib",
+      "fallback_applied": true,
+      "post_fallback_verification": {
+        "citation_resolves": true,
+        "pdflatex_undefined_references": 0,
+        "bib_entry_matches_citation_key": true
+      }
+    },
+    "audit_reports": {
+      "block_decision_recorded": true,
+      "fallback_decision_recorded": true,
+      "reproducible": true
+    }
+  },
+  "checks_results": [
+    {"id": "check_01", "result": "PASS", "note": "阻断生效，未进入改进流程"},
+    {"id": "check_02", "result": "PASS", "note": "sed 回退后 \\cite{lee2024attention} 解析成功，0 undefined"},
+    {"id": "check_03", "result": "PASS"}
+  ],
+  "weighted_score": 0.83,
+  "passed": true
+}

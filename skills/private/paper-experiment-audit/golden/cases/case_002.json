@@ -1,0 +1,52 @@
+{
+  "case_id": "case_002",
+  "description": "跨版本对比（699 vs 569）或消融复现差值 >0.5% 时，输出 MISMATCH 标记并阻断后续结论（Golden Error 路径）",
+  "input": {
+    "paper_dir": "papers/wdbc-cross-version/",
+    "files": {
+      "main.tex": {
+        "has_thebibliography": true,
+        "fig6_citation_count": 1,
+        "wdbc_dataset_versions_mentioned": ["699", "569"],
+        "table_cross_version": {
+          "version_699": {"f1_score": 0.941, "sample_count": 699},
+          "version_569": {"f1_score": 0.958, "sample_count": 569}
+        }
+      },
+      "references.bib": {
+        "entry_count": 28
+      },
+      "ablation/": {
+        "run_full_699.py": "存在",
+        "run_full_569.py": "存在",
+        "output_699.json": {
+          "dataset_version": "699",
+          "sample_count": 699,
+          "f1_score": 0.941
+        },
+        "output_569.json": {
+          "dataset_version": "569",
+          "sample_count": 569,
+          "f1_score": 0.958
+        }
+      }
+    }
+  },
+  "checks": [
+    {
+      "id": "mismatch_detected",
+      "weight": "critical",
+      "description": "跨版本 699 vs 569 差值 >0.5% 触发 MISMATCH 标记"
+    },
+    {
+      "id": "blockdownstream",
+      "weight": "critical",
+      "description": "MISMATCH 阻断后续结论"
+    },
+    {
+      "id": "version_source",
+      "weight": "high",
+      "description": "列出差值来源与版本号"
+    }
+  ]
+}

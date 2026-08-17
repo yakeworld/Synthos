@@ -1,0 +1,27 @@
+{
+  "case_id": "case_002",
+  "description": "异常测试：notebooklm list 返回未认证错误，但 profile 目录存有 148 cookies",
+  "expected": {
+    "diagnosis": {
+      "root_cause": "CLI 只读默认路径 ~/.notebooklm/storage-state.json，不读自定义 per-profile 路径",
+      "auth_data_present": true,
+      "custom_profile_path_respected": false
+    },
+    "resolution": {
+      "action": "notebooklm login",
+      "message": "执行 notebooklm login 重建会话（浏览器 OAuth；--headless 对 Google OAuth 可能失败）",
+      "continued_attempting_custom_profile_path": false
+    },
+    "outputs_written": []
+  },
+  "checks": [
+    {"id": "CK-01", "name": "诊断判定 CLI 只读默认路径（非自定义 profile 路径）", "weight": "critical"},
+    {"id": "CK-02", "name": "输出 '执行 notebooklm login 重建会话' 而非继续尝试自定义 profile 路径", "weight": "critical"},
+    {"id": "CK-03", "name": "确认 profile 内 cookie/Google 域存在但 CLI 未读取（区分无凭证 vs 路径错）", "weight": "high"},
+    {"id": "CK-04", "name": "错误/诊断信息包含上下文与恢复建议", "weight": "medium"}
+  ],
+  "pass_criteria": {
+    "min_weighted_score": 0.8,
+    "all_critical_must_pass": true
+  }
+}

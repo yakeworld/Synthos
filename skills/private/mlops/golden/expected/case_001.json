@@ -1,0 +1,26 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "routed_to": "codex-llm-routing",
+    "routing_reason": "请求描述涉及 Codex CLI 版本路由到本地 LLM Responses API 代理，命中 codex-llm-routing 子域",
+    "traceability": {
+      "request_keyword": "Codex CLI v0.139+",
+      "matched_subdomain": "codex-llm-routing",
+      "evidence": "VERIFICATION 第 1 条：路由依据可追溯至请求描述"
+    },
+    "status": "success"
+  },
+  "checks_result": [
+    {
+      "id": "route_correct",
+      "weight": "critical",
+      "passed": true
+    },
+    {
+      "id": "traceability",
+      "weight": "high",
+      "passed": true
+    }
+  ],
+  "score": 1.0
+}

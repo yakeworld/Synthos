@@ -1,0 +1,25 @@
+{
+  "case_id": "case_001",
+  "description": "多方向文献监控：瞳孔追踪 + 眼动分析，近 3 个月，双源并行召回",
+  "input": {
+    "request_type": "multi_direction_monitoring",
+    "directions": [
+      {
+        "id": "dir_1",
+        "name": "瞳孔追踪",
+        "sources": ["pubmed", "arxiv"],
+        "pubmed_keywords": ["pupil localization", "pupil segmentation"],
+        "arxiv_queries": ["pupil AND tracking", "pupil segmentation"]
+      },
+      {
+        "id": "dir_2",
+        "name": "眼动分析",
+        "sources": ["pubmed", "arxiv"],
+        "pubmed_keywords": ["eye tracking", "gaze estimation"],
+        "arxiv_queries": ["all:eye+AND+all:tracking", "gaze estimation"]
+      }
+    ],
+    "time_window_months": 3,
+    "top_n": 10
+  }
+}

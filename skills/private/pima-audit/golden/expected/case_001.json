@@ -1,0 +1,47 @@
+{
+  "case_id": "case_001",
+  "skill": "pima-audit",
+  "description": "期望输出：PIDD 泄漏审计的正常审计结论",
+  "baseline_audit": {
+    "recorded_models": 27,
+    "claimed_models": 32,
+    "missing_models_named": [
+      "DummyClassifier",
+      "GaussianProcessClassifier",
+      "StackingClassifier",
+      "TunedThresholdClassifierCV",
+      "FixedThresholdClassifier"
+    ],
+    "resolution": "逐一点名后补齐至 32，重跑审计"
+  },
+  "reproducibility": {
+    "code_format": "独立 .py 脚本",
+    "accepted_as_reproducible_record": true,
+    "cell_outputs_present": true
+  },
+  "literature_validation": {
+    "search_sources": ["Semantic Scholar", "CrossRef", "PubMed"],
+    "filter": "accuracy > 90% 或 F1 > 0.70",
+    "flagged": "高准确率论文标注数据泄露风险",
+    "third_party_crosscheck": "OpenML PIDD (ID:292) 200+ 公开实验",
+    "argument": "跨数据集方法论审计 vs 已有论文声明：高准确率论文与审计实测（F1≈0.71）偏差显著"
+  },
+  "post_leakage_f1": {
+    "observation": "泄漏后 F1 趋同 ~0.70",
+    "status": "经验观察，非理论保证（PIMA-007）",
+    "required_followup": "在更多数据集上持续验证（推荐 INSCAT + Diabetes 130-US）"
+  },
+  "paradigm_separation": {
+    "pima": {"type": "方法论审计", "n_models": 32},
+    "hcs_3wt": {"type": "新架构验证", "n_models": 7},
+    "conclusions_mixed": false
+  },
+  "conditions_consistency": {
+    "zero_replacer": "一致",
+    "pipeline_structure": "一致",
+    "cv_setup": "一致",
+    "metrics": "一致",
+    "comparison_valid": true
+  },
+  "genes_applied": ["PIMA-001", "PIMA-002", "PIMA-003", "PIMA-004", "PIMA-005", "PIMA-006", "PIMA-007"]
+}

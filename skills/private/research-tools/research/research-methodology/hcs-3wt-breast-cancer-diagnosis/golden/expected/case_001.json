@@ -1,0 +1,62 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "automation_rate": {
+      "mean": 0.7093,
+      "std": 0.0644,
+      "unit": "fraction",
+      "tolerance": 0.02
+    },
+    "automation_accuracy": {
+      "mean": 0.9926,
+      "std": 0.0095,
+      "unit": "fraction",
+      "tolerance": 0.01
+    },
+    "gray_zone": {
+      "fraction": 0.2907,
+      "malignant_enrichment": 1.21,
+      "tolerance_enrichment": 0.05
+    },
+    "hcs3wt_accuracy": {
+      "mean": 0.9475,
+      "tolerance": 0.01
+    },
+    "fn_reduction_vs_best_single": {
+      "reference_model": "SVC",
+      "reduction": 0.477,
+      "tolerance": 0.05
+    }
+  },
+  "expected_checks": [
+    {
+      "id": "HCS-001",
+      "expected": "passed",
+      "detail": "Single-class folds detected via len(np.unique(y_train_cv)) < 2 and skipped with continue; no SMOTE or SVC crash"
+    },
+    {
+      "id": "HCS-003",
+      "expected": "passed",
+      "detail": "Expert C meta-features P_A and P_B generated via cross_val_predict; no data leakage"
+    },
+    {
+      "id": "HCS-004",
+      "expected": "passed",
+      "detail": "10x5 CV (50 folds, ~190s) executed in background; no session timeout"
+    },
+    {
+      "id": "HCS-005",
+      "expected": "passed",
+      "detail": "CalibratedClassifierCV(SVC(), ensemble=False) used; ImportError fallback present"
+    },
+    {
+      "id": "HCS-006",
+      "expected": "passed",
+      "detail": "Borderline-SMOTE applied only to Expert B and Expert C training sets; Expert A untouched"
+    }
+  ],
+  "pass_criteria": {
+    "weighted_score_threshold": 0.80,
+    "all_critical_must_pass": true
+  }
+}

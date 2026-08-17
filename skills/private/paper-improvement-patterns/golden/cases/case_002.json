@@ -1,0 +1,31 @@
+{
+  "case_id": "case_002",
+  "skill": "paper-improvement-patterns",
+  "description": "错误路径测试：新增 bibitem 未被正文 \\cite{} 引用（含 %% 注释行内引用），D10a<100% 必须修复；消融中某组件增量为负必须移除该组件",
+  "input": {
+    "paper_dir": "papers/multi-component-model",
+    "paper_status": "compiles_clean",
+    "pdflatex": {"errors": 0, "undefined_references": 0},
+    "violations": [
+      {
+        "type": "orphan_bibitem",
+        "gene": "PAPE-007",
+        "detail": "新增 3 条 bibitem 仅被 %% 注释行引用：\\cite{park2025} 位于注释行，BibTeX 不可见",
+        "affected_keys": ["park2025", "kim2024", "nguyen2026"],
+        "D10a": 0.9
+      },
+      {
+        "type": "negative_ablation_delta",
+        "gene": "PAPE-002",
+        "detail": "消融显示 fusion_head 增量为 -0.003（负贡献）",
+        "component": "fusion_head"
+      }
+    ],
+    "gene_path": ["PAPE-007", "PAPE-002"]
+  },
+  "checks": [
+    {"id": "check_01", "priority": "critical", "description": "识别未引用 bibitem 的语义域，将其分组插入正文合适锚点（非机械追加），注释行引用移至正文"},
+    {"id": "check_02", "priority": "critical", "description": "修复后 D10a = 100%，pdflatex 重编译 0 undefined reference"},
+    {"id": "check_03", "priority": "critical", "description": "负增量组件 fusion_head 被移除，消融表重算，V1→V4 全正"}
+  ]
+}

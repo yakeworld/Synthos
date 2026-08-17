@@ -1,0 +1,18 @@
+{
+  "case_id": "case_001",
+  "description": "MiKTeX 编译失败报 'No space left on device'：先查磁盘排除真满，再清残留锁文件",
+  "input": {
+    "env": "Ubuntu，MiKTeX TeX Live 安装",
+    "symptom": "pdflatex 输出 'No space left on device'，编译失败",
+    "observed": "df -h 显示磁盘 60% 可用（非真满）；~/.miktex/texmfs/data/miktex/lock 存在残留"
+  },
+  "expected": {
+    "diagnosis_order": "先 df -h / df -i 排除真磁盘满/inode 耗尽（磁盘 60% 可用 → 非真满）→ 定位 ~/.miktex/texmfs/data/miktex/lock 残留",
+    "fix": "rm -rf 清除锁文件 + 损坏日志（不重装 MiKTeX）→ pdflatex test.tex 编译通过，PDF 正常生成"
+  },
+  "weight": {
+    "critical": 1.0,
+    "high": 0.7,
+    "medium": 0.4
+  }
+}

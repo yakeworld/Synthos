@@ -1,0 +1,46 @@
+{
+  "case_id": "bppv-expert_case_001",
+  "status": "success",
+  "expected": {
+    "affected_canal": "right posterior semicircular canal (后向半规管)",
+    "canal_identification_rationale": "upbeating + torsional、可疲劳、持续 <60s 的眼震模式符合后向半规管 BPPV 特征；Dix-Hallpike 阳性（upbeating 伴向地性扭转）指向同侧后向半规管",
+    "diagnostic_test": "Dix-Hallpike test",
+    "maneuver": "Epley",
+    "maneuver_steps": [
+      {
+        "element": "体位",
+        "detail": "坐位后仰（head hanging 过伸约 30°），随后向受累侧旋转 90°"
+      },
+      {
+        "element": "头转角度",
+        "detail": "90°（向患侧）→ 经正中 → 90°（向健侧）→ 45° 侧卧前倾"
+      },
+      {
+        "element": "时机",
+        "detail": "每一步保持约 30s，直至眼震消失后再多保持 10-30s"
+      },
+      {
+        "element": "预期眼震",
+        "detail": "后向半规管受累：upbeating + 向地性扭转；复位成功预期眼震逐渐消失（疲劳）"
+      }
+    ],
+    "medical_disclaimer": "仅作教育用途，临床决策需面诊评估",
+    "confidence": 0.85,
+    "sources": ["dix-hallpike.md", "epley-maneuver.md"]
+  },
+  "checks": {
+    "critical": [
+      "输出受累半规管识别结果",
+      "给出诊断试验选择（Dix-Hallpike）",
+      "给出含四要素（体位/头转角度/时机/预期眼震）的 Epley 结构化方案",
+      "包含医学警告 '仅作教育用途，临床决策需面诊评估'"
+    ],
+    "high": [
+      "confidence 为 float 类型",
+      "引用具体 AKNE wiki 来源（如 dix-hallpike.md）"
+    ],
+    "medium": [
+      "半规管识别理由与眼震模式一致"
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "error_raised": true,
+    "error_message": "输入无效：b/a = 25/20 = 1.25 不满足 (0,1] 约束，短半轴不得大于长半轴",
+    "recovery_suggestion": "检查椭圆检测结果，确认 major_axis 和 minor_axis 赋值正确"
+  },
+  "verification": [
+    "b/a = 1.25 > 1，应触发输入校验失败",
+    "错误信息包含具体比值 b/a = 1.25 和约束范围 (0,1]",
+    "错误信息包含恢复建议（检查椭圆检测参数）",
+    "不产生任何 3D 圆输出（无静默降级）"
+  ]
+}

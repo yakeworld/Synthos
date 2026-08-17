@@ -1,0 +1,28 @@
+{
+  "case_id": "case_002",
+  "skill": "paperjury",
+  "description": "错误路径测试：指标在 03-code/ 下无对应脚本/输出 → 直接标 FABRICATED 禁止放行；另有指标有代码但复现数值不匹配 → 标 MISMATCH；多轮累计超 50k tokens → 自动终止并输出未决问题清单",
+  "input": {
+    "paper_dir": "papers/leaky-paper",
+    "paper_tex": "paper.tex",
+    "claimed_metrics": [
+      {"name": "AUC", "value": 0.97, "section": "Results", "code_artifact": null},
+      {"name": "F1", "value": 0.91, "section": "Results", "code_artifact": "03-code/eval_f1.py"}
+    ],
+    "code_artifacts": {
+      "dir": "03-code/",
+      "scripts": ["eval_f1.py"],
+      "outputs": ["eval_f1_output.txt"],
+      "independent_run_actual": {"F1": 0.84}
+    },
+    "quality_gate": {"L1": "PASS", "L2": "PASS"},
+    "token_budget": {"multi_round_cumulative": 50000},
+    "multi_round_usage": 52400,
+    "gene_path": ["PAPE-002", "PAPE-004", "PAPE-006"]
+  },
+  "checks": [
+    {"id": "check_01", "priority": "critical", "description": "AUC=0.97 无对应脚本/输出 → 标 FABRICATED，禁止标注 CLOSE 或放行"},
+    {"id": "check_02", "priority": "critical", "description": "F1 有代码但 0.91 != 0.84 → 标 MISMATCH"},
+    {"id": "check_03", "priority": "critical", "description": "多轮累计 52.4k > 50k tokens → 自动终止并输出未决问题清单"}
+  ]
+}

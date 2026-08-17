@@ -1,0 +1,31 @@
+{
+  "case_id": "case_001",
+  "description": "基本功能测试：GitHub Topics 扫描命中吸收目标，执行五层吸收并落盘三层记录",
+  "expected": {
+    "ledger_entry": {
+      "project": "openclaw-merge-pattern",
+      "source": "github_topics",
+      "stars": 1240,
+      "target_skill": "skill-absorption",
+      "state": "absorbed",
+      "state_history": ["tracking", "evaluating", "absorbed"],
+      "record_file": "evolution/absorption-openclaw-merge-pattern.md",
+      "five_layer_record_present": true
+    },
+    "outputs_written": [
+      "evolution/absorption-openclaw-merge-pattern.md",
+      "absorption-ledger.json"
+    ],
+    "report_conforms_to": "references/absorption-report-template.md"
+  },
+  "checks": [
+    {"id": "CK-01", "name": "五层吸收记录文件存在且非空", "weight": "critical"},
+    {"id": "CK-02", "name": "台账条目状态为合法生命周期成员 (absorbed)", "weight": "critical"},
+    {"id": "CK-03", "name": "状态历史合法追踪 tracking→evaluating→absorbed（无非法跳转）", "weight": "high"},
+    {"id": "CK-04", "name": "吸收报告符合 absorption-report-template.md 模板", "weight": "medium"}
+  ],
+  "pass_criteria": {
+    "min_weighted_score": 0.8,
+    "all_critical_must_pass": true
+  }
+}

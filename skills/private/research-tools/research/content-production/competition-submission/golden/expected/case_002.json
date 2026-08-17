@@ -1,0 +1,34 @@
+{
+  "case_id": "competition-submission_case_002",
+  "status": "error",
+  "expected": {
+    "delivered": false,
+    "submission_zip": null,
+    "refuse_delivery": true,
+    "error": {
+      "code": "COMPLETENESS_CHECK_FAILED",
+      "missing_items": [
+        "申报表 docx (python-docx) 未生成",
+        "答辩 PPT pptx (python-pptx) 未生成",
+        "当前时间 2026-07-20 已晚于截止时间 2026-07-01"
+      ],
+      "context": "完整性检查发现评分维度/格式要求缺项，且当前时间已晚于竞赛截止时间",
+      "recovery_suggestion": "补齐申报表 docx 与答辩 PPT pptx，并核对截止时间；在截止时间前重新执行完整性检查与打包核对"
+    }
+  },
+  "checks": {
+    "critical": [
+      "拒绝交付 submission.zip（delivered=false，不静默打包交付）",
+      "输出带缺项清单的完整性检查结论",
+      "缺项清单涵盖缺失的格式要求（申报表/PPT）",
+      "识别当前时间已晚于竞赛截止时间"
+    ],
+    "high": [
+      "不执行 zip 打包（或打包前已失败中止）",
+      "错误信息含上下文与恢复建议"
+    ],
+    "medium": [
+      "若解包核对发现隐藏文件混入（-x \"*/.*\" 未生效）→ 报 '包内含隐藏文件' 并重建打包命令"
+    ]
+  }
+}

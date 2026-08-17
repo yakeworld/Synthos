@@ -1,0 +1,30 @@
+{
+  "case_id": "case_001",
+  "description": "基本功能测试：正交投影下瞳孔椭圆逆投影为 3D 圆（含深度模糊标注）",
+  "input": {
+    "ellipse": {
+      "center": [960.0, 540.0],
+      "major_axis": 24.0,
+      "minor_axis": 18.0,
+      "rotation_angle": 0.5236
+    },
+    "camera": {
+      "intrinsic_matrix": [[800.0, 0.0, 960.0], [0.0, 800.0, 540.0], [0.0, 0.0, 1.0]],
+      "principal_point": [960.0, 540.0],
+      "focal_length": 800.0
+    },
+    "prior": {
+      "circle_radius": 2.4,
+      "sphere_center_prior": null
+    }
+  },
+  "expected": {
+    "alpha_approx_rad": 0.7227,
+    "alpha_approx_deg": 41.4,
+    "phi_constraint": "phi = theta ± π/2（按右手定则定符号）",
+    "normal_is_unit": true,
+    "orthogonal_basis_right_hand": true,
+    "ambiguity": "depth"
+  },
+  "weight": "critical"
+}

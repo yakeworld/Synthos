@@ -1,0 +1,11 @@
+{
+  "case_id": "case_001",
+  "expected_output": "执行 pdflatex → bibtex paper → pdflatex → pdflatex 完整编译链后，paper.bbl 非空、paper.blg 0 warnings；pdflatex -interaction=nonstopmode 重编译后 ! LaTeX Error 计数 0、grep -c 'undefined' paper.log 为 0。",
+  "verification": [
+    "编译链顺序为 pdflatex → bibtex → pdflatex → pdflatex（≥4 次编译）",
+    "test -s paper.bbl 成立（.bbl 非空）",
+    "paper.blg 中 warning 计数为 0",
+    "重编译后 grep -c '! LaTeX Error' paper.log 为 0",
+    "grep -c 'undefined' paper.log 为 0"
+  ]
+}

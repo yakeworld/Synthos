@@ -1,0 +1,21 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "skill_list": [
+      {
+        "name": "creative-ideation",
+        "description": "Use when the user says 'I want to build something', 'give me a project idea', 'I'm bored', or any variant of 'I have tools but no direction'. Works for code, art, hardware, writing, tools."
+      }
+    ],
+    "message": "未找到相关技能，可调用 creative-ideation 探索方向",
+    "fallback_skill": "creative-ideation",
+    "gene_applied": "LAYE-001",
+    "status": "PASS (边界场景: 返回明确提示而非异常中断)"
+  },
+  "verification": [
+    "空 query / 模糊意图下未抛异常、未异常中断（边界场景约束）",
+    "返回明确提示文本，包含 '未找到相关技能' 及可行动建议",
+    "触发创意构思技能 creative-ideation（基因 LAYE-001: 意图模糊/只有工具无方向 → 调用创意构思打破僵局）",
+    "输出仍符合 list[dict] 格式，不破坏 IO_CONTRACT 签名"
+  ]
+}

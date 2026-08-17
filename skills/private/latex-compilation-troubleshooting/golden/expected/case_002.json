@@ -1,0 +1,10 @@
+{
+  "case_id": "case_002",
+  "expected_output": "诊断为 preamble 缺失 \\bibliographystyle{plain}（不是 bib 条目问题）；补上后重跑完整编译链，paper.bbl 非空。",
+  "verification": [
+    "根因判定为 \\bibliographystyle 缺失，而非 references.bib 条目问题",
+    "在 \\bibliography{references} 前添加 \\bibliographystyle{plain}",
+    "重跑编译链后 paper.bbl 非空且 bibtex 不再报 'I found no \\bibstyle command'",
+    "未使用 paper.* 通配符删除；批量修改前已创建带时间戳 .bak 备份"
+  ]
+}

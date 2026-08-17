@@ -1,0 +1,28 @@
+{
+  "case_id": "case_001",
+  "description": "WDBC 10x5 stratified CV — full HCS-3WT pipeline on breast cancer data",
+  "input": {
+    "data_path": "wdbc",
+    "dataset": "Wisconsin Diagnostic Breast Cancer (sklearn)",
+    "n_samples": 569,
+    "n_features": 30,
+    "cv_config": {
+      "outer_splits": 10,
+      "inner_splits": 5,
+      "stratified": true,
+      "total_folds": 50
+    },
+    "thresholds": {
+      "theta_low": 0.03,
+      "theta_high": 0.95
+    },
+    "execution_mode": "background"
+  },
+  "checks": [
+    {"id": "HCS-001", "name": "single_class_fold_skip", "weight": "critical"},
+    {"id": "HCS-003", "name": "meta_feature_leakage_prevention", "weight": "critical"},
+    {"id": "HCS-004", "name": "background_execution", "weight": "high"},
+    {"id": "HCS-005", "name": "svc_probability_api_compatible", "weight": "high"},
+    {"id": "HCS-006", "name": "smote_scope_restricted", "weight": "medium"}
+  ]
+}

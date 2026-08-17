@@ -1,0 +1,28 @@
+{
+  "case_id": "case_001",
+  "description": "基本功能测试：GitHub Topics 扫描命中吸收目标，执行五层吸收并落盘三层记录",
+  "scenario": "happy_path",
+  "input": {
+    "source": "github_topics",
+    "scan_command": "curl -s \"https://api.github.com/search/repositories?q=topic:agent-skills+in:readme\"",
+    "discovered_project": {
+      "name": "openclaw-merge-pattern",
+      "full_name": "acme/openclaw-merge-pattern",
+      "stars": 1240,
+      "language": "TypeScript",
+      "has_skills_dir": true,
+      "readme_excerpt": "Merge pattern for normalizing multi-source skill ingestion: deduplicate by signature, reconcile version fields, normalize IO_CONTRACT blocks before absorption.",
+      "skills_dir_listing": [
+        "SKILL.md",
+        "references/merge-pattern.md",
+        "scripts/normalize.py"
+      ]
+    },
+    "keyword_rotation_hit": "agent-skills",
+    "absorption_target": {
+      "source_project": "acme/openclaw-merge-pattern",
+      "target_skill": "skill-absorption",
+      "capability_under_test": "OpenClaw merge pattern 格式归一化"
+    }
+  }
+}

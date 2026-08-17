@@ -1,0 +1,10 @@
+{
+  "case_id": "case_003",
+  "expected_output": "ampy run 失败 → 改用 Python 直调 ampy.pyboard.Pyboard；串口完全无输出且 sendBreak/Ctrl+C/Ctrl+D 均无效 → 判定设备死锁，物理拔插 USB 恢复，并以 lsusb 成功≠串口可用做假阳性判断。",
+  "verification": [
+    "ampy run 失败后不再重试该路径，改为 Pyboard 直调",
+    "死锁判定条件成立：sendBreak、Ctrl+C、Ctrl+D 均无效",
+    "恢复手段为物理拔插 USB，而非继续软件尝试",
+    "结论中体现 lsusb 成功 ≠ 串口可用（哑状态假阳性）"
+  ]
+}

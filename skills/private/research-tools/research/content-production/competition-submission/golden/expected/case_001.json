@@ -1,0 +1,46 @@
+{
+  "case_id": "competition-submission_case_001",
+  "status": "success",
+  "expected": {
+    "delivered": true,
+    "submission_zip": "submission.zip",
+    "pack_command": "zip -r submission.zip submission/ -x \"*/.*\"",
+    "contents": {
+      "five_artifacts": [
+        "技术规格书 (tech-spec)",
+        "路线图 (Mermaid timeline)",
+        "视频脚本 (video-script)",
+        "申报表 docx (python-docx, form-filling)",
+        "答辩 PPT pptx (python-pptx, presentation)"
+      ],
+      "no_extra_files": true,
+      "no_hidden_files": true
+    },
+    "hard_assertions": [
+      "解包后恰含五类产物，无多余文件、无 */.* 隐藏文件",
+      "路线图用 Mermaid timeline 语法且渲染无误；申报表经 python-docx、PPT 经 python-pptx 基于标准模板生成",
+      "完整性检查逐项打勾覆盖全部评分维度与格式要求，且当前时间早于截止时间"
+    ],
+    "completeness_check": {
+      "scoring_dimensions_covered": ["创新性", "临床价值", "可落地性"],
+      "format_requirements_met": true,
+      "before_deadline": true
+    }
+  },
+  "checks": {
+    "critical": [
+      "解包核对恰含五类产物，无多余文件、无隐藏文件",
+      "路线图 Mermaid timeline 语法且渲染无误",
+      "申报表经 python-docx、PPT 经 python-pptx 基于标准模板生成",
+      "完整性检查逐项打勾确认涵盖全部评分维度与格式要求",
+      "当前时间早于截止时间"
+    ],
+    "high": [
+      "素材先于格式：技术方案/代码/演示数据完整正确后再做格式美化",
+      "以评为纲，无离纲内容"
+    ],
+    "medium": [
+      "zip 命令含 -x \"*/.*\" 排除隐藏文件"
+    ]
+  }
+}

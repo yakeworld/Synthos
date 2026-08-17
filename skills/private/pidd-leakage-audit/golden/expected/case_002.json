@@ -1,0 +1,29 @@
+{
+  "case_id": "case_002",
+  "skill": "pidd-leakage-audit",
+  "description": "期望输出：SHAP 独立 venv 环境配置与 CRISP-DM 规范引用",
+  "venv": {
+    "created": true,
+    "isolated_from_system_python": true,
+    "numpy_version": ">=2.0",
+    "system_numpy_avoided": "1.x（Debian 编译包 numexpr/bottleneck 冲突）",
+    "catboost_install": "在 venv 内单独编译安装，约 4 分钟（仅当使用 CatBoost 时）"
+  },
+  "shap_run": {
+    "script": "run_shap.py",
+    "crashed": false,
+    "crash_sources_avoided": ["numexpr", "bottleneck"]
+  },
+  "citations": {
+    "crisp_dm": "CRISP-DM",
+    "co_cited_original": "Shearer (2000)",
+    "co_cited_original_alt": "Wirth & Hipp (2000)",
+    "rule": "PIDD-005：引用 CRISP-DM 必须并引 Shearer (2000) 或 Wirth & Hipp (2000) 原始文献，禁止单引"
+  },
+  "output_contracts": [
+    "comprehensive_results.json（含 SHAP 结果）",
+    "run_shap.py",
+    "report.py"
+  ],
+  "genes_applied": ["PIDD-004", "PIDD-005"]
+}

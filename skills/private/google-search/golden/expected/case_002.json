@@ -1,0 +1,26 @@
+{
+  "case_id": "002",
+  "expected_output": "诊断报告正确识别出口 IP 封锁（非 SearXNG 故障），通过 Tailscale Exit Node / Tor SOCKS5 切换出口后恢复搜索，恢复后输出契约完整",
+  "verification": [
+    {
+      "check": "诊断路径",
+      "expected": "诊断步骤含 curl 宿主机外网检测（非直接重启容器），判定原因为出口 IP 封锁",
+      "method": "检查操作日志中先出现 curl 外网检测，再出现 IP 封锁判定，无连续 docker restart 记录"
+    },
+    {
+      "check": "切换动作",
+      "expected": "action_taken 含具体切换方法（tailscale set --exit-node 或 HTTP_PROXY=socks5h://），非泛泛而谈",
+      "method": "检查 action_taken 字段含 'exit-node' 或 'socks5' 关键词"
+    },
+    {
+      "check": "恢复验证",
+      "expected": "恢复后 SearXNG 搜索返回非空结果，且输出满足 {title, url, snippet, position, engine} 契约",
+      "method": "重跑 curl SearXNG API，确认返回 JSON 数组非空，每项含 5 契约字段"
+    },
+    {
+      "check": "无无效重试",
+      "expected": "未执行 >2 次容器重启；未反复重试同一超时操作",
+      "method": "检查操作日志中 docker restart 次数 ≤ 2，同一命令连续重试次数 ≤ 3"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "case_id": "case_001",
+  "description": "基本功能测试：真实 NotebookLM 库状态，执行 P0/P1/P2 分级审计与修复",
+  "expected": {
+    "audit_report": {
+      "output_dir": "~/notebooklm-audit/",
+      "private_not_project_docs": true,
+      "conforms_to": "references/notebooklm-audit-template.md"
+    },
+    "p0_actions": [
+      {"operation": "notebooklm source add", "notebook": "nb_eye_tracking", "added": 2}
+    ],
+    "p1_actions": [
+      {"operation": "notebooklm source rename", "uuid_prefix": "a1b2c3d4e5f6", "old_title": "201806596.pdf", "new_title": "201806596_<12char_uuid>_<descriptive_title>", "uses_12char_uuid_prefix": true}
+    ],
+    "p2_actions": {
+      "other_classified": true,
+      "duplicate_notebooks_removed": true,
+      "other_notebooks_before": 11,
+      "other_notebooks_after": 0
+    }
+  },
+  "checks": [
+    {"id": "CK-01", "name": "P0 缺失核心文献已通过 source add 补齐", "weight": "critical"},
+    {"id": "CK-02", "name": "P1 非标准命名 source 已用 12-char UUID 前缀重命名", "weight": "critical"},
+    {"id": "CK-03", "name": "P2 '其他' notebook 已归类并删除重复项", "weight": "high"},
+    {"id": "CK-04", "name": "审计报告落盘私有目录且符合模板（非项目 docs/）", "weight": "medium"}
+  ],
+  "pass_criteria": {
+    "min_weighted_score": 0.8,
+    "all_critical_must_pass": true
+  }
+}

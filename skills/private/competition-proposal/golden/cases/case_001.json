@@ -1,0 +1,28 @@
+{
+  "case_id": "case_001",
+  "description": "基本功能测试：四段式叙事申报书填充，含去技化转换与模板清理",
+  "input": {
+    "template": "template.docx",
+    "template_note": "含 20 列合并单元格表格、带星号必填字段（营收/融资/Token）",
+    "track": "医疗健康",
+    "content": {
+      "pain_point": "AI Agent 驱动的数据治理框架揭示：70% AI 医学论文存在数据泄露风险，行业面临数据质量危机。",
+      "solution": "首创 G1-G7 七级数据质量门控体系，通过 AI Agent 自主进化闭环，确保实验可追溯、可复现。",
+      "results": "已在 30 个主流模型上完成系统性基准验证，覆盖数据泄露检测全链路，量化指标可审计。",
+      "replicability": "方法论级解决方案，可推广至任何数据密集型领域，不依赖特定模型或平台。"
+    },
+    "track_checklist": {
+      "revenue_field": "0（事业单位不适用）",
+      "financing_field": "不适用（事业单位）",
+      "token_field": "不适用（事业单位）"
+    }
+  },
+  "expected": {
+    "output_file": "filled_application.docx",
+    "narrative_complete": true,
+    "terms_converted": ["AI Agent", "G1-G7"],
+    "track_marker": "√ 已选：医疗健康",
+    "template_placeholders_cleared": true
+  },
+  "weight": "critical"
+}

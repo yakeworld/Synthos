@@ -1,0 +1,16 @@
+{
+  "case_id": "case_001",
+  "description": "完整复现审计：数据集版本已锁定 + thebibliography 与 .bib 双源同步 + Golden 测试留痕",
+  "input": {
+    "paper_dir": "papers/repro-target",
+    "dataset": {"name": "pima-crispdm", "version": "v1.0-kaggle-2019", "lock_file": "dataset.lock.json", "version_pinned": true},
+    "bib_sources": {
+      "inline_thebibliography": {"entry_count": 32},
+      "bib_file": "references.bib",
+      "bib_entry_count": 32,
+      "sync_status": "in_sync"
+    },
+    "code_pipeline": {"runnable": true, "golden_test_present": true, "golden_test_name": "test_golden_repro.py"},
+    "verification_log": []
+  }
+}

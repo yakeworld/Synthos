@@ -1,0 +1,20 @@
+{
+  "case_id": "case_001",
+  "description": "基本功能测试: 扫描 outputs/papers/* 各论文 state.json (顶层 quality_score/D10a/Gates_result)，按质量分降序生成 submission_priority_list，缺项标注 需补充/无PDF；D10a 数字(100.0)与字符串(\"100%\")均解析成功 (PAPE-001/002)",
+  "input": {
+    "papers_dir": "outputs/papers/*",
+    "papers": [
+      {"name": "147-lens-capsule-biomechanics-ODE", "quality_score": 96, "D10a": "100%", "Gates_result": "PASS", "note": "白内障/PCO, R²=0.93/0.98, 需补充"},
+      {"name": "113-nystagmus-compensatory-ODE", "quality_score": 96, "D10a": 100.0, "Gates_result": "PASS", "note": "眼震 0.5%, 需补充"},
+      {"name": "bppv-canalith-relocation-ode", "quality_score": 95, "D10a": "100%", "Gates_result": "PASS", "note": "BPPV 2.4%, MAPE=7.8%, R²=0.94, 需补充"},
+      {"name": "corneal-biomechanics-ODE", "quality_score": 96, "D10a": 100.0, "Gates_result": "PASS", "note": "角膜生物力学, 无PDF"}
+    ],
+    "read_fields": "state.json 顶层字段 (quality_score / D10a / Gates_result)"
+  },
+  "expected": {
+    "output": "submission_priority_list (table, 按 quality_score 降序)",
+    "d10a_parse": "数字 100.0 与字符串 \"100%\" 两种格式均解析成功",
+    "missing_flags": ["需补充", "无PDF"]
+  },
+  "weight": "critical"
+}

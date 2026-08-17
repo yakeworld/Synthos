@@ -1,0 +1,20 @@
+{
+  "case_id": "case_002",
+  "description": "异常测试：system_a_root 缺失 + 关键词匹配产生权重低于阈值/邻接超限的边",
+  "scenario": "error_path",
+  "input": {
+    "system_a_root": null,
+    "system_b_root": "/media/yakeworld/sda2/AKNE",
+    "sync_direction": "a_to_b",
+    "domain_keywords": {
+      "ai": ["agent", "model", "data", "system"],
+      "cognition": ["knowledge", "hypothesis", "verification"]
+    },
+    "known_mappings": [],
+    "edge_conditions": {
+      "keyword_match_edge_weight": 0.21,
+      "single_node_adjacency": 47,
+      "adjacency_cap": 20
+    }
+  }
+}

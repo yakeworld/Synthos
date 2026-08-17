@@ -1,0 +1,31 @@
+{
+  "case_id": "001",
+  "expected_output": "10 条 list[dict] 结果，每项精确匹配契约 {title, url, snippet, position, engine}，engine 字段为 'serpapi'，无底层引擎字段混入",
+  "verification": [
+    {
+      "check": "结果数量",
+      "expected": "len(results) == 10",
+      "method": "python3 -c \"import json; data=json.load(open('result.json')); assert len(data)==10, f'Expected 10, got {len(data)}'\""
+    },
+    {
+      "check": "契约字段完整性",
+      "expected": "每条结果含且仅含 title/url/snippet/position/engine 5 个字段",
+      "method": "for item in data: assert set(item.keys()) == {'title','url','snippet','position','engine'}"
+    },
+    {
+      "check": "engine 标记正确",
+      "expected": "所有 item['engine'] == 'serpapi'",
+      "method": "assert all(item['engine']=='serpapi' for item in data)"
+    },
+    {
+      "check": "position 连续性",
+      "expected": "position 为 1-10 连续整数，无重复无跳号",
+      "method": "assert sorted(item['position'] for item in data) == list(range(1,11))"
+    },
+    {
+      "check": "URL 有效性",
+      "expected": "每条 url 以 http:// 或 https:// 开头，非空",
+      "method": "assert all(item['url'].startswith(('http://','https://')) for item in data)"
+    }
+  ]
+}

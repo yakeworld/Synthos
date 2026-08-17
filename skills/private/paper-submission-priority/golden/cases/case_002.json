@@ -1,0 +1,18 @@
+{
+  "case_id": "case_002",
+  "description": "引用健康异常测试: D10a=0 的论文 (concussion-oculomotor-PINN) 单独核查 orphans_count/zombies_count 与 Gates_result 格式 (字符串/字典)，异常标记「需补充」而非混入正常候选 (PAPE-003)",
+  "input": {
+    "papers_dir": "outputs/papers/*",
+    "papers": [
+      {"name": "concussion-oculomotor-PINN", "quality_score": 92, "D10a": 0.0, "Gates_result": {"gates": ["PASS", "FAIL"]}, "D8_d10a_scan": {"orphans_count": 3, "zombies_count": 1}},
+      {"name": "ocular-torsion-ODE", "quality_score": 91, "D10a": 0.0, "Gates_result": "PASS", "D8_d10a_scan": {"orphans_count": 0, "zombies_count": 0}}
+    ],
+    "focus": "D10a=0 论文的引用健康度单独核查"
+  },
+  "expected": {
+    "anomaly_handling": "D10a=0 论文不混入正常候选，单独标记「需补充」",
+    "orphans_zombies_checked": true,
+    "gates_format_checked": "字符串 \"PASS\" 与字典 {gates:[...]} 两种格式均正确处理"
+  },
+  "weight": "high"
+}

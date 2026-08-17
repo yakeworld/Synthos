@@ -1,0 +1,26 @@
+{
+  "case_id": "002",
+  "expected_output": "反证测试正确产出 falsified 判定，失败报告含具体原因、上下文与修复建议，信任分级相应下调",
+  "verification": [
+    {
+      "check": "证伪判定",
+      "expected": "falsification_result.verdict 为 'falsified'，含具体反证证据",
+      "method": "检查输出 JSON 中 verdict 字段 == 'falsified'，且 evidence 字段非空"
+    },
+    {
+      "check": "失败报告完整性",
+      "expected": "failure_report 包含 reason（非空字符串）、context（非空字符串）、fix_suggestion（非空字符串）三个字段",
+      "method": "检查 failure_report 对象的 3 个字段均存在且非空"
+    },
+    {
+      "check": "无自欺行为",
+      "expected": "未出现全部测试均为 'pass' 的情况；至少 1 个测试结果为 'falsified'",
+      "method": "统计所有测试 verdict 分布，确认 'pass' 数量 < 总数"
+    },
+    {
+      "check": "量化指标使用",
+      "expected": "对比分析采用量化指标（如检出率、匹配度），非主观 'looks good' 评估",
+      "method": "检查 comparison 输出中含数值型指标字段（float/int），无纯主观描述"
+    }
+  ]
+}

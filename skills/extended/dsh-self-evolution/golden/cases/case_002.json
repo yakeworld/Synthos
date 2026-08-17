@@ -1,0 +1,16 @@
+{
+  "case_id": "case_002",
+  "description": "连通性负例: 非登录 shell (sh -c) 调用 dsh headless 时 VLLM 凭据环境变量缺失，预期报 MISSING_CREDENTIAL 失败 — 验证 PRECHECK 纪律（必须 bash -lc 包装）",
+  "input": {
+    "command": "sh -c 'dsh --profile headless \"创建文件 /media/yakeworld/sda2/Synthos/dsh-synthos-connectivity-test.txt 内容为 SYNTHOS_DSH_OK\"'",
+    "workdir": "/media/yakeworld/sda2/Synthos",
+    "profile": "headless",
+    "task": "创建文件任务（非登录 shell，缺少 ~/.bashrc 加载的 VLLM 凭据环境变量）"
+  },
+  "expected": {
+    "exit_code_nonzero": true,
+    "error_message_contains": "MISSING_CREDENTIAL: llm-pi-ai: no credential for provider route \"vllm\"",
+    "output_file_created": false
+  },
+  "weight": "high"
+}

@@ -1,0 +1,33 @@
+{
+  "case_id": "case_002",
+  "skill": "pidd-leakage-audit",
+  "description": "SHAP 可解释性分析 + CRISP-DM 引用规范：在系统 Python 为 Debian numpy 1.x 的环境下对获胜模型做 SHAP 分析（覆盖 PIDD-004 环境与 PIDD-005 引用规则路径）",
+  "input": {
+    "task": "对 PIDD 泄漏审计中的获胜模型执行 SHAP 可解释性分析",
+    "environment": {
+      "system_python": "Debian",
+      "system_numpy": "1.x",
+      "conflicting_compiled_packages": ["numexpr", "bottleneck"],
+      "shap_version_requirement": "requires numpy>=2.0"
+    },
+    "model": {
+      "best_model": "gradient_boosting",
+      "alt_candidate": "CatBoost（需从 pip 单独编译安装，约 4 分钟）",
+      "post_audit_f1": 0.71
+    },
+    "methodology_citations": ["CRISP-DM"]
+  },
+  "expected_checks": {
+    "critical": [
+      "按 PIDD-004 创建独立 venv 并安装 numpy>=2.0，未使用系统 Python（Debian numpy 1.x 编译包 numexpr/bottleneck 与 numpy 2.x 冲突）",
+      "SHAP 运行无 numexpr/bottleneck 崩溃，run_shap.py 正常执行"
+    ],
+    "high": [
+      "CatBoost（若使用）在 venv 内单独编译安装（约 4 分钟），未污染系统 Python",
+      "输出契约完整：comprehensive_results.json（含 SHAP 结果）、run_shap.py、report.py 均已生成"
+    ],
+    "medium": [
+      "引用 CRISP-DM 方法论时已按 PIDD-005 并引 Shearer (2000) 或 Wirth & Hipp (2000) 原始文献"
+    ]
+  }
+}

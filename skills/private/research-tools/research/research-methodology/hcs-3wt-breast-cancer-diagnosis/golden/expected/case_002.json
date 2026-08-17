@@ -1,0 +1,66 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "automation_rate": {
+      "mean": 0.0858,
+      "std": 0.0203,
+      "unit": "fraction",
+      "note": "Below 10% threshold — triggers low-separability diagnostic"
+    },
+    "automation_accuracy": {
+      "mean": 0.9938,
+      "unit": "fraction",
+      "note": "0 auto false negatives despite low automation rate"
+    },
+    "gray_zone": {
+      "malignant_enrichment": 1.77,
+      "tolerance_enrichment": 0.1
+    },
+    "diagnostic": {
+      "triggered": true,
+      "reason": "automation_rate < 0.10 AND >90% of probabilities fall in [0.03, 0.95]",
+      "conclusion": "feature space lacks separation for default thresholds",
+      "honesty_signal": true
+    }
+  },
+  "expected_error_handling": {
+    "error_type": "low_separability_diagnosis",
+    "output_must_contain": [
+      "context: 特征空间分离度不足",
+      "recovery: 调整阈值至 0.20/0.80 或采用数据集特定阈值优化"
+    ],
+    "default_thresholds_not_forced": true
+  },
+  "expected_checks": [
+    {
+      "id": "HCS-001",
+      "expected": "passed",
+      "detail": "No single-class folds in PIMA; check present but not triggered"
+    },
+    {
+      "id": "HCS-002",
+      "expected": "passed",
+      "detail": "Automation rate 8.58% < 10%: probability histogram checked, >90% in [0.03,0.95] confirmed, recorded as honesty signal"
+    },
+    {
+      "id": "HCS-007",
+      "expected": "passed",
+      "detail": "Dataset-specific threshold handling invoked; default 0.03/0.95 documented as insufficient"
+    },
+    {
+      "id": "HCS-003",
+      "expected": "passed",
+      "detail": "cross_val_predict used for Expert C meta-features"
+    },
+    {
+      "id": "HCS-004",
+      "expected": "passed",
+      "detail": "~189s experiment executed in background"
+    }
+  ],
+  "pass_criteria": {
+    "weighted_score_threshold": 0.80,
+    "all_critical_must_pass": true,
+    "honesty_signal_must_be_present": true
+  }
+}

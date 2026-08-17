@@ -1,0 +1,9 @@
+{
+  "case_id": "case_002",
+  "expected_output": "pyvenv.cfg 设 include-system-site-packages = false，改用 ~/.venv/bin/python3 -m pip install Pillow；装后 pip3 show Pillow 的 Location 指向 ~/.venv/lib/python3.12/site-packages。",
+  "verification": [
+    "pyvenv.cfg 含 include-system-site-packages = false",
+    "安装使用 venv 内 python（~/.venv/bin/python3 -m pip），非系统 pip3 / uv pip",
+    "pip3 show Pillow 的 Location 为 ~/.venv/lib/python3.12/site-packages（非 /usr/lib/python3.12）"
+  ]
+}

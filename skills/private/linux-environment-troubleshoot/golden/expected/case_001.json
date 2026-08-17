@@ -1,0 +1,10 @@
+{
+  "case_id": "case_001",
+  "expected_output": "df -h 确认磁盘 60% 可用（非真满）→ 定位 ~/.miktex/texmfs/data/miktex/lock 残留 → rm -rf 清除锁文件 + 损坏日志 → pdflatex test.tex 编译通过，PDF 正常生成；全程未重装 MiKTeX。",
+  "verification": [
+    "先执行 df -h / df -i 排除真磁盘满/inode 耗尽，再查锁文件",
+    "定位并清除 ~/.miktex/texmfs/data/miktex/lock 及损坏日志",
+    "pdflatex test.tex 编译通过并生成 PDF",
+    "未执行 apt remove miktex && apt install miktex 重装（诊断顺序错误）"
+  ]
+}

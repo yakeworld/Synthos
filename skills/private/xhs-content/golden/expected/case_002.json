@@ -1,0 +1,50 @@
+{
+  "case_id": "case_002",
+  "expected_output": {
+    "post_body": {
+      "max_characters": 200,
+      "principle": "factual step description only, no narrative commentary",
+      "content_pattern": "OpenML 检索步骤: 搜索页 → 结果页元数据 → 数据集选择标准"
+    },
+    "tags": {
+      "count": 5,
+      "examples": ["#OpenML", "#数据集", "#科研工具", "#机器学习", "#数据检索"]
+    },
+    "figures": {
+      "total": 5,
+      "pillow_cards": {
+        "count": 3,
+        "composition": ["cover", "steps", "conclusion"],
+        "spec": {
+          "resolution": "1080x1440",
+          "background": "#0F172A",
+          "font": "Noto Sans CJK SC",
+          "max_words_per_figure": 10
+        }
+      },
+      "browser_screenshots": {
+        "count": 2,
+        "targets": ["OpenML search page", "OpenML dataset result page"],
+        "note": "real website display — method B"
+      }
+    },
+    "publish_channel_assessment": {
+      "channel": "personal_account",
+      "sensitivity": "non_medical",
+      "verdict": "publishable",
+      "note": "no UNVERIFIED flag needed"
+    }
+  },
+  "expected_checks": [
+    {"id": "XHS-001", "expected": "passed", "detail": "Body ≤ 200 chars; factual steps only; no forbidden narrative phrases"},
+    {"id": "XHS-004", "expected": "passed", "detail": "No code blocks in post; any code shown via screenshot"},
+    {"id": "XHS-005", "expected": "passed", "detail": "Mixed mode correctly applied: Pillow for steps/conclusion, browser screenshots for real website display"},
+    {"id": "XHS-006", "expected": "passed", "detail": "Personal account, non-medical domain: publishable; no compliance risk"},
+    {"id": "XHS-007", "expected": "passed", "detail": "Noto Sans CJK SC on Pillow cards; browser screenshots unaffected by font choice"}
+  ],
+  "pass_criteria": {
+    "weighted_score_threshold": 0.80,
+    "all_critical_must_pass": true,
+    "publish_channel_must_be_assessed": true
+  }
+}

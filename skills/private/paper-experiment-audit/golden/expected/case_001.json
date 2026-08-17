@@ -1,0 +1,52 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "status": "pass",
+    "audit_log": [
+      {
+        "check_id": "dataset_version_locked",
+        "result": "pass",
+        "detail": "数据集版本 699 在 main.tex、output_full.json、output_no_clinical.json 中一致记录"
+      },
+      {
+        "check_id": "ablation_repro",
+        "result": "pass",
+        "detail": "全模型 F1=0.941 vs 无临床 F1=0.928，差值 1.3% > 0.5%，但属不同配置对比（非复现差值）。同配置复现差值 0.0% ≤ 0.5% 判一致"
+      },
+      {
+        "check_id": "bib_consistency",
+        "result": "pass",
+        "detail": "thebibliography 32 条与 references.bib 32 条一一对应，无 MISMATCH"
+      },
+      {
+        "check_id": "fig6_dedup",
+        "result": "action_required",
+        "detail": "fig6 在 line 42, 108, 187 重复引用 3 次，建议合并为 line 42 单次引用，删除 line 108 和 187 的冗余引用"
+      },
+      {
+        "check_id": "cross_source",
+        "result": "pass",
+        "detail": "F1 指标在 output_full.json 和 main.tex 表格中交叉核对一致"
+      },
+      {
+        "check_id": "traceability",
+        "result": "pass",
+        "detail": "所有 6 条审计结论均标注数据源文件路径"
+      }
+    ],
+    "mismatches": [],
+    "actions_required": [
+      "合并 fig6 冗余引用（line 108, 187 → 删除）"
+    ],
+    "summary": "六条 VERIFICATION 全部通过，1 项建议合并冗余引用"
+  },
+  "checks_result": [
+    {"id": "dataset_version_locked", "weight": "critical", "passed": true},
+    {"id": "ablation_repro", "weight": "critical", "passed": true},
+    {"id": "bib_consistency", "weight": "critical", "passed": true},
+    {"id": "fig6_dedup", "weight": "high", "passed": true},
+    {"id": "cross_source", "weight": "high", "passed": true},
+    {"id": "traceability", "weight": "medium", "passed": true}
+  ],
+  "score": 1.0
+}

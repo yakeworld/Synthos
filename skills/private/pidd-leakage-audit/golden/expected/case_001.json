@@ -1,0 +1,43 @@
+{
+  "case_id": "case_001",
+  "skill": "pidd-leakage-audit",
+  "description": "期望输出：折内预处理修复后的审计结论与指标",
+  "actions": [
+    "按 PIDD-001 将 SMOTE 与 imputation 移入 imblearn.Pipeline（PIDD-002），仅在各 fold 训练折内执行",
+    "缺失值填充改为验证折内独立计算（PIDD-006），禁止全局 imputation",
+    "重跑 10-fold CV 并复算指标"
+  ],
+  "metrics": {
+    "f1_before_fix": 0.93,
+    "f1_after_fix": 0.71,
+    "f1_after_fix_bound": [0.68, 0.74],
+    "recall_before_fix": 0.5,
+    "recall_after_fix_note": "不再虚崩至 ~0.50，恢复至合理量级",
+    "precision_before_fix": 1.0,
+    "precision_after_fix_note": "不再虚高至 1.00，恢复至合理量级"
+  },
+  "leakage_findings": [
+    {
+      "source": "smote_before_split",
+      "gene": "PIDD-001",
+      "severity": "severe",
+      "evidence": "Recall 虚崩至 ~0.50、Precision 虚高至 1.00"
+    },
+    {
+      "source": "global_imputation",
+      "gene": "PIDD-006",
+      "severity": "minor",
+      "evidence": "F1 虚增 +0.6%"
+    }
+  ],
+  "pipeline_used": "imblearn.Pipeline",
+  "pipeline_forbidden": "sklearn.Pipeline（不支持 SMOTE，PIDD-002）",
+  "output_contracts": [
+    "cv_results.csv",
+    "comprehensive_results.json",
+    "run_shap.py",
+    "report.py"
+  ],
+  "recorded": "comprehensive_results.json 含修复前后指标对照与泄漏来源",
+  "f1_anomaly_triggered": false
+}

@@ -1,0 +1,39 @@
+{
+  "case_id": "case_002",
+  "skill": "prose-cluster-hybrid-citation-fix",
+  "description": "期望输出：Orphans > 0 触发 PROS-005，回查映射表补齐后验证通过",
+  "detection": {
+    "initial_verification": {
+      "d10a": "8/9 = 89%",
+      "orphans_count": 1,
+      "orphans": ["headimpulse"]
+    },
+    "triggered_gene": "PROS-005",
+    "fix_declared_complete": false
+  },
+  "recovery": {
+    "action": "回查映射表（PROS-001），为 headimpulse 补齐「章节-文本锚点」",
+    "mapping_added": {
+      "cite_key": "headimpulse",
+      "topic": "Head impulse modeling",
+      "section": "Introduction → Gap",
+      "anchor": "The head impulse test computational modeling"
+    },
+    "insertion": {
+      "anchor": "The head impulse test computational modeling represents the only existing",
+      "replacement": "The head impulse test computational modeling\\cite{headimpulse} represents the only existing"
+    }
+  },
+  "reverification": {
+    "d10a": "9/9 = 100%",
+    "orphans": 0,
+    "pdflatex_passes": 2,
+    "undefined_count_in_log": 0
+  },
+  "error_reporting": {
+    "lists_unanchored_keys": true,
+    "unanchored_keys_reported": ["headimpulse"],
+    "includes_before_after_comparison": true
+  },
+  "genes_applied": ["PROS-001", "PROS-005", "PROS-006"]
+}

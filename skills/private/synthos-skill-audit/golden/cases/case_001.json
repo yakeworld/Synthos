@@ -1,0 +1,19 @@
+{
+  "case_id": "case_001",
+  "description": "Audit /learn-generated xhs-content skill against Synthos five-section standard",
+  "input": {
+    "target_skill": "skills/private/xhs-content/SKILL.md",
+    "source": "learn-generated",
+    "structure_blocks": ["思想", "原理", "流程", "方法"],
+    "reference_standard": "Synthos five-section method (IO_CONTRACT, Principles, Verification, Golden Set, Genes)",
+    "dual_repo_paths": ["skills/private/", "skills/"],
+    "migration_status": "xhs-content migrated to skills/private/"
+  },
+  "checks": [
+    {"id": "SYNT-001", "name": "four_to_five_section_mapping", "weight": "critical"},
+    {"id": "SYNT-002", "name": "hierarchy_difference_recorded", "weight": "critical"},
+    {"id": "SYNT-003", "name": "privacy_scan_executed", "weight": "critical"},
+    {"id": "SYNT-004", "name": "path_trap_detection", "weight": "high"},
+    {"id": "SYNT-005", "name": "zero_finding_verification", "weight": "medium"}
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "case_id": "case_001",
+  "description": "路由请求：将 Codex CLI v0.139+ 路由到本地 LLM 的 Responses API 代理（Golden Input/Output 正常路径）",
+  "input": {
+    "request": "将 Codex CLI v0.139+ 路由到本地 LLM 的 Responses API 代理",
+    "context": {
+      "codex_cli_version": "0.139",
+      "target_backend": "local_llm_responses_api",
+      "available_subdomains": [
+        "codex-llm-routing",
+        "ellipse-3d-anatomy-constrained",
+        "evaluation",
+        "inference",
+        "models",
+        "research",
+        "training"
+      ]
+    }
+  },
+  "checks": [
+    {
+      "id": "route_correct",
+      "weight": "critical",
+      "description": "路由结果为 codex-llm-routing"
+    },
+    {
+      "id": "traceability",
+      "weight": "high",
+      "description": "路由依据可追溯至请求描述"
+    }
+  ]
+}

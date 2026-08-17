@@ -1,0 +1,68 @@
+{
+  "case_id": "case_001",
+  "skill": "paper-improvement",
+  "expected_output": {
+    "input_validation": {
+      "status": "PASS",
+      "tex_exists": true,
+      "pdf_exists": true,
+      "references_dir_exists": true,
+      "decision": "PROCEED",
+      "recorded_in_audit_report": true
+    },
+    "fake_doi_replacement": {
+      "total_found": 3,
+      "total_replaced": 3,
+      "log": [
+        {
+          "original_doi": "10.1109/CVPR.2019.00001",
+          "new_doi": "10.1109/CVPR.2019.00103",
+          "key": "he2019deepfake",
+          "title": "MOSNet: A Deep Metric Learning Approach for Face Anti-Spoofing",
+          "verified_via": "crossref_api"
+        },
+        {
+          "original_doi": "10.1038/s41586-020-2122-9",
+          "new_doi": "10.1038/s41586-020-2290-6",
+          "key": "smith2020placeholder",
+          "title": "Genome-wide association analyses identify new loci associated with inflammatory and autoimmune diseases",
+          "verified_via": "crossref_api"
+        },
+        {
+          "original_doi": "10.1145/3292500.3330860",
+          "new_doi": "10.1145/3397271.3401071",
+          "key": "wang2021phantom",
+          "title": "Deep Learning for Tabular Data: A Survey of Methods and Applications",
+          "verified_via": "crossref_api"
+        }
+      ],
+      "sed_fallback_used": false,
+      "all_traces_verifiable": true
+    },
+    "model_list_alignment": {
+      "missing_models_addressed": ["LightGBM", "CatBoost"],
+      "action": "补跑 LightGBM/CatBoost 实验并更新论文实验清单，与 helix_benchmark 一致",
+      "itemized_in_report": true
+    },
+    "compilation": {
+      "tool": "pdflatex",
+      "errors": 0,
+      "undefined_references": 0,
+      "exit_code": 0
+    },
+    "audit_reports": {
+      "count": 4,
+      "present": true,
+      "reproducible_verification_steps": true
+    }
+  },
+  "checks_results": [
+    {"id": "check_01", "result": "PASS"},
+    {"id": "check_02", "result": "PASS"},
+    {"id": "check_03", "result": "PASS"},
+    {"id": "check_04", "result": "PASS"},
+    {"id": "check_05", "result": "PASS"}
+  ],
+  "weighted_score": 0.84,
+  "passed": true
+}

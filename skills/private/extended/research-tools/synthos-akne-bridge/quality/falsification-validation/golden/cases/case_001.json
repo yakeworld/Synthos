@@ -1,0 +1,29 @@
+{
+  "case_id": "001",
+  "description": "基本功能测试：对技能声明执行证伪测试，验证完整证据链产出",
+  "input": {
+    "skill_claim": "citation-verification 技能在 pima-crispdm 数据集上可检出 ≥95% 虚构引用",
+    "applicable_scenarios": ["文献验证", "引用完整性审计"],
+    "testable_conditions": [
+      "在 pima-crispdm 数据集的 30 篇参考文献中执行引用验证",
+      "虚构引用检出率 ≥95%",
+      "每篇引用均产生可追溯的验证记录"
+    ],
+    "real_task_input": "pima-crispdm 论文目录 /media/yakeworld/sda2/Synthos/papers/pima-crispdm/"
+  },
+  "expected": {
+    "output_structure": {
+      "test_results": "list of test objects, each containing real_input, expected_output, actual_output, verdict",
+      "trust_grade": "string: High Trust / Medium Trust / Low Trust / Unreliable",
+      "trust_score": "float: 0.0-1.0",
+      "evidence_archive": "string: path to test-results/ directory"
+    },
+    "key_checks": [
+      "所有测试使用真实任务输入（非 mock/synthetic）",
+      "测试集包含至少 1 个期望失败的反证测试",
+      "每项测试归档完整证据链至 test-results/",
+      "信任分级基于累积证据而非单点数据"
+    ]
+  },
+  "weight": "critical"
+}

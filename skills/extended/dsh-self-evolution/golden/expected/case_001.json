@@ -1,0 +1,16 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "exit_code": 0,
+    "output_file": "/media/yakeworld/sda2/Synthos/dsh-synthos-connectivity-test.txt",
+    "output_content": "SYNTHOS_DSH_OK",
+    "dsh_agent": "qwen3.8-27b-nvfp4 (headless profile)",
+    "status": "PASS"
+  },
+  "verification": [
+    "command: bash -lc 'dsh --profile headless \"创建文件 ...\"' 退出码为 0",
+    "test -f /media/yakeworld/sda2/Synthos/dsh-synthos-connectivity-test.txt 且文件存在",
+    "grep -q 'SYNTHOS_DSH_OK' /media/yakeworld/sda2/Synthos/dsh-synthos-connectivity-test.txt 内容匹配",
+    "单轮耗时 < 5 分钟（简单任务判定标准）"
+  ]
+}

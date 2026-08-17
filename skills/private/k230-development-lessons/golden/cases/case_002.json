@@ -1,0 +1,18 @@
+{
+  "case_id": "case_002",
+  "description": "GPIO 按键配置前固件/板型判定：RT-Smart vs CanMV FPIOA 策略 + os.uname()[-1] 按键 GPIO 分配",
+  "input": {
+    "firmware_revision": "/revision.txt 含 rtsmart 字符串（RT-Smart 固件）",
+    "board_id": "os.uname()[-1] == 'k230_canmv_01studio'",
+    "task": "配置按键 GPIO（Pin.IN, Pin.PULL_UP）"
+  },
+  "expected": {
+    "firmware_check": "配置 GPIO 前读取 /revision.txt；含 rtsmart → 先显式 fpioa.set_function(pin, FPIOA.GPIO0 + pin)，再 machine.Pin(pin, Pin.IN, Pin.PULL_UP)；标准 CanMV 固件则直接用 machine.Pin，不叠 FPIOA",
+    "button_gpio": "os.uname()[-1] == 'k230_canmv_01studio' → 按键 GPIO21，按下=0（低电平）；'k230_canmv_lckfb' → GPIO53，按下=1（高电平）；其他板型默认 GPIO21/按下=0"
+  },
+  "weight": {
+    "critical": 1.0,
+    "high": 0.7,
+    "medium": 0.4
+  }
+}

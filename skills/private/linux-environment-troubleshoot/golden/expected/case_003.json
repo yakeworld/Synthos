@@ -1,0 +1,10 @@
+{
+  "case_id": "case_003",
+  "expected_output": "sudo dpkg --configure -a 修复中断状态，清除 /var/lib/dpkg/lock* 与 /var/cache/apt/archives/lock 后重试，dpkg/apt 恢复正常。",
+  "verification": [
+    "执行 sudo dpkg --configure -a 修复中断配置",
+    "清除 /var/lib/dpkg/lock-frontend、/var/lib/dpkg/lock、/var/cache/apt/archives/lock",
+    "修复后再次 sudo dpkg --configure -a 验证无错",
+    "未直接 apt remove 重装（锁优先重装原则）"
+  ]
+}

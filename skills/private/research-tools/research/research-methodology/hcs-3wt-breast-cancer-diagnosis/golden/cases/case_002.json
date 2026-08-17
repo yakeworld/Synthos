@@ -1,0 +1,28 @@
+{
+  "case_id": "case_002",
+  "description": "PIMA diabetes low-separability dataset — threshold sensitivity diagnostic",
+  "input": {
+    "data_path": "pima",
+    "dataset": "Pima Indians Diabetes (auxiliary cross-domain)",
+    "n_samples": 768,
+    "n_features": 8,
+    "cv_config": {
+      "outer_splits": 10,
+      "inner_splits": 5,
+      "stratified": true,
+      "total_folds": 50
+    },
+    "thresholds": {
+      "theta_low": 0.03,
+      "theta_high": 0.95
+    },
+    "execution_mode": "background"
+  },
+  "checks": [
+    {"id": "HCS-001", "name": "single_class_fold_skip", "weight": "critical"},
+    {"id": "HCS-002", "name": "low_automation_rate_diagnostic", "weight": "critical"},
+    {"id": "HCS-007", "name": "low_separability_threshold_handling", "weight": "critical"},
+    {"id": "HCS-003", "name": "meta_feature_leakage_prevention", "weight": "high"},
+    {"id": "HCS-004", "name": "background_execution", "weight": "medium"}
+  ]
+}

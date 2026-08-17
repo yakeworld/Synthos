@@ -1,0 +1,30 @@
+{
+  "case_id": "002",
+  "description": "降级链测试：SearXNG 引擎集体 ConnectTimeout 时正确诊断并切换出口 IP（GOOG-004）",
+  "input": {
+    "scenario": "SearXNG 所有引擎返回 httpx.ConnectTimeout",
+    "diagnostic_steps": [
+      "curl -s --max-time 10 -o /dev/null -w '%{http_code}' https://www.google.com.hk 检查宿主机外网",
+      "若返回非 000（网络正常）→ 判定为出口 IP 被封锁",
+      "切换 Tailscale Exit Node 或 Tor SOCKS5 代理",
+      "重跑 SearXNG 搜索验证恢复"
+    ],
+    "expected_diagnosis": "出口 IP 被 Google/Bing 封锁（非 SearXNG 故障）",
+    "expected_action": "切换出口 IP（Tailscale Exit Node / Tor SOCKS5），非重启容器"
+  },
+  "expected": {
+    "output_structure": {
+      "diagnosis": "string: 出口 IP 被封锁",
+      "action_taken": "string: 切换出口（含具体方法）",
+      "recovery_verification": "string: 重跑搜索返回非空结果",
+      "output_contract": "恢复后输出仍满足 {title, url, snippet, position, engine} 契约"
+    },
+    "key_checks": [
+      "诊断路径正确：先 curl 宿主机排除网络故障，再判定 IP 封锁",
+      "未执行无效重试（如反复重启 SearXNG 容器）",
+      "恢复后输出契约完整：5 字段齐全，engine 标记正确",
+      "学术搜索未依赖 google_scholar 专用引擎（GOOG-006）"
+    ]
+  },
+  "weight": "high"
+}

@@ -1,0 +1,11 @@
+{
+  "case_id": "bppv-expert_case_002",
+  "title": "nystagmus 缺失 / 无法判定受累半规管 —— 拒绝输出复位手法并给出错误上下文与恢复建议",
+  "task": "bppv-expert: 输入缺少眼震信息，无法判定受累半规管时应拒绝复位手法并返回错误信息",
+  "input": {
+    "patient_data": {
+      "nystagmus": null,
+      "symptoms": "特定头位诱发的短暂眩晕伴恶心，无眼震方向记录"
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "case_id": "case_001",
+  "description": "含 WDBC 实验的 LaTeX 论文目录——thebibliography 与 references.bib 并存、消融实验独立运行脚本+输出 JSON、fig6 重复引用 3 次（正常审计路径）",
+  "input": {
+    "paper_dir": "papers/wdbc-ablation/",
+    "files": {
+      "main.tex": {
+        "has_thebibliography": true,
+        "fig6_citation_count": 3,
+        "fig6_citation_lines": [42, 108, 187],
+        "wdbc_dataset_version": "699"
+      },
+      "references.bib": {
+        "entry_count": 32,
+        "sample_entries": [
+          {"key": "wolberg1995", "title": "Breast cancer wisconsin (diagnostic)", "year": 1995},
+          {"key": "khan2001", "title": "Multiclass pattern recognition for breast cancer", "year": 2001}
+        ]
+      },
+      "ablation/": {
+        "run_full.py": "存在",
+        "run_no_clinical.py": "存在",
+        "output_full.json": {
+          "dataset_version": "699",
+          "sample_count": 699,
+          "f1_score": 0.941
+        },
+        "output_no_clinical.json": {
+          "dataset_version": "699",
+          "sample_count": 699,
+          "f1_score": 0.928
+        }
+      }
+    }
+  },
+  "checks": [
+    {
+      "id": "dataset_version_locked",
+      "weight": "critical",
+      "description": "数据集版本锁定（699/569 分别记录）"
+    },
+    {
+      "id": "ablation_repro",
+      "weight": "critical",
+      "description": "消融复现差值 ≤0.5% 判一致"
+    },
+    {
+      "id": "bib_consistency",
+      "weight": "critical",
+      "description": "thebibliography ↔ references.bib 无 MISMATCH"
+    },
+    {
+      "id": "fig6_dedup",
+      "weight": "high",
+      "description": "fig6 冗余引用合并为单次"
+    },
+    {
+      "id": "cross_source",
+      "weight": "high",
+      "description": "同一指标 ≥2 独立源交叉核对"
+    },
+    {
+      "id": "traceability",
+      "weight": "medium",
+      "description": "每条结论可溯源"
+    }
+  ]
+}

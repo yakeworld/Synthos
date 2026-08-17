@@ -1,0 +1,20 @@
+{
+  "case_id": "case_002",
+  "description": "文件名与 bibkey 年份不一致 + 子目录已有 PDF 建 symlink（边界场景）",
+  "input": {
+    "paper_dir": "papers/demo-paper",
+    "bib_file": "papers/demo-paper/references.bib",
+    "tex_file": "papers/demo-paper/paper.tex",
+    "root_pdf": "papers/demo-paper/Shams2025.pdf",
+    "pdf_subdir": "papers/demo-paper/pdfs",
+    "subdir_pdf_exists": "papers/demo-paper/pdfs/Lee2023Pupil.pdf",
+    "root_access_needed": "papers/demo-paper/Lee2023Pupil.pdf",
+    "pdfinfo_results": {
+      "Shams2025.pdf": {"title": "BRFSS-based risk factor surveillance", "authors": ["Shams"], "year": 2023}
+    }
+  },
+  "bib_entries": [
+    {"bibkey": "Shams2023BRFSS", "title": "BRFSS-based risk factor surveillance", "year": 2023},
+    {"bibkey": "Lee2023Pupil", "title": "Pupil tracking under low light", "year": 2023}
+  ]
+}

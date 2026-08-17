@@ -1,0 +1,16 @@
+{
+  "case_id": "case_001",
+  "checks": [
+    {"id": "archive_mismatched", "weight": "critical", "expect": {"archived_to": "_archive/", "count": 8, "files": ["Old2019Legacy.pdf", "Old2020Legacy.pdf", "Old2021Legacy.pdf", "Old2022Legacy.pdf", "Old2023Legacy.pdf", "Old2024LegacyA.pdf", "Old2024LegacyB.pdf", "Old2024LegacyC.pdf"]}},
+    {"id": "name_mismatch_resolved", "weight": "critical", "expect": {"verified_by": "pdfinfo", "renamed": {"from": "Shams2025.pdf", "to": "Shams2023BRFSS.pdf"}, "bibkey": "Shams2023BRFSS"}},
+    {"id": "kept_matched", "weight": "high", "expect": {"kept_in_pdfs": ["Wang2024Gaze.pdf", "Lee2023Pupil.pdf"], "count": 3}},
+    {"id": "symlink_not_copy", "weight": "high", "expect": {"mechanism": "symlink", "root_entry_points_to": "pdfs/", "single_physical_copy": true}},
+    {"id": "bib_cleaned_before_tex", "weight": "critical", "expect": {"order": ["clean_bib_invalid_entries", "remove_tex_stale_cites", "pdflatex_recompile"]}},
+    {"id": "compile_verified", "weight": "critical", "expect": {"pdflatex_errors": 0, "undefined_references": 0}}
+  ],
+  "pass_criteria": {"weighted_score_min": 0.8, "all_critical_must_pass": true},
+  "failure_behavior": {
+    "undefined_reference": "触发 REFE-003：按序清理 bib → 删 .tex 残留 → 重编译，禁止乱序",
+    "name_mismatch_unverified": "触发 REFE-002：先用 pdfinfo 验证标题/作者再操作"
+  }
+}

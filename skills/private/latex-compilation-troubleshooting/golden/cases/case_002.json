@@ -1,0 +1,18 @@
+{
+  "case_id": "case_002",
+  "description": "bibtex 报 'I found no \\bibstyle command'（paper.bbl 为 0 字节）→ 判定缺失 \\bibliographystyle，而非 bib 条目问题",
+  "input": {
+    "project": "elsarticle 论文 paper.tex + 外部 references.bib",
+    "preamble": "含 \\bibliography{references} 但未含 \\bibliographystyle{plain}",
+    "trigger": "bibtex paper 报 'I found no \\bibstyle command'；paper.bbl 为 0 字节"
+  },
+  "expected": {
+    "diagnosis": "判定为 preamble 缺失 \\bibliographystyle{plain}（而非 references.bib 条目问题）",
+    "fix": "在 \\bibliography{} 前添加 \\bibliographystyle{plain}，重跑完整编译链后 .bbl 非空"
+  },
+  "weight": {
+    "critical": 1.0,
+    "high": 0.7,
+    "medium": 0.4
+  }
+}

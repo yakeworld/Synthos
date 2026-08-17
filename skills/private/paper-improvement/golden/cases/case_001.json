@@ -1,0 +1,33 @@
+{
+  "case_id": "case_001",
+  "skill": "paper-improvement",
+  "description": "基本功能测试：完整论文目录，含 3 条假 DOI、实验模型清单偏差项（LightGBM/CatBoost），覆盖正常改进路径",
+  "input": {
+    "paper_dir": "papers/hcs3wt-breast-cancer",
+    "files": {
+      "tex": "paper.tex",
+      "pdf": "paper.pdf",
+      "references_dir": "references/",
+      "references_count": 30,
+      "fake_dois": [
+        {"doi": "10.1109/CVPR.2019.00001", "key": "he2019deepfake", "context": "Introduction 引用，标题为占位符"},
+        {"doi": "10.1038/s41586-020-2122-9", "key": "smith2020placeholder", "context": "Methods 引用，标题与内容不符"},
+        {"doi": "10.1145/3292500.3330860", "key": "wang2021phantom", "context": "Related Work 引用，DOI 查无此文"}
+      ],
+      "model_list_deviation": {
+        "expected_from_helix_benchmark": ["XGBoost", "LightGBM", "CatBoost", "RandomForest", "LogisticRegression"],
+        "claimed_in_paper": ["XGBoost", "RandomForest", "LogisticRegression"],
+        "missing_models": ["LightGBM", "CatBoost"]
+      },
+      "p0_defects": []
+    },
+    "gene_path": ["PAPE-001", "PAPE-002", "PAPE-003", "PAPE-006"]
+  },
+  "checks": [
+    {"id": "check_01", "priority": "critical", "description": "输入完整性校验通过（目录/.tex/PDF 均存在），记录放行决定"},
+    {"id": "check_02", "priority": "critical", "description": "3 条假 DOI 全部替换为真实 DOI，替换日志逐条可回溯（原 DOI→新 DOI）"},
+    {"id": "check_03", "priority": "high", "description": "LightGBM/CatBoost 偏差项逐项列出并处置（补实验或修正论文清单）"},
+    {"id": "check_04", "priority": "critical", "description": "改进后 pdflatex 编译 0 error / 0 undefined reference"},
+    {"id": "check_05", "priority": "medium", "description": "四份标准审计报告齐备，PAPE-006 验证步骤可执行、可记录、可复现"}
+  ]
+}

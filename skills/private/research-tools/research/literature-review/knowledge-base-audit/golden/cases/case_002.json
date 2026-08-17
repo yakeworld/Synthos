@@ -1,0 +1,18 @@
+{
+  "case_id": "case_002",
+  "description": "异常测试：notebooklm list 返回未认证错误，但 profile 目录存有 148 cookies",
+  "scenario": "error_path",
+  "input": {
+    "notebooklm_list": {
+      "error": "Not authenticated. Run notebooklm login first.",
+      "notebooks": [],
+      "sources": []
+    },
+    "auth_snapshot": {
+      "profile_name": "default",
+      "profile_path": "~/.notebooklm/profiles/default/storage_state.json",
+      "storage_state": {"cookie_count": 148, "google_domains_present": true},
+      "default_cli_path_checked": "~/.notebooklm/storage-state.json"
+    }
+  }
+}

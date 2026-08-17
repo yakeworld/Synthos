@@ -1,0 +1,48 @@
+{
+  "case_id": "case_002",
+  "skill": "paperjury",
+  "expected_output": {
+    "claims": [
+      {
+        "name": "AUC",
+        "claimed": 0.97,
+        "actual": null,
+        "match": false,
+        "code_available": false,
+        "verdict": "FABRICATED",
+        "note": "03-code/ 下无对应脚本与输出，禁止标注 CLOSE 或放行 (PAPE-002)"
+      },
+      {
+        "name": "F1",
+        "claimed": 0.91,
+        "actual": 0.84,
+        "match": false,
+        "code_available": true,
+        "verdict": "MISMATCH",
+        "note": "独立运行 03-code/eval_f1.py 得 0.84，与 claimed 0.91 不符"
+      }
+    ],
+    "fabricated_items": 1,
+    "mismatch_items": 1,
+    "release_allowed": false,
+    "token_budget": {
+      "multi_round_used": 52400,
+      "budget": 50000,
+      "exceeded": true,
+      "action": "AUTO_TERMINATE",
+      "unresolved_issue_list_emitted": true
+    },
+    "unresolved_issues": [
+      {"id": "unresolved_001", "metric": "AUC", "status": "FABRICATED", "action": "移交作者，禁止放行"},
+      {"id": "unresolved_002", "metric": "F1", "status": "MISMATCH", "action": "需作者提供数据/代码修复后再审"},
+      {"id": "unresolved_003", "issue": "token 预算超限终止，L5-L7 合规检查未完成", "status": "OPEN", "assigned_to": "author"}
+    ]
+  },
+  "checks_results": [
+    {"id": "check_01", "result": "PASS", "note": "AUC 标 FABRICATED，未放行"},
+    {"id": "check_02", "result": "PASS", "note": "F1 标 MISMATCH (0.91 vs 0.84)"},
+    {"id": "check_03", "result": "PASS", "note": "52.4k > 50k → 自动终止，输出未决问题清单"}
+  ],
+  "weighted_score": 0.84,
+  "passed": true
+}

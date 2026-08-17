@@ -1,0 +1,37 @@
+{
+  "case_id": "case_002",
+  "skill": "pima-audit",
+  "description": "期望输出：失败路径检测与隔离处置（无跨数据集对比结论输出）",
+  "rejections": [
+    {
+      "defect": "条件不一致",
+      "gene": "PIMA-001",
+      "verdict": "标注「对比无效」，拒绝输出 INSCAT/130-US 与 PIDD 的跨数据集对比结论",
+      "recovery": "固定 ZeroReplacer、Pipeline 结构、CV 设置与评估指标后重跑"
+    },
+    {
+      "defect": "Notebook 无输出",
+      "gene": "PIMA-002",
+      "verdict": "拒绝该 Notebook 作为可复现记录，仅视为设计草稿",
+      "recovery": "将实验代码改写为独立 .py 脚本并保留完整 cell 输出"
+    },
+    {
+      "defect": "范式混同",
+      "gene": "PIMA-006",
+      "verdict": "隔离重审：Pima（方法论审计 32 基线）与 HCS-3WT（新架构验证 7 模型）严格分列",
+      "recovery": "将混同论证段拆分为两个独立范式段落"
+    }
+  ],
+  "output_conclusions_mixed": false,
+  "comparison_results_emitted": false,
+  "error_reporting": {
+    "includes_context": true,
+    "includes_recovery_suggestion": true
+  },
+  "audit_log_recorded": [
+    "条件不一致检测 → 对比无效",
+    "无输出 Notebook 检测 → 拒绝可复现记录",
+    "范式混同检测 → 隔离重审"
+  ],
+  "genes_applied": ["PIMA-001", "PIMA-002", "PIMA-006"]
+}

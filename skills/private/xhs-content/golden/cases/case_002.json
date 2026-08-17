@@ -1,0 +1,34 @@
+{
+  "case_id": "case_002",
+  "description": "Generate XHS post with mixed figures (Pillow cards + browser screenshots) for 'OpenML 数据集检索'",
+  "input": {
+    "topic": "OpenML 数据集检索",
+    "knowledge_points": [
+      {"id": "search", "content": "OpenML 搜索页：https://openml.org/search 按名称/标签/任务类型检索"},
+      {"id": "browse", "content": "结果页展示数据集元数据（行数、列数、分类变量数、缺失值比例）"},
+      {"id": "conclude", "content": "选择数据集时关注 license、data quality 分数、citation 格式"}
+    ],
+    "figure_mode": "mixed",
+    "figure_spec": {
+      "pillow_cards": {
+        "count": 3,
+        "resolution": "1080x1440",
+        "background": "#0F172A",
+        "font": "Noto Sans CJK SC"
+      },
+      "browser_screenshots": {
+        "count": 2,
+        "urls": ["https://openml.org/search", "https://openml.org/dataset/1491"]
+      }
+    },
+    "publish_channel": "personal_account",
+    "sensitivity_check": "non_medical"
+  },
+  "checks": [
+    {"id": "XHS-001", "name": "body_word_count_limit", "weight": "critical"},
+    {"id": "XHS-004", "name": "code_display_via_screenshot", "weight": "high"},
+    {"id": "XHS-005", "name": "figure_mode_selection", "weight": "high"},
+    {"id": "XHS-006", "name": "publish_channel_assessment", "weight": "medium"},
+    {"id": "XHS-007", "name": "font_rendering_correct", "weight": "medium"}
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "case_id": "case_001",
+  "description": "基本功能测试：两系统根目录已摸底，单向 A→B 桥接，幂等重跑",
+  "scenario": "happy_path",
+  "input": {
+    "system_a_root": "/media/yakeworld/sda2/Synthos",
+    "system_b_root": "/media/yakeworld/sda2/AKNE",
+    "sync_direction": "a_to_b",
+    "domain_keywords": {
+      "认知原子": ["knowledge-acquisition", "knowledge-extraction", "hypothesis-generation"],
+      "质量门": ["quality-gate", "citation-verification"],
+      "进化引擎": ["evolution", "skill-absorption"]
+    },
+    "known_mappings": [
+      ["skills/core/knowledge-acquisition", "akne/atoms/acq"],
+      ["skills/core/evolution", "akne/atoms/ver"],
+      ["skills/quality-gate", "akne/gates/g1_g7"]
+    ],
+    "rebuild_idempotency_check": true
+  }
+}

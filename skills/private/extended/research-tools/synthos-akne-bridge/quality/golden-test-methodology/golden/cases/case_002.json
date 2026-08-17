@@ -1,0 +1,27 @@
+{
+  "case_id": "002",
+  "description": "方法论验证：检查 golden 创建规范（cases 与 expected 一一配对、权重区分度、命名一致性）",
+  "input": {
+    "skill_dir": "skills/private/google-search",
+    "checks": [
+      "cases/ 中每个 case_XXX.json 在 expected/ 中有对应 expected/case_XXX.json",
+      "权重设置保留区分度（非全部 critical）",
+      "case 文件含必填字段：case_id/description/input/expected/weight",
+      "expected 文件含必填字段：case_id/expected_output/verification"
+    ]
+  },
+  "expected": {
+    "output_structure": {
+      "pairing_result": "dict: {cases_count, expected_count, matched, unmatched_cases, unmatched_expected}",
+      "weight_distribution": "dict: {critical: int, high: int, medium: int}",
+      "schema_valid": "bool"
+    },
+    "key_checks": [
+      "cases 与 expected 数量相等且命名一一配对",
+      "权重不全为 critical（至少有 high 或 medium）",
+      "所有 JSON 文件可被 json.load 正常解析",
+      "必填字段完整无缺失"
+    ]
+  },
+  "weight": "high"
+}

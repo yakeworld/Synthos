@@ -1,0 +1,29 @@
+{
+  "case_id": "case_002",
+  "skill": "prose-cluster-hybrid-citation-fix",
+  "description": "Golden 失败路径：批量替换后验证脚本 Orphans > 0（存在未锚定 bibitem 键），触发 PROS-005 回查映射表（PROS-001）",
+  "input": {
+    "file": "01-manuscript/paper.tex",
+    "post_fix_state": "已执行部分批量 tex.replace 修复",
+    "verification_output": {
+      "d10a": "8/9 = 89%",
+      "orphans_count": 1,
+      "orphans": ["headimpulse"]
+    },
+    "mapping_table_state": "headimpulse 的「章节-文本锚点」映射缺失（Introduction → Gap 段锚点未定位）"
+  },
+  "expected_checks": {
+    "critical": [
+      "Orphans > 0 → 触发 PROS-005，不宣布修复完成",
+      "回查映射表（PROS-001）为 headimpulse 补齐锚点（Introduction → Gap，短语 \"The head impulse test computational modeling\"）",
+      "重跑验证脚本后 Orphans 归 0、D10a = 100%"
+    ],
+    "high": [
+      "重跑双次 pdflatex 编译并复查 paper.log 无 undefined（PROS-006）",
+      "错误报告列出未锚定键（headimpulse）而非笼统失败"
+    ],
+    "medium": [
+      "修复记录含前后 Orphans/D10a 对照"
+    ]
+  }
+}

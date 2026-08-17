@@ -1,0 +1,19 @@
+{
+  "case_id": "case_002",
+  "description": "Golden Error 场景：数据集版本未锁定 + 验证步骤失败 → 判定复现无凭并记录修复",
+  "input": {
+    "paper_dir": "papers/repro-target-broken",
+    "dataset": {"name": "mimic-iv", "version": null, "lock_file": null, "version_pinned": false},
+    "bib_sources": {
+      "inline_thebibliography": {"entry_count": 30},
+      "bib_file": "references.bib",
+      "bib_entry_count": 29,
+      "sync_status": "out_of_sync",
+      "diff": {"missing_in_bib": ["Smith2024Gaze"], "extra_in_bib": ["Orphan2019Legacy"]}
+    },
+    "code_pipeline": {"runnable": true, "golden_test_present": true, "golden_test_name": "test_golden_repro.py", "last_run": {"status": "failed", "failing_check": "dataset_version"}},
+    "verification_log": [
+      {"step": "golden_test", "status": "failed", "reason": "数据集版本号未锁定", "recovery": null}
+    ]
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "case_id": "case_001",
+  "skill": "prose-cluster-hybrid-citation-fix",
+  "description": "期望输出：锚点映射表 + 批量替换 + 验证通过",
+  "mapping_table": [
+    {"cite_key": "halmagyi02", "topic": "vHIT / vestibular testing", "section": "Introduction → Background", "anchor": "video head impulse testing (vHIT)"},
+    {"cite_key": "curthoys09", "topic": "Semicircular canal anatomy", "section": "Introduction → Background", "anchor": "vestibular testing including caloric irrigation"},
+    {"cite_key": "parnes99", "topic": "Endolymphatic sac treatment", "section": "Introduction → Background", "anchor": "endolymphatic sac and stria vascularis"},
+    {"cite_key": "iahn17", "topic": "Meniere's classification", "section": "Introduction → Background", "anchor": "chronic vestibular disorder characterized by"},
+    {"cite_key": "headimpulse", "topic": "Head impulse modeling", "section": "Introduction → Gap", "anchor": "The head impulse test computational modeling"},
+    {"cite_key": "raissi19", "topic": "PINN framework", "section": "Methods → PINN Architecture", "anchor": "\\subsection{PINN Architecture}"},
+    {"cite_key": "chen18", "topic": "Neural ODE", "section": "Methods → PINN Architecture", "anchor": "\\subsection{PINN Architecture}"},
+    {"cite_key": "sanchez22", "topic": "Biochemically informed NeuralODE", "section": "Methods → PINN Architecture", "anchor": "\\subsection{PINN Architecture}"},
+    {"cite_key": "jagtap22", "topic": "Conservative PINNs", "section": "Methods → PINN Architecture", "anchor": "\\subsection{PINN Architecture}"}
+  ],
+  "insertions": [
+    {
+      "group": "vestibular testing → Introduction",
+      "anchor": "video head impulse testing (vHIT); and (c) audiometric assessment",
+      "replacement": "video head impulse testing (vHIT)\\cite{halmagyi02,curthoys09}; and (c) audiometric assessment",
+      "pattern": "单锚点合并（PROS-002）"
+    },
+    {
+      "group": "Meniere's → Background",
+      "anchor": "a chronic vestibular disorder characterized by episodic vertigo",
+      "replacement": "a chronic vestibular disorder\\cite{iahn17} characterized by episodic vertigo",
+      "pattern": "密集散文精确短语替换（PROS-003）"
+    },
+    {
+      "group": "PINN methods → PINN Architecture",
+      "anchor": "\\subsection{PINN Architecture}",
+      "replacement": "\\subsection{PINN Architecture}\n\nWe follow the physics-informed neural network framework\\cite{raissi19,chen18,sanchez22,jagtap22} for solving the inverse ODE problem.",
+      "pattern": "subsection 标题后解释句 + 合并 cite（PROS-004）"
+    }
+  ],
+  "verification": {
+    "d10a": "9/9 = 100%",
+    "orphans": 0,
+    "orphans_list": [],
+    "pdflatex_passes": 2,
+    "undefined_count_in_log": 0,
+    "pages_output": "正常（Output written on paper.pdf (N pages)）"
+  },
+  "genes_applied": ["PROS-001", "PROS-002", "PROS-003", "PROS-004", "PROS-005", "PROS-006"]
+}

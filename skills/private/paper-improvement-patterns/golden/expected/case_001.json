@@ -1,0 +1,52 @@
+{
+  "case_id": "case_001",
+  "skill": "paper-improvement-patterns",
+  "expected_output": {
+    "discussion_supplement": {
+      "added_references_count": 4,
+      "window": "2024-2026",
+      "structure": ["近期进展", "本方法优势", "未来工作"],
+      "added_references": [
+        {"key": "chen2024efficientattention", "year": 2024, "topic": "高效注意力机制"},
+        {"key": "li2024tabularsurvey", "year": 2024, "topic": "表格数据深度学习综述"},
+        {"key": "zhang2025featureselection", "year": 2025, "topic": "可微特征选择"},
+        {"key": "wagner2025fusionarchitectures", "year": 2025, "topic": "多分支融合架构"}
+      ],
+      "all_directly_related_to_method": true
+    },
+    "ablation_table": {
+      "versions": ["V1", "V2", "V3", "V4"],
+      "deltas": {"V1->V2": 0.012, "V2->V3": 0.008, "V3->V4": 0.004},
+      "all_deltas_positive": true,
+      "v4_bold": true,
+      "per_component_reason_explained": true
+    },
+    "statistics_section": {
+      "paired_t_test": {"t": 4.87, "df": 59, "p": "5.2e-06"},
+      "wilcoxon": {"w": 912, "p": "3.8e-07"},
+      "p_value_format": "scientific",
+      "cohens_d": 0.63,
+      "bootstrap": {"resamples": 1000, "ci95": [0.019, 0.041]}
+    },
+    "data_code_statement": {
+      "data_url": "https://www.kaggle.com/datasets/example/breast-cancer-imaging",
+      "code_url": "https://github.com/example/multi-component-model",
+      "license": "MIT",
+      "reproducibility_components_listed": true
+    },
+    "citation_health": {
+      "D10a": 1.0,
+      "orphan_bibitems": 0,
+      "comment_line_citations": 0
+    }
+  },
+  "checks_results": [
+    {"id": "check_01", "result": "PASS"},
+    {"id": "check_02", "result": "PASS"},
+    {"id": "check_03", "result": "PASS"},
+    {"id": "check_04", "result": "PASS"},
+    {"id": "check_05", "result": "PASS"}
+  ],
+  "weighted_score": 0.86,
+  "passed": true
+}

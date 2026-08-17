@@ -1,0 +1,28 @@
+{
+  "case_id": "case_001",
+  "description": "Generate XHS post package for 'Linux 环境排障三步法' with Pillow card-style figures",
+  "input": {
+    "topic": "Linux 环境排障三步法",
+    "knowledge_points": [
+      {"id": "df", "content": "df -h 检查磁盘空间，识别 inode 耗尽 vs 容量耗尽"},
+      {"id": "lock", "content": "查找 /var/lib/dpkg/lock 等锁文件，定位 dpkg 卡死"},
+      {"id": "venv", "content": "Python venv 隔离：system site-packages 与 venv 权限冲突排查"}
+    ],
+    "figure_mode": "A_pillow_card",
+    "figure_spec": {
+      "count": 5,
+      "resolution": "1080x1440",
+      "aspect_ratio": "3:4",
+      "background": "#0F172A",
+      "font": "Noto Sans CJK SC",
+      "max_words_per_figure": 10
+    }
+  },
+  "checks": [
+    {"id": "XHS-001", "name": "body_word_count_limit", "weight": "critical"},
+    {"id": "XHS-002", "name": "facts_traceable_to_source", "weight": "critical"},
+    {"id": "XHS-003", "name": "figure_spec_compliance", "weight": "high"},
+    {"id": "XHS-005", "name": "figure_mode_selection", "weight": "medium"},
+    {"id": "XHS-007", "name": "font_rendering_correct", "weight": "medium"}
+  ]
+}

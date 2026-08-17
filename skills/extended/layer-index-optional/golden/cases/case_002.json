@@ -1,0 +1,16 @@
+{
+  "case_id": "case_002",
+  "description": "边界/模糊意图测试: 空 query 或模糊意图 (只有工具无方向) 时，不异常中断，返回明确提示并触发创意构思技能 creative-ideation (LAYE-001)",
+  "input": {
+    "layer": "optional",
+    "query": "",
+    "context": {"env": "linux-cli", "intent": "只有工具无方向"}
+  },
+  "expected": {
+    "no_exception": true,
+    "fallback_skill": "creative-ideation",
+    "message_contains": "未找到相关技能",
+    "gene_applied": "LAYE-001"
+  },
+  "weight": "high"
+}

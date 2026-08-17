@@ -1,0 +1,38 @@
+{
+  "case_id": "case_002",
+  "skill": "paper-improvement-patterns",
+  "expected_output": {
+    "orphan_bibitem_fix": {
+      "semantic_grouping": [
+        {"key": "park2025", "semantic_domain": "近期多模态融合", "anchor_section": "Discussion.1 (近期进展)"},
+        {"key": "kim2024", "semantic_domain": "近期多模态融合", "anchor_section": "Discussion.1 (近期进展)"},
+        {"key": "nguyen2026", "semantic_domain": "特征选择前沿", "anchor_section": "Discussion.3 (未来工作)"}
+      ],
+      "mechanical_append": false,
+      "comment_line_citations_moved_to_body": true,
+      "moved_keys": ["park2025", "kim2024", "nguyen2026"]
+    },
+    "citation_health_after_fix": {
+      "D10a": 1.0,
+      "orphan_bibitems": 0,
+      "comment_line_citations": 0,
+      "pdflatex_undefined_references": 0
+    },
+    "negative_component_handling": {
+      "component": "fusion_head",
+      "delta": -0.003,
+      "action": "REMOVED",
+      "ablation_recomputed": true,
+      "versions_after": ["V1", "V2", "V3"],
+      "all_deltas_positive": true,
+      "paper_narrative_updated": true
+    }
+  },
+  "checks_results": [
+    {"id": "check_01", "result": "PASS", "note": "3 条孤儿 bibitem 按语义域分组插入正文锚点，注释行引用已移入正文"},
+    {"id": "check_02", "result": "PASS", "note": "D10a 0.90 → 1.00，0 undefined reference"},
+    {"id": "check_03", "result": "PASS", "note": "fusion_head 移除，消融重算后全正增量"}
+  ],
+  "weighted_score": 0.82,
+  "passed": true
+}

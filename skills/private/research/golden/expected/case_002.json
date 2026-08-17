@@ -1,0 +1,14 @@
+{
+  "case_id": "case_002",
+  "checks": [
+    {"id": "fallback_on_curl_blocked", "weight": "critical", "expect": {"gene": "RESE-004", "fallback": "curl 到文件 + 单独 python3 脚本", "inline_pipe_retried": false, "recovery_suggested": true, "error_context_recorded": true}},
+    {"id": "noise_rejected_by_precise_query", "weight": "critical", "expect": {"gene": "RESE-003", "rewritten_query": "all:eye+AND+all:tracking", "dropped_titles": ["Particle tracking in turbulence with eye-like features", "Counterfactual tracking in narrative understanding"], "kept_titles": ["Robust gaze estimation under occlusion"]}},
+    {"id": "local_date_filter_applied", "weight": "high", "expect": {"gene": "RESE-002", "field": "published", "window_months": 3, "applied_locally": true}},
+    {"id": "error_recovery_traced", "weight": "high", "expect": {"gene": "RESE-006", "error_contains_context": true, "error_contains_recovery_advice": true, "verification_steps_reproducible": true}}
+  ],
+  "pass_criteria": {"weighted_score_min": 0.8, "all_critical_must_pass": true},
+  "failure_behavior": {
+    "noise_query_reused": "违反 RESE-003，须改用精确布尔表达式重查",
+    "inline_curl_retried": "违反 RESE-004，须走「curl 到文件 + 单独 python3 脚本」回退路径"
+  }
+}

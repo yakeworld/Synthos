@@ -1,0 +1,18 @@
+{
+  "case_id": "case_001",
+  "description": "外部 references.bib 论文首次编译后出现 natbib Citation undefined，执行完整编译链修复",
+  "input": {
+    "project": "elsarticle 论文 paper.tex + 同目录外部 references.bib",
+    "preamble": "已含 \\bibliographystyle{plain} 与 \\bibliography{references}",
+    "trigger": "首次 pdflatex 后 paper.log 出现 'Package natbib Warning: Citation 'xxx' undefined'"
+  },
+  "expected": {
+    "fix_chain": "执行 pdflatex → bibtex paper → pdflatex → pdflatex 完整编译链",
+    "post_condition": "paper.bbl 非空且 paper.blg 显示 0 warnings；pdflatex -interaction=nonstopmode 重编译后 '! LaTeX Error' 计数为 0、grep -c 'undefined' paper.log 为 0"
+  },
+  "weight": {
+    "critical": 1.0,
+    "high": 0.7,
+    "medium": 0.4
+  }
+}

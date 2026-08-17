@@ -1,0 +1,20 @@
+{
+  "case_id": "case_001",
+  "expected_output": {
+    "submission_priority_list": [
+      {"rank": 1, "name": "147-lens-capsule-biomechanics-ODE", "quality_score": 96, "D10a": "100%", "flag": "需补充"},
+      {"rank": 2, "name": "113-nystagmus-compensatory-ODE", "quality_score": 96, "D10a": 100.0, "flag": "需补充"},
+      {"rank": 3, "name": "corneal-biomechanics-ODE", "quality_score": 96, "D10a": 100.0, "flag": "无PDF"},
+      {"rank": 4, "name": "bppv-canalith-relocation-ode", "quality_score": 95, "D10a": "100%", "flag": "需补充"}
+    ],
+    "d10a_parse": "数字 100.0 与字符串 \"100%\" 均成功解析为 100",
+    "status": "PASS"
+  },
+  "verification": [
+    "state.json 从顶层字段读取 quality_score (PAPE-001)，无论文因误查嵌套字段得到 score=-1",
+    "D10a 数字 (100.0) 与字符串 (\"100%\") 两种格式均解析成功 (PAPE-002)",
+    "submission_priority_list 按 quality_score 降序排列 (96 → 95)",
+    "缺项标注正确: 白内障/眼震/BPPV 标注 '需补充'，角膜生物力学标注 '无PDF' (N/A)",
+    "输出为 table 结构，含 论文名/分数/缺项标注 列，符合 IO_CONTRACT"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "case_id": "case_001",
+  "skill": "paper-improvement-patterns",
+  "description": "基本功能测试：可编译论文（pdflatex 0 error），多组件方法，Discussion 缺 2024-2026 前沿文献，声称显著优于基线但无统计检验",
+  "input": {
+    "paper_dir": "papers/multi-component-model",
+    "paper_status": "compiles_clean",
+    "pdflatex": {"errors": 0, "undefined_references": 0},
+    "method": {
+      "type": "multi_component",
+      "components": ["feature_selector", "attention_block", "fusion_head"],
+      "baseline": "standard_cnn"
+    },
+    "defects": [
+      {"type": "stale_literature", "location": "Discussion", "missing_window": "2024-2026", "gap": "缺少与方法直接相关的前沿文献"},
+      {"type": "no_statistical_test", "location": "Results", "claim": "显著优于基线", "test_present": false},
+      {"type": "no_data_code_statement", "location": "end_of_paper", "claim": "数据与代码可公开", "url_present": false}
+    ],
+    "gene_path": ["PAPE-001", "PAPE-002", "PAPE-003", "PAPE-004"]
+  },
+  "checks": [
+    {"id": "check_01", "priority": "high", "description": "Discussion 增补 3-5 篇 2024-2026 与方法直接相关的前沿文献，按 近期进展-本方法优势-未来工作 结构组织"},
+    {"id": "check_02", "priority": "high", "description": "V1→V4 消融表齐备，每组件增量为正，V4 用 \\textbf{} 强调"},
+    {"id": "check_03", "priority": "critical", "description": "统计节含配对 t 检验 + Wilcoxon 符号秩检验、科学计数法 p-value、Cohen's d、1000 次 bootstrap 95% CI"},
+    {"id": "check_04", "priority": "medium", "description": "Data/Code 声明含具体 URL + MIT 许可证 + 复现组件清单"},
+    {"id": "check_05", "priority": "critical", "description": "引用健康度 D10a = 100%（无孤儿 bibitem，无注释行内引用）"}
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "case_id": "001",
+  "description": "基本功能测试：对技能清单执行 golden 覆盖率统计，验证三要素（GOLDEN_SET.md + cases/ + expected/）判定逻辑",
+  "input": {
+    "skill_list": [
+      "skills/private/google-search",
+      "skills/private/extended/research-tools/synthos-akne-bridge/quality/falsification-validation",
+      "skills/private/extended/research-tools/synthos-akne-bridge/quality/golden-test-methodology"
+    ],
+    "check_criterion": "GOLDEN_SET.md + cases/ + expected/ 三者均存在且非空才计入有效覆盖"
+  },
+  "expected": {
+    "output_structure": {
+      "coverage_report": "dict: {total_skills, covered_skills, coverage_pct, grade}",
+      "gaps": "list[str]: skills missing golden components",
+      "next_targets": "list[str]: prioritized expansion targets"
+    },
+    "key_checks": [
+      "仅存 golden/ 目录而无 cases/expected 实物的技能不计入有效覆盖",
+      "覆盖率 = 有完整 golden 的技能数 / 总技能数",
+      "覆盖率等级正确：≥70% Excellent / 50-69% Adequate / 30-49% Low / <30% Critical",
+      "next_targets 按优先级排序：新吸收 → 高频使用 → 核心原子 → 扩展技能"
+    ]
+  },
+  "weight": "critical"
+}

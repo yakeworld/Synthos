@@ -1,0 +1,14 @@
+{
+  "case_id": "case_002",
+  "checks": [
+    {"id": "unpinned_dataset_blocks_repro", "weight": "critical", "expect": {"gene": "REPR-001", "verdict": "复现无凭", "action": "先锁定数据集版本再重跑", "silent_skip_allowed": false}},
+    {"id": "dual_source_drift_detected", "weight": "critical", "expect": {"gene": "REPR-002", "detected": true, "action": "同步更新 thebibliography 与 .bib 两者", "fixes": {"add_to_bib": ["Smith2024Gaze"], "remove_from_bib": ["Orphan2019Legacy"]}}},
+    {"id": "failure_recorded_with_recovery", "weight": "critical", "expect": {"gene": "REPR-005", "recorded_reason": "数据集版本号未锁定", "recovery_action_present": true, "logged": true}},
+    {"id": "no_silent_skip", "weight": "high", "expect": {"gene": "REPR-004", "every_verification_step_traced": true}}
+  ],
+  "pass_criteria": {"weighted_score_min": 0.8, "all_critical_must_pass": true},
+  "failure_behavior": {
+    "version_unpinned": "判定复现无凭：锁定版本 → 重跑 Golden 测试（原则#1 / REPR-001）",
+    "verification_failed": "记录具体失败原因及对应修复措施（REPR-004 / REPR-005），禁止静默跳过"
+  }
+}

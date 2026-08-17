@@ -1,0 +1,26 @@
+{
+  "case_id": "001",
+  "expected_output": "证伪测试完成，产出完整证据链：每个测试含真实输入、处理日志、最终输出、期望对比、量化指标，全部归档至 test-results/ 目录；技能信任分级更新（如 0.85 → High Trust）",
+  "verification": [
+    {
+      "check": "真实输入验证",
+      "expected": "所有测试输入来源于真实任务数据（pima-crispdm 论文目录），无 mock/synthetic 数据",
+      "method": "grep test-results/ 中所有 input 字段，确认无 'mock'/'synthetic'/'dummy' 关键词"
+    },
+    {
+      "check": "反证测试存在性",
+      "expected": "测试集包含至少 1 个期望失败（verdict=falsified）的测试用例",
+      "method": "遍历 test-results/ 中所有 verdict 字段，确认存在至少 1 个 'falsified'"
+    },
+    {
+      "check": "证据链完整性",
+      "expected": "每项测试的 test-results/ 归档包含 6 要素：输入数据、处理日志、输出结果、期望对比、量化度量、证据存储",
+      "method": "对每个测试目录检查是否包含 input.json、log.txt、output.json、comparison.json、metrics.json"
+    },
+    {
+      "check": "信任分级格式",
+      "expected": "信任分级为 4 档之一：0.9-1.0 High Trust / 0.7-0.9 Medium Trust / 0.5-0.7 Low Trust / <0.5 Unreliable",
+      "method": "检查 trust_grade 字段值是否在 4 档范围内，trust_score 为 0.0-1.0 浮点数"
+    }
+  ]
+}

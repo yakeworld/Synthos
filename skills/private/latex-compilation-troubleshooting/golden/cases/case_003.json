@@ -1,0 +1,18 @@
+{
+  "case_id": "case_003",
+  "description": "BibTeX 报 'didn't find a database entry for X' 但条目存在 → 优先怀疑 .bib 文件早期花括号不匹配，用独立文件最小化编译定位",
+  "input": {
+    "project": "paper.tex + references.bib（含条目 X）",
+    "trigger": "bibtex 报 'I didn't find a database entry for X'，但 X 在 .bib 中语法正确、明确存在",
+    "check": "grep -cP '{' 与 grep -cP '}' 花括号计数不平衡"
+  },
+  "expected": {
+    "diagnosis": "判定为 .bib 文件早期位置的花括号不匹配/格式错误导致 BibTeX 解析提前失败、跳过后续条目，而非 X 条目本身问题",
+    "debug_flow": "hexdump -C 查不可见字符 → 花括号计数 → 将嫌疑条目提取到独立 .bib 用最小化 tex 编译：独立成功 → 原文件其他条目致解析失败 → 逐个注释缩小范围；不修改'嫌疑'条目本身"
+  },
+  "weight": {
+    "critical": 1.0,
+    "high": 0.7,
+    "medium": 0.4
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "case_id": "case_001",
+  "description": "基本功能测试：真实 NotebookLM 库状态，执行 P0/P1/P2 分级审计与修复",
+  "scenario": "happy_path",
+  "input": {
+    "notebooklm_list": {
+      "notebooks": [
+        {"id": "nb_core_adhd", "title": "ADHD core project", "source_count": 2},
+        {"id": "nb_eye_tracking", "title": "Eye-tracking biomarkers", "source_count": 5},
+        {"id": "nb_001", "title": "其他", "source_count": 3},
+        {"id": "nb_002", "title": "其他", "source_count": 1},
+        {"id": "nb_003", "title": "其他", "source_count": 2},
+        {"id": "nb_004", "title": "其他", "source_count": 1},
+        {"id": "nb_005", "title": "其他", "source_count": 1},
+        {"id": "nb_006", "title": "其他", "source_count": 2},
+        {"id": "nb_007", "title": "其他", "source_count": 1},
+        {"id": "nb_008", "title": "其他", "source_count": 1},
+        {"id": "nb_009", "title": "其他", "source_count": 1},
+        {"id": "nb_010", "title": "其他", "source_count": 1},
+        {"id": "nb_011", "title": "其他", "source_count": 2}
+      ],
+      "sources": [
+        {"notebook": "nb_core_adhd", "title": "201806596.pdf", "standard_name": false, "uuid_prefix": "a1b2c3d4e5f6"},
+        {"notebook": "nb_eye_tracking", "title": "Oculomotor ADHD review 2023.pdf", "standard_name": true, "uuid_prefix": "f6e5d4c3b2a1"},
+        {"notebook": "nb_core_adhd", "title": "Eye-tracking ADHD screening 2023.pdf", "standard_name": true, "uuid_prefix": "1122334455aa"}
+      ]
+    },
+    "auth_snapshot": {
+      "context_json": {"notebook_id": "nb_core_adhd", "is_owner": true},
+      "storage_state": {"cookie_count": 148, "google_domains_present": true, "path": "~/.notebooklm/storage-state.json"}
+    },
+    "p0_missing_sources": [
+      {"notebook": "nb_eye_tracking", "missing": "2 foundational ADHD eye-tracking papers"}
+    ]
+  }
+}

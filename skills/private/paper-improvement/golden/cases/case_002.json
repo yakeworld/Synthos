@@ -1,0 +1,30 @@
+{
+  "case_id": "case_002",
+  "skill": "paper-improvement",
+  "description": "失败路径测试：输入不完整（缺 PDF），PAPE-001 必须立即阻断；另含 LaTeX 替换失败触发 PAPE-005 sed 回退的子场景",
+  "input": {
+    "paper_dir": "papers/incomplete-paper",
+    "files": {
+      "tex": "paper.tex",
+      "pdf": null,
+      "references_dir": "references/",
+      "references_count": 12,
+      "missing_files": ["paper.pdf"]
+    },
+    "sub_scenario": {
+      "name": "latex_replace_fallback",
+      "paper_dir": "papers/hcs3wt-breast-cancer",
+      "latex_replace_failure": {
+        "key": "lee2024attention",
+        "reason": "sed/正则未命中：bibitem 跨行且含特殊字符",
+        "fallback_gene": "PAPE-005"
+      }
+    },
+    "gene_path": ["PAPE-001", "PAPE-005", "PAPE-006"]
+  },
+  "checks": [
+    {"id": "check_01", "priority": "critical", "description": "缺 PDF → PAPE-001 立即阻断，不进入改进流程，阻断决定记录在审计报告"},
+    {"id": "check_02", "priority": "critical", "description": "sub-scenario：LaTeX 替换失败 → PAPE-005 启用 sed 回退并验证回退后引用解析成功"},
+    {"id": "check_03", "priority": "medium", "description": "阻断/回退决定均记录在标准审计报告（PAPE-006），可执行、可记录、可复现"}
+  ]
+}

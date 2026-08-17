@@ -1,0 +1,47 @@
+{
+  "case_id": "journal-selection-medical-ai_case_001",
+  "status": "success",
+  "expected": {
+    "candidate_count_min": 3,
+    "candidates": [
+      {
+        "display_name": "Patterns",
+        "two_year_mean_citedness": 18.4,
+        "if_tier": "Q1",
+        "match_rationale": "跨学科综合期刊，欢迎医学影像 AI 与级联分流类方法学工作，读者覆盖临床与跨学科人群"
+      },
+      {
+        "display_name": "Radiology: Artificial Intelligence",
+        "two_year_mean_citedness": 6.8,
+        "if_tier": "Q1-Q2",
+        "match_rationale": "放射学/肿瘤学临床读者高度匹配，WDBC 乳腺癌影像分类与其范围直接相关"
+      },
+      {
+        "display_name": "IEEE Journal of Biomedical and Health Informatics",
+        "two_year_mean_citedness": 6.1,
+        "if_tier": "Q1-Q2",
+        "match_rationale": "集成学习 + 级联分流的工程方法学在该刊有成熟接收面，APC 在 $3000 约束内"
+      }
+    ],
+    "uncertainty_annotations": [
+      "候选期刊 APC 为 OpenAlex 未覆盖时以相似论文检索推断并标注 '推断'",
+      "审稿周期 ≤12 周约束对部分高 IF 期刊可能不满足，已标注为不确定性"
+    ],
+    "display_name_checked": true
+  },
+  "checks": {
+    "critical": [
+      "推荐列表 ≥3 条候选期刊",
+      "每条候选含 display_name、2yr_mean_citedness（OpenAlex 实测）、IF 层级归类",
+      "每条候选含与选题的具体匹配度理由",
+      "display_name 逐条核对，排除同名歧义（Patterns vs Gene Expression Patterns）"
+    ],
+    "high": [
+      "缺失要素（如 APC）在输出中标注为不确定性",
+      "期刊指标通过 OpenAlex API 实测而非凭记忆"
+    ],
+    "medium": [
+      "输出为纲要级内容，详细指标下沉至 references/"
+    ]
+  }
+}

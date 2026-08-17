@@ -1,0 +1,32 @@
+{
+  "case_id": "case_001",
+  "skill": "prose-cluster-hybrid-citation-fix",
+  "description": "Golden 正常路径：paper.tex 含 9 个未锚定 bibitem + 密集散文段落，IMRaD 结构，Introduction/Methods 无正式引用",
+  "input": {
+    "file": "01-manuscript/paper.tex",
+    "unanchored_bibitems": [
+      "iahn17", "raissi19", "chen18", "sanchez22", "jagtap22",
+      "halmagyi02", "curthoys09", "parnes99", "headimpulse"
+    ],
+    "unanchored_bibitem_count": 9,
+    "structure": "IMRaD（Introduction/Methods/Results/Discussion）",
+    "prose_state": "密集散文段落，无 \\cite，仅作者-年份式散见引用",
+    "methods_subsection": "\\subsection{PINN Architecture}",
+    "method_cluster": ["raissi19", "chen18", "sanchez22", "jagtap22"]
+  },
+  "expected_checks": {
+    "critical": [
+      "按 PROS-002/004 在 \\subsection{PINN Architecture} 后单锚点合并 \\cite{raissi19,chen18,sanchez22,jagtap22}（附解释性句子）",
+      "验证脚本输出 D10a: N/N = 100%、Orphans: 0",
+      "双次 pdflatex 后 grep -c \"undefined\" paper.log 为 0"
+    ],
+    "high": [
+      "每个 bibitem 都有「引用键-主题-章节-文本锚点」映射（PROS-001）",
+      "密集散文段用精确短语 anchor 做字符串替换，替换后上下文完整未断裂（PROS-003）",
+      "方法簇未逐句重复插入，仅在单锚点合并"
+    ],
+    "medium": [
+      "编译后页码正常输出（Output written on paper.pdf (N pages)）"
+    ]
+  }
+}
