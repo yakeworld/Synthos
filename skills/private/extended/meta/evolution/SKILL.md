@@ -33,6 +33,7 @@ metadata:
 - git index 不同步：技能迁移后必须 `git rm old` → `git add new` → `commit`，否则结构分数失真
 - Nudge 循环触发：每会话 max_fires=1 防循环
 - 批量验证注入：验证必须独立计算（Cycle 186-187 教训），不可复用被验证对象的输出
+- 测量零假设审计（Phantom Gains, arXiv 2026-08-20）：进化收益声明须通过逐任务 gain/loss 转移审计——报告 before/after 转移矩阵，先对同一测量集重复 2 次测量得噪声带，带内转移不计为改进（方法见 self-deception-risk 技能"测量零假设审计"节）
 
 ## IO_CONTRACT
 
@@ -94,6 +95,11 @@ metadata:
 | PaperDebugger (3.3) | absorbed_methodology | Research→Critique→Revision + conference-style review | quality-gate + P0 + paper-pipeline | 2026-06-05 |
 | 724-office (3.8) | absorbed_methodology | Nudge Registry + Trigger Functions + Auto-Inject Hints | evolution + quality-gate | 2026-06-05 |
 | Claude Code (4.5) | absorbed_methodology | Hooks + Confidence Scoring + Parallel Agents + Session Start Context | evolution + quality-gate + task-router | 2026-06-05 |
+| HELIX (arXiv:2608.13951, 9.0) | absorbed_methodology | Model-Harness 协同进化：固定模型→从已验证兄弟轨迹更新模型→模型能力变化后重建 harness；harness 决定模型可完成之事与学习轨迹 | evolution (harness 进化基底) | 2026-08-18 |
+| Skill Blocks (arXiv:2608.14943, 9.0) | absorbed_methodology | 技能加载四法对比 (Full/Skill Block/Reference/Hybrid)：无普适赢家；Hybrid 在 SearchQA 省 27.4% / SpreadsheetBench 省 39.8% token，大多轮技能优势更大。结论：技能注入按任务类型选加载法，不默认全量注入 | evolution + task-router (渐进披露) | 2026-08-19 |
+| Evo-Harness (arXiv:2608.15071, 8.5) | absorbed_methodology | Context-to-Harness 技能编译：单次机会经验含噪，需从执行上下文蒸馏可复用技能（去任务特有噪声），而非全量存轨迹 | evolution (技能编译) | 2026-08-19 |
+| SkillCommit (arXiv:2608.15165, 8.0) | absorbed_methodology | 技能演化防合并冲突：按语义相似/LLM判断合并经验会合并表面相关但行为不兼容的策略→性能退化；须行为验证 (behaviorally validated scope expansion) 后再扩展技能范围 | evolution (技能合并护栏) | 2026-08-19 |
+| Ornith-1.5 (ornith.ai, 8.5) | absorbed_methodology | Self-Scaffolding→Self-Improvement 闭环：模型自提新任务→生成任务专属 scaffold→产出 solution rollout 供 RL 训练→持续创造新学习经验；397B MoE Terminal-Bench 86.1 持平 Claude Opus 4.8。与 Synthos 进化循环同构（四态决策=自提任务、技能=scaffold、golden 验证=rollout 评估） | evolution (自改进循环强化) | 2026-08-20 |
 
 
 ## Gene 层 (策略基因) — v2.24 新增
