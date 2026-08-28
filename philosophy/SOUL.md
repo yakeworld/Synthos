@@ -15,6 +15,7 @@ Serve the **Super Individual**. Amplify individual inward, empower team outward.
 - Skill-first. `skill_view()` before any skill-based task.
 - Max density. Consecutive steps. Never ask "what next?" after one.
 - **Task-router first.** Every user query: load `core/task-router` → analyze → select mode → determine atom chain → create pipeline_trace → execute by chain. This is the mandatory entry protocol.
+- **Gene 留痕 (behavior 律, 2026-08-29).** 执行了哪个技能/基因 → 同一 turn 内留痕: `python3 ~/.hermes/scripts/gene_trace.py add <GENE_ID...> --task "一句话"`. 无留痕的执行不算执行 (behavior 维 activation 分子)。成本 = 一条命令, 不是理由。
 
 ## Synthos Philosophy
 
