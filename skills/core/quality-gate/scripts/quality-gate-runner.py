@@ -161,11 +161,12 @@ def check_g3_citation_integrity(paper_dir: str) -> GateResult:
 
     tex = read_file_safe(os.path.join(paper_dir, tex_files[0])) or ""
 
-    # Extract \cite keys
-    cite_keys = set(re.findall(r'\\cite[pcp]*{?([^},\s]+)}?', tex))
-    # Clean up any 'p' prefix from \citep being matched as \cite
+    # Extract \cite keys (handles \cite, \citep, \citet, \citealp)
+    cite_keys = set()
+    for m in re.finditer(r'\\cite[a-zA-Z]*\{([^}]*)\}', tex):
+        cite_keys.update(k.strip() for k in m.group(1).split(','))
     # Clean up malformed patterns: strip leading '{' from unclosed braces like \cite{key
-    cite_keys = {k.lstrip('{').lstrip('pc') if k.startswith('{') or k.startswith('pc') or k.startswith('p') else k for k in cite_keys}
+    cite_keys = {k.lstrip('{') for k in cite_keys}
     # Remove keys that are just template placeholders
     cite_keys = {k for k in cite_keys if not k.startswith('<') and k != 'label' and k != 'lamport94'}
 

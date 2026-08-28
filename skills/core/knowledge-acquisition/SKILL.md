@@ -122,6 +122,8 @@ jabkit-rs fetch --provider=SemanticScholar --query="iris" --porcelain |
 | Sci-Hub 2024+ 新论文不在库 | 回退 OA 直链或 MedData |
 | 串流风险 | 下载后必须 `pdfinfo` 验证标题 |
 | curl 直连超时 | 清代理 `unset http_proxy https_proxy`，用 wget |
+| doi-fetch 卡死/超时 | 根因（2026-08-20 修复）：`provider_direct` 探测列表原有 `https://{doi}.pdf` 黑洞 URL（把 DOI 当域名）吃满 30s 硬超时 + 8 个 OA 源串行慢 API 累加。已修：删黑洞 URL + `connect_timeout(10s)` 防线 + direct 阶段专用 `get_fast`（每 URL ≤8s）。整流程 59.7s→29s。仍慢属正常（unpaywall/ncbi 等 API 响应慢、8 源串行），cdn 命中即返回 |
+| doi-fetch cdn 显示 "not PDF (146 bytes)" | bban.top 对该 DOI 无收录（返回 146 字节 404 占位 PDF），属正常降级路径，继续 Sci-Hub 层 |
 | TOR 代理 arXiv 超时 | Tor DNS 污染，改用 `--socks5` 非 hostname 模式 |
 
 ---
@@ -137,14 +139,15 @@ jabkit-rs fetch --provider=SemanticScholar --query="iris" --porcelain |
 
 ## Golden 集合 · GOLDEN SET
 
-- **Golden Input**: `jabkit-rs fetch --provider=SemanticScholar --query="iris recognition" --porcelain`，随后 `doi-fetch 10.1167/iovs.1.1.1 -o paper.pdf`
-- **Golden Output**: 25s 内产出 BibTeX；PDF 通过 `head -c 5 = %PDF-`（5 字节）且 `pdfinfo | grep Title` 标题与 DOI 论文一致；多源合并经 lit-import 入库无重复条目
+- **Golden Input**: `jabkit-rs fetch --provider=SemanticScholar --query="iris recognition" --porcelain`，随后 `doi-fetch 10.1038/nature14539 -o paper.pdf`（LeCun/Bengio/Hinton, *Deep learning*, Nature 521, 2015 — 2026-08-22 实测 scihub 层 2.0MB 命中）
+- **Golden Output**: 25s 内产出 BibTeX；PDF 通过 `head -c 5 = %PDF-`（5 字节）且 `pdfinfo | grep Title` 标题与 DOI 论文一致（Nature PDF 元数据 Title 常为空，用 `pdftotext -f 1 -l 1 | head` 核作者行亦可）；多源合并经 lit-import 入库无重复条目
 - **Golden Error**: 误用已弃用的 Java `jabkit` → 挂起无输出（实测 261s 无结果）；或 PDF 魔数校验读 4 字节失败 → 该 DOI 标为下载失败，不得入库
+- **Golden Error（2026-08-22 新增）**: 旧 golden DOI `10.1167/iovs.1.1.1` 已失效 — sci-hub.vg 对该 DOI 返回 Cloudflare Turnstile 验证页（2119 bytes HTML），全镜像无收录，doi-fetch 5 层全败。注意：scihub 层 "Error 页" ≠ 域名死亡，先 grep `cf-turnstile` 字样区分"无收录"与"域名死亡"；`PAPER_FETCH_SCIHUB_MIRRORS` 可覆盖镜像列表但救不了无收录 DOI
 
 ## 示例 · EXAMPLES
 
-**输入**：`jabkit-rs fetch --provider=SemanticScholar --query="iris recognition" --porcelain` + `doi-fetch 10.1167/iovs.1.1.1 -o paper.pdf`
-**输出**：~25s 内产出 BibTeX 条目；`paper.pdf` 通过 `head -c 5` = `%PDF-` 且 `pdfinfo | grep Title` 显示 "Iris recognition in ..." 与 DOI 论文一致
+**输入**：`jabkit-rs fetch --provider=SemanticScholar --query="iris recognition" --porcelain` + `doi-fetch 10.1038/nature14539 -o paper.pdf`
+**输出**：~25s 内产出 BibTeX 条目；`paper.pdf` 通过 `head -c 5` = `%PDF-`（实测 2083627 bytes，scihub 层命中）且 `pdftotext -f 1 -l 1` 首行含 "Deep learning" + LeCun/Bengio/Hinton 与 DOI 论文一致
 
 **输入**：`grep -ohP 'doi\s*=\s*\{([^}]+)\}' references.bib` → `xargs -I{} doi-fetch {} -o pdfs/{}.pdf`（50 篇批量）
 **输出**：48 篇成功（`%PDF-` 验证通过），2 篇 429 → rproxy 代理轮换后重试成功

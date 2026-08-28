@@ -200,6 +200,8 @@ G8 是核心门 (v5.1)，权重 0.10。G8 不通过 → 整体不通过 (一票�
 
 ## 陷阱
 
+- **runner 期望 --paper-dir 指向 01-manuscript/（tex 所在目录）**（2026-08-21 实测）：G2/G3 用 os.listdir 不递归，传论文根目录会报 "No .tex files found"。state.json 自动从上一级读取。
+- **quality-gate-runner.py 假阳性 G3（2026-08-21 已修复）**：旧正则 `\\cite[pcp]*{?([^},\s]+)}?` 会把 key 首字符当 citep/citet 后缀剥除（patel2024anterior → atel2024anterior，10 个正常引用被误报 unused）。已改为 `\\cite[a-zA-Z]*\{([^}]*)\}` 循环提取。若旧脚本仍误报 "atel2024anterior" 类 key，先更新脚本再跑。
 - **旧报告不可信**：state.json 中的 quality_score 可能过期 → 必须重新运行 runner
 - **L0.5 一票否决**：即使其他门全过，L0.5 失败 → 整体不通过
 - **state.json 自报 vs 独立审计不一致**：以 runner 输出为准
