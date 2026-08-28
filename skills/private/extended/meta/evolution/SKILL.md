@@ -189,17 +189,23 @@ SELF_REFLECT → 漂移检测 + 宪法集成
 - 连续3轮无进展 → 降级至探索模式
 - 相同目标连续2次 → 自动切换到其他维度
 
-## DIAGNOSE 评分公式 (v3, 七维, 2026-08-17 用户授权升级)
+## DIAGNOSE 评分公式 (v4, 八维, 2026-08-29 用户裁决引入 behavior 维)
 
-**Overall** = structural × 0.20 + benchmark × 0.20 + optimize × 0.10 + coverage × 0.10 + absorption × 0.10 + constitutional × 0.20 + liveness × 0.10
+**Overall** = structural × 0.18 + benchmark × 0.18 + constitutional × 0.18 + optimize × 0.09 + coverage × 0.09 + absorption × 0.09 + liveness × 0.09 + behavior × 0.10
 
-> **v3 升级说明（cycle 264）**: 六维饱和（全 1.0 = 理论上限）后，用户裁决引入第 7 维 liveness（基因层活性），评估 CON v5.1 P7 确立的 Gene 进化单元层。原有六维权重等比收缩（structural/benchmark 0.25→0.20，其余不变）。
+> **v4 升级说明（cycle 268）**: 七维全饱和 (OVERALL=1.0) 后 EVOL-008 触发，用户裁决"继续进化"= 引入第 8 维 **behavior**（行为活性）。前七维测"文件是否完整"，behavior 测"是否被执行"——锚定运行即证+取象通变，防"全满分但从不执行、从不学习的系统自称健康"（发育性藏的死穴：无痕迹的满分是假满分）。
 
 > **公式验证（Cycle 175, 旧六维）**: cycle-174 值 structural=1.0, benchmark=0.9984, optimize=0.8, coverage=0.8, absorption=0.8798, constitutional=1.0 → 0.9476 ✓。**每次 RECORD 必须用 diagnose.py 实际输出值，不可估算、不可袭旧。**
 
 ### 子维度公式
 
-**structural** = (yaml_valid_pct × 0.35 + git_tracked_pct × 0.25 + circular_clean × 0.25 + encoding_clean × 0.15) × dirty_penalty
+**behavior** (v4 新增) = activation_pct × 0.50 + verify_pct × 0.30 + lessons_pct × 0.20
+- activation_pct: outputs/ 下 pipeline_trace*.json 中含 gene_activation 记录的比例（行为留痕；机制自 EvoMap 表观遗传引入但 98 条历史 trace 无一条记录——"文档说有，行为没有"的首个量化）
+- verify_pct: trace 中原子 status=completed* 的比例（执行完成，非声明）
+- lessons_pct: lessons.jsonl 条数（10+ = 1.0, 1-9 = 0.5, 0 = 0）
+- Cycle 268 基线: 0.4182（activation 0/98, verify 16/22, lessons 35）；首条 gene_activation trace 破零 → 0.4268
+- 提升路径: 每次 task-router 执行按 SKILL.md 要求把 gene_activation 写进 trace（机制已存在，缺执行）→ activation 自然累积
+- structural = (yaml_valid_pct × 0.35 + git_tracked_pct × 0.25 + circular_clean × 0.25 + encoding_clean × 0.15) × dirty_penalty
 - dirty_penalty = (total_skills - dirty_sk_count) / total_skills
 
 **benchmark** = version_pct × 0.33 + signature_pct × 0.33 + io_contract_pct × 0.34

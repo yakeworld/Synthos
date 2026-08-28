@@ -244,9 +244,46 @@ count_pct = gene_count_ok / total_skills if total_skills else 0
 unique_pct = 1.0 - (gene_dup_ct / gene_ids_ct) if gene_ids_ct else 0.0
 liveness = min(1.0, section_pct * 0.40 + count_pct * 0.30 + unique_pct * 0.30)
 
-overall = (structural * 0.20 + benchmark * 0.20 + optimize * 0.10 +
-           coverage * 0.10 + absorption * 0.10 + constitutional * 0.20 +
-           liveness * 0.10)
+# ── BEHAVIOR (v4, cycle 268, 用户裁决 2026-08-29) ──────
+# 行为活性: 测"是否被执行"而非"文件是否完整" (锚定: 运行即证/取象通变)
+#   activation_pct: pipeline_trace 中含 gene_activation 记录的比例 (行为留痕)
+#   verify_pct:     trace 中原子 status=completed* 的比例 (执行完成, 非声明)
+#   lessons_pct:    失败轨迹沉淀 (10+ 条 = 1.0, 1-9 = 0.5, 0 = 0)
+import glob
+trace_files = glob.glob(os.path.join('outputs', '**', 'pipeline_trace*.json'), recursive=True)
+act_ct = 0
+atom_done = 0
+atom_total = 0
+for tf in trace_files:
+    try:
+        td = json.load(open(tf))
+        if td.get('gene_activation'):
+            act_ct += 1
+        ats = td.get('atoms', {})
+        if isinstance(ats, dict):
+            for a in ats.values():
+                if isinstance(a, dict):
+                    atom_total += 1
+                    if str(a.get('status', '')).startswith('completed'):
+                        atom_done += 1
+    except Exception:
+        pass
+activation_pct = act_ct / len(trace_files) if trace_files else 0.0
+verify_pct = atom_done / atom_total if atom_total else 0.0
+lessons_ct = 0
+_lf = os.path.join('outputs', 'evolution', 'lessons.jsonl')
+if os.path.exists(_lf):
+    with open(_lf) as _fh:
+        lessons_ct = sum(1 for line in _fh if line.strip())
+lessons_pct = 1.0 if lessons_ct >= 10 else (0.5 if lessons_ct >= 1 else 0.0)
+behavior = min(1.0, activation_pct * 0.50 + verify_pct * 0.30 + lessons_pct * 0.20)
+
+# v4 权重 (cycle 268): 8 维
+# structural 0.18 / benchmark 0.18 / constitutional 0.18 / optimize 0.09 /
+# coverage 0.09 / absorption 0.09 / liveness 0.09 / behavior 0.10
+overall = (structural * 0.18 + benchmark * 0.18 + optimize * 0.09 +
+           coverage * 0.09 + absorption * 0.09 + constitutional * 0.18 +
+           liveness * 0.09 + behavior * 0.10)
 
 # ── OUTPUT ─────────────────────────────────────────────
 print(f"=== PROBE ===")
@@ -264,6 +301,12 @@ print(f"  Count 4-8 ok:  {gene_count_ok}/{total_skills} ({count_pct*100:.1f}%)  
 print(f"  Unique IDs:    {gene_ids_ct - gene_dup_ct}/{gene_ids_ct} (dups={gene_dup_ct})  x0.30 = {unique_pct*0.30:.4f}")
 print(f"  LIVENESS: {liveness:.4f}")
 
+print(f"\n=== BEHAVIOR (v4) ===")
+print(f"  gene_activation traces: {act_ct}/{len(trace_files)} ({activation_pct*100:.1f}%)  x0.50 = {activation_pct*0.50:.4f}")
+print(f"  atoms completed:        {atom_done}/{atom_total} ({verify_pct*100:.1f}%)  x0.30 = {verify_pct*0.30:.4f}")
+print(f"  lessons:                {lessons_ct}  x0.20 = {lessons_pct*0.20:.4f}")
+print(f"  BEHAVIOR: {behavior:.4f}")
+
 print(f"\n=== BENCHMARK ===")
 print(f"  Version:      {ver_count}/{total_skills} ({vp*100:.1f}%)  x0.33 = {vp*0.33:.4f}")
 print(f"  Signature:    {sig_count}/{total_skills} ({sp*100:.1f}%)  x0.33 = {sp*0.33:.4f}")
@@ -279,6 +322,7 @@ dims = {
     'absorption': absorption,
     'constitutional': constitutional,
     'liveness': liveness,
+    'behavior': behavior,
 }
 for k, v in sorted(dims.items(), key=lambda x: x[1]):
     print(f"  {k:20s}: {v:.4f}")
@@ -286,14 +330,15 @@ for k, v in sorted(dims.items(), key=lambda x: x[1]):
 lowest = min(dims, key=dims.get)
 print(f"\n  LOWEST: {lowest} ({dims[lowest]:.4f})")
 
-print(f"\n=== OVERALL (v3, 7-dim) ===")
-print(f"  structural({structural:.4f})   x0.20 = {structural*0.20:.4f}")
-print(f"  benchmark({benchmark:.4f})    x0.20 = {benchmark*0.20:.4f}")
-print(f"  optimize({optimize:.4f})     x0.10 = {optimize*0.10:.4f}")
-print(f"  coverage({coverage:.4f})     x0.10 = {coverage*0.10:.4f}")
-print(f"  absorption({absorption:.4f})  x0.10 = {absorption*0.10:.4f}")
-print(f"  constitutional({constitutional:.4f}) x0.20 = {constitutional*0.20:.4f}")
-print(f"  liveness({liveness:.4f})     x0.10 = {liveness*0.10:.4f}")
+print(f"\n=== OVERALL (v4, 8-dim) ===")
+print(f"  structural({structural:.4f})   x0.18 = {structural*0.18:.4f}")
+print(f"  benchmark({benchmark:.4f})    x0.18 = {benchmark*0.18:.4f}")
+print(f"  optimize({optimize:.4f})     x0.09 = {optimize*0.09:.4f}")
+print(f"  coverage({coverage:.4f})     x0.09 = {coverage*0.09:.4f}")
+print(f"  absorption({absorption:.4f})  x0.09 = {absorption*0.09:.4f}")
+print(f"  constitutional({constitutional:.4f}) x0.18 = {constitutional*0.18:.4f}")
+print(f"  liveness({liveness:.4f})     x0.09 = {liveness*0.09:.4f}")
+print(f"  behavior({behavior:.4f})     x0.10 = {behavior*0.10:.4f}")
 print(f"  ─────────────────────────────────────────")
 print(f"  OVERALL: {overall:.4f}")
 
