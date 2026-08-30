@@ -1,6 +1,7 @@
 #!/bin/bash
 # Synthos 自动化进化循环 — cron 脚本
-set -e
+# 注意: evolution-loop.py 的退出码 = 分数信号 (0=优秀, 1=合格, 2=不合格),
+# 不是错误信号 — 不能用 set -e, 否则第一个 phase 就中止全脚本 (2026-08-31 修复)
 SCRIPT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$SCRIPT_DIR"
 LOG_DIR="outputs/cron-archive/evolution-logs"
