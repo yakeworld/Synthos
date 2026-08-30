@@ -601,9 +601,11 @@ def check_consistency(content: str, skill_dir: str, weights: Dict = None) -> Lis
     # Match "模式名称：" without ** wrapper
     mode_lines3 = re.findall(r'- \*[^*]+模式[^*]+\*[^：:]', content)
     patterns_found = max(patterns_found, len(mode_lines), len(mode_lines2))
-    # cycle 272 口径修正: >=3 步的显式管线 (Step 1/2/3...) 是单入口多阶段的
-    # 设计模式等价物 — 检查意图是"有设计而非随手写", 不是"必须多分支"
+    # cycle 272 口径修正: >=3 步的显式管线 (Step 1/2/3... 或 ## 1./## 2./## 3.)
+    # 是单入口多阶段的设计模式等价物 — 检查意图是"有设计而非随手写", 不是"必须多分支"
     pipeline_steps = len(set(re.findall(r'^#{2,4}\s+(?:Step|第)\s*\d+', content, re.M)))
+    pipeline_steps = max(pipeline_steps,
+                         len(set(re.findall(r'^#{2,4}\s+\d+[.、]\s*\S', content, re.M))))
     passed = patterns_found >= 2 or pipeline_steps >= 3
     results.append(CheckResult(
         name=f"模式定义完整（{patterns_found}个模式, {pipeline_steps}步管线）",
