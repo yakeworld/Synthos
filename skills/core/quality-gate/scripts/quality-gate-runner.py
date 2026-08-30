@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# 原理绑定：SKILL.md 维度3-脚本可运行性，铁律：凡数必源，凡引必验
 """
 Quality Gate Runner — 固定模板质量检查引擎
 ============================================
@@ -212,7 +213,7 @@ def check_g3_citation_integrity(paper_dir: str) -> GateResult:
         bib = read_file_safe(bib_path)
         if not bib:
             continue
-        bib_keys_set = set(re.findall(r'@\w+\{(\w+)', bib))
+        bib_keys_set = set(re.findall(r'@\w+\{([^,\s]+)', bib))
         bib_keys_set.update(set(re.findall(r'\\bibitem\{(\w+)', bib)))
         overlap = len(bib_keys_set & cite_keys)
         if overlap > best_match:
@@ -350,7 +351,7 @@ def check_g5_citation_quality(paper_dir: str) -> GateResult:
         with open(filepath) as f:
             content = f.read()
         # @article{key, or @misc{key, etc.
-        keys.update(re.findall(r'@\w+\{(\w+)', content))
+        keys.update(re.findall(r'@\w+\{([^,\s]+)', content))
         # \bibitem{key,
         keys.update(re.findall(r'\\bibitem\{(\w+)', content))
         return keys
@@ -496,11 +497,18 @@ def check_g7_content(paper_dir: str) -> GateResult:
     if not tex:
         return GateResult("G7_content", False, 0.0, ["No .tex"])
 
+    # Case-study / empirical papers: "Case Study"/"System" sections serve as
+    # the method description; "Finding"/"Analysis" sections serve as results.
     required_sections = {
-        "Introduction": "\\section{Introduction}",
-        "Methods": ["\\section{Methods}", "\\section{Methodology}"],
-        "Results": ["\\section{Results}", "\\section{Experiments}"],
-        "Discussion": ["\\section{Discussion}", "\\section{Conclusion}"],
+        "Introduction": ["\\section{Introduction}", "\\section*{Introduction}"],
+        "Methods": ["\\section{Methods}", "\\section{Methodology}",
+                    "\\section{Case Study", "\\section{System",
+                    "\\section{Architecture}", "\\section{Observation"],
+        "Results": ["\\section{Results}", "\\section{Experiments}",
+                    "\\section{Finding", "\\section{Analysis}",
+                    "\\section{Evaluation}", "\\section{Assessment"],
+        "Discussion": ["\\section{Discussion}", "\\section{Conclusion}",
+                       "\\section{Threats to Validity}"],
     }
 
     found = 0

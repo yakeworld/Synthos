@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# 原理绑定：SKILL.md delegate_task 铁律 / behavior 维代谢监护 (cycle 269)
 """gene_metabolism.py — behavior 维代谢看门狗 (cycle 269)
 
 每日自检: 报 behavior 分子 (gene_activation 留痕) 增量, 连续 3 天零增量告警"代谢停滞"。

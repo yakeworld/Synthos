@@ -591,21 +591,27 @@ def check_consistency(content: str, skill_dir: str, weights: Dict = None) -> Lis
             suggestion="添加实现脚本或移除铁律" if not has_implementations else ""
         ))
 
-    # 4.3 模式映射正确 — 支持多种格式：模式A:、模式A（xxx）、**模式A**：、Mode A:、- 模式名称：
-    patterns_found = len(re.findall(r'模式[A-Z]', content))
+    # 4.3 模式映射正确 — 支持多种格式：模式A:、模式A（xxx）、**模式A**：、Mode A:、- 模式名称：、模式1:、模式 #5
+    # cycle 272 口径修正: 字母模式 + 数字模式 (#5/1 等, 技能实际用数字编号)
+    patterns_found = len(re.findall(r'模式[A-Z0-9]', content))
+    patterns_found += len(re.findall(r'模式\s*#[A-Z0-9]', content))
     mode_lines = re.findall(r'(?:模式[A-Z][（:;]\s+|├──模式[A-Z]:|└──模式[A-Z]:)', content)
     # Match bullet points with 模式 in OPERATING_MODES section or similar
     mode_lines2 = re.findall(r'- \*\*[^*]*模式[^*]*\*\*', content)
     # Match "模式名称：" without ** wrapper
     mode_lines3 = re.findall(r'- \*[^*]+模式[^*]+\*[^：:]', content)
     patterns_found = max(patterns_found, len(mode_lines), len(mode_lines2))
+    # cycle 272 口径修正: >=3 步的显式管线 (Step 1/2/3...) 是单入口多阶段的
+    # 设计模式等价物 — 检查意图是"有设计而非随手写", 不是"必须多分支"
+    pipeline_steps = len(set(re.findall(r'^#{2,4}\s+(?:Step|第)\s*\d+', content, re.M)))
+    passed = patterns_found >= 2 or pipeline_steps >= 3
     results.append(CheckResult(
-        name=f"模式定义完整（{patterns_found}个模式）",
-        passed=patterns_found >= 2,  # 至少2个模式
+        name=f"模式定义完整（{patterns_found}个模式, {pipeline_steps}步管线）",
+        passed=passed,
         severity="P1",
         category="维度4-思想一致性",
-        details=f"{patterns_found}个模式定义",
-        suggestion="补充模式定义" if patterns_found < 2 else ""
+        details=f"{patterns_found}个模式定义, {pipeline_steps}步管线",
+        suggestion="补充模式定义或显式管线步骤" if not passed else ""
     ))
 
     # 4.4 无冗余代码（同目录下无完全重复的.py文件）
@@ -692,18 +698,24 @@ def check_quality(content: str, frontmatter: Optional[dict], skill_dir: str, wei
             with open(changelog_path) as f:
                 cl_content = f.read()
             # Extract version from changelog
-            cl_match = re.search(r'v?(\d+\.\d+(?:\.\d+)?)', cl_content)
-            cl_version = cl_match.group(1) if cl_match else ''
-            version_match = re.search(r'version[:\s]+(\d+\.\d+(?:\.\d+)?)', frontmatter.get('version', ''))
-            fm_version = version_match.group(1) if version_match else ''
+            # cycle 272 口径修正: 只从标题行 (## vX.Y.Z) 提取版本集,
+            # frontmatter 当前版必须 ∈ 该集 — 旧口径取文件首个版本号
+            # (最旧历史版本), 与 frontmatter 当前版必不匹配, 全是假阳性
+            cl_header_versions = set(re.findall(
+                r'^#+\s+v?(\d+\.\d+(?:\.\d+)?)\b', cl_content, re.M))
+            # cycle 272 口径修正: frontmatter 值本身就是版本号 (旧口径在
+            # "2.1.0" 里找 "version:" 前缀, fm_version 恒为空 → 必挂)
+            fm_match = re.match(r'(\d+\.\d+(?:\.\d+)?)', version or '')
+            fm_version = fm_match.group(1) if fm_match else ''
 
             results.append(CheckResult(
                 name="版本一致",
-                passed=version == cl_version or fm_version == cl_version or version == '' or cl_version == '',
+                passed=(version == '' or fm_version in cl_header_versions
+                        or not cl_header_versions),
                 severity="P1",
                 category="维度5-内容质量",
-                details=f"frontmatter: {version}, CHANGE_LOG: {cl_version}",
-                suggestion="同步版本号" if (version and cl_version and version != cl_version) else ""
+                details=f"frontmatter: {version}, CHANGE_LOG headers: {sorted(cl_header_versions)[-3:]}",
+                suggestion="在 CHANGE_LOG.md 补对应版本标题行" if (version and cl_header_versions and fm_version not in cl_header_versions) else ""
             ))
         else:
             results.append(CheckResult(

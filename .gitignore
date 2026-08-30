@@ -216,7 +216,8 @@ tools/literature-search/
 # ============================================
 # 21. 根目录 Python 脚本（已存档，不入库）
 # ============================================
-evolution-loop.py
+# 2026-08-31 cycle 272: 已移入 skills/private/extended/meta/evolution/scripts/ (git 跟踪)
+# evolution-loop.py
 pinn_gen_main.py
 pinn_gen_worker.py
 paper-queue.json

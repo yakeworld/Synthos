@@ -1,5 +1,11 @@
 #!/bin/bash
 # Synthos 自动化进化循环 — cron 脚本
+#
+# [DEPRECATED cycle 272] 本脚本是 v2 旧链路 (check_skill 结构扫描)。
+# 现行唯一度量层 = skills/private/extended/meta/evolution/scripts/diagnose.py (v4, 8-dim)
+# 结构扫描 = skills/private/extended/meta/evolution/scripts/evolution-loop.py
+# 定时进化 = hermes cron synthos-self-evolution (05:00)
+# 保留本脚本仅供手动对比 v2/v4 口径, 不再注册 cron。
 # 注意: evolution-loop.py 的退出码 = 分数信号 (0=优秀, 1=合格, 2=不合格),
 # 不是错误信号 — 不能用 set -e, 否则第一个 phase 就中止全脚本 (2026-08-31 修复)
 SCRIPT_DIR="$(cd "$(dirname "$0")/.." && pwd)"

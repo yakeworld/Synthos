@@ -1,5 +1,8 @@
 # Quality Gate — CHANGE_LOG
 
+
+## v3.1.0 (2026-08-31)
+- cycle 272: quality-gate-runner.py 补原理绑定注释; 版本标题对齐
 ## v2.40.0 (2026-06-27)
 ## v2.9.4 (2026-06-18)
 - 三项铁律 + Codex-tmux调度协议

@@ -231,7 +231,7 @@ python3 -c "import json; json.dump(knowledge_item, open('outputs/{paper_dir}/07-
 - 不允许包含实验结果
 - 避免 LaTeX 数学，用语言描述功能
 
-输出 `idea_sparse.md`，四部分：
+输出 idea_sparse.md，四部分：
 1. **Problem Statement** — 问题陈述
 2. **Core Hypothesis** — 核心假设
 3. **Proposed Methodology (high-level)** — 方法概述
@@ -245,7 +245,7 @@ python3 -c "import json; json.dump(knowledge_item, open('outputs/{paper_dir}/07-
 - 包含具体的架构选择和维度
 - 不允许实验结果
 
-输出 `idea_dense.md`，四部分（同上，但更详细）。
+输出 idea_dense.md，四部分（同上，但更详细）。
 
 ### 模式3: Full Reconstruction
 

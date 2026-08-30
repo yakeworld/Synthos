@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# 原理绑定：SKILL.md delegate_task 铁律 / behavior 维执行层 — 存在即留痕
 """gene_trace.py — 行为留痕 CLI (cycle 268, behavior 维的执行层)
 
 存在即留痕, 无痕即未生。

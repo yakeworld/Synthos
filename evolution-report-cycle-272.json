@@ -1,0 +1,115 @@
+{
+  "cycle": 272,
+  "timestamp": "2026-08-30T23:26:15.130063+00:00",
+  "mode": "SCAN/CORE",
+  "total": 8,
+  "healthy": 0,
+  "avg_score": 65.1,
+  "min_score": 59,
+  "max_score": 80,
+  "total_issues": 29,
+  "fixed": 0,
+  "score_changes": {},
+  "top_issues": [
+    {
+      "name": "模式定义完整（0个模式）",
+      "count": 7
+    },
+    {
+      "name": "版本一致",
+      "count": 7
+    },
+    {
+      "name": "有实战案例",
+      "count": 6
+    },
+    {
+      "name": "铁律有对应实现",
+      "count": 3
+    },
+    {
+      "name": "脚本有SKILL.md原理绑定",
+      "count": 2
+    },
+    {
+      "name": "触发条件明确",
+      "count": 1
+    },
+    {
+      "name": "边界定义清晰",
+      "count": 1
+    },
+    {
+      "name": "CHANGE_LOG.md存在",
+      "count": 1
+    },
+    {
+      "name": "Markdown引用完整（9个）",
+      "count": 1
+    }
+  ],
+  "lowest_skills": [
+    {
+      "name": "knowledge-acquisition",
+      "score": 59,
+      "status": "unhealthy",
+      "type": "core",
+      "issues": 6
+    },
+    {
+      "name": "knowledge-extraction",
+      "score": 59,
+      "status": "unhealthy",
+      "type": "core",
+      "issues": 4
+    },
+    {
+      "name": "quality-gate",
+      "score": 59,
+      "status": "unhealthy",
+      "type": "core",
+      "issues": 4
+    },
+    {
+      "name": "task-router",
+      "score": 59,
+      "status": "unhealthy",
+      "type": "core",
+      "issues": 4
+    },
+    {
+      "name": "viewpoint-verification",
+      "score": 59,
+      "status": "unhealthy",
+      "type": "core",
+      "issues": 4
+    },
+    {
+      "name": "argument-expression",
+      "score": 73,
+      "status": "acceptable",
+      "type": "core",
+      "issues": 3
+    },
+    {
+      "name": "association-discovery",
+      "score": 73,
+      "status": "acceptable",
+      "type": "core",
+      "issues": 3
+    },
+    {
+      "name": "hypothesis-generation",
+      "score": 80,
+      "status": "good",
+      "type": "core",
+      "issues": 1
+    }
+  ],
+  "next_actions": [
+    "🔴 P0 紧急修复: 6 个问题影响 3 个技能",
+    "🟠 不合格技能: 5 个需要优化",
+    "📊 健康率 0%，目标 ≥90%"
+  ],
+  "scan_time_ms": 1290
+}

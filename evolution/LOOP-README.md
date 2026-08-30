@@ -1,5 +1,16 @@
 # 自主进化循环 (Evolution Loop)
 
+## 链路状态 (cycle 272, 2026-08-31)
+
+**现行唯一度量层**: `skills/private/extended/meta/evolution/scripts/diagnose.py` (v4, 8 维, OVERALL 口径)
+**定时进化**: hermes cron `synthos-self-evolution` (每日 05:00, LLM 驱动)
+**behavior 看门狗**: hermes cron `gene-metabolism-watch` (每日 18:30, no_agent)
+
+以下 `evolution/evolution-loop-cron.sh` + `evolution-loop.py` 为 **v2 旧链路**（check_skill 结构扫描），
+保留作手动对比/结构深扫用，不再注册 crontab。`evolution-loop.py` 已移入
+`skills/private/extended/meta/evolution/scripts/`（git 跟踪，2026-08-31 前在仓库根目录
+被 07-03 清理删除过一次，本目录为准）。
+
 ## 架构
 
 ```
