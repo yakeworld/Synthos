@@ -614,7 +614,9 @@ def run_gate(paper_dir: str, mode: str = "full") -> QualityReport:
 
         if not result.pass_:
             report.overall_pass = False
-        if result.findings:
+        if result.findings and not result.pass_:
+            # 通过的门的 findings 是正面证据 (如 "Cross-referenced state.json")，
+            # 不是问题——不计入 issues (cycle 273 修: L0.5 通过 findings 曾被误标 P0)
             report.issues.append({
                 "gate": gate_name,
                 "severity": "P0" if gate_name in ("L0.5_data_honesty", "G4_constitution") else "P1",
