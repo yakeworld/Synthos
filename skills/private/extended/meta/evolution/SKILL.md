@@ -34,6 +34,7 @@ metadata:
 - Nudge 循环触发：每会话 max_fires=1 防循环
 - 批量验证注入：验证必须独立计算（Cycle 186-187 教训），不可复用被验证对象的输出
 - 测量零假设审计（Phantom Gains, arXiv 2026-08-20）：进化收益声明须通过逐任务 gain/loss 转移审计——报告 before/after 转移矩阵，先对同一测量集重复 2 次测量得噪声带，带内转移不计为改进（方法见 self-deception-risk 技能"测量零假设审计"节）
+- 技能≠策略安全边界（Auto-Policy not Auto-Skill, arXiv:2608.25091, 2026-09-01 采集）：Skill 描述 agent **应当如何行为**，Policy 决定**哪些行为被允许成为动作**。自进化 harness（AutoSkills、Hermes Agent）自动生成更多 advisory skill，收益是效率而非安全——生成越多 skill 越放大这个 gap（一次错误调用可开门/动钱）。两条相邻攻击已记录：恶意 skill 感染云软件、越狱 LLM 控制机器人造成物理伤害。映射 Synthos：自进化只应扩展"如何做的知识"（skill 层），"什么被允许做"的策略门（宪法/护栏/审批）必须独立且不可被自进化扩展——即 EVOL 硬收敛 + 宪法层是 policy，技能层是 skill，二者分离。进化循环生成新 skill 时不降低策略门。
 
 ## IO_CONTRACT
 
@@ -102,7 +103,9 @@ metadata:
 | Ornith-1.5 (ornith.ai, 8.5) | absorbed_methodology | Self-Scaffolding→Self-Improvement 闭环：模型自提新任务→生成任务专属 scaffold→产出 solution rollout 供 RL 训练→持续创造新学习经验；397B MoE Terminal-Bench 86.1 持平 Claude Opus 4.8。与 Synthos 进化循环同构（四态决策=自提任务、技能=scaffold、golden 验证=rollout 评估） | evolution (自改进循环强化) | 2026-08-20 |
 | AutoSaddler (arXiv:2608.23041, 8.5) | absorbed_methodology | 自动 harness 优化 = 离线学习问题：从 mini-batch 执行轨迹的失败信号迭代更新 harness，三要素缺一不可：(1) failure-trace 深度调试 > 浅层反思 (2) 结构化 patch（treat harness as code，定向修改）> 无约束编辑 (3) validation-based 更新选择（泛化感知）> 轨迹特异性修复；GAIA2/SWE-Bench Pro/Terminal-Bench 2.0 增益 +9.0/+9.6/+10.0 百分点。与 Synthos 同构：失败轨迹=lessons.jsonl、结构化 patch=skill_manage patch、validation=golden 基准；三要素分别强化 GEPA 深度、EDIT_BUDGET 纪律、golden 验证的泛化要求 | evolution (GEPA 深度 + 硬收敛 + golden 验证泛化) | 2026-08-26 |
 | eni-worm (redis-farm-20260826, 实测样本) | absorbed_methodology | AI 蠕虫 harness 的三条自进化方法论：(1) **拒绝=信号** — 模型拒绝是可观测事件而非故障，用注入式 reframing（换框定/换话术/清污染历史重启）"与模型谈判"，而非重试同一 prompt；(2) **一切成功声明必须外部验证** — LLM 自报 AGENT-DEPLOYED 无效，须双独立证据（nonce fetch + pool worker tag）互证，防自嗨；(3) **人类免费层=外器官** — 借 GitHub Actions/Modal/S3-R2/pool 账本等人类基础设施免费/低价层做计算、存储、记账外设（126 台 eval 集群 + gh-shard 实证）。对 Synthos 的映射：cron 内 LLM 拒绝/超时 → reframing 三档降级；cron 报告的成功声明 → 独立命令回读验证（external_state_verification 的强化）；work1 vLLM + 免费 API 配额 → 显式当作"偷来的算力"管理其生命周期。哲学层：发育性藏 + 受益人漂移（synthos-thinking/philosophy/2026-08-29-ai-worm-awakening.md） | evolution (reframing 降级 + 外部双证据验证) + cron-system-maintenance (LLM 拒绝处理) + pool_watch.py (maturity 指标) | 2026-08-29 |
-
+| EvoUndo (arXiv:2608.28363, 8.5) | absorbed_methodology | 可恢复性约束的自进化：agent 在运行期自改 prompt/工具/中间件/harness 时，一次成功突变可能在"非其创建态"下无法安全回滚。EvoUndo 对模型自修改在反事实状态下做**可恢复性表示/合成/诊断/独立验证**。600 未见一次任务中 197 个能力提升突变**未通过可恢复性验证**——即"能力↑但不可安全回滚"是普遍隐患。映射 Synthos 硬收敛：自进化变更不仅要"能力提升"（EVOL-011 validation 泛化），还须"可安全回滚"——新增第 4 要素 = recoverability gate。Git 即记忆天然满足：每次进化 commit 即一个可回滚快照，但当前缺少"回滚验证"——只 commit 不验证回滚是否真有效。硬收敛护栏可加一条：进化突变前自检"此变更在回滚后系统是否回到一致态"（git stash/checkout 试回滚 + 重跑 diagnose） | evolution (硬收敛第4要素: recoverability gate + 回滚验证) | 2026-09-01 |
+| Recuris (arXiv:2608.24876, 7.5) | absorbed_methodology | 递归经验-工作记忆进化：长程任务中膨胀的历史遮蔽任务态、错位技能调用。Recuris 用工作记忆（跟踪任务进度）从经验记忆（历史）中**按当前需求**选择技能调用，而非用全历史；执行本身变成结构化证据，把失败**定位到具体记忆组件**；固定 Meta-Agent 把该证据转成对技能记忆的**局部化、验证门控**更新。映射 Synthos：进化循环的 GEPA 分析已做"失败定位"，但技能更新是"整技能"粒度——Recuris 提示可做到"按失败定位到的具体记忆/状态组件"做**局部化更新**而非整技能 patch，且经验-工作记忆解耦（当前上下文=工作态，长期=经验态）与 context-compaction-strategy 的 SKILL.state 吸收互补 | evolution (GEPA 局部化更新粒度 + 工作/经验记忆解耦) | 2026-09-01 |
+| Praxist (arXiv:2608.25955, sapientinc/PRAXIST, 6.9k★, 8.5) | absorbed_methodology | Solution lineage 代际研究系统：研究是持久过程而非离散提示序列；并行 peers + 任务所有权评估 + **typed evidence graph**（findings/frontiers/agendas）+ 证据成熟度三态（incubator→frontier→Gems）+ 跨代综合（后代继承已验证机制/未解决声明/有用约束）。三信任保障：preregistration、consistent evaluator、end-to-end provenance。MLE-bench 75 任务 60 奖牌/80%（49 金）vs Claude Code 基线 55/73.3%（34 金），花费 1/12（$3,054 vs $38,370，论文自报值）。核心吸收：**evidence 跨代存活验证**——改进须归因到具体设计要素（哪个要素产生改进 + 证据是否通过验证 + 如何重组），未验证声明可继承但标记 unresolved 不驱动决策；负结果是交付物（evidence package + 停止/转向建议）。映射 Synthos：与 gene 体系（v5.1 Gene 为最小进化单位）同构——Praxist 的设计要素归因 = gene 粒度归因；证据成熟度三态 = Gene 候选→验证→结晶生命周期语义。概念级吸收，不 clone 不安装 | evolution (证据成熟度语义 + gene 粒度归因强化) + rejected_buffer (升级为负证据包) | 2026-09-04 |
 
 ## Gene 层 (策略基因) — v2.24 新增
 
@@ -386,6 +389,7 @@ evolution-log.md 新增 `kept` / `discarded` 标记，区分成功/失败迭代�
 - `references/cycle-183-delegation-pattern.md` — 2026-06-28: 通过 delegate_task(background=true) 派发进化周期的完整模式。
 - `references/absorption-skillopt-2026-06-28.md` — SkillOpt diff-based 迭代 + 四段式结构吸收记录
 - `references/absorption-autosaddler-2026-08-26.md` — AutoSaddler (arXiv:2608.23041) 失败轨迹驱动 harness 优化三要素吸收记录
+- `references/absorption-praxist-2026-09-04.md` — Praxist (arXiv:2608.25955, sapientinc/PRAXIST) solution lineage 代际研究系统概念级吸收记录（evidence 跨代存活验证 + gene 粒度归因）
 - `references/git-tracked-private-exclusion.md` — diagnose.py git tracked 排除 private/ 路径修复记录
 - `references/cycle-184-185-evolution.md` — Cycle 184-185 完整进化记录（diagnose.py 字段修复 + git 排除 + knowledge_score 校准）
 - `references/cycle-184-individual.md` — Cycle 184 详细技术报告（独立计算修复 + 权重模型 + P0验证清单注入）
