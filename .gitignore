@@ -240,3 +240,6 @@ tools/paper-manager/src/sources/pubscholar.py
 *.v2
 /outputs/papers/*/06-references/pdfs/
 *.bak-*
+
+# 2026-09-06 P0 cleanup: npm deps never tracked
+node_modules/
