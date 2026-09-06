@@ -165,19 +165,27 @@ def check_g2_compile(paper_dir: str) -> GateResult:
                           ["pdflatex not available — structure-only check (降级)"], [])
 
     log_tail = ""
-    # cwd = 论文根 (paper_dir 的上一级): 相对路径 ../05-figures 等才能解析;
+    # 相对图片路径的基准不确定 (../05-figures vs 裸文件名), 按优先级试多个 cwd:
+    # manuscript 目录 (裸文件名) → 论文根 (../xxx) → 手稿文件名所在目录。
     # 输出隔离到 tmp, 不污染工作区。pdflatex 失败再试 xelatex (xeCJK 论文)。
     src = os.path.join(paper_dir, tex_files[0])
-    workdir = os.path.dirname(os.path.abspath(paper_dir))
+    src_dir = os.path.dirname(os.path.abspath(src))
+    workdirs = []
+    for wd in (src_dir, os.path.dirname(src_dir)):
+        if wd and wd not in workdirs:
+            workdirs.append(wd)
     with tempfile.TemporaryDirectory(prefix="g2_compile_") as tmp:
         proc = None
-        for engine in ("pdflatex", "xelatex"):
-            if shutil.which(engine) is None:
-                continue
-            proc = subprocess.run(
-                [engine, "-interaction=nonstopmode", "-halt-on-error",
-                 "-draftmode", "-output-directory", tmp, src],
-                capture_output=True, text=True, timeout=180, cwd=workdir)
+        for wd in workdirs:
+            for engine in ("pdflatex", "xelatex"):
+                if shutil.which(engine) is None:
+                    continue
+                proc = subprocess.run(
+                    [engine, "-interaction=nonstopmode", "-halt-on-error",
+                     "-draftmode", "-output-directory", tmp, src],
+                    capture_output=True, text=True, timeout=180, cwd=wd)
+                if proc.returncode == 0:
+                    break
             if proc.returncode == 0:
                 break
         logf = os.path.join(tmp, os.path.splitext(tex_files[0])[0] + ".log")
@@ -630,8 +638,11 @@ def check_l05_data_honesty(paper_dir: str) -> GateResult:
         return f"{float(m.group(1)):.4f}".rstrip("0").rstrip(".") if m else s.lower()
 
     decls = [d.replace(" ", "") for d in numeric_decls]
-    # 只核可核对的纯数值声明 (p<0.001 类含运算符的保留, 不参与分母)
-    checkable = [d for d in decls if re.fullmatch(r"\d+\.?\d*%?", d)]
+    # 只核可核对的纯数值声明 (p<0.001 类含运算符的保留, 不参与分母);
+    # 引用年份 (19xx/20xx) 的来源是 references.bib (G3/G5 管), 不属 state.json 溯源, 排除。
+    checkable = [d for d in decls
+                 if re.fullmatch(r"\d+\.?\d*%?", d)
+                 and not re.fullmatch(r"(19|20)\d{2}", d)]
     if not checkable:
         return GateResult("L0.5", True, 1.0, [], ["No plain-numeric claims to check"])
 
