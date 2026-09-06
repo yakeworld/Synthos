@@ -36,7 +36,7 @@
 ## 待解决 (Open)
 
 | 编号 | 问题 | 严重度 | 状态 |
-| P040 | 评估器奖励完整性: L0.5/G2/behavior 三处假阳性已修 (f9c2963d), 待按新口径重扫 state 更新基线 | 🟡 P1 | 2026-09-07 评审实验1完成: tests/test_reward_integrity.py 冻结反例 7/7 (L0.5 空/无state.json 不再 PASS 0.8/0.6, 改逐项核对; G2 真编译 pdflatex/xelatex 退出码; behavior verify 剔除无产物 completed, 实测 245 completed 仅 5 产物存在). 真论文 spot check 抓出 2 处旧 PASS 实为 FAIL (3diris-01 缺图 / bppv-county xeCJK 需 xelatex). 余: (a) 按新 diagnose 重扫 evolution-state 基线 (0.9638 口径已变); (b) 82 篇 manuscript_ready 按新 L0.5 重过闸, 预计大量降级为需补 state.json 数值溯源; (c) 评审脆弱点 3/4/5 (auto-loop 状态机/回滚归属/快照不一致) 未动, 属实验2范围 |
+| P040 | 评估器奖励完整性: 实验1完成 + 全量重扫基线 | 🟡 P1 | 2026-09-07 实验1: 三处假阳性已修 (f9c2963d+补丁2), 冻结反例 7/7. 新口径全量重扫(99篇有tex): **overall pass=0** (旧state声称80篇pass全部翻FAIL), G2真编译33篇fail (缺图/xeCJK/真语法错误), L0.5 0/99 — 数据层实证: state.json 是管线状态非数值溯源台账, 论文实验数值未入 state.json (最好14篇也仅50-99%匹配). 这是数据缺口非门过严, 保持门不动(防选有利指标). 余: (a)数值溯源台账批量回填 (03-code/04-data → state.json, 机械任务可cron批跑) (b)33篇G2真编译错误修复 (c)评审脆弱点3/4/5=实验2 (d)1篇bppv-pinn GB编码异常 (e)76篇无tex(harvested)不在过闸范围 |
 |------|------|--------|------|
 | P030 | dsh 与并行 cron 同库编辑竞态: cycle-211 期间 11 个 private 技能被并行 cron 同时修改, dsh 报告 (15 changed) 与实际 diff (4) 不一致 | 🟡 P1 | 已缓解: 独立 VERIFY 捕获并归因 (cycle-211 记录); 后续 dsh 周期派发前检查并行 cron 状态, 或 commit 时按 diff 归属拆分 |
 | P034 | dsh 技能自动发现仅认 ~/.dsh/skills 目录 (用户实测指正); customSkillDirs (skills-flat) 未被自动发现消费 | 🟡 P1 | 文档已修正 (commit bf153d4); **cycle-213 已补 dsh-self-evolution 缺失链接 (1/11, 实测进 dsh 目录可见)**; 其余 10 个缺失链接待核对补齐 |
