@@ -3,8 +3,8 @@
 > **A Self-Evolving Cognitive Operating System for AI-Augmented Scientific Research**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Evolution Cycles](https://img.shields.io/badge/evolution-100%20cycles-brightgreen)](evolution-log.md)
-[![Quality Score](https://img.shields.io/badge/quality-0.90%20OK-success)](evolution-state.json)
+[![Evolution Cycles](https://img.shields.io/badge/evolution-272%20cycles-brightgreen)](evolution-log.md)
+[![Quality Score](https://img.shields.io/badge/quality-0.96%20overall%20%C2%B7%200.59%20behavior-success)](evolution-state.json)
 
 **Synthos reifies epistemological principles as executable cognitive atoms.** Unlike conventional research agents that wrap Python libraries as tools, Synthos operates as a purely skill-driven architecture: the Agent itself is the runtime, with **zero Python infrastructure code** (core orchestration is 100% SKILL.md; helper automation scripts in `scripts/` use Python/shell but are not part of the cognitive architecture).
 
@@ -18,7 +18,7 @@
 |:-----------|:------------|
 | **🧬 Epistemological Code** | 8 philosophical frameworks (First Principles, Falsificationism, Bayesian Reasoning, etc.) reified as executable SKILL.md atoms with formal I/O contracts |
 | **🏛️ Constitutional Hierarchy** | CON ≫ MEM ≫ CMD ≫ SKL ≫ DEF — immutable principles enforced by a philosophical immune system |
-| **🔄 Self-Evolution Engine v2.39** | 11-step state machine with SEPL rollback, Git-as-Memory, structural probes, functional benchmarks, external absorption, drift detection, and active inference gates |
+| **🔄 Self-Evolution Engine v2.27** | 11-step state machine with SEPL rollback, Git-as-Memory, structural probes, functional benchmarks, external absorption, drift detection, and active inference gates |
 | **🌱 Entelechy-Driven Absorption** | Aristotelian self-realization as the absorption axiom — from "gap-filling" to "nutrition assessment" |
 | **📝 Zero-Python Architecture** | All cognitive atoms + meta-components are pure SKILL.md markdown. No Python orchestration code |
 
@@ -29,7 +29,7 @@
 │              CONSTITUTION.md v5.0                    │
 │        (CON ≫ MEM ≫ CMD ≫ SKL ≫ DEF)                │
 ├─────────────────────────────────────────────────────┤
-│   ACQ → EXT → ASC → RIF → HYP → ARG/VER             │
+│   ACQ → EXT → ASC → HYP → ARG/VER                  │
 │         ↕        ↕        ↕        ↕                 │
 │   [Task Router] [Entelechy Gate] [Quality Gate]      │
 ├─────────────────────────────────────────────────────┤
@@ -39,44 +39,37 @@
 └─────────────────────────────────────────────────────┘
 ```
 
-**7 Cognitive Atoms:** Knowledge Acquisition → Knowledge Extraction → Association Discovery → Research Ideation → Hypothesis Generation → Argument Expression → Viewpoint Verification
+**6 Cognitive Atoms:** Knowledge Acquisition → Knowledge Extraction → Association Discovery → Hypothesis Generation → Argument Expression → Viewpoint Verification
 
 **3 Meta-Components:** Task Router (shortest-path routing), Entelechy Gate (direction compatibility), Quality Gate (L0–L4 multi-layer verification)
 
 ### 3-Layer Skill Architecture
 
-Synthos organizes **203 SKILL.md files** into a strict layered hierarchy:
+Synthos organizes **157 SKILL.md files** (measured 2026-09-06) into three directories:
 
-| Layer | Skills | Purpose | Precedence |
-|-------|--------|---------|------------|
-| **Core** | 88 skills | CON > MEM > CMD — immutable principles, core atoms | Highest |
-| **System** | 50 skills | SKL — system maintenance, evolution, quality gates | Medium |
-| **Optional** | 60 skills | DEF — auxiliary tools, creative, productivity | Lowest |
-
-**6 Composite skills** merge overlapping functionality into unified capabilities (github-workflow, creative-tools, mlops-toolchain, productivity-suite, social-monitor, paper-pipeline).
+| Directory | Skills | Purpose |
+|-----------|--------|---------|
+| `skills/core/` | 8 | cognitive atoms + task-router + quality-gate |
+| `skills/extended/` | 79 | research tools, devops, external automation |
+| `skills/private/` | 70 | domain-specific (clinical research, mentoring, writing) |
 
 ## Paper Outputs
 
-Synthos has produced **44 paper drafts** across multiple biomedical domains and methodology:
+**261 paper.tex drafts** on disk across multiple biomedical domains (measured 2026-09-06; drafts are machine-generated — publication readiness varies, see Quality Audits below).
 
-| Category | Papers | Size |
-|:---------|:-------|:----:|
-| 🧠 **Neurology** | PD Torsion Review, BPPV Minimal Stimulus, PD Dysphagia Risk, HCS-3WT Breast Cancer | 4 papers |
-| 👁️ **Ophthalmology** | Iris 3D Anatomical Segmentation, Iris YOLO, CutEye Model, Portable Eye Tracking | 4 papers |
-| 🔄 **VOR/Vestibular** | VOR Sparse Modular NN, VOR Digital Twin | 2 papers |
-| 📊 **Methodology** | PIMA CRISP-DM Helix | 1 paper |
-| 📚 **Literature Reviews** | 33 reviews across eye-tracking, VOR, BPPV, iris, eyeball, methods | 33 reviews |
-| **Total** | **44 paper.tex files** | |
+> ⚠️ **Status honesty:** these are drafts at various stages (machine draft / human-revised / peer-reviewed / submitted). Only a small subset is near-submittable; the per-category breakdown in the original 44-paper table is not maintained and has been removed rather than kept stale.
 
 ## Evolution History
 
-| Metric | Cycle 1 | Cycle 53 | Cycle 96 |
-|:-------|:-------:|:--------:|:--------:|
-| Structural Avg | 0.861 | 1.00 | **0.92** |
-| Benchmark Score | 0.66 | 1.00 | **0.82** |
-| Composite Score | 0.86 | 0.98 | **0.95** |
-| External Absorptions | 0 | 18 | **30+** |
-| SKILL.md Files | ~50 | ~100 | **203** |
+| Metric | Cycle 1 | Cycle 96 | Cycle 272 (current) |
+|:-------|:-------:|:--------:|:-------------------:|
+| Structural Avg | 0.861 | 0.92 | **1.00** |
+| Benchmark Score | 0.66 | 0.82 | **1.00** |
+| Composite Score | 0.86 | 0.95 | **0.9638** |
+| Behavior dimension | — | — | **0.5934** (current bottleneck) |
+| SKILL.md Files | ~50 | ~200 | **157** (2026-09 measured) |
+
+> Cycle 272 numbers come from `evolution-state.json` diagnostics. The behavior dimension (skill gene activation traceability) is the known next bottleneck; it is reported alongside overall on purpose — see `falsification-summary.md` for what the overall score does and does not cover.
 
 ## Comparison with Existing Systems
 
@@ -97,7 +90,9 @@ Synthos has produced **44 paper drafts** across multiple biomedical domains and 
 |-------|-------|-------|----------------|
 | 97 | synthos-paper.tex | 62.5/100 (C) | MAJOR_REVISION — 7 orphan refs, 80% GitHub refs |
 
-See [.evolution/reviews/](.evolution/reviews/) for detailed quality reports.
+> **Known limitation (2026-09 audit):** per-skill scan results (cycle 181: avg 62.2, healthy 0) and the evolution-state overall score use different measurement systems and were reported inconsistently. The overall score reflects structural/benchmark/absorption dimensions; it does **not** validate scientific quality of outputs. Independent reproduction of a full workflow is not yet available — `examples/` with a complete end-to-end desensitized case is planned.
+
+See `evolution-report-cycle-*.json` for raw scan data.
 
 ## License
 
@@ -118,4 +113,8 @@ If you use Synthos in your research, please cite:
 
 ---
 
-*Synthos v2.39.0 — 100 evolution cycles — Quality Score 0.90 (EXCELLENT) — Super Individual Engine ON*
+*Synthos v2.27 — 272 evolution cycles — Overall 0.9638 / Behavior 0.5934 (measured 2026-08-17, cycle 272)*
+
+## Numbers Provenance
+
+All counts in this file (157 skills, 261 paper drafts, 272 cycles, scores) were measured from the repository on 2026-09-06. `evolution-state.json` is the single source of truth for version/cycle/score; if this README disagrees with it, the README is stale — fix the README, not the state file.

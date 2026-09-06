@@ -238,7 +238,7 @@ Date: 2026-06-13
 - `CONSTITUTION.md` — 不可修改的宪法
 - `SKILL.md` — 认知操作系统总编排
 - `docs/verification-gates.md` — G1-G7 验证门
-- `evolution-state.json` — 进化状态（当前 cycle 72, v2.20）
+- `evolution-state.json` — 进化状态（当前 cycle 272, v2.27；2026-09-06 起为版本/轮次/分数的唯一事实源，文档与之冲突时改文档）
 - `evolution-log.md` — 进化日志
 - `skills/` — 全部认知原子和元组件
 - `tools/` — 论文管理器
