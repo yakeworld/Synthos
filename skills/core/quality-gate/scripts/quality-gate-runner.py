@@ -21,6 +21,7 @@ Synthos Quality Gate (正观) — 强制固定流程，零自由发挥。
 """
 
 import argparse
+import glob
 import json
 import os
 import re
@@ -124,7 +125,17 @@ def check_g1_identity(paper_dir: str) -> GateResult:
 
 
 def check_g2_compile(paper_dir: str) -> GateResult:
-    """G2: 编译检查 — tex 文件语法合法性 + 编译运行。"""
+    """G2: 编译检查 — tex 文件语法合法性 + pdflatex 真编译。
+
+    2026-09-07 reward-integrity (评审实验1): 旧实现只查 \\documentclass 等
+    结构字符串, "有标记" 被当成 "能编译"。现 pdflatex 可用时执行真编译,
+    退出码非 0 即 FAIL (结构检查保留为前置, 编译是裁决)。
+    pdflatex 不可用时降级为纯结构检查并在 findings 标注 (不静默)。
+    """
+    import shutil
+    import subprocess
+    import tempfile
+
     tex_files = [f for f in os.listdir(paper_dir) if f.endswith(".tex")]
     if not tex_files:
         return GateResult("G2_compile", False, 0.0, [
@@ -142,16 +153,46 @@ def check_g2_compile(paper_dir: str) -> GateResult:
     passed = sum(checks.values())
     total = len(checks)
     score = passed / total if total > 0 else 0
-
     failures = [f"Missing {k}" for k, v in checks.items() if not v]
 
-    return GateResult(
-        "G2_compile",
-        passed == total,
-        score,
-        failures,
-        ["Fix missing LaTeX structure elements"]
-    )
+    if passed != total:
+        return GateResult("G2_compile", False, score, failures,
+                          ["Fix missing LaTeX structure elements"])
+
+    # 真编译 (pdflatex 可用时)
+    if shutil.which("pdflatex") is None:
+        return GateResult("G2_compile", True, 1.0,
+                          ["pdflatex not available — structure-only check (降级)"], [])
+
+    log_tail = ""
+    # cwd = 论文根 (paper_dir 的上一级): 相对路径 ../05-figures 等才能解析;
+    # 输出隔离到 tmp, 不污染工作区。pdflatex 失败再试 xelatex (xeCJK 论文)。
+    src = os.path.join(paper_dir, tex_files[0])
+    workdir = os.path.dirname(os.path.abspath(paper_dir))
+    with tempfile.TemporaryDirectory(prefix="g2_compile_") as tmp:
+        proc = None
+        for engine in ("pdflatex", "xelatex"):
+            if shutil.which(engine) is None:
+                continue
+            proc = subprocess.run(
+                [engine, "-interaction=nonstopmode", "-halt-on-error",
+                 "-draftmode", "-output-directory", tmp, src],
+                capture_output=True, text=True, timeout=180, cwd=workdir)
+            if proc.returncode == 0:
+                break
+        logf = os.path.join(tmp, os.path.splitext(tex_files[0])[0] + ".log")
+        if os.path.exists(logf):
+            lines = (read_file_safe(logf) or "").splitlines()
+            err_lines = [l for l in lines if l.startswith("!")]
+            log_tail = "; ".join(err_lines[:3]) or lines[-1][:200]
+
+    if proc.returncode != 0:
+        detail = log_tail or (proc.stdout.strip().splitlines() or [""])[-1][:200] or proc.stderr.strip()[:200] or "compile failed"
+        return GateResult("G2_compile", False, 0.5,
+                          [f"compile exit={proc.returncode}: {detail[:300]}"],
+                          ["Fix LaTeX compile errors (见 .log 首条 !)"])
+    return GateResult("G2_compile", True, 1.0,
+                      [f"pdflatex exit=0 ({tex_files[0]})"], [])
 
 
 def check_g3_citation_integrity(paper_dir: str) -> GateResult:
@@ -505,8 +546,8 @@ def check_g7_content(paper_dir: str) -> GateResult:
                     "\\section{Case Study", "\\section{System",
                     "\\section{Architecture}", "\\section{Observation"],
         "Results": ["\\section{Results}", "\\section{Experiments}",
-                    "\\section{Finding", "\\section{Analysis}",
-                    "\\section{Evaluation}", "\\section{Assessment"],
+                    "\\section{Finding", "\\section{Analysis",
+                    "\\section{Evaluation}", "\\section{Assessment}"],
         "Discussion": ["\\section{Discussion}", "\\section{Conclusion}",
                        "\\section{Threats to Validity}"],
     }
@@ -567,8 +608,33 @@ def check_l05_data_honesty(paper_dir: str) -> GateResult:
     if not numeric_decls:
         return GateResult("L0.5", True, 1.0, [], ["No numeric declarations — acceptable"])
 
-    # Check if state.json exists and cross-validate
-    # state.json lives at paper_dir/../state.json (one level up from manuscript)
+    # 2026-09-07 reward-integrity (评审实验1): "有 state.json" 不等于 "数字有证据"。
+    # 逐项核对: tex 中每个数值声明 (归一化后) 必须在 state.json 任一叶子值中出现。
+    def _flatten(o):
+        vals = []
+        if isinstance(o, dict):
+            for v in o.values():
+                vals.extend(_flatten(v))
+        elif isinstance(o, list):
+            for v in o:
+                vals.extend(_flatten(v))
+        else:
+            vals.append(o)
+        return vals
+
+    def _norm(x):
+        if isinstance(x, (int, float)) and not isinstance(x, bool):
+            return f"{float(x):.4f}".rstrip("0").rstrip(".")
+        s = str(x).replace(" ", "")
+        m = re.search(r"(\d+\.?\d*)", s)
+        return f"{float(m.group(1)):.4f}".rstrip("0").rstrip(".") if m else s.lower()
+
+    decls = [d.replace(" ", "") for d in numeric_decls]
+    # 只核可核对的纯数值声明 (p<0.001 类含运算符的保留, 不参与分母)
+    checkable = [d for d in decls if re.fullmatch(r"\d+\.?\d*%?", d)]
+    if not checkable:
+        return GateResult("L0.5", True, 1.0, [], ["No plain-numeric claims to check"])
+
     state_path = os.path.join(os.path.dirname(paper_dir), "state.json")
     state = read_file_safe(state_path)
     if not state:
@@ -578,20 +644,79 @@ def check_l05_data_honesty(paper_dir: str) -> GateResult:
     if state:
         try:
             state_data = json.loads(state)
-            if isinstance(state_data, dict):
-                score = 0.8  # Has state.json as evidence source
-                return GateResult("L0.5", True, score,
-                                  ["Cross-referenced state.json"], [])
         except json.JSONDecodeError:
-            pass
+            state_data = None
+        if isinstance(state_data, (dict, list)) and state_data:
+            state_vals = {_norm(v) for v in _flatten(state_data)}
+            matched = [d for d in checkable if _norm(d) in state_vals]
+            frac = len(matched) / len(checkable)
+            if frac >= 1.0:
+                return GateResult("L0.5", True, 1.0,
+                                  [f"All {len(checkable)} numeric claims cross-verified vs state.json"], [])
+            if frac >= 0.5:
+                return GateResult("L0.5", False, 0.4,
+                                  [f"{len(checkable) - len(matched)}/{len(checkable)} numeric claims NOT found in state.json"],
+                                  ["把未核对数值写入 state.json 或删除/改写为定性表述"])
+            return GateResult("L0.5", False, 0.2 * frac + 0.0,
+                              [f"Only {len(matched)}/{len(checkable)} numeric claims found in state.json"],
+                              ["凡数必源: 每个数值写入 state.json 并附来源字段"])
 
-    return GateResult("L0.5", True, 0.6,
-                      ["Numeric claims lack state.json cross-reference"],
-                      ["Add state.json with quality metrics"])
+    # 无 state.json (或空/损坏): 数值声明无证据源 → 不得按"通过"处理
+    return GateResult("L0.5", False, 0.3,
+                      [f"{len(checkable)} numeric claims, no state.json evidence source"],
+                      ["Add state.json with the claimed values and their provenance"])
+
+
+def check_g8_refs_digest(paper_dir: str) -> GateResult:
+    """G8_refs_digest: 参考文献全文 digest 是否已生成 (GAP 前置机械门).
+
+    规则写在 SKILL.md 是认知约束, 会被跳过。本门把全文研读变成文件存在性:
+    04-data/references_digest.json 覆盖 >=80% 的 06-references PDF 且每篇有
+    有效 abstract/conclusion 段才过。没有这个文件, GAP 就没有全文证据。
+    """
+    root = os.path.dirname(os.path.abspath(paper_dir))
+    ref_pdfs = [os.path.basename(p)[:-4]
+                for p in glob.glob(os.path.join(root, "06-references", "*.pdf"))]
+    if not ref_pdfs:
+        return GateResult("G8_refs_digest", True, 1.0,
+                          ["no 06-references PDFs — digest not required"], [])
+    dpath = os.path.join(root, "04-data", "references_digest.json")
+    if not os.path.exists(dpath):
+        return GateResult("G8_refs_digest", False, 0.0,
+                          [f"references_digest.json missing ({len(ref_pdfs)} ref PDFs unread)"],
+                          [f"run: python3 {os.path.join(os.path.dirname(__file__),'make_refs_digest.py')} --paper-dir {paper_dir}"])
+    try:
+        d = json.load(open(dpath))
+    except Exception as e:
+        return GateResult("G8_refs_digest", False, 0.0,
+                          [f"digest unparseable: {e}"],
+                          ["regenerate references_digest.json"])
+    papers = d.get("papers", {})
+    # 判据 = 全文 Markdown 是否落盘且实质可读 (>=2000 chars)，不是"正则找到标题"。
+    # 标题格式因期刊而异，heading 正则必有漏检；全文存在性才是"读过"的诚实证据。
+    md_dir = os.path.join(root, "04-data", "references-md")
+    covered = []
+    for k in ref_pdfs:
+        p = papers.get(k, {})
+        md_chars = p.get("chars", 0)
+        mdp = os.path.join(md_dir, k + ".md")
+        if os.path.exists(mdp):
+            md_chars = max(md_chars, os.path.getsize(mdp))
+        if md_chars >= 2000:
+            covered.append(k)
+    frac = len(covered) / len(ref_pdfs) if ref_pdfs else 0
+    missing = [k for k in ref_pdfs if k not in covered]
+    if frac >= 0.8:
+        return GateResult("G8_refs_digest", True, 1.0,
+                          [f"full-text digest covers {len(covered)}/{len(ref_pdfs)} ref PDFs ({frac:.0%})"],
+                          [])
+    return GateResult("G8_refs_digest", False, round(frac, 2),
+                      [f"full-text digest covers only {len(covered)}/{len(ref_pdfs)} ({frac:.0%}); missing: {missing[:5]}"],
+                      ["run make_refs_digest.py to convert all ref PDFs before GAP"])
 
 
 def run_gate(paper_dir: str, mode: str = "full") -> QualityReport:
-    """Run all gates in fixed order: G1 → G2 → G3 → G4 → G5 → G6 → G7 + L0.5"""
+    """Run all gates in fixed order: G1 → G2 → G3 → G4 → G5 → G6 → G7 → G8 + L0.5"""
     paper_name = Path(paper_dir).name
     report = QualityReport(paper_dir, paper_name, True, 0.0)
 
@@ -603,6 +728,7 @@ def run_gate(paper_dir: str, mode: str = "full") -> QualityReport:
         "G5_citation_quality": check_g5_citation_quality,
         "G6_impact": check_g6_impact,
         "G7_content": check_g7_content,
+        "G8_refs_digest": check_g8_refs_digest,
         "L0.5_data_honesty": check_l05_data_honesty,
     }
 
@@ -619,7 +745,7 @@ def run_gate(paper_dir: str, mode: str = "full") -> QualityReport:
             # 不是问题——不计入 issues (cycle 273 修: L0.5 通过 findings 曾被误标 P0)
             report.issues.append({
                 "gate": gate_name,
-                "severity": "P0" if gate_name in ("L0.5_data_honesty", "G4_constitution") else "P1",
+                "severity": "P0" if gate_name in ("L0.5_data_honesty", "G4_constitution", "G8_refs_digest") else "P1",
                 "findings": result.findings,
                 "suggestions": result.suggestions,
             })
@@ -628,6 +754,11 @@ def run_gate(paper_dir: str, mode: str = "full") -> QualityReport:
 
     # L0.5 is a一票否决
     if report.gates.get("L0.5_data_honesty", {}).get("score", 1.0) < 0.5:
+        report.overall_pass = False
+
+    # G8_refs_digest 一票否决 (2026-08-31 用户裁决): 全文没读 = 证据不完整 = 造假嫌疑。
+    # 参考文献论文不读全文就提 GAP/假设, 与 data honesty 同级。
+    if report.gates.get("G8_refs_digest", {}).get("pass", True) is False:
         report.overall_pass = False
 
     return report

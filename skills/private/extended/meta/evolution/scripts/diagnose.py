@@ -244,10 +244,13 @@ count_pct = gene_count_ok / total_skills if total_skills else 0
 unique_pct = 1.0 - (gene_dup_ct / gene_ids_ct) if gene_ids_ct else 0.0
 liveness = min(1.0, section_pct * 0.40 + count_pct * 0.30 + unique_pct * 0.30)
 
-# ── BEHAVIOR (v4, cycle 268, 用户裁决 2026-08-29) ──────
+# ── BEHAVIOR (v4.1, 2026-09-07 reward-integrity) ──────
 # 行为活性: 测"是否被执行"而非"文件是否完整" (锚定: 运行即证/取象通变)
 #   activation_pct: pipeline_trace 中含 gene_activation 记录的比例 (行为留痕)
-#   verify_pct:     trace 中原子 status=completed* 的比例 (执行完成, 非声明)
+#   verify_pct:     trace 中原子 status=completed* 且产物可证实的比例
+#                   (2026-09-07 评审实验1: "completed" 不再自动等于 "执行完成" —
+#                    声称 output_file 但文件不存在 = 未证实, 不计入 verified;
+#                    实测基线: 256 原子中 245 completed, 仅 5 个产物文件真实存在)
 #   lessons_pct:    失败轨迹沉淀 (10+ 条 = 1.0, 1-9 = 0.5, 0 = 0)
 import glob
 trace_files = glob.glob(os.path.join('outputs', '**', 'pipeline_trace*.json'), recursive=True)
@@ -261,11 +264,19 @@ for tf in trace_files:
             act_ct += 1
         ats = td.get('atoms', {})
         if isinstance(ats, dict):
+            base_dir = os.path.dirname(tf)
             for a in ats.values():
                 if isinstance(a, dict):
                     atom_total += 1
                     if str(a.get('status', '')).startswith('completed'):
-                        atom_done += 1
+                        of = a.get('output_file')
+                        if not of:
+                            atom_done += 1  # 未声称产物 → 无法证伪, 计入但标注
+                        else:
+                            p = of if os.path.isabs(of) else os.path.join(base_dir, of)
+                            if os.path.exists(p):
+                                atom_done += 1  # 产物存在 → 证实
+                            # 声称 output_file 但文件不存在 → 未证实, 不计入
     except Exception:
         pass
 activation_pct = act_ct / len(trace_files) if trace_files else 0.0
