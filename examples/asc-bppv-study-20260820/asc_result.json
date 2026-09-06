@@ -1,0 +1,59 @@
+{
+ "relations": [
+  {
+   "type": "similar-to",
+   "items": [
+    "a._vats2021",
+    "s._alzuphar2016",
+    "b._gao2007",
+    "wang_xue_ha2014",
+    "j._lopez_escamez2006"
+   ],
+   "description": "10 篇 ASC-BPPV 主题相似 (跨研究重复验证)"
+  },
+  {
+   "type": "supports",
+   "items": [
+    "m._shankar2024",
+    "g._santopietro2026",
+    "b._gao2007"
+   ],
+   "description": "诊断方法支持: 9 篇诊断研究互相支持"
+  },
+  {
+   "type": "evolution",
+   "items": [
+    "n._si2017",
+    "p._lorin2005",
+    "y._ou2015"
+   ],
+   "description": "治疗方法演进: 16 篇手法研究 (Epley→修改→ASC 专用)"
+  },
+  {
+   "type": "supplement",
+   "items": [
+    "j._lopez_escamez2006",
+    "f._viberti2025",
+    "andrea_castellucci2020"
+   ],
+   "description": "眼震识别补充: 4 篇 nystagmus 研究补充诊断"
+  }
+ ],
+ "gaps": [
+  {
+   "type": "methodology_gap",
+   "importance": "P1",
+   "description": "ASC vs HSC-BPPV 鉴别诊断方法缺失 (nystagmus 方向差异未系统比较)",
+   "evidence": "nystagmus 方向 (upbeating vs downbeating) 是鉴别关键, 但跨论文无系统比较"
+  }
+ ],
+ "entity_distribution": {
+  "vertigo": 37,
+  "BPPV": 10,
+  "ASC": 10,
+  "treatment": 9,
+  "repositioning": 7,
+  "diagnosis": 6,
+  "nystagmus": 4
+ }
+}

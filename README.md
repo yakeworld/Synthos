@@ -90,7 +90,7 @@ Synthos organizes **157 SKILL.md files** (measured 2026-09-06) into three direct
 |-------|-------|-------|----------------|
 | 97 | synthos-paper.tex | 62.5/100 (C) | MAJOR_REVISION — 7 orphan refs, 80% GitHub refs |
 
-> **Known limitation (2026-09 audit):** per-skill scan results (cycle 181: avg 62.2, healthy 0) and the evolution-state overall score use different measurement systems and were reported inconsistently. The overall score reflects structural/benchmark/absorption dimensions; it does **not** validate scientific quality of outputs. Independent reproduction of a full workflow is not yet available — `examples/` with a complete end-to-end desensitized case is planned.
+> **Known limitation (2026-09 audit):** per-skill scan results (cycle 181: avg 62.2, healthy 0) and the evolution-state overall score use different measurement systems and were reported inconsistently. The overall score reflects structural/benchmark/absorption dimensions; it does **not** validate scientific quality of outputs. A complete end-to-end desensitized case is now available at [`examples/asc-bppv-study-20260820/`](examples/asc-bppv-study-20260820/README.md) — including the system's own recorded failures (metadata-only ACQ, quality gate G3 failure).
 
 See `evolution-report-cycle-*.json` for raw scan data.
 

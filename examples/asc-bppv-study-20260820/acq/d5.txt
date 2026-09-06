@@ -1,0 +1,263 @@
+@article{anirban_ghosh2023,
+  author = {Anirban Ghosh and Srinivas Dorasala},
+  title = {Epidemiology of benign paroxysomal positional vertigo (BPPV) and risk factors for secondary BPPV: a population-based study},
+  journal = {The Egyptian Journal of Otolaryngology},
+  year = {2023},
+  volume = {39},
+  doi = {10.1186/s43163-023-00456-6},
+  abstract = {BPPV (benign paroxysmal positional vertigo) is a disorder that causes sudden, spinning sensation for few seconds with specific head movements. Of all disorders of inner ear that causes dizziness, BPPP is the most common one. To understand this disorder, we conducted a retrospective study at a tertiary care ENT hospital in Eastern India. 1. To know the incidence of BPPV among all vertigo patients. 2. To know the age-sex distribution of BPPV. 3. To identify secondary causes of BPPV and their prevalence. 4. To know the incidence of different canal BPPVs. 5. To ascertain the treatment outcome of different particle repositioning maneuvers in BPPV. Total 575 patients presented to the vertigo clinic from 15 September 2018 to 21 March 2022. Out of them 151 patients (26.6%) were diagnosed with BPPV by proper history taking, clinical examination including provocative tests. They were treated with appropriate particle repositioning maneuvers (PRM). Patients were followed for mean 6 months and results were analyzed. Of all vertigo patients, BPPV constitutes 26.6% of cases, making it most common cause of peripheral vertigo. It commonly affects 40–60 years of age group with equal sex predilection. Eighty-three percent of cases were idiopathic, secondary causes include vestibular migraine, Meniere’s disease, labyrinthitis, and orthostatic hypotension. Posterior canal was most commonly affected (74%), followed by lateral and anterior canal. Particle repositioning maneuver (PRM) cures 96% of all BPPV patients (75% needs only one PRM, 15% requires the second one) with overall success rate of 96% after 6 months of follow-up. BPPV is the most common cause of peripheral vertigo. One has to understand the anatomy, physiology and pathophysiology of vestibular system to provide better patient care in these patients. Particle repositioning maneuver (PRM) is the treatment for BPPV.},
+}
+@article{m._brevern2006,
+  author = {M. Brevern and A. Radtke and F. Lezius and M. Feldmann and T. Ziese and T. Lempert and H. Neuhauser},
+  title = {Epidemiology of benign paroxysmal positional vertigo: a population based study},
+  journal = {Journal of Neurology, Neurosurgery & Psychiatry},
+  year = {2006},
+  volume = {78},
+  pages = {710 - 715},
+  doi = {10.1136/jnnp.2006.100420},
+  pmid = {17135456},
+}
+@article{h._neuhauser2009,
+  author = {H. Neuhauser},
+  title = {The epidemiology of dizziness and vertigo.},
+  journal = {Handbook of clinical neurology},
+  year = {2009},
+  volume = {137},
+  pages = {
+          67-82
+        },
+  doi = {10.1016/B978-0-444-63437-5.00005-4},
+  pmid = {27638063},
+}
+@article{v._moaddel2025,
+  author = {V. Moaddel and A. Tapia and D. Burkard and Matthew Singh and T. Peterson and Yeoshina Pillay and T. Sapp and L. Ambrose and B. Emmerich and J. Seamon and Jeffrey S. Jones},
+  title = {Not So Benign Paroxysmal Positional Vertigo in the Emergency Department},
+  journal = {Clinical and Molecular Epidemiology},
+  year = {2025},
+  doi = {10.53964/cme.2025007},
+  abstract = {Background: Benign paroxysmal positional vertigo (BPPV) is an inner-ear disorder that is the most common cause of peripheral vertigo. Many patients have mild to moderate illness and can be treated in outpatient settings. In those with severe symptoms, BBPV can have a dramatic effect on independence, quality of life, and daily functioning.
+
+ 
+
+Objective: This study aimed to determine the prevalence of inpatient treatment in patients who present to the emergency department (ED) with severe BPPV symptoms.
+
+ 
+
+Methods: This was a retrospective analysis of adult patients diagnosed with BPPV. Consecutive patients were seen over a nine-month period at seven affiliated EDs. Data collected included clinical features, demographics, diagnostic testing, treatment, and disposition. Patients who required hospital admission were compared to those discharged from the ED.
+
+ 
+
+Results: 400 adult ED patients were included in the study; 68 (17.0%) were admitted, and 332 (83.0%) were discharged home. Admitted patients were less likely to have positional testing performed in the ED and were more likely to undergo computed tomography (CT) imaging of the head (69.1% vs. 32.5%, P<0.001). Vestibular suppressant drugs were given to 95.0% of all BPPV patients in the ED while canalith repositioning maneuvers were used in only 4.0%. Patients were admitted because of difficulty with balance and gait (77.9%), persistent vomiting (20.6%), and/or waiting for magnetic resonance imaging (19.1%). Twenty-eight (7.0%) patients returned within 14 days for continued symptoms.
+
+ 
+
+Conclusions: BPPV is a common entity in older adults and may have a protracted course and a high risk of recurrence. Overall, 17.0% of adults presenting to the ED were admitted, generally because of difficulty with gait and persistent vomiting. When positional testing was not performed at the bedside, patients were often subjected to unnecessary and expensive investigations. Canalith repositioning maneuvers, such as the Epley maneuver, were used in only 4.0% of ED patients with BPPV. Although repositioning maneuvers can dramatically improve vertigo, some patients still experience residual dizziness at least one month after repositioning. Vestibular suppressant drugs are commonly prescribed in the ED and can be associated with significant adverse reactions.},
+}
+@article{shahdevi_nandar2026,
+  author = {Shahdevi Nandar and Theresa Puspanadi},
+  title = {Benign Paroxysmal Positional Vertigo},
+  journal = {Cerdika: Jurnal Ilmiah Indonesia},
+  year = {2026},
+  doi = {10.59141/cerdika.v6i2.3355},
+  abstract = {Benign paroxysmal positional vertigo (BPPV) is the most common cause of vertigo. BPPV is characterized by a sudden spinning sensation along with nystagmus, triggered by specific changes in head position. BPPV most commonly occurs when otoliths are displaced into the posterior semicircular canal; therefore, the Dix–Hallpike test is used to establish the diagnosis, and the Epley maneuver is performed to reposition the otoliths as the main therapy. The prognosis is good, but recurrences and residual dizziness may occur after therapy. This article aims to provide a comprehensive understanding of BPPV, including its definition, epidemiology, etiology, pathophysiology, clinical manifestations, diagnosis, differential diagnosis, management, and prognosis. The writing of this article uses a literature-study method with a narrative approach. BPPV has a lifetime prevalence of 2.4% with an incidence of 10.7–64 cases per 100,000 people per year, is 2–3 times more frequent in women, and peaks in the fifth–sixth decades of life. The most frequent type is PC-BPPV (60–90%). Pathophysiology involves the mechanisms of canalithiasis or cupulolithiasis. The diagnosis is established through the Dix–Hallpike test for PC-BPPV and the supine roll test for LC-BPPV. The main management is the canalith repositioning procedure: the Epley maneuver for PC-BPPV and the Lempert maneuver for LC-BPPV. The prognosis is generally good, with 20–50% of patients recovering spontaneously within 1–3 months; however, a recurrence rate of 40–50% within 5 years and residual dizziness of 29.6–76.9% may occur. BPPV is the most frequent cause of vertigo with relatively simple diagnosis and management, but it is often missed. A comprehensive understanding of BPPV is important for clinicians to diagnose and manage it appropriately in order to prevent complications and improve patients’ quality of life.},
+}
+@article{h._neuhauser2009,
+  author = {H. Neuhauser and T. Lempert},
+  title = {Vertigo: epidemiologic aspects.},
+  journal = {Seminars in neurology},
+  year = {2009},
+  volume = {29 5},
+  pages = {
+          473-81
+        },
+  doi = {10.1055/s-0029-1241043},
+  pmid = {19834858},
+}
+@article{p._vlastarakos2022,
+  author = {P. Vlastarakos and Efterpi Michailidou and T. Nikolopoulos},
+  title = {Unilateral vestibular weakness: an often under-recognized entity. Is symptom improvement feasible?},
+  journal = {Hearing, Balance and Communication},
+  year = {2022},
+  volume = {21},
+  pages = {16 - 29},
+  doi = {10.1080/21695717.2022.2122338},
+  abstract = {Abstract Objective To review the epidemiology, pathogenesis, diagnosis, and treatment of unilateral vestibular weakness (UVW), and critically assess the related evidence. Methods Literature research in Medline and other database sources until August 2020. Results The total number of included studies was 39. Conclusion The lifetime prevalence of UVW in the general population is 0.2%; the respective incidence is unknown. UVW frequently overlaps with other diagnoses; nevertheless, there is usually a history of a single, preceding, monophasic event. The respective criteria include unsteadiness of more than two months, clinical exclusion of BPPV, and exclusion of Meniere’s disease, central lesion, or bilateral vestibular dysfunction, and more than 25% inter-aural asymmetry in the caloric test. The latter represents the golden testing standard in suspected patients, and should be complemented with vestibulo-ocular reflex assessment via rotation-testing and video head-impulse test. Posturography can be useful to evaluate postural stability. Questionnaire-based assessments may assess symptom severity, the ensuing disability, and the subjective perception of patients’ overall balance status. MRI is advised in vertiginous patients in the presence of neurologic signs and symptoms, risk factors for cerebrovascular disease, or progressive unilateral hearing loss. Vestibular rehabilitation is effective in patients with UVW, whilst pharmacological treatment is of limited value.},
+}
+@article{hannelore_neuhauser12009,
+  author = {Hannelore Neuhauser1 , 2 and Thomas Lempert2 , 3},
+  title = {Vertigo: Epidemiologic Aspects},
+  journal = {Semin Neurol},
+  year = {2009},
+  volume = {29},
+  pages = {473 - 481},
+  doi = {10.1055/s-0029-1241043},
+}
+@article{nícolas_philippe_balduino_nogueira2026,
+  author = {Nícolas Philippe Balduino Nogueira and R. R. Deusdara Rodrigues and Tainá Cavalcante and Pedro Lucas Muniz Simões and A. Garces and V. Schoeps and Priscilla Mara Proveti de Lima and R. Dias and L. M. D. dos Santos and D. Brum and F. von Glehn},
+  title = {Epidemiology of neuromyelitis optica spectrum disease in Central-West Brazil: Prevalence and associated clinical and demographic features},
+  journal = {Multiple Sclerosis Journal - Experimental, Translational and Clinical},
+  year = {2026},
+  volume = {12},
+  doi = {10.1177/20552173261443832},
+  pmid = {42112097},
+  abstract = {Background Neuromyelitis optica spectrum diseases (NMOSD) are rare autoimmune diseases of the central nervous system. Although Brazil reports one of the highest global prevalences of NMOSD, regional data, particularly from the Central-West, remain limited. Objectives To characterize the epidemiological, laboratory, and therapeutic profiles of NMOSD patients residing in Brazil's Federal District, based on 2015 international diagnostic criteria. Methods This prospective observational study analyzed data from 55 consecutive NMOSD patients entered as new records in the Brazilian Registry of Neurological Diseases (REDONE.br) between July 2023 and July 2025. Statistical analyses included descriptive methods, between-group comparisons, and multivariable logistic-regression. Results The cohort comprised 45 women (81.8%), with a mean age of onset of 36.85 ± 14.89 years. Myelitis was the most frequent initial presentation (76.4%), followed by unilateral optic neuritis (45.5%). The socioeconomic profile revealed marked vulnerability: 65.5% reported family income ≤2 minimum wages, and 45.5% were unemployed. Rituximab was the most frequently used disease-modifying therapy. The estimated NMOSD prevalence was 1.84 cases per 100,000 inhabitants (95% CI: 1.38–2.39), and the prevalence of antiAQP4 +  was 1.64 cases per 100,000 (95% CI: 1.21–2.16). Conclusions This study provides a comprehensive characterization of NMOSD in Brazil's Central-West region and highlights that the disease disproportionately affects individuals living in conditions of social vulnerability.},
+}
+@article{l._suturina2024,
+  author = {L. Suturina and Daria Lizneva and L. Lazareva and I. Danusevich and Iana Nadeliaeva and L. Belenkaya and A. Atalyan and A. Belskikh and T. Bairova and L. Sholokhov and M. Rashidova and O. Krusko and Zorikto Darzhaev and Marina Rinchindorzhieva and Ayuna Malanova and L. Alekseeva and Eldar Sharifulin and M. Kuzmin and I. Igumnov and N. Babaeva and D. Tyumentseva and L. Grebenkina and N. Kurashova and M. Darenskaya and E. Belyaeva and N. Belkova and Irina A. Egorova and M. Salimova and L. Damdinova and A. Sambyalova and Elena Radnaeva and O. Dyachenko and Karina Antsupova and T. Trofimova and Anastasia V. Khomyakova and K. Ievleva and F. Stanczyk and R. Legro and Bulent O Yildiz and R. Azziz},
+  title = {Ethnicity and the Prevalence of Polycystic Ovary Syndrome: The Eastern Siberia PCOS Epidemiology and Phenotype Study.},
+  journal = {The Journal of clinical endocrinology and metabolism},
+  year = {2024},
+  doi = {10.1210/clinem/dgae424},
+  pmid = {38888252},
+  abstract = {CONTEXT
+Previous studies have shown that the prevalence of polycystic ovary syndrome (PCOS) may vary according to race/ethnicity, although few studies have assessed women of different ethnicities who live in similar geographic and socio-economic conditions.
+
+
+OBJECTIVE
+To determine the prevalence of PCOS in an unselected multiethnic population of premenopausal women.
+
+
+DESIGN
+A multicenter prospective cross-sectional study.
+
+
+SETTINGS
+The main regional employers of Irkutsk Region and the Buryat Republic, Russia.
+
+
+PARTICIPANTS
+During 2016-19, 1398 premenopausal women underwent a history and physical exam, pelvic ultrasound, and testing during a mandatory annual employment-related health assessment.
+
+
+MAIN OUTCOME MEASURES
+PCOS prevalence, overall and by ethnicity in a large medically unbiased population, including Caucasian (White), Mongolic or Asian (Buryat), and mixed ethnicity individuals, living in similar geographic and socio-economic conditions for centuries.
+
+
+RESULTS
+PCOS was diagnosed in 165/1134 (14.5%) women who had a complete evaluation for PCOS. Based on the probabilities for PCOS by clinical presentation observed in the cohort of women who had a complete evaluation we also estimated the weight-adjusted prevalence of PCOS in 264 women with an incomplete evaluation: 46.2 or 17.5%. Consequently, the total prevalence of PCOS in the population was 15.1%, higher among Caucasians and women of Mixed ethnicity compared to Asians (16.0% and 21.8% vs. 10.8%, pz <0.05).
+
+
+CONCLUSIONS
+We observed a 15.1% prevalence of PCOS in our medically unbiased population of premenopausal women. In this population of Siberian premenopausal women of Caucasian, Asian and Mixed ethnicity living in similar geographic and socio-economic conditions, the prevalence was higher in Caucasian or Mixed than Asian women. These data highlight the need to assess carefully ethnic-dependent differences in the frequency and clinical manifestation of PCOS.},
+}
+@article{xinjuan_huang2024,
+  author = {Xinjuan Huang and Ruoling Yu and Xinyun Tan and Manjie Guo and Yuanqin Xia and Huihui Zou and Xuelian Liu and Chunxiang Qin},
+  title = {Comparison of NAFLD, MAFLD, and MASLD Prevalence and Clinical Characteristics in Asia Adults.},
+  journal = {Journal of clinical and experimental hepatology},
+  year = {2024},
+  volume = {15 1},
+  pages = {
+          102420
+        },
+  doi = {10.1016/j.jceh.2024.102420},
+  pmid = {39564428},
+  abstract = {Background/Aims
+The principal limitations of the term non-alcoholic fatty liver disease (NAFLD) are the reliance on exclusionary confounder terms and the use of potentially stigmatizing language. Within three years, NAFLD went through two name changes, from NAFLD to metabolic-dysfunction-associated fatty liver disease (MAFLD) to metabolic dysfunction-associated steatotic liver disease (MASLD). However, there is no Asian consensus statement on the renaming of MASLD, and evidence on the epidemiology and characteristics in the Asia population under different diagnostic criteria remain limited. This study aimed to fill these gaps by analyzing the prevalence and characteristics of MASLD, NAFLD, and MAFLD in an Asian population.
+
+
+Methods
+A retrospective, cross-sectional study was conducted in regional China with participants from the health management database in 2017-2022. Demographic and laboratory metabolic profile and body composition data were obtained. Hepatic steatosis were diagnosed by ultrasound. The likelihood of having fibrosis was assessed using the NAFLD fibrosis score (NFS). Recently proposed criteria for metabolic dysfunction-associated steatotic liver disease (MASLD) were applied.
+
+
+Results
+A total of 20,226 subjects were included for final analysis. 7465 (36.91%) participants were categorized as MASLD patients, 10,726 (53.03%) participants were MAFLD, and 7333 (36.26%) participants were NAFLD. Compared with MAFLD, body composition of MASLD and NAFLD patients were obviously different. MASLD patients were older, had a higher body mass index and percentage of male gender, and had a higher ALT, diastolic blood pressure, triglyceride, and waist circumference but lower High-Density Lipoprotein Cholesterol (HDL-C) than non-MASLD patients. Using binary regression analysis, we found for the first time that putative bone mass (OR = 4.62, 95CI% 3.12-6.83) is associated with the risk of developing MASLD. The area under the receiver operating curve (AUC) for predicting cardiovascular outcomes (CV) was 0.644 for MAFLD and 0.701 for MASLD.
+
+
+Conclusion
+MASLD (36.91%) prevalence was closed to NAFLD (36.26%) and lower than MAFLD (53.03%). Presumed bone mass might be the predictor of disease progression in MASLD patients. MASLD better identifies patients likely to have a higher risk of metabolic disorders or CV events.},
+}
+@article{m._rolo2023,
+  author = {M. Rolo and B. González-Blanco and C. Reyes and N. Rosillo and P. López-Roa},
+  title = {Epidemiology and factors associated with Extra-pulmonary tuberculosis in a Low-prevalence area},
+  journal = {Journal of Clinical Tuberculosis and Other Mycobacterial Diseases},
+  year = {2023},
+  volume = {32},
+  doi = {10.1016/j.jctube.2023.100377},
+  pmid = {37252369},
+  abstract = {Background Tuberculosis is a global public health problem. Extra-pulmonary tuberculosis accounts for an increasing proportion of cases worldwide, although information about epidemiological, clinical, or microbiological factors is lacking. Methods We conducted a retrospective observational study of tuberculosis cases diagnosed between 2016 and 2021, classified into Pulmonary and Extra-pulmonary tuberculosis. Univariable and multivariable logistic regression models were used to investigate risk factors of Extra-pulmonary tuberculosis. Results 20.9% of overall cases were classified as Extra-pulmonary tuberculosis, with a rising trend from 22.6% in 2016 to 27.9% in 2021. Lymphatic tuberculosis accounted for 50.6% of cases, followed by pleural tuberculosis (24.1%). 55.4% of cases belonged to foreign-born patients. Microbiological culture tested positive in 92.8% of Extra-pulmonary cases. Logistic regression analysis showed that women were more predisposed to develop Extra-pulmonary tuberculosis (aOR 2.46, 95% CI 1.45–4.20) as well as elderly patients (aged ≥ 65 years) (aOR 2.47, 95% CI 1.19–5.13) and persons with previous history of tuberculosis (4.99, 95% CI 1.40–17.82). Conclusions Extra-pulmonary Tuberculosis have increased within our study period. A profound decline occurred in 2021 tuberculosis cases, probably due to COVID-19. Women, elderly population, and persons with previous history of tuberculosis are at higher risk of developing Extra-pulmonary tuberculosis in our setting.},
+}
+@article{d._g._evans2025,
+  author = {D. G. Evans and Scott R. Plotkin},
+  title = {Clinical epidemiology of NF2-related schwannomatosis.},
+  journal = {Handbook of clinical neurology},
+  year = {2025},
+  volume = {212},
+  pages = {
+          129-134
+        },
+  doi = {10.1016/B978-0-12-824534-7.00013-5},
+  pmid = {41052833},
+}
+@article{ahmed_alduais2025,
+  author = {Ahmed Alduais and Hind Alfadda and Hessah Saad Alarifi},
+  title = {Epidemiology of Cognitive Impairments: Demographic and Clinical Predictors of Memory and Attention Challenges—Findings from Twelve National Disability Indicators},
+  journal = {Journal of Clinical Medicine},
+  year = {2025},
+  volume = {14},
+  doi = {10.3390/jcm14186390},
+  pmid = {41010592},
+  abstract = {Background: Cognitive difficulties involving memory and concentration significantly affect individuals’ daily functioning and quality of life, influenced by demographic, clinical, and socio-environmental factors. This study aimed to examine the national prevalence and distribution of cognitive difficulties in Saudi Arabia, explore regional and gender disparities, and identify demographic and clinical predictors. Methods: Data were obtained from the 2017 Saudi National Disability Survey, a population-based, cross-sectional study involving 20.4 million Saudi citizens. Twelve indicators related to cognitive difficulty—covering severity, educational and marital status, consanguinity, duration, causes, and regional distribution—were analyzed, integrating baseline population data from three national surveys. Results: Results indicated that 1.1% (224,408 individuals) reported cognitive difficulties, predominantly alongside other disabilities (1.0%), while only 0.2% reported it exclusively. Cognitive difficulties were significantly higher in Al-Riyadh and Makkah Al-Mokarramah, with residents of Aseer and Hail facing doubled odds compared to Najran. Gender disparities were evident; males predominated in extreme severity and congenital or accident-related cases, whereas females showed higher proportions of disease-related causes, mild severity, and prolonged disability (≥25 years). Independent predictors included severe and extreme severity, disease-related causes, consanguinity, and long duration. Conclusions: These findings highlight critical regional and gender-based inequities and underscore the need for targeted policies emphasizing early detection, gender-sensitive interventions, and region-specific resource allocation to meet Saudi Arabia’s Vision 2030 objectives for inclusive health and social services.},
+}
+@article{m._lechner2022,
+  author = {M. Lechner and Jacklyn Liu and L. Masterson and Tim R. Fenton},
+  title = {HPV-associated oropharyngeal cancer: epidemiology, molecular biology and clinical management},
+  journal = {Nature Reviews. Clinical Oncology},
+  year = {2022},
+  volume = {19},
+  pages = {306 - 327},
+  doi = {10.1038/s41571-022-00603-7},
+  pmid = {35105976},
+  abstract = {Human papillomavirus (HPV)-positive (HPV+) oropharyngeal squamous cell carcinoma (OPSCC) has one of the most rapidly increasing incidences of any cancer in high-income countries. The most recent (8th) edition of the UICC/AJCC staging system separates HPV+ OPSCC from its HPV-negative (HPV−) counterpart to account for the improved prognosis seen in the former. Indeed, owing to its improved prognosis and greater prevalence in younger individuals, numerous ongoing trials are examining the potential for treatment de-intensification as a means to improve quality of life while maintaining acceptable survival outcomes. In addition, owing to the distinct biology of HPV+ OPSCCs, targeted therapies and immunotherapies have become an area of particular interest. Importantly, OPSCC is often detected at an advanced stage owing to a lack of symptoms in the early stages; therefore, a need exists to identify and validate possible diagnostic biomarkers to aid in earlier detection. In this Review, we provide a summary of the epidemiology, molecular biology and clinical management of HPV+ OPSCC in an effort to highlight important advances in the field. Ultimately, a need exists for improved understanding of the molecular basis and clinical course of this disease to guide efforts towards early detection and precision care, and to improve patient outcomes. The incidence of human papillomavirus (HPV)-positive oropharyngeal squamous cell carcinoma (OPSCC) is increasing rapidly in most developed countries. In this Review, the authors provide an overview of the epidemiology, molecular biology and treatment of HPV-positive OPSCC, including discussions of the role of treatment de-escalation and emerging novel therapies. The incidence of human papillomavirus-associated oropharyngeal cancer (HPV+ OPSCC) is expected to continue to rise over the coming decades until the benefits of gender-neutral prophylactic HPV vaccination begin to become manifest. The incidence of HPV+ OPSCC appears to be highest in high-income countries, although more epidemiological data are needed from low- and middle-income countries, in which HPV vaccination coverage remains low. The substantially better prognosis of patients with HPV+ OPSCC compared to those with HPV– OPSCC has been recognized in the American Joint Committee on Cancer TNM8 staging guidelines, which recommend stratification by HPV status to improve staging. The molecular biology and genomic features of HPV+ OPSCC are similar to those of other HPV-associated malignancies, with HPV oncogenes (E6 and E7) acting as key drivers of pathogenesis. Treatment de-intensification is being pursued in clinical trials, although identifying the ~15% of patients with HPV+ OPSCC who have recurrent disease, and who therefore require more intensive treatment, remains a key challenge. The incidence of human papillomavirus-associated oropharyngeal cancer (HPV+ OPSCC) is expected to continue to rise over the coming decades until the benefits of gender-neutral prophylactic HPV vaccination begin to become manifest. The incidence of HPV+ OPSCC appears to be highest in high-income countries, although more epidemiological data are needed from low- and middle-income countries, in which HPV vaccination coverage remains low. The substantially better prognosis of patients with HPV+ OPSCC compared to those with HPV– OPSCC has been recognized in the American Joint Committee on Cancer TNM8 staging guidelines, which recommend stratification by HPV status to improve staging. The molecular biology and genomic features of HPV+ OPSCC are similar to those of other HPV-associated malignancies, with HPV oncogenes (E6 and E7) acting as key drivers of pathogenesis. Treatment de-intensification is being pursued in clinical trials, although identifying the ~15% of patients with HPV+ OPSCC who have recurrent disease, and who therefore require more intensive treatment, remains a key challenge.},
+}
+@article{s._perego2020,
+  author = {S. Perego and A. Zambon and S. Nistri and A. Bruni and S. Motta and L. Cavalieri d’Oro and E. Rossi and G. Annoni and G. Bellelli},
+  title = {Prevalence, clinical correlates, and burden of undiagnosed aortic stenosis in older patients: a prospective study in a non-cardiologic acute hospital ward},
+  journal = {Aging Clinical and Experimental Research},
+  year = {2020},
+  pages = {1-8},
+  doi = {10.1007/s40520-020-01471-w},
+  pmid = {31970672},
+}
+@article{deema_gashgarey2024,
+  author = {Deema Gashgarey and M. Alsuhaibani and Raghad Alhuthil and Hattan Alhabshan and Azzam Alabdulqader and R. Badran and A. Balhmar and Haifa Aldawood and E. Albanyan and S. Alghamdi and S. Aljumaah and Ohoud A Alyabes and Sami Al-Hajjar},
+  title = {Evolving Epidemiology of Pediatric Respiratory Syncytial Virus (RSV) Cases Around COVID-19 Pandemic: Impact and Clinical Insights, Retrospective Cohort Study},
+  journal = {Journal of Epidemiology and Global Health},
+  year = {2024},
+  volume = {14},
+  pages = {319 - 326},
+  doi = {10.1007/s44197-024-00218-4},
+  pmid = {38573464},
+  abstract = {The burden of respiratory syncytial virus (RSV) in high-risk pediatric patients remains unclear. Therefore, this study aims to characterize pediatric RSV cases from January 2019 to December 2022 and assess the impact of the COVID-19 pandemic on RSV burden and RSV-related outcomes. In addition, examining factors influencing RSV-related hospitalization. This is a retrospective study that included pediatric patients (aged 14 and below) who presented at King Faisal Specialist Hospital and Research Centre (KFSHRC) in Riyadh, Saudi Arabia with RSV infection identified using real-time reverse-transcriptase polymerase chain reaction assays. Statistical analyses were performed using STATA. A total of 885 RSV cases were reported; (56.05%) were males and (43.95%) were females with a median age of 24 months [interquartile range (IQR): 11–60]. 534 (60.34%) required hospitalization. As for RSV seasonality, there was a significant increase in RSV prevalence following the COVID-19 pandemic, escalating from 205 cases in 2019 to 425 cases in 2022. The increase in 2022 was evident in January and persisted from September to December, reaching its peak during the months of October (20.70% − 88 cases) and November (32.00% − 136 cases). About (27.12%) of RSV infected children were medically free patients. Symptomatic patients exhibited various clinical manifestations, with ventilation necessary in (13.11%) of cases. Further analysis revealed significant changes in RSV-related outcomes post-COVID-19, including a decrease in hospitalization rates, an increase in medically free patients, and a lower need for ventilation (p < 0.05). Notably, a significant proportion of RSV admissions occurred within the first 6 months of life, with (77.69%) in the age group of 0 to 5 months. In addition, previous RSV infection, prematurity, low birth weight, renal disease, congenital heart disease, endocrine/metabolic disease, neuro/neuromuscular diseases, and genetic disorders were positively associated with hospitalization (P < 0.05). Interestingly, asthma and bone marrow transplantation were negatively associated with hospitalization (P < 0.05). The mortality rate in this study is (2.37%) (21/885). This study provides a comprehensive understanding of the demographic and clinical factors influencing RSV outcomes, highlighting the impact of the COVID-19 pandemic and shedding light on potential risk factors for RSV-related hospitalization. The highest prevalence of RSV during (September to January), aligning with global patterns and emphasizing the importance of timing in preventive strategies.},
+}
+@article{mingfeng_lee2023,
+  author = {Mingfeng Lee and Hitoshi Suzuki and Y. Nihei and K. Matsuzaki and Yusuke Suzuki},
+  title = {Ethnicity and IgA nephropathy: worldwide differences in epidemiology, timing of diagnosis, clinical manifestations, management and prognosis},
+  journal = {Clinical Kidney Journal},
+  year = {2023},
+  volume = {16},
+  pages = {ii1 - ii8},
+  doi = {10.1093/ckj/sfad199},
+  pmid = {38053973},
+  abstract = {ABSTRACT Immunoglobulin A nephropathy (IgAN), the most common primary glomerulonephritis, is one of the major causes of end-stage renal disease. Significant variances in epidemiology, clinical manifestation, timing of diagnosis, management and renal prognosis of IgAN have been reported worldwide. The incidence of IgAN is the most frequent in Asia, followed by Europe, and lower in Africa. Moreover, Asian patients show more frequent acute lesions in renal histology and present poorer renal outcomes compared with Caucasians. The comorbidities also show the difference between Asians and Caucasians. Although the frequency of gross hematuria with upper respiratory tract infection is not different, comorbidities with gastrointestinal diseases are reported to be higher in Europe. Recently, genetic studies for variant ethnic patients revealed widely ranging genetic risks in each ethnicity. A genetic risk score is most elevated in Asians, intermediate in Europeans and lowest in Africans, consistent with the disease prevalence of IgAN globally. Ethnic variance might be highly affected by the difference in genetic background. However, it is also essential to mention that the different timing of diagnosis due to variant urinary screening systems and the indication for renal biopsy in different countries may also contribute to these variances. The management of IgAN also varies internationally. Currently, several novel therapies based on the pathogenesis of IgAN are being assessed and are expected to become available soon. Further understanding the ethnic variance of IgAN might help establish individualized care for this disease. Here, we review the issues of ethnic heterogeneities of IgAN.},
+}
+@article{edgar_i._campos_madueno2023,
+  author = {Edgar I. Campos-Madueno and Melika Moradi and Yasmine Eddoubaji and F. Shahi and S. Moradi and Odette J. Bernasconi and Aline I. Moser and A. Endimiani},
+  title = {Intestinal colonization with multidrug-resistant Enterobacterales: screening, epidemiology, clinical impact, and strategies to decolonize carriers},
+  journal = {European Journal of Clinical Microbiology & Infectious Diseases},
+  year = {2023},
+  volume = {42},
+  pages = {229 - 254},
+  doi = {10.1007/s10096-023-04548-2},
+  pmid = {36680641},
+  abstract = {The clinical impact of infections due to extended-spectrum β-lactamase (ESBL)- and/or carbapenemase-producing Enterobacterales (Ent) has reached dramatic levels worldwide. Infections due to these multidrug-resistant (MDR) pathogens—especially Escherichia coli and Klebsiella pneumoniae—may originate from a prior asymptomatic intestinal colonization that could also favor transmission to other subjects. It is therefore desirable that gut carriers are rapidly identified to try preventing both the occurrence of serious endogenous infections and potential transmission. Together with the infection prevention and control countermeasures, any strategy capable of effectively eradicating the MDR-Ent from the intestinal tract would be desirable. In this narrative review, we present a summary of the different aspects linked to the intestinal colonization due to MDR-Ent. In particular, culture- and molecular-based screening techniques to identify carriers, data on prevalence and risk factors in different populations, clinical impact, length of colonization, and contribution to transmission in various settings will be overviewed. We will also discuss the standard strategies (selective digestive decontamination, fecal microbiota transplant) and those still in development (bacteriophages, probiotics, microcins, and CRISPR-Cas-based) that might be used to decolonize MDR-Ent carriers.},
+}
+@article{l._dresser2021,
+  author = {L. Dresser and R. Wlodarski and K. Rezania and B. Soliven},
+  title = {Myasthenia Gravis: Epidemiology, Pathophysiology and Clinical Manifestations},
+  journal = {Journal of Clinical Medicine},
+  year = {2021},
+  volume = {10},
+  doi = {10.3390/jcm10112235},
+  pmid = {34064035},
+  abstract = {Myasthenia gravis (MG) is an autoimmune neurological disorder characterized by defective transmission at the neuromuscular junction. The incidence of the disease is 4.1 to 30 cases per million person-years, and the prevalence rate ranges from 150 to 200 cases per million. MG is considered a classic example of antibody-mediated autoimmune disease. Most patients with MG have autoantibodies against the acetylcholine receptors (AChRs). Less commonly identified autoantibodies include those targeted to muscle-specific kinase (MuSK), low-density lipoprotein receptor-related protein 4 (Lrp4), and agrin. These autoantibodies disrupt cholinergic transmission between nerve terminals and muscle fibers by causing downregulation, destruction, functional blocking of AChRs, or disrupting the clustering of AChRs in the postsynaptic membrane. The core clinical manifestation of MG is fatigable muscle weakness, which may affect ocular, bulbar, respiratory and limb muscles. Clinical manifestations vary according to the type of autoantibody, and whether a thymoma is present.},
+}

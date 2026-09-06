@@ -1,0 +1,24 @@
+{
+ "hypotheses": [
+  {
+   "id": "H1",
+   "gap_ref": "ASC vs HSC 鉴别诊断",
+   "statement": "ASC-BPPV 与 HSC-BPPV 的 Dix-Hallpike 诱发 nystagmus 方向存在系统性差异 (ASC: upbeating + geotropic; HSC: horizontal + geotropic), 且该差异可作为鉴别诊断的可重复标准",
+   "falsification": "若 10+ 例 ASC-BPPV 与 HSC-BPPV 患者的 nystagmus 方向无统计显著差异 (p>0.05), H1 被证伪",
+   "verification": "回顾性研究: 比较 20 例 ASC-BPPV + 20 例 HSC-BPPV 的 Dix-Hallpike nystagmus 视频, 统计 upbeating vs horizontal 比例",
+   "bayesian_prior": 0.7,
+   "novelty": "medium (nystagmus 方向差异已知, 但无系统比较)",
+   "feasibility": "high (回顾性视频分析, 无需新患者)"
+  },
+  {
+   "id": "H2",
+   "gap_ref": "Yacovino 手法效果",
+   "statement": "Yacovino 手法 (modified supine roll) 对 ASC-BPPV 的 otolith 清除效果不优于自发坐起 (spontaneous sit-up), 其临床疗效反映被动 otolith 回归而非主动 repositioning",
+   "falsification": "若 RCT 显示 Yacovino 手法 24h 后 cure rate 显著高于自发坐起对照 (p<0.05), H2 被证伪",
+   "verification": "RCT: 50 例 ASC-BPPV 随机分 Yacovino 组 (n=25) + 自发坐起组 (n=25), 24h + 7d 随访 cure rate",
+   "bayesian_prior": 0.6,
+   "novelty": "high (挑战 Yacovino 手法的临床疗效, 与 2026 指南 A/1a 推荐矛盾)",
+   "feasibility": "medium (需 RCT, 3-6 个月)"
+  }
+ ]
+}

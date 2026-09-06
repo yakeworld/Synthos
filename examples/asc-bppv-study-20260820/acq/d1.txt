@@ -1,0 +1,206 @@
+@article{s._martellucci2022,
+  author = {S. Martellucci and Andrea Castellucci and P. Malara and G. Ralli and G. Pagliuca and C. Botti and A. Gallo and A. Ghidini and G. Asprella Libonati},
+  title = {Is it possible to diagnose Posterior Semicircular Canal BPPV from the sitting position? The role of the Head Pitch Test and the upright tests along the RALP and LARP planes.},
+  journal = {American journal of otolaryngology},
+  year = {2022},
+  volume = {43 4},
+  pages = {
+          103474
+        },
+  doi = {10.1016/j.amjoto.2022.103474},
+  pmid = {35561430},
+  abstract = {PURPOSE
+The diagnosis of benign paroxysmal positional vertigo (BPPV) involving the posterior semicircular canal (PSC) is traditionally entrusted to positioning tests where patients are rapidly brought in the supine position. This prospective study aims to define the role of a diagnostic protocol for PSC-BPPV including only upright tests.
+
+
+MATERIALS AND METHODS
+109 patients with PSC-BPPV were enrolled. The Head Pitch Test (HPT) was carried out first. If uneventful, the patient's head was turned 45° to each side and bent back-and-forth along the plane aligning either with the right anterior-left posterior (RALP) or left anterior-right posterior (LARP) canals, thus performing the upright RALP / upright LARP (uRALP/uLARP) test. Nystagmus observed was used to predict the diagnosis, which was therefore confirmed by Dix-Hallpike tests.
+
+
+RESULTS
+PSC-BPPV could be correctly diagnosed in 75.2% of cases with the sole HPT and in 87.2% of cases by adding the uRALP/uLARP test (Upright Protocol). The time elapsed from symptoms onset was closely related to the protocol sensitivity, as it reached 100% (64/64) in acute patients while decreased to 68.9% (31/45) in cases evaluated after 7 days (p < 0.001).
+
+
+CONCLUSIONS
+Upright maneuvers could correctly diagnose PSC-BPPV in most cases. uRALP/uLARP test demonstrated to improve the sensitivity of the HPT, mainly in recent-onset BPPV.},
+}
+@article{jaskaran_singh2019,
+  author = {Jaskaran Singh and Bhanu Bhardwaj},
+  title = {Lateral Semicircular Canal BPPV…Are We Still Ignorant?},
+  journal = {Indian Journal of Otolaryngology and Head & Neck Surgery},
+  year = {2019},
+  volume = {72},
+  pages = {175-183},
+  doi = {10.1007/s12070-019-01737-4},
+  pmid = {32551274},
+}
+@article{m._shankar2024,
+  author = {M. Shankar and M. Kumar},
+  title = {Anterior SCC BPPV: Significance and practice usingVHIT-diagnosis through a case series of positional vertigo},
+  journal = {TNAOI Journal of Otorhinolaryngology and Head &amp; Neck Surgery},
+  year = {2024},
+  doi = {10.54646/tnaoi.2024.06},
+  abstract = {Abstract Introduction: BPPV is a prevalent cause of vertigo, often misconstrued as a diagnosis even by medical personnel.ENT surgeons are adept at finding out which canal and which side is affected to set their treatment plan. Amongthe three semicircular canals, the anterior SCC BPPV is rare and the ENT surgeons must be sensitised to thisBPPV.Materials and methods:Here we use the VHIT method to find if there is a correlation between the clinicalmanifestations and findings. We have also used liberatory manoeuvres to find out the usefulness of the samealthough this study is mainly concentrated on the anterior semicircular canal and its alibi.Results:We have used VHIT to effectively find out the difference and thus help in the diagnosis and management.In our study of about 117 BPPV patients compared to approximately similar numbers, the effectiveness ofVHIT was analysed.Discussion:The results correlated well with the VHIT being a useful tool for the diagnosis of ASCC BPPV and alsoto carry out liberatory Yakovinos manoeuvre successfully.},
+}
+@article{a._vats2021,
+  author = {A. Vats and S. Kothari and J. K. Sharma and G. Ramchandani},
+  title = {Side Lying Test for Anterior Semicircular Canal Benign Paroxysmal Positional Vertigo},
+  journal = {Annals of Indian Academy of Neurology},
+  year = {2021},
+  volume = {25},
+  pages = {148 - 151},
+  doi = {10.4103/aian.AIAN_176_21},
+  pmid = {35342236},
+  abstract = {Annals of Indian Academy of Neurology ¦ Volume 25 ¦ Issue 1 ¦ January‐February 2022 148 IntRoductIon The diagnosis, localization, and lateralization of the involved semicircular canal (SCC) in benign paroxysmal positional vertigo (BPPV) are solitarily dependent on the oculomotor patterns of nystagmus elicited on the diagnostic positional tests: Dix‐Hallpike test (DHT) for the vertical canals (posterior and anterior semicircular canals) and supine roll test for horizontal semicircular canal. After following observations in 100 patients, Dix and Hallpike[1] (1952) propounded a symptomatic definition and a provocative positional test, which they referred to as “positional nystagmus of benign positional type.” In the maneuver innovated by them, the patient was first seated upon the examination couch with his head turned to one side and the gaze fixed firmly on the examiner’s forehead. Thereupon, the examiner would grasp the patient’s forehead firmly between his hands and briskly push the patient back into the critical position 30° below the level of the couch and subsequently turn the head approximately 30°–45° to one side. They noted torsional nystagmus with the upper pole of the eyes beating toward the ground and on retesting, this response fatigued. Response latency of approximately 5s with a crescendo‐decrescendo type of nystagmus and its reversal as the patient sits up was also observed. The DHT now in use, as per the clinical practice guidelines of the American Academy of Otolaryngology, Head, and Neck Surgery Foundation, recommends taking the head 20° below the level of the examination table instead.[2] The DHT orients the vertical canals (posterior and anterior semicircular canals) in a manner that the ampullary end of the canal displaces to a relatively superior location facilitating the excitatory ampullofugal movement of the otoconial debris. The ampullofugal cupular deflection during the DHT generates the excitatory impulses in the posterior [in posterior semicircular canal‐BPPV (PSC‐BPPV)] and anterior (in ASC‐BPPV) ampullary nerves resulting in the diagnostic oculomotor patterns (upbeating in PSC‐BPPV, downbeating in ASC‐BPPV; ipsitorsional in either case). The DHT is difficult to perform in patients with a limited cervical range of motion in the pitch plane, and those with obesity, fear, and musculoskeletal limitations. In addition, the biomechanics of the DHT has the potential to strain the back region of the clinician.},
+}
+@article{s._alzuphar2016,
+  author = {S. Alzuphar and R. Maire},
+  title = {[Anterior semicircular canal Benign Paroxysmal Positional Vertigo].},
+  journal = {Revue medicale suisse},
+  year = {2016},
+  volume = {12 533},
+  pages = {
+          1665-1669
+        },
+  pmid = {28686379},
+}
+@article{g._santopietro2026,
+  author = {G. Santopietro and Luigi Califano and I. Cangiano and Cataldo Latorre and M. Melillo and R. Teggi},
+  title = {Using 100 Hz Mastoid Vibration in Apogeotropic Posterior Semicircular Canal Benign Paroxysmal Positional Vertigo: Diagnostic and Therapeutic Implications in a Retrospective Case–Control Study},
+  journal = {Audiology Research},
+  year = {2026},
+  doi = {10.3390/audiolres16040112},
+  abstract = {Background: Positional torsional downbeating nystagmus elicited during diagnostic maneuvers for posterior semicircular canal benign paroxysmal positional vertigo (PSC-BPPV) may indicate either ipsilateral apogeotropic PSC-BPPV or contralateral anterior canal BPPV, making differential diagnosis challenging. This retrospective study evaluated whether ipsilateral 100 Hz mastoid vibration could facilitate conversion to a geotropic nystagmus pattern, thereby supporting both diagnosis and treatment. Materials and Methods: Ten patients with apogeotropic PSC-BPPV underwent standard diagnostic and therapeutic maneuvers combined with ipsilateral 100 Hz mastoid vibration. The primary outcome was the rate of nystagmus geotropization. Secondary outcomes included the number of repositioning maneuvers required to achieve complete symptom resolution. Outcomes were compared with those of two control groups: one consisting of patients with apogeotropic PSC-BPPV treated without mastoid vibration and another consisting of patients with typical PSC-BPPV treated using standard repositioning maneuvers alone. Results: Mastoid vibration induced geotropization in 7 out of 10 patients (70%). The mean number of liberatory maneuvers required for symptom resolution was lower in vibration-responsive patients than in vibration-non-responsive patients (1.7 ± 0.49 vs. 3.0 ± 1.41;). Compared with patients with apogeotropic PSC-BPPV treated without mastoid vibration, vibration-responsive patients required significantly fewer maneuvers (2.1 ± 0.87 vs. 2.9 ± 0.74; p = 0.036). No significant difference was observed when compared with patients with typical PSC-BPPV (2.1 ± 0.87 vs. 2.1 ± 0.52; p = 0.82). Conclusions: Mastoid vibration may represent a useful adjunctive tool in the management of apogeotropic PSC-BPPV by facilitating conversion to the typical geotropic pattern. This conversion may provide useful diagnostic information, and potentially reduce the number of repositioning maneuvers required to achieve symptom resolution.},
+}
+@article{b._gao2007,
+  author = {B. Gao and Hai-tao Song and Jin-mei Zhou and X. Gong and Wei-ning Huang},
+  title = {[Diagnosis and therapy for benign paroxysmal positional vertigo of the anterior semicircular canal].},
+  journal = {Zhonghua er bi yan hou tou jing wai ke za zhi = Chinese journal of otorhinolaryngology head and neck surgery},
+  year = {2007},
+  volume = {42 6},
+  pages = {
+          428-31
+        },
+  pmid = {17702417},
+}
+@article{n._si2017,
+  author = {N. Si},
+  title = {Diagnosis and treatment for benign paroxysmal positional vertigo of horizontal semicircular canal},
+  year = {2017},
+  volume = {41},
+  pages = {208-212},
+  doi = {10.3760/CMA.J.ISSN.1673-4106.2017.04.005},
+}
+@article{wang_xue_ha2014,
+  author = {Wang Xue-ha},
+  title = {Anterior semicircular canal benign paroxysmal positional vertigo in 41 patients},
+  year = {2014},
+}
+@article{j._lopez_escamez2006,
+  author = {J. Lopez-Escamez and M. I. Molina and M. Gámiz},
+  title = {Anterior semicircular canal benign paroxysmal positional vertigo and positional downbeating nystagmus.},
+  journal = {American journal of otolaryngology},
+  year = {2006},
+  volume = {27 3},
+  pages = {
+          173-8
+        },
+  doi = {10.1016/J.AMJOTO.2005.09.010},
+  pmid = {16647981},
+}
+@article{s._korres2008,
+  author = {S. Korres and M. Riga and D. Balatsouras and V. Sandris},
+  title = {Benign paroxysmal positional vertigo of the anterior semicircular canal: Atypical clinical findings and possible underlying mechanisms},
+  journal = {International Journal of Audiology},
+  year = {2008},
+  volume = {47},
+  pages = {276 - 282},
+  doi = {10.1080/14992020801958843},
+  pmid = {18465412},
+}
+@article{f._viberti2025,
+  author = {F. Viberti and Daniele Nuti and L. Salerni and M. Mandalà},
+  title = {Bedside evaluation of peripheral positional downbeating nystagmus: Toward the new definition of down-beating BPPV},
+  journal = {Journal of Vestibular Research},
+  year = {2025},
+  volume = {36},
+  pages = {289 - 297},
+  doi = {10.1177/09574271251412829},
+  pmid = {41454844},
+  abstract = {Background Positional downbeat nystagmus (pDBN) may have multiple etiologies. Objectives Description of a case series and further considerations about pDBN characteristics, pathogenesis, and differential diagnosis. Methods Descriptive study concerning 153 consecutive patients with pDBN of presumed peripheral origin that were recruited and observed. They were treated only with Brandt-Daroff Exercises. Results 56% reported symptoms of “typical positional vertigo,” 44% described postural instability during head movements or a continuous sense of dizziness. 40% of patients were symptom- and nystagmus-free after 1 week and almost 60% after 2 weeks 5% were still affected by pDBN after 1 month. Several pathogenetic hypotheses have been advanced: otoconia in the anterior canal, an apogeotropic variant of posterior canal, or in the short arm of the posterior canal. Conclusion Down-beat nystagmus arising from the semicircular canals must contain a torsional component and be in “canal-plane” - presenting more torsional when gaze is towards the affected canal, and more purely vertical when directed away, whereas central causes of DBN may be “pure” down-beat. Peripheral pDBN is fatigable, often no nystagmus when returning in sitting position and, highly relevantly, it is self-limiting (95% disappears with only Brandt-Daroff Exercises), with no central signs. Patients may complain of long-term dizziness, trunk oscillation, and prolonged motion sickness. New guidelines may consider the term of Down-Beating BPPV or Down-Beating peripheral positional vertigo, even if the otoconia’s exact position is still uncertain: in our opinion pDBN might be considered as an “apogeotropic variant of PC-BPPV”.},
+}
+@article{p._lorin2005,
+  author = {P. Lorin},
+  title = {[Benign paroxysmal positional vertigo of the anterior semicircular canal: clinical aspects and treatment].},
+  journal = {Revue de laryngologie - otologie - rhinologie},
+  year = {2005},
+  volume = {126 4},
+  pages = {
+          263-6
+        },
+  pmid = {16496555},
+}
+@article{t._chimona2013,
+  author = {T. Chimona},
+  title = {Benign paroxysmal positional vertigo (BPPV): diagnosis and management of the commonest cause of peripheral vertigo.},
+  year = {2013},
+}
+@article{y._ou2015,
+  author = {Y. Ou and Yiging Zheng and Honglei Zhu and Ling Chen and J. Zhong and Xiaowu Tang and Qiuhong Huang and Yao-dong Xu},
+  title = {[Clinical research of the otolith abnormal migration during canalith repositioning procedures for posterior semicircular canal benign paroxysmal positional vertigo].},
+  journal = {Lin chuang er bi yan hou tou jing wai ke za zhi = Journal of clinical otorhinolaryngology, head, and neck surgery},
+  year = {2015},
+  volume = {29 1},
+  pages = {
+          9-12
+        },
+  pmid = {25966545},
+}
+@article{xiao_kai_yang2015,
+  author = {Xiao-kai Yang and Shu-zhi Wu and Hua Ye},
+  title = {[Measurements of semicircular canal space direction with MRI].},
+  journal = {Lin chuang er bi yan hou tou jing wai ke za zhi = Journal of clinical otorhinolaryngology, head, and neck surgery},
+  year = {2015},
+  volume = {29 19},
+  pages = {
+          1683-6
+        },
+  pmid = {26999835},
+}
+@article{zhu_rong_y2013,
+  author = {Zhu Rong-y},
+  title = {Vertical semicircular canal function in Meniere's disease},
+  journal = {Journal of Shandong University},
+  year = {2013},
+}
+@article{b._cakir2006,
+  author = {B. Cakir and I. Ercan and Z. Çakır and Ş. Civelek and I. Sayin and S. Turgut},
+  title = {What Is the True Incidence of Horizontal Semicircular Canal Benign Paroxysmal Positional Vertigo?},
+  journal = {Otolaryngology–Head and Neck Surgery},
+  year = {2006},
+  volume = {134},
+  pages = {451 - 454},
+  doi = {10.1016/j.otohns.2005.07.045},
+  pmid = {16500443},
+}
+@article{andrea_castellucci2020,
+  author = {Andrea Castellucci and P. Malara and S. Martellucci and C. Botti and Silvia Delmonte and S. Quaglieri and E. Rebecchi and E. Armato and M. Ralli and M. Manfrin and A. Ghidini and G. Asprella Libonati},
+  title = {Feasibility of Using the Video-Head Impulse Test to Detect the Involved Canal in Benign Paroxysmal Positional Vertigo Presenting With Positional Downbeat Nystagmus},
+  journal = {Frontiers in Neurology},
+  year = {2020},
+  volume = {11},
+  doi = {10.3389/fneur.2020.578588},
+  pmid = {33178119},
+  abstract = {Positional downbeat nystagmus (pDBN) represents a relatively frequent finding. Its possible peripheral origin has been widely ascertained. Nevertheless, distinguishing features of peripheral positional nystagmus, including latency, paroxysm and torsional components, may be missing, resulting in challenging differential diagnosis with central pDBN. Moreover, in case of benign paroxysmal positional vertigo (BPPV), detection of the affected canal may be challenging as involvement of the non-ampullary arm of posterior semicircular canal (PSC) results in the same oculomotor responses generated by contralateral anterior canal (ASC)-canalolithiasis. Recent acquisitions suggest that patients with persistent pDBN due to vertical canal-BPPV may exhibit impaired vestibulo-ocular reflex (VOR) for the involved canal on video-head impulse test (vHIT). Since canal hypofunction normalizes following proper canalith repositioning procedures (CRP), an incomplete canalith jam acting as a “low-pass filter” for the affected ampullary receptor has been hypothesized. This study aims to determine the sensitivity of vHIT in detecting canal involvement in patients presenting with pDBN due to vertical canal-BPPV. We retrospectively reviewed the clinical records of 59 consecutive subjects presenting with peripheral pDBN. All patients were tested with video-Frenzel examination and vHIT at presentation and after resolution of symptoms or transformation in typical BPPV-variant. BPPV involving non-ampullary tract of PSC was diagnosed in 78%, ASC-BPPV in 11.9% whereas in 6 cases the involved canal remained unidentified. Presenting VOR-gain values for the affected canal were greatly impaired in cases with persistent pDBN compared to subjects with paroxysmal/transitory nystagmus (p < 0.001). Each patient received CRP for BPPV involving the hypoactive canal or, in case of normal VOR-gain, the assumed affected canal. Each subject exhibiting VOR-gain reduction for the involved canal developed normalization of vHIT data after proper repositioning (p < 0.001), proving a close relationship with otoliths altering high-frequency cupular responses. According to our results, overall vHIT sensitivity in detecting the affected SC was 72.9%, increasing up to 88.6% when considering only cases with persistent pDBN where an incomplete canal plug is more likely to occur. vHIT should be routinely used in patients with pDBN as it may enable to localize otoconia within the labyrinth, providing further insights to the pathophysiology of peripheral pDBN.},
+}
+@article{y._rah2026,
+  author = {Y. Rah},
+  title = {Advances in Benign Paroxysmal Positional Vertigo: Updated Insights on Diagnostic Pitfalls and Management},
+  journal = {Journal of Audiology & Otology},
+  year = {2026},
+  volume = {30},
+  pages = {1 - 12},
+  doi = {10.7874/jao.2025.00717},
+  pmid = {41622575},
+  abstract = {The diagnosis and treatment of benign paroxysmal positional vertigo (BPPV) rely on the observation of characteristic nystagmus elicited by specific diagnostic and repositioning maneuvers, making clinician expertise essential. Accurate diagnosis requires careful simulation of the position of otoconial debris within the semicircular canals, both at rest and during dynamic maneuvers. Diagnostic and repositioning maneuvers for posterior and horizontal canal BPPV are well established. However, caution is required in cases of cupulolithiasis, especially involving the vertical canals, where the direction of nystagmus may resemble that seen in canalolithiasis. Key features such as minimal latency and fatigability are important for differential diagnosis. Anterior canal BPPV typically presents with predominantly down-beating nystagmus accompanied by a minimal torsional component. Accordingly, recent therapeutic approaches for anterior canal BPPV have emphasized straight head-hanging and head-flexion maneuvers. In general, repositioning maneuvers achieve high cure rates. Nevertheless, the complex microanatomy and pathophysiology of BPPV may limit treatment efficacy. In such cases, clinicians should reassure patients regarding the benign and non–life-threatening nature of BPPV. A careful and systematic approach can then be adopted to reassess the diagnosis and optimize treatment strategies while minimizing vertigo.},
+}

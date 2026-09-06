@@ -1,0 +1,106 @@
+{
+  "paper_dir": "outputs/asc-bppv-study-20260820/01-manuscript",
+  "paper_name": "01-manuscript",
+  "overall_pass": false,
+  "overall_score": 0.8574,
+  "gates": {
+    "G1_identity": {
+      "gate": "G1_identity",
+      "pass": true,
+      "score": 1.0
+    },
+    "G2_compile": {
+      "gate": "G2_compile",
+      "pass": true,
+      "score": 1.0,
+      "suggestions": [
+        "Fix missing LaTeX structure elements"
+      ]
+    },
+    "G3_citation_integrity": {
+      "gate": "G3_citation",
+      "pass": false,
+      "score": 0.2593,
+      "findings": [
+        "Orphan citations (in .tex but not in .bib): ._lorin2005, a._bhandari2021, a._vats2021, b._cakir2006, b._gao2007, b._kinne2012, d._yacovino2009, f._ramos2019, f._viberti2025, g._santopietro2026",
+        "Unused bib entries: a, ahmed_alduais2025, anirban_ghosh2023, b, bernardo_faria_ramos2019, d, deema_gashgarey2024, e, edgar_i, f"
+      ],
+      "suggestions": [
+        "Add missing bib entries",
+        "Remove unused entries or cite them"
+      ]
+    },
+    "G4_constitution": {
+      "gate": "G4_constitution",
+      "pass": true,
+      "score": 1.0,
+      "suggestions": [
+        "Remove hardcoded credentials, use environment variables"
+      ]
+    },
+    "G5_citation_quality": {
+      "gate": "G5_quality",
+      "pass": true,
+      "score": 1.0,
+      "findings": [
+        "Citation match rate: 100% (27/27 matched)"
+      ]
+    },
+    "G6_impact": {
+      "gate": "G6_impact",
+      "pass": true,
+      "score": 1.0,
+      "suggestions": [
+        "Add Methods section describing approach"
+      ]
+    },
+    "G7_content": {
+      "gate": "G7_content",
+      "pass": true,
+      "score": 1.0
+    },
+    "L0.5_data_honesty": {
+      "gate": "L0.5",
+      "pass": true,
+      "score": 0.6,
+      "findings": [
+        "Numeric claims lack state.json cross-reference"
+      ],
+      "suggestions": [
+        "Add state.json with quality metrics"
+      ]
+    }
+  },
+  "issues": [
+    {
+      "gate": "G3_citation_integrity",
+      "severity": "P1",
+      "findings": [
+        "Orphan citations (in .tex but not in .bib): ._lorin2005, a._bhandari2021, a._vats2021, b._cakir2006, b._gao2007, b._kinne2012, d._yacovino2009, f._ramos2019, f._viberti2025, g._santopietro2026",
+        "Unused bib entries: a, ahmed_alduais2025, anirban_ghosh2023, b, bernardo_faria_ramos2019, d, deema_gashgarey2024, e, edgar_i, f"
+      ],
+      "suggestions": [
+        "Add missing bib entries",
+        "Remove unused entries or cite them"
+      ]
+    },
+    {
+      "gate": "G5_citation_quality",
+      "severity": "P1",
+      "findings": [
+        "Citation match rate: 100% (27/27 matched)"
+      ],
+      "suggestions": []
+    },
+    {
+      "gate": "L0.5_data_honesty",
+      "severity": "P0",
+      "findings": [
+        "Numeric claims lack state.json cross-reference"
+      ],
+      "suggestions": [
+        "Add state.json with quality metrics"
+      ]
+    }
+  ]
+}

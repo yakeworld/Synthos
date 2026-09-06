@@ -244,9 +244,16 @@ def update_state(result: CycleResult):
     with open(EVOLUTION_STATE, 'r') as f:
         state = json.load(f)
     
-    overall = result.avg_score / 100
-    state['overall_score'] = round(overall, 4)
+    # 2026-09-06 命名修复: 旧字段 overall_score = check_skill 扫描平均分/100,
+    # 与 diagnose.py 的 8 维 system-health 同文件并存 → 两套 "overall" 互相矛盾
+    # (审计发现的 overall 0.96 vs scan healthy 0). 现: 扫描结果用独立命名 scan_*,
+    # score (diagnose 8维) 是系统健康度的唯一 "overall".
+    scan_avg = result.avg_score / 100
+    state['scan_avg_score'] = round(scan_avg, 4)
+    state['scan_healthy'] = result.healthy
+    state['scan_total'] = result.total
     state['last_updated'] = result.timestamp
+    state['scan_measured_at'] = result.timestamp
     
     dims = state.get('dimensions', {})
     if result.avg_score > 0:

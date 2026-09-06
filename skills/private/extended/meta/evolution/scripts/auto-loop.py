@@ -328,13 +328,22 @@ def auto_loop(current_cycle, max_cycles=MAX_CYCLES):
     state['auto_trigger_active'] = True
     state['last_strategy'] = strategy
     
-    # Parse diagnostics
+    # Parse diagnostics — 2026-09-06 修复: 旧版在 OVERALL 行 break, 用另一套 6 维权重
+    # 自算 state['score'], 导致 score 与 diagnose.py 的 8 维官方 OVERALL 漂移
+    # (0.9638 vs 0.9769). 现: score = diagnose.py 打印的 OVERALL 原值 (凡数必源).
     diag = {}
+    overall_8d = None
     for line in result.stdout.split('\n'):
-        if 'OVERALL' in line:
-            break
-        if ':' in line and 'x0.' not in line and 'PROBE' not in line and 'BENCHMARK' not in line and 'DIAGNOSE' not in line and '===' not in line:
-            parts = line.strip().split(':')
+        s = line.strip()
+        if '=== STATE SYNC ===' in s:
+            break  # 同步自检段不参与维度解析 (2026-09-06: state 修复后此段开始真实输出)
+        if s.startswith('OVERALL:'):
+            try:
+                overall_8d = float(s.split('OVERALL:')[1].strip())
+            except (ValueError, IndexError):
+                pass
+        elif ':' in s and 'x0.' not in s and 'PROBE' not in s and 'BENCHMARK:' not in s and 'LIVENESS:' not in s and 'BEHAVIOR:' not in s and 'DIAGNOSE' not in s and '===' not in s and 'LOWEST' not in s:
+            parts = s.split(':')
             if len(parts) >= 2:
                 name = parts[0].strip()
                 val_str = parts[-1].strip().split()[0] if parts[-1].strip() else ''
@@ -342,14 +351,20 @@ def auto_loop(current_cycle, max_cycles=MAX_CYCLES):
                     val = float(val_str)
                     if '.' in val_str and 0 <= val <= 1:
                         diag[name] = val
-                except:
+                except (ValueError, IndexError):
                     pass
-    
+    diag['measured_at'] = datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
+
+    if overall_8d is not None:
+        diag['overall'] = round(overall_8d, 4)
+    # 兼容: 解析失败时回退到旧 6 维权重, 并标注非官方值
+    if 'overall' not in diag:
+        weights = {'structural': 0.25, 'benchmark': 0.25, 'optimize': 0.10, 'coverage': 0.10, 'absorption': 0.10, 'constitutional': 0.20}
+        overall = sum(diag.get(k, 0) * w for k, w in weights.items())
+        diag['overall'] = round(overall, 4)
+        diag['overall_fallback'] = 'legacy-6dim-weight (diagnose OVERALL parse failed)'
     state['diagnostics'] = diag
-    
-    weights = {'structural': 0.25, 'benchmark': 0.25, 'optimize': 0.10, 'coverage': 0.10, 'absorption': 0.10, 'constitutional': 0.20}
-    overall = sum(diag.get(k, 0) * w for k, w in weights.items())
-    state['score'] = round(overall, 4)
+    state['score'] = diag['overall']
     
     # Update knowledge pipeline
     if not state.get('knowledge_pipeline'):

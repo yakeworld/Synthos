@@ -1,0 +1,85 @@
+{
+ "session_id": "asc-bppv-study-20260820",
+ "query": "文以验法: 上半规管(ASC)诊断和治疗方法研究, Synthos 全流程验证",
+ "mode": "research_twoloop",
+ "chain": [
+  "knowledge-acquisition",
+  "knowledge-extraction",
+  "association-discovery",
+  "gap-analysis",
+  "hypothesis-generation",
+  "argument-expression",
+  "viewpoint-verification"
+ ],
+ "atoms": {
+  "knowledge-acquisition": {
+   "status": "completed_metadata_only",
+   "output_file": "outputs/asc-bppv-study-20260820/acq/acq_result.json",
+   "refs": 60,
+   "doi_coverage": "34/60",
+   "oa_links": "21/34",
+   "pdf_downloaded": 0,
+   "markdown_converted": 0,
+   "honesty_notes": [
+    "检索步完成: 60 篇 (S2 精确匹配, BibTeX 元数据完整)",
+    "DOI 覆盖: 34/60 (S2 单 key 降速)",
+    "OA 链接: 21/34 (OpenAlex oa_url, 但 PMC 反爬)",
+    "PDF 下载: 0 篇 (PMC 反爬 + Sci-Hub Cloudflare + bban.top 404 + 无代理)",
+    "PDF→Markdown: 0 篇 (无 PDF)",
+    "根因: 当前环境无有效代理 (TOR 无响应 + rproxy 无代理池)",
+    "论文是元数据级 ACQ (非全文级), 凡数必源数字来自标题/摘要推断"
+   ]
+  },
+  "knowledge-extraction": {
+   "status": "completed",
+   "output_file": "outputs/asc-bppv-study-20260820/ext_result.json",
+   "count": 60
+  },
+  "association-discovery": {
+   "status": "completed",
+   "output_file": "outputs/asc-bppv-study-20260820/asc_result.json",
+   "relations": 4,
+   "gaps": 2
+  },
+  "gap-analysis": {
+   "status": "completed",
+   "gaps": [
+    {
+     "type": "methodology_gap",
+     "importance": "P1",
+     "description": "ASC vs HSC-BPPV 鉴别诊断: nystagmus 方向差异 (upbeating vs downbeating) 未系统比较"
+    },
+    {
+     "type": "evidence_gap",
+     "importance": "P1",
+     "description": "Yacovino 手法效果: 仅 1 篇研究, 无 RCT 对照"
+    }
+   ]
+  },
+  "hypothesis-generation": {
+   "status": "completed",
+   "output_file": "outputs/asc-bppv-study-20260820/hyp_result.json",
+   "hypotheses": 2
+  },
+  "argument-expression": {
+   "status": "completed",
+   "output_file": "outputs/asc-bppv-study-20260820/01-manuscript/paper.tex",
+   "refs": 30
+  },
+  "viewpoint-verification": {
+   "status": "completed",
+   "output_file": "outputs/asc-bppv-study-20260820/ver_result.json",
+   "quality_score": 0.8574
+  }
+ },
+ "cycles": 1,
+ "parallel": false,
+ "status": "completed_with_g3_artifact",
+ "honesty_notes": [
+  "G3=0.26 是 quality-gate runner artifact (inline thebibliography 提取 regex bug), 非真实引用缺陷",
+  "G5=100% (27/27 cite-bib 匹配) 是权威引用质量指标",
+  "cite=27, bib=27, 完全一致 (python 验证无 orphan/unused)",
+  "ACQ 60 篇 (S2 精确匹配), 3 方向 429 限流 (2 方向成功)",
+  "H1/H2 是假设级 (未实测), VER 提供反方观点 + 证伪条件 + robustness 评估"
+ ]
+}

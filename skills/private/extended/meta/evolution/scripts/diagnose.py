@@ -343,8 +343,13 @@ print(f"  ───────────────────────�
 print(f"  OVERALL: {overall:.4f}")
 
 # State comparison
+# 2026-09-06 修复: state 变量此前从未加载, 本块一直在 except: pass 中静默失败
+# (自检从未真正运行). 现显式加载; 仍保留容错 (state 文件缺失/损坏时跳过).
 try:
-    state_score = state.get('overall_score', state.get('score', 0))
+    import json as _json, os as _os
+    with open(_os.path.join('evolution-state.json')) as _f:
+        state = _json.load(_f)
+    state_score = state.get('score', state.get('overall_score', 0))
     diff = abs(state_score - overall)
     print(f"\n=== STATE SYNC ===")
     print(f"  State claims: {state_score:.4f}")

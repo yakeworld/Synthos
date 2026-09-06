@@ -1,0 +1,31 @@
+{
+ "H1": {
+  "counter_arguments": [
+   "ASC-BPPV nystagmus 方向可能受头位/体位影响, 非恒定 upbeating",
+   "HSC-BPPV 也可能有垂直分量 (common crus 共享), nystagmus 方向非二值",
+   "小样本 (20+20) 可能无统计功效"
+  ],
+  "falsification_condition": "10+ 例无统计显著差异 (p>0.05)",
+  "robustness": "medium (需 20+20 例, 3 个中心, 视频盲读)"
+ },
+ "H2": {
+  "counter_arguments": [
+   "Yacovino 手法有物理机制 (otolith 沿 ASC 回归壶腹), 非纯被动",
+   "自发坐起可能不足以清除 ASC otolith (重力方向不利)",
+   "2026 指南 A/1a 推荐基于专家共识, 非仅 1 篇研究"
+  ],
+  "falsification_condition": "RCT 24h cure rate 显著高于自发坐起 (p<0.05)",
+  "robustness": "high (RCT 是金标准, 50 例足够)"
+ },
+ "paper_quality": {
+  "citation_count": 30,
+  "structure": "IMRaD complete (Introduction/Methods/Results/Discussion/Conclusion)",
+  "hypothesis_driven": true,
+  "falsifiable": true,
+  "limitations": [
+   "Systematic review only (no primary data)",
+   "H1/H2 not yet tested (hypothesis-level)",
+   "S2 rate-limited (60/60 ACQ, 但 2 方向 429)"
+  ]
+ }
+}

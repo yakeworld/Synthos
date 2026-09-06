@@ -1,0 +1,765 @@
+{
+ "knowledge_items": [
+  {
+   "key": "s._martellucci2022",
+   "title": "Is it possible to diagnose Posterior Semicircular Canal BPPV from the sitting position? The role of the Head Pitch Test and the upright tests along the RALP and LARP planes.",
+   "author": "S. Martellucci and Andrea Castellucci and P. Malara and G. Ralli and G. Pagliuca",
+   "year": "2022",
+   "journal": "American journal of otolaryngology",
+   "claim": "Is it possible to diagnose Posterior Semicircular Canal BPPV from the sitting position? The role of the Head Pitch Test and the upright tests along the RALP and LARP planes.",
+   "entities": [
+    "BPPV"
+   ],
+   "evidence": "标题: Is it possible to diagnose Posterior Semicircular Canal BPPV"
+  },
+  {
+   "key": "jaskaran_singh2019",
+   "title": "Lateral Semicircular Canal BPPV…Are We Still Ignorant?",
+   "author": "Jaskaran Singh and Bhanu Bhardwaj",
+   "year": "2019",
+   "journal": "Indian Journal of Otolaryngology and Head & Neck S",
+   "claim": "Lateral Semicircular Canal BPPV…Are We Still Ignorant?",
+   "entities": [
+    "BPPV"
+   ],
+   "evidence": "标题: Lateral Semicircular Canal BPPV…Are We Still Ignorant?"
+  },
+  {
+   "key": "m._shankar2024",
+   "title": "Anterior SCC BPPV: Significance and practice usingVHIT-diagnosis through a case series of positional vertigo",
+   "author": "M. Shankar and M. Kumar",
+   "year": "2024",
+   "journal": "TNAOI Journal of Otorhinolaryngology and Head &amp",
+   "claim": "Anterior SCC BPPV: Significance and practice usingVHIT-diagnosis through a case series of positional vertigo",
+   "entities": [
+    "BPPV",
+    "diagnosis",
+    "vertigo"
+   ],
+   "evidence": "标题: Anterior SCC BPPV: Significance and practice usingVHIT-diagn"
+  },
+  {
+   "key": "a._vats2021",
+   "title": "Side Lying Test for Anterior Semicircular Canal Benign Paroxysmal Positional Vertigo",
+   "author": "A. Vats and S. Kothari and J. K. Sharma and G. Ramchandani",
+   "year": "2021",
+   "journal": "Annals of Indian Academy of Neurology",
+   "claim": "Side Lying Test for Anterior Semicircular Canal Benign Paroxysmal Positional Vertigo",
+   "entities": [
+    "anterior semicircular canal",
+    "vertigo"
+   ],
+   "evidence": "标题: Side Lying Test for Anterior Semicircular Canal Benign Parox"
+  },
+  {
+   "key": "s._alzuphar2016",
+   "title": "[Anterior semicircular canal Benign Paroxysmal Positional Vertigo].",
+   "author": "S. Alzuphar and R. Maire",
+   "year": "2016",
+   "journal": "Revue medicale suisse",
+   "claim": "[Anterior semicircular canal Benign Paroxysmal Positional Vertigo].",
+   "entities": [
+    "anterior semicircular canal",
+    "vertigo"
+   ],
+   "evidence": "标题: [Anterior semicircular canal Benign Paroxysmal Positional Ve"
+  },
+  {
+   "key": "g._santopietro2026",
+   "title": "Using 100 Hz Mastoid Vibration in Apogeotropic Posterior Semicircular Canal Benign Paroxysmal Positional Vertigo: Diagnostic and Therapeutic Implications in a Retrospective Case–Control Study",
+   "author": "G. Santopietro and Luigi Califano and I. Cangiano and Cataldo Latorre and M. Mel",
+   "year": "2026",
+   "journal": "Audiology Research",
+   "claim": "Using 100 Hz Mastoid Vibration in Apogeotropic Posterior Semicircular Canal Benign Paroxysmal Positional Vertigo: Diagnostic and Therapeutic Implications in a Retrospective Case–Control Study",
+   "entities": [
+    "vertigo"
+   ],
+   "evidence": "标题: Using 100 Hz Mastoid Vibration in Apogeotropic Posterior Sem"
+  },
+  {
+   "key": "b._gao2007",
+   "title": "[Diagnosis and therapy for benign paroxysmal positional vertigo of the anterior semicircular canal].",
+   "author": "B. Gao and Hai-tao Song and Jin-mei Zhou and X. Gong and Wei-ning Huang",
+   "year": "2007",
+   "journal": "Zhonghua er bi yan hou tou jing wai ke za zhi = Ch",
+   "claim": "[Diagnosis and therapy for benign paroxysmal positional vertigo of the anterior semicircular canal].",
+   "entities": [
+    "anterior semicircular canal",
+    "diagnosis",
+    "vertigo"
+   ],
+   "evidence": "标题: [Diagnosis and therapy for benign paroxysmal positional vert"
+  },
+  {
+   "key": "n._si2017",
+   "title": "Diagnosis and treatment for benign paroxysmal positional vertigo of horizontal semicircular canal",
+   "author": "N. Si",
+   "year": "2017",
+   "journal": "?",
+   "claim": "Diagnosis and treatment for benign paroxysmal positional vertigo of horizontal semicircular canal",
+   "entities": [
+    "diagnosis",
+    "treatment",
+    "vertigo"
+   ],
+   "evidence": "标题: Diagnosis and treatment for benign paroxysmal positional ver"
+  },
+  {
+   "key": "wang_xue_ha2014",
+   "title": "Anterior semicircular canal benign paroxysmal positional vertigo in 41 patients",
+   "author": "Wang Xue-ha",
+   "year": "2014",
+   "journal": "?",
+   "claim": "Anterior semicircular canal benign paroxysmal positional vertigo in 41 patients",
+   "entities": [
+    "anterior semicircular canal",
+    "vertigo"
+   ],
+   "evidence": "标题: Anterior semicircular canal benign paroxysmal positional ver"
+  },
+  {
+   "key": "j._lopez_escamez2006",
+   "title": "Anterior semicircular canal benign paroxysmal positional vertigo and positional downbeating nystagmus.",
+   "author": "J. Lopez-Escamez and M. I. Molina and M. Gámiz",
+   "year": "2006",
+   "journal": "American journal of otolaryngology",
+   "claim": "Anterior semicircular canal benign paroxysmal positional vertigo and positional downbeating nystagmus.",
+   "entities": [
+    "anterior semicircular canal",
+    "nystagmus",
+    "vertigo"
+   ],
+   "evidence": "标题: Anterior semicircular canal benign paroxysmal positional ver"
+  },
+  {
+   "key": "s._korres2008",
+   "title": "Benign paroxysmal positional vertigo of the anterior semicircular canal: Atypical clinical findings and possible underlying mechanisms",
+   "author": "S. Korres and M. Riga and D. Balatsouras and V. Sandris",
+   "year": "2008",
+   "journal": "International Journal of Audiology",
+   "claim": "Benign paroxysmal positional vertigo of the anterior semicircular canal: Atypical clinical findings and possible underlying mechanisms",
+   "entities": [
+    "anterior semicircular canal",
+    "vertigo"
+   ],
+   "evidence": "标题: Benign paroxysmal positional vertigo of the anterior semicir"
+  },
+  {
+   "key": "f._viberti2025",
+   "title": "Bedside evaluation of peripheral positional downbeating nystagmus: Toward the new definition of down-beating BPPV",
+   "author": "F. Viberti and Daniele Nuti and L. Salerni and M. Mandalà",
+   "year": "2025",
+   "journal": "Journal of Vestibular Research",
+   "claim": "Bedside evaluation of peripheral positional downbeating nystagmus: Toward the new definition of down-beating BPPV",
+   "entities": [
+    "BPPV",
+    "nystagmus"
+   ],
+   "evidence": "标题: Bedside evaluation of peripheral positional downbeating nyst"
+  },
+  {
+   "key": "p._lorin2005",
+   "title": "[Benign paroxysmal positional vertigo of the anterior semicircular canal: clinical aspects and treatment].",
+   "author": "P. Lorin",
+   "year": "2005",
+   "journal": "Revue de laryngologie - otologie - rhinologie",
+   "claim": "[Benign paroxysmal positional vertigo of the anterior semicircular canal: clinical aspects and treatment].",
+   "entities": [
+    "anterior semicircular canal",
+    "treatment",
+    "vertigo"
+   ],
+   "evidence": "标题: [Benign paroxysmal positional vertigo of the anterior semici"
+  },
+  {
+   "key": "t._chimona2013",
+   "title": "Benign paroxysmal positional vertigo (BPPV): diagnosis and management of the commonest cause of peripheral vertigo.",
+   "author": "T. Chimona",
+   "year": "2013",
+   "journal": "?",
+   "claim": "Benign paroxysmal positional vertigo (BPPV): diagnosis and management of the commonest cause of peripheral vertigo.",
+   "entities": [
+    "BPPV",
+    "diagnosis",
+    "vertigo"
+   ],
+   "evidence": "标题: Benign paroxysmal positional vertigo (BPPV): diagnosis and m"
+  },
+  {
+   "key": "y._ou2015",
+   "title": "[Clinical research of the otolith abnormal migration during canalith repositioning procedures for posterior semicircular canal benign paroxysmal positional vertigo].",
+   "author": "Y. Ou and Yiging Zheng and Honglei Zhu and Ling Chen and J. Zhong and Xiaowu Tan",
+   "year": "2015",
+   "journal": "Lin chuang er bi yan hou tou jing wai ke za zhi = ",
+   "claim": "[Clinical research of the otolith abnormal migration during canalith repositioning procedures for posterior semicircular canal benign paroxysmal positional vertigo].",
+   "entities": [
+    "repositioning",
+    "otolith",
+    "canalith",
+    "vertigo"
+   ],
+   "evidence": "标题: [Clinical research of the otolith abnormal migration during "
+  },
+  {
+   "key": "xiao_kai_yang2015",
+   "title": "[Measurements of semicircular canal space direction with MRI].",
+   "author": "Xiao-kai Yang and Shu-zhi Wu and Hua Ye",
+   "year": "2015",
+   "journal": "Lin chuang er bi yan hou tou jing wai ke za zhi = ",
+   "claim": "[Measurements of semicircular canal space direction with MRI].",
+   "entities": [],
+   "evidence": "标题: [Measurements of semicircular canal space direction with MRI"
+  },
+  {
+   "key": "zhu_rong_y2013",
+   "title": "Vertical semicircular canal function in Meniere's disease",
+   "author": "Zhu Rong-y",
+   "year": "2013",
+   "journal": "Journal of Shandong University",
+   "claim": "Vertical semicircular canal function in Meniere's disease",
+   "entities": [],
+   "evidence": "标题: Vertical semicircular canal function in Meniere's disease"
+  },
+  {
+   "key": "b._cakir2006",
+   "title": "What Is the True Incidence of Horizontal Semicircular Canal Benign Paroxysmal Positional Vertigo?",
+   "author": "B. Cakir and I. Ercan and Z. Çakır and Ş. Civelek and I. Sayin and S. Turgut",
+   "year": "2006",
+   "journal": "Otolaryngology–Head and Neck Surgery",
+   "claim": "What Is the True Incidence of Horizontal Semicircular Canal Benign Paroxysmal Positional Vertigo?",
+   "entities": [
+    "vertigo"
+   ],
+   "evidence": "标题: What Is the True Incidence of Horizontal Semicircular Canal "
+  },
+  {
+   "key": "andrea_castellucci2020",
+   "title": "Feasibility of Using the Video-Head Impulse Test to Detect the Involved Canal in Benign Paroxysmal Positional Vertigo Presenting With Positional Downbeat Nystagmus",
+   "author": "Andrea Castellucci and P. Malara and S. Martellucci and C. Botti and Silvia Delm",
+   "year": "2020",
+   "journal": "Frontiers in Neurology",
+   "claim": "Feasibility of Using the Video-Head Impulse Test to Detect the Involved Canal in Benign Paroxysmal Positional Vertigo Presenting With Positional Downbeat Nystagmus",
+   "entities": [
+    "nystagmus",
+    "vertigo"
+   ],
+   "evidence": "标题: Feasibility of Using the Video-Head Impulse Test to Detect t"
+  },
+  {
+   "key": "y._rah2026",
+   "title": "Advances in Benign Paroxysmal Positional Vertigo: Updated Insights on Diagnostic Pitfalls and Management",
+   "author": "Y. Rah",
+   "year": "2026",
+   "journal": "Journal of Audiology & Otology",
+   "claim": "Advances in Benign Paroxysmal Positional Vertigo: Updated Insights on Diagnostic Pitfalls and Management",
+   "entities": [
+    "vertigo"
+   ],
+   "evidence": "标题: Advances in Benign Paroxysmal Positional Vertigo: Updated In"
+  },
+  {
+   "key": "rushika_patel2024",
+   "title": "Anterior Canal BPPV- A Rare Form of Vertical Canaloliathiasis: Series of 11 Cases",
+   "author": "Rushika Patel and Pushkar L. Lele",
+   "year": "2024",
+   "journal": "Indian Journal of Otolaryngology and Head & Neck S",
+   "claim": "Anterior Canal BPPV- A Rare Form of Vertical Canaloliathiasis: Series of 11 Cases",
+   "entities": [
+    "BPPV"
+   ],
+   "evidence": "标题: Anterior Canal BPPV- A Rare Form of Vertical Canaloliathiasi"
+  },
+  {
+   "key": "juras_jocys2025",
+   "title": "A Rare Case of Anterior Semicircular Canal BPPV Resistant to Treatment: A Case Report and Literature Review",
+   "author": "Juras Jocys and Aistė Paškonienė and E. Lesinskas",
+   "year": "2025",
+   "journal": "Audiology Research",
+   "claim": "A Rare Case of Anterior Semicircular Canal BPPV Resistant to Treatment: A Case Report and Literature Review",
+   "entities": [
+    "anterior semicircular canal",
+    "BPPV",
+    "treatment"
+   ],
+   "evidence": "标题: A Rare Case of Anterior Semicircular Canal BPPV Resistant to"
+  },
+  {
+   "key": "a._bhandari2021",
+   "title": "Diagnostic and Therapeutic Maneuvers for Anterior Canal BPPV Canalithiasis: Three-Dimensional Simulations",
+   "author": "A. Bhandari and Rajneesh Bhandari and H. Kingma and M. Strupp",
+   "year": "2021",
+   "journal": "Frontiers in Neurology",
+   "claim": "Diagnostic and Therapeutic Maneuvers for Anterior Canal BPPV Canalithiasis: Three-Dimensional Simulations",
+   "entities": [
+    "BPPV",
+    "canalith"
+   ],
+   "evidence": "标题: Diagnostic and Therapeutic Maneuvers for Anterior Canal BPPV"
+  },
+  {
+   "key": "danping_chen2015",
+   "title": "[Treatment of anterior canal benign paroxysmal positional vertigo by Yacovino repositioning maneuver].",
+   "author": "Danping Chen and S. Xiong and Yong Cui",
+   "year": "2015",
+   "journal": "Lin chuang er bi yan hou tou jing wai ke za zhi = ",
+   "claim": "[Treatment of anterior canal benign paroxysmal positional vertigo by Yacovino repositioning maneuver].",
+   "entities": [
+    "treatment",
+    "repositioning",
+    "vertigo"
+   ],
+   "evidence": "标题: [Treatment of anterior canal benign paroxysmal positional ve"
+  },
+  {
+   "key": "d._yacovino2009",
+   "title": "New therapeutic maneuver for anterior canal benign paroxysmal positional vertigo",
+   "author": "D. Yacovino and T. Hain and F. Gualtieri",
+   "year": "2009",
+   "journal": "Journal of Neurology",
+   "claim": "New therapeutic maneuver for anterior canal benign paroxysmal positional vertigo",
+   "entities": [
+    "vertigo"
+   ],
+   "evidence": "标题: New therapeutic maneuver for anterior canal benign paroxysma"
+  },
+  {
+   "key": "thanatporn_vongviriyangkoon2026",
+   "title": "Video head impulse testing before and after canalith repositioning for benign paroxysmal positional vertigo",
+   "author": "Thanatporn Vongviriyangkoon and S. Limviriyakul and K. Thongyai and S. Atipas an",
+   "year": "2026",
+   "journal": "European Archives of Oto-Rhino-Laryngology",
+   "claim": "Video head impulse testing before and after canalith repositioning for benign paroxysmal positional vertigo",
+   "entities": [
+    "repositioning",
+    "canalith",
+    "vertigo"
+   ],
+   "evidence": "标题: Video head impulse testing before and after canalith reposit"
+  },
+  {
+   "key": "b._kinne2012",
+   "title": "An Alternative Treatment Option for Anterior Canal Benign Paroxysmal Positional Vertigo",
+   "author": "B. Kinne",
+   "year": "2012",
+   "journal": "Physical & Occupational Therapy In Geriatrics",
+   "claim": "An Alternative Treatment Option for Anterior Canal Benign Paroxysmal Positional Vertigo",
+   "entities": [
+    "treatment",
+    "vertigo"
+   ],
+   "evidence": "标题: An Alternative Treatment Option for Anterior Canal Benign Pa"
+  },
+  {
+   "key": "y._k._kim2005",
+   "title": "The Effect of Canalith Repositioning for Anterior Semicircular Canal Canalithiasis",
+   "author": "Y. K. Kim and Jeong-eun Shin and J. Chung",
+   "year": "2005",
+   "journal": "ORL",
+   "claim": "The Effect of Canalith Repositioning for Anterior Semicircular Canal Canalithiasis",
+   "entities": [
+    "anterior semicircular canal",
+    "repositioning",
+    "canalith"
+   ],
+   "evidence": "标题: The Effect of Canalith Repositioning for Anterior Semicircul"
+  },
+  {
+   "key": "y._ou2015",
+   "title": "[Clinical research of the otolith abnormal migration during canalith repositioning procedures for posterior semicircular canal benign paroxysmal positional vertigo].",
+   "author": "Y. Ou and Yiging Zheng and Honglei Zhu and Ling Chen and J. Zhong and Xiaowu Tan",
+   "year": "2015",
+   "journal": "Lin chuang er bi yan hou tou jing wai ke za zhi = ",
+   "claim": "[Clinical research of the otolith abnormal migration during canalith repositioning procedures for posterior semicircular canal benign paroxysmal positional vertigo].",
+   "entities": [
+    "repositioning",
+    "otolith",
+    "canalith",
+    "vertigo"
+   ],
+   "evidence": "标题: [Clinical research of the otolith abnormal migration during "
+  },
+  {
+   "key": "j._lopez_escamez2006",
+   "title": "Anterior semicircular canal benign paroxysmal positional vertigo and positional downbeating nystagmus.",
+   "author": "J. Lopez-Escamez and M. I. Molina and M. Gámiz",
+   "year": "2006",
+   "journal": "American journal of otolaryngology",
+   "claim": "Anterior semicircular canal benign paroxysmal positional vertigo and positional downbeating nystagmus.",
+   "entities": [
+    "anterior semicircular canal",
+    "nystagmus",
+    "vertigo"
+   ],
+   "evidence": "标题: Anterior semicircular canal benign paroxysmal positional ver"
+  },
+  {
+   "key": "f._ramos2019",
+   "title": "APOGEOTROPIC VARIANT OF HC-BPPV : WHERE ARE THE PARTICLES?",
+   "author": "F. Ramos and R. Cal and P. L. Albernaz and F. Z. E. Maia",
+   "year": "2019",
+   "journal": "?",
+   "claim": "APOGEOTROPIC VARIANT OF HC-BPPV : WHERE ARE THE PARTICLES?",
+   "entities": [
+    "BPPV"
+   ],
+   "evidence": "标题: APOGEOTROPIC VARIANT OF HC-BPPV : WHERE ARE THE PARTICLES?"
+  },
+  {
+   "key": "bernardo_faria_ramos2019",
+   "title": "Apogeotropic variant of horizontal semicircular canal benign paroxysmal positional vertigo: Where are the particles?",
+   "author": "Bernardo Faria Ramos and R. Cal and Camila Martins Brock and P. L. Albernaz and ",
+   "year": "2019",
+   "journal": "Audiology Research",
+   "claim": "Apogeotropic variant of horizontal semicircular canal benign paroxysmal positional vertigo: Where are the particles?",
+   "entities": [
+    "vertigo"
+   ],
+   "evidence": "标题: Apogeotropic variant of horizontal semicircular canal benign"
+  },
+  {
+   "key": "huang_wei_ning2006",
+   "title": "Effectiveness of canalith repositioning procedure in the treatment of 165 cases of benign paroxysmal positional vertigo",
+   "author": "Huang Wei-ning",
+   "year": "2006",
+   "journal": "Chinese Journal of Otology",
+   "claim": "Effectiveness of canalith repositioning procedure in the treatment of 165 cases of benign paroxysmal positional vertigo",
+   "entities": [
+    "treatment",
+    "repositioning",
+    "canalith",
+    "vertigo"
+   ],
+   "evidence": "标题: Effectiveness of canalith repositioning procedure in the tre"
+  },
+  {
+   "key": "m._mandalà2019",
+   "title": "Benign Positional Paroxysmal Vertigo Treatment: a Practical Update",
+   "author": "M. Mandalà and L. Salerni and D. Nuti",
+   "year": "2019",
+   "journal": "Current Treatment Options in Neurology",
+   "claim": "Benign Positional Paroxysmal Vertigo Treatment: a Practical Update",
+   "entities": [
+    "treatment",
+    "vertigo"
+   ],
+   "evidence": "标题: Benign Positional Paroxysmal Vertigo Treatment: a Practical "
+  },
+  {
+   "key": "e._prokopakis2012",
+   "title": "Canalith Repositioning Procedures among 965 Patients with Benign Paroxysmal Positional Vertigo",
+   "author": "E. Prokopakis and Ioannis Vlastos and M. Tsagournisakis and P. Christodoulou and",
+   "year": "2012",
+   "journal": "Audiology and Neurotology",
+   "claim": "Canalith Repositioning Procedures among 965 Patients with Benign Paroxysmal Positional Vertigo",
+   "entities": [
+    "repositioning",
+    "canalith",
+    "vertigo"
+   ],
+   "evidence": "标题: Canalith Repositioning Procedures among 965 Patients with Be"
+  },
+  {
+   "key": "yihan_wang2019",
+   "title": "Benign paroxsymal positional vertigo – recommendations for treatment in primary care",
+   "author": "Yihan Wang and Ching Yee Chan and Qing-Hua Liu",
+   "year": "2019",
+   "journal": "Therapeutics and Clinical Risk Management",
+   "claim": "Benign paroxsymal positional vertigo – recommendations for treatment in primary care",
+   "entities": [
+    "treatment",
+    "vertigo"
+   ],
+   "evidence": "标题: Benign paroxsymal positional vertigo – recommendations for t"
+  },
+  {
+   "key": "m._el_anwar2022",
+   "title": "Benign paroxysmal positional vertigo: a multi-center study",
+   "author": "M. El-Anwar and Rasha Mohamed Kamel Mostafa Mesriga and M. Mobasher and M. Heggy",
+   "year": "2022",
+   "journal": "The Egyptian Journal of Otolaryngology",
+   "claim": "Benign paroxysmal positional vertigo: a multi-center study",
+   "entities": [
+    "vertigo"
+   ],
+   "evidence": "标题: Benign paroxysmal positional vertigo: a multi-center study"
+  },
+  {
+   "key": "s._korres2007",
+   "title": "Benign paroxysmal positional vertigo and its management.",
+   "author": "S. Korres and D. Balatsouras and Sotiris Papouliakos and E. Ferekidis",
+   "year": "2007",
+   "journal": "Medical science monitor : international medical jo",
+   "claim": "Benign paroxysmal positional vertigo and its management.",
+   "entities": [
+    "vertigo"
+   ],
+   "evidence": "标题: Benign paroxysmal positional vertigo and its management."
+  },
+  {
+   "key": "sheikh_hilal_ahmad2019",
+   "title": "Optimal management of benign paroxysmal positional vertigo patients: An unmet need.",
+   "author": "Sheikh Hilal Ahmad and S. Ahmad and Tak Sajad and Heena Naqash",
+   "year": "2019",
+   "journal": "JMS SKIMS",
+   "claim": "Optimal management of benign paroxysmal positional vertigo patients: An unmet need.",
+   "entities": [
+    "vertigo"
+   ],
+   "evidence": "标题: Optimal management of benign paroxysmal positional vertigo p"
+  },
+  {
+   "key": "ying_tian2012",
+   "title": "[Diagnosis and treatment of 318 benign paroxysmal positional vertigo cases].",
+   "author": "Ying Tian and Tao Zhang and Xue-jun Jiang",
+   "year": "2012",
+   "journal": "Lin chuang er bi yan hou tou jing wai ke za zhi = ",
+   "claim": "[Diagnosis and treatment of 318 benign paroxysmal positional vertigo cases].",
+   "entities": [
+    "diagnosis",
+    "treatment",
+    "vertigo"
+   ],
+   "evidence": "标题: [Diagnosis and treatment of 318 benign paroxysmal positional"
+  },
+  {
+   "key": "anirban_ghosh2023",
+   "title": "Epidemiology of benign paroxysomal positional vertigo (BPPV) and risk factors for secondary BPPV: a population-based study",
+   "author": "Anirban Ghosh and Srinivas Dorasala",
+   "year": "2023",
+   "journal": "The Egyptian Journal of Otolaryngology",
+   "claim": "Epidemiology of benign paroxysomal positional vertigo (BPPV) and risk factors for secondary BPPV: a population-based study",
+   "entities": [
+    "BPPV",
+    "vertigo",
+    "epidemiology"
+   ],
+   "evidence": "标题: Epidemiology of benign paroxysomal positional vertigo (BPPV)"
+  },
+  {
+   "key": "m._brevern2006",
+   "title": "Epidemiology of benign paroxysmal positional vertigo: a population based study",
+   "author": "M. Brevern and A. Radtke and F. Lezius and M. Feldmann and T. Ziese and T. Lempe",
+   "year": "2006",
+   "journal": "Journal of Neurology, Neurosurgery & Psychiatry",
+   "claim": "Epidemiology of benign paroxysmal positional vertigo: a population based study",
+   "entities": [
+    "vertigo",
+    "epidemiology"
+   ],
+   "evidence": "标题: Epidemiology of benign paroxysmal positional vertigo: a popu"
+  },
+  {
+   "key": "h._neuhauser2009",
+   "title": "The epidemiology of dizziness and vertigo.",
+   "author": "H. Neuhauser",
+   "year": "2009",
+   "journal": "Handbook of clinical neurology",
+   "claim": "The epidemiology of dizziness and vertigo.",
+   "entities": [
+    "vertigo",
+    "epidemiology"
+   ],
+   "evidence": "标题: The epidemiology of dizziness and vertigo."
+  },
+  {
+   "key": "v._moaddel2025",
+   "title": "Not So Benign Paroxysmal Positional Vertigo in the Emergency Department",
+   "author": "V. Moaddel and A. Tapia and D. Burkard and Matthew Singh and T. Peterson and Yeo",
+   "year": "2025",
+   "journal": "Clinical and Molecular Epidemiology",
+   "claim": "Not So Benign Paroxysmal Positional Vertigo in the Emergency Department",
+   "entities": [
+    "vertigo"
+   ],
+   "evidence": "标题: Not So Benign Paroxysmal Positional Vertigo in the Emergency"
+  },
+  {
+   "key": "shahdevi_nandar2026",
+   "title": "Benign Paroxysmal Positional Vertigo",
+   "author": "Shahdevi Nandar and Theresa Puspanadi",
+   "year": "2026",
+   "journal": "Cerdika: Jurnal Ilmiah Indonesia",
+   "claim": "Benign Paroxysmal Positional Vertigo",
+   "entities": [
+    "vertigo"
+   ],
+   "evidence": "标题: Benign Paroxysmal Positional Vertigo"
+  },
+  {
+   "key": "h._neuhauser2009",
+   "title": "Vertigo: epidemiologic aspects.",
+   "author": "H. Neuhauser and T. Lempert",
+   "year": "2009",
+   "journal": "Seminars in neurology",
+   "claim": "Vertigo: epidemiologic aspects.",
+   "entities": [
+    "vertigo"
+   ],
+   "evidence": "标题: Vertigo: epidemiologic aspects."
+  },
+  {
+   "key": "p._vlastarakos2022",
+   "title": "Unilateral vestibular weakness: an often under-recognized entity. Is symptom improvement feasible?",
+   "author": "P. Vlastarakos and Efterpi Michailidou and T. Nikolopoulos",
+   "year": "2022",
+   "journal": "Hearing, Balance and Communication",
+   "claim": "Unilateral vestibular weakness: an often under-recognized entity. Is symptom improvement feasible?",
+   "entities": [],
+   "evidence": "标题: Unilateral vestibular weakness: an often under-recognized en"
+  },
+  {
+   "key": "hannelore_neuhauser12009",
+   "title": "Vertigo: Epidemiologic Aspects",
+   "author": "Hannelore Neuhauser1 , 2 and Thomas Lempert2 , 3",
+   "year": "2009",
+   "journal": "Semin Neurol",
+   "claim": "Vertigo: Epidemiologic Aspects",
+   "entities": [
+    "vertigo"
+   ],
+   "evidence": "标题: Vertigo: Epidemiologic Aspects"
+  },
+  {
+   "key": "nícolas_philippe_balduino_nogueira2026",
+   "title": "Epidemiology of neuromyelitis optica spectrum disease in Central-West Brazil: Prevalence and associated clinical and demographic features",
+   "author": "Nícolas Philippe Balduino Nogueira and R. R. Deusdara Rodrigues and Tainá Cavalc",
+   "year": "2026",
+   "journal": "Multiple Sclerosis Journal - Experimental, Transla",
+   "claim": "Epidemiology of neuromyelitis optica spectrum disease in Central-West Brazil: Prevalence and associated clinical and demographic features",
+   "entities": [
+    "epidemiology"
+   ],
+   "evidence": "标题: Epidemiology of neuromyelitis optica spectrum disease in Cen"
+  },
+  {
+   "key": "l._suturina2024",
+   "title": "Ethnicity and the Prevalence of Polycystic Ovary Syndrome: The Eastern Siberia PCOS Epidemiology and Phenotype Study.",
+   "author": "L. Suturina and Daria Lizneva and L. Lazareva and I. Danusevich and Iana Nadelia",
+   "year": "2024",
+   "journal": "The Journal of clinical endocrinology and metaboli",
+   "claim": "Ethnicity and the Prevalence of Polycystic Ovary Syndrome: The Eastern Siberia PCOS Epidemiology and Phenotype Study.",
+   "entities": [
+    "epidemiology"
+   ],
+   "evidence": "标题: Ethnicity and the Prevalence of Polycystic Ovary Syndrome: T"
+  },
+  {
+   "key": "xinjuan_huang2024",
+   "title": "Comparison of NAFLD, MAFLD, and MASLD Prevalence and Clinical Characteristics in Asia Adults.",
+   "author": "Xinjuan Huang and Ruoling Yu and Xinyun Tan and Manjie Guo and Yuanqin Xia and H",
+   "year": "2024",
+   "journal": "Journal of clinical and experimental hepatology",
+   "claim": "Comparison of NAFLD, MAFLD, and MASLD Prevalence and Clinical Characteristics in Asia Adults.",
+   "entities": [],
+   "evidence": "标题: Comparison of NAFLD, MAFLD, and MASLD Prevalence and Clinica"
+  },
+  {
+   "key": "m._rolo2023",
+   "title": "Epidemiology and factors associated with Extra-pulmonary tuberculosis in a Low-prevalence area",
+   "author": "M. Rolo and B. González-Blanco and C. Reyes and N. Rosillo and P. López-Roa",
+   "year": "2023",
+   "journal": "Journal of Clinical Tuberculosis and Other Mycobac",
+   "claim": "Epidemiology and factors associated with Extra-pulmonary tuberculosis in a Low-prevalence area",
+   "entities": [
+    "epidemiology"
+   ],
+   "evidence": "标题: Epidemiology and factors associated with Extra-pulmonary tub"
+  },
+  {
+   "key": "d._g._evans2025",
+   "title": "Clinical epidemiology of NF2-related schwannomatosis.",
+   "author": "D. G. Evans and Scott R. Plotkin",
+   "year": "2025",
+   "journal": "Handbook of clinical neurology",
+   "claim": "Clinical epidemiology of NF2-related schwannomatosis.",
+   "entities": [
+    "epidemiology"
+   ],
+   "evidence": "标题: Clinical epidemiology of NF2-related schwannomatosis."
+  },
+  {
+   "key": "ahmed_alduais2025",
+   "title": "Epidemiology of Cognitive Impairments: Demographic and Clinical Predictors of Memory and Attention Challenges—Findings from Twelve National Disability Indicators",
+   "author": "Ahmed Alduais and Hind Alfadda and Hessah Saad Alarifi",
+   "year": "2025",
+   "journal": "Journal of Clinical Medicine",
+   "claim": "Epidemiology of Cognitive Impairments: Demographic and Clinical Predictors of Memory and Attention Challenges—Findings from Twelve National Disability Indicators",
+   "entities": [
+    "epidemiology"
+   ],
+   "evidence": "标题: Epidemiology of Cognitive Impairments: Demographic and Clini"
+  },
+  {
+   "key": "m._lechner2022",
+   "title": "HPV-associated oropharyngeal cancer: epidemiology, molecular biology and clinical management",
+   "author": "M. Lechner and Jacklyn Liu and L. Masterson and Tim R. Fenton",
+   "year": "2022",
+   "journal": "Nature Reviews. Clinical Oncology",
+   "claim": "HPV-associated oropharyngeal cancer: epidemiology, molecular biology and clinical management",
+   "entities": [
+    "epidemiology"
+   ],
+   "evidence": "标题: HPV-associated oropharyngeal cancer: epidemiology, molecular"
+  },
+  {
+   "key": "s._perego2020",
+   "title": "Prevalence, clinical correlates, and burden of undiagnosed aortic stenosis in older patients: a prospective study in a non-cardiologic acute hospital ward",
+   "author": "S. Perego and A. Zambon and S. Nistri and A. Bruni and S. Motta and L. Cavalieri",
+   "year": "2020",
+   "journal": "Aging Clinical and Experimental Research",
+   "claim": "Prevalence, clinical correlates, and burden of undiagnosed aortic stenosis in older patients: a prospective study in a non-cardiologic acute hospital ward",
+   "entities": [],
+   "evidence": "标题: Prevalence, clinical correlates, and burden of undiagnosed a"
+  },
+  {
+   "key": "deema_gashgarey2024",
+   "title": "Evolving Epidemiology of Pediatric Respiratory Syncytial Virus (RSV) Cases Around COVID-19 Pandemic: Impact and Clinical Insights, Retrospective Cohort Study",
+   "author": "Deema Gashgarey and M. Alsuhaibani and Raghad Alhuthil and Hattan Alhabshan and ",
+   "year": "2024",
+   "journal": "Journal of Epidemiology and Global Health",
+   "claim": "Evolving Epidemiology of Pediatric Respiratory Syncytial Virus (RSV) Cases Around COVID-19 Pandemic: Impact and Clinical Insights, Retrospective Cohort Study",
+   "entities": [
+    "epidemiology"
+   ],
+   "evidence": "标题: Evolving Epidemiology of Pediatric Respiratory Syncytial Vir"
+  },
+  {
+   "key": "mingfeng_lee2023",
+   "title": "Ethnicity and IgA nephropathy: worldwide differences in epidemiology, timing of diagnosis, clinical manifestations, management and prognosis",
+   "author": "Mingfeng Lee and Hitoshi Suzuki and Y. Nihei and K. Matsuzaki and Yusuke Suzuki",
+   "year": "2023",
+   "journal": "Clinical Kidney Journal",
+   "claim": "Ethnicity and IgA nephropathy: worldwide differences in epidemiology, timing of diagnosis, clinical manifestations, management and prognosis",
+   "entities": [
+    "diagnosis",
+    "epidemiology"
+   ],
+   "evidence": "标题: Ethnicity and IgA nephropathy: worldwide differences in epid"
+  },
+  {
+   "key": "edgar_i._campos_madueno2023",
+   "title": "Intestinal colonization with multidrug-resistant Enterobacterales: screening, epidemiology, clinical impact, and strategies to decolonize carriers",
+   "author": "Edgar I. Campos-Madueno and Melika Moradi and Yasmine Eddoubaji and F. Shahi and",
+   "year": "2023",
+   "journal": "European Journal of Clinical Microbiology & Infect",
+   "claim": "Intestinal colonization with multidrug-resistant Enterobacterales: screening, epidemiology, clinical impact, and strategies to decolonize carriers",
+   "entities": [
+    "epidemiology"
+   ],
+   "evidence": "标题: Intestinal colonization with multidrug-resistant Enterobacte"
+  },
+  {
+   "key": "l._dresser2021",
+   "title": "Myasthenia Gravis: Epidemiology, Pathophysiology and Clinical Manifestations",
+   "author": "L. Dresser and R. Wlodarski and K. Rezania and B. Soliven",
+   "year": "2021",
+   "journal": "Journal of Clinical Medicine",
+   "claim": "Myasthenia Gravis: Epidemiology, Pathophysiology and Clinical Manifestations",
+   "entities": [
+    "epidemiology"
+   ],
+   "evidence": "标题: Myasthenia Gravis: Epidemiology, Pathophysiology and Clinica"
+  }
+ ],
+ "count": 60
+}
