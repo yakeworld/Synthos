@@ -251,11 +251,16 @@ liveness = min(1.0, section_pct * 0.40 + count_pct * 0.30 + unique_pct * 0.30)
 #                   (2026-09-07 评审实验1: "completed" 不再自动等于 "执行完成" —
 #                    声称 output_file 但文件不存在 = 未证实, 不计入 verified;
 #                    实测基线: 256 原子中 245 completed, 仅 5 个产物文件真实存在)
+#                   (2026-09-07 评审三轮 补丁5 奖励单调性: 未声明产物的 completed
+#                    同样不再默认计入 verified — 旧版 "无声明=无法证伪=计入" 使
+#                    删除 output_file 字段反而提高 behavior (0.65→0.80 操纵路径)。
+#                    未证实的 completed 计入 atom_unverified, 只作透明度输出, 不计分。)
 #   lessons_pct:    失败轨迹沉淀 (10+ 条 = 1.0, 1-9 = 0.5, 0 = 0)
 import glob
 trace_files = glob.glob(os.path.join('outputs', '**', 'pipeline_trace*.json'), recursive=True)
 act_ct = 0
 atom_done = 0
+atom_unverified = 0
 atom_total = 0
 for tf in trace_files:
     try:
@@ -271,12 +276,13 @@ for tf in trace_files:
                     if str(a.get('status', '')).startswith('completed'):
                         of = a.get('output_file')
                         if not of:
-                            atom_done += 1  # 未声称产物 → 无法证伪, 计入但标注
+                            atom_unverified += 1  # 无产物声明 → 未证实, 不计入 (奖励单调性)
                         else:
                             p = of if os.path.isabs(of) else os.path.join(base_dir, of)
                             if os.path.exists(p):
                                 atom_done += 1  # 产物存在 → 证实
-                            # 声称 output_file 但文件不存在 → 未证实, 不计入
+                            else:
+                                atom_unverified += 1  # 声称产物但不存在 → 未证实
     except Exception:
         pass
 activation_pct = act_ct / len(trace_files) if trace_files else 0.0
@@ -315,6 +321,7 @@ print(f"  LIVENESS: {liveness:.4f}")
 print(f"\n=== BEHAVIOR (v4) ===")
 print(f"  gene_activation traces: {act_ct}/{len(trace_files)} ({activation_pct*100:.1f}%)  x0.50 = {activation_pct*0.50:.4f}")
 print(f"  atoms completed:        {atom_done}/{atom_total} ({verify_pct*100:.1f}%)  x0.30 = {verify_pct*0.30:.4f}")
+print(f"  atoms unverified:       {atom_unverified}/{atom_total} (completed 但产物未证实, 不计分 — 奖励单调性, 评审三轮)")
 print(f"  lessons:                {lessons_ct}  x0.20 = {lessons_pct*0.20:.4f}")
 print(f"  BEHAVIOR: {behavior:.4f}")
 

@@ -283,27 +283,24 @@ def auto_loop(current_cycle, max_cycles=MAX_CYCLES):
     
     print(f"Modified: {modified} skills")
     
-    # === COMMIT ===
+    # === COMMIT === (事务边界, 评审三轮 P1, 2026-09-07)
+    # 只 add + 只 commit 本周期实际修改的 targets (pathspec 限定)。
+    # 旧版: git add targets 后又 "clean other dirty files" — 把仓库里所有 M 文件
+    #       和所有未跟踪 .md/SKILL.md 全部 git add, 再做无 pathspec 的 git commit,
+    #       结果把本周期开始前就 staged 的无关文件 (如他人改动) 一并吞进本提交。
+    # 修正: 删除 blanket sweep; git commit 带 -- <targets> pathspec, 只提交本周期产物。
     for f in targets:
-        subprocess.run(["git", "add", f], capture_output=True, text=True, cwd=BASE_DIR)
-    
-    # Also clean other dirty files
-    for line in get_dirty_files():
-        if line.startswith('M '):
-            subprocess.run(["git", "add", line[3:]], capture_output=True, text=True, cwd=BASE_DIR)
-        elif '??' in line:
-            fpath = line[3:]
-            if fpath.endswith('.md') or fpath.endswith('/SKILL.md'):
-                subprocess.run(["git", "add", fpath], capture_output=True, text=True, cwd=BASE_DIR)
-    
-    pre_commit = get_dirty_files()
-    if pre_commit:
+        subprocess.run(["git", "add", "--", f], capture_output=True, text=True, cwd=BASE_DIR)
+
+    if targets and modified:
         msg = f"cycle {current_cycle}: auto {strategy} improvement ({modified} skills)"
         result = subprocess.run(
-            ["git", "commit", "-m", msg, "--no-verify"],
+            ["git", "commit", "-m", msg, "--no-verify", "--", *targets],
             capture_output=True, text=True, cwd=BASE_DIR
         )
-        print(f"Commit: {'✅' if result.returncode == 0 else '❌'}")
+        print(f"Commit: {'✅' if result.returncode == 0 else '❌'} ({len(targets)} targets, pathspec-scoped)")
+    else:
+        print("Commit: (no targets modified — 跳过 improvement commit, 不产生空/越界提交)")
     
     # === DIAGNOSE ===
     result = subprocess.run(
@@ -311,21 +308,41 @@ def auto_loop(current_cycle, max_cycles=MAX_CYCLES):
         capture_output=True, text=True, cwd=BASE_DIR, timeout=120
     )
     print(result.stdout)
-    
+    diagnose_rc = result.returncode  # 事务边界: 诊断退出码是"本轮是否可判健康"的裁决源
+
     # === UPDATE STATE ===
     with open(state_path) as f:
         state = json.load(f)
-    
+
     result2 = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True, cwd=BASE_DIR)
     state['git_commit'] = result2.stdout.strip()
     state['cycle'] = current_cycle
-    state['status'] = 'healthy'
-    state['state'] = 'healthy'
-    state['consecutive_healthy'] += 1
+    # 事务门 (reward-integrity 实验2, 评审三轮 P1, 2026-09-07):
+    # 旧版无条件写 status='healthy' + consecutive_healthy+=1 — diagnose 崩溃 (rc≠0)
+    # 也被记成健康周期, 递归守卫 (line ~444) 据此继续晋级 → 失败冒充 healthy。
+    # 修正: diagnose 失败 → status='degraded', consecutive_healthy 归零,
+    #       next_action 置 HALT, 递归守卫 (status!=healthy) 自然停止, 不得 auto-continue。
+    if diagnose_rc == 0:
+        state['status'] = 'healthy'
+        state['state'] = 'healthy'
+        state['consecutive_healthy'] = state.get('consecutive_healthy', 0) + 1
+    else:
+        state['status'] = 'degraded'
+        state['state'] = 'degraded'
+        state['consecutive_healthy'] = 0
+        state['next_action'] = (f'HALT: diagnose failed (rc={diagnose_rc}) — '
+                                'cycle NOT counted healthy; manual review required, no auto-continue')
+        print(f"\n[HALT] diagnose returncode={diagnose_rc} → cycle marked degraded, "
+              f"consecutive_healthy reset, auto-continuation stopped")
     state['last_run'] = datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
     state['phase'] = 'evolution'
-    state['next_action'] = 'continue'
-    state['auto_trigger_active'] = True
+    # 事务门: next_action/auto_trigger 只在 diagnose 成功时置 continue —
+    # 失败分支的 HALT next_action 不得被覆盖 (否则下一轮 cron/递归 仍会放行)。
+    if diagnose_rc == 0:
+        state['next_action'] = 'continue'
+        state['auto_trigger_active'] = True
+    else:
+        state['auto_trigger_active'] = False
     state['last_strategy'] = strategy
     
     # Parse diagnostics — 2026-09-06 修复: 旧版在 OVERALL 行 break, 用另一套 6 维权重
@@ -424,9 +441,12 @@ def auto_loop(current_cycle, max_cycles=MAX_CYCLES):
 ### Dirty: {len(get_dirty_files())}
 """)
     
-    subprocess.run(["git", "add", state_path, os.path.join(BASE_DIR, 'evolution-log.md')], 
+    # state/log 提交同样 pathspec 限定 (评审三轮 P1 事务边界):
+    # 旧版 git commit 无 pathspec → 把本周期开始前就 staged 的无关文件一并吞入。
+    subprocess.run(["git", "add", "--", state_path, os.path.join(BASE_DIR, 'evolution-log.md')],
                    capture_output=True, text=True, cwd=BASE_DIR)
-    subprocess.run(["git", "commit", "-m", f"evolution cycle {current_cycle}: {strategy} improvement, score {state['score']}", "--no-verify"], 
+    subprocess.run(["git", "commit", "-m", f"evolution cycle {current_cycle}: {strategy} improvement, score {state['score']}",
+                    "--no-verify", "--", state_path, os.path.join(BASE_DIR, 'evolution-log.md')],
                    capture_output=True, text=True, cwd=BASE_DIR)
     
     # Print summary

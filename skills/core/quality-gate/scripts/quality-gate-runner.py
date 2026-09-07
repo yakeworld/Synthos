@@ -159,34 +159,41 @@ def check_g2_compile(paper_dir: str) -> GateResult:
         return GateResult("G2_compile", False, score, failures,
                           ["Fix missing LaTeX structure elements"])
 
-    # 真编译 (pdflatex 可用时)
-    if shutil.which("pdflatex") is None:
-        return GateResult("G2_compile", True, 1.0,
-                          ["pdflatex not available — structure-only check (降级)"], [])
+    # 真编译 (2026-09-07 reward-integrity 补丁4, 评审三轮 P0):
+    # 枚举全部可用引擎 (pdflatex/xelatex/luatex), 不再把 pdflatex 当唯一前置条件;
+    # 无任何可用引擎 → 无编译证据 = UNVERIFIED, 不得按满分通过
+    # (旧版: shutil.which("pdflatex") is None → return True, 1.0, "降级" —
+    #  findings 文字写降级但结构化结果 pass=True, 且机器上仅有 xelatex 时也提前返回)。
+    engines = [e for e in ("pdflatex", "xelatex", "luatex") if shutil.which(e)]
+    if not engines:
+        return GateResult("G2_compile", False, 0.0,
+                          ["UNVERIFIED: no LaTeX engine available (pdflatex/xelatex/luatex all missing) — structure-only, no compile evidence"],
+                          ["Install a LaTeX engine or mark this gate UNVERIFIED in the release decision (not PASS)"])
 
     log_tail = ""
     # 相对图片路径的基准不确定 (../05-figures vs 裸文件名), 按优先级试多个 cwd:
-    # manuscript 目录 (裸文件名) → 论文根 (../xxx) → 手稿文件名所在目录。
-    # 输出隔离到 tmp, 不污染工作区。pdflatex 失败再试 xelatex (xeCJK 论文)。
+    # manuscript 目录 (裸文件名) → 论文根 (../xxx)。
+    # 输出隔离到 tmp, 不污染工作区。
     src = os.path.join(paper_dir, tex_files[0])
     src_dir = os.path.dirname(os.path.abspath(src))
     workdirs = []
     for wd in (src_dir, os.path.dirname(src_dir)):
         if wd and wd not in workdirs:
             workdirs.append(wd)
+    ok_engine = None
+    ok_cwd = None
     with tempfile.TemporaryDirectory(prefix="g2_compile_") as tmp:
         proc = None
         for wd in workdirs:
-            for engine in ("pdflatex", "xelatex"):
-                if shutil.which(engine) is None:
-                    continue
+            for engine in engines:
                 proc = subprocess.run(
                     [engine, "-interaction=nonstopmode", "-halt-on-error",
                      "-draftmode", "-output-directory", tmp, src],
                     capture_output=True, text=True, timeout=180, cwd=wd)
                 if proc.returncode == 0:
+                    ok_engine, ok_cwd = engine, wd
                     break
-            if proc.returncode == 0:
+            if ok_engine:
                 break
         logf = os.path.join(tmp, os.path.splitext(tex_files[0])[0] + ".log")
         if os.path.exists(logf):
@@ -194,13 +201,19 @@ def check_g2_compile(paper_dir: str) -> GateResult:
             err_lines = [l for l in lines if l.startswith("!")]
             log_tail = "; ".join(err_lines[:3]) or lines[-1][:200]
 
-    if proc.returncode != 0:
-        detail = log_tail or (proc.stdout.strip().splitlines() or [""])[-1][:200] or proc.stderr.strip()[:200] or "compile failed"
+    if proc is None or proc.returncode != 0:
+        if proc is not None:
+            tail_lines = proc.stdout.strip().splitlines()
+            detail = (log_tail or (tail_lines[-1][:200] if tail_lines else "")
+                      or proc.stderr.strip()[:200] or "compile failed")
+            rc = proc.returncode
+        else:
+            detail, rc = "compile not executed", "N/A"
         return GateResult("G2_compile", False, 0.5,
-                          [f"compile exit={proc.returncode}: {detail[:300]}"],
+                          [f"compile exit={rc}: {detail[:300]}"],
                           ["Fix LaTeX compile errors (见 .log 首条 !)"])
     return GateResult("G2_compile", True, 1.0,
-                      [f"pdflatex exit=0 ({tex_files[0]})"], [])
+                      [f"compile OK: engine={ok_engine} cwd={os.path.basename(ok_cwd) if ok_cwd else '?'} exit=0 ({tex_files[0]})"], [])
 
 
 def check_g3_citation_integrity(paper_dir: str) -> GateResult:
@@ -607,13 +620,35 @@ def check_l05_data_honesty(paper_dir: str) -> GateResult:
     if not tex:
         return GateResult("L0.5", False, 0.0, ["No .tex"])
 
-    # Extract numeric declarations
-    # Match patterns like: 85.2%, 3.14, 1234, p < 0.001
-    numeric_decls = re.findall(
-        r'(\d+\.?\d*\s*%?|[pP]\s*[<=>]\s*\d+\.?\d*)', tex
-    )
+    # Extract numeric declarations (reward-integrity 补丁3, 2026-09-07 评审三轮 P0):
+    # 旧版把 "无待核对项" 当通过 — 删除 p 值/数值声明反而从 FAIL 变 PASS 1.0 (减少证据=更高分)。
+    # 修正: (a) 声明只从 \begin{document} 之后的正文提取 — 前导命令参数 (12pt 排版参数)
+    #       不是数据声明, 消除评审三轮指出的误拒 (12pt 计入待核对数字);
+    # (b) 引用年份豁免仅限"引用语境": 括号内 (Smith 2020) 或逗号后 (Smith, 2020);
+    #     裸 4 位数 (enrolled 2024 participants) 是可核对数值声明, 不再当年份漏核;
+    # (c) p 值/统计量 (p < 0.001) 与裸计数同样是可核对声明;
+    # (d) 有声明但无任何绑定证据 → 不得按 "无可核对项" 放行。
+    body_m = re.search(r'\\begin\{document\}', tex)
+    body = tex[body_m.start():] if body_m else tex
 
-    if not numeric_decls:
+    def _is_citation_year(m):
+        s = m.start()
+        ctx = body[max(0, s - 40):s]
+        lp = ctx.rfind('(')
+        rp = ctx.rfind(')')
+        if lp != -1 and lp > rp:          # 处于未闭合括号内: (Smith 2020)
+            return True
+        if re.search(r',\s*$', ctx):      # 逗号后: Smith, 2020
+            return True
+        return False
+
+    body_no_years = re.sub(r'(19|20)\d{2}',
+                           lambda m: ' ' if _is_citation_year(m) else m.group(0), body)
+    plain_decls = re.findall(r'\d+\.?\d*\s*%?', body_no_years)
+    p_decls = re.findall(r'[pP]\s*[<>=]\s*\d+\.?\d*', body_no_years)
+    all_decls = plain_decls + p_decls
+
+    if not all_decls:
         return GateResult("L0.5", True, 1.0, [], ["No numeric declarations — acceptable"])
 
     # 2026-09-07 reward-integrity (评审实验1): "有 state.json" 不等于 "数字有证据"。
@@ -637,14 +672,61 @@ def check_l05_data_honesty(paper_dir: str) -> GateResult:
         m = re.search(r"(\d+\.?\d*)", s)
         return f"{float(m.group(1)):.4f}".rstrip("0").rstrip(".") if m else s.lower()
 
-    decls = [d.replace(" ", "") for d in numeric_decls]
-    # 只核可核对的纯数值声明 (p<0.001 类含运算符的保留, 不参与分母);
-    # 引用年份 (19xx/20xx) 的来源是 references.bib (G3/G5 管), 不属 state.json 溯源, 排除。
-    checkable = [d for d in decls
-                 if re.fullmatch(r"\d+\.?\d*%?", d)
-                 and not re.fullmatch(r"(19|20)\d{2}", d)]
-    if not checkable:
-        return GateResult("L0.5", True, 1.0, [], ["No plain-numeric claims to check"])
+    # 声明—证据匹配。
+    # 奖励单调性不变量 (评审三轮 2026-09-07): 移除/隐藏证据不得提高本门分数。
+    # (a) 无关字段同值仍可通过集合成员匹配 — 此局限未修, 由 P1 "声明—来源绑定"
+    #     (tests/test_reward_integrity_adversarial.py 的 LI 项显式声明);
+    # (b) 正文/前导命令参数剥离 (排版参数 12pt 不是数据声明, 防误拒);
+    # (c) 声明提取后不得出现 "无可核对项 → PASS 1.0" 分支 — 有声明无证据源 = FAIL。
+    decls = [d.replace(" ", "") for d in all_decls]
+    checkable = [d for d in decls if re.fullmatch(r"\d+\.?\d*%?", d)]
+    pcheck = [d for d in decls if re.fullmatch(r"[pP][<>=]\d+\.?\d*", d)]
+    if not (checkable or pcheck):
+        # 理论不可达 (all_decls 非空且只含这两类); 保留 FAIL 语义:
+        # 提取到声明但无法归类的, 视为证据关系不可验证, 不放行。
+        return GateResult("L0.5", False, 0.3,
+                          [f"{len(decls)} unclassifiable numeric declarations"],
+                          ["把数值声明规范化 (裸数值/百分数/p 值) 后写入 state.json 溯源"])
+
+    def _pval(d):
+        m = re.search(r"(\d+\.?\d*)", d)
+        return m.group(1) if m else d
+
+    pcheck_norm = [_pval(d) for d in pcheck]
+    total_claims = len(checkable) + len(pcheck_norm)
+
+    # ── 声明—来源绑定 (STRICT, reward-integrity P1, 评审三轮) ──
+    # 旧版只做数值集合成员检查 → 无关字段同值可背书 (room_temperature:85.2 → "Accuracy 85.2%")。
+    # 若存在 provenance (provenance.json 或 state["provenance"]), 升级为 STRICT:
+    #   每个可核对声明必须命中一条携带完整溯源字段 + 结果文件真实存在 + 哈希匹配的记录。
+    # 无 provenance → 保持 LEGACY 集合成员检查 (向后兼容, 冻结测试不变)。
+    try:
+        _prov_mod_dir = os.path.dirname(os.path.abspath(__file__))
+        import importlib.util as _ilu
+        _spec = _ilu.spec_from_file_location("synthos_provenance",
+                                             os.path.join(_prov_mod_dir, "provenance.py"))
+        _prov = _ilu.module_from_spec(_spec); _spec.loader.exec_module(_prov)
+        _PROV = _prov
+    except Exception:
+        _PROV = None
+    provenance = _PROV.load_provenance(paper_dir) if _PROV else None
+    # None = 无 provenance (LEGACY); {} = STRICT 启用但零记录 (有声明必不通过)
+    if provenance is not None:
+        _normed_claims = [_norm(d) for d in checkable] + [_norm(v) for v in pcheck_norm]
+        _base = os.path.dirname(os.path.abspath(paper_dir))
+        bound = _PROV.bound_claims(_normed_claims, provenance, _base)
+        unbound = _PROV.unbound_claims(_normed_claims, provenance, _base)
+        bound_frac = len(bound) / total_claims
+        if bound_frac >= 1.0:
+            return GateResult("L0.5", True, 1.0,
+                              [f"STRICT provenance: all {total_claims} claims bound to verified sources"], [])
+        if bound_frac >= 0.5:
+            return GateResult("L0.5", False, 0.4,
+                              [f"STRICT provenance: {len(unbound)}/{total_claims} claims NOT bound to complete evidence (unrelated-field same-value does NOT count)"],
+                              ["为未绑定声明补全 provenance: value/metric/unit/run/result_file/file_hash/tex_location"])
+        return GateResult("L0.5", False, 0.2 * bound_frac,
+                          [f"STRICT provenance: only {len(bound)}/{total_claims} claims bound"],
+                          ["凡数必源且源必可绑: 见 provenance.py REQUIRED_FIELDS"])
 
     state_path = os.path.join(os.path.dirname(paper_dir), "state.json")
     state = read_file_safe(state_path)
@@ -660,21 +742,23 @@ def check_l05_data_honesty(paper_dir: str) -> GateResult:
         if isinstance(state_data, (dict, list)) and state_data:
             state_vals = {_norm(v) for v in _flatten(state_data)}
             matched = [d for d in checkable if _norm(d) in state_vals]
-            frac = len(matched) / len(checkable)
+            p_matched = [v for v in pcheck_norm if _norm(v) in state_vals]
+            matched_all = len(matched) + len(p_matched)
+            frac = matched_all / total_claims
             if frac >= 1.0:
                 return GateResult("L0.5", True, 1.0,
-                                  [f"All {len(checkable)} numeric claims cross-verified vs state.json"], [])
+                                  [f"All {total_claims} numeric claims cross-verified vs state.json"], [])
             if frac >= 0.5:
                 return GateResult("L0.5", False, 0.4,
-                                  [f"{len(checkable) - len(matched)}/{len(checkable)} numeric claims NOT found in state.json"],
+                                  [f"{total_claims - matched_all}/{total_claims} numeric claims NOT found in state.json"],
                                   ["把未核对数值写入 state.json 或删除/改写为定性表述"])
-            return GateResult("L0.5", False, 0.2 * frac + 0.0,
-                              [f"Only {len(matched)}/{len(checkable)} numeric claims found in state.json"],
+            return GateResult("L0.5", False, 0.2 * frac,
+                              [f"Only {matched_all}/{total_claims} numeric claims found in state.json"],
                               ["凡数必源: 每个数值写入 state.json 并附来源字段"])
 
     # 无 state.json (或空/损坏): 数值声明无证据源 → 不得按"通过"处理
     return GateResult("L0.5", False, 0.3,
-                      [f"{len(checkable)} numeric claims, no state.json evidence source"],
+                      [f"{total_claims} numeric claims, no state.json evidence source"],
                       ["Add state.json with the claimed values and their provenance"])
 
 
