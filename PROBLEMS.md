@@ -36,7 +36,7 @@
 ## 待解决 (Open)
 
 | 编号 | 问题 | 严重度 | 状态 |
-| P040 | 评估器奖励完整性: 实验1完成 + 全量重扫基线 | 🟡 P1 | 2026-09-07 实验1: 三处假阳性已修 (f9c2963d+补丁2), 冻结反例 7/7. 新口径全量重扫(99篇有tex): **overall pass=0** (旧state声称80篇pass全部翻FAIL), G2真编译33篇fail (缺图/xeCJK/真语法错误), L0.5 0/99 — 数据层实证: state.json 是管线状态非数值溯源台账, 论文实验数值未入 state.json (最好14篇也仅50-99%匹配). 这是数据缺口非门过严, 保持门不动(防选有利指标). 余: (a)数值溯源台账批量回填 (03-code/04-data → state.json, 机械任务可cron批跑) (b)33篇G2真编译错误修复 (c)评审脆弱点3/4/5=实验2 (d)1篇bppv-pinn GB编码异常 (e)76篇无tex(harvested)不在过闸范围 |
+| P040 | 评估器奖励完整性: 实验1+全量重扫+溯源回填 完成 | 🟡 P1 | 2026-09-07 全链: (1)三处假阳性已修 (f9c2963d+201edee9), 冻结反例7/7; (2)新口径重扫99篇 overall pass 0→1; (3)数值溯源台账回填177篇 state.data_provenance (03-code/04-data/07-quality 结果文件), **bppv-canalith-relocation-ode 380/380 全溯源 overall=1.0 首篇过闸**, L0.5 pass 0→1, 81篇升0.4档(≥50%), 0.4档匹配率76.6%(剩7051数值散在正文/表格); (4)论文state.json全部入库(git即记忆, 69678890); (5)G2真编译33篇分诊全为paper.tex内容级缺陷: 缺图6/缺$ 8/未定义命令5/tab3/花括号CJK等11 — **待用户拍板改paper.tex (铁律) + 6篇回代码出图**. 余: 实验2(评审脆弱点3/4/5 auto-loop状态机/回滚归属/快照) |
 |------|------|--------|------|
 | P030 | dsh 与并行 cron 同库编辑竞态: cycle-211 期间 11 个 private 技能被并行 cron 同时修改, dsh 报告 (15 changed) 与实际 diff (4) 不一致 | 🟡 P1 | 已缓解: 独立 VERIFY 捕获并归因 (cycle-211 记录); 后续 dsh 周期派发前检查并行 cron 状态, 或 commit 时按 diff 归属拆分 |
 | P034 | dsh 技能自动发现仅认 ~/.dsh/skills 目录 (用户实测指正); customSkillDirs (skills-flat) 未被自动发现消费 | 🟡 P1 | 文档已修正 (commit bf153d4); **cycle-213 已补 dsh-self-evolution 缺失链接 (1/11, 实测进 dsh 目录可见)**; 其余 10 个缺失链接待核对补齐 |
