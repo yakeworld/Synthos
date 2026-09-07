@@ -1,0 +1,18 @@
+{
+  "type": "harvested_paper",
+  "harvest_date": "2026-08-18",
+  "monitor_source": "literature-monitor 2026-08-18 (EPMC pdf=render)",
+  "title": "3DeepVOG: An Open-Source Framework for Real-Time, Accurate 3D Gaze Tracking with Deep Learning",
+  "doi": "10.1159/000549948",
+  "pdf_status": "pdf_copied 6871433",
+  "stage": "harvested",
+  "next_steps": [
+    "knowledge-extraction (EXT) 待执行"
+  ],
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

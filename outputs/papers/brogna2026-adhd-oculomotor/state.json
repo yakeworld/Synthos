@@ -1,0 +1,27 @@
+{
+  "slug": "brogna2026-adhd-oculomotor",
+  "title": "Pattern of Oculomotor Findings in Children with Attention Deficit/Hyperactivity Disorder in Relation to Methylphenidate Treatment",
+  "authors": "Brogna C, Napoli V, Castellini L, Mirra F, Sestito S, Marsella G, Piscopiello ML, Cima V, Ricci D, Salerni A, Di Cesare G, Brogna P, Romeo DM",
+  "year": 2026,
+  "doi": "10.3390/jcm15062108",
+  "pmid": "41899034",
+  "pmcid": "PMC13026225",
+  "journal": "Journal of Clinical Medicine",
+  "direction": "方向3：ADHD 眼动追踪",
+  "harvest_date": "2026-08-23",
+  "monitor_source": "literature-monitor 2026-08-23 (EPMC pdf=render)",
+  "pdf_status": "downloaded",
+  "pdf_size": 438472,
+  "pdf_source": "monitor-EPMC-pdf-render",
+  "pdf_path": "01-manuscript/brogna2026-adhd-oculomotor.pdf",
+  "abstract_source": "europepmc",
+  "abstract": "Attention-Deficit/Hyperactivity Disorder (ADHD) may be associated with alterations in eye movements, which in turn may reflect dysfunctions in executive functions and sensorimotor integration processes. This review analyzed the pattern of oculomotor findings of pediatric populations diagnosed with ADHD with or without methylphenidate (MPH) treatment, with the aim of systematically describing the oculomotor findings.",
+  "note": "ADHD 儿童眼球运动模式综述（含 MPH 治疗对比），方向3 OA 综述",
+  "status": "harvested",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

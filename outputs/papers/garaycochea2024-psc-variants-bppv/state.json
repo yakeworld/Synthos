@@ -1,0 +1,22 @@
+{
+  "slug": "garaycochea2024-psc-variants-bppv",
+  "title": "Variants of posterior semicircular canal involvement in benign paroxysmal positional vertigo",
+  "authors": "Garaycochea O, Pérez-Fernández N",
+  "year": 2024,
+  "doi": "10.1016/j.otoeng.2024.01.013",
+  "pmid": "38438080",
+  "pmcid": null,
+  "journal": "Acta Otorrinolaringol Esp (Engl Ed) 75(5):324-334",
+  "direction": "BPPV/前庭康复",
+  "harvest_date": "2026-09-03",
+  "monitor_source": "literature-monitor 2026-09-03 08:07 (方向2 半规管空间姿态)",
+  "pdf_status": "failed",
+  "pdf_note": "EPMC: isOpenAccess=N, inEPMC=N, hasPDF=N (付费墙, 无OA通道)。doi-fetch 全通道 (cdn/scihub/libgen×5/annas/direct) 均 NO_RESULT/NO_PDF。标记'付费不可下载'，下轮不重试。",
+  "status": "harvested_metadata_only",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "slug": "sun2024-asoct-keratitis",
+  "title": "An AS-OCT image dataset for deep learning-enabled segmentation and 3D reconstruction for keratitis",
+  "authors": "Sun Y and Maimaiti N and Xu P and Jin P and Cai J and Qian G and Chen P and Xu M and Jia G and Wu Q and Ye J",
+  "year": 2024,
+  "doi": "10.1038/s41597-024-03464-0",
+  "journal": "Sci Data",
+  "direction": "方向1：瞳孔/虹膜分割、眼球三维建模",
+  "harvest_date": "2026-08-20",
+  "monitor_source": "literature-report-2026-08-20",
+  "pdf_status": "downloaded",
+  "pdf_size": 1902240,
+  "pdf_source": "monitor-nature-direct",
+  "abstract_source": "europepmc",
+  "note": "方向 1 可用的分割+3D 重建公开数据集（Sci Data 官方数据论文）",
+  "status": "harvested",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

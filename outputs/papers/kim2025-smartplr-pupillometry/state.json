@@ -1,0 +1,27 @@
+{
+  "slug": "kim2025-smartplr-pupillometry",
+  "title": "SmartPLR: a digital solution for AI-powered smartphone pupillometry",
+  "authors": "Kim KL, Kim DK, Lee JH, Kim YC",
+  "year": 2025,
+  "doi": "10.1186/s12886-025-04462-5",
+  "pmid": "41225382",
+  "pmcid": "PMC12613743",
+  "journal": "BMC Ophthalmology",
+  "direction": "方向1：瞳孔/虹膜分割、眼球三维建模",
+  "pdf_path": "01-manuscript/kim2025-smartplr-pupillometry.pdf",
+  "pdf_status": "downloaded",
+  "pdf_size": 2877130,
+  "pdf_source": "harvest-doi-fetch-direct(s2-oa)",
+  "note": "深度学习手机瞳孔测量（SmartPLR），与瞳孔分割方向直接相关；准确率对标 Goldmann 瞳孔计",
+  "harvest_date": "2026-08-30",
+  "monitor_source": "literature-monitor 2026-08-30 (5方向检索)",
+  "abstract_source": "europepmc",
+  "abstract": "BackgroundTo develop a smartphone-based pupillometry using deep learning and evaluate its accuracy compared to a commercial pupillometer, the NPi-300.Methods336 pupillary light reflex (PLR) exams from 158 volunteers were analyzed using deep learning models (UNet, UNet++, DeepLabV3, DeepLabV3+, and Mask R-CNN) with different backbones (ResNet50, Swin Transformer, and ConvNeXt V2). Once the best combination was identified, image data was filtered according to the degree of eyelid opening and image blurriness. The maximum-minimum pupil size difference, constriction velocity (CV), and percentage change in pupil size (CP) were compared between our application and the NPi-300 gold standard. The kernel density estimation and Bhattacharyya Distance were used to develop a scoring method to classify pupil reactivity: SmartPLR.ResultsMask R-CNN (ConvNeXt V2 backbone), which showed a mean intersection over union of 0.9177, segmentation mean average precision (mAP) of 0.8670, and bounding box mAP of 0.8663, was selected for our application. The Pearson correlation values comparing our application to the NPi-300 for pupil size difference, CV, and CP were 0.77, 0.77, and 0.74, respectively. The SmartPLR formula was defined as [Formula: see text], and sluggish pupils were defined as [Formula: see text] and [Formula: see text], and urgent pupils were defined as [Formula: see text] and [Formula: see text].ConclusionsDespite various smartphone applications developed to evaluate the PLR, they rely on additional add-ons or infrared light source. This prevents such applications from being completely commercialized. Our novel smartphone application, built on deep learning and not requiring infrared or additional devices, demonstrated high accuracy compared to the NPi-300.",
+  "status": "pending_review",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

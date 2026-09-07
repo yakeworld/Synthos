@@ -1,0 +1,22 @@
+{
+  "type": "harvested_paper",
+  "harvest_date": "2026-08-19",
+  "monitor_source": "literature-monitor 2026-08-19 (rproxy-jabkit)",
+  "title": "Encoder-shared visual state space network for anterior segment reconstruction",
+  "authors": "Guiping Qian; Huaqiong Wang; Shan Luo; Yiming Sun; Dingguo Yu; Xiaodiao Chen; Fan Zhang",
+  "year": 2025,
+  "journal": "Computerized Medical Imaging and Graphics",
+  "doi": "10.1016/j.compmedimag.2025.102631",
+  "direction": "3D 虹膜形状估计",
+  "pdf_status": "manual (Elsevier 付费墙, Sci-Hub 无收录)",
+  "stage": "harvested",
+  "next_steps": [
+    "knowledge-extraction (EXT) 待执行"
+  ],
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "slug": "lee2026-adhd-orienting-eye-tracker",
+  "title": "Exploring early-stage orienting behavior using an eye tracker for attention deficit hyperactivity disorder classification.",
+  "authors": "Lee S, Lee S, Jeong I, Jeong J, Park H, Kwon MK, Zanto T, Sul S, Jung D.",
+  "year": "2026",
+  "doi": "10.1038/s41598-026-41419-0",
+  "pmid": "41748846",
+  "pmcid": "PMC12979651",
+  "journal": "Scientific reports",
+  "direction": "方向3: ADHD 眼动追踪",
+  "harvest_date": "2026-08-27",
+  "monitor_source": "literature-monitor 2026-08-27 08:09 (rproxy/Tor pipeline)",
+  "pdf_status": "downloaded",
+  "pdf_size": 2590321,
+  "pdf_source": "monitor-reuse (monitor 08-27 downloaded, magic verified)",
+  "pdf_path": "01-manuscript/lee2026-adhd-orienting-eye-tracker.pdf",
+  "abstract_source": "europepmc",
+  "abstract": "Exploring early-stage orienting behavior is essential for elucidating the behavioral mechanisms underlying attentional shifts in attention deficit hyperactivity disorder (ADHD). However, traditional tasks lacking eye-tracking data often obscure these mechanisms. This study investigates low-level attentional shifting in ADHD using a simplified gaze-cueing task and explores classification markers via eye movement. Eye-tracking data were analyzed from 27 typically developing children and 19 children diagnosed with ADHD. We constructed a logistic regression model for classification purposes. Eye movement data alone yielded an accuracy of 0.84, comparable to the accuracy achieved using combined eye-tracking and behavioral data (0.87), underscoring the sensitivity of gaze-based features. Children with ADHD exhibited significantly prolonged inter-saccadic fixations in non-target regions (p = .02, d = 0.80) and marginally reduced saccade frequency (p = .06, d = − 0.52) during target detection, indicating delayed attentional shifting and diminished goal-directed attention. Prolonged fixation during target detection behavior emerged as the strongest predictor, correlating with both inattention and hyperactivity (r = .46; r = .36; both p < .01). Additionally, children with ADHD demonstrated lower response to joint attention and a greater reliance on peripheral vision. These findings highlight distinct gaze patterns under low cognitive load, revealing subtle mechanisms of executive dysfunction and potential early classification markers.",
+  "note": "ADHD 早期定向行为眼动追踪分类研究, OA/PMC12979651, monitor EPMC pdf=render 落盘复用",
+  "status": "harvested",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

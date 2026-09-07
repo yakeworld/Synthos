@@ -1,0 +1,21 @@
+{
+  "slug": "ahmed2026-rtms-vestibular-dizziness",
+  "title": "Repetitive Transcranial Magnetic Stimulation for Dizziness, Balance, and Postural Stability in Chronic Peripheral Vestibular Dizziness",
+  "authors": "Ahmed et al.",
+  "year": 2026,
+  "doi": "10.1016/j.apmr.2026.02.005",
+  "journal": "Archives of Physical Medicine and Rehabilitation",
+  "direction": "BPPV/前庭康复",
+  "harvest_date": "2026-08-17",
+  "monitor_source": "literature-monitor 2026-08-17 08:5x",
+  "pdf_status": "failed",
+  "pdf_source": "doi-fetch all sources (direct NO_MATCH, cdn not PDF, scihub NO_PDF, libgen NO_RESULT, annas NONE)",
+  "note": "rTMS for chronic peripheral vestibular dizziness - non-traditional vestibular rehab intervention. Elsevier paywall; needs institutional access.",
+  "status": "manual",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

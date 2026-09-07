@@ -1,0 +1,25 @@
+{
+  "slug": "cengiz2026-residual-dizziness-rct",
+  "title": "Management of residual dizziness following successful repositioning maneuvers in posterior semicircular canal benign paroxysmal positional vertigo: a randomized controlled trial",
+  "authors": "Cengiz DU, Mazooğlu B",
+  "year": 2026,
+  "doi": "10.1007/s00405-025-09696-z",
+  "pmid": "41094214",
+  "pmcid": null,
+  "journal": "European Archives of Oto-Rhino-Laryngology",
+  "direction": "方向4：BPPV/前庭康复",
+  "pdf_path": null,
+  "pdf_status": "failed",
+  "note": "PSCC BPPV 复位后残余头晕的 RCT（Brandt-Daroff 训练）；注意与已入库 yu2026-residual-dizziness-recovery（综述/观察性）为不同论文；Springer OA=N。2026-08-31 收割任务重试（NO_TOR=1 直连）全通道 NO_MATCH，EPMC 复测仍 OA=N/hasPDF=N（确认真付费），下轮继续重试",
+  "harvest_date": "2026-08-30",
+  "monitor_source": "literature-monitor 2026-08-30 (5方向检索)",
+  "abstract_source": "europepmc",
+  "abstract": "PurposeThe aim was to evaluate the effectiveness of Brandt-Daroff exercises in the management of residual dizziness following successful repositioning maneuvers in posterior semicircular canal BPPV.MethodsA total of 67 individuals, comprising 46 women and 21 men aged between 18 and 60 years, were included in the study. Following successful repositioning maneuvers, participants were randomly assigned to two groups. One group received Brandt-Daroff exercises after the successful maneuver, while the other group did not receive any exercises. Subjective assessments were conducted at three different time points: at the time of diagnosis, one week after the successful repositioning maneuver, and at the end of the first month. The diagnostic process was monitored using videonystagmography (VNG), while the assessment phase included the administration of the Dizziness Handicap Inventory (DHI) and the Visual Analog Scale (VAS).ResultsA statistically significant difference was found between the groups that performed Brandt-Daroff exercises and those that did not in terms of the total score of the Dizziness Handicap Inventory, as well as its emotional, physical, and functional subscale scores (p ConclusionsBrandt-Daroff exercises were found to be effective in the management of residual dizziness following successful repositioning maneuvers.",
+  "status": "pending_review",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

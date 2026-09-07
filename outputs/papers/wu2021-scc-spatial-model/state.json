@@ -1,0 +1,27 @@
+{
+  "slug": "wu2021-scc-spatial-model",
+  "title": "Mathematical Model of Human Semicircular Canal Spatial Attitude",
+  "authors": "Wu S, Lin P, Zheng Y, Zhou Y, Yang X (Xiao-kai Yang — 本实验室)",
+  "year": 2021,
+  "doi": "10.21203/rs.3.rs-146523/v1",
+  "pmid": null,
+  "pmcid": null,
+  "journal": "Research Square (OSF preprint)",
+  "direction": "方向2：半规管空间姿态",
+  "harvest_date": "2026-08-28",
+  "monitor_source": "literature-monitor 2026-08-28 (rproxy-jabkit, ⭐ 方向2)",
+  "pdf_status": "downloaded",
+  "pdf_size": 637698,
+  "pdf_source": "doi-fetch direct (unpaywall)",
+  "pdf_path": "01-manuscript/wu2021-osf.pdf",
+  "abstract_source": "crossref+osf",
+  "abstract": "（OSF 预印本，Crossref 无摘要）半规管空间姿态数学模型，2021-01-19 发布。与 Blender BPPV 仿真的半规管几何约束需求直接相关。",
+  "note": "⚠️ 本实验室合作者署名（Xiao-kai Yang 末位）。08-27 watchlist 曾以 Zhou 2024 (10.3389/fneur.2024.1396513) 登记方向2，本篇为 2021 OSF 预印本，二者为不同文献，均保留。引用前须核题避免混淆。",
+  "status": "harvested",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

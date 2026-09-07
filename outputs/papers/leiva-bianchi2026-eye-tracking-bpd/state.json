@@ -1,0 +1,25 @@
+{
+  "slug": "leiva-bianchi2026-eye-tracking-bpd",
+  "title": "Eye-Tracking and Borderline Personality Disorder: A Systematic Review",
+  "authors": "Leiva-Bianchi M, Nvo-Fernández M",
+  "year": 2026,
+  "doi": "10.3390/brainsci16070712",
+  "pmid": "42512487",
+  "pmcid": null,
+  "journal": "Brain Sciences",
+  "direction": "方向3：ADHD/眼动追踪 — BPD 眼动系统综述（2026 最新）",
+  "harvest_date": "2026-08-28",
+  "monitor_source": "literature-monitor 2026-08-28 (rproxy-jabkit, ⭐ 方向3)",
+  "pdf_status": "failed (MDPI OA 直连被 Cloudflare 拦截; doi-fetch 全通道 NO_RESULT; 下轮重试)",
+  "pdf_source": null,
+  "abstract_source": "europepmc",
+  "abstract": "Borderline personality disorder (BPD) is characterised by emotion dysregulation, impulsivity and interpersonal hypersensitivity. Eye tracking and pupillometry provide objective indices of social attention and inhibitory control. PRISMA 2020; Web of Science, Scopus, PubMed. Synthesises empirical evidence on visuo-attentional and pupillary alterations in BPD.",
+  "note": "BPD 眼动/瞳孔计量系统综述 — 跨诊断客观指标叙事参照; MDPI OA 理论上应可直连, 下轮重试 /pdf 端点",
+  "status": "harvested",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

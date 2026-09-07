@@ -1,0 +1,24 @@
+{
+  "slug": "meng2026-eye-gen-3d-eyeball",
+  "title": "Personalized eye protection for head CT organ-based tube current modulation: A deep learning approach to derive 3D eyeball models from a single-view topogram",
+  "authors": "Meng X, Zhu L, Chen S, Liu M, Wang Y",
+  "year": 2026,
+  "doi": "10.1002/acm2.70665",
+  "pmid": "42338069",
+  "pmcid": "PMC13291186",
+  "journal": "Journal of applied clinical medical physics",
+  "direction": "方向1: 眼球三维建模（3D eyeball 从单视角 topogram 生成）",
+  "harvest_date": "2026-09-05",
+  "monitor_source": "~/.hermes/cron/output/02af0335f03a_20260905_080805.txt (literature-monitor rproxy 版, 08:08 落盘)",
+  "pdf_status": "ok",
+  "pdf_size": 4886138,
+  "pdf_source": "EPMC pdf=render (monitor 通道, /tmp/litmon_20260905/pdfs/meng2026_3deb_eyeball.pdf 复用, 魔数 %PDF- 验证)",
+  "status": "new",
+  "link": "https://doi.org/10.1002/acm2.70665",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

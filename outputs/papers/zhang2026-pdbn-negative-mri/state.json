@@ -1,0 +1,21 @@
+{
+  "slug": "zhang2026-pdbn-negative-mri",
+  "title": "Clinical characteristics and therapeutic outcomes of 120 patients with positional down-beat nystagmus (pDBN) with negative brain MRI",
+  "authors": "Zhang et al.",
+  "year": 2026,
+  "doi": "10.1007/s00405-026-10538-9",
+  "journal": "European Archives of Oto-Rhino-Laryngology",
+  "direction": "BPPV/前庭康复",
+  "harvest_date": "2026-08-17",
+  "monitor_source": "literature-monitor 2026-08-17 08:5x",
+  "pdf_status": "failed",
+  "pdf_source": "doi-fetch all sources (scihub NO_PDF, direct NO_MATCH, cdn not PDF, libgen NO_RESULT)",
+  "note": "120 pDBN cases with negative MRI - important differential diagnosis for BPPV. Springer paywall; needs institutional access or author request.",
+  "status": "manual",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

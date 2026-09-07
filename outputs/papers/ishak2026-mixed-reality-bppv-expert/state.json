@@ -1,0 +1,25 @@
+{
+  "slug": "ishak2026-mixed-reality-bppv-expert",
+  "title": "Expert Perspectives on Developing Mixed Reality Software for Benign Paroxysmal Positional Vertigo Management: A Qualitative Study",
+  "authors": "Ishak MN, Ismail MA, Ismail I, Esa NK, Razali MS, Amiruddin S",
+  "year": 2026,
+  "doi": "10.7759/cureus.111593",
+  "pmid": "42516464",
+  "journal": "Cureus",
+  "direction": "BPPV/前庭康复",
+  "harvest_date": "2026-08-29",
+  "monitor_source": "~/.hermes/cron/output/02af0335f03a_20260829_080922.txt",
+  "pdf_status": "downloaded",
+  "pdf_size": 845078,
+  "pdf_source": "EPMC pdf=render (monitor 2026-09-07, /tmp/litmon_2026-09-07/PMC13402929.pdf, PMC13402929)",
+  "note": "BPPV 混合现实软件专家定性研究（17名临床专家）。与用户虚拟仿真+Blender方向直接相关，可作临床依据引用。Cureus 按 pitfall 下载不可用，需机构订阅/文献传递获取。 (2026-09-07: monitor 经 EPMC pdf=render 成功下载, PDF 已补入 01-manuscript/, pdftotext 标题验证匹配)",
+  "status": "new",
+  "link": "https://doi.org/10.7759/cureus.111593",
+  "pdf_added_at": "2026-09-07",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

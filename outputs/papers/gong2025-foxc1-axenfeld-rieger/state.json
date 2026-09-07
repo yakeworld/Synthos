@@ -1,0 +1,27 @@
+{
+  "slug": "gong2025-foxc1-axenfeld-rieger",
+  "title": "Identification and functional study of a novel FOXC1 missense mutation in a Chinese family with Axenfeld-Rieger syndrome",
+  "authors": "Gong X, Lei X, Li Z, Xing Y",
+  "year": 2025,
+  "doi": "10.1038/s41598-025-04872-x",
+  "pmid": "40481210",
+  "pmcid": "PMC12144153",
+  "journal": "Scientific Reports",
+  "direction": "方向1：瞳孔/虹膜分割、眼球三维建模",
+  "pdf_path": "01-manuscript/gong2025-foxc1-axenfeld-rieger.pdf",
+  "pdf_status": "downloaded",
+  "pdf_size": 1861238,
+  "pdf_source": "harvest-doi-fetch-direct(unpaywall)",
+  "note": "FOXC1 新突变致 Axenfeld-Rieger 综合征，3D 前段形态学关联；前段发育异常家族案例",
+  "harvest_date": "2026-08-30",
+  "monitor_source": "literature-monitor 2026-08-30 (5方向检索)",
+  "abstract_source": "europepmc",
+  "abstract": "Axenfeld-Rieger syndrome (ARS) is an uncommon manifestation of anterior segment development dysregulation. We recruited a two-generation Chinese family with hereditary ARS, which manifested as posterior embryotoxon, corneal leucoplakia, ectopic pupil, and extensive iris stromal atrophy with iridocorneal adhesion. Whole-exome sequencing (WES) was utilized for the initial screening, followed by Sanger sequencing to identify pathogenic gene mutations. A novel missense variant in FOXC1 (c.382C > T, p.H128Y) was identified. The FOXC1 protein is highly evolutionarily conserved. The potential effects of this mutation on protein structure were studied using 3D modelling and molecular dynamics (MD) simulation techniques. 3D modelling revealed that the mutation altered the conformation of the FOXC1 protein. The MD results suggested that the mutation could reduce the stability of the protein structure. Western blotting revealed that the expression of the mutant FOXC1 (c.382C > T, p.H128Y) was lower than that of the wild type. In summary, a novel FOXC1 variant was discovered within a Chinese family with ARS, broadening the spectrum of ARS mutations. This study also elucidated the underlying mechanisms by which FOXC1 gene deficiency causes ARS.",
+  "status": "pending_review",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

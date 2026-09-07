@@ -1,0 +1,27 @@
+{
+  "slug": "zhou2024-crista-orientation",
+  "title": "The spatial orientation of crista ampullaris: implications for BPPV diagnosis and treatment",
+  "authors": "Zhou M, Mao J, Yang X",
+  "year": 2024,
+  "doi": "10.3389/fneur.2024.1401041",
+  "pmid": "39026586",
+  "pmcid": "PMC11256863",
+  "journal": "Frontiers in Neurology",
+  "direction": "方向2：半规管空间姿态（跨方向4 BPPV）",
+  "harvest_date": "2026-08-24",
+  "monitor_source": "literature-monitor 2026-08-24 08:18 (Tor 出口 104.244.72.132)",
+  "pdf_status": "downloaded",
+  "pdf_size": 1234941,
+  "pdf_source": "monitor-EPMC-pdf-render",
+  "pdf_path": "01-manuscript/zhou2024-crista-orientation.pdf",
+  "abstract_source": "europepmc",
+  "abstract": "ObjectiveThis study aimed to provide a comprehensive understanding of the spatial orientation of the crista ampullaris within the inner ear and its implications for the diagnosis and management of benign paroxysmal positional vertigo (BPPV).MethodsUsing high-resolution MRI scans of 55 normal inner ears, 3D models of the semicircular canals were segmented. These were complemented by detailed membrane labyrinth models from micro-CT scans of human temporal bones, accessed via the Comparative Ear Bank (www.earbank.org). A statistical shape model of inner ears and eyeballs was established, and a standardized 3D spatial coordinate system was created. The horizontal plane was defined using the top of the common crus and the bottom of the eyeballs. This calibrated reference system allowed for precise quantification of crista ampullaris orientations by calculating angles between the defined crista planes and coordinate planes.ResultsThe plane of the ampulla and the corresponding semicircular canal plane are nearly perpendicular to each other. In the upright position, the posterior semicircular canal crista ampullaris formed an angle of 48.9° with the horizontal plane. The relative orientations of the crista ampullaris of the lateral and superior canals were also defined. Furthermore, we identified \"zero-point planes\" representing crista orientations perpendicular to gravity, which resulted in minimal ampullary stimulation. A 6.2° tilt to the left in the supine position resulted in the plane of the left lateral semicircular canal crista ampullaris being parallel to the direction of gravity.ConclusionThis study elucidates the precise spatial orientation of the crista ampullaris, thereby providing an anatomical basis for understanding BPPV pathophysiology and improving the accuracy of diagnostic and therapeutic maneuvers. The findings have the potential to significantly enhance the management of BPPV and other inner ear disorders.",
+  "note": "壶腹嵴空间方位 MRI 55耳 3D 分割 + 统计形状模型 + 标准3D坐标系，直接支撑半规管姿态建模；建议优先阅读①",
+  "status": "harvested",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

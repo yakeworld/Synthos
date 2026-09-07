@@ -1,0 +1,25 @@
+{
+  "slug": "alashram2024-gufoni-hsc-bppv",
+  "title": "Gufoni maneuver for treatment of horizontal canal benign paroxysmal positional vertigo: a systematic review of randomized controlled trials",
+  "authors": "Alashram AR",
+  "year": 2024,
+  "doi": "10.1007/s00405-024-08712-y",
+  "pmid": "38705895",
+  "pmcid": null,
+  "journal": "European Archives of Oto-Rhino-Laryngology",
+  "direction": "方向4：BPPV/前庭康复",
+  "pdf_path": null,
+  "pdf_status": "failed",
+  "note": "Gufoni maneuver RCT systematic review for HC-BPPV (10 RCTs, 1025 pts): Gufoni better than sham but NOT superior to Barbecue roll / Appiani / Mastoid oscillation / head shaking / modified Gufoni. Sister paper of alashram2025-barbecue-roll-hsc-bppv (same author); directly supports side-specific maneuver selection narrative. Springer paid OA=N, doi-fetch all channels NO_MATCH (direct + Tor both tried 2026-08-31), retry next round",
+  "harvest_date": "2026-08-31",
+  "monitor_source": "literature-monitor 2026-08-30 (5-dir search) + harvest task 2026-08-31 backfill",
+  "abstract_source": "europepmc",
+  "abstract": "PurposeThis review aims to investigate the effects of the Gufoni maneuver on horizontal semicircular canal benign paroxysmal positional vertigo (HC-BPPV).MethodsA comprehensive search, including PubMed, PEDro, REHABDATA, SCOPUS, EMBASE, and Web of Science, was conducted to determine randomized clinical trials (RCTs) studying the effects of the Gufoni maneuver for HC-BPPV from inception to March 1, 2024. The quality of the included studies was estimated using the Physiotherapy Evidence Database (PEDro) scale.ResultsTen randomized controlled trials (RCTs) were included in this review with a total of 1025 HC-BPPV patients (mean age = 58.58 years; 63% female; 55% right-side HC-HBPPV; 49% geotropic HC-BPPV). The included RCTs ranged from 4 to 9 out of 10 (median = 6.5) on the PEDro scale. The included studies showed that the Gufoni maneuver revealed efficacy when compared to the sham maneuver but not when compared to other maneuvers such as the Barbecue roll maneuver, the Appiani maneuver, the Mastoid oscillation, the head shaking, and the modified Gufoni maneuver.ConclusionsThe Gufoni maneuver is considered an option for treating patients with geotropic or apogeotropic HC-BPPV. Precise diagnosis of the BPPV, the subtype of HC-BPPV, symptom duration, history of previous BPPV attacks, the applied methods of maneuver and the proficiency of the clinician performing the maneuver, proper diagnosis, presence of any underlying health conditions are critical for successful treatment. Further studies are strongly warranted.",
+  "status": "pending_review",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

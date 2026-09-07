@@ -1,0 +1,47 @@
+{
+  "paper_id": "apc-short-arm-ppv-simulation",
+  "paper_name": "Posterior Canal Short-Arm (APC) PPV: A Literature Analysis and Virtual Simulation of Diagnosis and Treatment",
+  "direction": "BPPV-后管短臂侧APC",
+  "status": "draft",
+  "current_step": "design",
+  "quality_score": 0,
+  "gate_status": "NOT_STARTED",
+  "target_journal": "Medical Engineering and Physics",
+  "created": "2026-08-10",
+  "last_modified": "2026-08-10",
+  "steps_completed": [
+    "directory_creation"
+  ],
+  "source_opinions": [
+    "guideline-review 意见7(APC更常见却缺说明)",
+    "意见12(短臂vs长臂鉴别缺失)"
+  ],
+  "hypotheses": [
+    "H1: APC患病率(2.5-4.7%)高于AC(1.2%)",
+    "H2: APC与AC在D-H位眼震方向可区分(扭转分量)",
+    "H3: APC用标准Epley/Semont即可治愈",
+    "H4: 短臂侧与长臂侧眼震方向相反"
+  ],
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [
+      4.917,
+      -7.268,
+      6.288,
+      -3.309,
+      2.434,
+      9.306,
+      0.678,
+      4.497,
+      2.764,
+      8.664,
+      0.9378,
+      1,
+      0.9524,
+      0.75,
+      0.8
+    ],
+    "_n_values": 15
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "slug": "zhang2025-iris3d-icl",
+  "title": "Investigation of 3D iris morphology early alteration after implantable collamer lens implantation by using SS-OCT",
+  "authors": "Zhang Z and Chang S and Li K and Yao J and Wang Z and Liu J and Jiang L and Chai F and Wang X",
+  "year": 2025,
+  "doi": "10.1016/j.heliyon.2024.e41542",
+  "journal": "Heliyon",
+  "direction": "方向5：3D 虹膜形状估计",
+  "harvest_date": "2026-08-20",
+  "monitor_source": "literature-report-2026-08-20",
+  "pdf_status": "downloaded",
+  "pdf_size": 2210343,
+  "pdf_source": "monitor-epmc-pdf-render",
+  "abstract_source": "europepmc",
+  "note": "方向 5 罕见直接命中：SS-OCT 量化 ICL 术后 3D 虹膜形态改变，临床测量级 3D 虹膜形状论文",
+  "status": "harvested",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

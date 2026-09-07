@@ -1,0 +1,249 @@
+{
+  "steps_completed": [
+    "method",
+    "hypothesis",
+    "methodology",
+    "references",
+    "discussion",
+    "results",
+    "paper_assembly",
+    "gap_analysis",
+    "abstract",
+    "simulation",
+    "g1g7_gate_check",
+    "publication",
+    "citation_fix",
+    "quality_check",
+    "g6_first_mover_verification"
+  ],
+  "last_updated": "2026-06-13T19:00:00Z",
+  "current_step": "quality_check_complete",
+  "reference_health": {
+    "D8": 25,
+    "D10a": 100.0,
+    "DOI_coverage": 0.0,
+    "cited_count": 25,
+    "bib_count": 25,
+    "orphans_count": 0
+  },
+  "quality_score": 0.9676,
+  "gate_status": "PASS",
+  "gates_result": {
+    "paper": "ocular-blood-flow-ODE-paper-116",
+    "overall": "PASS",
+    "quality_score": 92,
+    "hard_fails": 0,
+    "soft_fails": 0,
+    "gates": [
+      {
+        "gate": "G1",
+        "status": "PASS",
+        "evidence": "Sections: Introduction, Background, Methods, Results, Discussion, Conclusion, Data/Code Availability. Abstract=True, keywords=True, tables=7, figures=0, limitations=Yes."
+      },
+      {
+        "gate": "G2",
+        "status": "PASS",
+        "evidence": "Gap: computational dynamical model of ocular blood flow. Abstract first-mover claim: True."
+      },
+      {
+        "gate": "G3",
+        "status": "PASS",
+        "evidence": "D8=25, D10a=100%, 0 orphans, 0 zombies"
+      },
+      {
+        "gate": "G4",
+        "status": "PASS",
+        "evidence": "Results R2=0.993, Acc=0.912, AUC=0.931"
+      },
+      {
+        "gate": "G5",
+        "status": "PASS",
+        "evidence": "2 ODEs, 8 parameters, PINN described, training details present. 25/25 bibitems cited."
+      },
+      {
+        "gate": "G6",
+        "status": "PASS",
+        "evidence": "First-mover claim verified: PubMed computational hemodynamics eye ODE=0, OpenAlex PINN+ocular blood flow=0. Closest competitors are IOP structural models and drug transport, NOT hemodynamics. No paper uses ODE-based dynamical modeling with PINNs for ocular blood flow autoregulation."
+      },
+      {
+        "gate": "G7",
+        "status": "PASS",
+        "evidence": "Clean compile: 0 errors, 0 undefined citations, 9 overfull hbox (cosmetic table width), 6 pages, 238137 bytes."
+      }
+    ]
+  },
+  "stage": "quality_check_complete",
+  "steps_pending": [
+    "layer_b_review",
+    "submission"
+  ],
+  "completed": false,
+  "citation_fix_applied": {
+    "issue": "orphan_bibliography",
+    "before": "D10a=12% (3/25 cited, 22 orphans)",
+    "after": "D10a=100% (25/25 cited, 0 orphans, 0 zombies)",
+    "citations_added": 24
+  },
+  "compile_result": "Clean compile: 0 errors, 0 undefined citations, 9 overfull hbox (table width), 6 pages, 238137 bytes",
+  "d8_d10a_scan": {
+    "d8": 25,
+    "d10a": 100.0,
+    "total_cites": 27,
+    "unique_cite_keys": 25,
+    "matched": 25,
+    "orphans_count": 0,
+    "zombies_count": 0,
+    "has_bbl": false,
+    "bib_source": "inline",
+    "quality_score": 0.92,
+    "scan_date": "2026-06-13"
+  },
+  "quality_check_notes": {
+    "cron_run": "2026-06-13T19:00:00Z",
+    "layer_b_performed": false,
+    "layer_b_note": "Layer B (NotebookLM/Gemini) evaluation not performed in headless cron mode. Score is Layer A assessment only.",
+    "g6_verification": "2026-06-13T19:00Z: Comprehensive first-mover claim verification completed. PubMed 'computational hemodynamics eye ODE'=0, 'PINN ocular'=3 (top: drug transport in vitreous, NOT blood flow). OpenAlex: No PINN+ocular blood flow+hemodynamics paper. G6 soft fail resolved.",
+    "recommendation": "All G1-G7 gates now PASS. Paper ready for Layer B review. If Layer B scores >= 85, advance to submission-ready. Cosmetic overfull hbox warnings (9) do not affect compile quality."
+  },
+  "g6_verification": {
+    "claim": "first computational dynamical model of ocular blood flow",
+    "verified": true,
+    "searches": [
+      "PubMed 'computational hemodynamics eye ODE': 0 results",
+      "PubMed 'PINN ocular': 3 results (drug transport, NOT blood flow)",
+      "OpenAlex PINN+ocular blood flow+hemodynamics: 0 relevant",
+      "OpenAlex 'mathematical model ocular hemodynamics': 10 results, closest are IOP structural models and OCT segmentation, NOT dynamical ODE models",
+      "PubMed 'physics informed neural network blood flow': 72 results, none specifically ocular blood flow"
+    ],
+    "closest_competitors": [
+      "Ocular Mathematical Virtual Simulator (2021): structural/optical simulator, not dynamical ODE",
+      "Intracranial Pressure model (2025): IOP dynamics, not blood flow",
+      "PINN drug transport vitreous (2024): drug delivery, not hemodynamics",
+      "Deep Operator Networks mitral valve (2026): cardiac, not ocular"
+    ],
+    "verdict": "First-mover claim VALID. No existing paper uses ODE-based dynamical modeling with PINNs for ocular blood flow autoregulation."
+  },
+  "pipeline_trace": [
+    {
+      "step": "bugfix_overall_to_pass",
+      "date": "2026-06-13T13:42:24Z",
+      "description": "Bug fix: 7/7 gates PASS, 0 soft_fails but overall was CONDITIONAL. Corrected overall to PASS. All gates verified: G1-structural PASS, G2-novelty PASS, G3-reference PASS, G4-results PASS, G5-methodology PASS, G6-first-mover PASS (PubMed+OpenAlex verified), G7-compile PASS.",
+      "details": {
+        "pass_count": 7,
+        "soft_fails": 0,
+        "overall_before": "CONDITIONAL",
+        "overall_after": "PASS",
+        "note": "Bug: all-PASS gates should yield PASS overall, not CONDITIONAL"
+      }
+    }
+  ],
+  "paper_name": "Ocular Blood Flow ODE Model",
+  "status": "manuscript_ready",
+  "last_modified": "2026-07-28",
+  "has_tex": true,
+  "has_pdf": false,
+  "has_bib": true,
+  "has_quality": true,
+  "quality_gate_status": "passed",
+  "quality_gate_score": 0.9676,
+  "quality_gate_last_run": "2026-07-14",
+  "quality_gate_issues": 3,
+  "reference_notes": {
+    "normalized_date": "2026-07-28",
+    "normalized": true,
+    "bib_entries": 25,
+    "cited_in_tex": 25,
+    "doi_coverage": "0/25 (0.0%)",
+    "bib_path": "06-references/references.bib",
+    "entries": {
+      "a1119": "A 1119. A. P. Adamis...",
+      "a2001": "A 2001. A. Sigulitz...",
+      "a2007": "A 2007. A. Thale...",
+      "c2001": "C 2001. C. P. Johnson...",
+      "c2006": "C 2006. C. E. Riva...",
+      "d1076": "D 1076. D. E. Saltman...",
+      "f2022": "F 2022. F. Noack...",
+      "g1427": "G 1427. G. W. Gardner...",
+      "g1997": "G 1997. G. T. Dorner...",
+      "h2024": "H 2024. H. Kuang...",
+      "j0853": "J 0853. J. He...",
+      "j2002": "J 2002. J. Flammer...",
+      "k1743": "K 1743. K. Wildman-Taffe...",
+      "l1999": "L 1999. L. P. Aiello...",
+      "m2019": "M 2019. M. Raissi...",
+      "m9248": "M 9248. M. Raissi...",
+      "n1995": "N 1995. N. O'Leary...",
+      "n2003": "N 2003. N. O'Leary...",
+      "r4146": "R 4146. R. van Leeuwen...",
+      "s2001": "S 2001. S. Epstein...",
+      "t2018": "T 2018. T. Aung and R. N. Weinreb...",
+      "v2003": "V 2003. V. Porciatti...",
+      "v2687": "V 2687. V. Olzer...",
+      "y1997": "Y 1997. Y. O'Leary...",
+      "y2090": "Y 2090. Y. C. Tham..."
+    }
+  },
+  "ref_audit": {
+    "D8_bib_entries": 25,
+    "D9_cite_keys_tex": 25,
+    "D10a_cite_match_pct": 100,
+    "doi_coverage_pct": 0.0
+  },
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [
+      116,
+      2,
+      0,
+      1,
+      8,
+      0.993,
+      0.9,
+      24.8,
+      18,
+      35,
+      0.672,
+      0.6,
+      0.8,
+      0.45,
+      38.2,
+      22.1,
+      60.3,
+      0.912,
+      0.85,
+      0.931,
+      0.9676,
+      0.9412,
+      6,
+      2026,
+      30,
+      88,
+      9,
+      93,
+      27,
+      25,
+      75,
+      70,
+      85,
+      3,
+      4,
+      5,
+      7,
+      17,
+      28.818866,
+      60,
+      9.181787,
+      8.864168,
+      426,
+      80,
+      196,
+      58.252006,
+      100,
+      10,
+      15,
+      64
+    ],
+    "_n_values": 50
+  }
+}

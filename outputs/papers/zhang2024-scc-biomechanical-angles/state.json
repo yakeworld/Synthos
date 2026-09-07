@@ -1,0 +1,27 @@
+{
+  "slug": "zhang2024-scc-biomechanical-angles",
+  "title": "Investigation on biomechanical responses in bilateral semicircular canals and nystagmus in vestibulo-ocular reflex experiments under different forward-leaning angles",
+  "authors": "Zhang J, Zhang S, Li Y, Xiao L, Yu S, Wu X, Shen S, Xu H",
+  "year": 2024,
+  "doi": "10.3389/fbioe.2024.1322008",
+  "pmid": "38384434",
+  "pmcid": "PMC10879882",
+  "journal": "Frontiers in Bioengineering and Biotechnology",
+  "direction": "方向2：半规管空间姿态",
+  "pdf_path": "01-manuscript/zhang2024-scc-biomechanical-angles.pdf",
+  "pdf_status": "downloaded",
+  "pdf_size": 3037817,
+  "pdf_source": "harvest-EPMC-pdf-render",
+  "note": "双侧半规管在不同前倾角度下的生物力学响应 + VOR 实验中的眼震；与空间姿态测量方向直接相关",
+  "harvest_date": "2026-08-30",
+  "monitor_source": "literature-monitor 2026-08-30 (5方向检索)",
+  "abstract_source": "europepmc",
+  "abstract": "Different head positions affect the responses of the vestibular semicircular canals (SCCs) to angular movement. Specific head positions can relieve vestibular disorders caused by excessive stimulating SCCs. In this study, we quantitatively explored responses of human SCCs using numerical simulations of fluid-structure interaction and vestibulo-ocular reflex (VOR) experiments under different forward-leaning angles of the head, including 0°, 10°, 20°, 30°, 40°, 50°, and 60°. It was found that the horizontal nystagmus slow-phase velocity and corresponding biomechanical responses of the cupula in horizontal SCC increased with the forward-leaning angles of the head, reached a maximum when the head was tilted 30° forward, and then gradually decreased. However, no obvious vertical or torsional nystagmus was observed in the VOR experiments. In the numerical model of bilateral SCCs, the biomechanical responses of the cupula in the left anterior SCC and the right anterior SCC showed the same trends; they decreased with the forward-leaning angles, reached a minimum at a 40° forward tilt of the head, and then gradually increased. Similarly, the biomechanical responses of the cupula in the left posterior SCC and in the right posterior SCC followed a same trend, decreasing with the forward-leaning angles, reaching a minimum at a 30° forward tilt of the head, and then gradually increasing. Additionally, the biomechanical responses of the cupula in both the anterior and posterior SCCs consistently remained lower than those observed in the horizontal SCCs across all measured head positions. The occurrence of these numerical results was attributed to the consistent maintenance of mutual symmetry in the bilateral SCCs with respect to the mid-sagittal plane containing the axis of rotation. This symmetry affected the distribution of endolymph pressure, resulting in biomechanical responses of the cupula in each pair of symmetrical SCCs exhibiting same tendencies under different forward-leaning angles of the head. These results provided a reliable numerical basis for future research to relieve vestibular diseases induced by spatial orientation of SCCs.",
+  "status": "pending_review",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

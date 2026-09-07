@@ -1,0 +1,26 @@
+{
+  "slug": "kim2026-adhd-digital-therapeutic",
+  "title": "Eye-Tracking-Based Digital Therapeutic for ADHD in Children: Development and Preliminary Evaluation of an Adaptive Learning Guide",
+  "authors": "Kim SC, Lee SY, Lee SW",
+  "year": 2026,
+  "doi": "10.3390/healthcare14111486",
+  "pmid": "42278739",
+  "pmcid": "PMC13256545",
+  "journal": "Healthcare (Basel) 14(11):1486",
+  "direction": "ADHD眼动追踪",
+  "harvest_date": "2026-08-17",
+  "monitor_source": "literature-monitor 2026-08-17 08:5x",
+  "pdf_status": "downloaded",
+  "pdf_source": "EPMC pdf=render PMC13256545 (monitor 2026-08-26 下载 2357890B, 收割 cp 复用 + 魔数回验; 原 08-17 doi-fetch MDPI 全通道失败已修复)",
+  "pdf_bytes": 2357890,
+  "pdf_md5_prefix": "4726cad3",
+  "pdf_added_at": "2026-08-26T08:35:00+00:00",
+  "note": "08-17 收割时 MDPI 被墙 (pdf_status=failed); 2026-08-26 monitor 经 EPMC PMC13256545 拿到真 PDF, 本轮补入 01-manuscript 并回验魔数通过。",
+  "status": "harvested",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

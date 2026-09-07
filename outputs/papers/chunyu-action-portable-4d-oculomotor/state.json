@@ -1,0 +1,30 @@
+{
+  "project": "chunyu-action-portable-4d-oculomotor",
+  "project_name_cn": "春雨行动转化项目登记 — 便携式四维眼动分析系统",
+  "type": "registration",
+  "platform": "中国（浙江）卫生健康科技研发与转化平台",
+  "platform_url": "https://www.msttp.com/home/multifactorLogin",
+  "action": "春雨行动",
+  "steps_completed": [
+    "info_extraction_from_pdf",
+    "structured_fill_ready"
+  ],
+  "current_step": "pending_platform_submission",
+  "owner": "杨晓凯",
+  "owner_contact": "13587431303 / Yakeworld@126.com",
+  "institution": "温州市人民医院",
+  "partner_enterprises": [
+    "杭州研脉科技有限公司",
+    "中国科学院苏州生物医学工程技术研究所"
+  ],
+  "product_stage": "三代样机v3.0，算法固化+电路定型，正对接生产工艺",
+  "review_contact": "叶琳（679368）— 科研转化中心",
+  "last_updated": "2026-08-17T00:00:00+08:00",
+  "notes": "内容取自用户提供的征集表PDF（附件1）+ 填报指导DOCX；待用户在msttp平台实际填报提交",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

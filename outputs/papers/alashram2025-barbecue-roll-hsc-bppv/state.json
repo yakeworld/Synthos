@@ -1,0 +1,25 @@
+{
+  "slug": "alashram2025-barbecue-roll-hsc-bppv",
+  "title": "Barbecue roll maneuver for horizontal canal benign paroxysmal positional vertigo: a systematic review of randomized controlled trials",
+  "authors": "Alashram AR",
+  "year": 2025,
+  "doi": "10.1007/s00405-025-09304-0",
+  "pmid": "40102224",
+  "pmcid": null,
+  "journal": "European Archives of Oto-Rhino-Laryngology",
+  "direction": "方向4：BPPV/前庭康复",
+  "pdf_path": null,
+  "pdf_status": "failed",
+  "note": "HSC BPPV barbecue roll 手法 RCT 系统综述，与患侧定位/手法选择叙事相关；Springer 付费 OA=N，doi-fetch 全通道 NO_MATCH。2026-08-31 收割任务重试（NO_TOR=1 直连+Tor）再次全通道失败，EPMC 复测仍 OA=N/hasPDF=N（确认真付费，非收录时滞），下轮继续重试",
+  "harvest_date": "2026-08-30",
+  "monitor_source": "literature-monitor 2026-08-30 (5方向检索)",
+  "abstract_source": "europepmc",
+  "abstract": "PurposeThis review aims to investigate the effects of the Barbecue roll maneuver on horizontal semicircular canal benign paroxysmal positional vertigo (HC-BPPV) recovery.MethodsMultiple databases, including \"PubMed, PEDro, REHABDATA, MEDLINE, SCOPUS, EMBASE, and Web of Science\" were searched from inception to October 2024\". Experimental studies that included patients with HC-BPPV that performed the Barbecue roll maneuver independently or in combination with other treatments, compared with active, passive, or no controls, assessed HC-BPPV symptoms, were included in this analysis. The \"Physiotherapy Evidence Database (PEDro)\" scale was used to investigate the methodological quality of the included studies.ResultsNine studies met the inclusion criteria with 768 HC-BPPV patients (mean age = 56.16 years; 64% female; 52% right-side HC-BPPV; 90% geotropic HC-BPPV). The PEDro scores ranged from 3 to 8, with a median of 6. The findings showed that the Barbecue roll maneuver is not superior in reducing HC-BPPV symptoms compared to other maneuvers, such as the Gufoni, the Gufoni-Appiani and the Li repositioning.ConclusionsThe initial findings indicated that the Barbecue roll maneuver is considered a treatment option for treating geotropic HC-BPPV. Performing Barbecue roll maneuver for 1 to 3 times can yield meaningful effects. Accurate diagnosis of HC-BPPV is essential for optimal treatment outcomes. The success rate of recovery depends on patient characteristics and therapist proficiency. Additional studies are recommended.",
+  "status": "pending_review",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

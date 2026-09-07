@@ -1,0 +1,37 @@
+{
+  "paper_id": "adhd-diagnosis-multimodal-graph-convolutional-network",
+  "paper_name": "adhd-diagnosis-multimodal-graph-convolutional-network",
+  "status": "harvested",
+  "current_step": "new",
+  "quality_score": 0,
+  "direction": "_unknown",
+  "category": "misc",
+  "source": "?",
+  "rank": "?",
+  "target_journal": "",
+  "merged_from": "backup/outputs/papers",
+  "merged_at": "2026-07-28",
+  "pipeline_trace": [
+    {
+      "step": "harvested",
+      "date": "2026-07-28",
+      "description": "Merged from literature harvest, direction=_unknown"
+    }
+  ],
+  "remaining_tasks": [
+    "Write manuscript",
+    "Run quality gate G1-G7"
+  ],
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [
+      0.9656,
+      1,
+      0.9545,
+      0.97,
+      0.8
+    ],
+    "_n_values": 5
+  }
+}

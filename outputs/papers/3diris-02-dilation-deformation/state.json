@@ -1,0 +1,49 @@
+{
+  "project_name": "3diris-02-dilation-deformation",
+  "direction": "三维虹膜瞳孔缩放变形分析 — 瞳孔扩张与虹膜深度/形状的耦合 (H03: r=-0.618)",
+  "quality_score": null,
+  "stage": "ghost_backfilled",
+  "core_papers": 4,
+  "literature_papers": 41,
+  "source_note": "从 3diris 集群衍生 (共享 3diris-01 数据资产: 100 Blender 模型 / 72K 合成图像)",
+  "hypotheses": {
+    "H03_dilation_deformation": {
+      "status": "completed_in_parent",
+      "finding": "r=-0.618 pupil vs depth (来自 3diris-01 state.json, 2026-07-21 完成)"
+    }
+  },
+  "pipeline_status": {
+    "acq": true,
+    "ext": false,
+    "asc": false,
+    "arg": true,
+    "ver": false,
+    "ghost_status": "incomplete",
+    "has_tex": true,
+    "has_pdf": true,
+    "has_quality": false,
+    "missing": [
+      "03-code",
+      "05-results",
+      "state.json (本文件为回填)",
+      "quality gate"
+    ]
+  },
+  "next_steps": [
+    "BACKFILL-2026-08-12: state.json 已回填 (ghost paper 修复), 待 quality-gate L1 检查",
+    "决定: 与 3diris-01 合并 (论文已含 dilation 分析) 或独立成文 — 建议合并, 避免重复",
+    "若独立: 需补充 tex 中 H03 的数据图与独立分析代码"
+  ],
+  "decision": "RECOMMEND-MERGE: 3diris-01 论文已包含瞳孔缩放变形分析 (r=-0.618), 独立成文无增量价值; 建议归档为 3diris-01 的子章节引用, 不再推进独立论文",
+  "last_modified": "2026-08-12",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [
+      0.975,
+      1,
+      0.8
+    ],
+    "_n_values": 3
+  }
+}

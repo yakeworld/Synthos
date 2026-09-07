@@ -1,0 +1,25 @@
+{
+  "slug": "yu2026-residual-dizziness-recovery",
+  "title": "Multidimensional factors influencing the recovery trajectory of residual dizziness after successful canalith repositioning in benign paroxysmal positional vertigo: an ordered logistic regression analysis",
+  "authors": "Yu M, Lei C, Zou T, Su J, Lu H",
+  "year": 2026,
+  "doi": "10.1007/s00405-026-10405-7",
+  "pmid": "42402503",
+  "pmcid": null,
+  "journal": "European Archives of Oto-Rhino-Laryngology",
+  "direction": "方向4：BPPV/前庭康复 — 残留眩晕恢复轨迹",
+  "harvest_date": "2026-08-28",
+  "monitor_source": "literature-monitor 2026-08-28 (rproxy-jabkit, ⭐ 方向4)",
+  "pdf_status": "failed (2026 新文, EPMC 收录时滞, isOpenAccess=N; 下轮 EPMC 复查 PMCID)",
+  "pdf_source": null,
+  "abstract_source": "europepmc",
+  "abstract": "To explore the multidimensional factors associated with the recovery trajectory in patients with persistent residual dizziness (RD) following successful repositioning for BPPV. Retrospective, 169 patients with BPPV and persistent RD. Primary outcome: RD recovery trajectory (ordinal, Day 7 & Day 14 follow-up). Univariate analysis and ordered logistic regression.",
+  "note": "残留眩晕多维因素 + 有序 logistic 回归, 169 例回顾 — 与 bppv-pc 残留眩晕叙事直接对话; PDF 待 EPMC 收录后补下",
+  "status": "harvested",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "slug": "bretthauer2026-raven-eyemov",
+  "type": "harvested_paper",
+  "title": "Watching reasoning at work: eye movement patterns of participants with ADHD solving Raven's matrices.",
+  "authors": "Bretthauer J, Canu D, Thiemann U, Fleischhaker C, Biscaldi M, Smyrnis N, Bender S, Beauducel A, Klein C",
+  "year": 2026,
+  "doi": "10.1007/s00787-026-03038-y",
+  "pmid": "42517889",
+  "pmcid": null,
+  "journal": "European Child & Adolescent Psychiatry",
+  "direction": "ADHD 眼动追踪 (方向3)",
+  "harvest_date": "2026-08-26",
+  "monitor_source": "literature-monitor 2026-08-26 08:13 (Springer OA 直连, via rproxy-jabkit/Tor)",
+  "pdf_status": "downloaded",
+  "pdf_source": "Springer OA 直连 10.1007/s00787-026-03038-y.pdf (monitor 下载, 收割 cp 复用 + 魔数回验)",
+  "pdf_bytes": 1247362,
+  "pdf_md5_prefix": "db6691d3",
+  "pdf_added_at": "2026-08-26T08:35:00+00:00",
+  "stage": "harvested",
+  "note": "08-03/08-16 报告曾标记已收割但为 ghost(无目录/state/PDF 落盘);本轮真实首次入库。Raven 矩阵眼动 + ADHD 认知策略,方向3高价值。",
+  "next_steps": [
+    "knowledge-extraction (EXT) 待执行"
+  ],
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

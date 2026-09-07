@@ -1,0 +1,23 @@
+{
+  "slug": "smith2026-ptbppv",
+  "title": "Data from a UK-based multicentre randomised feasibility study investigating the management of post-traumatic benign paroxysmal positional vertigo: mixed-methods analyses",
+  "authors": "Smith RM and Sahu B and Burgess C and Beattie J and Newdick A and Tahtis V and Corcoran J and Marsden J and Seemungal BM",
+  "year": 2026,
+  "doi": "10.1136/bmjopen-2026-117657",
+  "journal": "BMJ Open",
+  "direction": "方向4：BPPV/前庭康复",
+  "harvest_date": "2026-08-20",
+  "monitor_source": "literature-report-2026-08-20",
+  "pdf_status": "downloaded",
+  "pdf_size": 1052903,
+  "pdf_source": "monitor-epmc-pdf-render",
+  "abstract_source": "europepmc",
+  "note": "方向 4 罕见的干预性研究（创伤后 BPPV 可行性 RCT，TBI 交叉空白）",
+  "status": "harvested",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

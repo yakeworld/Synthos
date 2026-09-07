@@ -1,0 +1,27 @@
+{
+  "slug": "fujieda2026-gazefinder-adhd",
+  "title": "Adjunctive utility of gaze-based indices obtained with Gazefinder for ADHD assessment in children",
+  "authors": "Fujieda, Masanori, Yamashita, Masatoshi, Hamatani, Sayo, Kitagawa, Hitomi, Matsuzaki, Hideo, Yoshida, Tokiko, Sasaki, Tsuyoshi, Sudo, Yusuke, Isobe, Yuko, Kosaka, Hirotaka, Tsuchiya, Kenji J, Hirano, Yoshiyuki, Mizuno, Yoshifumi",
+  "year": 2026,
+  "doi": "10.1007/s00787-026-03145-w",
+  "pmid": "42550242",
+  "pmcid": null,
+  "journal": "European Child & Adolescent Psychiatry",
+  "direction": "方向3：ADHD 眼动追踪",
+  "harvest_date": "2026-08-24",
+  "monitor_source": "literature-monitor 2026-08-24 08:18 (Tor 出口 104.244.72.132)",
+  "pdf_status": "downloaded",
+  "pdf_size": 1284585,
+  "pdf_source": "monitor-doi-fetch-direct (Springer OA)",
+  "pdf_path": "01-manuscript/fujieda2026-gazefinder-adhd.pdf",
+  "abstract_source": "crossref",
+  "abstract": "Abstract Diagnosis of attention-deficit/hyperactivity disorder (ADHD) relies primarily on subjective clinical assessments, necessitating the establishment of objective, low-burden supplementary indicators. While eye-tracking has emerged as a noninvasive method for capturing temporal fluctuations in attentional allocation, its discriminative performance in ADHD remains under-explored. This study examined differences in gaze indices between children with ADHD and typically developing (TD) children using the Gazefinder system and evaluated the utility of these indices in distinguishing diagnostic groups. Participants included 83 children with ADHD and 85 typically developing children (aged 6–17 years). Gaze behavior was recorded during two visual stimuli tasks designed to elicit ADHD characteristics: a classroom animation and a video with increasingly competing stimuli. Six fixation-rate indices and two gaze-shift frequency indices were calculated. Analyses included between-group comparisons, partial correlations with the CANTAB Stop Signal Task and Conners-3, and machine learning–based classification. Fixation-rate indices did not differ significantly between groups; however, under conditions of increasing competing stimuli, children with ADHD exhibited a significantly higher number of gaze shifts between areas of interest (AoIs). Several gaze indices were significantly associated with inhibitory control measures and behavioral symptoms, and select associations remained significant after controlling for diagnosis. Machine learning models incorporating age, sex, and a nested RFE-selected feature subset achieved a maximum area under the curve (AUC) of 0.760. Eye-tracking represents a promising method for quantifying attentional control characteristics associated with ADHD. While gaze indices do not independently replace clinical diagnosis, they may serve as candidate objective supplementary indicators supporting a dimensional understanding of ADHD traits.",
+  "note": "Gazefinder 注视指标辅助 ADHD 评估，2026-08-04 在线发表；EPMC 无 PMCID（新文收录时滞，正常）",
+  "status": "harvested",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

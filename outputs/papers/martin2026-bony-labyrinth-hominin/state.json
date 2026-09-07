@@ -1,0 +1,23 @@
+{
+  "slug": "martin2026-bony-labyrinth-hominin",
+  "title": "Bony labyrinth morphology reveals deep population history and isolation among Homo sapiens in prehistoric northeastern Africa (44-3 ka)",
+  "authors": "Martin et al.",
+  "year": 2026,
+  "doi": "10.1038/s41467-026-76423-5",
+  "journal": "Nature Communications",
+  "direction": "半规管空间姿态",
+  "harvest_date": "2026-08-17",
+  "monitor_source": "literature-monitor 2026-08-17 08:5x",
+  "pdf_status": "downloaded",
+  "pdf_size": 2975367,
+  "pdf_pages": 19,
+  "pdf_source": "unpaywall (Nat Commun) via literature-monitor",
+  "note": "Human bony labyrinth (incl. semicircular canals) 3D morphology x population isolation history - evolutionary/morphological perspective on SCC spatial attitude, CT 3D morphometry method directly transferable",
+  "status": "harvested",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

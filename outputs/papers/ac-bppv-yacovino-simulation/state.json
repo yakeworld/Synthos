@@ -1,0 +1,173 @@
+{
+  "paper_id": "ac-bppv-yacovino-simulation",
+  "paper_name": "Down-Beating Nystagmus: Otolith Canal Entry or Anterior Canal BPPV? A Virtual Simulation Study",
+  "direction": "BPPV-前管仿真",
+  "status": "manuscript_ready",
+  "current_step": "quality_gate_passed",
+  "quality_score": 0.94,
+  "gate_status": "PASS",
+  "target_journal": "Medical Engineering and Physics",
+  "created": "2026-08-08",
+  "last_modified": "2026-08-21",
+  "steps_completed": [
+    "directory_creation",
+    "design",
+    "manuscript_writing",
+    "compile"
+  ],
+  "hypotheses": [
+    "H-1 (入管): 深悬头位（SHH）可使椭圆囊耳石经总脚进入后半规管，产生与上半规管BPPV相同的下跳眼震（伪影来源）",
+    "H-2 (转换): Yacovino 治疗后'转阴'反映的是耳石半规管转换（入后管），而非上半规管耳石被清除",
+    "H-3 (无效): Yacovino 手法不能使上半规管长臂耳石脱出（全角度/全粒径扫描验证）"
+  ],
+  "compile_status": {
+    "errors": 0,
+    "undefined_refs": 0,
+    "pages": 19,
+    "size_bytes": 284480,
+    "last_compile": "2026-08-08"
+  },
+  "bib_entries": 31,
+  "references_fulltext": {
+    "total": 31,
+    "with_pdf": 31,
+    "audit": "30/30 APPROPRIATE + yang2020superiorcanal (全文验证)",
+    "location": "06-references/"
+  },
+  "gates_result": {
+    "G1_identity": {
+      "score": 1.0,
+      "pass": true
+    },
+    "G2_compile": {
+      "score": 1.0,
+      "pass": true
+    },
+    "G3_citation_integrity": {
+      "score": 1.0,
+      "pass": true
+    },
+    "G4_constitution": {
+      "score": 1.0,
+      "pass": true
+    },
+    "G5_citation_quality": {
+      "score": 1.0,
+      "pass": true
+    },
+    "G6_impact": {
+      "score": 1.0,
+      "pass": true
+    },
+    "G7_content": {
+      "score": 0.75,
+      "pass": true
+    },
+    "L0.5_data_honesty": {
+      "score": 0.8,
+      "pass": true
+    },
+    "overall_score": 0.9437,
+    "overall_pass": true
+  },
+  "stats": {
+    "references_cited": 34,
+    "bib_entries": 34,
+    "pdfs": 60,
+    "pages": 22,
+    "tables": 6
+  },
+  "notes": "2026-08-21: 新增实验设计扩展（2x2 场景矩阵 + Epley 阳性对照 + chin-tuck 角度扫描 + 粒径扫描 + 敏感性分析），见 08-records/experiment-design-extension-20260821.md；学生独立执行版位于 NFS /mnt/nfs/papers/ac-bppv-yacovino-simulation-v2-student",
+  "v2_student": {
+    "location": "/mnt/nfs/papers/ac-bppv-yacovino-simulation-v2-student",
+    "status": "student_experiments_pending",
+    "tasks": [
+      "Epley阳性对照",
+      "2x2场景矩阵",
+      "chin-tuck角度扫描",
+      "粒径x角度扫描",
+      "敏感性分析"
+    ],
+    "acceptance_after": "学生完成后结果回写本版补充材料"
+  },
+  "core_scientific_hypothesis": "下跳眼震的起源判别：耳石入半规管（canalith entry）vs 上半规管BPPV——common crus 是通路机制而非假说主体",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [
+      -3.308641292578561,
+      -3.3478446431495605,
+      1,
+      3,
+      4,
+      0.8133,
+      0,
+      0.9565,
+      0.75,
+      0.8,
+      2026,
+      8,
+      21,
+      0.9437,
+      0.85,
+      0.6,
+      0.5,
+      2,
+      26,
+      60,
+      34,
+      10,
+      0.96,
+      5,
+      22,
+      18,
+      11,
+      6,
+      100,
+      7,
+      30,
+      2025,
+      8000,
+      33,
+      2014,
+      24882928,
+      10.3389,
+      2016,
+      61,
+      23,
+      2009,
+      8.4,
+      27,
+      45,
+      64,
+      76,
+      82.5,
+      2015,
+      20,
+      2022,
+      55,
+      67,
+      123,
+      133,
+      10.21053,
+      12,
+      6411,
+      65,
+      2019,
+      84.6,
+      13,
+      42.5,
+      70,
+      17,
+      40,
+      28,
+      9,
+      14,
+      9.5,
+      95,
+      59,
+      41718340
+    ],
+    "_n_values": 72
+  }
+}

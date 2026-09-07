@@ -1,0 +1,138 @@
+{
+  "paper_name": "eye-head-coordination-PINN",
+  "paper_title": "Eye-Head Coordination Dynamics: A 2-ODE System and Physics-Informed Neural Network for Computational Modeling of Gaze Redirection",
+  "stage": "quality_check_complete",
+  "current_step": "publication",
+  "steps_completed": [
+    "compile",
+    "d10a_fix",
+    "g1g7_gate_check",
+    "publication"
+  ],
+  "quality_score": 0.975,
+  "gate_status": "PASS",
+  "white_space": {
+    "pubmed": 0,
+    "openalex": 8,
+    "status": "ABSOLUTE_WHITE",
+    "deep_verified": true,
+    "verified_queries": [
+      "\"eye-head coordination\" AND (\"PINN\" OR \"physics-informed\" OR \"ODE\" OR \"dynamical model\")=0",
+      "\"eye-head coordination\" AND (\"neural network\" OR \"computational model\")=2 harmless",
+      "\"gaze redirection\" AND (\"model\" OR \"simulation\")=3 unrelated",
+      "\"coupled\" AND \"eye\" AND \"head\" AND (\"ODE\" OR \"differential equation\")=1 unrelated",
+      "\"eye-head\" AND \"coordination\" AND \"bifurcation\"=0",
+      "\"eye-head coupling\" AND (\"concussion\" OR \"TBI\")=0"
+    ]
+  },
+  "d8_d10a_scan": {
+    "d8": 10,
+    "d10a": 100.0,
+    "total_cites": 10,
+    "matched": 10,
+    "orphans_count": 0,
+    "zombies_count": 0,
+    "has_bbl": false,
+    "bib_source": "inline",
+    "scan_date": "2026-06-16"
+  },
+  "compile_stats": {
+    "tex_bytes": 32152,
+    "pdf_pages": 13,
+    "pdf_bytes": 217075,
+    "bibitems": 10,
+    "citations": 10,
+    "orphan_refs": 0,
+    "zombie_refs": 0,
+    "d10a": "100.0%",
+    "compile_errors": 0,
+    "compile_warnings": 0
+  },
+  "gates_result": {
+    "gates": [
+      {
+        "gate": "G1",
+        "status": "PASS",
+        "evidence": "10 relevant refs, eye-head coordination domain, clinical applications"
+      },
+      {
+        "gate": "G2",
+        "status": "PASS",
+        "evidence": "Clear domain extraction, coupled 2-ODE system, clinical mapping"
+      },
+      {
+        "gate": "G3",
+        "status": "PASS",
+        "evidence": "D10a=100% (10/10, 0 orphans, 0 zombies)"
+      },
+      {
+        "gate": "G4",
+        "status": "PASS",
+        "evidence": "Testable hypothesis, 5 experiments, explicit success criteria"
+      },
+      {
+        "gate": "G5",
+        "status": "PASS",
+        "evidence": "Complete IMRaD, logical argument flow, honest limitations"
+      },
+      {
+        "gate": "G6",
+        "status": "PASS",
+        "evidence": "ABSOLUTE_WHITE confirmed, 0 genuine competitors in PubMed"
+      },
+      {
+        "gate": "G7",
+        "status": "PASS",
+        "evidence": "Clean compile, Code/Data section added, D10a=100%"
+      }
+    ],
+    "overall": "PASS",
+    "hard_fails": 0,
+    "soft_fails": 0,
+    "quality_score": 80
+  },
+  "notes": {
+    "initial_onboard_2026-06-16": "Orphan paper onboarded. D8=10 (after removing 7 cross-project contaminated endolymph/hydrops bibitems). D10a=50.0% (5/10 cited, 5 orphans: robinson1981, collewijn1988, migicovsky1995, steinman1973, kimm2020). Clean compile: 13pp/215KB, 0 errors, 0 undefined citations. G6 first-mover claim=ABSOLUTE_WHITE (PubMed=0). qs=60, CONDITIONAL. Needs D10a fix + G1-G7 gate check.",
+    "d10a_fix_2026-06-16": "D10a 50%→100% (10/10, 0 orphans, 0 zombies). 5 orphan bibitems cited: robinson1981→Theoretical Foundations, collewijn1988→Background (foveate/afoveate), migicovsky1995→Background (neural circuitry), steinman1973→Discussion Limitations, kimm2020→Introduction (bidirectional coupling). Clean compile: 13pp/216KB, 0 errors, 0 undefined. qs 60→68.",
+    "g1g7_gate_check_2026-06-16": "Full G1-G7 gate check. All 7 gates PASS. G6 deep-verified (6 PubMed queries, ABSOLUTE_WHITE). Code/Data Availability section added. Clean compile: 13pp/217KB, 0 errors. qs 68→80, CONDITIONAL→PASS. 0 SOFT_FAILs."
+  },
+  "last_updated": "2026-06-16T03:43:00Z",
+  "status": "manuscript_ready",
+  "last_modified": "2026-07-09T12:57:48.269845+00:00",
+  "has_tex": true,
+  "has_pdf": true,
+  "has_bib": false,
+  "has_quality": true,
+  "quality_gate_status": "passed",
+  "quality_gate_score": 0.975,
+  "quality_gate_last_run": "2026-07-14",
+  "quality_gate_issues": 2,
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [
+      0.975,
+      1,
+      0.8,
+      2,
+      6,
+      2026,
+      30,
+      88,
+      8,
+      9,
+      83,
+      12,
+      10,
+      13,
+      75,
+      70,
+      85,
+      3,
+      4,
+      5,
+      7
+    ],
+    "_n_values": 21
+  }
+}

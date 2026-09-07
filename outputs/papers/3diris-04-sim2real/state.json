@@ -1,0 +1,109 @@
+{
+  "project_name": "3d-iris-reconstruction",
+  "direction": "三维虹膜重建与形状分析",
+  "quality_score": 82,
+  "stage": "g33_single_frame_identity_fail_paper_74p",
+  "core_papers": 4,
+  "literature_papers": 41,
+  "hypotheses": {
+    "H01_pca_shape_analysis": {
+      "status": "completed",
+      "finding": "13 PCs → 90% variance, PC1-3 = 63%"
+    },
+    "H02_cnn_vs_sfm": {
+      "status": "completed",
+      "finding": "ResNet-18 predicts 13 PCA params from 2D images: r=0.9963 mean correlation"
+    },
+    "H03_dilation_deformation": {
+      "status": "completed",
+      "finding": "r=-0.618 pupil vs depth"
+    },
+    "H04_texture_shape_independence": {
+      "status": "completed",
+      "finding": "rotation-invariant texture features vs PCA params: mean |r|=0.0735 (independent)"
+    },
+    "H05_multi_task_pose": {
+      "status": "resolved_fixed",
+      "finding": "Root cause identified: warp_image_to_depth() kept texture identical across PCA values. Fixed with 3D-projected coordinate sampling. New data: 75K images + 75K depth profiles with explicit pose labels (pitch/yaw/torsion/tx/ty/tz)."
+    },
+    "H06_profile_to_pca": {
+      "status": "completed",
+      "finding": "MLP (32-dim depth profile → 13 PCA): Mean r=0.5233 after 50 epochs. Top PCs: PC1=0.884, PC4=0.879, PC7=0.848, PC9=0.849. Lower PCs (11-13) drop to r<0.30. This proves depth profiles carry shape signal but are limited for fine-grained shape prediction."
+    },
+    "H07_dual_stream_pose_pca": {
+      "status": "completed",
+      "finding": "Dual-stream (RGB+profile -> PCA+pose) trained 30 epochs, 9672s total. PCA mean r=0.6828 (vs profile-only 0.5233 baseline, +30% signal from RGB). Top9 PCs (90% variance) dual-r=0.8203, Tail PCs mean r=0.3735. Pose mean r=0.1439 — fundamentally ill-posed: yaw=0.431 best, pitch/torsion <0.25, translation=NaN. Best val loss=0.5278 at ep25. Architecture insight: profile->PCA path ignores RGB info, actually degrades PCA vs CNN-only (0.68 vs 0.99). Profile encoding is useful for sim2real transfer, not pure CNN prediction."
+    }
+  },
+  "analyses": [
+    "G24 STRONGER-AUG COMPLETE (2026-08-17 00:50, see 3diris-01) + THIS PAPER updated 01:30: stronger photometric augmentation family (contrast U[0.3,2.0] p=0.50 / gamma U[0.5,2.0] p=0.25 / per-channel histeq p=0.15 / identity p=0.10) on G20-identical f=0.05 UNMASKED, 66ep early-stop. Preregistered decision FAIL: contrast x0.7 pose r=0.7826 < 0.90 (G20 0.5262 -> G23 0.7332 -> G24 0.7826 monotone but saturating); clean-domain no regression (posed PCA 0.9881/pose 0.9985, frontal bias 0.0265->0.0092 rad); all 14 conditions >= G20. CONCLUSION: data-side augmentation ceiling — G21 inference-time contrast normalization remains MANDATORY. Paper: G24 subsubsection + Fig24 + Conclusion + G17 count errata fix (49 pages, 0 errors, 0 undefined refs). NEXT: G24b combined deployment test (normalization + aug).",
+    "G22 UNMASKED-f BOUNDARY SCAN COMPLETE (2026-08-16 06:44, proc_3b1c49c56284 + watchdog + in-run fix 07:13): JointFusionNetG16 UNMASKED at f=0.10/0.25/0.49 (identity fractions 8.8%/19.4%/32.0%), posed 67500 fixed, val=posed 7500. NO COLLAPSE UP TO f=0.49 — every fraction meets ALL pre-registered targets (PCA>0.95, posed pose>0.90, frontal mean|pred|<0.10 rad): f=0.10 (47ep, best val 0.025130): posed PCA r=0.9922 (min PC6 0.9687), pose r=0.9930 (pitch 0.988/yaw 0.991/torsion 1.000); frontal PCA 0.9983 + mean|pred| 0.0032 rad. f=0.25 (30ep, best val 0.015434): posed PCA r=0.9949, pose r=0.9928; frontal mean|pred| 0.0036 rad. f=0.49 (29ep, best val 0.012596): posed PCA r=0.9966 (min PC 0.9880), pose r=0.9934; frontal mean|pred| 0.0004 rad (identity mapping essentially exact at 32% identity). TWO CONCLUSIONS: (1) shape anchor strengthens monotonically with frontal pool (0.9775@f=0.05 -> 0.9922/0.9949/0.9966) while pose flat (0.993-0.997) — more frontal buys shape, not pose; (2) G15 collapse boundary strictly in (0.49, 1.0] in f (identity fraction (32%, 49%]) — dilution collapse is a high-identity-pressure regime, NOT generic to unmasked training; unmasked safe across entire tested low-to-moderate identity range. Deployment answer unchanged (f=0.05 optimal, unmasked safe). Fig22 + late_fusion_g22_results.json + late_fusion_g22_inference.json + paper G22 subsubsection + 3 Table rows + Table caption + Conclusion (46 pages, 0 errors).",
+    "G21 COMPLETE (2026-08-15 20:55, see 3diris-01) + paper updated 20:57: imaging-degradation robustness - PCA r immune to all degradations (posed 0.9768-0.9778); pose robust to blur/downscale/noise/JPEG (>=0.95) but contrast reduction breaks pose (x0.7 -> r=0.526). Paper: G21 subsubsection + Fig21 (43 pages, 0 errors). Deployment: contrast normalization is the single required countermeasure.",
+    "G20 COMPLETE (2026-08-15 18:51, see 3diris-01) + paper updated 20:15: JOINT LOW-f UNMASKED — frontal pose bias fixed (mean|pred| 0.757->0.026 rad), posed PCA r=0.9775 / pose r=0.9970, dilution collapse f-dependent. Paper: G20 subsubsection + Fig20 + Table row + caption + Conclusion updated (42 pages, 0 errors). Deployment answer: single-model f=0.05 UNMASKED with 3,240-image frontal calibration set.",
+    "G18 COMPLETE-CAPSTONE (2026-08-15 14:10, see 3diris-01): JOINT LOW-f — G16 masked-pose joint capstone at G17 minimal frontal fraction f=0.05. 36ep early-stop (best val 0.071547@ep16). PCA r=0.9765 held-out posed inference (all 13 PCs >0.92, min PC10; Top9 0.9781/Tail4 0.9657) + Pose r=0.9950 (pitch 0.996/yaw 0.998/torsion 1.000) — BOTH thresholds met. Single-model shape+pose at minimal frontal cost (3,240 frontal, 20.8:1 posed:frontal). THIS PAPER: G18 subsubsection + Fig18 + Table row + Conclusion updated 2026-08-15 16:00, compiled 39 pages 0 errors.",
+    "G19 deployment validation (2026-08-15 16:10, see 3diris-01): frontal-val PCA r=0.9963 BUT pose branch mean|pred|=0.757 rad on exact-frontal (systematic bias; masked-pose never taught frontal->identity). Near-frontal posed OK (0.029 rad), edge-pose OK (PCA 0.9766/pose 0.9948). G20 (unmasked at f=0.05) launched 16:15 to fix.",
+    "G16 CAPSTONE (2026-08-13 15:22): MASKED pose loss in mixed-domain joint training — PCA r=0.9969 + Pose r=0.9931 on held-out posed inference (both thresholds met). Identity-target dilution confirmed as G15 pose-collapse mechanism; single-model mixed-domain joint shape+pose achieved. Paper G16 subsubsection + Table row + Conclusion/FutureWork updated 20:22, compiled 35 pages 0 errors.",
+    "PLY mesh stats (65K verts, 1.23mm depth)",
+    "PCA depth profile (100 bins, 100 models)",
+    "Pupil dilation vs depth correlation (r=-0.618)",
+    "Per-model shape statistics",
+    "CNN validation: ResNet-18 → 13 PCA params, r=0.9963 mean correlation (7,200 val images)",
+    "Texture-shape independence: rotation-invariant features vs PCA params, mean |r|=0.0735",
+    "Dual-stream training: 30 epochs, PCA r=0.6828 (RGB+profile), Pose r=0.1439 (RGB only)",
+    "Profile→PCA: MLP baseline, mean r=0.5233, top PCs r>0.84",
+    "Architecture analysis: profile->PCA ignores RGB → degrades vs CNN-only (0.68 vs 0.99)",
+    "Comprehensive analysis figure: dual_stream_analysis.png (13 subplots, loss curves, correlations, comparison)",
+    "CNN extended 100-epoch: mean r=0.9977, RMSE=0.0449, all PCs > r=0.993, val_loss=0.0020",
+    "Paper updated: 3diris-04-sim2real includes 100-epoch CNN results, architecture comparison table, convergence analysis",
+    "G12 matrix closure (2026-08-12): random-init 512D from-scratch on posed domain r=0.0480 - RGB-only shape readout not learnable at any init/objective/budget; depth profile unconditionally required (matrix: 512D all <0.05, 576D all 0.63-0.73)",
+    "G17 minimal frontal fraction (2026-08-15 01:01, see 3diris-01): f*=0.05 — 3,240 frontal images anchor posed-domain shape at r=0.9910 (all fractions >0.95 threshold). Paper G17 subsubsection + Table rows + Conclusion, 36 pages 0 errors.",
+    "G24b COMBINED DEPLOYMENT VERIFICATION + PROTOCOL CORRECTION COMPLETE (2026-08-17, inference-only, proc_ba2986bede74 + g24b_none_corr): G24 model (late_fusion_g24.pth) + inference-side contrast normalization on the 14-condition battery. CRITICAL BUG FOUND: G21 protocol (inherited by G23/G24) parsed float(cond[N:]) on zero-padded keys — 'down05'[4:]=5.0 / 'down025'[4:]=25.0 (5x/25x UPSCALES, the down rows were info-preserving no-ops) and 'contrast07'[8:]=7.0 / 'contrast05'[8:]=5.0 (x7/x5 AMPLIFICATION with clipping, NOT the labeled x0.7/x0.5 reduction). Bug identification verified to 4 decimals: G20 legacy x7/x5 reproduces historical pose r 0.5262/0.6278 exactly. CORRECTED MEASUREMENTS: (a) true x0.7/x0.5 reduction nearly benign even no-norm — G20 0.9942/0.9849, G24 0.9992/0.9987; (b) true 0.5/0.25 downscale benign — G20 0.9971/0.9969, G24 0.9993/0.9994 (historical conclusion survives); (c) the genuine pose threat = dynamic-range clipping (x5/x7): G20 0.526/0.628; G24 aug alone 0.783/0.846; (d) G24 + z-score normalization (mean->127.5, std->45) closes the corrected battery: ALL 14 conditions pose r>=0.910 (clean 0.9994, contrast07 0.9994, contrast05 0.9975, down 0.9994, blur4 0.9902, jpeg20 0.9581, noise20 0.9102, combo 0.9607), frontal bias <=0.044 rad, PCA r flat 0.988; normalization alone also fixes G20 (0.9482/0.9466); legacy clipping partially mitigated (snorm 0.744/0.798, pnorm 0.778/0.835). CORRECTED DEPLOYMENT ANSWER: G24 f=0.05 UNMASKED + per-image z-score normalization = robust across blur/noise/downscale/JPEG/contrast-reduction; residual fragility = severe clipping (capture-side exposure control = future work). Fig25 + late_fusion_g24b_degradation_results.json (4 batteries: g24_snorm 16cond / g24_pnorm critical / g20_none corrected / g20_snorm_contrast / g24_none_corrected) + late_fusion_g24b_decision.json + paper G24b section + G21/G23/G24 correction + Conclusion (51 pages, 0 errors). G-series deployment-robustness line CLOSES.",
+    "PAPER-CONSISTENCY-AUDIT (2026-08-17 08:45, cron): G20-G24b paper.tex numbers verified against 3diris-01 source JSONs - ZERO errors. 51 pages 0 errors 0 undefined refs confirmed (paper_compile_g24b.log). Data-hygiene fix upstream: 3diris-01 late_fusion_g24b_decision.json g24_no_norm_legacy_boost -> g24_snorm_legacy_boost (mislabel, values unchanged; paper text unaffected). See exec-report-2026-08-17-paper-consistency-audit.md"
+  ],
+  "next_steps": [
+    "G24-COMPLETE (2026-08-17 00:50, see 3diris-01): STRONGER augmentation family — preregistered FAIL (contrast x0.7 pose r=0.7826 < 0.90), monotone G20->G23->G24 (0.526->0.733->0.783) but saturating; clean no regression (posed PCA 0.9881/pose 0.9985), frontal bias 0.0092 rad; G21 normalization remains mandatory. THIS PAPER: G24 subsubsection + Fig24 + Conclusion + G17 errata (49 pages, 0 errors, 0 undefined refs).",
+    "G22-COMPLETE (2026-08-16 06:44, proc_3b1c49c56284): UNMASKED-f boundary scan — NO collapse up to f=0.49 (identity 32%). f=0.10: PCA 0.9922/pose 0.9930/frontal|pred| 0.0032; f=0.25: 0.9949/0.9928/0.0036; f=0.49: 0.9966/0.9934/0.0004. All 3 pre-registered targets met at every fraction. Shape anchor monotonic in f; pose flat. G15 collapse boundary in (0.49,1.0] (identity (32%,49%]). Paper G22 section + Fig22 + Table rows + Conclusion (46 pages, 0 errors). NEXT: G23 contrast-augmented training (G21 contrast weakness fix).",
+    "G21-COMPLETE (2026-08-15 20:55, see 3diris-01): imaging-degradation robustness - PCA immune, pose robust except contrast. THIS PAPER: G21 subsubsection + Fig21, 43 pages 0 errors.",
+    "G20-COMPLETE-SUCCESS (2026-08-15 18:51, see 3diris-01): UNMASKED joint at f=0.05 fixes G19 frontal pose bias (0.757->0.026 rad), posed PCA 0.9775/pose 0.9970. THIS PAPER: G20 subsubsection + Fig20 + Table row + Conclusion, 42 pages 0 errors.",
+    "G20-COMPLETE-SUCCESS (2026-08-15 18:51, see 3diris-01): UNMASKED joint at f=0.05 fixes G19 frontal pose bias (0.757->0.026 rad), posed PCA 0.9775/pose 0.9970. THIS PAPER: G20 subsubsection + Fig20 + Table row + Conclusion, 42 pages 0 errors.",
+    "G18-COMPLETE-CAPSTONE (2026-08-15 14:10, see 3diris-01): JOINT LOW-f — G16 masked-pose joint capstone at f=0.05. PCA r=0.9765 + Pose r=0.9950 held-out posed inference (both thresholds met). Single-model shape+pose at minimal frontal cost. THIS PAPER: G18 subsubsection + Fig18 + Table row + Conclusion, 39 pages 0 errors.",
+    "G16-CAPSTONE (2026-08-13 15:22, see 3diris-01): MASKED pose loss — single-model mixed-domain joint shape+pose ACHIEVED. PCA r=0.9969 + Pose r=0.9931 held-out posed inference (both pre-registered thresholds met). Identity-target dilution confirmed as G15 pose-collapse mechanism. THIS PAPER: G16 subsubsection + Table row + Conclusion/FutureWork updated 20:22, compiled 35 pages 0 errors. NEXT: G17 minimal frontal fraction (launched 2026-08-13 20:40, proc_d825a71b96f1) + G14 OpenEDS real-data validation (network restored but Meta auth-walled).",
+    "G13b-BREAKTHROUGH (2026-08-12 19:41, see 3diris-01): MIXED-DOMAIN training breaks the fusion plateau. Frontal(64800)+posed(67500) joint training, identical 640D deep-profile config to G13a, val=posed-val(7500): PCA r=0.9984 (best ckpt ep14 r=0.9982), posed inference r=0.9982 (all 13 PCs >0.99; training-eval min PC6=0.9951, inference min PC6=0.9930), frontal inference r=0.9987, early-stop ep34. Frontal shape signal transfers across pose-warp — plateau was domain-composition artifact, NOT structural. THIS PAPER: G13b subsubsection + Table row + Fig14 + Conclusion/FutureWork updated, compiled 0 errors (30 pages).",
+    "G13a-COMPLETE (2026-08-12 13:28, see 3diris-01): DeepProfile 640D fusion, cosine LR, 100ep hard budget — plateau ROBUST to capacity+budget (r=0.6881, hypothesis falsified). Fig13 + G13a section in this paper, 28 pages, 0 errors.",
+    "G11/G11b/G12-COMPLETE (2026-08-12, see 3diris-01): mechanism discrimination + ablation matrix closed. Pose-branch interference falsified; profile concat is the posed-domain shape carrier (G11b 0.715 / G06b 0.718); RGB-only 512D fails in all configs (G12 random-init 0.048 / G11 -0.015 / G10c 0.018) - depth profile unconditionally required. Paper G12 section added, 25 pages, 0 errors.",
+    "G13-NEXT (pending, see 3diris-01 research-plan): BREAKTHROUGH achieved via Mixed-Domain (G13b r=0.9984). Remaining: OpenEDS sim2real validation (P0), minimal frontal fraction, mixed-domain joint shape+pose.",
+    "G06-COMPLETE (2026-08-11, 见 3diris-01): late-fusion r=0.6945 — falsified for shape recovery",
+    "G07-COMPLETE (2026-08-11): 3-DOF pose pitch/yaw/torsion r>0.92 (torsion 0.994) — 论文 pose 章节已更新",
+    "G10/G10b/G10c-COMPLETE (2026-08-11): 全部收官 — pose-warp domain shift 为 PCA 读不出的根因, 3-DOF pose 在 posed 域 r>0.99; Fig8/9/10 已并入本文",
+    "NEXT-P0: Validate on OpenEDS real eye images (sim2real transfer) — scripts in 备份/openeds.py, dataset download pending. G13b solved the posed-domain plateau; OpenEDS is now the critical clinical viability test (r=0.9984 mixed-domain model vs frontal CNN-only 0.9977 on real data).",
+    "注意: 本文为 sim2real 论文, G10 系列实验结果 (domain gap 发现) + G13b (mixed-domain 突破) 是核心增量, 投稿叙事应围绕 pose 3-DOF 解决 + domain-gap 机制 + mixed-domain 结构性修复",
+    "G24b-COMPLETE (2026-08-17): combined deployment verification PASS + protocol bug fix (G21-G24 down/contrast parsing: down05/025 were 5x/25x upscales, contrast07/05 were x7/x5 clipping boosts; corrected semantics re-measured). Corrected deployment answer: G24 model + per-image z-score normalization covers all 14 corrected conditions (pose r>=0.910); residual fragility = severe dynamic-range clipping (future: capture-side exposure control or contrast-aware losses). G-series deployment-robustness line CLOSED. NEXT: (1) G14 OpenEDS real-data validation (P0, auth-walled — needs user Kaggle/Facebook credentials); (2) paper polish: G20-G24 paragraph proofing + page balance (51 pages); (3) optional G25: contrast-aware loss for clipping robustness."
+  ],
+  "known_issues": {
+    "dual_stream_architecture_flaw": "Dual-stream separates profile->PCA and RGB->pose. PCA head never sees RGB features directly. This degrades PCA accuracy (0.68) vs CNN-only (0.9977). Architecture needs true late fusion for best results.",
+    "pose_ill_posed": "6-DOF from single 2D image is fundamentally ill-posed. Translation (tx,ty,tz) = NaN. Only yaw has weak signal (r=0.43). Need 3-DOF rotation focus or multi-view constraints.",
+    "g12_matrix_closed": "G12 (2026-08-12): ablation matrix complete. RGB-only 512D fails on posed domain at every initialization/objective; 576D fusion plateaus ~0.71 init-independent. Depth profile is the unconditional shape carrier across the pose-warp domain shift.",
+    "g13b_breakthrough": "G13b (2026-08-12 19:41): mixed-domain training BREAKS the plateau — PCA r=0.9984 on posed val (all 13 PCs >0.99; training-eval min PC6=0.9951, inference min PC6=0.9930), frontal r=0.9987. The r~0.71 plateau was a domain-composition artifact, not structural. RGB+profile fusion + mixed-domain training recovers posed-domain shape at CNN-only ceiling. Next: OpenEDS real-data validation.",
+    "g21_parsing_bug_20260817": "G21 degradation protocol parsing bug (inherited G23/G24): condition factors parsed with float(cond[N:]) on zero-padded keys — down05/down025 became 5x/25x upscales (down-robustness rows were no-ops) and contrast07/contrast05 became x7/x5 amplification with clipping (the 'contrast reduction' story). Fixed in G24b with an explicit factor table; corrected measurements: mild reduction x0.7/x0.5 and true downscale 0.5/0.25 are benign (G20 pose r>=0.985, G24 >=0.999); genuine threat = dynamic-range clipping; deployment answer = G24 + z-score normalization covers the corrected battery."
+  },
+  "last_modified": "2026-08-22 00:20 (strategic-review: stage sync g24b_complete->g33; paper.tex 已含 G25c-G33 小节, 74页 0 errors 2026-08-20)",
+  "reference_notes": {
+    "normalized_date": "2026-07-28",
+    "normalized": true,
+    "bib_entries": 76,
+    "cited_in_tex": 2,
+    "doi_coverage": "4/76 (5.3%)",
+    "bib_path": "../3diris-01-pca-shape-analysis/06-references/references.bib"
+  },
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [
+      0.9333,
+      1,
+      0.6667,
+      0.8
+    ],
+    "_n_values": 4
+  }
+}

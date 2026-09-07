@@ -1,0 +1,27 @@
+{
+  "slug": "ozalp2026-scheimpflug-iris-keratoconus",
+  "title": "Scheimpflug Photography-Based Evaluation of Structural Iris Changes Across Keratoconus Stages in Comparison with Healthy Eyes.",
+  "authors": "Özalp O, Gür OB, İçer SM, Yılmaz HNN, Atalay E.",
+  "year": "2026",
+  "doi": "10.1007/s40123-026-01381-6",
+  "pmid": "42043741",
+  "pmcid": "PMC13250106",
+  "journal": "Ophthalmology and therapy",
+  "direction": "方向1: 瞳孔/虹膜分割、眼球三维建模",
+  "harvest_date": "2026-08-27",
+  "monitor_source": "literature-monitor 2026-08-27 08:09 (rproxy/Tor pipeline)",
+  "pdf_status": "downloaded",
+  "pdf_size": 1111993,
+  "pdf_source": "monitor-reuse (monitor 08-27 downloaded, magic verified)",
+  "pdf_path": "01-manuscript/ozalp2026-scheimpflug-iris-keratoconus.pdf",
+  "abstract_source": "europepmc",
+  "abstract": " Introduction Keratoconus (KC) is a progressive corneal disorder caused by impaired biomechanical integrity, leading to geometric deformation. Although corneal changes are well characterized, iris structural alterations across KC stages remain poorly studied. Accordingly, this study aims to compare quantitative iris characteristics among healthy controls and patients with different stages of KC. Methods This retrospective cross-sectional study included 547 eyes: 497 from 264 keratoconus subjects classified according to the Topographic Keratoconus Classification (TKC) system as subclinical (n = 102), early stage (n = 219, TKC 1-2), and late-stage (n = 176, TKC 3-4), and single eyes from 50 healthy emmetropic controls. Anterior segment imaging was performed using Pentacam Scheimpflug tomography. Iris segmentation was achieved using a semi-automated Python-based pipeline incorporating the Segment Anything Model, followed by extraction of the anterior iris boundary. The iris was subdivided into basal, mid-iris, and pupil-edge regions. Region-specific geometric parameters, including curvature, arc length, and area under the curve (AUC), were computed using spline-based fitting and numerical integration. Group comparisons were conducted using one-way analysis of variance with false discovery rate correction, followed by age-adjusted analysis of covariance. Results Mean basal and mid-iris curvature showed significant overall differences across TKC stages, with a progressive reduction from healthy controls to late-stage KC (p = 0.01 and p  Conclusions Increased pupil-edge curvature in KC represents a geometric alteration that may be clinically relevant in eyes undergoing intraocular surgery, particularly in relation to anterior chamber dynamics and potential susceptibility to postoperative pupillary block. Conversely, mid-iris straightening may reflect structural variation within the iris in late-stage disease. Together, these findings suggest that corneal geometric changes in KC may be associated with subtle alterations in anterior chamber mechanical environment, potentially contributing to secondary changes in iris configuration.",
+  "note": "Scheimpflug 结构性虹膜变化跨角膜圆锥分期, OA/PMC13250106, EPMC 限流后经 doi-fetch unpaywall 直连成功, monitor 落盘复用",
+  "status": "harvested",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

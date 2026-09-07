@@ -1,0 +1,30 @@
+{
+  "slug": "mustafa2025-scoping-bppv",
+  "type": "harvested_paper",
+  "title": "A Scoping Review of Home-Based Vestibular Rehabilitation for Benign Paroxysmal Positional Vertigo Patients.",
+  "authors": "Mustafa H, Omar N, Alghwiri AA, Manaf H",
+  "year": 2025,
+  "doi": "10.21315/mjms-05-2025-356",
+  "pmid": "42077343",
+  "pmcid": "PMC13132131",
+  "journal": "The Malaysian Journal of Medical Sciences (MJMS)",
+  "direction": "BPPV/前庭康复 (方向4)",
+  "harvest_date": "2026-08-26",
+  "monitor_source": "literature-monitor 2026-08-26 08:12 (doi-fetch unpaywall, via rproxy-jabkit/Tor)",
+  "pdf_status": "downloaded",
+  "pdf_source": "doi-fetch unpaywall mjms-05-2025-356.pdf (monitor 下载, 收割 cp 复用 + 魔数回验)",
+  "pdf_bytes": 639102,
+  "pdf_md5_prefix": "963956e1",
+  "pdf_added_at": "2026-08-26T08:35:00+00:00",
+  "stage": "harvested",
+  "note": "home-based BPPV 前庭康复 scoping review,方向4(前庭康复)高价值。raihan2026-adhd-scoping 是不同论文(IEEE AIRC, ADHD 眼动),非重复。",
+  "next_steps": [
+    "knowledge-extraction (EXT) 待执行"
+  ],
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

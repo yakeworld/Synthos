@@ -1,0 +1,26 @@
+{
+  "slug": "shigeno2017-downbeating-variant-bppv",
+  "title": "Positional Down-Beating Nystagmus caused by a variant of Posterior-canal BPPV or Anterior-canal BPPV",
+  "authors": "Shigeno K",
+  "year": 2017,
+  "doi": "10.3757/jser.76.684",
+  "pmid": null,
+  "pmcid": null,
+  "journal": "Equilibrium Research 76(6):684-691",
+  "direction": "BPPV/前庭康复",
+  "harvest_date": "2026-09-03",
+  "monitor_source": "literature-monitor 2026-09-03 08:07 (方向4 BPPV/前庭康复)",
+  "pdf_status": "downloaded",
+  "pdf_source": "doi-fetch scihub 通道 463805B（cdn/libgen×5/annas/direct 全失败）",
+  "pdf_bytes": 463805,
+  "pdf_md5_prefix": "3a64fe65",
+  "pdf_added_at": "2026-09-03T08:46:00+08:00",
+  "note": "Down-beating nystagmus 变型（非典型后半规管型或前半规管型 BPPV）——与 ac-bppv 标题方向 (Down-Beating Nystagmus: Otolith Canal Entry or AC BPPV?) 直接撞题，需差异化对比。日文期刊，无 PMID。",
+  "status": "harvested",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

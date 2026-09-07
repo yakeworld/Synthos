@@ -1,0 +1,37 @@
+{
+  "name": "gvs-latent-perception",
+  "dataset": "GVS in latent space dataset (Zenodo 21670229; arXiv 2607.26659; CC-BY-4.0)",
+  "priority": "P1.5",
+  "stage": "data_ready_extracted",
+  "mode": "模式 #68 (刺激-感知生成对) 首例候选 — 波形-感知嵌入可行性",
+  "source": {
+    "zenodo_record": "21670229",
+    "file": "SupplementaryMaterialsFin.rar",
+    "bytes": 211129423,
+    "license": "cc-by-4.0",
+    "url": "https://zenodo.org/api/records/21670229/files/SupplementaryMaterialsFin.rar/content"
+  },
+  "download_status": {
+    "completed": "2026-08-20 16:16 (hourly-briefing in-run)",
+    "bytes": 211129423,
+    "verified": "unrar t All OK",
+    "extracted": "raw/Supplementary materials/ 680 files 205MB",
+    "inventory": "latent_by_filename.npz (~100 waveforms x mu/logvar 32d) + text_db.npz (100 texts x 1024d emb + directions) + vae_weights.pth + model_vae.py + 10 user eval CSVs + StimPairs/correct 150 pairs + WaveformLib 202 waveforms + artifacts/exports 4 samples",
+    "vae_meta": {
+      "seq_len": 250,
+      "latent_dim": 32
+    }
+  },
+  "next_steps": [
+    "模式#68 立项评估: 波形-VAE-latent(32d) vs 文本-embedding(1024d) 感知映射",
+    "用户评估对 P1-P10 + StimPairs 150 对 → 感知一致性/交叉验证",
+    "候选假设: latent 空间语义方向 vs 感知偏好; 生成-感知闭环"
+  ],
+  "created": "2026-08-20",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

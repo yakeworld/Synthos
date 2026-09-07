@@ -1,0 +1,22 @@
+{
+  "type": "harvested_paper",
+  "harvest_date": "2026-08-19",
+  "monitor_source": "literature-monitor 2026-08-19 (rproxy-jabkit)",
+  "title": "Three-Dimensional Ultrafast Ultrasound Reveals Dynamic Vascular Alterations During Intraocular Melanoma Progression in Mice",
+  "authors": "Yu Xia; Tengbo Rao; Renxin Luo; Jinyu Yang; Changguan Wang; Xuemin Li; Jiarui Yang; Jiabin Zhang; Heping Cheng; Jue Zhang",
+  "year": 2026,
+  "journal": "Investigative Ophthalmology &amp; Visual Science",
+  "doi": "10.1167/iovs.67.4.63",
+  "direction": "瞳孔/虹膜分割、眼球三维建模",
+  "pdf_status": "pdf_copied 7627426 (EPMC pdf=render, monitor 2026-08-19)",
+  "stage": "harvested",
+  "next_steps": [
+    "knowledge-extraction (EXT) 待执行"
+  ],
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

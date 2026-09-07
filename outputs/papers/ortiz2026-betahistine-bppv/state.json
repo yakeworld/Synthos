@@ -1,0 +1,25 @@
+{
+  "slug": "ortiz2026-betahistine-bppv",
+  "type": "harvested_paper",
+  "harvest_date": "2026-08-18",
+  "monitor_source": "literature-monitor 2026-08-18 (unpaywall Frontiers, full-text backfill)",
+  "title": "Betahistine for residual dizziness after canalith repositioning in BPPV: a systematic review of RCTs",
+  "authors": "Ortiz-Prado E, Vasconez-Gonzalez J, Gavilanes-Rodriguez S, Castillo-Bustamante M, Barreto V, Maya-Castro M, Izquierdo-Condoy JS",
+  "year": 2026,
+  "journal": "Frontiers in Pharmacology",
+  "doi": "10.3389/fphar.2026.1855843",
+  "pmid": "42311406",
+  "pmcid": "PMC13269398",
+  "pdf_status": "downloaded 2593497 (2026-08-28 补入, monitor-EPMC-pdf-render cp 复用)",
+  "pdf_path": "01-manuscript/ortiz2026-betahistine-bppv.pdf",
+  "stage": "harvested",
+  "next_steps": [
+    "knowledge-extraction (EXT) 待执行"
+  ],
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

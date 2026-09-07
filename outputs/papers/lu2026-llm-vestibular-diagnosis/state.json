@@ -1,0 +1,23 @@
+{
+  "slug": "lu2026-llm-vestibular-diagnosis",
+  "title": "Conversational Large Language Models for Vestibular Diagnosis in Outpatient Clinics: Prospective Multicenter Diagnostic Accuracy Study",
+  "authors": "Lu et al.",
+  "year": 2026,
+  "doi": "10.2196/100442",
+  "journal": "Journal of Medical Internet Research (JMIR)",
+  "direction": "BPPV/前庭康复",
+  "harvest_date": "2026-08-17",
+  "monitor_source": "literature-monitor 2026-08-17 08:5x",
+  "pdf_status": "downloaded",
+  "pdf_size": 1022527,
+  "pdf_pages": 14,
+  "pdf_source": "JMIR official /pdf direct via literature-monitor",
+  "note": "Conversational LLM for outpatient vestibular diagnosis - prospective multicenter diagnostic accuracy study, AI-assisted BPPV/vestibular diagnosis frontier evidence, directly relevant to intelligent vestibular diagnosis",
+  "status": "harvested",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

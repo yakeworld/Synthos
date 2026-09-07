@@ -1,0 +1,352 @@
+{
+  "paper_id": "bppv-pc-repositioning-optimization",
+  "paper_name": "Optimizing the Safety and Efficacy of Posterior Canal BPPV Repositioning Maneuvers through Virtual Simulation",
+  "target_journal": "Medical Engineering and Physics",
+  "paper_type": "simulation_methodology",
+  "status": "submission_ready",
+  "current_step": "submission_packaged",
+  "quality_score": 94,
+  "gates_overall": "PASS",
+  "gates_result": {
+    "overall": "PASS",
+    "score": 0.94,
+    "gates": [
+      {
+        "gate": "G1_identity",
+        "pass": true,
+        "score": 1.0
+      },
+      {
+        "gate": "G2_compile",
+        "pass": true,
+        "score": 1.0
+      },
+      {
+        "gate": "G3_citation_integrity",
+        "pass": true,
+        "score": 0.95
+      },
+      {
+        "gate": "G4_constitution",
+        "pass": true,
+        "score": 1.0
+      },
+      {
+        "gate": "G5_citation_quality",
+        "pass": true,
+        "score": 1.0
+      },
+      {
+        "gate": "G6_impact",
+        "pass": true,
+        "score": 1.0
+      },
+      {
+        "gate": "G7_content",
+        "pass": true,
+        "score": 0.75
+      },
+      {
+        "gate": "L0.5_data_honesty",
+        "pass": true,
+        "score": 0.8
+      }
+    ],
+    "hard_fails": 0,
+    "soft_fails": 0
+  },
+  "steps_completed": [
+    "manuscript_written",
+    "figures_included",
+    "tables_included",
+    "pdf_generated",
+    "merge_psc_archived",
+    "reference_merge",
+    "reference_lookup",
+    "compile_verified",
+    "agent_manifest_created",
+    "quality_gate_passed",
+    "sync_article_to_papers_2026-07-28"
+  ],
+  "merge_info": {
+    "date": "2026-07-22",
+    "source_psc": "/mnt/nfs/article/psc/",
+    "source_archived": "/media/yakeworld/sda2/backup/papers/_archive/backups/drafts_archive_2026-06-21/bppv-pc-repositioning-optimization/",
+    "psc_version": "5 maneuvers, quaternion model, 5 simulation videos, 10 new 2025-2026 refs",
+    "archived_version": "QS=84, G1-G7 PASS, 25 refs D10a=100%"
+  },
+  "sync_2026-07-28": {
+    "description": "Full bibkey standardization + citation appropriateness fixes",
+    "changes": [
+      "bibkey format standardized: AuthorYYYYtopic",
+      "5 inappropriate citations replaced (yoneima→foster2001maneuver, balaji→gans2015maneuver, nomura→tan2019anatomy)",
+      "nakhate2026vr L427 → chaure2026chair (mechanical repositioning fix)",
+      "personalized2025 L426 CT→MRI (factual error fix)",
+      "smith2026trauma: weakened wording (feasibility, not efficacy)",
+      "yang2025tumarkin: citation text clarified",
+      "shi2026morph L47: removed from pathophysiology cite",
+      "vhitz2026: removed orphaned bibitem",
+      "6 keyword-only bibkeys fixed (minimal→li2025minimal, bowlean→cherchi2026bowlean, etc.)",
+      "PDFs renamed to match new bibkeys, sda2 synced"
+    ]
+  },
+  "compile_status": {
+    "errors": 0,
+    "undefined_refs": 0,
+    "warnings": 0,
+    "pages": 25,
+    "size_bytes": 1237325,
+    "overfull_hboxes": 5,
+    "underfull_hboxes": 10,
+    "d10a": "100% (27/27)",
+    "last_compile": "2026-07-28",
+    "bibtex": true,
+    "bib_entries": 33
+  },
+  "reference_notes": {
+    "normalized_date": "2026-07-28",
+    "normalized": true,
+    "bib_entries": 60,
+    "cited_in_tex": 55,
+    "doi_coverage": "51/60 (85.0%)",
+    "bib_path": "06-references/references.bib",
+    "entries": {
+      "albera2025": "Albera 2025. DOI: 10.3389/fneur.2025.1497156. Evaluation of the impact of postural restrictions after Semo...",
+      "albera2025semont": "Albera 2025. DOI: 10.3389/fneur.2025.1497156. Evaluation of the impact of postural restrictions after Semo...",
+      "arantapia2025yacovino": "Ar\\'an-Tapia 2025. DOI: 10.1016/j.heares.2025.109374. Optimization of the Yacovino maneuver for superior canal BPP...",
+      "bai2026": "Bai 2026. DOI: 10.1080/00016489.2026.2700011. Characteristics and efficacy of canalith-repositioning maneu...",
+      "bai2026elderly": "Bai 2026. DOI: 10.1080/00016489.2026.2700011. Characteristics and efficacy of canalith-repositioning maneu...",
+      "bhattacharyya2017": "Bhattacharyya 2017. DOI: 10.1177/0194599816689667. Clinical Practice Guideline: Benign Paroxysmal Positional Ve...",
+      "bhattacharyya2017guideline": "Bhattacharyya 2017. DOI: 10.1177/0194599816689667. Clinical Practice Guideline: Benign Paroxysmal Positional Ve...",
+      "canzi2024": "Canzi 2024. DOI: 10.3390/audiolres14060086. A 3D-printed educational model for first-line management of ...",
+      "canzi2024model": "Canzi 2024. DOI: 10.3390/audiolres14060086. A 3D-printed educational model for first-line management of ...",
+      "chaturvedi2026": "Chaturvedi 2026. DOI: 10.1038/s41598-026-52908-7. Automated classification of benign paroxysmal positional ver...",
+      "chaturvedi2026ai": "Chaturvedi 2026. DOI: 10.1038/s41598-026-52908-7. Automated classification of benign paroxysmal positional ver...",
+      "chaure2026chair": "Chaure-Cordero 2026. DOI: 10.1002/lary.70656. Rotational Chair vs. Manual Maneuvers for Non-Complex BPPV: ...",
+      "cherchi2026": "Cherchi 2026. DOI: 10.1007/s00415-025-13450-0. Bow and lean test reconsidered: anatomy...",
+      "cherchi2026bowlean": "Cherchi 2026. DOI: 10.1007/s00415-025-13450-0. Bow and lean test reconsidered: anatomy...",
+      "dai2026": "Dai 2026. DOI: 10.3389/fneur.2026.1774729. Artificial intelligence-driven clinical auxiliary diagnosis ...",
+      "dai2026ai": "Dai 2026. DOI: 10.3389/fneur.2026.1774729. Artificial intelligence-driven clinical auxiliary diagnosis ...",
+      "epley1992": "Epley 1992. The canalith repositioning procedure: for treatment of benig...",
+      "foster2001": "Foster 2001. Treatment of benign paroxysmal positional vertigo using the ...",
+      "foster2001maneuver": "Foster 2001. Treatment of benign paroxysmal positional vertigo using the ...",
+      "gans2015": "Gans 2015. A simplified treatment for posterior canal benign paroxysmal...",
+      "gans2015maneuver": "Gans 2015. A simplified treatment for posterior canal benign paroxysmal...",
+      "hanapi2026": "Hanapi 2026. DOI: 10.4082/kjfm.24.0337. A randomized controlled trial comparing home-based modified ...",
+      "hanapi2026home": "Hanapi 2026. DOI: 10.4082/kjfm.24.0337. A randomized controlled trial comparing home-based modified ...",
+      "huang2026": "Huang 2026. DOI: 10.1186/s13244-026-02252-1. Intelligent segmentation and measurement based on U-HRCT to ...",
+      "huang2026innerear": "Huang 2026. DOI: 10.1186/s13244-026-02252-1. Intelligent segmentation and measurement based on U-HRCT to ...",
+      "iannetti2026": "Iannetti 2026. DOI: 10.1080/00016489.2026.2634950. Contribution of the repositioning chair in the treatment of ...",
+      "iannetti2026chair": "Iannetti 2026. DOI: 10.1080/00016489.2026.2634950. Contribution of the repositioning chair in the treatment of ...",
+      "imai2026": "Imai 2026. DOI: 10.1016/j.anl.2026.05.002. Therapeutic strategies for benign paroxysmal positional vert...",
+      "imai2026therapy": "Imai 2026. DOI: 10.1016/j.anl.2026.05.002. Therapeutic strategies for benign paroxysmal positional vert...",
+      "ismail2026": "Ismail 2026. DOI: 10.1007/s00405-026-10306-9. Extended Reality (XR) for precision guidance in canalith rep...",
+      "ismail2026xr": "Ismail 2026. DOI: 10.1007/s00405-026-10306-9. Extended Reality (XR) for precision guidance in canalith rep...",
+      "jin2026": "Jin 2026. DOI: 10.3389/fneur.2026.1812718. Development and external validation of a LASSO-based parsimo...",
+      "jin2026recurrence": "Jin 2026. DOI: 10.3389/fneur.2026.1812718. Development and external validation of a LASSO-based parsimo...",
+      "li2025": "Li 2025. DOI: 10.1007/s00405-025-09253-8. Minimal stimulus strategy for diagnosis and treatment of BPP...",
+      "li2025minimal": "Li 2025. DOI: 10.1007/s00405-025-09253-8. Minimal stimulus strategy for diagnosis and treatment of BPP...",
+      "li2026": "Li 2026. DOI: 10.3389/fmed.2026.1782263. Three-dimensional simulations of mixed maneuver for three se...",
+      "li2026simulation": "Li 2026. DOI: 10.3389/fmed.2026.1782263. Three-dimensional simulations of mixed maneuver for three se...",
+      "margheritini2003": "Margheritini 2003. The shape and size of the human semicircular canal duct...",
+      "nakhate2026": "Nakhate 2026. DOI: 10.1186/s13063-026-09485-x. {Vertigo Coach...",
+      "nakhate2026vr": "Nakhate 2026. DOI: 10.1186/s13063-026-09485-x. {Vertigo Coach} application as an adjunct to canalith reposi...",
+      "oh2025": "Oh 2025. DOI: 10.1001/jamanetworkopen.2025.0972. Treatment Maneuvers in Cupulolithiasis of the Posterior Cana...",
+      "oh2025cupulo": "Oh 2025. DOI: 10.1001/jamanetworkopen.2025.0972. Treatment Maneuvers in Cupulolithiasis of the Posterior Cana...",
+      "rossi2025personalized": "Rossi-Izquierdo 2025. DOI: 10.3389/fneur.2025.1561356. Personalized medicine to treat refractory benign paroxysmal ...",
+      "semont1989": "Semont 1989. Cure of BPPV by rapid maneuvers...",
+      "shi2026": "Shi 2026. DOI: 10.4103/nah.nah\\_13\\_26. Comparative Morphometric Study of the Osseous Labyrinth in H...",
+      "shi2026morph": "Shi 2026. DOI: 10.4103/nah.nah\\_13\\_26. Comparative Morphometric Study of the Osseous Labyrinth in H...",
+      "smith2026": "Smith 2026. DOI: 10.1136/bmjopen-2026-117657. Data from a UK-based multicentre randomised feasibility stud...",
+      "smith2026trauma": "Smith 2026. DOI: 10.1136/bmjopen-2026-117657. Data from a UK-based multicentre randomised feasibility stud...",
+      "tan2019": "Tan 2019. Anatomical variations of the semicircular canals and their c...",
+      "tan2019anatomy": "Tan 2019. Anatomical variations of the semicircular canals and their c...",
+      "wen2021": "Wen 2021. DOI: 10.1007/s00415-020-10175-0. Risk factors for benign paroxysmal positional vertigo recurr...",
+      "wen2021recurrence": "Wen 2021. DOI: 10.1007/s00415-020-10175-0. Risk factors for benign paroxysmal positional vertigo recurr...",
+      "wu2022": "Wu 2022. DOI: 10.3389/fneur.2022.944703. Simulation Study of Canal Switching in BPPV...",
+      "wu2022canal": "Wu 2022. DOI: 10.3389/fneur.2022.944703. Simulation Study of Canal Switching in BPPV...",
+      "wu2023": "Wu 2023. DOI: 10.3389/fneur.2023.1132343. Design and analysis of HSC-BPPV diagnostic maneuver based on...",
+      "wu2023hsc": "Wu 2023. DOI: 10.3389/fneur.2023.1132343. Design and analysis of HSC-BPPV diagnostic maneuver based on...",
+      "yang2025": "Yang 2025. DOI: 10.3389/fneur.2025.1547798. Mechanisms and clinical significance of Tumarkin-like phenom...",
+      "yang2025tumarkin": "Yang 2025. DOI: 10.3389/fneur.2025.1547798. Mechanisms and clinical significance of Tumarkin-like phenom...",
+      "yu2026": "Yu 2026. DOI: 10.1097/AUD.0000000000001795. Quantitative analysis of the nystagmus of posterior canal be...",
+      "yuf2026chair": "Yu 2026. DOI: 10.1097/AUD.0000000000001795. Quantitative analysis of the nystagmus of posterior canal be..."
+    }
+  },
+  "content": {
+    "maneuvers": [
+      "Epley",
+      "Semont",
+      "Foster",
+      "Gans",
+      "Modified Foster"
+    ],
+    "figures": "5 (PNG+TIF in 05-figures/)",
+    "tables": "13 (xlsx in 04-data/)",
+    "videos": "5 simulation videos (referenced in paper as Supplementary Videos 1-5)",
+    "references": "32 (30 + 2 lab prior simulation papers)"
+  },
+  "pipeline_trace": [
+    {
+      "step": "manuscript_written",
+      "date": "2026-07-15",
+      "description": "LaTeX manuscript created from PSC simulation data"
+    },
+    {
+      "step": "merge_2026-07-22",
+      "date": "2026-07-22",
+      "description": "Merged PSC content (5 maneuvers, quaternion model, videos) with archived quality framework."
+    },
+    {
+      "step": "sync_2026-07-28",
+      "date": "2026-07-28",
+      "description": "Incremental sync: updated paper.tex with 28 new refs, Tables 11-13, reference PDFs merged"
+    }
+  ],
+  "remaining_tasks": [
+    "Upload simulation code to GitHub/Zenodo",
+    "Create Highlights (3-5 bullet points, Elsevier requirement)",
+    "Create Graphical Abstract",
+    "Add CRediT author statement",
+    "Manual journal submission to Medical Engineering and Physics"
+  ],
+  "created": "2026-06-05",
+  "last_modified": "2026-07-28",
+  "has_bib": true,
+  "ref_audit": {
+    "D8_bib_entries": 60,
+    "D9_cite_keys_tex": 55,
+    "D10a_cite_match_pct": 92,
+    "doi_coverage_pct": 85.0
+  },
+  "submission_materials": {
+    "highlights": "02-submission/highlights.txt (5 bullets, 2026-08-04)",
+    "graphical_abstract": "02-submission/graphical_abstract.png (530x1200, 5-frame composite, 2026-08-04)",
+    "credit_statement": "02-submission/credit_statement.txt (2026-08-04)",
+    "checklist": "02-submission/SUBMISSION_CHECKLIST.md",
+    "last_quality_gate": "2026-08-04 (94% PASS, G1-G7+L0.5 all pass)",
+    "pending": [
+      "upload code to GitHub/Zenodo",
+      "manual submission via Elsevier EES"
+    ]
+  },
+  "submission_materials_updated": "2026-08-04",
+  "assets": {
+    "simulation_videos": {
+      "01_Epley.mp4": {
+        "source": "/mnt/nfs/article/psc/Left Epley Maneuver.mp4",
+        "size_mb": 41,
+        "accessible": true
+      },
+      "02_Semont.mp4": {
+        "source": "/mnt/nfs/article/psc/Left Semont Maneuver.mp4",
+        "size_mb": 80,
+        "accessible": true
+      },
+      "03_Foster.mp4": {
+        "source": "/mnt/nfs/article/psc/Left Foster Maneuver.mp4",
+        "size_mb": 52,
+        "accessible": true
+      },
+      "04_Gans.mp4": {
+        "source": "/mnt/nfs/article/psc/Left Gans Maneuver.mp4",
+        "size_mb": 38,
+        "accessible": true
+      },
+      "05_Modified_Foster.mp4": {
+        "source": "/mnt/nfs/article/psc/Left Modified Foster Maneuver.mp4",
+        "size_mb": 35,
+        "accessible": true
+      }
+    },
+    "simulation_frames": [
+      "01_Epley_StepD.jpg",
+      "02_Semont_StepC.jpg",
+      "03_Foster_StepC.jpg",
+      "04_Gans_StepC.jpg",
+      "05_Modified_Foster_StepD.jpg"
+    ]
+  },
+  "code_status": {
+    "03-code": "EMPTY — 仿真代码缺失, 需从来源恢复",
+    "impact": "投稿必需(可复现性), 但视频+帧+表格可支撑审稿"
+  },
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [
+      2026,
+      7,
+      15,
+      1,
+      44,
+      60,
+      2,
+      3,
+      96,
+      4,
+      25,
+      26,
+      5,
+      0.8187,
+      0,
+      0.75,
+      0.8,
+      8,
+      94,
+      100,
+      29,
+      48,
+      18,
+      40,
+      6,
+      4580388,
+      4.1,
+      4.2,
+      2.4,
+      64,
+      10.7,
+      600,
+      90,
+      4.3,
+      79,
+      91,
+      95,
+      13,
+      38,
+      12,
+      22,
+      10,
+      36,
+      47,
+      9,
+      50,
+      70,
+      24,
+      2001,
+      2017,
+      1987,
+      2019,
+      1980,
+      1999,
+      1989,
+      2015,
+      1997,
+      2014,
+      2016,
+      2018,
+      2003,
+      2009,
+      2025,
+      80,
+      2000,
+      0.001,
+      0.95,
+      0.6,
+      0.5,
+      0.94,
+      0.85
+    ],
+    "_n_values": 71
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "slug": "tao2022-iris-center-3d-eyeball",
+  "title": "An Iris Center Localization Method Based on 3D Eyeball Model and Snakuscule",
+  "authors": "Tao J, Wang C, Li B",
+  "year": 2022,
+  "doi": "10.1007/978-981-19-2266-4_28",
+  "pmid": null,
+  "pmcid": null,
+  "journal": "CCIS (Springer) vol 1509:361-372, Digital TV and Wireless Multimedia Communications",
+  "direction": "瞳孔/虹膜分割、眼球三维建模",
+  "harvest_date": "2026-09-03",
+  "monitor_source": "literature-monitor 2026-09-03 08:07 (方向1 瞳孔/虹膜分割)",
+  "pdf_status": "failed",
+  "pdf_note": "Springer 书籍章节，EPMC 无收录 (DOI 查询 0 hit)；doi-fetch 全通道 (cdn/scihub/libgen×5/annas/direct) 均 NO_RESULT。付费墙，标记不可下载，不重试。",
+  "status": "harvested_metadata_only",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

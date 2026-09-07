@@ -1,0 +1,24 @@
+{
+  "slug": "fuhl2021-teyedd-20m-eye-images",
+  "title": "TEyeD: Over 20 Million Real-World Eye Images with Pupil, Eyelid, and Iris 2D and 3D Segmentations, 2D and 3D Landmarks, 3D Eyeball, Gaze Vector, and Eye Movement Types",
+  "authors": "Fuhl W, Kasneci G, Kasneci E et al (Tuebingen/TUM)",
+  "year": 2021,
+  "doi": "10.1109/ismar52148.2021.00053",
+  "pmid": null,
+  "pmcid": null,
+  "journal": "IEEE ISMAR 2021",
+  "direction": "Direction 1: iris segmentation / 3D eyeball modeling",
+  "harvest_date": "2026-09-01",
+  "monitor_source": "literature-monitor 02af0335f03a 2026-09-01 (rproxy pipeline)",
+  "pdf_status": "downloaded",
+  "pdf_size": 1234492,
+  "pdf_source": "doi-fetch direct/unpaywall",
+  "note": "Flagship 20M-image 2D+3D annotated eye dataset; core resource for 3D eyeball model-constrained iris segmentation. Downloaded via doi-fetch direct/unpaywall channel (1.23MB, arXiv v5 preprint).",
+  "status": "harvested",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

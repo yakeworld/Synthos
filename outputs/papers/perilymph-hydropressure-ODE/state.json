@@ -1,0 +1,180 @@
+{
+  "paper_name": "perilymph-hydropressure-ODE",
+  "stage": "quality_check_complete",
+  "quality_score": 0.9654,
+  "gate_status": "PASS",
+  "steps_completed": [
+    "compile",
+    "quality_check",
+    "code_section_added"
+  ],
+  "reference_health": {
+    "D8": 15,
+    "D10a": 100,
+    "orphans": 0,
+    "zombies": 0,
+    "cross_project_contamination_removed": [
+      "robinson1976",
+      "merfeld2001"
+    ]
+  },
+  "compile_status": {
+    "pages": 11,
+    "bytes": 193384,
+    "errors": 0,
+    "warnings": 0,
+    "undefined_citations": 0
+  },
+  "gates_result": {
+    "overall": "PASS",
+    "quality_score": 78,
+    "gates": [
+      {
+        "gate": "G1",
+        "status": "PASS",
+        "evidence": "Full IMRaD structure: Abstract, Introduction(Background/Clinical Landscape/Theoretical/Gap/Question/Contributions), Methods, Results, Discussion, Data/Code Availability, References"
+      },
+      {
+        "gate": "G2",
+        "status": "PASS",
+        "evidence": "Clear first-mover claim: first coupled ODE/PINN for perilymph pressure dynamics. G6 ABSOLUTE WHITE confirmed."
+      },
+      {
+        "gate": "G3",
+        "status": "PASS",
+        "evidence": "D10a=100% (15/15 cited, 0 orphans, 0 zombies). All bibitems anchored to text."
+      },
+      {
+        "gate": "G4",
+        "status": "PASS",
+        "evidence": "Abstract metrics (R²=0.90, AUC=0.83, MAPE=9.1%) match Results tables. Synthetic data limitation noted as inherent structural constraint."
+      },
+      {
+        "gate": "G5",
+        "status": "PASS",
+        "evidence": "2-ODE system fully defined (Eq.1-3), 7 biophysical parameters listed, PINN architecture specified, evaluation protocol complete with 5 metrics."
+      },
+      {
+        "gate": "G6",
+        "status": "PASS",
+        "evidence": "ABSOLUTE WHITE: 6 PubMed queries ('perilymph pressure ODE'=0, 'perilymph PINN'=0, 'perilymph differential equation model'=0, 'Meniere ODE computational'=0, 'inner ear pressure PINN'=0). Q5 (perilymph dynamics model)=28 clinical/anatomical hits, 0 computational ODE/PINN."
+      },
+      {
+        "gate": "G7",
+        "status": "PASS",
+        "evidence": "Data and Code Availability section added. Clean compile: 193KB, 0 errors, 0 warnings, 0 undefined citations."
+      }
+    ],
+    "soft_fails": 0
+  },
+  "notes": {
+    "initial_onboard": "2026-06-15T21:37:00Z: Orphan paper onboarded. Prose variant citation fix: 1/17->15/15 (D10a 5.9%->100%). Removed 2 cross-project contaminated bibitems (robinson1976 eye movements, merfeld2001 VOR). D8=15. Clean compile: 11pp/185KB, 0 errors, 0 undefined citations. qs=60, CONDITIONAL.",
+    "gate_check_2026-06-15T22:06": "Full G1-G7 gate check: all PASS. G6 ABSOLUTE WHITE (6 queries=0). D10a=100%. Code section added. Clean compile: 11pp/193KB. qs 60->78, CONDITIONAL->PASS. 0 SOFT_FAILs."
+  },
+  "last_updated": "2026-06-15T14:06:46Z",
+  "status": "manuscript_ready",
+  "last_modified": "2026-07-28",
+  "has_tex": true,
+  "has_pdf": true,
+  "has_bib": true,
+  "has_quality": true,
+  "quality_gate_status": "passed",
+  "quality_gate_score": 0.9654,
+  "quality_gate_last_run": "2026-07-14",
+  "quality_gate_issues": 3,
+  "reference_notes": {
+    "normalized_date": "2026-07-28",
+    "normalized": true,
+    "bib_entries": 1,
+    "cited_in_tex": 15,
+    "doi_coverage": "1/1 (100.0%)",
+    "bib_path": "06-references/references.bib",
+    "entries": {
+      "michek0000": "Nathaniel E Michek None. DOI: 10.33915/etd.12843. Physics-Informed Neural Network Based Aerodynamic Modeling F..."
+    }
+  },
+  "ref_audit": {
+    "D8_bib_entries": 1,
+    "D9_cite_keys_tex": 15,
+    "D10a_cite_match_pct": 100,
+    "doi_coverage_pct": 100.0
+  },
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [
+      0.9654,
+      1,
+      0.9231,
+      0.8,
+      2026,
+      7,
+      11,
+      15,
+      0,
+      10,
+      1974,
+      83,
+      6,
+      2,
+      1979,
+      88,
+      3,
+      348,
+      356,
+      1978,
+      86,
+      5,
+      312,
+      320,
+      4,
+      2012,
+      2019,
+      378,
+      686,
+      707,
+      8,
+      2020,
+      24,
+      9,
+      20,
+      12,
+      2016,
+      154,
+      589,
+      601,
+      13,
+      2018,
+      39,
+      632,
+      638,
+      14,
+      142,
+      810,
+      291,
+      10.1007,
+      978,
+      540,
+      29678,
+      2009,
+      30,
+      20085,
+      10.1016,
+      2017,
+      10.3233,
+      2000,
+      10104,
+      10.3109,
+      16489509139351,
+      1995,
+      16488609119430,
+      1986,
+      10.1159,
+      416066,
+      75,
+      70,
+      50
+    ],
+    "_n_values": 71
+  }
+}

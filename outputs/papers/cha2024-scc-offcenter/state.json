@@ -1,0 +1,27 @@
+{
+  "slug": "cha2024-scc-offcenter",
+  "title": "A computational study on off-center rotational dynamics of human semicircular canals with implications for real and virtual worlds",
+  "authors": "Cha S, Kim W",
+  "year": 2024,
+  "doi": "10.1016/j.heliyon.2024.e41035",
+  "pmid": "39720057",
+  "pmcid": "PMC11667610",
+  "journal": "Heliyon",
+  "direction": "方向2：半规管空间姿态",
+  "harvest_date": "2026-08-24",
+  "monitor_source": "literature-monitor 2026-08-24 08:18 (Tor 出口 104.244.72.132)",
+  "pdf_status": "downloaded",
+  "pdf_size": 5236364,
+  "pdf_source": "monitor-EPMC-pdf-render",
+  "pdf_path": "01-manuscript/cha2024-scc-offcenter.pdf",
+  "abstract_source": "europepmc",
+  "abstract": "This study investigates human semicircular canal (SCC) dynamics under off-center rotational conditions. Previous research has modeled human rotational perception and the dynamic response of the SCCs by assuming a centered rotation state, where the rotation axis aligns with the SCC's center. However, this assumption is not representative of most real-life rotational situations. Understanding the effect of the offset distance between the rotation axis and the centers of the SCCs is essential, yet many studies still rely on bandpass filter models that do not account for this factor. Experimental studies are also limited, and mock-up models have difficulty accurately depicting these dynamics due to the cupula's low Young's modulus. Therefore, this study models endolymph and cupula within the SCCs using the finite element method (FEM) and a two-way fluid-structure interaction (FSI) approach. The results compare cupula displacement across different rotational conditions: step velocity motion (SVM), step acceleration motion (SAM), and sinusoidal motion. Notably, as the offset distance increases, the gain factor increases while the long time constant decreases. This finding highlights the limitations of existing centered rotation-based bandpass filter models. Based on these findings, we propose a modified transfer function that accounts for offset distance, offering a more generalizable model for human rotational perception and the dynamic responses of the SCCs. Additionally, this study provides foundational data to address sensory conflict, spatial disorientation, and various applications that require a precise dynamics model.",
+  "note": "off-center 旋转动力学（旋转轴与SCC中心偏移），计算方法与本研究同路径；建议优先阅读②",
+  "status": "harvested",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

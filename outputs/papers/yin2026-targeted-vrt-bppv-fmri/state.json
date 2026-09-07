@@ -1,0 +1,24 @@
+{
+  "slug": "yin2026-targeted-vrt-bppv-fmri",
+  "title": "Targeted Vestibular Rehabilitation Accelerates Symptom Relief by Promoting Vestibular Compensation in BPPV Patients With Residual Symptoms: Evidence From Resting-State fMRI",
+  "authors": "Yin G, Liang Y, Huang Q, Li L, Lin J, Liu C, Li Z, Zeng X",
+  "year": 2026,
+  "doi": "10.1002/brb3.71696",
+  "pmid": "42625427",
+  "journal": "Brain and Behavior",
+  "direction": "BPPV/前庭康复",
+  "harvest_date": "2026-08-29",
+  "monitor_source": "~/.hermes/cron/output/02af0335f03a_20260829_080922.txt",
+  "pdf_status": "failed",
+  "pdf_size": null,
+  "pdf_source": null,
+  "note": "tVRT 加速 BPPV 残余症状缓解 + rs-fMRI 神经机制（94例）。Wiley 2026 新文 doi-fetch 全通道失败。2026-09-05 收割轮重试（NO_TOR=1 doi-fetch 直连）仍全通道失败，维持下轮重试。",
+  "status": "new",
+  "link": "https://doi.org/10.1002/brb3.71696",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

@@ -1,9 +1,13 @@
 # Synthos .gitignore — 严格过滤（2026-05-28 整理后版）
 
 # ============================================
-# 1. 论文稿件（不入库）
+# 1. 论文稿件（不入库, 2026-09-07 起例外: 论文级 state.json 入库 — git 即记忆 P035/P040）
 # ============================================
-/outputs/
+/outputs/*
+!/outputs/papers
+!/outputs/papers/*
+/outputs/papers/*/*
+!/outputs/papers/*/state.json
 /evolution-state.json
 /evolution-log.md
 

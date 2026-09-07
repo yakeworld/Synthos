@@ -1,0 +1,28 @@
+{
+  "slug": "kwon2026-imu-crp-bppv",
+  "title": "Feasibility and Preliminary Outcomes of a Wearable Inertial Measurement Unit-Guided Canalith Repositioning Procedure for Idiopathic Benign Paroxysmal Positional Vertigo",
+  "authors": "Kwon C, Shim DB, Joo JS, Go Y, Pastor CAC, Suh MW, Ku Y",
+  "year": 2026,
+  "doi": "10.21053/ceo.2026-00070",
+  "pmid": "42528373",
+  "pmcid": null,
+  "journal": "Ceylon Medical Journal (CEO)",
+  "direction": "方向4：BPPV/前庭康复 — IMU 引导复位（家庭/基层 BPPV 处理趋势）",
+  "harvest_date": "2026-08-28",
+  "monitor_source": "literature-monitor 2026-08-28 (rproxy-jabkit, ⭐ 方向4)",
+  "pdf_status": "downloaded",
+  "pdf_size": 702877,
+  "pdf_source": "doi-fetch direct (unpaywall)",
+  "pdf_path": "01-manuscript/kwon2026.pdf",
+  "pdf_pages": 45,
+  "abstract_source": "europepmc",
+  "abstract": "Self-administered canalith repositioning procedure (CRP) for BPPV is often limited by inaccurate head positioning. We evaluated the feasibility of an inertial measurement unit (IMU)-guided CRP system relative to specialist-performed CRP and explored head motion parameters associated with outcomes. Prospective comparative study (Dec 2019-June 2021), 88 patients with BPPV (74 women [84%]; mean [SD] age, 56.5 [15.7] years) underwent IMU-guided CRP with real-time audio feedback (IMU-CRP, n=44) or conventional CRP.",
+  "note": "IMU/可穿戴设备引导 CRP + 实时语音反馈, 直接支撑 bppv-pc 论文'家庭/基层 BPPV 处理临床空白'定位; 头部运动参数与结局关联分析",
+  "status": "harvested",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

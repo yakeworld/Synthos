@@ -1,0 +1,28 @@
+{
+  "slug": "durmus2025-smartphone-gait-bppv",
+  "title": "Diagnostic utility of smartphone-integrated gait analysis in the assessment of BPPV",
+  "authors": "Durmus K, Bora A, Sapci B, Al-Hazzar MK, Akti K, Kekul Sapci M, Altuntas EE",
+  "year": 2025,
+  "doi": "10.3389/fneur.2025.1728659",
+  "pmid": "41426988",
+  "pmcid": "PMC12716158",
+  "journal": "Frontiers in Neurology",
+  "direction": "方向4：BPPV/前庭康复 — 智能手机步态分析（家庭/基层评估趋势）",
+  "harvest_date": "2026-08-28",
+  "monitor_source": "literature-monitor 2026-08-28 (✅PDF 已下载, EPMC pdf=render)",
+  "pdf_status": "downloaded",
+  "pdf_size": 674310,
+  "pdf_source": "monitor-EPMC-pdf-render (cp 复用)",
+  "pdf_path": "01-manuscript/durmus2025-smartphone-gait-bppv.pdf",
+  "pdf_pages": 8,
+  "abstract_source": "europepmc",
+  "abstract": "BPPV is the most common vestibular disorder causing gait disturbances. Smartphone-based gait analysis has emerged as a portable, cost-effective alternative to laboratory-based assessments. Objective: evaluate the diagnostic utility of smartphone-based gait analysis in BPPV patients and its effectiveness in assessing treatment outcomes.",
+  "note": "智能手机步态分析评估 BPPV 及疗效 — 家庭/基层 BPPV 评估趋势佐证, 与 kwon2026 IMU-CRP 互补",
+  "status": "harvested",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

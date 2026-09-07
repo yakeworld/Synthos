@@ -1,0 +1,22 @@
+{
+  "type": "harvested_paper",
+  "harvest_date": "2026-08-19",
+  "monitor_source": "literature-monitor 2026-08-19 (rproxy-jabkit)",
+  "title": "Design and Implementation of an Eyewear-Integrated Infrared Eye-Tracking System",
+  "authors": "Carlo Pezzoli; Marco Brando Mario Paracchini; Daniele Maria Crafa; Marco Carminati; Luca Merigo; Tommaso Ongarello; Marco Marcon",
+  "year": 2026,
+  "journal": "Sensors",
+  "doi": "10.3390/s26072065",
+  "direction": "3D 虹膜形状估计",
+  "pdf_status": "manual (MDPI Cloudflare 拦截)",
+  "stage": "harvested",
+  "next_steps": [
+    "knowledge-extraction (EXT) 待执行"
+  ],
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

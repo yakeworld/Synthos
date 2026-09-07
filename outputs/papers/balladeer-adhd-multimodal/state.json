@@ -1,0 +1,56 @@
+{
+  "project_name": "balladeer-adhd-multimodal",
+  "direction": "ADHD 儿童/青少年同步 EEG+眼动+EDA 多模态数据集 (BALLADEER) — 模式D 跨模态动力学: 扫视锁定 EEG / 微扫视×EEG微状态耦合 / 瞳孔-EDA相干 / ADHD 眼动亚型聚类",
+  "quality_score": null,
+  "stage": "registered_download_pending",
+  "core_papers": 1,
+  "literature_papers": 0,
+  "source_note": "2026-08-16 文献监控第33轮 P0.5 ⭐ 发现 (Sci Data, doi 10.1038/s41597-026-06758-7, PMID 41680221); figshare DOI 10.6084/m9.figshare.28676042 核验存在",
+  "hypotheses": {
+    "H01_saccade_locked_eeg": {
+      "status": "pending",
+      "finding": "扫视锁定 EEG 微状态 × ADHD 组间差异 (原作者仅做跨模态 ML 分类)"
+    },
+    "H02_microsaccade_eeg_coupling": {
+      "status": "pending",
+      "finding": "微扫视动力学 × EEG 微状态时序耦合"
+    },
+    "H03_pupil_eda_coherence": {
+      "status": "pending",
+      "finding": "瞳孔-EDA 自主神经相干 (arousal 维度)"
+    },
+    "H04_adhd_subtype_clustering": {
+      "status": "pending",
+      "finding": "眼动特征 ADHD 亚型无监督聚类"
+    }
+  },
+  "data_assets": {
+    "figshare_article_id": 28676042,
+    "file": "BALLADEER ADHD DATASET.zip",
+    "size_bytes": 13633870282,
+    "download_url": "https://ndownloader.figshare.com/files/53280374",
+    "md5": "c7e7b5d57855ada4a380f667d1a5cf85",
+    "download_status": "PENDING — 2026-08-17 实测: 直连 ~20KB/s, Tor ~11KB/s, 13.6GB 不可行 (需 ~190h); 待高速代理/镜像或分段下载",
+    "api_403": "figshare API 直连 403 (DC IP 被 Cloudflare 拦截), Tor 出口可达"
+  },
+  "pipeline_status": {
+    "acq": false,
+    "ext": false,
+    "asc": false,
+    "arg": false,
+    "ver": false
+  },
+  "next_steps": [
+    "下载: 代理池高速出口或 figshare 分段下载 (13.6GB), 验证 md5 c7e7b5...",
+    "解包核实: 文件清单 + 被试数 (儿童/青少年 ADHD + 神经典型对照) + 模态对齐验证",
+    "H01 起跑: 扫视锁定 EEG 提取 (EEGLAB/MNE)",
+    "注: 2026 主力管线直接匹配 (模式D 跨模态动力学), 神经发育障碍眼动族首个公共多模态数据"
+  ],
+  "last_modified": "2026-08-17",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

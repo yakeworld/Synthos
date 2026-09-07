@@ -1,0 +1,23 @@
+{
+  "slug": "bates2026-vestibular-reality-monitoring",
+  "title": "Vestibular Perturbation Disrupts Source and Reality Monitoring",
+  "authors": "Bates et al.",
+  "year": 2026,
+  "doi": "10.64898/2026.08.07.743488",
+  "journal": "bioRxiv preprint (PPR1298038)",
+  "direction": "半规管空间姿态",
+  "harvest_date": "2026-08-17",
+  "monitor_source": "literature-monitor 2026-08-17 08:5x",
+  "pdf_status": "downloaded",
+  "pdf_size": 649298,
+  "pdf_pages": 45,
+  "pdf_source": "doi-fetch unpaywall direct (rproxy-jabkit, harvest retry)",
+  "note": "Vestibular perturbation disrupts source/reality monitoring - vestibular influence on cognition. Monitor phase bioRxiv 403, harvest retry via unpaywall hit.",
+  "status": "harvested",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

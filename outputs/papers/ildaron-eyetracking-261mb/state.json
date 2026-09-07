@@ -1,0 +1,35 @@
+{
+  "paper": "ildaron-eyetracking-261mb",
+  "stage": "data_ready_extracted",
+  "created": "2026-09-02",
+  "download_status": {
+    "source": "ildaron eye-tracking (261MB archive)",
+    "file": "04-data/archive.zip",
+    "size_bytes": 261288664,
+    "status": "COMPLETE + VERIFIED (TESTZIP_OK files=10311 bad=None, 09-02 14:32)",
+    "extracted": "2026-09-03 07:xx in-run (10311 files -> 04-data/raw/)"
+  },
+  "data_layout": {
+    "root": "04-data/raw",
+    "image_for_train": "9796 jpg (1.jpg..9796.jpg, no gaps)",
+    "dataset_example": "514 files (jpg only, no annotation)",
+    "label_for_rename": "all_annotation.txt: 14763 rows x 41 fields"
+  },
+  "annotation_probe_2026_09_04": {
+    "fields": "0-11 ellipse A (8x2 pts) + 12-23 ellipse B (8x2 pts) + 24/25 ids + 26-27 headpose x/y (range 0-1279/0-799, likely px) + 28-31 quaternion/angles + 32-40 iris centers x2 eyes (x,y,z-ish)",
+    "mapping": "col24 = frame/group id 0-1279 (1280 unique, monotonic NON-decreasing = session-interleaved order); 2-24 rows per id (avg 11.5); col25 = 800 unique ids (7-33 rows each) = second-level session grouping. row->jpg mapping NOT resolvable from file contents alone: only 1279/1280 of col24 ids exist as image_for_train/N.jpg -> archive image set is a subset or naming was pre-rename (label_for_rename = ids refer to ORIGINAL numbering, 1280 frames annotated vs 9796 images available; 8516 images unannotated).",
+    "conclusion_3d_iris_line": "2D iris ellipse + headpose + per-eye center available per frame; NO real depth (center z field present but single-camera -> not metric depth). Fails G14 input spec (paired RGB + real depth needed) -> 3D iris geometry line NOT viable from this dataset. Usable for: 2D iris shape regression, head-pose-conditioned ellipse prediction, calibration/occlusion robustness probes. P1 demoted to P2 (conditional: only if 2D iris shape line revived)."
+  },
+  "notes": "per-frame iris/eye annotation with 3D pose fields. G14 input spec check: FAILED (no real depth). Probe done in-run 09-04 01:1x, see annotation_probe_2026_09_04.",
+  "open_questions": [
+    "original numbering convention for col24 ids (source repo README/paper needed for license + mapping)",
+    "col25 800-id grouping semantics (session? subject?)",
+    "license/provenance (source repo paper)"
+  ],
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

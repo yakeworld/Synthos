@@ -1,0 +1,24 @@
+{
+  "slug": "baquerizo2026-adolescent-saccadometry",
+  "title": "Normative Values for Prosaccade and Antisaccade Eye Movements in Adolescents Using a New Saccadometry Test.",
+  "authors": "Baquerizo-Burgos J, Baquerizo-Burgos E, Puga-Tejada M, Baquerizo Y Flores J.",
+  "year": 2026,
+  "doi": "10.3766/jaaa.250046",
+  "pmid": "42403969",
+  "pmcid": null,
+  "journal": "Journal of the American Academy of Audiology",
+  "direction": "Direction 3: ADHD eye tracking / saccade norms",
+  "harvest_date": "2026-09-01",
+  "monitor_source": "literature-monitor 02af0335f03a 2026-09-01 (rproxy pipeline)",
+  "pdf_status": "failed",
+  "pdf_size": 0,
+  "pdf_source": null,
+  "note": "Normative values for pro/antisaccade in adolescents via a new saccadometry test. Directly relevant to the Listing-plane thickness / microtremor niche. JAAA (Elsevier); pmcid=None (indexing lag), PDF manual.",
+  "status": "manual",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

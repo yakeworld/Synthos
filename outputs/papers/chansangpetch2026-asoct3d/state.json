@@ -1,0 +1,23 @@
+{
+  "slug": "chansangpetch2026-asoct3d",
+  "title": "Comparable performance of 3D and 2D anterior segment optical coherence tomography in predicting intraocular pressure reduction following cataract surgery",
+  "authors": "Chansangpetch S and Phinyo P and Patumanond J and Choovuthayakorn J and Lin SC",
+  "year": 2026,
+  "doi": "10.1371/journal.pone.0345582",
+  "journal": "PLoS One",
+  "direction": "方向1：瞳孔/虹膜分割、眼球三维建模",
+  "harvest_date": "2026-08-20",
+  "monitor_source": "literature-report-2026-08-20",
+  "pdf_status": "downloaded",
+  "pdf_size": 1940967,
+  "pdf_source": "monitor-unpaywall",
+  "abstract_source": "europepmc",
+  "note": "3D 眼前节成像临床增量价值直接验证（3D vs 2D AS-OCT→IOP 预测）",
+  "status": "harvested",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

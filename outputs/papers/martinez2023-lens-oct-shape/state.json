@@ -1,0 +1,26 @@
+{
+  "slug": "martinez2023-lens-oct-shape",
+  "title": "Estimation of the full shape of the crystalline lens from OCT: validation using stretched donor lenses",
+  "authors": "Martinez-Enriquez E, Maceo Heilman B, de Castro A, Mohamed A, Ruggeri M, Zvietcovich F, Manns F, Marcos S",
+  "year": 2023,
+  "doi": "10.1364/boe.493795",
+  "pmid": "37799671",
+  "pmcid": "PMC10549758",
+  "journal": "Biomed Opt Express 14(8):4261-4276",
+  "direction": "3D虹膜形状估计",
+  "harvest_date": "2026-09-03",
+  "monitor_source": "literature-monitor 2026-09-03 08:07 (方向5 3D虹膜形状估计)",
+  "pdf_status": "downloaded",
+  "pdf_source": "EPMC pdf=render PMC10549758（首次234B重定向失败，5s后重试得真PDF 4969267B）；doi-fetch 全通道 NO_RESULT；Optica 直连 Cloudflare 拦截",
+  "pdf_bytes": 4969267,
+  "pdf_md5_prefix": "dec195d6",
+  "pdf_added_at": "2026-09-03T08:48:00+08:00",
+  "note": "OCT 晶状体全形状重建+供体晶状体验证，前段几何重建参考方法。",
+  "status": "harvested",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

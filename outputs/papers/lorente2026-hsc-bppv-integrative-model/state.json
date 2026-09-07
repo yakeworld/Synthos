@@ -1,0 +1,25 @@
+{
+  "slug": "lorente2026-hsc-bppv-integrative-model",
+  "title": "Pathophysiological Variants of Horizontal Semicircular Canal Benign Paroxysmal Positional Vertigo: Toward an Integrative Model Based on Otoconial Location and Cupular Dynamics",
+  "authors": "Lorente-Piera J, Manrique-Huarte R, Pérez-Fernández N",
+  "year": 2026,
+  "doi": "10.3390/audiolres16040117",
+  "pmid": "42645128",
+  "pmcid": null,
+  "journal": "Audiology research (MDPI)",
+  "direction": "方向4: BPPV — HSC-BPPV 整合模型（直接对应 ac-bppv 假说）",
+  "harvest_date": "2026-09-05",
+  "monitor_source": "~/.hermes/cron/output/02af0335f03a_20260905_080805.txt",
+  "pdf_status": "failed",
+  "pdf_size": null,
+  "pdf_source": null,
+  "note": "MDPI 2026 新文，doi-fetch 3 通道全部 NO_RESULT（libgen 各镜像 + annas + direct），EPMC 无 PMCID（收录时滞，技能 #18）。scoping review（26 研究）建立 6 种 HSC-BPPV 机械配置整合模型（long-arm/short-arm canalolithiasis, canal-side/utricular-side cupulolithiasis, canalith jam, light cupula）— 直接对应 ac-bppv 假说，建议精读。MDPI 新文 >1 月年后可再试直连（skill #24）。",
+  "status": "new-pdf-pending",
+  "link": "https://doi.org/10.3390/audiolres16040117",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}

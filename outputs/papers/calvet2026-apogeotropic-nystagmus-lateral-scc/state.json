@@ -1,0 +1,24 @@
+{
+  "slug": "calvet2026-apogeotropic-nystagmus-lateral-scc",
+  "title": "Persistent apogeotropic positional nystagmus of the lateral semicircular canal: clinical features and association with vestibular atelectasis on delayed 3D-FLAIR MRI",
+  "authors": "Calvet L, Regrain E, Seidermann L, Labrousse M, Dubernard X",
+  "year": 2026,
+  "doi": "10.3389/fneur.2026.1890082",
+  "pmid": "42630146",
+  "journal": "Frontiers in Neurology",
+  "direction": "BPPV/前庭康复",
+  "harvest_date": "2026-08-29",
+  "monitor_source": "~/.hermes/cron/output/02af0335f03a_20260829_080922.txt",
+  "pdf_status": "downloaded",
+  "pdf_size": 636583,
+  "pdf_source": "doi-fetch direct (unpaywall)",
+  "note": "apogeotropic nystagmus lateral canal + vestibular atelectasis (3D-FLAIR MRI)。与 ac-bppv 假说（耳石入管/半规管转换）直接相关，monitor 标记优先精读。",
+  "status": "harvested",
+  "link": "https://doi.org/10.3389/fneur.2026.1890082",
+  "data_provenance": {
+    "_source": "backfill_provenance.py: 03-code/04-data/07-quality/05-figures *.json",
+    "_note": "实验数值溯源台账 (P040a, 2026-09-07 reward-integrity), L0.5 凡数必源核对用",
+    "values": [],
+    "_n_values": 0
+  }
+}
