@@ -50,6 +50,51 @@ def git(args, cwd):
     subprocess.run(["git"] + args, cwd=cwd, capture_output=True, text=True)
 
 
+def run_scenario(fx, fault_mode, init_consecutive, score_before):
+    """跑单周期故障注入。fault_mode: 'rc1' | 'timeout' | 'empty_stdout' | 'ok'"""
+    state_path = os.path.join(fx, "evolution-state.json")
+    with open(state_path, "w") as f:
+        json.dump({"score": score_before, "status": "healthy", "state": "healthy",
+                   "consecutive_healthy": init_consecutive, "cycle": 0,
+                   "diagnostics": {k: 1.0 for k in
+                                   ("structural", "benchmark", "constitutional",
+                                    "optimize", "coverage", "absorption",
+                                    "liveness", "behavior", "overall")},
+                   "knowledge_pipeline": {}}, f)
+    foreign = os.path.join(fx, "foreign.txt")
+    with open(foreign, "w") as f:
+        f.write("pre-staged unrelated file\n")
+    subprocess.run(["git", "add", "foreign.txt"], cwd=fx, capture_output=True, text=True)
+
+    mod = load_autoloop()
+    mod.BASE_DIR = fx
+    real_run = mod.subprocess.run
+
+    def fake_run(cmd, **kw):
+        joined = " ".join(str(c) for c in cmd)
+        if "diagnose.py" in joined:
+            if fault_mode == "rc1":
+                return SimpleNamespace(returncode=1, stdout="",
+                                       stderr="injected diagnose failure")
+            if fault_mode == "timeout":
+                raise subprocess.TimeoutExpired(cmd=cmd, timeout=kw.get("timeout", 120))
+            if fault_mode == "empty_stdout":
+                return SimpleNamespace(returncode=0, stdout="", stderr="")
+            return SimpleNamespace(returncode=0,
+                                   stdout="OVERALL: 0.9512\nBEHAVIOR: 0.6\n",
+                                   stderr="")
+        return real_run(cmd, **kw)
+
+    mod.subprocess.run = fake_run
+    raised = None
+    try:
+        mod.auto_loop(1, max_cycles=1)
+    except Exception as e:
+        raised = e
+    st = json.load(open(state_path))
+    return st, raised, foreign
+
+
 def main():
     fx = tempfile.mkdtemp(prefix="txfixture_")
     try:
@@ -67,47 +112,10 @@ def main():
         git(["add", "skills"], fx)
         git(["commit", "-qm", "fixture init"], fx)
 
-        # 3. 初始 state: score=0.9, healthy, consecutive=0, diagnostics 全 1.0
-        diag_ok = {k: 1.0 for k in
-                   ("structural", "benchmark", "constitutional", "optimize",
-                    "coverage", "absorption", "liveness", "behavior", "overall")}
-        state_path = os.path.join(fx, "evolution-state.json")
-        with open(state_path, "w") as f:
-            json.dump({"score": 0.9, "status": "healthy", "state": "healthy",
-                       "consecutive_healthy": 0, "cycle": 0,
-                       "diagnostics": diag_ok,
-                       "knowledge_pipeline": {}}, f)
-        git(["add", "evolution-state.json"], fx)
-        git(["commit", "-qm", "fixture state"], fx)
-
-        # 4. 预先 staged 的无关 foreign.txt (验证不被吞并/撤销)
-        foreign = os.path.join(fx, "foreign.txt")
-        with open(foreign, "w") as f:
-            f.write("pre-staged unrelated file\n")
-        git(["add", "foreign.txt"], fx)  # staged, 未 commit
-
-        # 5. 载入 auto-loop, 重定向 BASE_DIR 到夹具
-        mod = load_autoloop()
-        mod.BASE_DIR = fx
-        real_run = mod.subprocess.run
-
-        def fake_run(cmd, **kw):
-            joined = " ".join(str(c) for c in cmd)
-            if "diagnose.py" in joined:
-                # 故障注入: diagnose 崩溃
-                return SimpleNamespace(returncode=1, stdout="", stderr="injected diagnose failure")
-            return real_run(cmd, **kw)
-
-        mod.subprocess.run = fake_run
-
-        # 6. 跑单周期
-        try:
-            mod.auto_loop(1, max_cycles=1)
-        except Exception as e:
-            print(f"  (auto_loop raised {type(e).__name__}: {e} — 记录后继续断言 state)")
-
-        # 7. 断言
-        st = json.load(open(state_path))
+        # ===== 场景 A: diagnose rc=1 (原 T1-T5c) =====
+        st, raised, foreign = run_scenario(fx, "rc1", 0, 0.9)
+        if raised:
+            print(f"  (场景A auto_loop raised {type(raised).__name__}: {raised})")
         check("T1 diagnose 失败 → status 不得为 healthy",
               st.get("status") != "healthy", f"status={st.get('status')}")
         check("T2 consecutive_healthy 不得增加 (保持 0)",
@@ -129,11 +137,51 @@ def main():
         check("T5b 无关 foreign.txt 未被吞进任何 commit (保持 staged 独立)",
               "foreign.txt" not in committed,
               f"foreign in commits: {'foreign.txt' in committed}")
-        porcelain = subprocess.run(["git", "status", "--porcelain"], cwd=fx,
-                                   capture_output=True, text=True).stdout
-        check("T5c 失败后 foreign.txt 仍为 staged (A  前缀), 未被 reset 丢失",
-              any(l.strip().endswith("foreign.txt") for l in porcelain.splitlines()),
-              f"porcelain: {porcelain.strip()[:100]!r}")
+        # T5c (评审四轮强化): porcelain 行名检查太弱 (git reset 后 ?? 前缀仍匹配文件名)
+        # → 断言 index 级: foreign.txt 在 index 中且有暂存内容 (ls-files -s 非空)。
+        idx = subprocess.run(["git", "ls-files", "-s", "foreign.txt"], cwd=fx,
+                             capture_output=True, text=True).stdout.strip()
+        check("T5c 失败后 foreign.txt 仍在 git index (staged 对象未丢失)",
+              idx != "" and "foreign.txt" in idx, f"index: {idx!r}")
+        if idx:
+            blob = idx.split()[1]
+            blob_ct = subprocess.run(["git", "cat-file", "-p", blob], cwd=fx,
+                                     capture_output=True, text=True).stdout
+            check("T5c2 index 内容保全 (暂存对象内容 = 原文件内容)",
+                  "pre-staged unrelated file" in blob_ct, f"blob: {blob_ct[:40]!r}")
+        else:
+            check("T5c2 index 内容保全 (暂存对象内容 = 原文件内容)", False, "no blob")
+
+        # ===== 场景 B: diagnose TimeoutExpired (评审四轮: 旧版超时在状态降级前抛出) =====
+        st, raised, _ = run_scenario(fx, "timeout", 7, 0.9)
+        check("T6 诊断超时 → status degraded (不得遗留旧 healthy)",
+              st.get("status") == "degraded",
+              f"status={st.get('status')}" + (f" raised={raised}" if raised else ""))
+        check("T7 诊断超时 → 非零 consecutive_healthy 归零 (7→0)",
+              st.get("consecutive_healthy") == 0,
+              f"consecutive={st.get('consecutive_healthy')}")
+        check("T7b 诊断超时 → next_action 含 HALT",
+              "HALT" in str(st.get("next_action", "")), f"next_action={st.get('next_action')!r}")
+        check("T7c 诊断超时 → 分数不更新 (保持 0.9, 故障周期不写自算分数)",
+              abs(st.get("score", -1) - 0.9) < 1e-9, f"score={st.get('score')}")
+
+        # ===== 场景 C: rc=0 但 stdout 空 (无效成功输出不得计为健康周期) =====
+        st, raised, _ = run_scenario(fx, "empty_stdout", 3, 0.88)
+        check("T8 rc=0 但无 OVERALL 输出 → status degraded (无效输出=故障)",
+              st.get("status") == "degraded", f"status={st.get('status')}")
+        check("T8b rc=0 无效输出 → consecutive 归零 (3→0)",
+              st.get("consecutive_healthy") == 0, f"consecutive={st.get('consecutive_healthy')}")
+
+        # ===== 场景 D: 正常诊断 (OVERALL 解析) → healthy + 计数 +1 + 分数更新 =====
+        st, raised, _ = run_scenario(fx, "ok", 4, 0.87)
+        check("T9 正常诊断 → status healthy 且 consecutive 4→5",
+              st.get("status") == "healthy" and st.get("consecutive_healthy") == 5,
+              f"status={st.get('status')} consecutive={st.get('consecutive_healthy')}")
+        check("T9b 正常诊断 → 分数=诊断 OVERALL 原值 (0.9512, 凡数必源)",
+              abs(st.get("score", -1) - 0.9512) < 1e-6, f"score={st.get('score')}")
+        check("T9c 正常诊断 → next_action=continue 且 auto_trigger 开",
+              st.get("next_action") == "continue" and st.get("auto_trigger_active") is True,
+              f"next_action={st.get('next_action')!r} trigger={st.get('auto_trigger_active')}")
     finally:
         shutil.rmtree(fx, ignore_errors=True)
 

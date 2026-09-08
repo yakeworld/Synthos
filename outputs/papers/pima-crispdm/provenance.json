@@ -1,0 +1,33 @@
+{
+ "mode": "STRICT",
+ "_note": "P0-1 真实闭环试点 (评审四轮 2026-09-08): 声明—来源绑定台账。每条记录绑定: 值+指标+单位+run receipt+结果文件+完整SHA-256+tex行号。file_hash 双锚定 = 结果文件 sha256 + 手稿 tex sha256 (防'结果文件对但声明文本被改')。",
+ "provenance": {
+  "pidd_n": {
+   "value": 768,
+   "metric": "n_subjects",
+   "unit": "subjects",
+   "run": "python3 03-code/crisp_dm_pima_unified.py (CRISP-DM Helix, 2026-06-20, rc=0)",
+   "result_file": "04-data/definitive_ablation.json",
+   "file_hash": "filesha256:4003daa33e82cca712cbb1e45e9631bfb02a937316750f44f69c692740fd85ff texsha256:d73c2104750fec99076e7bf11418617bdfb656273eafa62ca76f4bf841c79be3",
+   "tex_location": "130"
+  },
+  "pidd_prevalence": {
+   "value": 34.9,
+   "metric": "prevalence",
+   "unit": "%",
+   "run": "python3 03-code/crisp_dm_pima_unified.py (CRISP-DM Helix, 2026-06-20, rc=0)",
+   "result_file": "04-data/definitive_ablation.json",
+   "file_hash": "filesha256:4003daa33e82cca712cbb1e45e9631bfb02a937316750f44f69c692740fd85ff texsha256:d73c2104750fec99076e7bf11418617bdfb656273eafa62ca76f4bf841c79be3",
+   "tex_location": "130"
+  },
+  "threshold_f1": {
+   "value": 0.707,
+   "metric": "f1",
+   "unit": "score",
+   "run": "python3 03-code/crisp_dm_pima_unified.py (threshold sweep, 2026-06-20, rc=0)",
+   "result_file": "04-data/definitive_experiment.json",
+   "file_hash": "filesha256:2a815c25fee8f982e9b31a571fa230cc8d805b89d70804d047f866dcf3d18a1e texsha256:d73c2104750fec99076e7bf11418617bdfb656273eafa62ca76f4bf841c79be3",
+   "tex_location": "229"
+  }
+ }
+}

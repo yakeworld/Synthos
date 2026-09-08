@@ -279,10 +279,11 @@ for tf in trace_files:
                             atom_unverified += 1  # 无产物声明 → 未证实, 不计入 (奖励单调性)
                         else:
                             p = of if os.path.isabs(of) else os.path.join(base_dir, of)
-                            if os.path.exists(p):
-                                atom_done += 1  # 产物存在 → 证实
+                            # 评审四轮: 目录不是产物 (output_file="." 时 exists 为真 → 假证实)
+                            if os.path.isfile(p):
+                                atom_done += 1  # 产物是真实文件 → 证实
                             else:
-                                atom_unverified += 1  # 声称产物但不存在 → 未证实
+                                atom_unverified += 1  # 声称产物但不存在/是目录 → 未证实
     except Exception:
         pass
 activation_pct = act_ct / len(trace_files) if trace_files else 0.0

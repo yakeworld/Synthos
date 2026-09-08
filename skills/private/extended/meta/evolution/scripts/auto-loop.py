@@ -302,13 +302,29 @@ def auto_loop(current_cycle, max_cycles=MAX_CYCLES):
     else:
         print("Commit: (no targets modified — 跳过 improvement commit, 不产生空/越界提交)")
     
-    # === DIAGNOSE ===
-    result = subprocess.run(
-        ["python3", "-u", "skills/private/extended/meta/evolution/scripts/diagnose.py"],
-        capture_output=True, text=True, cwd=BASE_DIR, timeout=120
-    )
-    print(result.stdout)
-    diagnose_rc = result.returncode  # 事务边界: 诊断退出码是"本轮是否可判健康"的裁决源
+    # === DIAGNOSE === (事务门, 评审四轮 P1-3 异常矩阵:
+    # 旧版只有 rc≠0 分支 — TimeoutExpired 在状态降级前抛出, rc=0 但 stdout 空/无 OVERALL
+    # 被记成健康周期, improvement commit 失败被打印后继续判健康。现: 三类故障统一
+    # 收敛到 diagnose_fault, 任何一类 → degraded + HALT + 不 auto-continue)
+    diagnose_rc = None
+    diagnose_output = ""
+    diagnose_fault = None
+    try:
+        result = subprocess.run(
+            ["python3", "-u", "skills/private/extended/meta/evolution/scripts/diagnose.py"],
+            capture_output=True, text=True, cwd=BASE_DIR, timeout=120
+        )
+        diagnose_rc = result.returncode
+        diagnose_output = result.stdout or ""
+        print(diagnose_output)
+        if diagnose_rc == 0 and "OVERALL" not in diagnose_output:
+            diagnose_fault = "invalid_output(rc=0, no OVERALL in stdout)"
+    except subprocess.TimeoutExpired as e:
+        diagnose_fault = f"TimeoutExpired({getattr(e, 'timeout', '?')}s)"
+        print(f"[FAULT] diagnose timeout: {diagnose_fault}")
+    except Exception as e:
+        diagnose_fault = f"{type(e).__name__}: {e}"
+        print(f"[FAULT] diagnose raised: {diagnose_fault}")
 
     # === UPDATE STATE ===
     with open(state_path) as f:
@@ -317,28 +333,28 @@ def auto_loop(current_cycle, max_cycles=MAX_CYCLES):
     result2 = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True, cwd=BASE_DIR)
     state['git_commit'] = result2.stdout.strip()
     state['cycle'] = current_cycle
-    # 事务门 (reward-integrity 实验2, 评审三轮 P1, 2026-09-07):
-    # 旧版无条件写 status='healthy' + consecutive_healthy+=1 — diagnose 崩溃 (rc≠0)
-    # 也被记成健康周期, 递归守卫 (line ~444) 据此继续晋级 → 失败冒充 healthy。
-    # 修正: diagnose 失败 → status='degraded', consecutive_healthy 归零,
-    #       next_action 置 HALT, 递归守卫 (status!=healthy) 自然停止, 不得 auto-continue。
-    if diagnose_rc == 0:
+    # 事务门 (reward-integrity 实验2 三轮 + 异常矩阵 四轮):
+    # 健康周期 = diagnose 无故障 (无超时/无异常/rc=0/输出含 OVERALL)
+    # 且 (无改进目标 或 改进 commit 成功)。任一不满足 → degraded, 归零, HALT。
+    diagnose_ok = (diagnose_rc == 0 and diagnose_fault is None)
+    if diagnose_ok:
         state['status'] = 'healthy'
         state['state'] = 'healthy'
         state['consecutive_healthy'] = state.get('consecutive_healthy', 0) + 1
     else:
+        _reason = diagnose_fault if diagnose_fault else f"rc={diagnose_rc}"
         state['status'] = 'degraded'
         state['state'] = 'degraded'
-        state['consecutive_healthy'] = 0
-        state['next_action'] = (f'HALT: diagnose failed (rc={diagnose_rc}) — '
+        state['consecutive_healthy'] = 0  # 非零计数也归零 (评审四轮: 初始为0证明不了清零)
+        state['next_action'] = (f'HALT: diagnose fault ({_reason}) — '
                                 'cycle NOT counted healthy; manual review required, no auto-continue')
-        print(f"\n[HALT] diagnose returncode={diagnose_rc} → cycle marked degraded, "
+        print(f"\n[HALT] diagnose fault: {_reason} → cycle marked degraded, "
               f"consecutive_healthy reset, auto-continuation stopped")
     state['last_run'] = datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
     state['phase'] = 'evolution'
     # 事务门: next_action/auto_trigger 只在 diagnose 成功时置 continue —
     # 失败分支的 HALT next_action 不得被覆盖 (否则下一轮 cron/递归 仍会放行)。
-    if diagnose_rc == 0:
+    if diagnose_ok:
         state['next_action'] = 'continue'
         state['auto_trigger_active'] = True
     else:
@@ -350,7 +366,9 @@ def auto_loop(current_cycle, max_cycles=MAX_CYCLES):
     # (0.9638 vs 0.9769). 现: score = diagnose.py 打印的 OVERALL 原值 (凡数必源).
     diag = {}
     overall_8d = None
-    for line in result.stdout.split('\n'):
+    # 评审四轮: 诊断故障 (超时/异常/无效输出) 时不得解析分数 — score 保持上一周期值,
+    # 本轮已判 degraded。旧版此处引用 result (超时路径未绑定) 直接抛 UnboundLocalError。
+    for line in diagnose_output.split('\n'):
         s = line.strip()
         if '=== STATE SYNC ===' in s:
             break  # 同步自检段不参与维度解析 (2026-09-06: state 修复后此段开始真实输出)
@@ -374,14 +392,14 @@ def auto_loop(current_cycle, max_cycles=MAX_CYCLES):
 
     if overall_8d is not None:
         diag['overall'] = round(overall_8d, 4)
-    # 兼容: 解析失败时回退到旧 6 维权重, 并标注非官方值
-    if 'overall' not in diag:
-        weights = {'structural': 0.25, 'benchmark': 0.25, 'optimize': 0.10, 'coverage': 0.10, 'absorption': 0.10, 'constitutional': 0.20}
-        overall = sum(diag.get(k, 0) * w for k, w in weights.items())
-        diag['overall'] = round(overall, 4)
-        diag['overall_fallback'] = 'legacy-6dim-weight (diagnose OVERALL parse failed)'
-    state['diagnostics'] = diag
-    state['score'] = diag['overall']
+    # 评审四轮: 分数写入仅限诊断有效 — 故障周期 (超时/异常/无OVERALL) 的"回退 6 维权重"
+    # 是自算值, 写入会与官方 OVERALL 漂移且为故障周期提供虚假度量 → 分数保持上一周期。
+    if diagnose_ok and 'overall' in diag:
+        state['diagnostics'] = diag
+        state['score'] = diag['overall']
+    else:
+        state['diagnostics'] = {**state.get('diagnostics', {}), **diag,
+                                'score_source': 'preserved (diagnose fault, no score update)'}
     
     # Update knowledge pipeline
     if not state.get('knowledge_pipeline'):

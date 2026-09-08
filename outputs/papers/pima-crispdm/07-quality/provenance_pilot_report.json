@@ -1,0 +1,31 @@
+{
+ "paper": "pima-crispdm",
+ "mode": "STRICT",
+ "entries": {
+  "pidd_n": {
+   "ok": true,
+   "reason": "ok"
+  },
+  "pidd_prevalence": {
+   "ok": true,
+   "reason": "ok"
+  },
+  "threshold_f1": {
+   "ok": true,
+   "reason": "ok"
+  }
+ },
+ "bindings": {
+  "768": true,
+  "34.9": true,
+  "0.707": true
+ },
+ "negatives": {
+  "tampered_content": false,
+  "dir_result_file": false,
+  "short_hash": false,
+  "wrong_metric": false,
+  "tampered_tex": false
+ },
+ "acceptance": "PASS"
+}

@@ -1,0 +1,34 @@
+{
+ "generated_at": "2026-09-08",
+ "repo_commit": "f70820585c4974a69493a72f1ee6c3f84a5b49ac",
+ "source_of_truth": {
+  "path": "/media/yakeworld/data/Synthos",
+  "quality_gate_runner_sha256": "4a55c7a4bf47748c33a35945f73f186a66f1478ed98effdc55e07a8945c20725",
+  "provenance_sha256": "0f8b42749e7086a93261618171fc2a54d62bcaf7855806550e78667ab3a6a313",
+  "l05_mode": "auto (STRICT iff provenance trace present; env SYNTHOS_PROVENANCE_MODE=STRICT forces)",
+  "g2_engines": [
+   "pdflatex",
+   "xelatex",
+   "luatex"
+  ]
+ },
+ "entrypoints": [
+  {
+   "entry": "dsh:skills-flat/quality-gate",
+   "realpath": "/media/yakeworld/data/Synthos/skills/core/quality-gate",
+   "is_symlink_chain_to_live": true,
+   "runner_sha256": "4a55c7a4bf47748c33a35945f73f186a66f1478ed98effdc55e07a8945c20725",
+   "provenance_sha256": "0f8b42749e7086a93261618171fc2a54d62bcaf7855806550e78667ab3a6a313",
+   "consistent": true
+  },
+  {
+   "entry": "codex:skills/synthos-core/quality-gate",
+   "realpath": "/media/yakeworld/data/Synthos/skills/core/quality-gate",
+   "is_symlink_chain_to_live": true,
+   "runner_sha256": "4a55c7a4bf47748c33a35945f73f186a66f1478ed98effdc55e07a8945c20725",
+   "provenance_sha256": "0f8b42749e7086a93261618171fc2a54d62bcaf7855806550e78667ab3a6a313",
+   "consistent": true
+  }
+ ],
+ "all_consistent": true
+}

@@ -182,14 +182,22 @@ def check_g2_compile(paper_dir: str) -> GateResult:
             workdirs.append(wd)
     ok_engine = None
     ok_cwd = None
+    engine_errors = []  # 评审四轮: 超时/启动异常必须转结构化失败, 不得被静默吞掉
     with tempfile.TemporaryDirectory(prefix="g2_compile_") as tmp:
         proc = None
         for wd in workdirs:
             for engine in engines:
-                proc = subprocess.run(
-                    [engine, "-interaction=nonstopmode", "-halt-on-error",
-                     "-draftmode", "-output-directory", tmp, src],
-                    capture_output=True, text=True, timeout=180, cwd=wd)
+                try:
+                    proc = subprocess.run(
+                        [engine, "-interaction=nonstopmode", "-halt-on-error",
+                         "-draftmode", "-output-directory", tmp, src],
+                        capture_output=True, text=True, timeout=180, cwd=wd)
+                except (subprocess.TimeoutExpired, OSError) as e:
+                    # 评审四轮: 引擎挂起/启动失败 ≠ "该引擎不行, 试下一个" —
+                    # 记录为 UNVERIFIED 证据 (结构化), 继续尝试其余引擎。
+                    engine_errors.append(f"{engine}@{os.path.basename(wd)}: {type(e).__name__}")
+                    proc = None
+                    continue
                 if proc.returncode == 0:
                     ok_engine, ok_cwd = engine, wd
                     break
@@ -209,11 +217,15 @@ def check_g2_compile(paper_dir: str) -> GateResult:
             rc = proc.returncode
         else:
             detail, rc = "compile not executed", "N/A"
+        if engine_errors:
+            detail = (f"[UNVERIFIED engine errors: {'; '.join(engine_errors)}] "
+                      f"{detail}")  # 评审四轮: 超时/启动失败进入结构化 findings, 不静默
         return GateResult("G2_compile", False, 0.5,
                           [f"compile exit={rc}: {detail[:300]}"],
                           ["Fix LaTeX compile errors (见 .log 首条 !)"])
     return GateResult("G2_compile", True, 1.0,
-                      [f"compile OK: engine={ok_engine} cwd={os.path.basename(ok_cwd) if ok_cwd else '?'} exit=0 ({tex_files[0]})"], [])
+                      [f"compile OK: engine={ok_engine} cwd={os.path.realpath(ok_cwd) if ok_cwd else '?'} exit=0 ({tex_files[0]})"
+                       + (f" [engine errors on other paths: {'; '.join(engine_errors)}]" if engine_errors else "")], [])
 
 
 def check_g3_citation_integrity(paper_dir: str) -> GateResult:
@@ -632,13 +644,23 @@ def check_l05_data_honesty(paper_dir: str) -> GateResult:
     body = tex[body_m.start():] if body_m else tex
 
     def _is_citation_year(m):
+        # 评审四轮 R1: 旧版"处于未闭合括号内即当年份" — `We enrolled (2024 participants).`
+        # 的数字落在括号内被滤成空声明 → 空声明满分 PASS。修正: 括号内只有紧邻出现
+        # 姓名式 token (CamelCase/全大写 或 后随姓名字形) 才算引用 (Smith 2020);
+        # 括号内是数字+量词 (2024 participants) 不是引用。
         s = m.start()
-        ctx = body[max(0, s - 40):s]
+        ctx = body[max(0, s - 40):s].rstrip()
         lp = ctx.rfind('(')
         rp = ctx.rfind(')')
-        if lp != -1 and lp > rp:          # 处于未闭合括号内: (Smith 2020)
+        inner = ctx[lp + 1:] if (lp != -1 and lp > rp) else ""
+        if inner:
+            # 引用语境: 括号内末尾是 "Name YYYY" 或 "Name, YYYY" 模式
+            if re.search(r"[A-Z][a-z]+(\s+[A-Z][a-z]+)*\s*,?\s*$", inner):
+                return True
+            return False  # 括号内但没有姓名 token (如 "(2024 participants" 之前的量词) → 不豁免
+        if re.search(r",\s*([A-Z][a-z]+)\s*,$", ctx):  # 逗号后跟姓名再逗号: Smith, 2020
             return True
-        if re.search(r',\s*$', ctx):      # 逗号后: Smith, 2020
+        if re.search(r",\s*([A-Z][a-z]+\s){1,3}$", ctx):  # Smith, Jones, 2020
             return True
         return False
 
@@ -649,7 +671,12 @@ def check_l05_data_honesty(paper_dir: str) -> GateResult:
     all_decls = plain_decls + p_decls
 
     if not all_decls:
-        return GateResult("L0.5", True, 1.0, [], ["No numeric declarations — acceptable"])
+        # 评审四轮 R1: 旧版此处 = 空声明满分 PASS (年份过滤把 (2024 participants) 滤空后
+        # 走此分支)。空正文在 0 声明语境下无奖励意义 → 返回 0.0 (不放行);
+        # 奖励单调性: 删除数字声明不得提高分数 (有声明时基线 >=0.2*frac)。
+        return GateResult("L0.5", False, 0.0,
+                          ["L0.5: no numeric declarations in body — reward-neutral, not PASS"],
+                          ["正文数值声明已提取; 0 声明不授予通过"])
 
     # 2026-09-07 reward-integrity (评审实验1): "有 state.json" 不等于 "数字有证据"。
     # 逐项核对: tex 中每个数值声明 (归一化后) 必须在 state.json 任一叶子值中出现。
@@ -698,8 +725,11 @@ def check_l05_data_honesty(paper_dir: str) -> GateResult:
     # ── 声明—来源绑定 (STRICT, reward-integrity P1, 评审三轮) ──
     # 旧版只做数值集合成员检查 → 无关字段同值可背书 (room_temperature:85.2 → "Accuracy 85.2%")。
     # 若存在 provenance (provenance.json 或 state["provenance"]), 升级为 STRICT:
-    #   每个可核对声明必须命中一条携带完整溯源字段 + 结果文件真实存在 + 哈希匹配的记录。
-    # 无 provenance → 保持 LEGACY 集合成员检查 (向后兼容, 冻结测试不变)。
+    #   每个可核对声明必须命中一条携带完整溯源字段 + 结果文件 isfile + 完整 SHA-256 匹配
+    #   + metric 语义一致 + tex_location 有效的记录 (评审四轮: 不可验=拒绝, 不是跳过)。
+    # 材料不得自行降级 (B4): provenance.json 存在或 state 含 provenance 键 → STRICT;
+    #   值为 null/非 dict → STRICT 空记录 (有声明必 FAIL), 绝不落入 LEGACY。
+    # 无 provenance 痕迹 → LEGACY 集合成员检查 (向后兼容, 冻结测试不变)。
     try:
         _prov_mod_dir = os.path.dirname(os.path.abspath(__file__))
         import importlib.util as _ilu
@@ -709,24 +739,36 @@ def check_l05_data_honesty(paper_dir: str) -> GateResult:
         _PROV = _prov
     except Exception:
         _PROV = None
-    provenance = _PROV.load_provenance(paper_dir) if _PROV else None
-    # None = 无 provenance (LEGACY); {} = STRICT 启用但零记录 (有声明必不通过)
-    if provenance is not None:
-        _normed_claims = [_norm(d) for d in checkable] + [_norm(v) for v in pcheck_norm]
-        _base = os.path.dirname(os.path.abspath(paper_dir))
-        bound = _PROV.bound_claims(_normed_claims, provenance, _base)
-        unbound = _PROV.unbound_claims(_normed_claims, provenance, _base)
-        bound_frac = len(bound) / total_claims
-        if bound_frac >= 1.0:
-            return GateResult("L0.5", True, 1.0,
-                              [f"STRICT provenance: all {total_claims} claims bound to verified sources"], [])
-        if bound_frac >= 0.5:
-            return GateResult("L0.5", False, 0.4,
-                              [f"STRICT provenance: {len(unbound)}/{total_claims} claims NOT bound to complete evidence (unrelated-field same-value does NOT count)"],
-                              ["为未绑定声明补全 provenance: value/metric/unit/run/result_file/file_hash/tex_location"])
-        return GateResult("L0.5", False, 0.2 * bound_frac,
-                          [f"STRICT provenance: only {len(bound)}/{total_claims} claims bound"],
-                          ["凡数必源且源必可绑: 见 provenance.py REQUIRED_FIELDS"])
+    if _PROV is not None:
+        # 评审四轮 B4: 外部验收配置 (env SYNTHOS_PROVENANCE_MODE=STRICT) 强制 STRICT —
+        # 材料删除唯一 provenance 来源不得自行落入 LEGACY 宽模式。
+        _strict_required = os.environ.get("SYNTHOS_PROVENANCE_MODE", "").strip().upper() == "STRICT"
+        provenance, _pmode = _PROV.load_provenance(paper_dir, strict_required=_strict_required)
+        if _pmode == "STRICT":
+            # 声明上下文: 每个声明在正文中的 ±30 字符 (metric 语义核验用)
+            def _ctx_of(d):
+                i = body.find(d)
+                if i == -1:
+                    return ""
+                return body[max(0, i - 30):i + len(d) + 30]
+            _normed_claims = [_norm(d) for d in checkable] + [_norm(v) for v in pcheck_norm]
+            _contexts = [_ctx_of(d) for d in checkable] + [d for d in pcheck]  # p 值上下文=原始声明 (p<0.001)
+            _base = os.path.dirname(os.path.abspath(paper_dir))
+            _tex_abs = os.path.abspath(os.path.join(paper_dir, "paper.tex"))
+            bound = _PROV.bound_claims(_normed_claims, provenance, _base,
+                                       contexts=_contexts, tex_abs=_tex_abs)
+            _n_bound = len(bound)
+            bound_frac = _n_bound / total_claims
+            if bound_frac >= 1.0:
+                return GateResult("L0.5", True, 1.0,
+                                  [f"STRICT provenance: all {total_claims} claims bound to verified sources (metric-semantic + full SHA-256 + isfile)"], [])
+            if bound_frac >= 0.5:
+                return GateResult("L0.5", False, 0.4,
+                                  [f"STRICT provenance: {total_claims - _n_bound}/{total_claims} claims NOT bound to complete evidence (unrelated-field same-value does NOT count)"],
+                                  ["为未绑定声明补全 provenance: value/metric/unit/run/result_file/file_hash(完整sha256)/tex_location"])
+            return GateResult("L0.5", False, 0.2 * bound_frac,
+                              [f"STRICT provenance: only {_n_bound}/{total_claims} claims bound"],
+                              ["凡数必源且源必可绑: 见 provenance.py REQUIRED_FIELDS"])
 
     state_path = os.path.join(os.path.dirname(paper_dir), "state.json")
     state = read_file_safe(state_path)
@@ -756,8 +798,11 @@ def check_l05_data_honesty(paper_dir: str) -> GateResult:
                               [f"Only {matched_all}/{total_claims} numeric claims found in state.json"],
                               ["凡数必源: 每个数值写入 state.json 并附来源字段"])
 
-    # 无 state.json (或空/损坏): 数值声明无证据源 → 不得按"通过"处理
-    return GateResult("L0.5", False, 0.3,
+    # 无 state.json (或空/损坏): 数值声明无证据源 → 不得按"通过"处理。
+    # 评审四轮 R2 (奖励单调性): 删除不匹配的 state.json 不得提高分数 —
+    # 有 state 但 0 匹配 = 0.2*0 = 0.0, 此分支必须 <= 该基线 (取 0.0)。
+    # 旧版此处 0.3 > 0.0 → 删 state 反而加分。
+    return GateResult("L0.5", False, 0.0,
                       [f"{total_claims} numeric claims, no state.json evidence source"],
                       ["Add state.json with the claimed values and their provenance"])
 

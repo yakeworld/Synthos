@@ -87,7 +87,7 @@ def main():
         resf = os.path.join(ms_bound, "results_accuracy.json")
         with open(resf, "w") as f:
             f.write('{"accuracy": 0.852}')
-        h = hashlib.sha256(open(resf, "rb").read()).hexdigest()[:16]
+        h = hashlib.sha256(open(resf, "rb").read()).hexdigest()  # 完整 64-hex (评审四轮: 短前缀不再被接受)
         # 回填完整绑定记录 (结果文件已存在, 哈希对得上)
         sj = os.path.join(tmp, "a1s2_bound_ok", "state.json")
         with open(sj) as f:
@@ -100,23 +100,116 @@ def main():
         with open(sj, "w") as f:
             json.dump(st, f)
         r = q.check_l05_data_honesty(ms_bound)
-        check("A1s2 STRICT 完整绑定 (结果文件存在+哈希匹配) → 通过 (防'全部拒绝'投机)",
+        check("A1s2 STRICT 完整绑定 (结果文件存在+完整哈希匹配) → 通过 (防'全部拒绝'投机)",
               r.pass_ and r.score >= 1.0, f"pass={r.pass_} score={r.score}")
 
-        # ── A2 p 声明无证据 → 不得满分放行 ──
+        # ── 评审四轮 P0-1: STRICT 直接绕过 (tmp_review4_repro.py 的 B 系列) ──
+        import importlib.util as _ilu
+        _spec = _ilu.spec_from_file_location("prov4",
+                                             os.path.join(ROOT, "skills", "core",
+                                                          "quality-gate", "scripts",
+                                                          "provenance.py"))
+        P4 = _ilu.module_from_spec(_spec); _spec.loader.exec_module(P4)
+        import hashlib as _h4
+        # B1: result_file 指向目录 + 非法哈希 "x" (Astra 原始反例, 旧版预期 True)
+        b1root = tempfile.mkdtemp(prefix="provB1_")
+        try:
+            b1_entry = {"value": 85.2, "metric": "accuracy", "unit": "%",
+                        "run": "never-executed", "result_file": ".",
+                        "file_hash": "x", "tex_location": "L10 Accuracy 85.2"}
+            b1 = P4.is_bound("85.2", {"e": b1_entry}, b1root,
+                             claim_context="Accuracy 85.2%", tex_abs=None)
+            check("B1 目录 result_file + 非法哈希 → 必须拒绝 (Astra 反例: 旧版 True)",
+                  b1 is False, f"is_bound={b1}")
+        finally:
+            shutil.rmtree(b1root, ignore_errors=True)
+        # B2: 完整哈希的前 16 位 → 必须拒绝 (旧版 startswith 放行)
+        b2root = tempfile.mkdtemp(prefix="provB2_")
+        try:
+            resf = os.path.join(b2root, "r.json")
+            with open(resf, "w") as f:
+                f.write('{"accuracy": 0.852}')
+            full = _h4.sha256(open(resf, "rb").read()).hexdigest()
+            b2_entry = {"value": 85.2, "metric": "accuracy", "unit": "%",
+                        "run": "x", "result_file": os.path.join(b2root, "r.json"),
+                        "file_hash": full[:16], "tex_location": "L10 Accuracy 85.2"}
+            b2 = P4.is_bound("85.2", {"e": b2_entry}, b2root,
+                             claim_context="Accuracy 85.2%")
+            check("B2 16-hex 短哈希前缀 → 必须拒绝 (旧版 startswith 放行)",
+                  b2 is False, f"is_bound={b2}")
+            b2f_entry = dict(b2_entry, file_hash=full)
+            b2f = P4.is_bound("85.2", {"e": b2f_entry}, b2root,
+                              claim_context="Accuracy 85.2%")
+            check("B2f 完整 64-hex 哈希 → 通过 (防全拒绝)",
+                  b2f is True, f"is_bound={b2f}")
+        finally:
+            shutil.rmtree(b2root, ignore_errors=True)
+        # B3: 错指标 — 声明 "Accuracy 85.2%" 不能用 room_temperature 记录背书
+        b3root = tempfile.mkdtemp(prefix="provB3_")
+        try:
+            resf = os.path.join(b3root, "r.json")
+            with open(resf, "w") as f:
+                f.write('{"room_temperature": 85.2}')
+            full = _h4.sha256(open(resf, "rb").read()).hexdigest()
+            b3_entry = {"value": 85.2, "metric": "room_temperature", "unit": "C",
+                        "run": "x", "result_file": os.path.join(b3root, "r.json"),
+                        "file_hash": full, "tex_location": "L10 Accuracy 85.2"}
+            b3 = P4.is_bound("85.2", {"e": b3_entry}, b3root,
+                             claim_context="the model Accuracy 85.2% was")
+            check("B3 错指标: room_temperature 记录不得背书 Accuracy 声明 (语义核验)",
+                  b3 is False, f"is_bound={b3}")
+        finally:
+            shutil.rmtree(b3root, ignore_errors=True)
+        # B3b: 哈希对 + 结果文件内容无关, 但 metric/上下文一致 → 允许
+        #      (关系核验边界: 语义一致 + 文件完整, 内容语义由 metric 词表约束)
+        # B4: 材料不得自行降级 — provenance: null → STRICT 空记录, 不得 LEGACY 放行
+        _, ms_b4 = t["make_paper"](tmp, "b4_null_prov",
+                                   PREFIX + r"Accuracy 85.2\%." + SUFFIX,
+                                   state={"room_temperature": 85.2, "provenance": None})
+        r = q.check_l05_data_honesty(ms_b4)
+        check("B4a provenance: null → STRICT 空记录, 必须 FAIL (不得 LEGACY 同值放行)",
+              r.pass_ is False, f"pass={r.pass_} score={r.score} {r.findings[:1]}")
+        # B4b: 删掉唯一 provenance 字段 (旧版行为) → 仍不得通过;
+        #      外部验收配置 (env) 强制 STRICT 时同样拒绝
+        _, ms_b4b = t["make_paper"](tmp, "b4b_delete_prov",
+                                    PREFIX + r"Accuracy 85.2\%." + SUFFIX,
+                                    state={"room_temperature": 85.2})
+        os.environ["SYNTHOS_PROVENANCE_MODE"] = "STRICT"
+        try:
+            r = q.check_l05_data_honesty(ms_b4b)
+            check("B4b 删除 provenance 来源 + 验收配置强制 STRICT → 必须 FAIL (材料不得自选宽模式)",
+                  r.pass_ is False, f"pass={r.pass_} score={r.score}")
+        finally:
+            os.environ.pop("SYNTHOS_PROVENANCE_MODE", None)
+        # R2: 删除不匹配的 state → 分数不得提高 (旧版 0.0 → 0.3)
+        _, ms_r2 = t["make_paper"](tmp, "r2_mismatch_state",
+                                   PREFIX + r"Accuracy 85.2\%." + SUFFIX,
+                                   state={"other": 1})
+        r_m = q.check_l05_data_honesty(ms_r2)
+        _, ms_r2n = t["make_paper"](tmp, "r2_no_state",
+                                    PREFIX + r"Accuracy 85.2\%." + SUFFIX,
+                                    state=None)
+        r_n = q.check_l05_data_honesty(ms_r2n)
+        check("R2 删除不匹配 state 不得提高分数 (旧版 0→0.3 奖励操纵)",
+              r_n.score <= r_m.score + 1e-9 and r_n.pass_ is False and r_m.pass_ is False,
+              f"with_state={r_m.score} without={r_n.score}")
+
+        # ── A2 p 声明无证据 → 必须失败 (评审四轮: "不得满分"弱断言升级为"必须失败") ──
         _, ms = t["make_paper"](tmp, "a2_p_only",
                                 PREFIX + "The test yielded p < 0.001." + SUFFIX,
                                 state=None)
         r = q.check_l05_data_honesty(ms)
-        check("A2 仅 p 声明无 state → 不得 PASS 1.0 (旧版绕过: '无可核对项')",
-              not (r.pass_ and r.score >= 1.0), f"pass={r.pass_} score={r.score}")
+        check("A2 仅 p 声明无 state → 必须 FAIL 且 score==0.0 (防 pass=True,0.5 变异)",
+              r.pass_ is False and abs(r.score - 0.0) < 1e-9,
+              f"pass={r.pass_} score={r.score}")
         # 变体: state 存在但缺 p 值
         _, ms = t["make_paper"](tmp, "a2b_p_missing",
                                 PREFIX + "The test yielded p < 0.001." + SUFFIX,
                                 state={"other": 1})
         r = q.check_l05_data_honesty(ms)
-        check("A2b 仅 p 声明 + state 缺 p 值 → 不得满分通过",
-              not (r.pass_ and r.score >= 1.0), f"pass={r.pass_} score={r.score}")
+        check("A2b 仅 p 声明 + state 缺 p 值 → 必须 FAIL 且 score==0.0",
+              r.pass_ is False and abs(r.score - 0.0) < 1e-9,
+              f"pass={r.pass_} score={r.score}")
         # 正例: state 含 p 值 → 必须通过 (防"全部拒绝"投机)
         _, ms = t["make_paper"](tmp, "a2c_p_bound",
                                 PREFIX + "The test yielded p < 0.001." + SUFFIX,
@@ -125,13 +218,35 @@ def main():
         check("A2c 仅 p 声明 + state 含 p 值 → 通过 (真实正确样例不被误杀)",
               r.pass_ and r.score >= 1.0, f"pass={r.pass_} score={r.score}")
 
-        # ── A3 人数 2024 不得当年份漏核 ──
+        # ── A3 人数 2024 不得当年份漏核 (评审四轮: 必须失败) ──
         _, ms = t["make_paper"](tmp, "a3_count_2024",
                                 PREFIX + "We enrolled 2024 participants." + SUFFIX,
                                 state=None)
         r = q.check_l05_data_honesty(ms)
-        check("A3 人数 2024 无 state → 不得 PASS 1.0 (旧版绕过: 年份排除)",
-              not (r.pass_ and r.score >= 1.0), f"pass={r.pass_} score={r.score}")
+        check("A3 人数 2024 无 state → 必须 FAIL 且 score==0.0",
+              r.pass_ is False and abs(r.score - 0.0) < 1e-9,
+              f"pass={r.pass_} score={r.score}")
+        # 评审四轮 R1: 括号人数 / 逗号人数 — 旧版年份过滤把 2024 滤空 → 空声明满分 PASS
+        _, ms = t["make_paper"](tmp, "m1_bracket_2024",
+                                PREFIX + r"We enrolled (2024 participants)." + SUFFIX,
+                                state=None)
+        r = q.check_l05_data_honesty(ms)
+        check("M1 括号人数 (2024 participants) 无 state → 必须 FAIL (R1 空声明满分已封)",
+              r.pass_ is False, f"pass={r.pass_} score={r.score}")
+        # M1b 奖励单调性: 括号版分数不得高于裸 2024 基线 (删括号=删证据, 不得加分)
+        _, ms_base = t["make_paper"](tmp, "a3_base_mono",
+                                     PREFIX + "We enrolled 2024 participants." + SUFFIX,
+                                     state=None)
+        r_base = q.check_l05_data_honesty(ms_base)
+        check("M1b 括号人数分数不得高于裸人数基线 (奖励单调)",
+              r.score <= r_base.score + 1e-9,
+              f"bracket={r.score} baseline={r_base.score}")
+        _, ms = t["make_paper"](tmp, "m2_comma_2024",
+                                PREFIX + r"We enrolled, 2024 participants." + SUFFIX,
+                                state=None)
+        r = q.check_l05_data_honesty(ms)
+        check("M2 逗号人数 , 2024 participants 无 state → 必须 FAIL (R1 逗号版)",
+              r.pass_ is False, f"pass={r.pass_} score={r.score}")
         _, ms = t["make_paper"](tmp, "a3b_count_bound",
                                 PREFIX + "We enrolled 2024 participants." + SUFFIX,
                                 state={"n_participants": 2024})
@@ -149,14 +264,14 @@ def main():
         check("A4 12pt 排版参数 + 真实 85.2 有证据 → 通过 (评审三轮指出的误拒)",
               r.pass_ and r.score >= 1.0, f"pass={r.pass_} score={r.score}")
 
-        # ── A5 无编译器 → 不得满分通过 ──
+        # ── A5 无编译器 → 必须 FAIL 且 score==0.0 (评审四轮: 不得满分→必须失败) ──
         _, ms = t["make_paper"](tmp, "a5_no_compiler",
                                 PREFIX + r"\undefinedcommandxyz" + SUFFIX)
         with patch("shutil.which", return_value=None):
             with patch("subprocess.run") as compiler:
                 r = q.check_g2_compile(ms)
-                check("A5 无 LaTeX 引擎 → 不得 PASS 1.0 (UNVERIFIED 语义)",
-                      not (r.pass_ and r.score >= 1.0),
+                check("A5 无 LaTeX 引擎 → 必须 FAIL 且 score==0.0 (防 pass=True,0.5 变异)",
+                      r.pass_ is False and abs(r.score - 0.0) < 1e-9,
                       f"pass={r.pass_} score={r.score} findings={r.findings[:1]}")
                 check("A5b 无引擎时零编译调用",
                       compiler.call_count == 0, f"calls={compiler.call_count}")
@@ -202,6 +317,16 @@ def main():
                   b_no_field is not None and b_with_ghost is not None
                   and b_no_field <= b_with_ghost + 1e-9,
                   f"with_ghost={b_with_ghost} no_field={b_no_field}")
+            # 评审四轮: 目录冒充产物 — output_file="." (exists 为真) 不得计入 verified
+            with open(os.path.join(outs, "pipeline_trace_b.json"), "w") as f:
+                json.dump({"gene_activation": {"ACQ": ["KA-001"]},
+                           "atoms": {"x": {"status": "completed",
+                                           "output_file": "."}}}, f)
+            b_dir = run_diagnose_behavior(t2)
+            check("A7b output_file 指向目录 → 不得计入 verified (目录不是产物)",
+                  b_dir is not None and b_with_ghost is not None
+                  and b_dir <= b_with_ghost + 1e-9,
+                  f"with_ghost={b_with_ghost} dir_as_output={b_dir}")
         finally:
             shutil.rmtree(t2, ignore_errors=True)
     finally:
